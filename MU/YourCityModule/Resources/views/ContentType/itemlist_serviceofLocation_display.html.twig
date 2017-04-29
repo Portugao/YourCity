@@ -1,6 +1,0 @@
-{# Purpose of this template: Display services of location within an external context #}
-{% for serviceofLocation in items %}
-    <h3>{{ serviceofLocation|muyourcitymodule_formattedTitle }}</h3>
-    <p><a href="{{ path('muyourcitymodule_serviceoflocation_display', { 'id': serviceofLocation.id }) }}">{{ __('Read more') }}</a>
-    </p>
-{% endfor %}
