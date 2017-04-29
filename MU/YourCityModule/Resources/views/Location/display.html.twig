@@ -18,6 +18,7 @@
 
     <div class="row">
         <div class="col-sm-8">
+        <div class="col-sm-8">
         {% if location.workflowState is not empty and routeArea == 'admin' %}
             <dt>{{ __('State') }}</dt>
             <dd>{{ location.workflowState|muyourcitymodule_listEntry('location', 'workflowState') }}</dd>
@@ -242,20 +243,30 @@
             <dt>{{ __('Longitude') }}</dt>
             <dd>{{ location.longitude|muyourcitymodule_geoData }}</dd>
         {% endif %#} 
-    <br style="clear: both;" />
-    {#% if location.latitude != '0.0000000' and location.longitude != '0.0000000' %#}
-    <h3 class="muyourcitymodule-map">{{ __('Map') }}</h3>
-    <div id="mapContainer" class="muyourcitymodule-mapcontainer">
-    </div>
-    {#% endif %#}
+        <br style="clear: both;" />
 
-    {#{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: location }) }#}
+        {#{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: location }) }#}
 
-    {{ block('display_hooks') }}
+        {{ block('display_hooks') }}
+        </div>
+        <div class="col-sm-4">
+            {% if location.specialsOfLocation|default %}
+        {{ include(
+            '@MUYourCityModule/SpecialOfLocation/includeDisplayItemListMany.html.twig',
+            { items: location.specialsOfLocation }
+        ) }}
+    {% endif %}
+        </div>
         </div>
         <div class="col-sm-4">
             {{ block('related_items') }}
         </div>
+        
+        {#% if location.latitude != '0.0000000' and location.longitude != '0.0000000' %#}
+        <h3 class="muyourcitymodule-map">{{ __('Map') }}</h3>
+        <div id="mapContainer" class="muyourcitymodule-mapcontainer">
+        </div>
+        {#% endif %#}
     </div>
 </div>
 {% endblock %}
