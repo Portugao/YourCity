@@ -8,10 +8,11 @@
         {% endif %}
     </div>
     <div class="col-md-10">
-        <h2>{{ item|muyourcitymodule_formattedTitle }}</h2>
+        <h2><a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': item.id, 'slug': item.slug }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ item.name|notifyFilters('muyourcitymodule.filterhook.locations') }}
+        {{ item|muyourcitymodule_formattedTitle }}</a></h2>
     </div>
 </div>
-{% if item.menuOfLocation|default %}
+{% if item.menuOfLocation|default and showMenus == true %}
     <h2>{{ __('Menus') }}</h2>
     {% for menu in item.menuOfLocation %}
     {% if menu|length <= 4 %}
@@ -27,7 +28,7 @@
     {% endfor %}
 {% endif %}
 
-{% if item.offers|default %}
+{% if item.offers|default and showOffers == true %}
     <h2>{{ __('Offers') }}</h2>
     {% for offer in item.offers %}
     {% if item.offers|length <= 4 %}
@@ -43,7 +44,7 @@
     {% endfor %}
 {% endif %}
 
-{% if item.products|default %}
+{% if item.products|default and showProducts == true %}
     <h2>{{ __('Products') }}</h2>
     {% for product in item.products %}
     {% if item.products|length <= 4 %}
@@ -59,12 +60,13 @@
     {% endfor %}
 {% endif %}
 
-{% if item.product|default %}
-    {% for product in item.product %}
+{% if item.events|default and showEvents == true %}
+    <h2>{{ __('Events') }}</h2>
+    {% for event in item.events %}
     <div class="col-md-6 abo-location-list">
         {{ include(
-            '@MUYourCityModule/Product/includeDisplayItemListOneOwn.html.twig',
-                { item: product }
+            '@MUYourCityModule/Event/includeDisplayItemListOneOwn.html.twig',
+                { item: event }
             ) }}
     </div>
     {% endfor %}
