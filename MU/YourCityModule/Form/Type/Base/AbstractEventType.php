@@ -157,11 +157,6 @@ abstract class AbstractEventType extends AbstractType
         
         $builder->add('name', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
             'label' => $this->__('Name') . ':',
-            'label_attr' => [
-                'class' => 'tooltips',
-                'title' => $this->__('Maximum 100 characters.')
-            ],
-            'help' => $this->__('Maximum 100 characters.'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 100,

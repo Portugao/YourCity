@@ -23,10 +23,6 @@
             <dt>{{ __('Name') }}</dt>
             <dd>{{ part.name }}</dd>
         {% endif %}
-        {% if part.descriptionForGoogle is not empty %}
-            <dt>{{ __('Description for google') }}</dt>
-            <dd>{{ part.descriptionForGoogle }}</dd>
-        {% endif %}
         {% if part.description is not empty %}
             <dt>{{ __('Description') }}</dt>
             <dd>{{ part.description|safeHtml }}</dd>

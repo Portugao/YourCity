@@ -1,13 +1,13 @@
-{# purpose of this template: inclusion template for display of related specials of location #}
-{% set hasAdminPermission = hasPermission('MUYourCityModule:SpecialOfLocation:', '::', 'ACCESS_EDIT') %}
+{# purpose of this template: inclusion template for display of related services of location #}
+{% set hasAdminPermission = hasPermission('MUYourCityModule:ServiceOfLocation:', '::', 'ACCESS_EDIT') %}
 {% if nolink is not defined %}
     {% set nolink = false %}
 {% endif %}
 {% if items|default and items|length > 0 %}
-
-<ul class="list-group">
+<ul class="list-group muyourcitymodule-related-item-list serviceoflocation">
 {% for item in items %}
-  <li class="list-group-item">{{ item.name }}</li>
+<li class="list-group-item">{{ item.name }}</li>
 {% endfor %}
 </ul>
 {% endif %}
+
