@@ -265,7 +265,9 @@ class AbonnementController extends AbstractAbonnementController
     	$viewHelper = $this->get('mu_yourcity_module.view_helper');
     
     	$request->query->set('pos', $pos);
-    	$request->query->set('own', 1);
+    	if ($isAdmin == false) {
+    	    $request->query->set('own', 1);
+    	}
     
     	$sortableColumns = new SortableColumns($this->get('router'), 'muyourcitymodule_abonnement_' . ($isAdmin ? 'admin' : '') . 'view', 'sort', 'sortdir');
     
