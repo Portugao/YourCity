@@ -13,11 +13,101 @@
 namespace MU\YourCityModule\Listener;
 
 use MU\YourCityModule\Listener\Base\AbstractEntityLifecycleListener;
+use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+use MU\YourCityModule\YourCityEvents;
+
 
 /**
  * Event subscriber implementation class for entity lifecycle events.
  */
 class EntityLifecycleListener extends AbstractEntityLifecycleListener
-{
-    // feel free to enhance this listener by custom actions
+{ 
+   /**
+    * The postPersist event occurs for an entity after the entity has been made persistent.
+    * It will be invoked after the database insert operations. Generated primary key values
+    * are available in the postPersist event.
+    *
+    * @param LifecycleEventArgs $args Event arguments
+    */
+   public function postPersist(LifecycleEventArgs $args)
+   {
+   	$entity = $args->getObject();
+   	if (!$this->isEntityManagedByThisBundle($entity) || !method_exists($entity, 'get_objectType')) {
+   		return;
+   	}
+   
+   	$objectId = $entity->createCompositeIdentifier();
+   	$currentUserApi = $this->container->get('zikula_users_module.current_user');
+   	$logArgs = ['app' => 'MUYourCityModule', 'user' => $currentUserApi->get('uname'), 'entity' => $entity->get_objectType(), 'id' => $objectId];
+   	$this->logger->debug('{app}: User {user} created the {entity} with id {id}.', $logArgs);
+   
+   	// create the filter event and dispatch it
+   	$event = $this->createFilterEvent($entity);
+   	$this->eventDispatcher->dispatch(constant('\\MU\\YourCityModule\\YourCityEvents::' . strtoupper($entity->get_objectType()) . '_POST_PERSIST'), $event);
+   
+   	if (method_exists($entity, 'getLocation')) {
+        $objectType = $entity->get_objectType();
+   	    $location = $entity->getLocation();
+   	    if ($location) {
+   	        if ($objectType == 'event') {
+   		        die('Event'); 	
+   	    	}
+   	    	if ($objectType == 'offer') {
+   	    		die('Offer');
+   	    	}
+   	    	if ($objectType == 'product') {
+   	    		die('Product');
+   	    	}
+   	    	if ($objectType == 'menuOfLocation') {
+   	    		die('Menu');
+   	    	}
+   	    }
+   	}
+   
+   }
+   
+   /**
+    * The postUpdate event occurs after the database update operations to entity data.
+    * It is not called for a DQL UPDATE statement.
+    *
+    * @param LifecycleEventArgs $args Event arguments
+    */
+   public function postUpdate(LifecycleEventArgs $args)
+   {
+   	$entity = $args->getObject();
+   	if (!$this->isEntityManagedByThisBundle($entity) || !method_exists($entity, 'get_objectType')) {
+   		return;
+   	}
+   
+   	$objectId = $entity->createCompositeIdentifier();
+   	$currentUserApi = $this->container->get('zikula_users_module.current_user');
+   	$logArgs = ['app' => 'MUYourCityModule', 'user' => $currentUserApi->get('uname'), 'entity' => $entity->get_objectType(), 'id' => $objectId];
+   	$this->logger->debug('{app}: User {user} updated the {entity} with id {id}.', $logArgs);
+   
+   	// create the filter event and dispatch it
+   	$event = $this->createFilterEvent($entity);
+   	$this->eventDispatcher->dispatch(constant('\\MU\\YourCityModule\\YourCityEvents::' . strtoupper($entity->get_objectType()) . '_POST_UPDATE'), $event);
+   
+   	if (method_exists($entity, 'getLocation')) {
+   		$objectType = $entity->get_objectType();
+   		$location = $entity->getLocation();
+   		if ($location) {
+   			if ($objectType == 'event') {
+   				die('Event');
+   			}
+   			if ($objectType == 'offer') {
+   				die('Offer');
+   			}
+   			if ($objectType == 'product') {
+   				die('Offer');
+   			}
+   			if ($objectType == 'menuOfLocation') {
+   				die('Menu');
+   			}
+   		}
+   	}
+   }
+   
+   
+    
 }
