@@ -20,7 +20,7 @@
                 <a href="{{ path('muyourcitymodule_abonnement_' ~ routeArea ~ 'edit', { 'id': abonnement.id }) }}" title="{{ __('Edit Abonnement')|e('html_attr') }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                     {{ include(
                         '@MUYourCityModule/Location/includeDisplayItemListOneOwn.html.twig',
-                        { item: abonnement.location }
+                        { item: abonnement.location, showMenus: abonnement.showMenus, showOffers: abonnement.showOffers, showProducts: abonnement.showProducts, showEvents: abonnement.showEvents }
                     ) }}
                 </div>
             {% endif %}
