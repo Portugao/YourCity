@@ -13,11 +13,349 @@
 namespace MU\YourCityModule\Container;
 
 use MU\YourCityModule\Container\Base\AbstractLinkContainer;
+use Zikula\Core\LinkContainer\LinkContainerInterface;
 
 /**
  * This is the link container service implementation class.
  */
 class LinkContainer extends AbstractLinkContainer
 {
-    // feel free to add own extensions here
+    /**
+     * Returns available header links.
+     *
+     * @param string $type The type to collect links for
+     *
+     * @return array Array of header links
+     */
+    public function getLinks($type = LinkContainerInterface::TYPE_ADMIN)
+    {
+        $contextArgs = ['api' => 'linkContainer', 'action' => 'getLinks'];
+        $allowedObjectTypes = $this->controllerHelper->getObjectTypes('api', $contextArgs);
+
+        $permLevel = LinkContainerInterface::TYPE_ADMIN == $type ? ACCESS_ADMIN : ACCESS_READ;
+
+        // Create an array of links to return
+        $links = [];
+
+        if (LinkContainerInterface::TYPE_ACCOUNT == $type) {
+            if (!$this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_OVERVIEW)) {
+                return $links;
+            }
+
+            if (true === $this->variableApi->get('MUYourCityModule', 'linkOwnBranchesOnAccountPage', true)) {
+                $objectType = 'branch';
+                if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
+                    $links[] = [
+                        'url' => $this->router->generate('muyourcitymodule_' . strtolower($objectType) . '_view', ['own' => 1]),
+                        'text' => $this->__('My branches', 'muyourcitymodule'),
+                        'icon' => 'list-alt'
+                    ];
+                }
+            }
+
+            if (true === $this->variableApi->get('MUYourCityModule', 'linkOwnLocationsOnAccountPage', true)) {
+                $objectType = 'location';
+                if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
+                    $links[] = [
+                        'url' => $this->router->generate('muyourcitymodule_' . strtolower($objectType) . '_view', ['own' => 1]),
+                        'text' => $this->__('My locations', 'muyourcitymodule'),
+                        'icon' => 'list-alt'
+                    ];
+                }
+            }
+
+            if (true === $this->variableApi->get('MUYourCityModule', 'linkOwnPartsOnAccountPage', true)) {
+                $objectType = 'part';
+                if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
+                    $links[] = [
+                        'url' => $this->router->generate('muyourcitymodule_' . strtolower($objectType) . '_view', ['own' => 1]),
+                        'text' => $this->__('My parts', 'muyourcitymodule'),
+                        'icon' => 'list-alt'
+                    ];
+                }
+            }
+
+            if (true === $this->variableApi->get('MUYourCityModule', 'linkOwnImagesOfLocationOnAccountPage', true)) {
+                $objectType = 'imageOfLocation';
+                if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
+                    $links[] = [
+                        'url' => $this->router->generate('muyourcitymodule_' . strtolower($objectType) . '_view', ['own' => 1]),
+                        'text' => $this->__('My images of location', 'muyourcitymodule'),
+                        'icon' => 'list-alt'
+                    ];
+                }
+            }
+
+            if (true === $this->variableApi->get('MUYourCityModule', 'linkOwnFilesOfLocationOnAccountPage', true)) {
+                $objectType = 'fileOfLocation';
+                if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
+                    $links[] = [
+                        'url' => $this->router->generate('muyourcitymodule_' . strtolower($objectType) . '_view', ['own' => 1]),
+                        'text' => $this->__('My files of location', 'muyourcitymodule'),
+                        'icon' => 'list-alt'
+                    ];
+                }
+            }
+
+            if (true === $this->variableApi->get('MUYourCityModule', 'linkOwnOffersOnAccountPage', true)) {
+                $objectType = 'offer';
+                if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
+                    $links[] = [
+                        'url' => $this->router->generate('muyourcitymodule_' . strtolower($objectType) . '_view', ['own' => 1]),
+                        'text' => $this->__('My offers', 'muyourcitymodule'),
+                        'icon' => 'list-alt'
+                    ];
+                }
+            }
+
+            if (true === $this->variableApi->get('MUYourCityModule', 'linkOwnMenusOfLocationOnAccountPage', true)) {
+                $objectType = 'menuOfLocation';
+                if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
+                    $links[] = [
+                        'url' => $this->router->generate('muyourcitymodule_' . strtolower($objectType) . '_view', ['own' => 1]),
+                        'text' => $this->__('My menus of location', 'muyourcitymodule'),
+                        'icon' => 'list-alt'
+                    ];
+                }
+            }
+
+            if (true === $this->variableApi->get('MUYourCityModule', 'linkOwnPartsOfMenuOnAccountPage', true)) {
+                $objectType = 'partOfMenu';
+                if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
+                    $links[] = [
+                        'url' => $this->router->generate('muyourcitymodule_' . strtolower($objectType) . '_view', ['own' => 1]),
+                        'text' => $this->__('My parts of menu', 'muyourcitymodule'),
+                        'icon' => 'list-alt'
+                    ];
+                }
+            }
+
+            if (true === $this->variableApi->get('MUYourCityModule', 'linkOwnDishesOnAccountPage', true)) {
+                $objectType = 'dish';
+                if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
+                    $links[] = [
+                        'url' => $this->router->generate('muyourcitymodule_' . strtolower($objectType) . '_view', ['own' => 1]),
+                        'text' => $this->__('My dishes', 'muyourcitymodule'),
+                        'icon' => 'list-alt'
+                    ];
+                }
+            }
+
+            if (true === $this->variableApi->get('MUYourCityModule', 'linkOwnEventsOnAccountPage', true)) {
+                $objectType = 'event';
+                if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
+                    $links[] = [
+                        'url' => $this->router->generate('muyourcitymodule_' . strtolower($objectType) . '_view', ['own' => 1]),
+                        'text' => $this->__('My events', 'muyourcitymodule'),
+                        'icon' => 'list-alt'
+                    ];
+                }
+            }
+
+            if (true === $this->variableApi->get('MUYourCityModule', 'linkOwnProductsOnAccountPage', true)) {
+                $objectType = 'product';
+                if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
+                    $links[] = [
+                        'url' => $this->router->generate('muyourcitymodule_' . strtolower($objectType) . '_view', ['own' => 1]),
+                        'text' => $this->__('My products', 'muyourcitymodule'),
+                        'icon' => 'list-alt'
+                    ];
+                }
+            }
+
+            if (true === $this->variableApi->get('MUYourCityModule', 'linkOwnSpecialsOfLocationOnAccountPage', true)) {
+                $objectType = 'specialOfLocation';
+                if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
+                    $links[] = [
+                        'url' => $this->router->generate('muyourcitymodule_' . strtolower($objectType) . '_view', ['own' => 1]),
+                        'text' => $this->__('My specials of location', 'muyourcitymodule'),
+                        'icon' => 'list-alt'
+                    ];
+                }
+            }
+
+            if (true === $this->variableApi->get('MUYourCityModule', 'linkOwnServicesOfLocationOnAccountPage', true)) {
+                $objectType = 'serviceOfLocation';
+                if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
+                    $links[] = [
+                        'url' => $this->router->generate('muyourcitymodule_' . strtolower($objectType) . '_view', ['own' => 1]),
+                        'text' => $this->__('My services of location', 'muyourcitymodule'),
+                        'icon' => 'list-alt'
+                    ];
+                }
+            }
+
+            if (true === $this->variableApi->get('MUYourCityModule', 'linkOwnAbonnementsOnAccountPage', true)) {
+                $objectType = 'abonnement';
+                if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
+                    $links[] = [
+                        'url' => $this->router->generate('muyourcitymodule_' . strtolower($objectType) . '_view', ['own' => 1]),
+                        'text' => $this->__('My abonnements', 'muyourcitymodule'),
+                        'icon' => 'list-alt'
+                    ];
+                }
+            }
+
+            if ($this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {
+                $links[] = [
+                    'url' => $this->router->generate('muyourcitymodule_location_adminindex'),
+                    'text' => $this->__('Your city Backend', 'muyourcitymodule'),
+                    'icon' => 'wrench'
+                ];
+            }
+
+
+            return $links;
+        }
+
+        $routeArea = LinkContainerInterface::TYPE_ADMIN == $type ? 'admin' : '';
+        if (LinkContainerInterface::TYPE_ADMIN == $type) {
+            if ($this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_READ)) {
+                $links[] = [
+                    'url' => $this->router->generate('muyourcitymodule_location_index'),
+                    'text' => $this->__('Frontend', 'muyourcitymodule'),
+                    'title' => $this->__('Switch to user area.', 'muyourcitymodule'),
+                    'icon' => 'home'
+                ];
+            }
+        } else {
+            if ($this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {
+                $links[] = [
+                    'url' => $this->router->generate('muyourcitymodule_location_adminindex'),
+                    'text' => $this->__('Backend', 'muyourcitymodule'),
+                    'title' => $this->__('Switch to administration area.', 'muyourcitymodule'),
+                    'icon' => 'wrench'
+                ];
+            }
+        }
+        
+        if (in_array('branch', $allowedObjectTypes)
+            && $this->permissionApi->hasPermission($this->getBundleName() . ':Branch:', '::', $permLevel)) {
+            $links[] = [
+                'url' => $this->router->generate('muyourcitymodule_branch_' . $routeArea . 'view'),
+                'text' => $this->__('Branches', 'muyourcitymodule'),
+                'title' => $this->__('Branch list', 'muyourcitymodule')
+            ];
+        }
+        if (in_array('location', $allowedObjectTypes)
+            && $this->permissionApi->hasPermission($this->getBundleName() . ':Location:', '::', $permLevel)) {
+            $links[] = [
+                'url' => $this->router->generate('muyourcitymodule_location_' . $routeArea . 'view'),
+                'text' => $this->__('Locations', 'muyourcitymodule'),
+                'title' => $this->__('Location list', 'muyourcitymodule')
+            ];
+        }
+        if (in_array('part', $allowedObjectTypes)
+            && $this->permissionApi->hasPermission($this->getBundleName() . ':Part:', '::', $permLevel)) {
+            $links[] = [
+                'url' => $this->router->generate('muyourcitymodule_part_' . $routeArea . 'view'),
+                'text' => $this->__('Parts', 'muyourcitymodule'),
+                'title' => $this->__('Part list', 'muyourcitymodule')
+            ];
+        }
+        if ($routeArea == 'admin') {
+        if (in_array('imageOfLocation', $allowedObjectTypes)
+            && $this->permissionApi->hasPermission($this->getBundleName() . ':ImageOfLocation:', '::', $permLevel)) {
+            $links[] = [
+                'url' => $this->router->generate('muyourcitymodule_imageoflocation_' . $routeArea . 'view'),
+                'text' => $this->__('Images of location', 'muyourcitymodule'),
+                'title' => $this->__('Image of location list', 'muyourcitymodule')
+            ];
+        }
+        if (in_array('fileOfLocation', $allowedObjectTypes)
+            && $this->permissionApi->hasPermission($this->getBundleName() . ':FileOfLocation:', '::', $permLevel)) {
+            $links[] = [
+                'url' => $this->router->generate('muyourcitymodule_fileoflocation_' . $routeArea . 'view'),
+                'text' => $this->__('Files of location', 'muyourcitymodule'),
+                'title' => $this->__('File of location list', 'muyourcitymodule')
+            ];
+        }
+        }
+        if (in_array('offer', $allowedObjectTypes)
+            && $this->permissionApi->hasPermission($this->getBundleName() . ':Offer:', '::', $permLevel)) {
+            $links[] = [
+                'url' => $this->router->generate('muyourcitymodule_offer_' . $routeArea . 'view'),
+                'text' => $this->__('Offers', 'muyourcitymodule'),
+                'title' => $this->__('Offer list', 'muyourcitymodule')
+            ];
+        }
+        if (in_array('menuOfLocation', $allowedObjectTypes)
+            && $this->permissionApi->hasPermission($this->getBundleName() . ':MenuOfLocation:', '::', $permLevel)) {
+            $links[] = [
+                'url' => $this->router->generate('muyourcitymodule_menuoflocation_' . $routeArea . 'view'),
+                'text' => $this->__('Menus of location', 'muyourcitymodule'),
+                'title' => $this->__('Menu of location list', 'muyourcitymodule')
+            ];
+        }
+        if ($routeArea == 'admin') {
+        if (in_array('partOfMenu', $allowedObjectTypes)
+            && $this->permissionApi->hasPermission($this->getBundleName() . ':PartOfMenu:', '::', $permLevel)) {
+            $links[] = [
+                'url' => $this->router->generate('muyourcitymodule_partofmenu_' . $routeArea . 'view'),
+                'text' => $this->__('Parts of menu', 'muyourcitymodule'),
+                'title' => $this->__('Part of menu list', 'muyourcitymodule')
+            ];
+        }
+        if (in_array('dish', $allowedObjectTypes)
+            && $this->permissionApi->hasPermission($this->getBundleName() . ':Dish:', '::', $permLevel)) {
+            $links[] = [
+                'url' => $this->router->generate('muyourcitymodule_dish_' . $routeArea . 'view'),
+                'text' => $this->__('Dishes', 'muyourcitymodule'),
+                'title' => $this->__('Dish list', 'muyourcitymodule')
+            ];
+        }
+        }
+        if (in_array('event', $allowedObjectTypes)
+            && $this->permissionApi->hasPermission($this->getBundleName() . ':Event:', '::', $permLevel)) {
+            $links[] = [
+                'url' => $this->router->generate('muyourcitymodule_event_' . $routeArea . 'view'),
+                'text' => $this->__('Events', 'muyourcitymodule'),
+                'title' => $this->__('Event list', 'muyourcitymodule')
+            ];
+        }
+        if (in_array('product', $allowedObjectTypes)
+            && $this->permissionApi->hasPermission($this->getBundleName() . ':Product:', '::', $permLevel)) {
+            $links[] = [
+                'url' => $this->router->generate('muyourcitymodule_product_' . $routeArea . 'view'),
+                'text' => $this->__('Products', 'muyourcitymodule'),
+                'title' => $this->__('Product list', 'muyourcitymodule')
+            ];
+        }
+        if ($routeArea == 'admin') {
+        if (in_array('specialOfLocation', $allowedObjectTypes)
+            && $this->permissionApi->hasPermission($this->getBundleName() . ':SpecialOfLocation:', '::', $permLevel)) {
+            $links[] = [
+                'url' => $this->router->generate('muyourcitymodule_specialoflocation_' . $routeArea . 'view'),
+                'text' => $this->__('Specials of location', 'muyourcitymodule'),
+                'title' => $this->__('Special of location list', 'muyourcitymodule')
+            ];
+        }
+        if (in_array('serviceOfLocation', $allowedObjectTypes)
+            && $this->permissionApi->hasPermission($this->getBundleName() . ':ServiceOfLocation:', '::', $permLevel)) {
+            $links[] = [
+                'url' => $this->router->generate('muyourcitymodule_serviceoflocation_' . $routeArea . 'view'),
+                'text' => $this->__('Services of location', 'muyourcitymodule'),
+                'title' => $this->__('Service of location list', 'muyourcitymodule')
+            ];
+        }
+        }
+        if (in_array('abonnement', $allowedObjectTypes)
+            && $this->permissionApi->hasPermission($this->getBundleName() . ':Abonnement:', '::', $permLevel)) {
+            $links[] = [
+                'url' => $this->router->generate('muyourcitymodule_abonnement_' . $routeArea . 'view'),
+                'text' => $this->__('Abonnements', 'muyourcitymodule'),
+                'title' => $this->__('Abonnement list', 'muyourcitymodule')
+            ];
+        }
+        if ($routeArea == 'admin' && $this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {
+            $links[] = [
+                'url' => $this->router->generate('muyourcitymodule_config_config'),
+                'text' => $this->__('Configuration', 'muyourcitymodule'),
+                'title' => $this->__('Manage settings for this application', 'muyourcitymodule'),
+                'icon' => 'wrench'
+            ];
+        }
+
+        return $links;
+    }
 }

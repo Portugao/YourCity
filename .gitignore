@@ -32,8 +32,8 @@ local.properties
 ## Zikula
 ################
 
-.generated.*
-.generated.html.twig
+*.generated.*
+*.generated.html.twig
 
 
 #################
