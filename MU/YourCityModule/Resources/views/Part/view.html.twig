@@ -36,18 +36,13 @@
                 <th id="hName" scope="col" class="text-left">
                     <a href="{{ sort.name.url }}" title="{{ __f('Sort by %s', {'%s': 'name'}) }}" class="{{ sort.name.class }}">{{ __('Name') }}</a>
                 </th>
-                <th id="hDescriptionForGoogle" scope="col" class="text-left">
-                    <a href="{{ sort.descriptionForGoogle.url }}" title="{{ __f('Sort by %s', {'%s': 'description for google'}) }}" class="{{ sort.descriptionForGoogle.class }}">{{ __('Description for google') }}</a>
-                </th>
                 <th id="hDescription" scope="col" class="text-left">
                     <a href="{{ sort.description.url }}" title="{{ __f('Sort by %s', {'%s': 'description'}) }}" class="{{ sort.description.class }}">{{ __('Description') }}</a>
-                </th>
-                <th id="hImageOfPart" scope="col" class="text-left">
-                    <a href="{{ sort.imageOfPart.url }}" title="{{ __f('Sort by %s', {'%s': 'image of part'}) }}" class="{{ sort.imageOfPart.class }}">{{ __('Image of part') }}</a>
                 </th>
             </tr>
             </thead>
             <tbody>
+        
         
         {% for part in items %}
             <tr>
