@@ -25,9 +25,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Zikula\Component\SortableColumns\Column;
 use Zikula\Component\SortableColumns\SortableColumns;
 
-
-
-
 /**
  * Abonnement controller class providing navigation and interaction functionality.
  */
@@ -250,47 +247,46 @@ class AbonnementController extends AbstractAbonnementController
     {
         return parent::handleSelectedEntriesAction($request);
     }
-
     /**
      * This method includes the common implementation code for adminView() and view().
      */
     protected function viewInternal(Request $request, $sort, $sortdir, $pos, $num, $isAdmin = false)
     {
-        // parameter specifying which type of objects we are treating
-        $objectType = 'abonnement';
-        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_READ;
-        if (!$this->hasPermission('MUYourCityModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
-            throw new AccessDeniedException();
-        }
-        $templateParameters = [
-            'routeArea' => $isAdmin ? 'admin' : ''
-        ];
-        $controllerHelper = $this->get('mu_yourcity_module.controller_helper');
-        $viewHelper = $this->get('mu_yourcity_module.view_helper');
-        
-        $request->query->set('pos', $pos);
-        $request->query->set('own', 1);
-        
-        $sortableColumns = new SortableColumns($this->get('router'), 'muyourcitymodule_abonnement_' . ($isAdmin ? 'admin' : '') . 'view', 'sort', 'sortdir');
-        
-        $sortableColumns->addColumns([
-            new Column('workflowState'),
-            new Column('name'),
-            new Column('location'),
-            new Column('createdBy'),
-            new Column('createdDate'),
-            new Column('updatedBy'),
-            new Column('updatedDate'),
-        ]);
-        $sortableColumns->setOrderBy($sortableColumns->getColumn($sort), strtoupper($sortdir));
-        
-        $templateParameters = $controllerHelper->processViewActionParameters($objectType, $sortableColumns, $templateParameters, true);
-        
-        foreach ($templateParameters['items'] as $k => $entity) {
-            $entity->initWorkflow();
-        }
-        
-        // fetch and return the appropriate template
-        return $viewHelper->processTemplate($objectType, 'view', $templateParameters);
+    	// parameter specifying which type of objects we are treating
+    	$objectType = 'abonnement';
+    	$permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_READ;
+    	if (!$this->hasPermission('MUYourCityModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
+    		throw new AccessDeniedException();
+    	}
+    	$templateParameters = [
+    			'routeArea' => $isAdmin ? 'admin' : ''
+    	];
+    	$controllerHelper = $this->get('mu_yourcity_module.controller_helper');
+    	$viewHelper = $this->get('mu_yourcity_module.view_helper');
+    
+    	$request->query->set('pos', $pos);
+    	$request->query->set('own', 1);
+    
+    	$sortableColumns = new SortableColumns($this->get('router'), 'muyourcitymodule_abonnement_' . ($isAdmin ? 'admin' : '') . 'view', 'sort', 'sortdir');
+    
+    	$sortableColumns->addColumns([
+    			new Column('workflowState'),
+    			new Column('name'),
+    			new Column('location'),
+    			new Column('createdBy'),
+    			new Column('createdDate'),
+    			new Column('updatedBy'),
+    			new Column('updatedDate'),
+    	]);
+    	$sortableColumns->setOrderBy($sortableColumns->getColumn($sort), strtoupper($sortdir));
+    
+    	$templateParameters = $controllerHelper->processViewActionParameters($objectType, $sortableColumns, $templateParameters, true);
+    
+    	foreach ($templateParameters['items'] as $k => $entity) {
+    		$entity->initWorkflow();
+    	}
+    
+    	// fetch and return the appropriate template
+    	return $viewHelper->processTemplate($objectType, 'view', $templateParameters);
     }
 }

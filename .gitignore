@@ -33,7 +33,7 @@ local.properties
 ################
 
 .generated.*
-.generated.*.*
+.generated.html.twig
 
 
 #################
