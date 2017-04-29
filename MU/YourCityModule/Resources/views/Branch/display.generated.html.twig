@@ -23,23 +23,19 @@
             <dt>{{ __('Name') }}</dt>
             <dd>{{ branch.name }}</dd>
         {% endif %}
-        {% if branch.descriptionForGoogle is not empty %}
-            <dt>{{ __('Description for google') }}</dt>
-            <dd>{{ branch.descriptionForGoogle }}</dd>
-        {% endif %}
         {% if branch.description is not empty %}
             <dt>{{ __('Description') }}</dt>
             <dd>{{ branch.description|safeHtml }}</dd>
         {% endif %}
-        {% if branch.imageofBranch is not empty %}
-            <dt>{{ __('Imageof branch') }}</dt>
-            <dd>{% if branch.imageofBranch is not empty and branch.imageofBranchMeta|default %}
-                        <a href="{{ branch.imageofBranchUrl }}" title="{{ branch|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if branch.imageofBranchMeta.isImage %} class="image-link"{% endif %}>
-            {% if branch.imageofBranchMeta.isImage %}
-                {% set thumbOptions = attribute(thumbRuntimeOptions, 'branchImageofBranch') %}
-                <img src="{{ branch.imageofBranch.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ branch|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+        {% if branch.imageOfBranch is not empty %}
+            <dt>{{ __('Image of branch') }}</dt>
+            <dd>{% if branch.imageOfBranch is not empty and branch.imageOfBranchMeta|default %}
+                        <a href="{{ branch.imageOfBranchUrl }}" title="{{ branch|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if branch.imageOfBranchMeta.isImage %} class="image-link"{% endif %}>
+            {% if branch.imageOfBranchMeta.isImage %}
+                {% set thumbOptions = attribute(thumbRuntimeOptions, 'branchImageOfBranch') %}
+                <img src="{{ branch.imageOfBranch.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ branch|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
             {% else %}
-                {{ __('Download') }} ({{ branch.imageofBranchMeta.size|muyourcitymodule_fileSize(branch.imageofBranch.getPathname(), false, false) }})
+                {{ __('Download') }} ({{ branch.imageOfBranchMeta.size|muyourcitymodule_fileSize(branch.imageOfBranch.getPathname(), false, false) }})
             {% endif %}
             </a>
             {% else %}&nbsp;{% endif %}
