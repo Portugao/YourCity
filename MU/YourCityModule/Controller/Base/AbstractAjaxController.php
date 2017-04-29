@@ -283,9 +283,10 @@ abstract class AbstractAjaxController extends AbstractController
         $id = $postData->getInt('id', 0);
         
         if ($id == 0
-            || ($objectType != 'location' && $objectType != 'product')
+            || ($objectType != 'location' && $objectType != 'product' && $objectType != 'abonnement')
         || ($objectType == 'location' && !in_array($field, ['agreement', 'unclearTimes']))
         || ($objectType == 'product' && !in_array($field, ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']))
+        || ($objectType == 'abonnement' && !in_array($field, ['showMenus', 'sendMessageForMenus', 'showOffers', 'sendMessageForOffers', 'showEvents', 'sendMessageForEvents', 'showProducts', 'sendMessageForProducts', 'showOptionOne', 'sendMessageToOptionOne', 'showOptionTwo', 'sendMessageToOptionTwo', 'showOptionThree', 'sendMessageToOptionThree']))
         ) {
             return new BadDataResponse($this->__('Error: invalid input.'));
         }
