@@ -103,7 +103,7 @@ abstract class AbstractEditHandler extends EditHandler
         // editable relation, we store the id and assign it now to show it in UI
         $this->relationPresets['servicesOfLocation'] = $this->request->get('servicesOfLocation', '');
         if (!empty($this->relationPresets['servicesOfLocation'])) {
-            $relObj = $this->entityFactory->getRepository('serviceofLocation')->selectById($this->relationPresets['servicesOfLocation']);
+            $relObj = $this->entityFactory->getRepository('serviceOfLocation')->selectById($this->relationPresets['servicesOfLocation']);
             if (null !== $relObj) {
                 $relObj->addLocations($entity);
             }

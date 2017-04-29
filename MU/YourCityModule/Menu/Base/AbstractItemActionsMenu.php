@@ -29,7 +29,7 @@ use MU\YourCityModule\Entity\DishEntity;
 use MU\YourCityModule\Entity\EventEntity;
 use MU\YourCityModule\Entity\ProductEntity;
 use MU\YourCityModule\Entity\SpecialOfLocationEntity;
-use MU\YourCityModule\Entity\ServiceofLocationEntity;
+use MU\YourCityModule\Entity\ServiceOfLocationEntity;
 use MU\YourCityModule\Entity\AbonnementEntity;
 
 /**
@@ -298,10 +298,10 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$title]->setLinkAttribute('title', $title);
             }
             
-            $relatedComponent = 'MUYourCityModule:ServiceofLocation:';
+            $relatedComponent = 'MUYourCityModule:ServiceOfLocation:';
             $relatedInstance = $entity['id'] . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
-                $title = $this->__('Create serviceof location');
+                $title = $this->__('Create service of location');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_serviceoflocation_' . $routeArea . 'edit',
                     'routeParameters' => ['locations' => $entity['id']]
@@ -863,8 +863,8 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$title]->setLinkAttribute('title', $title);
             }
         }
-        if ($entity instanceof ServiceofLocationEntity) {
-            $component = 'MUYourCityModule:ServiceofLocation:';
+        if ($entity instanceof ServiceOfLocationEntity) {
+            $component = 'MUYourCityModule:ServiceOfLocation:';
             $instance = $entity['id'] . '::';
             $routePrefix = 'muyourcitymodule_serviceoflocation_';
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
@@ -889,19 +889,19 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
                 ])->setAttribute('icon', 'fa fa-pencil-square-o');
-                $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this serviceof location'));
+                $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this service of location'));
                 $menu->addChild($this->__('Reuse'), [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => ['astemplate' => $entity['id']]
                 ])->setAttribute('icon', 'fa fa-files-o');
-                $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new serviceof location'));
+                $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new service of location'));
             }
             if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
                 $menu->addChild($this->__('Delete'), [
                     'route' => $routePrefix . $routeArea . 'delete',
                     'routeParameters' => $entity->createUrlArgs()
                 ])->setAttribute('icon', 'fa fa-trash-o');
-                $menu[$this->__('Delete')]->setLinkAttribute('title', $this->__('Delete this serviceof location'));
+                $menu[$this->__('Delete')]->setLinkAttribute('title', $this->__('Delete this service of location'));
             }
             if ($context == 'display') {
                 $title = $this->__('Back to overview');

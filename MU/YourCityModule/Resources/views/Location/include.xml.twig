@@ -140,7 +140,7 @@
     <servicesOfLocation>
     {% if location.servicesOfLocation|default %}
         {% for relatedItem in location.servicesOfLocation %}
-        <serviceofLocation>{{ relatedItem|muyourcitymodule_formattedTitle }}</serviceofLocation>
+        <serviceOfLocation>{{ relatedItem|muyourcitymodule_formattedTitle }}</serviceOfLocation>
         {% endfor %}
     {% endif %}
     </servicesOfLocation>

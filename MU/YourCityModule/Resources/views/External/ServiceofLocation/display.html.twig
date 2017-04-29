@@ -1,9 +1,9 @@
-{# Purpose of this template: Display one certain serviceof location within an external context #}
-<div id="serviceofLocation{$serviceofLocation.id}" class="muyourcitymodule-external-serviceoflocation">
+{# Purpose of this template: Display one certain service of location within an external context #}
+<div id="serviceOfLocation{$serviceOfLocation.id}" class="muyourcitymodule-external-serviceoflocation">
 {% if displayMode == 'link' %}
     <p class="muyourcitymodule-external-link">
-    <a href="{{ path('muyourcitymodule_serviceoflocation_display', { 'id': serviceofLocation.id }) }}" title="{{ serviceofLocation|muyourcitymodule_formattedTitle|e('html_attr') }}">
-    {{ serviceofLocation|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.servicesoflocation.filter') }}
+    <a href="{{ path('muyourcitymodule_serviceoflocation_display', { 'id': serviceOfLocation.id }) }}" title="{{ serviceOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}">
+    {{ serviceOfLocation|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.servicesoflocation.filter') }}
     </a>
     </p>
 {% endif %}
@@ -11,7 +11,7 @@
     {# for normal users without edit permission show only the actual file per default #}
     {% if displayMode == 'embed' %}
         <p class="muyourcitymodule-external-title">
-            <strong>{{ serviceofLocation|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.servicesoflocation.filter') }}</strong>
+            <strong>{{ serviceOfLocation|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.servicesoflocation.filter') }}</strong>
         </p>
     {% endif %}
 {% endif %}
@@ -32,7 +32,7 @@
     {# you can enable more details about the item: #}
     {#
         <p class="muyourcitymodule-external-description">
-            {% if serviceofLocation.description is not empty %}{{ serviceofLocation.description }}<br />{% endif %}
+            {% if serviceOfLocation.description is not empty %}{{ serviceOfLocation.description }}<br />{% endif %}
         </p>
     #}
 {% endif %}

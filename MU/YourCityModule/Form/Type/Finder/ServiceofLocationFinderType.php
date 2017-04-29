@@ -12,12 +12,12 @@
 
 namespace MU\YourCityModule\Form\Type\Finder;
 
-use MU\YourCityModule\Form\Type\Finder\Base\AbstractServiceofLocationFinderType;
+use MU\YourCityModule\Form\Type\Finder\Base\AbstractServiceOfLocationFinderType;
 
 /**
- * Serviceof location finder form type implementation class.
+ * Service of location finder form type implementation class.
  */
-class ServiceofLocationFinderType extends AbstractServiceofLocationFinderType
+class ServiceOfLocationFinderType extends AbstractServiceOfLocationFinderType
 {
     // feel free to extend the base form type class here
 }

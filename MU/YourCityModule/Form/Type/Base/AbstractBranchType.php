@@ -125,7 +125,7 @@ abstract class AbstractBranchType extends AbstractType
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             $entity = $event->getData();
-            foreach (['imageofBranch'] as $uploadFieldName) {
+            foreach (['imageOfBranch'] as $uploadFieldName) {
                 $entity[$uploadFieldName] = [
                     $uploadFieldName => $entity[$uploadFieldName] instanceof File ? $entity[$uploadFieldName]->getPathname() : null
                 ];
@@ -133,7 +133,7 @@ abstract class AbstractBranchType extends AbstractType
         });
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
             $entity = $event->getData();
-            foreach (['imageofBranch'] as $uploadFieldName) {
+            foreach (['imageOfBranch'] as $uploadFieldName) {
                 if (is_array($entity[$uploadFieldName])) {
                     $entity[$uploadFieldName] = $entity[$uploadFieldName][$uploadFieldName];
                 }
@@ -212,11 +212,11 @@ abstract class AbstractBranchType extends AbstractType
             }
         }
         
-        $builder->add('imageofBranch', 'MU\YourCityModule\Form\Type\Field\UploadType', [
-            'label' => $this->__('Imageof branch') . ':',
+        $builder->add('imageOfBranch', 'MU\YourCityModule\Form\Type\Field\UploadType', [
+            'label' => $this->__('Image of branch') . ':',
             'attr' => [
                 'class' => ' validate-upload',
-                'title' => $this->__('Enter the imageof branch of the branch')
+                'title' => $this->__('Enter the image of branch of the branch')
             ],
             'required' => false && $options['mode'] == 'create',
             'entity' => $options['entity'],
@@ -340,7 +340,7 @@ abstract class AbstractBranchType extends AbstractType
                     return $this->entityFactory->createBranch();
                 },
                 'error_mapping' => [
-                    'imageofBranch' => 'imageofBranch.imageofBranch',
+                    'imageOfBranch' => 'imageOfBranch.imageOfBranch',
                 ],
                 'mode' => 'create',
                 'actions' => [],

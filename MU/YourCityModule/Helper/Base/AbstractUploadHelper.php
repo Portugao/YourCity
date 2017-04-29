@@ -607,7 +607,7 @@ abstract class AbstractUploadHelper
     {
         $result = true;
     
-        $result &= $this->checkAndCreateUploadFolder('branch', 'imageofBranch', 'gif, jpeg, jpg, png');
+        $result &= $this->checkAndCreateUploadFolder('branch', 'imageOfBranch', 'gif, jpeg, jpg, png');
     
         $result &= $this->checkAndCreateUploadFolder('location', 'logoOfYourLocation', 'gif, jpeg, jpg, png');
         $result &= $this->checkAndCreateUploadFolder('location', 'imageOfLocation', 'gif, jpeg, jpg, png');

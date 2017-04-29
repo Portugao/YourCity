@@ -670,10 +670,10 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     /**
      * Bidirectional - Many locations [locations] have many servicesOfLocation [services of location] (OWNING SIDE).
      *
-     * @ORM\ManyToMany(targetEntity="MU\YourCityModule\Entity\ServiceofLocationEntity", inversedBy="locations")
+     * @ORM\ManyToMany(targetEntity="MU\YourCityModule\Entity\ServiceOfLocationEntity", inversedBy="locations")
      * @ORM\JoinTable(name="mu_yourcity_location_serviceoflocation")
      * @ORM\OrderBy({"name" = "ASC"})
-     * @var \MU\YourCityModule\Entity\ServiceofLocationEntity[] $servicesOfLocation
+     * @var \MU\YourCityModule\Entity\ServiceOfLocationEntity[] $servicesOfLocation
      */
     protected $servicesOfLocation = null;
     /**
@@ -2991,7 +2991,7 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     /**
      * Returns the services of location.
      *
-     * @return \MU\YourCityModule\Entity\ServiceofLocationEntity[]
+     * @return \MU\YourCityModule\Entity\ServiceOfLocationEntity[]
      */
     public function getServicesOfLocation()
     {
@@ -3001,39 +3001,39 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     /**
      * Sets the services of location.
      *
-     * @param \MU\YourCityModule\Entity\ServiceofLocationEntity[] $servicesOfLocation
+     * @param \MU\YourCityModule\Entity\ServiceOfLocationEntity[] $servicesOfLocation
      *
      * @return void
      */
     public function setServicesOfLocation($servicesOfLocation)
     {
-        foreach ($servicesOfLocation as $serviceofLocationSingle) {
-            $this->addServicesOfLocation($serviceofLocationSingle);
+        foreach ($servicesOfLocation as $serviceOfLocationSingle) {
+            $this->addServicesOfLocation($serviceOfLocationSingle);
         }
     }
     
     /**
-     * Adds an instance of \MU\YourCityModule\Entity\ServiceofLocationEntity to the list of services of location.
+     * Adds an instance of \MU\YourCityModule\Entity\ServiceOfLocationEntity to the list of services of location.
      *
-     * @param \MU\YourCityModule\Entity\ServiceofLocationEntity $serviceofLocation The instance to be added to the collection
+     * @param \MU\YourCityModule\Entity\ServiceOfLocationEntity $serviceOfLocation The instance to be added to the collection
      *
      * @return void
      */
-    public function addServicesOfLocation(\MU\YourCityModule\Entity\ServiceofLocationEntity $serviceofLocation)
+    public function addServicesOfLocation(\MU\YourCityModule\Entity\ServiceOfLocationEntity $serviceOfLocation)
     {
-        $this->servicesOfLocation->add($serviceofLocation);
+        $this->servicesOfLocation->add($serviceOfLocation);
     }
     
     /**
-     * Removes an instance of \MU\YourCityModule\Entity\ServiceofLocationEntity from the list of services of location.
+     * Removes an instance of \MU\YourCityModule\Entity\ServiceOfLocationEntity from the list of services of location.
      *
-     * @param \MU\YourCityModule\Entity\ServiceofLocationEntity $serviceofLocation The instance to be removed from the collection
+     * @param \MU\YourCityModule\Entity\ServiceOfLocationEntity $serviceOfLocation The instance to be removed from the collection
      *
      * @return void
      */
-    public function removeServicesOfLocation(\MU\YourCityModule\Entity\ServiceofLocationEntity $serviceofLocation)
+    public function removeServicesOfLocation(\MU\YourCityModule\Entity\ServiceOfLocationEntity $serviceOfLocation)
     {
-        $this->servicesOfLocation->removeElement($serviceofLocation);
+        $this->servicesOfLocation->removeElement($serviceOfLocation);
     }
     
     /**

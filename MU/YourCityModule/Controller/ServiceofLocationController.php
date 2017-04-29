@@ -12,7 +12,7 @@
 
 namespace MU\YourCityModule\Controller;
 
-use MU\YourCityModule\Controller\Base\AbstractServiceofLocationController;
+use MU\YourCityModule\Controller\Base\AbstractServiceOfLocationController;
 
 use RuntimeException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -20,12 +20,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Zikula\ThemeModule\Engine\Annotation\Theme;
-use MU\YourCityModule\Entity\ServiceofLocationEntity;
+use MU\YourCityModule\Entity\ServiceOfLocationEntity;
 
 /**
- * Serviceof location controller class providing navigation and interaction functionality.
+ * Service of location controller class providing navigation and interaction functionality.
  */
-class ServiceofLocationController extends AbstractServiceofLocationController
+class ServiceOfLocationController extends AbstractServiceOfLocationController
 {
     /**
      * @inheritDoc
@@ -114,7 +114,7 @@ class ServiceofLocationController extends AbstractServiceofLocationController
     /**
      * @inheritDoc
      *
-     * @Route("/admin/serviceofLocation/{id}.{_format}",
+     * @Route("/admin/serviceOfLocation/{id}.{_format}",
      *        requirements = {"id" = "\d+", "_format" = "html|xml|json|kml"},
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
@@ -122,43 +122,43 @@ class ServiceofLocationController extends AbstractServiceofLocationController
      * @Theme("admin")
      *
      * @param Request $request Current request instance
-     * @param ServiceofLocationEntity $serviceofLocation Treated serviceof location instance
+     * @param ServiceOfLocationEntity $serviceOfLocation Treated service of location instance
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by param converter if serviceof location to be displayed isn't found
+     * @throws NotFoundHttpException Thrown by param converter if service of location to be displayed isn't found
      */
-    public function adminDisplayAction(Request $request, ServiceofLocationEntity $serviceofLocation)
+    public function adminDisplayAction(Request $request, ServiceOfLocationEntity $serviceOfLocation)
     {
-        return parent::adminDisplayAction($request, $serviceofLocation);
+        return parent::adminDisplayAction($request, $serviceOfLocation);
     }
     
     /**
      * @inheritDoc
      *
-     * @Route("/serviceofLocation/{id}.{_format}",
+     * @Route("/serviceOfLocation/{id}.{_format}",
      *        requirements = {"id" = "\d+", "_format" = "html|xml|json|kml"},
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )
      *
      * @param Request $request Current request instance
-     * @param ServiceofLocationEntity $serviceofLocation Treated serviceof location instance
+     * @param ServiceOfLocationEntity $serviceOfLocation Treated service of location instance
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by param converter if serviceof location to be displayed isn't found
+     * @throws NotFoundHttpException Thrown by param converter if service of location to be displayed isn't found
      */
-    public function displayAction(Request $request, ServiceofLocationEntity $serviceofLocation)
+    public function displayAction(Request $request, ServiceOfLocationEntity $serviceOfLocation)
     {
-        return parent::displayAction($request, $serviceofLocation);
+        return parent::displayAction($request, $serviceOfLocation);
     }
     /**
      * @inheritDoc
      *
-     * @Route("/admin/serviceofLocation/edit/{id}.{_format}",
+     * @Route("/admin/serviceOfLocation/edit/{id}.{_format}",
      *        requirements = {"id" = "\d+", "_format" = "html"},
      *        defaults = {"id" = "0", "_format" = "html"},
      *        methods = {"GET", "POST"}
@@ -170,7 +170,7 @@ class ServiceofLocationController extends AbstractServiceofLocationController
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by form handler if serviceof location to be edited isn't found
+     * @throws NotFoundHttpException Thrown by form handler if service of location to be edited isn't found
      * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
     public function adminEditAction(Request $request)
@@ -181,7 +181,7 @@ class ServiceofLocationController extends AbstractServiceofLocationController
     /**
      * @inheritDoc
      *
-     * @Route("/serviceofLocation/edit/{id}.{_format}",
+     * @Route("/serviceOfLocation/edit/{id}.{_format}",
      *        requirements = {"id" = "\d+", "_format" = "html"},
      *        defaults = {"id" = "0", "_format" = "html"},
      *        methods = {"GET", "POST"}
@@ -192,7 +192,7 @@ class ServiceofLocationController extends AbstractServiceofLocationController
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by form handler if serviceof location to be edited isn't found
+     * @throws NotFoundHttpException Thrown by form handler if service of location to be edited isn't found
      * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
     public function editAction(Request $request)
@@ -202,7 +202,7 @@ class ServiceofLocationController extends AbstractServiceofLocationController
     /**
      * @inheritDoc
      *
-     * @Route("/admin/serviceofLocation/delete/{id}.{_format}",
+     * @Route("/admin/serviceOfLocation/delete/{id}.{_format}",
      *        requirements = {"id" = "\d+", "_format" = "html"},
      *        defaults = {"_format" = "html"},
      *        methods = {"GET", "POST"}
@@ -210,40 +210,40 @@ class ServiceofLocationController extends AbstractServiceofLocationController
      * @Theme("admin")
      *
      * @param Request $request Current request instance
-     * @param ServiceofLocationEntity $serviceofLocation Treated serviceof location instance
+     * @param ServiceOfLocationEntity $serviceOfLocation Treated service of location instance
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by param converter if serviceof location to be deleted isn't found
+     * @throws NotFoundHttpException Thrown by param converter if service of location to be deleted isn't found
      * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
-    public function adminDeleteAction(Request $request, ServiceofLocationEntity $serviceofLocation)
+    public function adminDeleteAction(Request $request, ServiceOfLocationEntity $serviceOfLocation)
     {
-        return parent::adminDeleteAction($request, $serviceofLocation);
+        return parent::adminDeleteAction($request, $serviceOfLocation);
     }
     
     /**
      * @inheritDoc
      *
-     * @Route("/serviceofLocation/delete/{id}.{_format}",
+     * @Route("/serviceOfLocation/delete/{id}.{_format}",
      *        requirements = {"id" = "\d+", "_format" = "html"},
      *        defaults = {"_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
      *
      * @param Request $request Current request instance
-     * @param ServiceofLocationEntity $serviceofLocation Treated serviceof location instance
+     * @param ServiceOfLocationEntity $serviceOfLocation Treated service of location instance
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by param converter if serviceof location to be deleted isn't found
+     * @throws NotFoundHttpException Thrown by param converter if service of location to be deleted isn't found
      * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
-    public function deleteAction(Request $request, ServiceofLocationEntity $serviceofLocation)
+    public function deleteAction(Request $request, ServiceOfLocationEntity $serviceOfLocation)
     {
-        return parent::deleteAction($request, $serviceofLocation);
+        return parent::deleteAction($request, $serviceOfLocation);
     }
 
     /**

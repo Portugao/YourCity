@@ -61,7 +61,7 @@
         {% endif %}
         <fieldset>
             <legend>{{ __('Further properties') }}</legend>
-            {{ form_row(form.imageofBranch) }}
+            {{ form_row(form.imageOfBranch) }}
         </fieldset>
         
         {% if mode != 'create' %}
@@ -125,7 +125,7 @@
                     mUYourCityInitUserField('muyourcitymodule_branch_moderationSpecificCreator', 'getCommonUsersList');
                 {% endif %}
                 mUYourCityInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ branch.id }}{% endif %}');
-                mUYourCityInitUploadField('muyourcitymodule_branch_imageofBranch_imageofBranch');
+                mUYourCityInitUploadField('muyourcitymodule_branch_imageOfBranch_imageOfBranch');
             });
         })(jQuery);
     /* ]]> */

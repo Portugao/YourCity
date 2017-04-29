@@ -43,8 +43,8 @@
             {% if 'specialOfLocation' in activatedObjectTypes %}
                 <li{{ objectType == 'specialOfLocation' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'specialOfLocation', 'editor': editorName}) }}" title="{{ __('Search and select special of location') }}">{{ __('Specials of location') }}</a></li>
             {% endif %}
-            {% if 'serviceofLocation' in activatedObjectTypes %}
-                <li{{ objectType == 'serviceofLocation' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'serviceofLocation', 'editor': editorName}) }}" title="{{ __('Search and select serviceof location') }}">{{ __('Services of location') }}</a></li>
+            {% if 'serviceOfLocation' in activatedObjectTypes %}
+                <li{{ objectType == 'serviceOfLocation' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'serviceOfLocation', 'editor': editorName}) }}" title="{{ __('Search and select service of location') }}">{{ __('Services of location') }}</a></li>
             {% endif %}
             </ul>
         </div>

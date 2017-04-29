@@ -1,5 +1,5 @@
 {# Purpose of this template: Display item information for previewing from other modules #}
-<dl id="serviceofLocation{{ serviceofLocation.id }}">
-<dt>{{ serviceofLocation|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.servicesoflocation.filter') }}</dt>
-{% if serviceofLocation.description is not empty %}<dd>{{ serviceofLocation.description }}</dd>{% endif %}
+<dl id="serviceOfLocation{{ serviceOfLocation.id }}">
+<dt>{{ serviceOfLocation|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.servicesoflocation.filter') }}</dt>
+{% if serviceOfLocation.description is not empty %}<dd>{{ serviceOfLocation.description }}</dd>{% endif %}
 </dl>

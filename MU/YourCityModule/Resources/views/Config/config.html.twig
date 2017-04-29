@@ -28,7 +28,7 @@
                 <a id="imagesTabDrop" class="dropdown-toggle" href="#" data-toggle="dropdown" aria-controls="imagesTabDropSections" aria-expanded="false" title="{{ tabTitle|e('html_attr') }}">{{ tabTitle }}<span class="caret"></span></a>
                 <ul id="imagesTabDropSections" class="dropdown-menu" aria-labelledby="imagesTabDrop">
                 <li>
-                    <a id="imagesBranchImageofBranchTab" href="#tabImagesBranchImageofBranch" role="tab" data-toggle="tab" aria-controls="tabImagesBranchImageofBranch">{{ __('Branches imageof branch') }}</a>
+                    <a id="imagesBranchImageOfBranchTab" href="#tabImagesBranchImageOfBranch" role="tab" data-toggle="tab" aria-controls="tabImagesBranchImageOfBranch">{{ __('Branches image of branch') }}</a>
                 </li>
                 <li>
                     <a id="imagesLocationLogoOfYourLocationTab" href="#tabImagesLocationLogoOfYourLocation" role="tab" data-toggle="tab" aria-controls="tabImagesLocationLogoOfYourLocation">{{ __('Locations logo of your location') }}</a>
@@ -120,29 +120,29 @@
                         {{ form_row(form.linkOwnProductsOnAccountPage) }}
                         {{ form_row(form.specialOfLocationEntriesPerPage) }}
                         {{ form_row(form.linkOwnSpecialsOfLocationOnAccountPage) }}
-                        {{ form_row(form.serviceofLocationEntriesPerPage) }}
+                        {{ form_row(form.serviceOfLocationEntriesPerPage) }}
                         {{ form_row(form.linkOwnServicesOfLocationOnAccountPage) }}
                         {{ form_row(form.abonnementEntriesPerPage) }}
                         {{ form_row(form.linkOwnAbonnementsOnAccountPage) }}
                     </fieldset>
                 </div>
-                <div role="tabpanel" class="tab-pane fade" id="tabImagesBranchImageofBranch" aria-labelledby="imagesBranchImageofBranchTab">
-                    {% set tabTitle = __('Image settings for branches imageof branch') %}
+                <div role="tabpanel" class="tab-pane fade" id="tabImagesBranchImageOfBranch" aria-labelledby="imagesBranchImageOfBranchTab">
+                    {% set tabTitle = __('Image settings for branches image of branch') %}
                     <fieldset>
                         <legend>{{ tabTitle }}</legend>
                 
-                        {{ form_row(form.enableShrinkingForBranchImageofBranch) }}
-                        <div id="shrinkDetailsBranchImageofBranch">
-                        {{ form_row(form.shrinkWidthBranchImageofBranch) }}
-                        {{ form_row(form.shrinkHeightBranchImageofBranch) }}
+                        {{ form_row(form.enableShrinkingForBranchImageOfBranch) }}
+                        <div id="shrinkDetailsBranchImageOfBranch">
+                        {{ form_row(form.shrinkWidthBranchImageOfBranch) }}
+                        {{ form_row(form.shrinkHeightBranchImageOfBranch) }}
                         </div>
-                        {{ form_row(form.thumbnailModeBranchImageofBranch) }}
-                        {{ form_row(form.thumbnailWidthBranchImageofBranchView) }}
-                        {{ form_row(form.thumbnailHeightBranchImageofBranchView) }}
-                        {{ form_row(form.thumbnailWidthBranchImageofBranchDisplay) }}
-                        {{ form_row(form.thumbnailHeightBranchImageofBranchDisplay) }}
-                        {{ form_row(form.thumbnailWidthBranchImageofBranchEdit) }}
-                        {{ form_row(form.thumbnailHeightBranchImageofBranchEdit) }}
+                        {{ form_row(form.thumbnailModeBranchImageOfBranch) }}
+                        {{ form_row(form.thumbnailWidthBranchImageOfBranchView) }}
+                        {{ form_row(form.thumbnailHeightBranchImageOfBranchView) }}
+                        {{ form_row(form.thumbnailWidthBranchImageOfBranchDisplay) }}
+                        {{ form_row(form.thumbnailHeightBranchImageOfBranchDisplay) }}
+                        {{ form_row(form.thumbnailWidthBranchImageOfBranchEdit) }}
+                        {{ form_row(form.thumbnailHeightBranchImageOfBranchEdit) }}
                     </fieldset>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="tabImagesLocationLogoOfYourLocation" aria-labelledby="imagesLocationLogoOfYourLocationTab">

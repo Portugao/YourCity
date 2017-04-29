@@ -108,7 +108,7 @@ abstract class AbstractBranchFinderType extends AbstractType
             'required' => false
         ]);
         $builder->add('imageField', 'Symfony\Component\Form\Extension\Core\Type\HiddenType', [
-            'data' => 'imageofBranch'
+            'data' => 'imageOfBranch'
         ]);
     }
 
@@ -152,9 +152,7 @@ abstract class AbstractBranchFinderType extends AbstractType
                 'empty_data' => '',
                 'choices' => [
                     $this->__('Name') => 'name',
-                    $this->__('Description for google') => 'descriptionForGoogle',
                     $this->__('Description') => 'description',
-                    $this->__('Imageof branch') => 'imageofBranch',
                     $this->__('Creation date') => 'createdDate',
                     $this->__('Creator') => 'createdBy',
                     $this->__('Update date') => 'updatedDate',

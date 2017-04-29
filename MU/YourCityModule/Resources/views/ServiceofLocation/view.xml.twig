@@ -1,9 +1,9 @@
 {# purpose of this template: services of location view xml view #}
 <?xml version="1.0" encoding="{{ pageGetVar('meta.charset') }}" ?>
 <servicesOfLocation>
-{% for serviceofLocation in items %}
-    {{ include('@MUYourCityModule/ServiceofLocation/include.xml.twig') }}
+{% for serviceOfLocation in items %}
+    {{ include('@MUYourCityModule/ServiceOfLocation/include.xml.twig') }}
 {% else %}
-    <noServiceofLocation />
+    <noServiceOfLocation />
 {% endfor %}
 </servicesOfLocation>

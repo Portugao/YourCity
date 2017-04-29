@@ -1,16 +1,16 @@
-{# purpose of this template: services of location list view #}
+{# purpose of this template: branches list view #}
 {% extends routeArea == 'admin' ? 'MUYourCityModule::adminBase.html.twig' : 'MUYourCityModule::base.html.twig' %}
-{% block title own ? __('My services of location') : __('Service of location list') %}
+{% block title own ? __('My branches') : __('Branch list') %}
 {% block admin_page_icon 'list-alt' %}
 {% block content %}
-<div class="muyourcitymodule-serviceoflocation muyourcitymodule-view">
+<div class="muyourcitymodule-branch muyourcitymodule-view">
 
     {{ block('page_nav_links') }}
 
-    {{ include('@MUYourCityModule/ServiceOfLocation/viewQuickNav.html.twig', { workflowStateFilter: false }) }}{# see template file for available options #}
+    {{ include('@MUYourCityModule/Branch/viewQuickNav.html.twig', { workflowStateFilter: false }) }}{# see template file for available options #}
 
     {% if routeArea == 'admin' %}
-    <form action="{{ path('muyourcitymodule_serviceoflocation_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="servicesOfLocationViewForm" class="form-horizontal" role="form">
+    <form action="{{ path('muyourcitymodule_branch_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="branchesViewForm" class="form-horizontal" role="form">
         <div>
     {% endif %}
         <div class="table-responsive">
@@ -21,7 +21,7 @@
                 {% endif %}
                 <col id="cItemActions" />
                 <col id="cName" />
-                <col id="cIconForService" />
+                <col id="cDescription" />
             </colgroup>
             <thead>
             <tr>
@@ -34,38 +34,38 @@
                 <th id="hName" scope="col" class="text-left">
                     <a href="{{ sort.name.url }}" title="{{ __f('Sort by %s', {'%s': 'name'}) }}" class="{{ sort.name.class }}">{{ __('Name') }}</a>
                 </th>
-                <th id="hIconForService" scope="col" class="text-left">
-                    <a href="{{ sort.iconForService.url }}" title="{{ __f('Sort by %s', {'%s': 'icon for service'}) }}" class="{{ sort.iconForService.class }}">{{ __('Icon for service') }}</a>
+                <th id="hDescription" scope="col" class="text-left">
+                    <a href="{{ sort.description.url }}" title="{{ __f('Sort by %s', {'%s': 'description'}) }}" class="{{ sort.description.class }}">{{ __('Description') }}</a>
                 </th>
             </tr>
             </thead>
             <tbody>
         
-        {% for serviceOfLocation in items %}
+        {% for branch in items %}
             <tr>
                 {% if routeArea == 'admin' %}
                     <td headers="hSelect" class="fixed-column text-center z-w02">
-                        <input type="checkbox" name="items[]" value="{{ serviceOfLocation.id }}" class="muyourcity-toggle-checkbox" />
+                        <input type="checkbox" name="items[]" value="{{ branch.id }}" class="muyourcity-toggle-checkbox" />
                     </td>
                 {% endif %}
-                <td id="itemActions{{ serviceOfLocation.id }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
-                    {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: serviceOfLocation, area: routeArea, context: 'view' }) %}
+                <td id="itemActions{{ branch.id }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
+                    {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: branch, area: routeArea, context: 'view' }) %}
                     <div class="dropdown">
-                        <a id="itemActions{{ serviceOfLocation.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
+                        <a id="itemActions{{ branch.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
                         {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
                     </div>
                 </td>
                 <td headers="hName" class="text-left">
-                    <a href="{{ path('muyourcitymodule_serviceoflocation_' ~ routeArea ~ 'display', { 'id': serviceOfLocation.id }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ serviceOfLocation.name|notifyFilters('muyourcitymodule.filterhook.servicesoflocation') }}</a>
+                    <a href="{{ path('muyourcitymodule_branch_' ~ routeArea ~ 'display', { 'id': branch.id }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ branch.name|notifyFilters('muyourcitymodule.filterhook.branches') }}</a>
                 </td>
-                <td headers="hIconForService" class="text-left">
-                    {{ serviceOfLocation.iconForService }}
+                <td headers="hDescription" class="text-left">
+                    {{ branch.description|safeHtml|truncate(50) }}
                 </td>
             </tr>
         {% else %}
             <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
                 <td class="text-left" colspan="{% if routeArea == 'admin' %}4{% else %}3{% endif %}">
-            {{ __('No services of location found.') }}
+            {{ __('No branches found.') }}
               </td>
             </tr>
         {% endfor %}
@@ -75,11 +75,11 @@
         </div>
         
         {% if all != 1 and pager|default %}
-            {{ pager({ rowcount: pager.amountOfItems, limit: pager.itemsPerPage, display: 'page', route: 'muyourcitymodule_serviceoflocation_' ~ routeArea ~ 'view'}) }}
+            {{ pager({ rowcount: pager.amountOfItems, limit: pager.itemsPerPage, display: 'page', route: 'muyourcitymodule_branch_' ~ routeArea ~ 'view'}) }}
         {% endif %}
     {% if routeArea == 'admin' %}
             <fieldset>
-                <label for="mUYourCityModuleAction" class="col-sm-3 control-label">{{ __('With selected services of location') }}</label>
+                <label for="mUYourCityModuleAction" class="col-sm-3 control-label">{{ __('With selected branches') }}</label>
                 <div class="col-sm-6">
                     <select id="mUYourCityModuleAction" name="action" class="form-control input-sm">
                         <option value="">{{ __('Choose action') }}</option>
@@ -100,17 +100,17 @@
 {% block page_nav_links %}
     <p>
         {% if canBeCreated %}
-            {% if hasPermission('MUYourCityModule:ServiceOfLocation:', '::', 'ACCESS_EDIT') %}
-                {% set createTitle = __('Create service of location') %}
-                <a href="{{ path('muyourcitymodule_serviceoflocation_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
+            {% if hasPermission('MUYourCityModule:Branch:', '::', 'ACCESS_EDIT') %}
+                {% set createTitle = __('Create branch') %}
+                <a href="{{ path('muyourcitymodule_branch_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
             {% endif %}
         {% endif %}
         {% if all == 1 %}
             {% set linkTitle = __('Back to paginated view') %}
-            <a href="{{ path('muyourcitymodule_serviceoflocation_' ~ routeArea ~ 'view') }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
+            <a href="{{ path('muyourcitymodule_branch_' ~ routeArea ~ 'view') }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
         {% else %}
             {% set linkTitle = __('Show all entries') %}
-            <a href="{{ path('muyourcitymodule_serviceoflocation_' ~ routeArea ~ 'view', { all: 1 }) }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
+            <a href="{{ path('muyourcitymodule_branch_' ~ routeArea ~ 'view', { all: 1 }) }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
         {% endif %}
     </p>
 {% endblock %}
@@ -118,7 +118,7 @@
     
     {# here you can activate calling display hooks for the view page if you need it #}
     {# % if routeArea != 'admin' %}
-        {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.servicesoflocation.display_view', urlObject=currentUrlObject) %}
+        {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.branches.display_view', urlObject=currentUrlObject) %}
         {% for providerArea, hook in hooks %}
             {{ hook }}
         {% endfor %}

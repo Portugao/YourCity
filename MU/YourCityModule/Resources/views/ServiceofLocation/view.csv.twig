@@ -2,12 +2,12 @@
 {% spaceless %}"{{ __('Name') }}";"{{ __('Description') }}";"{{ __('Icon for service') }}";"{{ __('Workflow state') }}"
 ;"{{ __('Locations') }}"
 {% endspaceless %}
-{% for serviceofLocation in items %}
+{% for serviceOfLocation in items %}
 {% spaceless %}
-    "{{ serviceofLocation.name }}";"{{ serviceofLocation.description|safeHtml }}";"{{ serviceofLocation.iconForService }}";"{{ serviceofLocation.workflowState|muyourcitymodule_objectState(false)|lower }}"
+    "{{ serviceOfLocation.name }}";"{{ serviceOfLocation.description|safeHtml }}";"{{ serviceOfLocation.iconForService }}";"{{ serviceOfLocation.workflowState|muyourcitymodule_objectState(false)|lower }}"
     ;"
-    {% if serviceofLocation.locations|default %}
-        {% for relatedItem in serviceofLocation.locations %}
+    {% if serviceOfLocation.locations|default %}
+        {% for relatedItem in serviceOfLocation.locations %}
         {{ relatedItem|muyourcitymodule_formattedTitle }}{% if not loop.last %}, {% endif %}
         {% endfor %}
     {% endif %}

@@ -12,23 +12,23 @@
 
 namespace MU\YourCityModule\Entity;
 
-use MU\YourCityModule\Entity\Base\AbstractServiceofLocationEntity as BaseEntity;
+use MU\YourCityModule\Entity\Base\AbstractServiceOfLocationEntity as BaseEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Entity class that defines the entity structure and behaviours.
  *
- * This is the concrete entity class for serviceof location entities.
- * @Gedmo\TranslationEntity(class="MU\YourCityModule\Entity\ServiceofLocationTranslationEntity")
- * @ORM\Entity(repositoryClass="MU\YourCityModule\Entity\Repository\ServiceofLocationRepository")
+ * This is the concrete entity class for service of location entities.
+ * @Gedmo\TranslationEntity(class="MU\YourCityModule\Entity\ServiceOfLocationTranslationEntity")
+ * @ORM\Entity(repositoryClass="MU\YourCityModule\Entity\Repository\ServiceOfLocationRepository")
  * @ORM\Table(name="mu_yourcity_serviceoflocation",
  *     indexes={
  *         @ORM\Index(name="workflowstateindex", columns={"workflowState"})
  *     }
  * )
  */
-class ServiceofLocationEntity extends BaseEntity
+class ServiceOfLocationEntity extends BaseEntity
 {
     // feel free to add your own methods here
 }

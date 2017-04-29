@@ -24,13 +24,13 @@ use Zikula\Component\SortableColumns\Column;
 use Zikula\Component\SortableColumns\SortableColumns;
 use Zikula\Core\Controller\AbstractController;
 use Zikula\Core\RouteUrl;
-use MU\YourCityModule\Entity\ServiceofLocationEntity;
+use MU\YourCityModule\Entity\ServiceOfLocationEntity;
 use MU\YourCityModule\Helper\FeatureActivationHelper;
 
 /**
- * Serviceof location controller base class.
+ * Service of location controller base class.
  */
-abstract class AbstractServiceofLocationController extends AbstractController
+abstract class AbstractServiceOfLocationController extends AbstractController
 {
     /**
      * This is the default action handling the index admin area called without defining arguments.
@@ -68,7 +68,7 @@ abstract class AbstractServiceofLocationController extends AbstractController
     protected function indexInternal(Request $request, $isAdmin = false)
     {
         // parameter specifying which type of objects we are treating
-        $objectType = 'serviceofLocation';
+        $objectType = 'serviceOfLocation';
         $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_OVERVIEW;
         if (!$this->hasPermission('MUYourCityModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
             throw new AccessDeniedException();
@@ -123,7 +123,7 @@ abstract class AbstractServiceofLocationController extends AbstractController
     protected function viewInternal(Request $request, $sort, $sortdir, $pos, $num, $isAdmin = false)
     {
         // parameter specifying which type of objects we are treating
-        $objectType = 'serviceofLocation';
+        $objectType = 'serviceOfLocation';
         $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_READ;
         if (!$this->hasPermission('MUYourCityModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
             throw new AccessDeniedException();
@@ -140,7 +140,6 @@ abstract class AbstractServiceofLocationController extends AbstractController
         
         $sortableColumns->addColumns([
             new Column('name'),
-            new Column('description'),
             new Column('iconForService'),
             new Column('createdBy'),
             new Column('createdDate'),
@@ -160,61 +159,61 @@ abstract class AbstractServiceofLocationController extends AbstractController
     }
     /**
      * This action provides a item detail view in the admin area.
-     * @ParamConverter("serviceofLocation", class="MUYourCityModule:ServiceofLocationEntity", options = {"id" = "id", "repository_method" = "selectById"})
-     * @Cache(lastModified="serviceofLocation.getUpdatedDate()", ETag="'ServiceofLocation' ~ serviceofLocation.getid() ~ serviceofLocation.getUpdatedDate().format('U')")
+     * @ParamConverter("serviceOfLocation", class="MUYourCityModule:ServiceOfLocationEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @Cache(lastModified="serviceOfLocation.getUpdatedDate()", ETag="'ServiceOfLocation' ~ serviceOfLocation.getid() ~ serviceOfLocation.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
-     * @param ServiceofLocationEntity $serviceofLocation Treated serviceof location instance
+     * @param ServiceOfLocationEntity $serviceOfLocation Treated service of location instance
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by param converter if serviceof location to be displayed isn't found
+     * @throws NotFoundHttpException Thrown by param converter if service of location to be displayed isn't found
      */
-    public function adminDisplayAction(Request $request, ServiceofLocationEntity $serviceofLocation)
+    public function adminDisplayAction(Request $request, ServiceOfLocationEntity $serviceOfLocation)
     {
-        return $this->displayInternal($request, $serviceofLocation, true);
+        return $this->displayInternal($request, $serviceOfLocation, true);
     }
     
     /**
      * This action provides a item detail view.
-     * @ParamConverter("serviceofLocation", class="MUYourCityModule:ServiceofLocationEntity", options = {"id" = "id", "repository_method" = "selectById"})
-     * @Cache(lastModified="serviceofLocation.getUpdatedDate()", ETag="'ServiceofLocation' ~ serviceofLocation.getid() ~ serviceofLocation.getUpdatedDate().format('U')")
+     * @ParamConverter("serviceOfLocation", class="MUYourCityModule:ServiceOfLocationEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @Cache(lastModified="serviceOfLocation.getUpdatedDate()", ETag="'ServiceOfLocation' ~ serviceOfLocation.getid() ~ serviceOfLocation.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
-     * @param ServiceofLocationEntity $serviceofLocation Treated serviceof location instance
+     * @param ServiceOfLocationEntity $serviceOfLocation Treated service of location instance
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by param converter if serviceof location to be displayed isn't found
+     * @throws NotFoundHttpException Thrown by param converter if service of location to be displayed isn't found
      */
-    public function displayAction(Request $request, ServiceofLocationEntity $serviceofLocation)
+    public function displayAction(Request $request, ServiceOfLocationEntity $serviceOfLocation)
     {
-        return $this->displayInternal($request, $serviceofLocation, false);
+        return $this->displayInternal($request, $serviceOfLocation, false);
     }
     
     /**
      * This method includes the common implementation code for adminDisplay() and display().
      */
-    protected function displayInternal(Request $request, ServiceofLocationEntity $serviceofLocation, $isAdmin = false)
+    protected function displayInternal(Request $request, ServiceOfLocationEntity $serviceOfLocation, $isAdmin = false)
     {
         // parameter specifying which type of objects we are treating
-        $objectType = 'serviceofLocation';
+        $objectType = 'serviceOfLocation';
         $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_READ;
         if (!$this->hasPermission('MUYourCityModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
             throw new AccessDeniedException();
         }
         // create identifier for permission check
-        $instanceId = $serviceofLocation->createCompositeIdentifier();
+        $instanceId = $serviceOfLocation->createCompositeIdentifier();
         if (!$this->hasPermission('MUYourCityModule:' . ucfirst($objectType) . ':', $instanceId . '::', $permLevel)) {
             throw new AccessDeniedException();
         }
         
-        $serviceofLocation->initWorkflow();
+        $serviceOfLocation->initWorkflow();
         $templateParameters = [
             'routeArea' => $isAdmin ? 'admin' : '',
-            $objectType => $serviceofLocation
+            $objectType => $serviceOfLocation
         ];
         
         $controllerHelper = $this->get('mu_yourcity_module.controller_helper');
@@ -227,14 +226,14 @@ abstract class AbstractServiceofLocationController extends AbstractController
     }
     /**
      * This action provides a handling of edit requests in the admin area.
-     * @Cache(lastModified="serviceofLocation.getUpdatedDate()", ETag="'ServiceofLocation' ~ serviceofLocation.getid() ~ serviceofLocation.getUpdatedDate().format('U')")
+     * @Cache(lastModified="serviceOfLocation.getUpdatedDate()", ETag="'ServiceOfLocation' ~ serviceOfLocation.getid() ~ serviceOfLocation.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by form handler if serviceof location to be edited isn't found
+     * @throws NotFoundHttpException Thrown by form handler if service of location to be edited isn't found
      * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
     public function adminEditAction(Request $request)
@@ -244,14 +243,14 @@ abstract class AbstractServiceofLocationController extends AbstractController
     
     /**
      * This action provides a handling of edit requests.
-     * @Cache(lastModified="serviceofLocation.getUpdatedDate()", ETag="'ServiceofLocation' ~ serviceofLocation.getid() ~ serviceofLocation.getUpdatedDate().format('U')")
+     * @Cache(lastModified="serviceOfLocation.getUpdatedDate()", ETag="'ServiceOfLocation' ~ serviceOfLocation.getid() ~ serviceOfLocation.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by form handler if serviceof location to be edited isn't found
+     * @throws NotFoundHttpException Thrown by form handler if service of location to be edited isn't found
      * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
     public function editAction(Request $request)
@@ -265,7 +264,7 @@ abstract class AbstractServiceofLocationController extends AbstractController
     protected function editInternal(Request $request, $isAdmin = false)
     {
         // parameter specifying which type of objects we are treating
-        $objectType = 'serviceofLocation';
+        $objectType = 'serviceOfLocation';
         $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_EDIT;
         if (!$this->hasPermission('MUYourCityModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
             throw new AccessDeniedException();
@@ -291,61 +290,61 @@ abstract class AbstractServiceofLocationController extends AbstractController
     }
     /**
      * This action provides a handling of simple delete requests in the admin area.
-     * @ParamConverter("serviceofLocation", class="MUYourCityModule:ServiceofLocationEntity", options = {"id" = "id", "repository_method" = "selectById"})
-     * @Cache(lastModified="serviceofLocation.getUpdatedDate()", ETag="'ServiceofLocation' ~ serviceofLocation.getid() ~ serviceofLocation.getUpdatedDate().format('U')")
+     * @ParamConverter("serviceOfLocation", class="MUYourCityModule:ServiceOfLocationEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @Cache(lastModified="serviceOfLocation.getUpdatedDate()", ETag="'ServiceOfLocation' ~ serviceOfLocation.getid() ~ serviceOfLocation.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
-     * @param ServiceofLocationEntity $serviceofLocation Treated serviceof location instance
+     * @param ServiceOfLocationEntity $serviceOfLocation Treated service of location instance
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by param converter if serviceof location to be deleted isn't found
+     * @throws NotFoundHttpException Thrown by param converter if service of location to be deleted isn't found
      * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
-    public function adminDeleteAction(Request $request, ServiceofLocationEntity $serviceofLocation)
+    public function adminDeleteAction(Request $request, ServiceOfLocationEntity $serviceOfLocation)
     {
-        return $this->deleteInternal($request, $serviceofLocation, true);
+        return $this->deleteInternal($request, $serviceOfLocation, true);
     }
     
     /**
      * This action provides a handling of simple delete requests.
-     * @ParamConverter("serviceofLocation", class="MUYourCityModule:ServiceofLocationEntity", options = {"id" = "id", "repository_method" = "selectById"})
-     * @Cache(lastModified="serviceofLocation.getUpdatedDate()", ETag="'ServiceofLocation' ~ serviceofLocation.getid() ~ serviceofLocation.getUpdatedDate().format('U')")
+     * @ParamConverter("serviceOfLocation", class="MUYourCityModule:ServiceOfLocationEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @Cache(lastModified="serviceOfLocation.getUpdatedDate()", ETag="'ServiceOfLocation' ~ serviceOfLocation.getid() ~ serviceOfLocation.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
-     * @param ServiceofLocationEntity $serviceofLocation Treated serviceof location instance
+     * @param ServiceOfLocationEntity $serviceOfLocation Treated service of location instance
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by param converter if serviceof location to be deleted isn't found
+     * @throws NotFoundHttpException Thrown by param converter if service of location to be deleted isn't found
      * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
-    public function deleteAction(Request $request, ServiceofLocationEntity $serviceofLocation)
+    public function deleteAction(Request $request, ServiceOfLocationEntity $serviceOfLocation)
     {
-        return $this->deleteInternal($request, $serviceofLocation, false);
+        return $this->deleteInternal($request, $serviceOfLocation, false);
     }
     
     /**
      * This method includes the common implementation code for adminDelete() and delete().
      */
-    protected function deleteInternal(Request $request, ServiceofLocationEntity $serviceofLocation, $isAdmin = false)
+    protected function deleteInternal(Request $request, ServiceOfLocationEntity $serviceOfLocation, $isAdmin = false)
     {
         // parameter specifying which type of objects we are treating
-        $objectType = 'serviceofLocation';
+        $objectType = 'serviceOfLocation';
         $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_DELETE;
         if (!$this->hasPermission('MUYourCityModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
             throw new AccessDeniedException();
         }
         $logger = $this->get('logger');
-        $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => 'serviceof location', 'id' => $serviceofLocation->createCompositeIdentifier()];
+        $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => 'service of location', 'id' => $serviceOfLocation->createCompositeIdentifier()];
         
-        $serviceofLocation->initWorkflow();
+        $serviceOfLocation->initWorkflow();
         
         // determine available workflow actions
         $workflowHelper = $this->get('mu_yourcity_module.workflow_helper');
-        $actions = $workflowHelper->getActionsForObject($serviceofLocation);
+        $actions = $workflowHelper->getActionsForObject($serviceOfLocation);
         if (false === $actions || !is_array($actions)) {
             $this->addFlash('error', $this->__('Error! Could not determine workflow actions.'));
             $logger->error('{app}: User {user} tried to delete the {entity} with id {id}, but failed to determine available workflow actions.', $logArgs);
@@ -366,29 +365,29 @@ abstract class AbstractServiceofLocationController extends AbstractController
             break;
         }
         if (!$deleteAllowed) {
-            $this->addFlash('error', $this->__('Error! It is not allowed to delete this serviceof location.'));
+            $this->addFlash('error', $this->__('Error! It is not allowed to delete this service of location.'));
             $logger->error('{app}: User {user} tried to delete the {entity} with id {id}, but this action was not allowed.', $logArgs);
         
             return $this->redirectToRoute($redirectRoute);
         }
         
-        $form = $this->createForm('MU\YourCityModule\Form\DeleteEntityType', $serviceofLocation);
+        $form = $this->createForm('MU\YourCityModule\Form\DeleteEntityType', $serviceOfLocation);
         
         if ($form->handleRequest($request)->isValid()) {
             if ($form->get('delete')->isClicked()) {
                 $hookHelper = $this->get('mu_yourcity_module.hook_helper');
                 // Let any hooks perform additional validation actions
-                $validationHooksPassed = $hookHelper->callValidationHooks($serviceofLocation, 'validate_delete');
+                $validationHooksPassed = $hookHelper->callValidationHooks($serviceOfLocation, 'validate_delete');
                 if ($validationHooksPassed) {
                     // execute the workflow action
-                    $success = $workflowHelper->executeAction($serviceofLocation, $deleteActionId);
+                    $success = $workflowHelper->executeAction($serviceOfLocation, $deleteActionId);
                     if ($success) {
                         $this->addFlash('status', $this->__('Done! Item deleted.'));
                         $logger->notice('{app}: User {user} deleted the {entity} with id {id}.', $logArgs);
                     }
                     
-                    // Let any hooks know that we have deleted the serviceof location
-                    $hookHelper->callProcessHooks($serviceofLocation, 'process_delete', null);
+                    // Let any hooks know that we have deleted the service of location
+                    $hookHelper->callProcessHooks($serviceOfLocation, 'process_delete', null);
                     
                     return $this->redirectToRoute($redirectRoute);
                 }
@@ -402,7 +401,7 @@ abstract class AbstractServiceofLocationController extends AbstractController
         $templateParameters = [
             'routeArea' => $isAdmin ? 'admin' : '',
             'deleteForm' => $form->createView(),
-            $objectType => $serviceofLocation
+            $objectType => $serviceOfLocation
         ];
         
         $controllerHelper = $this->get('mu_yourcity_module.controller_helper');
@@ -454,7 +453,7 @@ abstract class AbstractServiceofLocationController extends AbstractController
      */
     protected function handleSelectedEntriesActionInternal(Request $request, $isAdmin = false)
     {
-        $objectType = 'serviceofLocation';
+        $objectType = 'serviceOfLocation';
         
         // Get parameters
         $action = $request->request->get('action', null);
@@ -498,7 +497,7 @@ abstract class AbstractServiceofLocationController extends AbstractController
                 $success = $workflowHelper->executeAction($entity, $action);
             } catch(\Exception $e) {
                 $this->addFlash('error', $this->__f('Sorry, but an error occured during the %action% action.', ['%action%' => $action]) . '  ' . $e->getMessage());
-                $logger->error('{app}: User {user} tried to execute the {action} workflow action for the {entity} with id {id}, but failed. Error details: {errorMessage}.', ['app' => 'MUYourCityModule', 'user' => $userName, 'action' => $action, 'entity' => 'serviceof location', 'id' => $itemId, 'errorMessage' => $e->getMessage()]);
+                $logger->error('{app}: User {user} tried to execute the {action} workflow action for the {entity} with id {id}, but failed. Error details: {errorMessage}.', ['app' => 'MUYourCityModule', 'user' => $userName, 'action' => $action, 'entity' => 'service of location', 'id' => $itemId, 'errorMessage' => $e->getMessage()]);
             }
         
             if (!$success) {
@@ -507,10 +506,10 @@ abstract class AbstractServiceofLocationController extends AbstractController
         
             if ($action == 'delete') {
                 $this->addFlash('status', $this->__('Done! Item deleted.'));
-                $logger->notice('{app}: User {user} deleted the {entity} with id {id}.', ['app' => 'MUYourCityModule', 'user' => $userName, 'entity' => 'serviceof location', 'id' => $itemId]);
+                $logger->notice('{app}: User {user} deleted the {entity} with id {id}.', ['app' => 'MUYourCityModule', 'user' => $userName, 'entity' => 'service of location', 'id' => $itemId]);
             } else {
                 $this->addFlash('status', $this->__('Done! Item updated.'));
-                $logger->notice('{app}: User {user} executed the {action} workflow action for the {entity} with id {id}.', ['app' => 'MUYourCityModule', 'user' => $userName, 'action' => $action, 'entity' => 'serviceof location', 'id' => $itemId]);
+                $logger->notice('{app}: User {user} executed the {action} workflow action for the {entity} with id {id}.', ['app' => 'MUYourCityModule', 'user' => $userName, 'action' => $action, 'entity' => 'service of location', 'id' => $itemId]);
             }
         
             // Let any hooks know that we have updated or deleted an item
@@ -519,7 +518,7 @@ abstract class AbstractServiceofLocationController extends AbstractController
             if ($action != 'delete') {
                 $urlArgs = $entity->createUrlArgs();
                 $urlArgs['_locale'] = $request->getLocale();
-                $url = new RouteUrl('muyourcitymodule_serviceofLocation_' . /*($isAdmin ? 'admin' : '') . */'display', $urlArgs);
+                $url = new RouteUrl('muyourcitymodule_serviceOfLocation_' . /*($isAdmin ? 'admin' : '') . */'display', $urlArgs);
             }
             $hookHelper->callProcessHooks($entity, $hookType, $url);
         }

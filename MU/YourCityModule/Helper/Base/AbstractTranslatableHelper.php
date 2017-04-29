@@ -123,7 +123,7 @@ abstract class AbstractTranslatableHelper
             case 'specialOfLocation':
                 $fields = ['name', 'description'];
                 break;
-            case 'serviceofLocation':
+            case 'serviceOfLocation':
                 $fields = ['name', 'description'];
                 break;
         }

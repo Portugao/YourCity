@@ -20,9 +20,9 @@ use Zikula\Common\Translator\TranslatorTrait;
 use MU\YourCityModule\Helper\FeatureActivationHelper;
 
 /**
- * Serviceof location finder form type base class.
+ * Service of location finder form type base class.
  */
-abstract class AbstractServiceofLocationFinderType extends AbstractType
+abstract class AbstractServiceOfLocationFinderType extends AbstractType
 {
     use TranslatorTrait;
 
@@ -32,7 +32,7 @@ abstract class AbstractServiceofLocationFinderType extends AbstractType
     protected $featureActivationHelper;
 
     /**
-     * ServiceofLocationFinderType constructor.
+     * ServiceOfLocationFinderType constructor.
      *
      * @param TranslatorInterface $translator Translator service instance
      * @param FeatureActivationHelper $featureActivationHelper FeatureActivationHelper service instance
@@ -104,9 +104,9 @@ abstract class AbstractServiceofLocationFinderType extends AbstractType
             'label' => $this->__('Paste as') . ':',
             'empty_data' => 1,
             'choices' => [
-                $this->__('Relative link to the serviceof location') => 1,
-                $this->__('Absolute url to the serviceof location') => 2,
-                $this->__('ID of serviceof location') => 3
+                $this->__('Relative link to the service of location') => 1,
+                $this->__('Absolute url to the service of location') => 2,
+                $this->__('ID of service of location') => 3
             ],
             'choices_as_values' => true,
             'multiple' => false,
@@ -128,7 +128,6 @@ abstract class AbstractServiceofLocationFinderType extends AbstractType
                 'empty_data' => '',
                 'choices' => [
                     $this->__('Name') => 'name',
-                    $this->__('Description') => 'description',
                     $this->__('Icon for service') => 'iconForService',
                     $this->__('Creation date') => 'createdDate',
                     $this->__('Creator') => 'createdBy',

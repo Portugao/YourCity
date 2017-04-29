@@ -19,9 +19,7 @@
             <div class="col-sm-9">
                 <select id="{$baseID}Sort" name="sort" class="form-control">
                     <option value="name"{if $sort eq 'name'} selected="selected"{/if}>{gt text='Name'}</option>
-                    <option value="descriptionForGoogle"{if $sort eq 'descriptionForGoogle'} selected="selected"{/if}>{gt text='Description for google'}</option>
                     <option value="description"{if $sort eq 'description'} selected="selected"{/if}>{gt text='Description'}</option>
-                    <option value="imageOfPart"{if $sort eq 'imageOfPart'} selected="selected"{/if}>{gt text='Image of part'}</option>
                     <option value="createdDate"{if $sort eq 'createdDate'} selected="selected"{/if}>{gt text='Creation date'}</option>
                     <option value="createdBy"{if $sort eq 'createdBy'} selected="selected"{/if}>{gt text='Creator'}</option>
                     <option value="updatedDate"{if $sort eq 'updatedDate'} selected="selected"{/if}>{gt text='Update date'}</option>

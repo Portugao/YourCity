@@ -975,7 +975,7 @@ abstract class AbstractLocationType extends AbstractType
             return $entityDisplayHelper->getFormattedTitle($entity);
         };
         $builder->add('servicesOfLocation', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
-            'class' => 'MUYourCityModule:ServiceofLocationEntity',
+            'class' => 'MUYourCityModule:ServiceOfLocationEntity',
             'choice_label' => $choiceLabelClosure,
             'multiple' => true,
             'expanded' => false,

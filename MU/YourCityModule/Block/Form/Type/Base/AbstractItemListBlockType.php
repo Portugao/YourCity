@@ -99,7 +99,7 @@ abstract class AbstractItemListBlockType extends AbstractType
                 $this->__('Events') => 'event',
                 $this->__('Products') => 'product',
                 $this->__('Specials of location') => 'specialOfLocation',
-                $this->__('Services of location') => 'serviceofLocation',
+                $this->__('Services of location') => 'serviceOfLocation',
                 $this->__('Abonnements') => 'abonnement'
             ],
             'choices_as_values' => true,

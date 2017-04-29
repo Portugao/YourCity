@@ -143,7 +143,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Used to determine moderator user accounts for sending email notifications.')
                 ],
                 'help' => $this->__('Used to determine moderator user accounts for sending email notifications.'),
-                'data' => isset($this->moduleVars['moderationGroupForLocations']) ? $this->moduleVars['moderationGroupForLocations'] : '',
+                'data' => isset($this->moduleVars['moderationGroupForLocations']) ? intval($this->moduleVars['moderationGroupForLocations']) : intval(2),
                 'attr' => [
                     'maxlength' => 255,
                     'title' => $this->__('Choose the moderation group for locations.')
@@ -172,7 +172,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The amount of branches shown per page'),
                 'required' => false,
-                'data' => isset($this->moduleVars['branchEntriesPerPage']) ? $this->moduleVars['branchEntriesPerPage'] : '',
+                'data' => isset($this->moduleVars['branchEntriesPerPage']) ? intval($this->moduleVars['branchEntriesPerPage']) : intval(10),
                 'empty_data' => intval('10'),
                 'attr' => [
                     'maxlength' => 255,
@@ -200,7 +200,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The amount of locations shown per page'),
                 'required' => false,
-                'data' => isset($this->moduleVars['locationEntriesPerPage']) ? $this->moduleVars['locationEntriesPerPage'] : '',
+                'data' => isset($this->moduleVars['locationEntriesPerPage']) ? intval($this->moduleVars['locationEntriesPerPage']) : intval(10),
                 'empty_data' => intval('10'),
                 'attr' => [
                     'maxlength' => 255,
@@ -228,7 +228,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The amount of parts shown per page'),
                 'required' => false,
-                'data' => isset($this->moduleVars['partEntriesPerPage']) ? $this->moduleVars['partEntriesPerPage'] : '',
+                'data' => isset($this->moduleVars['partEntriesPerPage']) ? intval($this->moduleVars['partEntriesPerPage']) : intval(10),
                 'empty_data' => intval('10'),
                 'attr' => [
                     'maxlength' => 255,
@@ -256,7 +256,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The amount of images of location shown per page'),
                 'required' => false,
-                'data' => isset($this->moduleVars['imageOfLocationEntriesPerPage']) ? $this->moduleVars['imageOfLocationEntriesPerPage'] : '',
+                'data' => isset($this->moduleVars['imageOfLocationEntriesPerPage']) ? intval($this->moduleVars['imageOfLocationEntriesPerPage']) : intval(10),
                 'empty_data' => intval('10'),
                 'attr' => [
                     'maxlength' => 255,
@@ -284,7 +284,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The amount of files of location shown per page'),
                 'required' => false,
-                'data' => isset($this->moduleVars['fileOfLocationEntriesPerPage']) ? $this->moduleVars['fileOfLocationEntriesPerPage'] : '',
+                'data' => isset($this->moduleVars['fileOfLocationEntriesPerPage']) ? intval($this->moduleVars['fileOfLocationEntriesPerPage']) : intval(10),
                 'empty_data' => intval('10'),
                 'attr' => [
                     'maxlength' => 255,
@@ -312,7 +312,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The amount of offers shown per page'),
                 'required' => false,
-                'data' => isset($this->moduleVars['offerEntriesPerPage']) ? $this->moduleVars['offerEntriesPerPage'] : '',
+                'data' => isset($this->moduleVars['offerEntriesPerPage']) ? intval($this->moduleVars['offerEntriesPerPage']) : intval(10),
                 'empty_data' => intval('10'),
                 'attr' => [
                     'maxlength' => 255,
@@ -340,7 +340,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The amount of menus of location shown per page'),
                 'required' => false,
-                'data' => isset($this->moduleVars['menuOfLocationEntriesPerPage']) ? $this->moduleVars['menuOfLocationEntriesPerPage'] : '',
+                'data' => isset($this->moduleVars['menuOfLocationEntriesPerPage']) ? intval($this->moduleVars['menuOfLocationEntriesPerPage']) : intval(10),
                 'empty_data' => intval('10'),
                 'attr' => [
                     'maxlength' => 255,
@@ -368,7 +368,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The amount of parts of menu shown per page'),
                 'required' => false,
-                'data' => isset($this->moduleVars['partOfMenuEntriesPerPage']) ? $this->moduleVars['partOfMenuEntriesPerPage'] : '',
+                'data' => isset($this->moduleVars['partOfMenuEntriesPerPage']) ? intval($this->moduleVars['partOfMenuEntriesPerPage']) : intval(10),
                 'empty_data' => intval('10'),
                 'attr' => [
                     'maxlength' => 255,
@@ -396,7 +396,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The amount of dishes shown per page'),
                 'required' => false,
-                'data' => isset($this->moduleVars['dishEntriesPerPage']) ? $this->moduleVars['dishEntriesPerPage'] : '',
+                'data' => isset($this->moduleVars['dishEntriesPerPage']) ? intval($this->moduleVars['dishEntriesPerPage']) : intval(10),
                 'empty_data' => intval('10'),
                 'attr' => [
                     'maxlength' => 255,
@@ -424,7 +424,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The amount of events shown per page'),
                 'required' => false,
-                'data' => isset($this->moduleVars['eventEntriesPerPage']) ? $this->moduleVars['eventEntriesPerPage'] : '',
+                'data' => isset($this->moduleVars['eventEntriesPerPage']) ? intval($this->moduleVars['eventEntriesPerPage']) : intval(10),
                 'empty_data' => intval('10'),
                 'attr' => [
                     'maxlength' => 255,
@@ -452,7 +452,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The amount of products shown per page'),
                 'required' => false,
-                'data' => isset($this->moduleVars['productEntriesPerPage']) ? $this->moduleVars['productEntriesPerPage'] : '',
+                'data' => isset($this->moduleVars['productEntriesPerPage']) ? intval($this->moduleVars['productEntriesPerPage']) : intval(10),
                 'empty_data' => intval('10'),
                 'attr' => [
                     'maxlength' => 255,
@@ -480,7 +480,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The amount of specials of location shown per page'),
                 'required' => false,
-                'data' => isset($this->moduleVars['specialOfLocationEntriesPerPage']) ? $this->moduleVars['specialOfLocationEntriesPerPage'] : '',
+                'data' => isset($this->moduleVars['specialOfLocationEntriesPerPage']) ? intval($this->moduleVars['specialOfLocationEntriesPerPage']) : intval(10),
                 'empty_data' => intval('10'),
                 'attr' => [
                     'maxlength' => 255,
@@ -500,19 +500,19 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('The link own specials of location on account page option.')
                 ],
             ])
-            ->add('serviceofLocationEntriesPerPage', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
-                'label' => $this->__('Serviceof location entries per page') . ':',
+            ->add('serviceOfLocationEntriesPerPage', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+                'label' => $this->__('Service of location entries per page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
                     'title' => $this->__('The amount of services of location shown per page')
                 ],
                 'help' => $this->__('The amount of services of location shown per page'),
                 'required' => false,
-                'data' => isset($this->moduleVars['serviceofLocationEntriesPerPage']) ? $this->moduleVars['serviceofLocationEntriesPerPage'] : '',
+                'data' => isset($this->moduleVars['serviceOfLocationEntriesPerPage']) ? intval($this->moduleVars['serviceOfLocationEntriesPerPage']) : intval(10),
                 'empty_data' => intval('10'),
                 'attr' => [
                     'maxlength' => 255,
-                    'title' => $this->__('Enter the serviceof location entries per page.') . ' ' . $this->__('Only digits are allowed.')
+                    'title' => $this->__('Enter the service of location entries per page.') . ' ' . $this->__('Only digits are allowed.')
                 ],'scale' => 0
             ])
             ->add('linkOwnServicesOfLocationOnAccountPage', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
@@ -536,7 +536,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The amount of abonnements shown per page'),
                 'required' => false,
-                'data' => isset($this->moduleVars['abonnementEntriesPerPage']) ? $this->moduleVars['abonnementEntriesPerPage'] : '',
+                'data' => isset($this->moduleVars['abonnementEntriesPerPage']) ? intval($this->moduleVars['abonnementEntriesPerPage']) : intval(10),
                 'empty_data' => intval('10'),
                 'attr' => [
                     'maxlength' => 255,
@@ -568,7 +568,7 @@ abstract class AbstractConfigType extends AbstractType
     public function addImagesFields(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('enableShrinkingForBranchImageofBranch', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('enableShrinkingForBranchImageOfBranch', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
                 'label' => $this->__('Enable shrinking') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -576,13 +576,13 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image.'),
                 'required' => false,
-                'data' => (bool)(isset($this->moduleVars['enableShrinkingForBranchImageofBranch']) ? $this->moduleVars['enableShrinkingForBranchImageofBranch'] : false),
+                'data' => (bool)(isset($this->moduleVars['enableShrinkingForBranchImageOfBranch']) ? $this->moduleVars['enableShrinkingForBranchImageOfBranch'] : false),
                 'attr' => [
                     'title' => $this->__('The enable shrinking option.'),
                     'class' => 'shrink-enabler'
                 ],
             ])
-            ->add('shrinkWidthBranchImageofBranch', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('shrinkWidthBranchImageOfBranch', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
                 'label' => $this->__('Shrink width') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -590,7 +590,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The maximum image width in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['shrinkWidthBranchImageofBranch']) ? $this->moduleVars['shrinkWidthBranchImageofBranch'] : '',
+                'data' => isset($this->moduleVars['shrinkWidthBranchImageOfBranch']) ? intval($this->moduleVars['shrinkWidthBranchImageOfBranch']) : intval(800),
                 'empty_data' => intval('800'),
                 'attr' => [
                     'maxlength' => 4,
@@ -599,7 +599,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('shrinkHeightBranchImageofBranch', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('shrinkHeightBranchImageOfBranch', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
                 'label' => $this->__('Shrink height') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -607,7 +607,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The maximum image height in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['shrinkHeightBranchImageofBranch']) ? $this->moduleVars['shrinkHeightBranchImageofBranch'] : '',
+                'data' => isset($this->moduleVars['shrinkHeightBranchImageOfBranch']) ? intval($this->moduleVars['shrinkHeightBranchImageOfBranch']) : intval(600),
                 'empty_data' => intval('600'),
                 'attr' => [
                     'maxlength' => 4,
@@ -616,7 +616,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailModeBranchImageofBranch', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            ->add('thumbnailModeBranchImageOfBranch', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
                 'label' => $this->__('Thumbnail mode') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -624,7 +624,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail mode (inset or outbound).'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailModeBranchImageofBranch']) ? $this->moduleVars['thumbnailModeBranchImageofBranch'] : '',
+                'data' => isset($this->moduleVars['thumbnailModeBranchImageOfBranch']) ? $this->moduleVars['thumbnailModeBranchImageOfBranch'] : '',
                 'empty_data' => 'inset',
                 'attr' => [
                     'title' => $this->__('Choose the thumbnail mode.')
@@ -635,7 +635,7 @@ abstract class AbstractConfigType extends AbstractType
                 'choices_as_values' => true,
                 'multiple' => false
             ])
-            ->add('thumbnailWidthBranchImageofBranchView', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthBranchImageOfBranchView', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
                 'label' => $this->__('Thumbnail width view') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -643,7 +643,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail width on view pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailWidthBranchImageofBranchView']) ? $this->moduleVars['thumbnailWidthBranchImageofBranchView'] : '',
+                'data' => isset($this->moduleVars['thumbnailWidthBranchImageOfBranchView']) ? intval($this->moduleVars['thumbnailWidthBranchImageOfBranchView']) : intval(32),
                 'empty_data' => intval('32'),
                 'attr' => [
                     'maxlength' => 4,
@@ -651,7 +651,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightBranchImageofBranchView', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightBranchImageOfBranchView', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
                 'label' => $this->__('Thumbnail height view') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -659,7 +659,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail height on view pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailHeightBranchImageofBranchView']) ? $this->moduleVars['thumbnailHeightBranchImageofBranchView'] : '',
+                'data' => isset($this->moduleVars['thumbnailHeightBranchImageOfBranchView']) ? intval($this->moduleVars['thumbnailHeightBranchImageOfBranchView']) : intval(24),
                 'empty_data' => intval('24'),
                 'attr' => [
                     'maxlength' => 4,
@@ -667,7 +667,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailWidthBranchImageofBranchDisplay', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthBranchImageOfBranchDisplay', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
                 'label' => $this->__('Thumbnail width display') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -675,7 +675,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail width on display pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailWidthBranchImageofBranchDisplay']) ? $this->moduleVars['thumbnailWidthBranchImageofBranchDisplay'] : '',
+                'data' => isset($this->moduleVars['thumbnailWidthBranchImageOfBranchDisplay']) ? intval($this->moduleVars['thumbnailWidthBranchImageOfBranchDisplay']) : intval(240),
                 'empty_data' => intval('240'),
                 'attr' => [
                     'maxlength' => 4,
@@ -683,7 +683,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightBranchImageofBranchDisplay', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightBranchImageOfBranchDisplay', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
                 'label' => $this->__('Thumbnail height display') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -691,7 +691,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail height on display pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailHeightBranchImageofBranchDisplay']) ? $this->moduleVars['thumbnailHeightBranchImageofBranchDisplay'] : '',
+                'data' => isset($this->moduleVars['thumbnailHeightBranchImageOfBranchDisplay']) ? intval($this->moduleVars['thumbnailHeightBranchImageOfBranchDisplay']) : intval(180),
                 'empty_data' => intval('180'),
                 'attr' => [
                     'maxlength' => 4,
@@ -699,7 +699,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailWidthBranchImageofBranchEdit', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthBranchImageOfBranchEdit', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
                 'label' => $this->__('Thumbnail width edit') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -707,7 +707,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail width on edit pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailWidthBranchImageofBranchEdit']) ? $this->moduleVars['thumbnailWidthBranchImageofBranchEdit'] : '',
+                'data' => isset($this->moduleVars['thumbnailWidthBranchImageOfBranchEdit']) ? intval($this->moduleVars['thumbnailWidthBranchImageOfBranchEdit']) : intval(240),
                 'empty_data' => intval('240'),
                 'attr' => [
                     'maxlength' => 4,
@@ -715,7 +715,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightBranchImageofBranchEdit', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightBranchImageOfBranchEdit', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
                 'label' => $this->__('Thumbnail height edit') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -723,7 +723,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail height on edit pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailHeightBranchImageofBranchEdit']) ? $this->moduleVars['thumbnailHeightBranchImageofBranchEdit'] : '',
+                'data' => isset($this->moduleVars['thumbnailHeightBranchImageOfBranchEdit']) ? intval($this->moduleVars['thumbnailHeightBranchImageOfBranchEdit']) : intval(180),
                 'empty_data' => intval('180'),
                 'attr' => [
                     'maxlength' => 4,
@@ -753,7 +753,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The maximum image width in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['shrinkWidthLocationLogoOfYourLocation']) ? $this->moduleVars['shrinkWidthLocationLogoOfYourLocation'] : '',
+                'data' => isset($this->moduleVars['shrinkWidthLocationLogoOfYourLocation']) ? intval($this->moduleVars['shrinkWidthLocationLogoOfYourLocation']) : intval(800),
                 'empty_data' => intval('800'),
                 'attr' => [
                     'maxlength' => 4,
@@ -770,7 +770,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The maximum image height in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['shrinkHeightLocationLogoOfYourLocation']) ? $this->moduleVars['shrinkHeightLocationLogoOfYourLocation'] : '',
+                'data' => isset($this->moduleVars['shrinkHeightLocationLogoOfYourLocation']) ? intval($this->moduleVars['shrinkHeightLocationLogoOfYourLocation']) : intval(600),
                 'empty_data' => intval('600'),
                 'attr' => [
                     'maxlength' => 4,
@@ -806,7 +806,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail width on view pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailWidthLocationLogoOfYourLocationView']) ? $this->moduleVars['thumbnailWidthLocationLogoOfYourLocationView'] : '',
+                'data' => isset($this->moduleVars['thumbnailWidthLocationLogoOfYourLocationView']) ? intval($this->moduleVars['thumbnailWidthLocationLogoOfYourLocationView']) : intval(32),
                 'empty_data' => intval('32'),
                 'attr' => [
                     'maxlength' => 4,
@@ -822,7 +822,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail height on view pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailHeightLocationLogoOfYourLocationView']) ? $this->moduleVars['thumbnailHeightLocationLogoOfYourLocationView'] : '',
+                'data' => isset($this->moduleVars['thumbnailHeightLocationLogoOfYourLocationView']) ? intval($this->moduleVars['thumbnailHeightLocationLogoOfYourLocationView']) : intval(24),
                 'empty_data' => intval('24'),
                 'attr' => [
                     'maxlength' => 4,
@@ -838,7 +838,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail width on display pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailWidthLocationLogoOfYourLocationDisplay']) ? $this->moduleVars['thumbnailWidthLocationLogoOfYourLocationDisplay'] : '',
+                'data' => isset($this->moduleVars['thumbnailWidthLocationLogoOfYourLocationDisplay']) ? intval($this->moduleVars['thumbnailWidthLocationLogoOfYourLocationDisplay']) : intval(240),
                 'empty_data' => intval('240'),
                 'attr' => [
                     'maxlength' => 4,
@@ -854,7 +854,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail height on display pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailHeightLocationLogoOfYourLocationDisplay']) ? $this->moduleVars['thumbnailHeightLocationLogoOfYourLocationDisplay'] : '',
+                'data' => isset($this->moduleVars['thumbnailHeightLocationLogoOfYourLocationDisplay']) ? intval($this->moduleVars['thumbnailHeightLocationLogoOfYourLocationDisplay']) : intval(180),
                 'empty_data' => intval('180'),
                 'attr' => [
                     'maxlength' => 4,
@@ -870,7 +870,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail width on edit pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailWidthLocationLogoOfYourLocationEdit']) ? $this->moduleVars['thumbnailWidthLocationLogoOfYourLocationEdit'] : '',
+                'data' => isset($this->moduleVars['thumbnailWidthLocationLogoOfYourLocationEdit']) ? intval($this->moduleVars['thumbnailWidthLocationLogoOfYourLocationEdit']) : intval(240),
                 'empty_data' => intval('240'),
                 'attr' => [
                     'maxlength' => 4,
@@ -886,7 +886,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail height on edit pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailHeightLocationLogoOfYourLocationEdit']) ? $this->moduleVars['thumbnailHeightLocationLogoOfYourLocationEdit'] : '',
+                'data' => isset($this->moduleVars['thumbnailHeightLocationLogoOfYourLocationEdit']) ? intval($this->moduleVars['thumbnailHeightLocationLogoOfYourLocationEdit']) : intval(180),
                 'empty_data' => intval('180'),
                 'attr' => [
                     'maxlength' => 4,
@@ -916,7 +916,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The maximum image width in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['shrinkWidthLocationImageOfLocation']) ? $this->moduleVars['shrinkWidthLocationImageOfLocation'] : '',
+                'data' => isset($this->moduleVars['shrinkWidthLocationImageOfLocation']) ? intval($this->moduleVars['shrinkWidthLocationImageOfLocation']) : intval(800),
                 'empty_data' => intval('800'),
                 'attr' => [
                     'maxlength' => 4,
@@ -933,7 +933,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The maximum image height in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['shrinkHeightLocationImageOfLocation']) ? $this->moduleVars['shrinkHeightLocationImageOfLocation'] : '',
+                'data' => isset($this->moduleVars['shrinkHeightLocationImageOfLocation']) ? intval($this->moduleVars['shrinkHeightLocationImageOfLocation']) : intval(600),
                 'empty_data' => intval('600'),
                 'attr' => [
                     'maxlength' => 4,
@@ -969,7 +969,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail width on view pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailWidthLocationImageOfLocationView']) ? $this->moduleVars['thumbnailWidthLocationImageOfLocationView'] : '',
+                'data' => isset($this->moduleVars['thumbnailWidthLocationImageOfLocationView']) ? intval($this->moduleVars['thumbnailWidthLocationImageOfLocationView']) : intval(32),
                 'empty_data' => intval('32'),
                 'attr' => [
                     'maxlength' => 4,
@@ -985,7 +985,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail height on view pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailHeightLocationImageOfLocationView']) ? $this->moduleVars['thumbnailHeightLocationImageOfLocationView'] : '',
+                'data' => isset($this->moduleVars['thumbnailHeightLocationImageOfLocationView']) ? intval($this->moduleVars['thumbnailHeightLocationImageOfLocationView']) : intval(24),
                 'empty_data' => intval('24'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1001,7 +1001,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail width on display pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailWidthLocationImageOfLocationDisplay']) ? $this->moduleVars['thumbnailWidthLocationImageOfLocationDisplay'] : '',
+                'data' => isset($this->moduleVars['thumbnailWidthLocationImageOfLocationDisplay']) ? intval($this->moduleVars['thumbnailWidthLocationImageOfLocationDisplay']) : intval(240),
                 'empty_data' => intval('240'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1017,7 +1017,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail height on display pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailHeightLocationImageOfLocationDisplay']) ? $this->moduleVars['thumbnailHeightLocationImageOfLocationDisplay'] : '',
+                'data' => isset($this->moduleVars['thumbnailHeightLocationImageOfLocationDisplay']) ? intval($this->moduleVars['thumbnailHeightLocationImageOfLocationDisplay']) : intval(180),
                 'empty_data' => intval('180'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1033,7 +1033,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail width on edit pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailWidthLocationImageOfLocationEdit']) ? $this->moduleVars['thumbnailWidthLocationImageOfLocationEdit'] : '',
+                'data' => isset($this->moduleVars['thumbnailWidthLocationImageOfLocationEdit']) ? intval($this->moduleVars['thumbnailWidthLocationImageOfLocationEdit']) : intval(240),
                 'empty_data' => intval('240'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1049,7 +1049,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail height on edit pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailHeightLocationImageOfLocationEdit']) ? $this->moduleVars['thumbnailHeightLocationImageOfLocationEdit'] : '',
+                'data' => isset($this->moduleVars['thumbnailHeightLocationImageOfLocationEdit']) ? intval($this->moduleVars['thumbnailHeightLocationImageOfLocationEdit']) : intval(180),
                 'empty_data' => intval('180'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1079,7 +1079,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The maximum image width in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['shrinkWidthPartImageOfPart']) ? $this->moduleVars['shrinkWidthPartImageOfPart'] : '',
+                'data' => isset($this->moduleVars['shrinkWidthPartImageOfPart']) ? intval($this->moduleVars['shrinkWidthPartImageOfPart']) : intval(800),
                 'empty_data' => intval('800'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1096,7 +1096,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The maximum image height in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['shrinkHeightPartImageOfPart']) ? $this->moduleVars['shrinkHeightPartImageOfPart'] : '',
+                'data' => isset($this->moduleVars['shrinkHeightPartImageOfPart']) ? intval($this->moduleVars['shrinkHeightPartImageOfPart']) : intval(600),
                 'empty_data' => intval('600'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1132,7 +1132,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail width on view pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailWidthPartImageOfPartView']) ? $this->moduleVars['thumbnailWidthPartImageOfPartView'] : '',
+                'data' => isset($this->moduleVars['thumbnailWidthPartImageOfPartView']) ? intval($this->moduleVars['thumbnailWidthPartImageOfPartView']) : intval(32),
                 'empty_data' => intval('32'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1148,7 +1148,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail height on view pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailHeightPartImageOfPartView']) ? $this->moduleVars['thumbnailHeightPartImageOfPartView'] : '',
+                'data' => isset($this->moduleVars['thumbnailHeightPartImageOfPartView']) ? intval($this->moduleVars['thumbnailHeightPartImageOfPartView']) : intval(24),
                 'empty_data' => intval('24'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1164,7 +1164,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail width on display pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailWidthPartImageOfPartDisplay']) ? $this->moduleVars['thumbnailWidthPartImageOfPartDisplay'] : '',
+                'data' => isset($this->moduleVars['thumbnailWidthPartImageOfPartDisplay']) ? intval($this->moduleVars['thumbnailWidthPartImageOfPartDisplay']) : intval(240),
                 'empty_data' => intval('240'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1180,7 +1180,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail height on display pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailHeightPartImageOfPartDisplay']) ? $this->moduleVars['thumbnailHeightPartImageOfPartDisplay'] : '',
+                'data' => isset($this->moduleVars['thumbnailHeightPartImageOfPartDisplay']) ? intval($this->moduleVars['thumbnailHeightPartImageOfPartDisplay']) : intval(180),
                 'empty_data' => intval('180'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1196,7 +1196,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail width on edit pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailWidthPartImageOfPartEdit']) ? $this->moduleVars['thumbnailWidthPartImageOfPartEdit'] : '',
+                'data' => isset($this->moduleVars['thumbnailWidthPartImageOfPartEdit']) ? intval($this->moduleVars['thumbnailWidthPartImageOfPartEdit']) : intval(240),
                 'empty_data' => intval('240'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1212,7 +1212,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail height on edit pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailHeightPartImageOfPartEdit']) ? $this->moduleVars['thumbnailHeightPartImageOfPartEdit'] : '',
+                'data' => isset($this->moduleVars['thumbnailHeightPartImageOfPartEdit']) ? intval($this->moduleVars['thumbnailHeightPartImageOfPartEdit']) : intval(180),
                 'empty_data' => intval('180'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1242,7 +1242,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The maximum image width in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['shrinkWidthImageOfLocationImage']) ? $this->moduleVars['shrinkWidthImageOfLocationImage'] : '',
+                'data' => isset($this->moduleVars['shrinkWidthImageOfLocationImage']) ? intval($this->moduleVars['shrinkWidthImageOfLocationImage']) : intval(800),
                 'empty_data' => intval('800'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1259,7 +1259,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The maximum image height in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['shrinkHeightImageOfLocationImage']) ? $this->moduleVars['shrinkHeightImageOfLocationImage'] : '',
+                'data' => isset($this->moduleVars['shrinkHeightImageOfLocationImage']) ? intval($this->moduleVars['shrinkHeightImageOfLocationImage']) : intval(600),
                 'empty_data' => intval('600'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1295,7 +1295,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail width on view pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailWidthImageOfLocationImageView']) ? $this->moduleVars['thumbnailWidthImageOfLocationImageView'] : '',
+                'data' => isset($this->moduleVars['thumbnailWidthImageOfLocationImageView']) ? intval($this->moduleVars['thumbnailWidthImageOfLocationImageView']) : intval(32),
                 'empty_data' => intval('32'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1311,7 +1311,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail height on view pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailHeightImageOfLocationImageView']) ? $this->moduleVars['thumbnailHeightImageOfLocationImageView'] : '',
+                'data' => isset($this->moduleVars['thumbnailHeightImageOfLocationImageView']) ? intval($this->moduleVars['thumbnailHeightImageOfLocationImageView']) : intval(24),
                 'empty_data' => intval('24'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1327,7 +1327,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail width on display pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailWidthImageOfLocationImageDisplay']) ? $this->moduleVars['thumbnailWidthImageOfLocationImageDisplay'] : '',
+                'data' => isset($this->moduleVars['thumbnailWidthImageOfLocationImageDisplay']) ? intval($this->moduleVars['thumbnailWidthImageOfLocationImageDisplay']) : intval(240),
                 'empty_data' => intval('240'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1343,7 +1343,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail height on display pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailHeightImageOfLocationImageDisplay']) ? $this->moduleVars['thumbnailHeightImageOfLocationImageDisplay'] : '',
+                'data' => isset($this->moduleVars['thumbnailHeightImageOfLocationImageDisplay']) ? intval($this->moduleVars['thumbnailHeightImageOfLocationImageDisplay']) : intval(180),
                 'empty_data' => intval('180'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1359,7 +1359,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail width on edit pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailWidthImageOfLocationImageEdit']) ? $this->moduleVars['thumbnailWidthImageOfLocationImageEdit'] : '',
+                'data' => isset($this->moduleVars['thumbnailWidthImageOfLocationImageEdit']) ? intval($this->moduleVars['thumbnailWidthImageOfLocationImageEdit']) : intval(240),
                 'empty_data' => intval('240'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1375,7 +1375,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail height on edit pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailHeightImageOfLocationImageEdit']) ? $this->moduleVars['thumbnailHeightImageOfLocationImageEdit'] : '',
+                'data' => isset($this->moduleVars['thumbnailHeightImageOfLocationImageEdit']) ? intval($this->moduleVars['thumbnailHeightImageOfLocationImageEdit']) : intval(180),
                 'empty_data' => intval('180'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1405,7 +1405,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The maximum image width in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['shrinkWidthOfferImageOfOffer']) ? $this->moduleVars['shrinkWidthOfferImageOfOffer'] : '',
+                'data' => isset($this->moduleVars['shrinkWidthOfferImageOfOffer']) ? intval($this->moduleVars['shrinkWidthOfferImageOfOffer']) : intval(800),
                 'empty_data' => intval('800'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1422,7 +1422,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The maximum image height in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['shrinkHeightOfferImageOfOffer']) ? $this->moduleVars['shrinkHeightOfferImageOfOffer'] : '',
+                'data' => isset($this->moduleVars['shrinkHeightOfferImageOfOffer']) ? intval($this->moduleVars['shrinkHeightOfferImageOfOffer']) : intval(600),
                 'empty_data' => intval('600'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1458,7 +1458,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail width on view pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailWidthOfferImageOfOfferView']) ? $this->moduleVars['thumbnailWidthOfferImageOfOfferView'] : '',
+                'data' => isset($this->moduleVars['thumbnailWidthOfferImageOfOfferView']) ? intval($this->moduleVars['thumbnailWidthOfferImageOfOfferView']) : intval(32),
                 'empty_data' => intval('32'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1474,7 +1474,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail height on view pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailHeightOfferImageOfOfferView']) ? $this->moduleVars['thumbnailHeightOfferImageOfOfferView'] : '',
+                'data' => isset($this->moduleVars['thumbnailHeightOfferImageOfOfferView']) ? intval($this->moduleVars['thumbnailHeightOfferImageOfOfferView']) : intval(24),
                 'empty_data' => intval('24'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1490,7 +1490,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail width on display pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailWidthOfferImageOfOfferDisplay']) ? $this->moduleVars['thumbnailWidthOfferImageOfOfferDisplay'] : '',
+                'data' => isset($this->moduleVars['thumbnailWidthOfferImageOfOfferDisplay']) ? intval($this->moduleVars['thumbnailWidthOfferImageOfOfferDisplay']) : intval(240),
                 'empty_data' => intval('240'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1506,7 +1506,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail height on display pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailHeightOfferImageOfOfferDisplay']) ? $this->moduleVars['thumbnailHeightOfferImageOfOfferDisplay'] : '',
+                'data' => isset($this->moduleVars['thumbnailHeightOfferImageOfOfferDisplay']) ? intval($this->moduleVars['thumbnailHeightOfferImageOfOfferDisplay']) : intval(180),
                 'empty_data' => intval('180'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1522,7 +1522,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail width on edit pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailWidthOfferImageOfOfferEdit']) ? $this->moduleVars['thumbnailWidthOfferImageOfOfferEdit'] : '',
+                'data' => isset($this->moduleVars['thumbnailWidthOfferImageOfOfferEdit']) ? intval($this->moduleVars['thumbnailWidthOfferImageOfOfferEdit']) : intval(240),
                 'empty_data' => intval('240'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1538,7 +1538,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail height on edit pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailHeightOfferImageOfOfferEdit']) ? $this->moduleVars['thumbnailHeightOfferImageOfOfferEdit'] : '',
+                'data' => isset($this->moduleVars['thumbnailHeightOfferImageOfOfferEdit']) ? intval($this->moduleVars['thumbnailHeightOfferImageOfOfferEdit']) : intval(180),
                 'empty_data' => intval('180'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1568,7 +1568,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The maximum image width in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['shrinkWidthMenuOfLocationImageOfMenu']) ? $this->moduleVars['shrinkWidthMenuOfLocationImageOfMenu'] : '',
+                'data' => isset($this->moduleVars['shrinkWidthMenuOfLocationImageOfMenu']) ? intval($this->moduleVars['shrinkWidthMenuOfLocationImageOfMenu']) : intval(800),
                 'empty_data' => intval('800'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1585,7 +1585,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The maximum image height in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['shrinkHeightMenuOfLocationImageOfMenu']) ? $this->moduleVars['shrinkHeightMenuOfLocationImageOfMenu'] : '',
+                'data' => isset($this->moduleVars['shrinkHeightMenuOfLocationImageOfMenu']) ? intval($this->moduleVars['shrinkHeightMenuOfLocationImageOfMenu']) : intval(600),
                 'empty_data' => intval('600'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1621,7 +1621,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail width on view pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailWidthMenuOfLocationImageOfMenuView']) ? $this->moduleVars['thumbnailWidthMenuOfLocationImageOfMenuView'] : '',
+                'data' => isset($this->moduleVars['thumbnailWidthMenuOfLocationImageOfMenuView']) ? intval($this->moduleVars['thumbnailWidthMenuOfLocationImageOfMenuView']) : intval(32),
                 'empty_data' => intval('32'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1637,7 +1637,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail height on view pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailHeightMenuOfLocationImageOfMenuView']) ? $this->moduleVars['thumbnailHeightMenuOfLocationImageOfMenuView'] : '',
+                'data' => isset($this->moduleVars['thumbnailHeightMenuOfLocationImageOfMenuView']) ? intval($this->moduleVars['thumbnailHeightMenuOfLocationImageOfMenuView']) : intval(24),
                 'empty_data' => intval('24'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1653,7 +1653,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail width on display pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailWidthMenuOfLocationImageOfMenuDisplay']) ? $this->moduleVars['thumbnailWidthMenuOfLocationImageOfMenuDisplay'] : '',
+                'data' => isset($this->moduleVars['thumbnailWidthMenuOfLocationImageOfMenuDisplay']) ? intval($this->moduleVars['thumbnailWidthMenuOfLocationImageOfMenuDisplay']) : intval(240),
                 'empty_data' => intval('240'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1669,7 +1669,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail height on display pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailHeightMenuOfLocationImageOfMenuDisplay']) ? $this->moduleVars['thumbnailHeightMenuOfLocationImageOfMenuDisplay'] : '',
+                'data' => isset($this->moduleVars['thumbnailHeightMenuOfLocationImageOfMenuDisplay']) ? intval($this->moduleVars['thumbnailHeightMenuOfLocationImageOfMenuDisplay']) : intval(180),
                 'empty_data' => intval('180'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1685,7 +1685,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail width on edit pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailWidthMenuOfLocationImageOfMenuEdit']) ? $this->moduleVars['thumbnailWidthMenuOfLocationImageOfMenuEdit'] : '',
+                'data' => isset($this->moduleVars['thumbnailWidthMenuOfLocationImageOfMenuEdit']) ? intval($this->moduleVars['thumbnailWidthMenuOfLocationImageOfMenuEdit']) : intval(240),
                 'empty_data' => intval('240'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1701,7 +1701,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail height on edit pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailHeightMenuOfLocationImageOfMenuEdit']) ? $this->moduleVars['thumbnailHeightMenuOfLocationImageOfMenuEdit'] : '',
+                'data' => isset($this->moduleVars['thumbnailHeightMenuOfLocationImageOfMenuEdit']) ? intval($this->moduleVars['thumbnailHeightMenuOfLocationImageOfMenuEdit']) : intval(180),
                 'empty_data' => intval('180'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1731,7 +1731,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The maximum image width in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['shrinkWidthDishImageOfDish']) ? $this->moduleVars['shrinkWidthDishImageOfDish'] : '',
+                'data' => isset($this->moduleVars['shrinkWidthDishImageOfDish']) ? intval($this->moduleVars['shrinkWidthDishImageOfDish']) : intval(800),
                 'empty_data' => intval('800'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1748,7 +1748,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The maximum image height in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['shrinkHeightDishImageOfDish']) ? $this->moduleVars['shrinkHeightDishImageOfDish'] : '',
+                'data' => isset($this->moduleVars['shrinkHeightDishImageOfDish']) ? intval($this->moduleVars['shrinkHeightDishImageOfDish']) : intval(600),
                 'empty_data' => intval('600'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1784,7 +1784,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail width on view pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailWidthDishImageOfDishView']) ? $this->moduleVars['thumbnailWidthDishImageOfDishView'] : '',
+                'data' => isset($this->moduleVars['thumbnailWidthDishImageOfDishView']) ? intval($this->moduleVars['thumbnailWidthDishImageOfDishView']) : intval(32),
                 'empty_data' => intval('32'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1800,7 +1800,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail height on view pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailHeightDishImageOfDishView']) ? $this->moduleVars['thumbnailHeightDishImageOfDishView'] : '',
+                'data' => isset($this->moduleVars['thumbnailHeightDishImageOfDishView']) ? intval($this->moduleVars['thumbnailHeightDishImageOfDishView']) : intval(24),
                 'empty_data' => intval('24'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1816,7 +1816,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail width on display pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailWidthDishImageOfDishDisplay']) ? $this->moduleVars['thumbnailWidthDishImageOfDishDisplay'] : '',
+                'data' => isset($this->moduleVars['thumbnailWidthDishImageOfDishDisplay']) ? intval($this->moduleVars['thumbnailWidthDishImageOfDishDisplay']) : intval(240),
                 'empty_data' => intval('240'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1832,7 +1832,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail height on display pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailHeightDishImageOfDishDisplay']) ? $this->moduleVars['thumbnailHeightDishImageOfDishDisplay'] : '',
+                'data' => isset($this->moduleVars['thumbnailHeightDishImageOfDishDisplay']) ? intval($this->moduleVars['thumbnailHeightDishImageOfDishDisplay']) : intval(180),
                 'empty_data' => intval('180'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1848,7 +1848,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail width on edit pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailWidthDishImageOfDishEdit']) ? $this->moduleVars['thumbnailWidthDishImageOfDishEdit'] : '',
+                'data' => isset($this->moduleVars['thumbnailWidthDishImageOfDishEdit']) ? intval($this->moduleVars['thumbnailWidthDishImageOfDishEdit']) : intval(240),
                 'empty_data' => intval('240'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1864,7 +1864,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail height on edit pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailHeightDishImageOfDishEdit']) ? $this->moduleVars['thumbnailHeightDishImageOfDishEdit'] : '',
+                'data' => isset($this->moduleVars['thumbnailHeightDishImageOfDishEdit']) ? intval($this->moduleVars['thumbnailHeightDishImageOfDishEdit']) : intval(180),
                 'empty_data' => intval('180'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1894,7 +1894,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The maximum image width in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['shrinkWidthEventImageOfEvent']) ? $this->moduleVars['shrinkWidthEventImageOfEvent'] : '',
+                'data' => isset($this->moduleVars['shrinkWidthEventImageOfEvent']) ? intval($this->moduleVars['shrinkWidthEventImageOfEvent']) : intval(800),
                 'empty_data' => intval('800'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1911,7 +1911,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The maximum image height in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['shrinkHeightEventImageOfEvent']) ? $this->moduleVars['shrinkHeightEventImageOfEvent'] : '',
+                'data' => isset($this->moduleVars['shrinkHeightEventImageOfEvent']) ? intval($this->moduleVars['shrinkHeightEventImageOfEvent']) : intval(600),
                 'empty_data' => intval('600'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1947,7 +1947,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail width on view pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailWidthEventImageOfEventView']) ? $this->moduleVars['thumbnailWidthEventImageOfEventView'] : '',
+                'data' => isset($this->moduleVars['thumbnailWidthEventImageOfEventView']) ? intval($this->moduleVars['thumbnailWidthEventImageOfEventView']) : intval(32),
                 'empty_data' => intval('32'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1963,7 +1963,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail height on view pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailHeightEventImageOfEventView']) ? $this->moduleVars['thumbnailHeightEventImageOfEventView'] : '',
+                'data' => isset($this->moduleVars['thumbnailHeightEventImageOfEventView']) ? intval($this->moduleVars['thumbnailHeightEventImageOfEventView']) : intval(24),
                 'empty_data' => intval('24'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1979,7 +1979,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail width on display pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailWidthEventImageOfEventDisplay']) ? $this->moduleVars['thumbnailWidthEventImageOfEventDisplay'] : '',
+                'data' => isset($this->moduleVars['thumbnailWidthEventImageOfEventDisplay']) ? intval($this->moduleVars['thumbnailWidthEventImageOfEventDisplay']) : intval(240),
                 'empty_data' => intval('240'),
                 'attr' => [
                     'maxlength' => 4,
@@ -1995,7 +1995,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail height on display pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailHeightEventImageOfEventDisplay']) ? $this->moduleVars['thumbnailHeightEventImageOfEventDisplay'] : '',
+                'data' => isset($this->moduleVars['thumbnailHeightEventImageOfEventDisplay']) ? intval($this->moduleVars['thumbnailHeightEventImageOfEventDisplay']) : intval(180),
                 'empty_data' => intval('180'),
                 'attr' => [
                     'maxlength' => 4,
@@ -2011,7 +2011,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail width on edit pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailWidthEventImageOfEventEdit']) ? $this->moduleVars['thumbnailWidthEventImageOfEventEdit'] : '',
+                'data' => isset($this->moduleVars['thumbnailWidthEventImageOfEventEdit']) ? intval($this->moduleVars['thumbnailWidthEventImageOfEventEdit']) : intval(240),
                 'empty_data' => intval('240'),
                 'attr' => [
                     'maxlength' => 4,
@@ -2027,7 +2027,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('Thumbnail height on edit pages in pixels.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['thumbnailHeightEventImageOfEventEdit']) ? $this->moduleVars['thumbnailHeightEventImageOfEventEdit'] : '',
+                'data' => isset($this->moduleVars['thumbnailHeightEventImageOfEventEdit']) ? intval($this->moduleVars['thumbnailHeightEventImageOfEventEdit']) : intval(180),
                 'empty_data' => intval('180'),
                 'attr' => [
                     'maxlength' => 4,
@@ -2072,7 +2072,7 @@ abstract class AbstractConfigType extends AbstractType
                     ,$this->__('Event') => 'event'
                     ,$this->__('Product') => 'product'
                     ,$this->__('Special of location') => 'specialOfLocation'
-                    ,$this->__('Serviceof location') => 'serviceofLocation'
+                    ,$this->__('Service of location') => 'serviceOfLocation'
                 ],
                 'choices_as_values' => true,
                 'multiple' => true
@@ -2163,7 +2163,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The default zoom level.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['defaultZoomLevel']) ? $this->moduleVars['defaultZoomLevel'] : '',
+                'data' => isset($this->moduleVars['defaultZoomLevel']) ? intval($this->moduleVars['defaultZoomLevel']) : intval(18),
                 'empty_data' => intval('18'),
                 'attr' => [
                     'maxlength' => 255,

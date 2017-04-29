@@ -19,7 +19,7 @@ use Psr\Log\LoggerInterface;
  * Repository class used to implement own convenience methods for performing certain DQL queries.
  *
  * This is the base repository class for the many to many relationship
- * between location and serviceof location entities.
+ * between location and service of location entities.
  */
 class AbstractLocationServiceofLocationRepository extends EntityRepository
 {

@@ -12,14 +12,14 @@
 
 namespace MU\YourCityModule\Entity\Repository;
 
-use MU\YourCityModule\Entity\Repository\Base\AbstractServiceofLocationTranslationRepository;
+use MU\YourCityModule\Entity\Repository\Base\AbstractServiceOfLocationTranslationRepository;
 
 /**
  * Repository class used to implement own convenience methods for performing certain DQL queries.
  *
- * This is the concrete repository class for serviceof location translation entities.
+ * This is the concrete repository class for service of location translation entities.
  */
-class ServiceofLocationTranslationRepository extends AbstractServiceofLocationTranslationRepository
+class ServiceOfLocationTranslationRepository extends AbstractServiceOfLocationTranslationRepository
 {
     // feel free to add your own methods here
 }

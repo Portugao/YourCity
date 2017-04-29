@@ -247,7 +247,7 @@ abstract class AbstractUserListener implements EventSubscriberInterface
         $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->currentUserApi->get('uname'), 'entities' => 'specials of location'];
         $this->logger->notice('{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.', $logArgs);
         
-        $repo = $this->entityFactory->getRepository('serviceofLocation');
+        $repo = $this->entityFactory->getRepository('serviceOfLocation');
         // set creator to admin (2) for all services of location created by this user
         $repo->updateCreator($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
         

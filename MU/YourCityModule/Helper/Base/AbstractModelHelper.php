@@ -91,7 +91,7 @@ abstract class AbstractModelHelper
             case 'specialOfLocation':
                 $result = true;
                 break;
-            case 'serviceofLocation':
+            case 'serviceOfLocation':
                 $result = true;
                 break;
             case 'abonnement':

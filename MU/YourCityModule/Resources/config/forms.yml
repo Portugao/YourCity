@@ -126,7 +126,7 @@ services:
             - { name: form.type }
     
     mu_yourcity_module.form.type.serviceoflocationquicknav:
-        class: MU\YourCityModule\Form\Type\QuickNavigation\ServiceofLocationQuickNavType
+        class: MU\YourCityModule\Form\Type\QuickNavigation\ServiceOfLocationQuickNavType
         arguments:
             - "@translator.default"
             - "@mu_yourcity_module.listentries_helper"
@@ -614,7 +614,7 @@ services:
             - { name: form.type }
     
     mu_yourcity_module.form.handler.serviceoflocation:
-        class: MU\YourCityModule\Form\Handler\ServiceofLocation\EditHandler
+        class: MU\YourCityModule\Form\Handler\ServiceOfLocation\EditHandler
         arguments:
             - "@kernel"
             - "@translator.default"
@@ -639,7 +639,7 @@ services:
             - { name: form.type }
     
     mu_yourcity_module.form.type.serviceoflocation:
-        class: MU\YourCityModule\Form\Type\ServiceofLocationType
+        class: MU\YourCityModule\Form\Type\ServiceOfLocationType
         arguments:
             - "@translator.default"
             - "@mu_yourcity_module.entity_factory"
@@ -800,7 +800,7 @@ services:
             - { name: form.type }
     
     mu_yourcity_module.form.type.serviceoflocationfinder:
-        class: MU\YourCityModule\Form\Type\Finder\ServiceofLocationFinderType
+        class: MU\YourCityModule\Form\Type\Finder\ServiceOfLocationFinderType
         arguments:
             - "@translator.default"
             - "@mu_yourcity_module.feature_activation_helper"

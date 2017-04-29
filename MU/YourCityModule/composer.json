@@ -68,8 +68,8 @@
                 "MUYourCityModule:Location:Product": "Location ID:Product ID:",
                 "MUYourCityModule:SpecialOfLocation:": "SpecialOfLocation ID::",
                 "MUYourCityModule:Location:SpecialOfLocation": "Location ID:SpecialOfLocation ID:",
-                "MUYourCityModule:ServiceofLocation:": "ServiceofLocation ID::",
-                "MUYourCityModule:Location:ServiceofLocation": "Location ID:ServiceofLocation ID:",
+                "MUYourCityModule:ServiceOfLocation:": "ServiceOfLocation ID::",
+                "MUYourCityModule:Location:ServiceOfLocation": "Location ID:ServiceOfLocation ID:",
                 "MUYourCityModule:Abonnement:": "Abonnement ID::",
                 "MUYourCityModule:Location:Abonnement": "Location ID:Abonnement ID:",
                 "MUYourCityModule::Ajax": "::"

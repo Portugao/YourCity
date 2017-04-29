@@ -15,10 +15,10 @@ namespace MU\YourCityModule\Entity\Base;
 use Gedmo\Translatable\Entity\MappedSuperclass\AbstractTranslation;
 
 /**
- * Entity extension domain class storing serviceof location translations.
+ * Entity extension domain class storing service of location translations.
  *
- * This is the base translation class for serviceof location entities.
+ * This is the base translation class for service of location entities.
  */
-abstract class AbstractServiceofLocationTranslationEntity extends AbstractTranslation
+abstract class AbstractServiceOfLocationTranslationEntity extends AbstractTranslation
 {
 }

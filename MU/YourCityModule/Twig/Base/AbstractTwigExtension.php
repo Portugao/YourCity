@@ -328,7 +328,7 @@ abstract class AbstractTwigExtension extends Twig_Extension
         ];
         $result[] = [
             'text' => $this->__('Services of location'),
-            'value' => 'serviceofLocation'
+            'value' => 'serviceOfLocation'
         ];
         $result[] = [
             'text' => $this->__('Abonnements'),

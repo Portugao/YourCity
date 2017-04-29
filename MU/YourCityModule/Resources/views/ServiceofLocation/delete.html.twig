@@ -1,10 +1,10 @@
 {# purpose of this template: services of location delete confirmation view #}
 {% extends routeArea == 'admin' ? 'MUYourCityModule::adminBase.html.twig' : 'MUYourCityModule::base.html.twig' %}
-{% block title __('Delete serviceof location') %}
+{% block title __('Delete service of location') %}
 {% block admin_page_icon 'trash-o' %}
 {% block content %}
     <div class="muyourcitymodule-serviceoflocation muyourcitymodule-delete">
-        <p class="alert alert-warning">{{ __f('Do you really want to delete this serviceof location: "%name%" ?', { '%name%': serviceofLocation|muyourcitymodule_formattedTitle }) }}</p>
+        <p class="alert alert-warning">{{ __f('Do you really want to delete this service of location: "%name%" ?', { '%name%': serviceOfLocation|muyourcitymodule_formattedTitle }) }}</p>
 
         {% form_theme deleteForm with [
             '@MUYourCityModule/Form/bootstrap_3.html.twig',
@@ -28,7 +28,7 @@
     </div>
 {% endblock %}
 {% block display_hooks %}
-    {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.servicesoflocation.form_delete', id=serviceofLocation.id) %}
+    {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.servicesoflocation.form_delete', id=serviceOfLocation.id) %}
     {% if hooks is iterable and hooks|length > 0 %}
         {% for providerArea, hook in hooks %}
             <fieldset>

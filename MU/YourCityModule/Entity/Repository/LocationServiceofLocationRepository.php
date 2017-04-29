@@ -18,7 +18,7 @@ use MU\YourCityModule\Entity\Repository\Base\AbstractLocationServiceofLocationRe
  * Repository class used to implement own convenience methods for performing certain DQL queries.
  *
  * This is the concrete repository class for the many to many relationship
- * between location and serviceof location entities.
+ * between location and service of location entities.
  */
 class LocationServiceofLocationRepository extends AbstractLocationServiceofLocationRepository
 {

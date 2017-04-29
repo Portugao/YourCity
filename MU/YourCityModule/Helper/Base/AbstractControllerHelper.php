@@ -171,7 +171,7 @@ abstract class AbstractControllerHelper
         $allowedObjectTypes[] = 'event';
         $allowedObjectTypes[] = 'product';
         $allowedObjectTypes[] = 'specialOfLocation';
-        $allowedObjectTypes[] = 'serviceofLocation';
+        $allowedObjectTypes[] = 'serviceOfLocation';
         $allowedObjectTypes[] = 'abonnement';
     
         return $allowedObjectTypes;
@@ -497,7 +497,7 @@ abstract class AbstractControllerHelper
             // initialise Imagine runtime options
             if ($objectType == 'branch') {
                 $thumbRuntimeOptions = [];
-                $thumbRuntimeOptions[$objectType . 'ImageofBranch'] = $this->imageHelper->getRuntimeOptions($objectType, 'imageofBranch', $context, $args);
+                $thumbRuntimeOptions[$objectType . 'ImageOfBranch'] = $this->imageHelper->getRuntimeOptions($objectType, 'imageOfBranch', $context, $args);
                 $parameters['thumbRuntimeOptions'] = $thumbRuntimeOptions;
             }
             if ($objectType == 'location') {

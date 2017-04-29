@@ -1,5 +1,5 @@
 {# purpose of this template: inclusion template for display of related services of location #}
-{% set hasAdminPermission = hasPermission('MUYourCityModule:ServiceofLocation:', '::', 'ACCESS_EDIT') %}
+{% set hasAdminPermission = hasPermission('MUYourCityModule:ServiceOfLocation:', '::', 'ACCESS_EDIT') %}
 {% if nolink is not defined %}
     {% set nolink = false %}
 {% endif %}
@@ -11,7 +11,7 @@
     {{ item|muyourcitymodule_formattedTitle }}
 {% if not nolink %}
     </a>
-    <a id="serviceofLocationItem{{ item.id }}Display" href="{{ path('muyourcitymodule_serviceoflocation_' ~ routeArea ~ 'display', { 'id': item.id, 'raw': 1 }) }}" title="{{ __('Open quick view window') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ item|muyourcitymodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
+    <a id="serviceOfLocationItem{{ item.id }}Display" href="{{ path('muyourcitymodule_serviceoflocation_' ~ routeArea ~ 'display', { 'id': item.id, 'raw': 1 }) }}" title="{{ __('Open quick view window') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ item|muyourcitymodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
 {% endif %}
 {% endspaceless %}
 </h4>

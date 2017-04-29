@@ -38,7 +38,7 @@ use MU\YourCityModule\Event\FilterDishEvent;
 use MU\YourCityModule\Event\FilterEventEvent;
 use MU\YourCityModule\Event\FilterProductEvent;
 use MU\YourCityModule\Event\FilterSpecialOfLocationEvent;
-use MU\YourCityModule\Event\FilterServiceofLocationEvent;
+use MU\YourCityModule\Event\FilterServiceOfLocationEvent;
 use MU\YourCityModule\Event\FilterAbonnementEvent;
 
 /**
@@ -384,7 +384,7 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
         $uploadFields = [];
         switch ($objectType) {
             case 'branch':
-                $uploadFields = ['imageofBranch'];
+                $uploadFields = ['imageOfBranch'];
                 break;
             case 'location':
                 $uploadFields = ['logoOfYourLocation', 'imageOfLocation'];

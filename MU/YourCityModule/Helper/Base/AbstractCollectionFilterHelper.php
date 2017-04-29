@@ -28,7 +28,7 @@ use MU\YourCityModule\Entity\DishEntity;
 use MU\YourCityModule\Entity\EventEntity;
 use MU\YourCityModule\Entity\ProductEntity;
 use MU\YourCityModule\Entity\SpecialOfLocationEntity;
-use MU\YourCityModule\Entity\ServiceofLocationEntity;
+use MU\YourCityModule\Entity\ServiceOfLocationEntity;
 use MU\YourCityModule\Entity\AbonnementEntity;
 use MU\YourCityModule\Entity\Factory\YourCityFactory;
 use MU\YourCityModule\Helper\CategoryHelper;
@@ -129,8 +129,8 @@ abstract class AbstractCollectionFilterHelper
         if ($objectType == 'specialOfLocation') {
             return $this->getViewQuickNavParametersForSpecialOfLocation($context, $args);
         }
-        if ($objectType == 'serviceofLocation') {
-            return $this->getViewQuickNavParametersForServiceofLocation($context, $args);
+        if ($objectType == 'serviceOfLocation') {
+            return $this->getViewQuickNavParametersForServiceOfLocation($context, $args);
         }
         if ($objectType == 'abonnement') {
             return $this->getViewQuickNavParametersForAbonnement($context, $args);
@@ -185,8 +185,8 @@ abstract class AbstractCollectionFilterHelper
         if ($objectType == 'specialOfLocation') {
             return $this->addCommonViewFiltersForSpecialOfLocation($qb);
         }
-        if ($objectType == 'serviceofLocation') {
-            return $this->addCommonViewFiltersForServiceofLocation($qb);
+        if ($objectType == 'serviceOfLocation') {
+            return $this->addCommonViewFiltersForServiceOfLocation($qb);
         }
         if ($objectType == 'abonnement') {
             return $this->addCommonViewFiltersForAbonnement($qb);
@@ -242,8 +242,8 @@ abstract class AbstractCollectionFilterHelper
         if ($objectType == 'specialOfLocation') {
             return $this->applyDefaultFiltersForSpecialOfLocation($qb, $parameters);
         }
-        if ($objectType == 'serviceofLocation') {
-            return $this->applyDefaultFiltersForServiceofLocation($qb, $parameters);
+        if ($objectType == 'serviceOfLocation') {
+            return $this->applyDefaultFiltersForServiceOfLocation($qb, $parameters);
         }
         if ($objectType == 'abonnement') {
             return $this->applyDefaultFiltersForAbonnement($qb, $parameters);
@@ -515,7 +515,7 @@ abstract class AbstractCollectionFilterHelper
      *
      * @return array List of template variables to be assigned
      */
-    protected function getViewQuickNavParametersForServiceofLocation($context = '', $args = [])
+    protected function getViewQuickNavParametersForServiceOfLocation($context = '', $args = [])
     {
         $parameters = [];
     
@@ -540,6 +540,20 @@ abstract class AbstractCollectionFilterHelper
         $parameters['location'] = $this->request->query->get('location', 0);
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
         $parameters['q'] = $this->request->query->get('q', '');
+        $parameters['showMenus'] = $this->request->query->get('showMenus', '');
+        $parameters['sendMessageForMenus'] = $this->request->query->get('sendMessageForMenus', '');
+        $parameters['showOffers'] = $this->request->query->get('showOffers', '');
+        $parameters['sendMessageForOffers'] = $this->request->query->get('sendMessageForOffers', '');
+        $parameters['showEvents'] = $this->request->query->get('showEvents', '');
+        $parameters['sendMessageForEvents'] = $this->request->query->get('sendMessageForEvents', '');
+        $parameters['showProducts'] = $this->request->query->get('showProducts', '');
+        $parameters['sendMessageForProducts'] = $this->request->query->get('sendMessageForProducts', '');
+        $parameters['showOptionOne'] = $this->request->query->get('showOptionOne', '');
+        $parameters['sendMessageToOptionOne'] = $this->request->query->get('sendMessageToOptionOne', '');
+        $parameters['showOptionTwo'] = $this->request->query->get('showOptionTwo', '');
+        $parameters['sendMessageToOptionTwo'] = $this->request->query->get('sendMessageToOptionTwo', '');
+        $parameters['showOptionThree'] = $this->request->query->get('showOptionThree', '');
+        $parameters['sendMessageToOptionThree'] = $this->request->query->get('sendMessageToOptionThree', '');
     
         return $parameters;
     }
@@ -1151,19 +1165,19 @@ abstract class AbstractCollectionFilterHelper
      *
      * @return QueryBuilder Enriched query builder instance
      */
-    protected function addCommonViewFiltersForServiceofLocation(QueryBuilder $qb)
+    protected function addCommonViewFiltersForServiceOfLocation(QueryBuilder $qb)
     {
         $routeName = $this->request->get('_route');
         if (false !== strpos($routeName, 'edit')) {
             return $qb;
         }
     
-        $parameters = $this->getViewQuickNavParametersForServiceofLocation();
+        $parameters = $this->getViewQuickNavParametersForServiceOfLocation();
         foreach ($parameters as $k => $v) {
             if (in_array($k, ['q', 'searchterm'])) {
                 // quick search
                 if (!empty($v)) {
-                    $repository = $this->entityFactory->getRepository('serviceofLocation');
+                    $repository = $this->entityFactory->getRepository('serviceOfLocation');
                     $qb = $repository->addSearchFilter($qb, $v);
                 }
             } else if (!is_array($v)) {
@@ -1183,7 +1197,7 @@ abstract class AbstractCollectionFilterHelper
             }
         }
     
-        $qb = $this->applyDefaultFiltersForServiceofLocation($qb, $parameters);
+        $qb = $this->applyDefaultFiltersForServiceOfLocation($qb, $parameters);
     
         return $qb;
     }
@@ -1209,6 +1223,13 @@ abstract class AbstractCollectionFilterHelper
                 if (!empty($v)) {
                     $repository = $this->entityFactory->getRepository('abonnement');
                     $qb = $repository->addSearchFilter($qb, $v);
+                }
+            } elseif (in_array($k, ['showMenus', 'sendMessageForMenus', 'showOffers', 'sendMessageForOffers', 'showEvents', 'sendMessageForEvents', 'showProducts', 'sendMessageForProducts', 'showOptionOne', 'sendMessageToOptionOne', 'showOptionTwo', 'sendMessageToOptionTwo', 'showOptionThree', 'sendMessageToOptionThree'])) {
+                // boolean filter
+                if ($v == 'no') {
+                    $qb->andWhere('tbl.' . $k . ' = 0');
+                } elseif ($v == 'yes' || $v == '1') {
+                    $qb->andWhere('tbl.' . $k . ' = 1');
                 }
             } else if (!is_array($v)) {
                 // field filter
@@ -1394,7 +1415,7 @@ abstract class AbstractCollectionFilterHelper
         }
         
         $endDate = $this->request->query->get('enddate', date('Y-m-d H:i:s'));
-        $qb->andWhere('tbl.enddate >= :endDate')
+        $qb->andWhere('(tbl.enddate >= :endDate OR tbl.enddate IS NULL)')
            ->setParameter('endDate', $endDate);
     
         return $qb;
@@ -1580,10 +1601,10 @@ abstract class AbstractCollectionFilterHelper
      *
      * @return QueryBuilder Enriched query builder instance
      */
-    protected function applyDefaultFiltersForServiceofLocation(QueryBuilder $qb, $parameters = [])
+    protected function applyDefaultFiltersForServiceOfLocation(QueryBuilder $qb, $parameters = [])
     {
         $routeName = $this->request->get('_route');
-        $isAdminArea = false !== strpos($routeName, 'muyourcitymodule_serviceof location_admin');
+        $isAdminArea = false !== strpos($routeName, 'muyourcitymodule_service of location_admin');
         if ($isAdminArea) {
             return $qb;
         }
@@ -1658,8 +1679,8 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchDescriptionForGoogle'] = '%' . $fragment . '%';
             $filters[] = 'tbl.description LIKE :searchDescription';
             $parameters['searchDescription'] = '%' . $fragment . '%';
-            $filters[] = 'tbl.imageofBranch = :searchImageofBranch';
-            $parameters['searchImageofBranch'] = $fragment;
+            $filters[] = 'tbl.imageOfBranch = :searchImageOfBranch';
+            $parameters['searchImageOfBranch'] = $fragment;
         }
         if ($objectType == 'location') {
             $filters[] = 'tbl.workflowState = :searchWorkflowState';
@@ -1885,7 +1906,7 @@ abstract class AbstractCollectionFilterHelper
             $filters[] = 'tbl.iconForSpecial LIKE :searchIconForSpecial';
             $parameters['searchIconForSpecial'] = '%' . $fragment . '%';
         }
-        if ($objectType == 'serviceofLocation') {
+        if ($objectType == 'serviceOfLocation') {
             $filters[] = 'tbl.name LIKE :searchName';
             $parameters['searchName'] = '%' . $fragment . '%';
             $filters[] = 'tbl.description LIKE :searchDescription';
@@ -1898,6 +1919,8 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchWorkflowState'] = $fragment;
             $filters[] = 'tbl.name LIKE :searchName';
             $parameters['searchName'] = '%' . $fragment . '%';
+            $filters[] = 'tbl.positionOfAbo = :searchPositionOfAbo';
+            $parameters['searchPositionOfAbo'] = $fragment;
         }
     
         $qb->andWhere('(' . implode(' OR ', $filters) . ')');

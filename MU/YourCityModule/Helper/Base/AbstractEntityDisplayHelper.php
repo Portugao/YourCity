@@ -28,7 +28,7 @@ use MU\YourCityModule\Entity\DishEntity;
 use MU\YourCityModule\Entity\EventEntity;
 use MU\YourCityModule\Entity\ProductEntity;
 use MU\YourCityModule\Entity\SpecialOfLocationEntity;
-use MU\YourCityModule\Entity\ServiceofLocationEntity;
+use MU\YourCityModule\Entity\ServiceOfLocationEntity;
 use MU\YourCityModule\Entity\AbonnementEntity;
 use MU\YourCityModule\Helper\ListEntriesHelper;
 
@@ -127,8 +127,8 @@ abstract class AbstractEntityDisplayHelper
         if ($entity instanceof SpecialOfLocationEntity) {
             return $this->formatSpecialOfLocation($entity);
         }
-        if ($entity instanceof ServiceofLocationEntity) {
-            return $this->formatServiceofLocation($entity);
+        if ($entity instanceof ServiceOfLocationEntity) {
+            return $this->formatServiceOfLocation($entity);
         }
         if ($entity instanceof AbonnementEntity) {
             return $this->formatAbonnement($entity);
@@ -312,11 +312,11 @@ abstract class AbstractEntityDisplayHelper
     /**
      * Returns the formatted title for a given entity.
      *
-     * @param ServiceofLocationEntity $entity The given entity instance
+     * @param ServiceOfLocationEntity $entity The given entity instance
      *
      * @return string The formatted title
      */
-    protected function formatServiceofLocation(ServiceofLocationEntity $entity)
+    protected function formatServiceOfLocation(ServiceOfLocationEntity $entity)
     {
         return $this->translator->__f('%name%', [
             '%name%' => $entity->getName()
@@ -382,7 +382,7 @@ abstract class AbstractEntityDisplayHelper
         if ($objectType == 'specialOfLocation') {
             return 'name';
         }
-        if ($objectType == 'serviceofLocation') {
+        if ($objectType == 'serviceOfLocation') {
             return 'name';
         }
         if ($objectType == 'abonnement') {
@@ -437,7 +437,7 @@ abstract class AbstractEntityDisplayHelper
         if ($objectType == 'specialOfLocation') {
             return 'description';
         }
-        if ($objectType == 'serviceofLocation') {
+        if ($objectType == 'serviceOfLocation') {
             return 'description';
         }
         if ($objectType == 'abonnement') {
@@ -457,7 +457,7 @@ abstract class AbstractEntityDisplayHelper
     public function getPreviewFieldName($objectType)
     {
         if ($objectType == 'branch') {
-            return 'imageofBranch';
+            return 'imageOfBranch';
         }
         if ($objectType == 'location') {
             return 'logoOfYourLocation';
@@ -530,7 +530,7 @@ abstract class AbstractEntityDisplayHelper
         if ($objectType == 'specialOfLocation') {
             return 'createdDate';
         }
-        if ($objectType == 'serviceofLocation') {
+        if ($objectType == 'serviceOfLocation') {
             return 'createdDate';
         }
         if ($objectType == 'abonnement') {

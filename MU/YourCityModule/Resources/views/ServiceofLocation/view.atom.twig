@@ -15,7 +15,7 @@
     <link rel="alternate" type="text/html" hreflang="{{ app.request.locale }}" href="{{ url('muyourcitymodule_serviceoflocation_' ~ routeArea ~ 'index') }}" />
     <link rel="self" type="application/atom+xml" href="{{ app.request.getSchemeAndHttpHost() ~ app.request.getBasePath() }}" />
     <rights>Copyright (c) {{ 'now'|date('Y') }}, {{ app.request.getSchemeAndHttpHost()|e }}</rights>
-{% for serviceofLocation in items %}
+{% for serviceOfLocation in items %}
     {{ block('entry') }}
 {% endfor %}
 </feed>
@@ -25,32 +25,32 @@
     </entry>
 {% endblock %}
 {% block entry_content %}
-    <title type="html">{{ serviceofLocation|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.servicesoflocation') }}</title>
-    <link rel="alternate" type="text/html" href="{{ url('muyourcitymodule_serviceoflocation_' ~ routeArea ~ 'display', { 'id': serviceofLocation.id }) }}" />
-    {% set uniqueID %}tag:{{ app.request.getSchemeAndHttpHost()|replace({ 'http://': '', '/': '' }) }},{{ serviceofLocation.createdDate|date('Y-m-d') }}:{{ path('muyourcitymodule_serviceoflocation_' ~ routeArea ~ 'display', { 'id': serviceofLocation.id }) }}{% endset %}
+    <title type="html">{{ serviceOfLocation|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.servicesoflocation') }}</title>
+    <link rel="alternate" type="text/html" href="{{ url('muyourcitymodule_serviceoflocation_' ~ routeArea ~ 'display', { 'id': serviceOfLocation.id }) }}" />
+    {% set uniqueID %}tag:{{ app.request.getSchemeAndHttpHost()|replace({ 'http://': '', '/': '' }) }},{{ serviceOfLocation.createdDate|date('Y-m-d') }}:{{ path('muyourcitymodule_serviceoflocation_' ~ routeArea ~ 'display', { 'id': serviceOfLocation.id }) }}{% endset %}
     <id>{{ uniqueID }}</id>
-    {% if serviceofLocation.updatedDate|default %}
-        <updated>{{ serviceofLocation.updatedDate|date('Y-m-dTH:M:SZ') }}</updated>
+    {% if serviceOfLocation.updatedDate|default %}
+        <updated>{{ serviceOfLocation.updatedDate|date('Y-m-dTH:M:SZ') }}</updated>
     {% endif %}
-    {% if serviceofLocation.createdDate|default %}
-        <published>{{ serviceofLocation.createdDate|date('Y-m-dTH:M:SZ') }}</published>
+    {% if serviceOfLocation.createdDate|default %}
+        <published>{{ serviceOfLocation.createdDate|date('Y-m-dTH:M:SZ') }}</published>
     {% endif %}
-    {% if serviceofLocation.createdBy|default and serviceofLocation.createdBy.getUid() > 0 %}
-        {% set creatorAttributes = serviceofLocation.createdBy.getAttributes() %}
+    {% if serviceOfLocation.createdBy|default and serviceOfLocation.createdBy.getUid() > 0 %}
+        {% set creatorAttributes = serviceOfLocation.createdBy.getAttributes() %}
         <author>
-           <name>{{ creatorAttributes.get('realname')|default(creatorAttributes.get('name'))|default(serviceofLocation.createdBy.getUname()) }}</name>
+           <name>{{ creatorAttributes.get('realname')|default(creatorAttributes.get('name'))|default(serviceOfLocation.createdBy.getUname()) }}</name>
            <uri>{{ creatorAttributes.get('_UYOURHOMEPAGE')|default('-') }}</uri>
-           <email>{{ serviceofLocation.createdBy.getEmail() }}</email>
+           <email>{{ serviceOfLocation.createdBy.getEmail() }}</email>
         </author>
     {% endif %}
     <summary type="html">
         <![CDATA[
-        {{ serviceofLocation.description|truncate(150, true, '&hellip;')|default('-') }}
+        {{ serviceOfLocation.description|truncate(150, true, '&hellip;')|default('-') }}
         ]]>
     </summary>
     <content type="html">
         <![CDATA[
-        {{ serviceofLocation.name|replace({ '<br>': '<br />' }) }}
+        {{ serviceOfLocation.name|replace({ '<br>': '<br />' }) }}
         ]]>
     </content>
 {% endblock %}

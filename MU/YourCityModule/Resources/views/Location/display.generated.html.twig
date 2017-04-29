@@ -450,15 +450,15 @@
     
     {% if location.servicesOfLocation|default %}
         {{ include(
-            '@MUYourCityModule/ServiceofLocation/includeDisplayItemListMany.html.twig',
+            '@MUYourCityModule/ServiceOfLocation/includeDisplayItemListMany.html.twig',
             { items: location.servicesOfLocation }
         ) }}
     {% endif %}
     
-    {% set mayManage = hasPermission('MUYourCityModule:ServiceofLocation:', '::', 'ACCESS_EDIT') %}
+    {% set mayManage = hasPermission('MUYourCityModule:ServiceOfLocation:', '::', 'ACCESS_EDIT') %}
     {% if mayManage %}
         <p class="managelink">
-            {% set createTitle = __('Create serviceof location') %}
+            {% set createTitle = __('Create service of location') %}
             <a href="{{ path('muyourcitymodule_serviceoflocation_' ~ routeArea ~ 'edit', { locations: location.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
         </p>
     {% endif %}

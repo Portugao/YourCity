@@ -17,8 +17,8 @@ use Gedmo\Translatable\Entity\Repository\TranslationRepository;
 /**
  * Repository class used to implement own convenience methods for performing certain DQL queries.
  *
- * This is the base repository class for serviceof location translation entities.
+ * This is the base repository class for service of location translation entities.
  */
-abstract class AbstractServiceofLocationTranslationRepository extends TranslationRepository
+abstract class AbstractServiceOfLocationTranslationRepository extends TranslationRepository
 {
 }

@@ -4,7 +4,7 @@
     <name><![CDATA[{{ branch.name }}]]></name>
     <descriptionForGoogle><![CDATA[{{ branch.descriptionForGoogle }}]]></descriptionForGoogle>
     <description><![CDATA[{{ branch.description|safeHtml }}]]></description>
-    <imageofBranch{% if branch.imageofBranch is not empty and branch.imageofBranchMeta|default %} extension="{{ branch.imageofBranchMeta.extension }}" size="{{ branch.imageofBranchMeta.size }}" isImage="{% if branch.imageofBranchMeta.isImage %}true{% else %}false{% endif %}"{% if branch.imageofBranchMeta.isImage %} width="{{ branch.imageofBranchMeta.width }}" height="{{ branch.imageofBranchMeta.height }}" format="{{ branch.imageofBranchMeta.format }}"{% endif %}{% endif %}>{{ branch.imageofBranch }}</imageofBranch>
+    <imageOfBranch{% if branch.imageOfBranch is not empty and branch.imageOfBranchMeta|default %} extension="{{ branch.imageOfBranchMeta.extension }}" size="{{ branch.imageOfBranchMeta.size }}" isImage="{% if branch.imageOfBranchMeta.isImage %}true{% else %}false{% endif %}"{% if branch.imageOfBranchMeta.isImage %} width="{{ branch.imageOfBranchMeta.width }}" height="{{ branch.imageOfBranchMeta.height }}" format="{{ branch.imageOfBranchMeta.format }}"{% endif %}{% endif %}>{{ branch.imageOfBranch }}</imageOfBranch>
     <workflowState>{{ branch.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
     <locations>
     {% if branch.locations|default %}

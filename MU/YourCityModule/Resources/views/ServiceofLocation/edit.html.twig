@@ -1,4 +1,4 @@
-{# purpose of this template: build the form to edit an instance of serviceof location #}
+{# purpose of this template: build the form to edit an instance of service of location #}
 {% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
 {% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
 
@@ -8,7 +8,7 @@
     {{ pageAddAsset('javascript', zasset('@MUYourCityModule:js/MUYourCityModule.EditFunctions.js'), 99) }}
     {{ pageAddAsset('javascript', asset('typeahead/typeahead.bundle.min.js')) }}
 {% endblock %}
-{% block title mode == 'create' ? __('Create serviceof location') : __('Edit serviceof location') %}
+{% block title mode == 'create' ? __('Create service of location') : __('Edit service of location') %}
 {% block admin_page_icon mode == 'create' ? 'plus' : 'pencil-square-o' %}
 {% block content %}
     <div class="muyourcitymodule-serviceoflocation muyourcitymodule-edit">
@@ -16,7 +16,7 @@
             '@MUYourCityModule/Form/bootstrap_3.html.twig',
             'ZikulaFormExtensionBundle:Form:form_div_layout.html.twig'
         ] %}
-        {{ form_start(form, {attr: {id: 'serviceofLocationEditForm', class: 'muyourcity-edit-form'}}) }}
+        {{ form_start(form, {attr: {id: 'serviceOfLocationEditForm', class: 'muyourcity-edit-form'}}) }}
         {{ form_errors(form) }}
         {% if translationsEnabled == true %}
             <div class="zikula-bootstrap-tab-container">

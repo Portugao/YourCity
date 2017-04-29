@@ -27,9 +27,9 @@ use MU\YourCityModule\Helper\ListEntriesHelper;
 use MU\YourCityModule\Helper\TranslatableHelper;
 
 /**
- * Serviceof location editing form type base class.
+ * Service of location editing form type base class.
  */
-abstract class AbstractServiceofLocationType extends AbstractType
+abstract class AbstractServiceOfLocationType extends AbstractType
 {
     use TranslatorTrait;
 
@@ -69,7 +69,7 @@ abstract class AbstractServiceofLocationType extends AbstractType
     protected $featureActivationHelper;
 
     /**
-     * ServiceofLocationType constructor.
+     * ServiceOfLocationType constructor.
      *
      * @param TranslatorInterface $translator     Translator service instance
      * @param EntityFactory       $entityFactory EntityFactory service instance
@@ -141,7 +141,7 @@ abstract class AbstractServiceofLocationType extends AbstractType
             'attr' => [
                 'maxlength' => 100,
                 'class' => '',
-                'title' => $this->__('Enter the name of the serviceof location')
+                'title' => $this->__('Enter the name of the service of location')
             ],
             'required' => true,
         ]);
@@ -152,17 +152,17 @@ abstract class AbstractServiceofLocationType extends AbstractType
             'attr' => [
                 'maxlength' => 2000,
                 'class' => '',
-                'title' => $this->__('Enter the description of the serviceof location')
+                'title' => $this->__('Enter the description of the service of location')
             ],
             'required' => false,
         ]);
         
-        if ($this->variableApi->getSystemVar('multilingual') && $this->featureActivationHelper->isEnabled(FeatureActivationHelper::TRANSLATIONS, 'serviceofLocation')) {
-            $supportedLanguages = $this->translatableHelper->getSupportedLanguages('serviceofLocation');
+        if ($this->variableApi->getSystemVar('multilingual') && $this->featureActivationHelper->isEnabled(FeatureActivationHelper::TRANSLATIONS, 'serviceOfLocation')) {
+            $supportedLanguages = $this->translatableHelper->getSupportedLanguages('serviceOfLocation');
             if (is_array($supportedLanguages) && count($supportedLanguages) > 1) {
                 $currentLanguage = $this->translatableHelper->getCurrentLanguage();
-                $translatableFields = $this->translatableHelper->getTranslatableFields('serviceofLocation');
-                $mandatoryFields = $this->translatableHelper->getMandatoryFields('serviceofLocation');
+                $translatableFields = $this->translatableHelper->getTranslatableFields('serviceOfLocation');
+                $mandatoryFields = $this->translatableHelper->getMandatoryFields('serviceOfLocation');
                 foreach ($supportedLanguages as $language) {
                     if ($language == $currentLanguage) {
                         continue;
@@ -187,7 +187,7 @@ abstract class AbstractServiceofLocationType extends AbstractType
             'attr' => [
                 'maxlength' => 255,
                 'class' => '',
-                'title' => $this->__('Enter the icon for service of the serviceof location')
+                'title' => $this->__('Enter the icon for service of the service of location')
             ],
             'required' => false,
         ]);
@@ -303,9 +303,9 @@ abstract class AbstractServiceofLocationType extends AbstractType
         $resolver
             ->setDefaults([
                 // define class for underlying data (required for embedding forms)
-                'data_class' => 'MU\YourCityModule\Entity\ServiceofLocationEntity',
+                'data_class' => 'MU\YourCityModule\Entity\ServiceOfLocationEntity',
                 'empty_data' => function (FormInterface $form) {
-                    return $this->entityFactory->createServiceofLocation();
+                    return $this->entityFactory->createServiceOfLocation();
                 },
                 'error_mapping' => [
                 ],

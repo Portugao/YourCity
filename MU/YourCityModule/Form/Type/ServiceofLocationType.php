@@ -12,12 +12,12 @@
 
 namespace MU\YourCityModule\Form\Type;
 
-use MU\YourCityModule\Form\Type\Base\AbstractServiceofLocationType;
+use MU\YourCityModule\Form\Type\Base\AbstractServiceOfLocationType;
 
 /**
- * Serviceof location editing form type implementation class.
+ * Service of location editing form type implementation class.
  */
-class ServiceofLocationType extends AbstractServiceofLocationType
+class ServiceOfLocationType extends AbstractServiceOfLocationType
 {
-    // feel free to extend the serviceof location editing form type class here
+    // feel free to extend the service of location editing form type class here
 }

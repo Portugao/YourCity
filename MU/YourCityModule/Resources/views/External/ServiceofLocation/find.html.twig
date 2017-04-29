@@ -1,7 +1,7 @@
 {# Purpose of this template: Display a popup selector of services of location for scribite integration #}
 {% set useFinder = true %}
 {% extends 'MUYourCityModule::raw.html.twig' %}
-{% block title __('Search and select serviceof location') %}
+{% block title __('Search and select service of location') %}
 {% block content %}
     <div class="container">
         <div class="zikula-bootstrap-tab-container">
@@ -43,8 +43,8 @@
             {% if 'specialOfLocation' in activatedObjectTypes %}
                 <li{{ objectType == 'specialOfLocation' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'specialOfLocation', 'editor': editorName}) }}" title="{{ __('Search and select special of location') }}">{{ __('Specials of location') }}</a></li>
             {% endif %}
-            {% if 'serviceofLocation' in activatedObjectTypes %}
-                <li{{ objectType == 'serviceofLocation' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'serviceofLocation', 'editor': editorName}) }}" title="{{ __('Search and select serviceof location') }}">{{ __('Services of location') }}</a></li>
+            {% if 'serviceOfLocation' in activatedObjectTypes %}
+                <li{{ objectType == 'serviceOfLocation' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'serviceOfLocation', 'editor': editorName}) }}" title="{{ __('Search and select service of location') }}">{{ __('Services of location') }}</a></li>
             {% endif %}
             </ul>
         </div>
@@ -55,24 +55,24 @@
         {{ form_start(finderForm, {attr: { id: 'mUYourCityModuleSelectorForm' }}) }}
         {{ form_errors(finderForm) }}
         <fieldset>
-            <legend>{{ __('Search and select serviceof location') }}</legend>
+            <legend>{{ __('Search and select service of location') }}</legend>
             {{ form_row(finderForm.pasteAs) }}
             <br />
             <div class="form-group">
-                <label class="col-sm-3 control-label">{{ __('Serviceof location') }}:</label>
+                <label class="col-sm-3 control-label">{{ __('Service of location') }}:</label>
                 <div class="col-sm-9">
                     <div id="muyourcitymoduleItemContainer">
                         <ul>
-                            {% for serviceofLocation in items %}
+                            {% for serviceOfLocation in items %}
                                 <li>
-                                    {% set itemId = serviceofLocation.createCompositeIdentifier() %}
+                                    {% set itemId = serviceOfLocation.createCompositeIdentifier() %}
                                     <a href="#" data-itemid="{{ itemId }}">
-                                        {{ serviceofLocation|muyourcitymodule_formattedTitle }}
+                                        {{ serviceOfLocation|muyourcitymodule_formattedTitle }}
                                     </a>
-                                    <input type="hidden" id="path{{ itemId }}" value="{{ path('muyourcitymodule_serviceoflocation_display', { 'id': serviceofLocation.id }) }}" />
-                                    <input type="hidden" id="url{{ itemId }}" value="{{ url('muyourcitymodule_serviceoflocation_display', { 'id': serviceofLocation.id }) }}" />
-                                    <input type="hidden" id="title{{ itemId }}" value="{{ serviceofLocation|muyourcitymodule_formattedTitle|e('html_attr') }}" />
-                                    <input type="hidden" id="desc{{ itemId }}" value="{% set description %}{% if serviceofLocation.description is not empty %}{{ serviceofLocation.description }}{% endif %}
+                                    <input type="hidden" id="path{{ itemId }}" value="{{ path('muyourcitymodule_serviceoflocation_display', { 'id': serviceOfLocation.id }) }}" />
+                                    <input type="hidden" id="url{{ itemId }}" value="{{ url('muyourcitymodule_serviceoflocation_display', { 'id': serviceOfLocation.id }) }}" />
+                                    <input type="hidden" id="title{{ itemId }}" value="{{ serviceOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}" />
+                                    <input type="hidden" id="desc{{ itemId }}" value="{% set description %}{% if serviceOfLocation.description is not empty %}{{ serviceOfLocation.description }}{% endif %}
                                     {% endset %}{{ description|striptags|e('html_attr') }}" />
                                 </li>
                             {% else %}
@@ -103,7 +103,7 @@
     {#
     <div class="muyourcitymodule-finderform">
         <fieldset>
-            {{ render(controller('MUYourCityModule:ServiceofLocation:edit')) }}
+            {{ render(controller('MUYourCityModule:ServiceOfLocation:edit')) }}
         </fieldset>
     </div>
     #}

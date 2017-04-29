@@ -78,7 +78,7 @@ abstract class AbstractEntityFactory
         $repository = $this->objectManager->getRepository($entityClass);
         $repository->setCollectionFilterHelper($this->collectionFilterHelper);
 
-        if (in_array($objectType, ['branch', 'location', 'part', 'imageOfLocation', 'fileOfLocation', 'offer', 'menuOfLocation', 'partOfMenu', 'dish', 'event', 'product', 'specialOfLocation', 'serviceofLocation'])) {
+        if (in_array($objectType, ['branch', 'location', 'part', 'imageOfLocation', 'fileOfLocation', 'offer', 'menuOfLocation', 'partOfMenu', 'dish', 'event', 'product', 'specialOfLocation', 'serviceOfLocation'])) {
             $repository->setTranslationsEnabled($this->featureActivationHelper->isEnabled(FeatureActivationHelper::TRANSLATIONS, $objectType));
         }
 
@@ -278,17 +278,17 @@ abstract class AbstractEntityFactory
     }
 
     /**
-     * Creates a new serviceofLocation instance.
+     * Creates a new serviceOfLocation instance.
      *
-     * @return MU\YourCityModule\Entity\serviceofLocationEntity The newly created entity instance
+     * @return MU\YourCityModule\Entity\serviceOfLocationEntity The newly created entity instance
      */
-    public function createServiceofLocation()
+    public function createServiceOfLocation()
     {
-        $entityClass = 'MU\\YourCityModule\\Entity\\ServiceofLocationEntity';
+        $entityClass = 'MU\\YourCityModule\\Entity\\ServiceOfLocationEntity';
 
         $entity = new $entityClass();
 
-        $this->entityInitialiser->initServiceofLocation($entity);
+        $this->entityInitialiser->initServiceOfLocation($entity);
 
         return $entity;
     }

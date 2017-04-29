@@ -12,16 +12,16 @@
 
 namespace MU\YourCityModule\Entity;
 
-use MU\YourCityModule\Entity\Base\AbstractServiceofLocationTranslationEntity as BaseEntity;
+use MU\YourCityModule\Entity\Base\AbstractServiceOfLocationTranslationEntity as BaseEntity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Entity extension domain class storing serviceof location translations.
+ * Entity extension domain class storing service of location translations.
  *
- * This is the concrete translation class for serviceof location entities.
+ * This is the concrete translation class for service of location entities.
  *
- * @ORM\Entity(repositoryClass="MU\YourCityModule\Entity\Repository\ServiceofLocationTranslationRepository")
+ * @ORM\Entity(repositoryClass="MU\YourCityModule\Entity\Repository\ServiceOfLocationTranslationRepository")
  * @ORM\Table(name="mu_yourcity_serviceoflocation_translation",
  *     indexes={
  *         @ORM\Index(name="translations_lookup_idx", columns={
@@ -30,7 +30,7 @@ use Doctrine\ORM\Mapping as ORM;
  *     }
  * )
  */
-class ServiceofLocationTranslationEntity extends BaseEntity
+class ServiceOfLocationTranslationEntity extends BaseEntity
 {
     // feel free to add your own methods here
 }

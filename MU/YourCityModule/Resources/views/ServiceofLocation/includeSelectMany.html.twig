@@ -15,7 +15,7 @@
         {{ form_row(attribute(form, alias)) }}
         <div class="muyourcitymodule-relation-leftside">
             {{ include(
-                '@MUYourCityModule/ServiceofLocation/includeSelectItemListMany.html.twig',
+                '@MUYourCityModule/ServiceOfLocation/includeSelectItemListMany.html.twig',
                 attribute(linkingItem, alias) is defined ? { items: attribute(linkingItem, alias) } : {}
             ) }}
         </div>

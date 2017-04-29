@@ -217,7 +217,7 @@ abstract class AbstractListEntriesHelper
                         break;
                 }
                 break;
-            case 'serviceofLocation':
+            case 'serviceOfLocation':
                 switch ($fieldName) {
                     case 'workflowState':
                         $result = false;
@@ -340,10 +340,10 @@ abstract class AbstractListEntriesHelper
                         break;
                 }
                 break;
-            case 'serviceofLocation':
+            case 'serviceOfLocation':
                 switch ($fieldName) {
                     case 'workflowState':
-                        $entries = $this->getWorkflowStateEntriesForServiceofLocation();
+                        $entries = $this->getWorkflowStateEntriesForServiceOfLocation();
                         break;
                 }
                 break;
@@ -822,7 +822,7 @@ abstract class AbstractListEntriesHelper
      *
      * @return array Array with desired list entries
      */
-    public function getWorkflowStateEntriesForServiceofLocation()
+    public function getWorkflowStateEntriesForServiceOfLocation()
     {
         $states = [];
         $states[] = [

@@ -24,7 +24,7 @@ use MU\YourCityModule\Entity\DishEntity;
 use MU\YourCityModule\Entity\EventEntity;
 use MU\YourCityModule\Entity\ProductEntity;
 use MU\YourCityModule\Entity\SpecialOfLocationEntity;
-use MU\YourCityModule\Entity\ServiceofLocationEntity;
+use MU\YourCityModule\Entity\ServiceOfLocationEntity;
 use MU\YourCityModule\Entity\AbonnementEntity;
 use MU\YourCityModule\Helper\ListEntriesHelper;
 
@@ -234,13 +234,13 @@ abstract class AbstractEntityInitialiser
     }
 
     /**
-     * Initialises a given serviceofLocation instance.
+     * Initialises a given serviceOfLocation instance.
      *
-     * @param ServiceofLocationEntity $entity The newly created entity instance
+     * @param ServiceOfLocationEntity $entity The newly created entity instance
      *
-     * @return ServiceofLocationEntity The updated entity instance
+     * @return ServiceOfLocationEntity The updated entity instance
      */
-    public function initServiceofLocation(ServiceofLocationEntity $entity)
+    public function initServiceOfLocation(ServiceOfLocationEntity $entity)
     {
 
         return $entity;

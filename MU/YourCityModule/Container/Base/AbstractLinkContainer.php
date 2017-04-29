@@ -245,7 +245,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             }
 
             if (true === $this->variableApi->get('MUYourCityModule', 'linkOwnServicesOfLocationOnAccountPage', true)) {
-                $objectType = 'serviceofLocation';
+                $objectType = 'serviceOfLocation';
                 if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
                     $links[] = [
                         'url' => $this->router->generate('muyourcitymodule_' . strtolower($objectType) . '_view', ['own' => 1]),
@@ -395,12 +395,12 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
                 'title' => $this->__('Special of location list', 'muyourcitymodule')
             ];
         }
-        if (in_array('serviceofLocation', $allowedObjectTypes)
-            && $this->permissionApi->hasPermission($this->getBundleName() . ':ServiceofLocation:', '::', $permLevel)) {
+        if (in_array('serviceOfLocation', $allowedObjectTypes)
+            && $this->permissionApi->hasPermission($this->getBundleName() . ':ServiceOfLocation:', '::', $permLevel)) {
             $links[] = [
                 'url' => $this->router->generate('muyourcitymodule_serviceoflocation_' . $routeArea . 'view'),
                 'text' => $this->__('Services of location', 'muyourcitymodule'),
-                'title' => $this->__('Serviceof location list', 'muyourcitymodule')
+                'title' => $this->__('Service of location list', 'muyourcitymodule')
             ];
         }
         if (in_array('abonnement', $allowedObjectTypes)

@@ -154,14 +154,9 @@ abstract class AbstractOfferType extends AbstractType
         
         $builder->add('name', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
             'label' => $this->__('Name') . ':',
-            'label_attr' => [
-                'class' => 'tooltips',
-                'title' => $this->__('Only 100 characters; better only 57.')
-            ],
-            'help' => $this->__('Only 100 characters; better only 57.'),
             'empty_data' => '',
             'attr' => [
-                'maxlength' => 100,
+                'maxlength' => 255,
                 'class' => '',
                 'title' => $this->__('Enter the name of the offer')
             ],
@@ -302,7 +297,7 @@ abstract class AbstractOfferType extends AbstractType
                 'class' => '',
                 'title' => $this->__('Enter the enddate of the offer')
             ],
-            'required' => true,
+            'required' => false,
             'empty_data' => date('Y-m-d H:i:s'),
             'with_seconds' => true,
             'date_widget' => 'single_text',

@@ -181,7 +181,7 @@ abstract class AbstractSearchHelper extends AbstractSearchable
                     $whereArray[] = 'tbl.name';
                     $whereArray[] = 'tbl.descriptionForGoogle';
                     $whereArray[] = 'tbl.description';
-                    $whereArray[] = 'tbl.imageofBranch';
+                    $whereArray[] = 'tbl.imageOfBranch';
                     break;
                 case 'location':
                     $whereArray[] = 'tbl.workflowState';
@@ -266,7 +266,7 @@ abstract class AbstractSearchHelper extends AbstractSearchable
                     $whereArray[] = 'tbl.description';
                     $whereArray[] = 'tbl.iconForSpecial';
                     break;
-                case 'serviceofLocation':
+                case 'serviceOfLocation':
                     $whereArray[] = 'tbl.workflowState';
                     $whereArray[] = 'tbl.name';
                     $whereArray[] = 'tbl.description';
@@ -302,7 +302,7 @@ abstract class AbstractSearchHelper extends AbstractSearchable
     
             $descriptionFieldName = $this->entityDisplayHelper->getDescriptionFieldName($objectType);
     
-            $entitiesWithDisplayAction = ['branch', 'location', 'part', 'imageOfLocation', 'fileOfLocation', 'offer', 'menuOfLocation', 'partOfMenu', 'dish', 'event', 'product', 'specialOfLocation', 'serviceofLocation'];
+            $entitiesWithDisplayAction = ['branch', 'location', 'part', 'imageOfLocation', 'fileOfLocation', 'offer', 'menuOfLocation', 'partOfMenu', 'dish', 'event', 'product', 'specialOfLocation', 'serviceOfLocation'];
     
             foreach ($entities as $entity) {
                 $urlArgs = $entity->createUrlArgs();
@@ -401,7 +401,7 @@ abstract class AbstractSearchHelper extends AbstractSearchable
                 'label' => $this->__('Specials of location')
             ],
             'mUYourCityModuleServicesOfLocation' => [
-                'value' => 'serviceofLocation',
+                'value' => 'serviceOfLocation',
                 'label' => $this->__('Services of location')
             ],
             'mUYourCityModuleAbonnements' => [

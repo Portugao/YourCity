@@ -76,7 +76,7 @@ function smarty_function_muyourcitymoduleObjectTypeSelector($params, $view)
     ];
     $result[] = [
         'text' => __('Services of location', $dom),
-        'value' => 'serviceofLocation'
+        'value' => 'serviceOfLocation'
     ];
     $result[] = [
         'text' => __('Abonnements', $dom),

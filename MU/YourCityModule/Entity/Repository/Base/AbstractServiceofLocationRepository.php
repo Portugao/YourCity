@@ -22,15 +22,15 @@ use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\UsersModule\Api\CurrentUserApi;
-use MU\YourCityModule\Entity\ServiceofLocationEntity;
+use MU\YourCityModule\Entity\ServiceOfLocationEntity;
 use MU\YourCityModule\Helper\CollectionFilterHelper;
 
 /**
  * Repository class used to implement own convenience methods for performing certain DQL queries.
  *
- * This is the base repository class for serviceof location entities.
+ * This is the base repository class for service of location entities.
  */
-abstract class AbstractServiceofLocationRepository extends EntityRepository
+abstract class AbstractServiceOfLocationRepository extends EntityRepository
 {
     /**
      * @var string The default sorting field/expression
@@ -56,7 +56,6 @@ abstract class AbstractServiceofLocationRepository extends EntityRepository
     {
         return [
             'name',
-            'description',
             'iconForService',
             'createdBy',
             'createdDate',
@@ -147,12 +146,12 @@ abstract class AbstractServiceofLocationRepository extends EntityRepository
     public function truncateTable(LoggerInterface $logger)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->delete('MU\YourCityModule\Entity\ServiceofLocationEntity', 'tbl');
+        $qb->delete('MU\YourCityModule\Entity\ServiceOfLocationEntity', 'tbl');
         $query = $qb->getQuery();
     
         $query->execute();
     
-        $logArgs = ['app' => 'MUYourCityModule', 'entity' => 'serviceof location'];
+        $logArgs = ['app' => 'MUYourCityModule', 'entity' => 'service of location'];
         $logger->debug('{app}: Truncated the {entity} entity table.', $logArgs);
     }
     /**
@@ -177,7 +176,7 @@ abstract class AbstractServiceofLocationRepository extends EntityRepository
         }
     
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->update('MU\YourCityModule\Entity\ServiceofLocationEntity', 'tbl')
+        $qb->update('MU\YourCityModule\Entity\ServiceOfLocationEntity', 'tbl')
            ->set('tbl.createdBy', $newUserId)
            ->where('tbl.createdBy = :creator')
            ->setParameter('creator', $userId);
@@ -210,7 +209,7 @@ abstract class AbstractServiceofLocationRepository extends EntityRepository
         }
     
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->update('MU\YourCityModule\Entity\ServiceofLocationEntity', 'tbl')
+        $qb->update('MU\YourCityModule\Entity\ServiceOfLocationEntity', 'tbl')
            ->set('tbl.updatedBy', $newUserId)
            ->where('tbl.updatedBy = :editor')
            ->setParameter('editor', $userId);
@@ -241,7 +240,7 @@ abstract class AbstractServiceofLocationRepository extends EntityRepository
         }
     
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->delete('MU\YourCityModule\Entity\ServiceofLocationEntity', 'tbl')
+        $qb->delete('MU\YourCityModule\Entity\ServiceOfLocationEntity', 'tbl')
            ->where('tbl.createdBy = :creator')
            ->setParameter('creator', $userId);
         $query = $qb->getQuery();
@@ -271,7 +270,7 @@ abstract class AbstractServiceofLocationRepository extends EntityRepository
         }
     
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->delete('MU\YourCityModule\Entity\ServiceofLocationEntity', 'tbl')
+        $qb->delete('MU\YourCityModule\Entity\ServiceOfLocationEntity', 'tbl')
            ->where('tbl.updatedBy = :editor')
            ->setParameter('editor', $userId);
         $query = $qb->getQuery();
@@ -324,7 +323,7 @@ abstract class AbstractServiceofLocationRepository extends EntityRepository
      * @param boolean $useJoins Whether to include joining related objects (optional) (default=true)
      * @param boolean $slimMode If activated only some basic fields are selected without using any joins (optional) (default=false)
      *
-     * @return array|serviceofLocationEntity Retrieved data array or serviceofLocationEntity instance
+     * @return array|serviceOfLocationEntity Retrieved data array or serviceOfLocationEntity instance
      */
     public function selectById($id = 0, $useJoins = true, $slimMode = false)
     {
@@ -340,7 +339,7 @@ abstract class AbstractServiceofLocationRepository extends EntityRepository
      * @param boolean $useJoins Whether to include joining related objects (optional) (default=true)
      * @param boolean $slimMode If activated only some basic fields are selected without using any joins (optional) (default=false)
      *
-     * @return ArrayCollection Collection containing retrieved serviceofLocationEntity instances
+     * @return ArrayCollection Collection containing retrieved serviceOfLocationEntity instances
      */
     public function selectByIdList($idList = [0], $useJoins = true, $slimMode = false)
     {
@@ -386,7 +385,7 @@ abstract class AbstractServiceofLocationRepository extends EntityRepository
     {
         $qb = $this->genericBaseQuery($where, $orderBy, $useJoins, $slimMode);
         if ((!$useJoins || !$slimMode) && null !== $this->collectionFilterHelper) {
-            $qb = $this->collectionFilterHelper->addCommonViewFilters('serviceofLocation', $qb);
+            $qb = $this->collectionFilterHelper->addCommonViewFilters('serviceOfLocation', $qb);
         }
     
         return $qb;
@@ -400,7 +399,7 @@ abstract class AbstractServiceofLocationRepository extends EntityRepository
      * @param boolean $useJoins Whether to include joining related objects (optional) (default=true)
      * @param boolean $slimMode If activated only some basic fields are selected without using any joins (optional) (default=false)
      *
-     * @return ArrayCollection Collection containing retrieved serviceofLocationEntity instances
+     * @return ArrayCollection Collection containing retrieved serviceOfLocationEntity instances
      */
     public function selectWhere($where = '', $orderBy = '', $useJoins = true, $slimMode = false)
     {
@@ -523,7 +522,7 @@ abstract class AbstractServiceofLocationRepository extends EntityRepository
     
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select($selection)
-           ->from('MU\YourCityModule\Entity\ServiceofLocationEntity', 'tbl');
+           ->from('MU\YourCityModule\Entity\ServiceOfLocationEntity', 'tbl');
     
         if (!empty($where)) {
             $qb->andWhere($where);
@@ -550,7 +549,7 @@ abstract class AbstractServiceofLocationRepository extends EntityRepository
         $qb = $this->getCountQuery($where, $useJoins);
     
         if (null !== $this->collectionFilterHelper) {
-            $qb = $this->collectionFilterHelper->applyDefaultFilters('serviceofLocation', $qb, $parameters);
+            $qb = $this->collectionFilterHelper->applyDefaultFilters('serviceOfLocation', $qb, $parameters);
         }
     
         $query = $qb->getQuery();
@@ -566,7 +565,7 @@ abstract class AbstractServiceofLocationRepository extends EntityRepository
      * @param string  $fieldValue The value of the property to be checked
      * @param integer $excludeId  Id of services of location to exclude (optional)
      *
-     * @return boolean Result of this check, true if the given serviceof location does not already exist
+     * @return boolean Result of this check, true if the given service of location does not already exist
      */
     public function detectUniqueState($fieldName, $fieldValue, $excludeId = 0)
     {
@@ -614,7 +613,7 @@ abstract class AbstractServiceofLocationRepository extends EntityRepository
     
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select($selection)
-           ->from('MU\YourCityModule\Entity\ServiceofLocationEntity', 'tbl');
+           ->from('MU\YourCityModule\Entity\ServiceOfLocationEntity', 'tbl');
     
         if (true === $useJoins) {
             $this->addJoinsToFrom($qb);

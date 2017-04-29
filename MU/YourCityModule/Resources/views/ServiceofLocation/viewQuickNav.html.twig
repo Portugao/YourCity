@@ -1,14 +1,14 @@
 {# purpose of this template: services of location view filter form #}
-{% if hasPermission('MUYourCityModule:ServiceofLocation:', '::', 'ACCESS_EDIT') %}
+{% if hasPermission('MUYourCityModule:ServiceOfLocation:', '::', 'ACCESS_EDIT') %}
     {% form_theme quickNavForm with [
         'bootstrap_3_layout.html.twig'
     ] %}
-    {{ form_start(quickNavForm, {attr: {id: 'mUYourCityModuleServiceofLocationQuickNavForm', class: 'muyourcitymodule-quicknav navbar-form', role: 'navigation'}}) }}
+    {{ form_start(quickNavForm, {attr: {id: 'mUYourCityModuleServiceOfLocationQuickNavForm', class: 'muyourcitymodule-quicknav navbar-form', role: 'navigation'}}) }}
     {{ form_errors(quickNavForm) }}
-    <a href="#collapseServiceofLocationQuickNav" role="button" data-toggle="collapse" class="btn btn-default" aria-expanded="false" aria-controls="collapseServiceofLocationQuickNav">
+    <a href="#collapseServiceOfLocationQuickNav" role="button" data-toggle="collapse" class="btn btn-default" aria-expanded="false" aria-controls="collapseServiceOfLocationQuickNav">
         <i class="fa fa-filter" aria-hidden="true"></i> {{ __('Filter') }}
     </a>
-    <div id="collapseServiceofLocationQuickNav" class="collapse">
+    <div id="collapseServiceOfLocationQuickNav" class="collapse">
         <fieldset>
             <h3>{{ __('Quick navigation') }}</h3>
             {% if workflowStateFilter is defined and workflowStateFilter != true %}

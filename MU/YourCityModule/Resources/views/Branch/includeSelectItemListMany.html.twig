@@ -12,8 +12,8 @@
     {{ item|muyourcitymodule_formattedTitle }}
      <a id="{{ idPrefixItem }}Remove" href="javascript:mUYourCityRemoveRelatedItem('{{ idPrefix }}', '{{ item.id }}');">{{ removeImage|raw }}</a>
     <br />
-    {% if item.imageofBranch is not empty and item.imageofBranchMeta.isImage %}
-        <img src="{{ item.imageofBranch.getPathname()|imagine_filter('zkroot', relationThumbRuntimeOptions) }}" alt="{{ item|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ relationThumbRuntimeOptions.thumbnail.size[0] }}" height="{{ relationThumbRuntimeOptions.thumbnail.size[1] }}" class="img-rounded" />
+    {% if item.imageOfBranch is not empty and item.imageOfBranchMeta.isImage %}
+        <img src="{{ item.imageOfBranch.getPathname()|imagine_filter('zkroot', relationThumbRuntimeOptions) }}" alt="{{ item|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ relationThumbRuntimeOptions.thumbnail.size[0] }}" height="{{ relationThumbRuntimeOptions.thumbnail.size[1] }}" class="img-rounded" />
     {% endif %}
 </li>
 {% endfor %}

@@ -20,9 +20,9 @@ use MU\YourCityModule\Helper\FeatureActivationHelper;
 use MU\YourCityModule\Helper\ListEntriesHelper;
 
 /**
- * Serviceof location quick navigation form type base class.
+ * Service of location quick navigation form type base class.
  */
-abstract class AbstractServiceofLocationQuickNavType extends AbstractType
+abstract class AbstractServiceOfLocationQuickNavType extends AbstractType
 {
     use TranslatorTrait;
 
@@ -37,7 +37,7 @@ abstract class AbstractServiceofLocationQuickNavType extends AbstractType
     protected $featureActivationHelper;
 
     /**
-     * ServiceofLocationQuickNavType constructor.
+     * ServiceOfLocationQuickNavType constructor.
      *
      * @param TranslatorInterface $translator   Translator service instance
      * @param ListEntriesHelper   $listHelper   ListEntriesHelper service instance
@@ -95,7 +95,7 @@ abstract class AbstractServiceofLocationQuickNavType extends AbstractType
      */
     public function addListFields(FormBuilderInterface $builder, array $options)
     {
-        $listEntries = $this->listHelper->getEntries('serviceofLocation', 'workflowState');
+        $listEntries = $this->listHelper->getEntries('serviceOfLocation', 'workflowState');
         $choices = [];
         $choiceAttributes = [];
         foreach ($listEntries as $entry) {
@@ -152,7 +152,6 @@ abstract class AbstractServiceofLocationQuickNavType extends AbstractType
                 ],
                 'choices' =>             [
                     $this->__('Name') => 'name',
-                    $this->__('Description') => 'description',
                     $this->__('Icon for service') => 'iconForService',
                     $this->__('Creation date') => 'createdDate',
                     $this->__('Creator') => 'createdBy',

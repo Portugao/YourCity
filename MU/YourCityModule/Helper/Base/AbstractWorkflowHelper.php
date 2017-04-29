@@ -199,7 +199,7 @@ abstract class AbstractWorkflowHelper
             case 'specialOfLocation':
                 $result = 'none';
                 break;
-            case 'serviceofLocation':
+            case 'serviceOfLocation':
                 $result = 'none';
                 break;
             case 'abonnement':

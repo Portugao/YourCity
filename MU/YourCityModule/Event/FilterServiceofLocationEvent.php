@@ -12,12 +12,12 @@
 
 namespace MU\YourCityModule\Event;
 
-use MU\YourCityModule\Event\Base\AbstractFilterServiceofLocationEvent;
+use MU\YourCityModule\Event\Base\AbstractFilterServiceOfLocationEvent;
 
 /**
- * Event implementation class for filtering serviceof location processing.
+ * Event implementation class for filtering service of location processing.
  */
-class FilterServiceofLocationEvent extends AbstractFilterServiceofLocationEvent
+class FilterServiceOfLocationEvent extends AbstractFilterServiceOfLocationEvent
 {
     // feel free to extend the event class here
 }

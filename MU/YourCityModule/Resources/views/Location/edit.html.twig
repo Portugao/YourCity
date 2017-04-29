@@ -138,7 +138,7 @@
             { group: 'location', alias: 'specialsOfLocation', aliasReverse: 'locations', mandatory: false, idPrefix: 'yourcityLocation_SpecialsOfLocation', linkingItem: location, displayMode: 'choices' }
         ) }}
         {{ include(
-            '@MUYourCityModule/ServiceofLocation/includeSelectMany.html.twig',
+            '@MUYourCityModule/ServiceOfLocation/includeSelectMany.html.twig',
             { group: 'location', alias: 'servicesOfLocation', aliasReverse: 'locations', mandatory: false, idPrefix: 'yourcityLocation_ServicesOfLocation', linkingItem: location, displayMode: 'choices' }
         ) }}
         {% if featureActivationHelper.isEnabled(constant('MU\\YourCityModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'location') %}

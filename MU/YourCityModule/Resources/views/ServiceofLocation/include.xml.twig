@@ -1,13 +1,13 @@
 {# purpose of this template: services of location xml inclusion template #}
-<serviceoflocation id="{{ serviceofLocation.id }}" createdon="{{ serviceofLocation.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ serviceofLocation.updatedDate|localizeddate('medium', 'short') }}">
-    <id>{{ serviceofLocation.id }}</id>
-    <name><![CDATA[{{ serviceofLocation.name }}]]></name>
-    <description><![CDATA[{{ serviceofLocation.description|safeHtml }}]]></description>
-    <iconForService><![CDATA[{{ serviceofLocation.iconForService }}]]></iconForService>
-    <workflowState>{{ serviceofLocation.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
+<serviceoflocation id="{{ serviceOfLocation.id }}" createdon="{{ serviceOfLocation.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ serviceOfLocation.updatedDate|localizeddate('medium', 'short') }}">
+    <id>{{ serviceOfLocation.id }}</id>
+    <name><![CDATA[{{ serviceOfLocation.name }}]]></name>
+    <description><![CDATA[{{ serviceOfLocation.description|safeHtml }}]]></description>
+    <iconForService><![CDATA[{{ serviceOfLocation.iconForService }}]]></iconForService>
+    <workflowState>{{ serviceOfLocation.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
     <locations>
-    {% if serviceofLocation.locations|default %}
-        {% for relatedItem in serviceofLocation.locations %}
+    {% if serviceOfLocation.locations|default %}
+        {% for relatedItem in serviceOfLocation.locations %}
         <location>{{ relatedItem|muyourcitymodule_formattedTitle }}</location>
         {% endfor %}
     {% endif %}

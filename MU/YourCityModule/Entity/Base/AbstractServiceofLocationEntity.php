@@ -25,7 +25,7 @@ use MU\YourCityModule\Validator\Constraints as YourCityAssert;
 /**
  * Entity class that defines the entity structure and behaviours.
  *
- * This is the base entity class for serviceof location entities.
+ * This is the base entity class for service of location entities.
  * The following annotation marks it as a mapped superclass so subclasses
  * inherit orm properties.
  *
@@ -33,7 +33,7 @@ use MU\YourCityModule\Validator\Constraints as YourCityAssert;
  *
  * @abstract
  */
-abstract class AbstractServiceofLocationEntity extends EntityAccess implements Translatable
+abstract class AbstractServiceOfLocationEntity extends EntityAccess implements Translatable
 {
     /**
      * Hook entity workflow field and behaviour.
@@ -48,7 +48,7 @@ abstract class AbstractServiceofLocationEntity extends EntityAccess implements T
     /**
      * @var string The tablename this object maps to
      */
-    protected $_objectType = 'serviceofLocation';
+    protected $_objectType = 'serviceOfLocation';
     
     /**
      * @ORM\Id
@@ -62,7 +62,7 @@ abstract class AbstractServiceofLocationEntity extends EntityAccess implements T
      * the current workflow state
      * @ORM\Column(length=20)
      * @Assert\NotBlank()
-     * @YourCityAssert\ListEntry(entityName="serviceofLocation", propertyName="workflowState", multiple=false)
+     * @YourCityAssert\ListEntry(entityName="serviceOfLocation", propertyName="workflowState", multiple=false)
      * @var string $workflowState
      */
     protected $workflowState = 'initial';
@@ -114,7 +114,7 @@ abstract class AbstractServiceofLocationEntity extends EntityAccess implements T
     protected $locations = null;
     
     /**
-     * ServiceofLocationEntity constructor.
+     * ServiceOfLocationEntity constructor.
      *
      * Will not be called by Doctrine and can therefore be used
      * for own implementation purposes. It is also possible to add
@@ -428,7 +428,7 @@ abstract class AbstractServiceofLocationEntity extends EntityAccess implements T
      */
     public function __toString()
     {
-        return 'Serviceof location ' . $this->createCompositeIdentifier() . ': ' . $this->getName();
+        return 'Service of location ' . $this->createCompositeIdentifier() . ': ' . $this->getName();
     }
     
     /**

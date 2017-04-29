@@ -1030,7 +1030,7 @@ abstract class AbstractYourCityEvents
      * are loaded from the database.
      *
      * The event listener receives an
-     * MU\YourCityModule\Event\FilterServiceofLocationEvent instance.
+     * MU\YourCityModule\Event\FilterServiceOfLocationEvent instance.
      *
      * @see MU\YourCityModule\Listener\EntityLifecycleListener::postLoad()
      * @var string
@@ -1038,11 +1038,11 @@ abstract class AbstractYourCityEvents
     const SERVICEOFLOCATION_POST_LOAD = 'muyourcitymodule.serviceoflocation_post_load';
     
     /**
-     * The muyourcitymodule.serviceoflocation_pre_persist event is thrown before a new serviceof location
+     * The muyourcitymodule.serviceoflocation_pre_persist event is thrown before a new service of location
      * is created in the system.
      *
      * The event listener receives an
-     * MU\YourCityModule\Event\FilterServiceofLocationEvent instance.
+     * MU\YourCityModule\Event\FilterServiceOfLocationEvent instance.
      *
      * @see MU\YourCityModule\Listener\EntityLifecycleListener::prePersist()
      * @var string
@@ -1050,11 +1050,11 @@ abstract class AbstractYourCityEvents
     const SERVICEOFLOCATION_PRE_PERSIST = 'muyourcitymodule.serviceoflocation_pre_persist';
     
     /**
-     * The muyourcitymodule.serviceoflocation_post_persist event is thrown after a new serviceof location
+     * The muyourcitymodule.serviceoflocation_post_persist event is thrown after a new service of location
      * has been created in the system.
      *
      * The event listener receives an
-     * MU\YourCityModule\Event\FilterServiceofLocationEvent instance.
+     * MU\YourCityModule\Event\FilterServiceOfLocationEvent instance.
      *
      * @see MU\YourCityModule\Listener\EntityLifecycleListener::postPersist()
      * @var string
@@ -1062,11 +1062,11 @@ abstract class AbstractYourCityEvents
     const SERVICEOFLOCATION_POST_PERSIST = 'muyourcitymodule.serviceoflocation_post_persist';
     
     /**
-     * The muyourcitymodule.serviceoflocation_pre_remove event is thrown before an existing serviceof location
+     * The muyourcitymodule.serviceoflocation_pre_remove event is thrown before an existing service of location
      * is removed from the system.
      *
      * The event listener receives an
-     * MU\YourCityModule\Event\FilterServiceofLocationEvent instance.
+     * MU\YourCityModule\Event\FilterServiceOfLocationEvent instance.
      *
      * @see MU\YourCityModule\Listener\EntityLifecycleListener::preRemove()
      * @var string
@@ -1074,11 +1074,11 @@ abstract class AbstractYourCityEvents
     const SERVICEOFLOCATION_PRE_REMOVE = 'muyourcitymodule.serviceoflocation_pre_remove';
     
     /**
-     * The muyourcitymodule.serviceoflocation_post_remove event is thrown after an existing serviceof location
+     * The muyourcitymodule.serviceoflocation_post_remove event is thrown after an existing service of location
      * has been removed from the system.
      *
      * The event listener receives an
-     * MU\YourCityModule\Event\FilterServiceofLocationEvent instance.
+     * MU\YourCityModule\Event\FilterServiceOfLocationEvent instance.
      *
      * @see MU\YourCityModule\Listener\EntityLifecycleListener::postRemove()
      * @var string
@@ -1086,11 +1086,11 @@ abstract class AbstractYourCityEvents
     const SERVICEOFLOCATION_POST_REMOVE = 'muyourcitymodule.serviceoflocation_post_remove';
     
     /**
-     * The muyourcitymodule.serviceoflocation_pre_update event is thrown before an existing serviceof location
+     * The muyourcitymodule.serviceoflocation_pre_update event is thrown before an existing service of location
      * is updated in the system.
      *
      * The event listener receives an
-     * MU\YourCityModule\Event\FilterServiceofLocationEvent instance.
+     * MU\YourCityModule\Event\FilterServiceOfLocationEvent instance.
      *
      * @see MU\YourCityModule\Listener\EntityLifecycleListener::preUpdate()
      * @var string
@@ -1098,11 +1098,11 @@ abstract class AbstractYourCityEvents
     const SERVICEOFLOCATION_PRE_UPDATE = 'muyourcitymodule.serviceoflocation_pre_update';
     
     /**
-     * The muyourcitymodule.serviceoflocation_post_update event is thrown after an existing new serviceof location
+     * The muyourcitymodule.serviceoflocation_post_update event is thrown after an existing new service of location
      * has been updated in the system.
      *
      * The event listener receives an
-     * MU\YourCityModule\Event\FilterServiceofLocationEvent instance.
+     * MU\YourCityModule\Event\FilterServiceOfLocationEvent instance.
      *
      * @see MU\YourCityModule\Listener\EntityLifecycleListener::postUpdate()
      * @var string

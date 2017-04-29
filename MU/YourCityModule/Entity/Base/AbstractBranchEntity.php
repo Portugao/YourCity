@@ -97,13 +97,13 @@ abstract class AbstractBranchEntity extends EntityAccess implements Translatable
     protected $description = '';
     
     /**
-     * Imageof branch meta data array.
+     * Image of branch meta data array.
      *
      * @ORM\Column(type="array")
      * @Assert\Type(type="array")
-     * @var array $imageofBranchMeta
+     * @var array $imageOfBranchMeta
      */
-    protected $imageofBranchMeta = [];
+    protected $imageOfBranchMeta = [];
     
     /**
      * @ORM\Column(length=255, nullable=true)
@@ -113,17 +113,17 @@ abstract class AbstractBranchEntity extends EntityAccess implements Translatable
      * )
      * @Assert\Image(
      * )
-     * @var string $imageofBranch
+     * @var string $imageOfBranch
      */
-    protected $imageofBranch = null;
+    protected $imageOfBranch = null;
     
     /**
-     * Full imageof branch path as url.
+     * Full image of branch path as url.
      *
      * @Assert\Type(type="string")
-     * @var string $imageofBranchUrl
+     * @var string $imageOfBranchUrl
      */
-    protected $imageofBranchUrl = '';
+    protected $imageOfBranchUrl = '';
     
     
     /**
@@ -304,74 +304,74 @@ abstract class AbstractBranchEntity extends EntityAccess implements Translatable
     }
     
     /**
-     * Returns the imageof branch.
+     * Returns the image of branch.
      *
      * @return string
      */
-    public function getImageofBranch()
+    public function getImageOfBranch()
     {
-        return $this->imageofBranch;
+        return $this->imageOfBranch;
     }
     
     /**
-     * Sets the imageof branch.
+     * Sets the image of branch.
      *
-     * @param string $imageofBranch
+     * @param string $imageOfBranch
      *
      * @return void
      */
-    public function setImageofBranch($imageofBranch)
+    public function setImageOfBranch($imageOfBranch)
     {
-        if ($this->imageofBranch !== $imageofBranch) {
-            $this->imageofBranch = $imageofBranch;
+        if ($this->imageOfBranch !== $imageOfBranch) {
+            $this->imageOfBranch = $imageOfBranch;
         }
     }
     
     /**
-     * Returns the imageof branch url.
+     * Returns the image of branch url.
      *
      * @return string
      */
-    public function getImageofBranchUrl()
+    public function getImageOfBranchUrl()
     {
-        return $this->imageofBranchUrl;
+        return $this->imageOfBranchUrl;
     }
     
     /**
-     * Sets the imageof branch url.
+     * Sets the image of branch url.
      *
-     * @param string $imageofBranchUrl
+     * @param string $imageOfBranchUrl
      *
      * @return void
      */
-    public function setImageofBranchUrl($imageofBranchUrl)
+    public function setImageOfBranchUrl($imageOfBranchUrl)
     {
-        if ($this->imageofBranchUrl !== $imageofBranchUrl) {
-            $this->imageofBranchUrl = $imageofBranchUrl;
+        if ($this->imageOfBranchUrl !== $imageOfBranchUrl) {
+            $this->imageOfBranchUrl = $imageOfBranchUrl;
         }
     }
     
     /**
-     * Returns the imageof branch meta.
+     * Returns the image of branch meta.
      *
      * @return array
      */
-    public function getImageofBranchMeta()
+    public function getImageOfBranchMeta()
     {
-        return $this->imageofBranchMeta;
+        return $this->imageOfBranchMeta;
     }
     
     /**
-     * Sets the imageof branch meta.
+     * Sets the image of branch meta.
      *
-     * @param array $imageofBranchMeta
+     * @param array $imageOfBranchMeta
      *
      * @return void
      */
-    public function setImageofBranchMeta($imageofBranchMeta = [])
+    public function setImageOfBranchMeta($imageOfBranchMeta = [])
     {
-        if ($this->imageofBranchMeta !== $imageofBranchMeta) {
-            $this->imageofBranchMeta = $imageofBranchMeta;
+        if ($this->imageOfBranchMeta !== $imageOfBranchMeta) {
+            $this->imageOfBranchMeta = $imageOfBranchMeta;
         }
     }
     
@@ -561,9 +561,9 @@ abstract class AbstractBranchEntity extends EntityAccess implements Translatable
         $this->resetWorkflow();
     
         // reset upload fields
-        $this->setImageofBranch(null);
-        $this->setImageofBranchMeta([]);
-        $this->setImageofBranchUrl('');
+        $this->setImageOfBranch(null);
+        $this->setImageOfBranchMeta([]);
+        $this->setImageOfBranchUrl('');
     
         $this->setCreatedBy(null);
         $this->setCreatedDate(null);

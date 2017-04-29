@@ -13,17 +13,17 @@
 namespace MU\YourCityModule\Event\Base;
 
 use Symfony\Component\EventDispatcher\Event;
-use MU\YourCityModule\Entity\ServiceofLocationEntity;
+use MU\YourCityModule\Entity\ServiceOfLocationEntity;
 
 /**
- * Event base class for filtering serviceof location processing.
+ * Event base class for filtering service of location processing.
  */
-class AbstractFilterServiceofLocationEvent extends Event
+class AbstractFilterServiceOfLocationEvent extends Event
 {
     /**
-     * @var ServiceofLocationEntity Reference to treated entity instance.
+     * @var ServiceOfLocationEntity Reference to treated entity instance.
      */
-    protected $serviceofLocation;
+    protected $serviceOfLocation;
 
     /**
      * @var array Entity change set for preUpdate events.
@@ -31,25 +31,25 @@ class AbstractFilterServiceofLocationEvent extends Event
     protected $entityChangeSet = [];
 
     /**
-     * FilterServiceofLocationEvent constructor.
+     * FilterServiceOfLocationEvent constructor.
      *
-     * @param ServiceofLocationEntity $serviceofLocation Processed entity
+     * @param ServiceOfLocationEntity $serviceOfLocation Processed entity
      * @param array $entityChangeSet Change set for preUpdate events
      */
-    public function __construct(ServiceofLocationEntity $serviceofLocation, $entityChangeSet = [])
+    public function __construct(ServiceOfLocationEntity $serviceOfLocation, $entityChangeSet = [])
     {
-        $this->serviceofLocation = $serviceofLocation;
+        $this->serviceOfLocation = $serviceOfLocation;
         $this->entityChangeSet = $entityChangeSet;
     }
 
     /**
      * Returns the entity.
      *
-     * @return ServiceofLocationEntity
+     * @return ServiceOfLocationEntity
      */
-    public function getServiceofLocation()
+    public function getServiceOfLocation()
     {
-        return $this->serviceofLocation;
+        return $this->serviceOfLocation;
     }
 
     /**

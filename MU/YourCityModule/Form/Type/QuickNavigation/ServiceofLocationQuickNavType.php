@@ -12,12 +12,12 @@
 
 namespace MU\YourCityModule\Form\Type\QuickNavigation;
 
-use MU\YourCityModule\Form\Type\QuickNavigation\Base\AbstractServiceofLocationQuickNavType;
+use MU\YourCityModule\Form\Type\QuickNavigation\Base\AbstractServiceOfLocationQuickNavType;
 
 /**
- * Serviceof location quick navigation form type implementation class.
+ * Service of location quick navigation form type implementation class.
  */
-class ServiceofLocationQuickNavType extends AbstractServiceofLocationQuickNavType
+class ServiceOfLocationQuickNavType extends AbstractServiceOfLocationQuickNavType
 {
     // feel free to extend the base form type class here
 }

@@ -24,7 +24,7 @@
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <copyright>Copyright (c) {{ 'now'|date('Y') }}, {{ app.request.getSchemeAndHttpHost()|e }}</copyright>
         <webMaster>{{ pageGetVar('adminmail)|e }}</webMaster>
-{% for serviceofLocation in items %}
+{% for serviceOfLocation in items %}
     {{ block('entry') }}
 {% endfor %}
     </channel>
@@ -35,19 +35,19 @@
     </item>
 {% endblock %}
 {% block entry_content %}
-    <title><![CDATA[{% if serviceofLocation.updatedDate|default %}{{ serviceofLocation.updatedDate|localizeddate('medium', 'short') }} - {% endif %}{{ serviceofLocation|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.servicesoflocation') }}]]></title>
-    <link>{{ url('muyourcitymodule_serviceoflocation_' ~ routeArea ~ 'display', { 'id': serviceofLocation.id }) }}</link>
-    <guid>{{ url('muyourcitymodule_serviceoflocation_' ~ routeArea ~ 'display', { 'id': serviceofLocation.id }) }}</guid>
-    {% if serviceofLocation.createdBy|default and serviceofLocation.createdBy.getUid() > 0 %}
-        {% set creatorAttributes = serviceofLocation.createdBy.getAttributes() %}
-        <author>{{ serviceofLocation.createdBy.getEmail() }} ({{ creatorAttributes.get('realname')|default(creatorAttributes.get('name'))|default(serviceofLocation.createdBy.getUname()) }})</author>
+    <title><![CDATA[{% if serviceOfLocation.updatedDate|default %}{{ serviceOfLocation.updatedDate|localizeddate('medium', 'short') }} - {% endif %}{{ serviceOfLocation|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.servicesoflocation') }}]]></title>
+    <link>{{ url('muyourcitymodule_serviceoflocation_' ~ routeArea ~ 'display', { 'id': serviceOfLocation.id }) }}</link>
+    <guid>{{ url('muyourcitymodule_serviceoflocation_' ~ routeArea ~ 'display', { 'id': serviceOfLocation.id }) }}</guid>
+    {% if serviceOfLocation.createdBy|default and serviceOfLocation.createdBy.getUid() > 0 %}
+        {% set creatorAttributes = serviceOfLocation.createdBy.getAttributes() %}
+        <author>{{ serviceOfLocation.createdBy.getEmail() }} ({{ creatorAttributes.get('realname')|default(creatorAttributes.get('name'))|default(serviceOfLocation.createdBy.getUname()) }})</author>
     {% endif %}
     <description>
         <![CDATA[
-        {{ serviceofLocation.description|replace({ '<br>': '<br />' }) }}
+        {{ serviceOfLocation.description|replace({ '<br>': '<br />' }) }}
         ]]>
     </description>
-    {% if serviceofLocation.createdDate|default %}
-        <pubDate>{{ serviceofLocation.createdDate|date('a, d b Y T +0100') }}</pubDate>
+    {% if serviceOfLocation.createdDate|default %}
+        <pubDate>{{ serviceOfLocation.createdDate|date('a, d b Y T +0100') }}</pubDate>
     {% endif %}
 {% endblock %}

@@ -1,13 +1,13 @@
 {* Purpose of this template: Display a popup selector for Forms and Content integration *}
-{assign var='baseID' value='serviceofLocation'}
+{assign var='baseID' value='serviceOfLocation'}
 <div class="row">
     <div class="col-sm-8">
         <div class="form-group">
-            <label for="{$baseID}Id" class="col-sm-3 control-label">{gt text='Serviceof location'}:</label>
+            <label for="{$baseID}Id" class="col-sm-3 control-label">{gt text='Service of location'}:</label>
             <div class="col-sm-9">
                 <select id="{$baseID}Id" name="id" class="form-control">
-                    {foreach item='serviceofLocation' from=$items}
-                        <option value="{$serviceofLocation.id}"{if $selectedId eq $serviceofLocation.id} selected="selected"{/if}>{$serviceofLocation->getName()}</option>
+                    {foreach item='serviceOfLocation' from=$items}
+                        <option value="{$serviceOfLocation.id}"{if $selectedId eq $serviceOfLocation.id} selected="selected"{/if}>{$serviceOfLocation->getName()}</option>
                     {foreachelse}
                         <option value="0">{gt text='No entries found.'}</option>
                     {/foreach}
@@ -19,7 +19,6 @@
             <div class="col-sm-9">
                 <select id="{$baseID}Sort" name="sort" class="form-control">
                     <option value="name"{if $sort eq 'name'} selected="selected"{/if}>{gt text='Name'}</option>
-                    <option value="description"{if $sort eq 'description'} selected="selected"{/if}>{gt text='Description'}</option>
                     <option value="iconForService"{if $sort eq 'iconForService'} selected="selected"{/if}>{gt text='Icon for service'}</option>
                     <option value="createdDate"{if $sort eq 'createdDate'} selected="selected"{/if}>{gt text='Creation date'}</option>
                     <option value="createdBy"{if $sort eq 'createdBy'} selected="selected"{/if}>{gt text='Creator'}</option>
@@ -46,7 +45,7 @@
     </div>
     <div class="col-sm-4">
         <div id="{$baseID}Preview" style="border: 1px dotted #a3a3a3; padding: .2em .5em">
-            <p><strong>{gt text='Serviceof location information'}</strong></p>
+            <p><strong>{gt text='Service of location information'}</strong></p>
             {img id='ajax_indicator' modname='core' set='ajax' src='indicator_circle.gif' alt='' class='hidden'}
             <div id="{$baseID}PreviewContainer">&nbsp;</div>
         </div>
