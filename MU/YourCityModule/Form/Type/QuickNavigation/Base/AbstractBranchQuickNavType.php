@@ -152,9 +152,7 @@ abstract class AbstractBranchQuickNavType extends AbstractType
                 ],
                 'choices' =>             [
                     $this->__('Name') => 'name',
-                    $this->__('Description for google') => 'descriptionForGoogle',
                     $this->__('Description') => 'description',
-                    $this->__('Imageof branch') => 'imageofBranch',
                     $this->__('Creation date') => 'createdDate',
                     $this->__('Creator') => 'createdBy',
                     $this->__('Update date') => 'updatedDate',

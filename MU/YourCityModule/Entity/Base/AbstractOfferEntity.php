@@ -68,11 +68,10 @@ abstract class AbstractOfferEntity extends EntityAccess implements Translatable
     protected $workflowState = 'initial';
     
     /**
-     * Only 100 characters; better only 57.
      * @Gedmo\Translatable
-     * @ORM\Column(length=100)
+     * @ORM\Column(length=255)
      * @Assert\NotBlank()
-     * @Assert\Length(min="0", max="100")
+     * @Assert\Length(min="0", max="255")
      * @var string $name
      */
     protected $name = '';
@@ -168,7 +167,7 @@ abstract class AbstractOfferEntity extends EntityAccess implements Translatable
     /**
      * On this date the offer will get put into the archive.
      * @ORM\Column(type="datetime")
-     * @Assert\NotBlank()
+     * @Assert\NotNull()
      * @Assert\DateTime()
      * @var DateTime $enddate
      */

@@ -56,9 +56,7 @@ abstract class AbstractBranchRepository extends EntityRepository
     {
         return [
             'name',
-            'descriptionForGoogle',
             'description',
-            'imageofBranch',
             'createdBy',
             'createdDate',
             'updatedBy',

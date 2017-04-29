@@ -75,7 +75,6 @@ abstract class AbstractEventEntity extends EntityAccess implements Translatable
     protected $workflowState = 'initial';
     
     /**
-     * Maximum 100 characters.
      * @Gedmo\Translatable
      * @ORM\Column(length=100)
      * @Assert\NotBlank()

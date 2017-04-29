@@ -140,9 +140,7 @@ abstract class AbstractPartController extends AbstractController
         
         $sortableColumns->addColumns([
             new Column('name'),
-            new Column('descriptionForGoogle'),
             new Column('description'),
-            new Column('imageOfPart'),
             new Column('createdBy'),
             new Column('createdDate'),
             new Column('updatedBy'),

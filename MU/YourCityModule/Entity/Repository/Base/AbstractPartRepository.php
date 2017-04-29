@@ -56,9 +56,7 @@ abstract class AbstractPartRepository extends EntityRepository
     {
         return [
             'name',
-            'descriptionForGoogle',
             'description',
-            'imageOfPart',
             'createdBy',
             'createdDate',
             'updatedBy',
