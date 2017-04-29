@@ -21,6 +21,33 @@
         <fieldset>
             <legend>{{ __('Content') }}</legend>
             {{ form_row(form.name) }}
+            {{ form_row(form.showMenus) }}
+            {{ form_row(form.sendMessageForMenus) }}
+            {{ form_row(form.showOffers) }}
+            {{ form_row(form.sendMessageForOffers) }}
+            {{ form_row(form.showEvents) }}
+            {{ form_row(form.sendMessageForEvents) }}
+            {{ form_row(form.showProducts) }}
+            {{ form_row(form.sendMessageForProducts) }}
+            <div class="hidden">
+                {{ form_row(form.showOptionOne) }}
+            </div>
+            <div class="hidden">
+                {{ form_row(form.sendMessageToOptionOne) }}
+            </div>
+            <div class="hidden">
+                {{ form_row(form.showOptionTwo) }}
+            </div>
+            <div class="hidden">
+                {{ form_row(form.sendMessageToOptionTwo) }}
+            </div>
+            <div class="hidden">
+                {{ form_row(form.showOptionThree) }}
+            </div>
+            <div class="hidden">
+                {{ form_row(form.sendMessageToOptionThree) }}
+            </div>
+            {{ form_row(form.positionOfAbo) }}
         </fieldset>
         
         {{ include(

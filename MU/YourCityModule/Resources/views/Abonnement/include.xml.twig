@@ -2,6 +2,21 @@
 <abonnement id="{{ abonnement.id }}" createdon="{{ abonnement.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ abonnement.updatedDate|localizeddate('medium', 'short') }}">
     <id>{{ abonnement.id }}</id>
     <name><![CDATA[{{ abonnement.name }}]]></name>
+    <showMenus>{% if not abonnement.showMenus %}0{% else %}1{% endif %}</showMenus>
+    <sendMessageForMenus>{% if not abonnement.sendMessageForMenus %}0{% else %}1{% endif %}</sendMessageForMenus>
+    <showOffers>{% if not abonnement.showOffers %}0{% else %}1{% endif %}</showOffers>
+    <sendMessageForOffers>{% if not abonnement.sendMessageForOffers %}0{% else %}1{% endif %}</sendMessageForOffers>
+    <showEvents>{% if not abonnement.showEvents %}0{% else %}1{% endif %}</showEvents>
+    <sendMessageForEvents>{% if not abonnement.sendMessageForEvents %}0{% else %}1{% endif %}</sendMessageForEvents>
+    <showProducts>{% if not abonnement.showProducts %}0{% else %}1{% endif %}</showProducts>
+    <sendMessageForProducts>{% if not abonnement.sendMessageForProducts %}0{% else %}1{% endif %}</sendMessageForProducts>
+    <showOptionOne>{% if not abonnement.showOptionOne %}0{% else %}1{% endif %}</showOptionOne>
+    <sendMessageToOptionOne>{% if not abonnement.sendMessageToOptionOne %}0{% else %}1{% endif %}</sendMessageToOptionOne>
+    <showOptionTwo>{% if not abonnement.showOptionTwo %}0{% else %}1{% endif %}</showOptionTwo>
+    <sendMessageToOptionTwo>{% if not abonnement.sendMessageToOptionTwo %}0{% else %}1{% endif %}</sendMessageToOptionTwo>
+    <showOptionThree>{% if not abonnement.showOptionThree %}0{% else %}1{% endif %}</showOptionThree>
+    <sendMessageToOptionThree>{% if not abonnement.sendMessageToOptionThree %}0{% else %}1{% endif %}</sendMessageToOptionThree>
+    <positionOfAbo>{{ abonnement.positionOfAbo }}</positionOfAbo>
     <workflowState>{{ abonnement.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
     <location>{% if abonnement.location|default %}{{ abonnement.location|muyourcitymodule_formattedTitle }}{% endif %}</location>
 </abonnement>

@@ -73,6 +73,128 @@ abstract class AbstractAbonnementEntity extends EntityAccess
      */
     protected $name = 'abo';
     
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
+     * @Assert\Type(type="bool")
+     * @var boolean $showMenus
+     */
+    protected $showMenus = false;
+    
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
+     * @Assert\Type(type="bool")
+     * @var boolean $sendMessageForMenus
+     */
+    protected $sendMessageForMenus = false;
+    
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
+     * @Assert\Type(type="bool")
+     * @var boolean $showOffers
+     */
+    protected $showOffers = false;
+    
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\IsTrue(message="This option is mandatory.")
+     * @Assert\Type(type="bool")
+     * @var boolean $sendMessageForOffers
+     */
+    protected $sendMessageForOffers = false;
+    
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
+     * @Assert\Type(type="bool")
+     * @var boolean $showEvents
+     */
+    protected $showEvents = false;
+    
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
+     * @Assert\Type(type="bool")
+     * @var boolean $sendMessageForEvents
+     */
+    protected $sendMessageForEvents = false;
+    
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\IsTrue(message="This option is mandatory.")
+     * @Assert\Type(type="bool")
+     * @var boolean $showProducts
+     */
+    protected $showProducts = false;
+    
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\IsTrue(message="This option is mandatory.")
+     * @Assert\Type(type="bool")
+     * @var boolean $sendMessageForProducts
+     */
+    protected $sendMessageForProducts = false;
+    
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
+     * @Assert\Type(type="bool")
+     * @var boolean $showOptionOne
+     */
+    protected $showOptionOne = false;
+    
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
+     * @Assert\Type(type="bool")
+     * @var boolean $sendMessageToOptionOne
+     */
+    protected $sendMessageToOptionOne = false;
+    
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
+     * @Assert\Type(type="bool")
+     * @var boolean $showOptionTwo
+     */
+    protected $showOptionTwo = false;
+    
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
+     * @Assert\Type(type="bool")
+     * @var boolean $sendMessageToOptionTwo
+     */
+    protected $sendMessageToOptionTwo = false;
+    
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
+     * @Assert\Type(type="bool")
+     * @var boolean $showOptionThree
+     */
+    protected $showOptionThree = false;
+    
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
+     * @Assert\Type(type="bool")
+     * @var boolean $sendMessageToOptionThree
+     */
+    protected $sendMessageToOptionThree = false;
+    
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\Type(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\NotEqualTo(value=0)
+     * @Assert\LessThan(value=100000000000)
+     * @var integer $positionOfAbo
+     */
+    protected $positionOfAbo = 0;
+    
     
     /**
      * Bidirectional - Many abonnements [abonnements] are linked by one location [location] (OWNING SIDE).
@@ -191,6 +313,366 @@ abstract class AbstractAbonnementEntity extends EntityAccess
     {
         if ($this->name !== $name) {
             $this->name = isset($name) ? $name : '';
+        }
+    }
+    
+    /**
+     * Returns the show menus.
+     *
+     * @return boolean
+     */
+    public function getShowMenus()
+    {
+        return $this->showMenus;
+    }
+    
+    /**
+     * Sets the show menus.
+     *
+     * @param boolean $showMenus
+     *
+     * @return void
+     */
+    public function setShowMenus($showMenus)
+    {
+        if (boolval($this->showMenus) !== boolval($showMenus)) {
+            $this->showMenus = boolval($showMenus);
+        }
+    }
+    
+    /**
+     * Returns the send message for menus.
+     *
+     * @return boolean
+     */
+    public function getSendMessageForMenus()
+    {
+        return $this->sendMessageForMenus;
+    }
+    
+    /**
+     * Sets the send message for menus.
+     *
+     * @param boolean $sendMessageForMenus
+     *
+     * @return void
+     */
+    public function setSendMessageForMenus($sendMessageForMenus)
+    {
+        if (boolval($this->sendMessageForMenus) !== boolval($sendMessageForMenus)) {
+            $this->sendMessageForMenus = boolval($sendMessageForMenus);
+        }
+    }
+    
+    /**
+     * Returns the show offers.
+     *
+     * @return boolean
+     */
+    public function getShowOffers()
+    {
+        return $this->showOffers;
+    }
+    
+    /**
+     * Sets the show offers.
+     *
+     * @param boolean $showOffers
+     *
+     * @return void
+     */
+    public function setShowOffers($showOffers)
+    {
+        if (boolval($this->showOffers) !== boolval($showOffers)) {
+            $this->showOffers = boolval($showOffers);
+        }
+    }
+    
+    /**
+     * Returns the send message for offers.
+     *
+     * @return boolean
+     */
+    public function getSendMessageForOffers()
+    {
+        return $this->sendMessageForOffers;
+    }
+    
+    /**
+     * Sets the send message for offers.
+     *
+     * @param boolean $sendMessageForOffers
+     *
+     * @return void
+     */
+    public function setSendMessageForOffers($sendMessageForOffers)
+    {
+        if (boolval($this->sendMessageForOffers) !== boolval($sendMessageForOffers)) {
+            $this->sendMessageForOffers = boolval($sendMessageForOffers);
+        }
+    }
+    
+    /**
+     * Returns the show events.
+     *
+     * @return boolean
+     */
+    public function getShowEvents()
+    {
+        return $this->showEvents;
+    }
+    
+    /**
+     * Sets the show events.
+     *
+     * @param boolean $showEvents
+     *
+     * @return void
+     */
+    public function setShowEvents($showEvents)
+    {
+        if (boolval($this->showEvents) !== boolval($showEvents)) {
+            $this->showEvents = boolval($showEvents);
+        }
+    }
+    
+    /**
+     * Returns the send message for events.
+     *
+     * @return boolean
+     */
+    public function getSendMessageForEvents()
+    {
+        return $this->sendMessageForEvents;
+    }
+    
+    /**
+     * Sets the send message for events.
+     *
+     * @param boolean $sendMessageForEvents
+     *
+     * @return void
+     */
+    public function setSendMessageForEvents($sendMessageForEvents)
+    {
+        if (boolval($this->sendMessageForEvents) !== boolval($sendMessageForEvents)) {
+            $this->sendMessageForEvents = boolval($sendMessageForEvents);
+        }
+    }
+    
+    /**
+     * Returns the show products.
+     *
+     * @return boolean
+     */
+    public function getShowProducts()
+    {
+        return $this->showProducts;
+    }
+    
+    /**
+     * Sets the show products.
+     *
+     * @param boolean $showProducts
+     *
+     * @return void
+     */
+    public function setShowProducts($showProducts)
+    {
+        if (boolval($this->showProducts) !== boolval($showProducts)) {
+            $this->showProducts = boolval($showProducts);
+        }
+    }
+    
+    /**
+     * Returns the send message for products.
+     *
+     * @return boolean
+     */
+    public function getSendMessageForProducts()
+    {
+        return $this->sendMessageForProducts;
+    }
+    
+    /**
+     * Sets the send message for products.
+     *
+     * @param boolean $sendMessageForProducts
+     *
+     * @return void
+     */
+    public function setSendMessageForProducts($sendMessageForProducts)
+    {
+        if (boolval($this->sendMessageForProducts) !== boolval($sendMessageForProducts)) {
+            $this->sendMessageForProducts = boolval($sendMessageForProducts);
+        }
+    }
+    
+    /**
+     * Returns the show option one.
+     *
+     * @return boolean
+     */
+    public function getShowOptionOne()
+    {
+        return $this->showOptionOne;
+    }
+    
+    /**
+     * Sets the show option one.
+     *
+     * @param boolean $showOptionOne
+     *
+     * @return void
+     */
+    public function setShowOptionOne($showOptionOne)
+    {
+        if (boolval($this->showOptionOne) !== boolval($showOptionOne)) {
+            $this->showOptionOne = boolval($showOptionOne);
+        }
+    }
+    
+    /**
+     * Returns the send message to option one.
+     *
+     * @return boolean
+     */
+    public function getSendMessageToOptionOne()
+    {
+        return $this->sendMessageToOptionOne;
+    }
+    
+    /**
+     * Sets the send message to option one.
+     *
+     * @param boolean $sendMessageToOptionOne
+     *
+     * @return void
+     */
+    public function setSendMessageToOptionOne($sendMessageToOptionOne)
+    {
+        if (boolval($this->sendMessageToOptionOne) !== boolval($sendMessageToOptionOne)) {
+            $this->sendMessageToOptionOne = boolval($sendMessageToOptionOne);
+        }
+    }
+    
+    /**
+     * Returns the show option two.
+     *
+     * @return boolean
+     */
+    public function getShowOptionTwo()
+    {
+        return $this->showOptionTwo;
+    }
+    
+    /**
+     * Sets the show option two.
+     *
+     * @param boolean $showOptionTwo
+     *
+     * @return void
+     */
+    public function setShowOptionTwo($showOptionTwo)
+    {
+        if (boolval($this->showOptionTwo) !== boolval($showOptionTwo)) {
+            $this->showOptionTwo = boolval($showOptionTwo);
+        }
+    }
+    
+    /**
+     * Returns the send message to option two.
+     *
+     * @return boolean
+     */
+    public function getSendMessageToOptionTwo()
+    {
+        return $this->sendMessageToOptionTwo;
+    }
+    
+    /**
+     * Sets the send message to option two.
+     *
+     * @param boolean $sendMessageToOptionTwo
+     *
+     * @return void
+     */
+    public function setSendMessageToOptionTwo($sendMessageToOptionTwo)
+    {
+        if (boolval($this->sendMessageToOptionTwo) !== boolval($sendMessageToOptionTwo)) {
+            $this->sendMessageToOptionTwo = boolval($sendMessageToOptionTwo);
+        }
+    }
+    
+    /**
+     * Returns the show option three.
+     *
+     * @return boolean
+     */
+    public function getShowOptionThree()
+    {
+        return $this->showOptionThree;
+    }
+    
+    /**
+     * Sets the show option three.
+     *
+     * @param boolean $showOptionThree
+     *
+     * @return void
+     */
+    public function setShowOptionThree($showOptionThree)
+    {
+        if (boolval($this->showOptionThree) !== boolval($showOptionThree)) {
+            $this->showOptionThree = boolval($showOptionThree);
+        }
+    }
+    
+    /**
+     * Returns the send message to option three.
+     *
+     * @return boolean
+     */
+    public function getSendMessageToOptionThree()
+    {
+        return $this->sendMessageToOptionThree;
+    }
+    
+    /**
+     * Sets the send message to option three.
+     *
+     * @param boolean $sendMessageToOptionThree
+     *
+     * @return void
+     */
+    public function setSendMessageToOptionThree($sendMessageToOptionThree)
+    {
+        if (boolval($this->sendMessageToOptionThree) !== boolval($sendMessageToOptionThree)) {
+            $this->sendMessageToOptionThree = boolval($sendMessageToOptionThree);
+        }
+    }
+    
+    /**
+     * Returns the position of abo.
+     *
+     * @return integer
+     */
+    public function getPositionOfAbo()
+    {
+        return $this->positionOfAbo;
+    }
+    
+    /**
+     * Sets the position of abo.
+     *
+     * @param integer $positionOfAbo
+     *
+     * @return void
+     */
+    public function setPositionOfAbo($positionOfAbo)
+    {
+        if (intval($this->positionOfAbo) !== intval($positionOfAbo)) {
+            $this->positionOfAbo = intval($positionOfAbo);
         }
     }
     

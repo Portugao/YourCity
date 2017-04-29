@@ -99,6 +99,7 @@ abstract class AbstractAbonnementQuickNavType extends AbstractType
         $this->addSearchField($builder, $options);
         $this->addSortingFields($builder, $options);
         $this->addAmountField($builder, $options);
+        $this->addBooleanFields($builder, $options);
         $builder->add('updateview', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
             'label' => $this->__('OK'),
             'attr' => [
@@ -208,6 +209,21 @@ abstract class AbstractAbonnementQuickNavType extends AbstractType
                 ],
                 'choices' =>             [
                     $this->__('Name') => 'name',
+                    $this->__('Show menus') => 'showMenus',
+                    $this->__('Send message for menus') => 'sendMessageForMenus',
+                    $this->__('Show offers') => 'showOffers',
+                    $this->__('Send message for offers') => 'sendMessageForOffers',
+                    $this->__('Show events') => 'showEvents',
+                    $this->__('Send message for events') => 'sendMessageForEvents',
+                    $this->__('Show products') => 'showProducts',
+                    $this->__('Send message for products') => 'sendMessageForProducts',
+                    $this->__('Show option one') => 'showOptionOne',
+                    $this->__('Send message to option one') => 'sendMessageToOptionOne',
+                    $this->__('Show option two') => 'showOptionTwo',
+                    $this->__('Send message to option two') => 'sendMessageToOptionTwo',
+                    $this->__('Show option three') => 'showOptionThree',
+                    $this->__('Send message to option three') => 'sendMessageToOptionThree',
+                    $this->__('Position of abo') => 'positionOfAbo',
                     $this->__('Creation date') => 'createdDate',
                     $this->__('Creator') => 'createdBy',
                     $this->__('Update date') => 'updatedDate',
@@ -260,6 +276,198 @@ abstract class AbstractAbonnementQuickNavType extends AbstractType
             'choices_as_values' => true,
             'required' => false,
             'expanded' => false
+        ]);
+    }
+
+    /**
+     * Adds boolean fields.
+     *
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
+     */
+    public function addBooleanFields(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('showMenus', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            'label' => $this->__('Show menus'),
+            'attr' => [
+                'class' => 'input-sm'
+            ],
+            'required' => false,
+            'placeholder' => $this->__('All'),
+            'choices' => [
+                $this->__('No') => 'no',
+                $this->__('Yes') => 'yes'
+            ],
+            'choices_as_values' => true
+        ]);
+        $builder->add('sendMessageForMenus', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            'label' => $this->__('Send message for menus'),
+            'attr' => [
+                'class' => 'input-sm'
+            ],
+            'required' => false,
+            'placeholder' => $this->__('All'),
+            'choices' => [
+                $this->__('No') => 'no',
+                $this->__('Yes') => 'yes'
+            ],
+            'choices_as_values' => true
+        ]);
+        $builder->add('showOffers', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            'label' => $this->__('Show offers'),
+            'attr' => [
+                'class' => 'input-sm'
+            ],
+            'required' => false,
+            'placeholder' => $this->__('All'),
+            'choices' => [
+                $this->__('No') => 'no',
+                $this->__('Yes') => 'yes'
+            ],
+            'choices_as_values' => true
+        ]);
+        $builder->add('sendMessageForOffers', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            'label' => $this->__('Send message for offers'),
+            'attr' => [
+                'class' => 'input-sm'
+            ],
+            'required' => false,
+            'placeholder' => $this->__('All'),
+            'choices' => [
+                $this->__('No') => 'no',
+                $this->__('Yes') => 'yes'
+            ],
+            'choices_as_values' => true
+        ]);
+        $builder->add('showEvents', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            'label' => $this->__('Show events'),
+            'attr' => [
+                'class' => 'input-sm'
+            ],
+            'required' => false,
+            'placeholder' => $this->__('All'),
+            'choices' => [
+                $this->__('No') => 'no',
+                $this->__('Yes') => 'yes'
+            ],
+            'choices_as_values' => true
+        ]);
+        $builder->add('sendMessageForEvents', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            'label' => $this->__('Send message for events'),
+            'attr' => [
+                'class' => 'input-sm'
+            ],
+            'required' => false,
+            'placeholder' => $this->__('All'),
+            'choices' => [
+                $this->__('No') => 'no',
+                $this->__('Yes') => 'yes'
+            ],
+            'choices_as_values' => true
+        ]);
+        $builder->add('showProducts', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            'label' => $this->__('Show products'),
+            'attr' => [
+                'class' => 'input-sm'
+            ],
+            'required' => false,
+            'placeholder' => $this->__('All'),
+            'choices' => [
+                $this->__('No') => 'no',
+                $this->__('Yes') => 'yes'
+            ],
+            'choices_as_values' => true
+        ]);
+        $builder->add('sendMessageForProducts', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            'label' => $this->__('Send message for products'),
+            'attr' => [
+                'class' => 'input-sm'
+            ],
+            'required' => false,
+            'placeholder' => $this->__('All'),
+            'choices' => [
+                $this->__('No') => 'no',
+                $this->__('Yes') => 'yes'
+            ],
+            'choices_as_values' => true
+        ]);
+        $builder->add('showOptionOne', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            'label' => $this->__('Show option one'),
+            'attr' => [
+                'class' => 'input-sm'
+            ],
+            'required' => false,
+            'placeholder' => $this->__('All'),
+            'choices' => [
+                $this->__('No') => 'no',
+                $this->__('Yes') => 'yes'
+            ],
+            'choices_as_values' => true
+        ]);
+        $builder->add('sendMessageToOptionOne', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            'label' => $this->__('Send message to option one'),
+            'attr' => [
+                'class' => 'input-sm'
+            ],
+            'required' => false,
+            'placeholder' => $this->__('All'),
+            'choices' => [
+                $this->__('No') => 'no',
+                $this->__('Yes') => 'yes'
+            ],
+            'choices_as_values' => true
+        ]);
+        $builder->add('showOptionTwo', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            'label' => $this->__('Show option two'),
+            'attr' => [
+                'class' => 'input-sm'
+            ],
+            'required' => false,
+            'placeholder' => $this->__('All'),
+            'choices' => [
+                $this->__('No') => 'no',
+                $this->__('Yes') => 'yes'
+            ],
+            'choices_as_values' => true
+        ]);
+        $builder->add('sendMessageToOptionTwo', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            'label' => $this->__('Send message to option two'),
+            'attr' => [
+                'class' => 'input-sm'
+            ],
+            'required' => false,
+            'placeholder' => $this->__('All'),
+            'choices' => [
+                $this->__('No') => 'no',
+                $this->__('Yes') => 'yes'
+            ],
+            'choices_as_values' => true
+        ]);
+        $builder->add('showOptionThree', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            'label' => $this->__('Show option three'),
+            'attr' => [
+                'class' => 'input-sm'
+            ],
+            'required' => false,
+            'placeholder' => $this->__('All'),
+            'choices' => [
+                $this->__('No') => 'no',
+                $this->__('Yes') => 'yes'
+            ],
+            'choices_as_values' => true
+        ]);
+        $builder->add('sendMessageToOptionThree', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            'label' => $this->__('Send message to option three'),
+            'attr' => [
+                'class' => 'input-sm'
+            ],
+            'required' => false,
+            'placeholder' => $this->__('All'),
+            'choices' => [
+                $this->__('No') => 'no',
+                $this->__('Yes') => 'yes'
+            ],
+            'choices_as_values' => true
         ]);
     }
 

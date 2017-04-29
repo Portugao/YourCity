@@ -124,6 +124,144 @@ abstract class AbstractAbonnementType extends AbstractType
             ],
             'required' => false,
         ]);
+        
+        $builder->add('showMenus', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            'label' => $this->__('Show menus') . ':',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('show menus ?')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('sendMessageForMenus', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            'label' => $this->__('Send message for menus') . ':',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('send message for menus ?')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('showOffers', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            'label' => $this->__('Show offers') . ':',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('show offers ?')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('sendMessageForOffers', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            'label' => $this->__('Send message for offers') . ':',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('send message for offers ?')
+            ],
+            'required' => true,
+        ]);
+        
+        $builder->add('showEvents', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            'label' => $this->__('Show events') . ':',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('show events ?')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('sendMessageForEvents', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            'label' => $this->__('Send message for events') . ':',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('send message for events ?')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('showProducts', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            'label' => $this->__('Show products') . ':',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('show products ?')
+            ],
+            'required' => true,
+        ]);
+        
+        $builder->add('sendMessageForProducts', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            'label' => $this->__('Send message for products') . ':',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('send message for products ?')
+            ],
+            'required' => true,
+        ]);
+        
+        $builder->add('showOptionOne', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            'label' => $this->__('Show option one') . ':',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('show option one ?')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('sendMessageToOptionOne', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            'label' => $this->__('Send message to option one') . ':',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('send message to option one ?')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('showOptionTwo', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            'label' => $this->__('Show option two') . ':',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('show option two ?')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('sendMessageToOptionTwo', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            'label' => $this->__('Send message to option two') . ':',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('send message to option two ?')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('showOptionThree', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            'label' => $this->__('Show option three') . ':',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('show option three ?')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('sendMessageToOptionThree', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            'label' => $this->__('Send message to option three') . ':',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('send message to option three ?')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('positionOfAbo', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            'label' => $this->__('Position of abo') . ':',
+            'empty_data' => '0',
+            'attr' => [
+                'maxlength' => 11,
+                'class' => ' validate-digits',
+                'title' => $this->__('Enter the position of abo of the abonnement.') . ' ' . $this->__('Only digits are allowed.')
+            ],
+            'required' => true,
+            'scale' => 0
+        ]);
     }
 
     /**
