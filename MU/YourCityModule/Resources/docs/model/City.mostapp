@@ -11,7 +11,7 @@ application "YourCity" {
         versionAllGeneratedFiles false
         generatePoweredByBacklinksIntoFooterTemplates false
         generateTests false
-        markFiles "Resources/public/css/style.css,\r\nResources/views/Abonnement/view.html.twig,\r\nResources/views/Branch/display.html.twig,\r\nResources/views/Event/display.html.twig,\r\nResources/views/MenuOfLocation/display.html.twig,\r\nResources/views/Location/display.html.twig,\r\nResources/views/Offer/display.html.twig,\r\nResources/views/Offer/view.html.twig,\r\nResources/views/Part/display.html.twig,\r\nResources/views/SpecialOfLocation/display.html.twig,\r\nResources/views/SpecialOfLocation/view.html.twig,\r\nResources/views/ServiceOfLocation/display.html.twig,\r\nResources/views/SpecialOfLocation/view.html.twig"
+        markFiles "Controller/AbonnementControllper.php,\r\nResources/public/css/style.css,\r\nResources/views/Abonnement/view.html.twig,\r\nResources/views/Branch/display.html.twig,\r\nResources/views/Branch/view.html.twig,\r\nResources/views/Event/display.html.twig,\r\nResources/views/Event/view.html.twig,\r\nResources/views/MenuOfLocation/display.html.twig,\r\nResources/views/MenuOfLocation/view.html.twig,\r\nResources/views/Location/display.html.twig,\r\nResources/views/Location/view.html.twig,\r\nResources/views/Offer/display.html.twig,\r\nResources/views/Offer/view.html.twig,\r\nResources/views/Part/display.html.twig,\r\nResources/views/Part/view.html.twig,\r\nResources/views/SpecialOfLocation/display.html.twig,\r\nResources/views/SpecialOfLocation/view.html.twig,\r\nResources/views/SpecialOfLocation/view.html.twig,\r\nResources/views/ServiceOfLocation/display.html.twig,\r\nResources/views/SpecialOfLocation/view.html.twig"
     }
     entities {
         entity "branch" {
@@ -23,14 +23,16 @@ application "YourCity" {
                 string "descriptionForGoogle" nullable translatable {
                     documentation "Only 170 characters."
                     mandatory false
+                    displayType NONE
                     length 170
                 },
                 text "description" translatable {
                     documentation "Only 2000 characters."
                     mandatory false
                 },
-                upload "imageofBranch" {
+                upload "imageOfBranch" {
                     mandatory false
+                displayType DISPLAY
                 }
             }
             actions {
@@ -266,6 +268,7 @@ application "YourCity" {
                 string "descriptionForGoogle" nullable translatable {
                     documentation "Only 170 characters."
                     mandatory false
+                displayType NONE
                 },
                 text "description" nullable {
                     documentation "Only 2000 characters."
@@ -273,6 +276,7 @@ application "YourCity" {
                 },
                 upload "imageOfPart" {
                     mandatory false
+                displayType DISPLAY
                 }
             }
             actions {
@@ -341,8 +345,8 @@ application "YourCity" {
             hasTray true
             fields {
                 string "name" translatable {
-                    documentation "Only 100 characters; better only 57."
-                    length 100
+                    documentation ""
+                    length 255
                 },
                 text "text" nullable translatable {
                     mandatory false
@@ -373,6 +377,7 @@ application "YourCity" {
             ,
                 datetime "enddate" endDate {
                     documentation "On this date the offer will get put into the archive."
+                    mandatory false
                     displayType NONE
                 }
             }
@@ -476,7 +481,7 @@ application "YourCity" {
             hasTray true
             fields {
                 string "name" translatable {
-                    documentation "Maximum 100 characters."
+                    documentation ""
                     length 100
                 },
                 text "description" nullable translatable {
@@ -597,7 +602,7 @@ application "YourCity" {
             }
         }
     ,
-        entity "serviceofLocation" {
+        entity "serviceOfLocation" {
             nameMultiple "servicesOfLocation"
             displayPattern "#name#"
             fields {
@@ -607,6 +612,7 @@ application "YourCity" {
                 },
                 text "description" nullable translatable {
                     mandatory false
+                displayType NONE
                 }
             ,
                 string "iconForService" {
@@ -624,6 +630,7 @@ application "YourCity" {
         }
     ,
         entity "abonnement" {
+            documentation "You are able to subscribe for a location.\r\nYou can set if you wish to see parts of a location and if you like to get a message."
             nameMultiple "abonnements"
             displayPattern "#name#"
             ownerPermission true
@@ -631,6 +638,52 @@ application "YourCity" {
                 string "name" {
                     defaultValue "abo"
                     mandatory false
+                }
+            ,
+                boolean "showMenus" ajaxTogglability {
+                    mandatory false
+                },
+                boolean "sendMessageForMenus" ajaxTogglability {
+                    mandatory false
+                },
+                boolean "showOffers" ajaxTogglability {
+                    mandatory false
+                },
+                boolean "sendMessageForOffers" ajaxTogglability,
+                boolean "showEvents" ajaxTogglability {
+                    mandatory false
+                },
+                boolean "sendMessageForEvents" ajaxTogglability {
+                    mandatory false
+                },
+                boolean "showProducts" ajaxTogglability,
+                boolean "sendMessageForProducts" ajaxTogglability,
+                boolean "showOptionOne" ajaxTogglability {
+                    mandatory false
+                    visible false
+                },
+                boolean "sendMessageToOptionOne" ajaxTogglability {
+                    mandatory false
+                    visible false
+                },
+                boolean "showOptionTwo" ajaxTogglability {
+                    mandatory false
+                    visible false
+                },
+                boolean "sendMessageToOptionTwo" ajaxTogglability {
+                    mandatory false
+                    visible false
+                },
+                boolean "showOptionThree" ajaxTogglability {
+                    mandatory false
+                    visible false
+                },
+                boolean "sendMessageToOptionThree" ajaxTogglability {
+                    mandatory false
+                    visible false
+                },
+                integer "positionOfAbo" {
+                    defaultValue "0"
                 }
             }
             actions {
@@ -742,7 +795,7 @@ application "YourCity" {
         many2many {
             source "location"
             sourceAlias "locations"
-            target "serviceofLocation"
+            target "serviceOfLocation"
             targetAlias "servicesOfLocation"
             refClass "LocationServiceofLocation"
             orderBy "name"
