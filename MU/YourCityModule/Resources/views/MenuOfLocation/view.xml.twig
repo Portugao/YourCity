@@ -1,0 +1,9 @@
+{# purpose of this template: menus of location view xml view #}
+<?xml version="1.0" encoding="{{ pageGetVar('meta.charset') }}" ?>
+<menusOfLocation>
+{% for menuOfLocation in items %}
+    {{ include('@MUYourCityModule/MenuOfLocation/include.xml.twig') }}
+{% else %}
+    <noMenuOfLocation />
+{% endfor %}
+</menusOfLocation>

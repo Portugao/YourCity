@@ -1,0 +1,7 @@
+{# purpose of this template: dishes view json view #}
+[
+{% for dish in items %}
+    {% if not loop.first %},{% endif %}
+    {{ dish.toJson() }}
+{% endfor %}
+]

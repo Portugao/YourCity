@@ -1,0 +1,15 @@
+{# Purpose of this template: Display item information for previewing from other modules #}
+<dl id="product{{ product.id }}">
+<dt>{{ product|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.products.filter') }}</dt>
+{% if product.description is not empty %}<dd>{{ product.description }}</dd>{% endif %}
+{% if featureActivationHelper.isEnabled(constant('MU\\YourCityModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'product') %}
+    <dd>
+        <dl class="category-list">
+        {% for propName, catMapping in product.categories %}
+            <dt>{{ propName }}</dt>
+            <dd>{{ catMapping.category.display_name[app.request.locale]|default(catMapping.category.name) }}</dd>
+        {% endfor %}
+        </dl>
+    </dd>
+{% endif %}
+</dl>

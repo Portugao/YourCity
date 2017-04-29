@@ -1,0 +1,147 @@
+{# Purpose of this template: Display a popup selector of locations for scribite integration #}
+{% set useFinder = true %}
+{% extends 'MUYourCityModule::raw.html.twig' %}
+{% block title __('Search and select location') %}
+{% block content %}
+    <div class="container">
+        <div class="zikula-bootstrap-tab-container">
+            <ul class="nav nav-tabs">
+            {% set activatedObjectTypes = getModVar('MUYourCityModule', 'enabledFinderTypes', []) %}
+            {% if 'branch' in activatedObjectTypes %}
+                <li{{ objectType == 'branch' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'branch', 'editor': editorName}) }}" title="{{ __('Search and select branch') }}">{{ __('Branches') }}</a></li>
+            {% endif %}
+            {% if 'location' in activatedObjectTypes %}
+                <li{{ objectType == 'location' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'location', 'editor': editorName}) }}" title="{{ __('Search and select location') }}">{{ __('Locations') }}</a></li>
+            {% endif %}
+            {% if 'part' in activatedObjectTypes %}
+                <li{{ objectType == 'part' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'part', 'editor': editorName}) }}" title="{{ __('Search and select part') }}">{{ __('Parts') }}</a></li>
+            {% endif %}
+            {% if 'imageOfLocation' in activatedObjectTypes %}
+                <li{{ objectType == 'imageOfLocation' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'imageOfLocation', 'editor': editorName}) }}" title="{{ __('Search and select image of location') }}">{{ __('Images of location') }}</a></li>
+            {% endif %}
+            {% if 'fileOfLocation' in activatedObjectTypes %}
+                <li{{ objectType == 'fileOfLocation' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'fileOfLocation', 'editor': editorName}) }}" title="{{ __('Search and select file of location') }}">{{ __('Files of location') }}</a></li>
+            {% endif %}
+            {% if 'offer' in activatedObjectTypes %}
+                <li{{ objectType == 'offer' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'offer', 'editor': editorName}) }}" title="{{ __('Search and select offer') }}">{{ __('Offers') }}</a></li>
+            {% endif %}
+            {% if 'menuOfLocation' in activatedObjectTypes %}
+                <li{{ objectType == 'menuOfLocation' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'menuOfLocation', 'editor': editorName}) }}" title="{{ __('Search and select menu of location') }}">{{ __('Menus of location') }}</a></li>
+            {% endif %}
+            {% if 'partOfMenu' in activatedObjectTypes %}
+                <li{{ objectType == 'partOfMenu' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'partOfMenu', 'editor': editorName}) }}" title="{{ __('Search and select part of menu') }}">{{ __('Parts of menu') }}</a></li>
+            {% endif %}
+            {% if 'dish' in activatedObjectTypes %}
+                <li{{ objectType == 'dish' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'dish', 'editor': editorName}) }}" title="{{ __('Search and select dish') }}">{{ __('Dishes') }}</a></li>
+            {% endif %}
+            {% if 'event' in activatedObjectTypes %}
+                <li{{ objectType == 'event' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'event', 'editor': editorName}) }}" title="{{ __('Search and select event') }}">{{ __('Events') }}</a></li>
+            {% endif %}
+            {% if 'product' in activatedObjectTypes %}
+                <li{{ objectType == 'product' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'product', 'editor': editorName}) }}" title="{{ __('Search and select product') }}">{{ __('Products') }}</a></li>
+            {% endif %}
+            {% if 'specialOfLocation' in activatedObjectTypes %}
+                <li{{ objectType == 'specialOfLocation' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'specialOfLocation', 'editor': editorName}) }}" title="{{ __('Search and select special of location') }}">{{ __('Specials of location') }}</a></li>
+            {% endif %}
+            {% if 'serviceofLocation' in activatedObjectTypes %}
+                <li{{ objectType == 'serviceofLocation' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'serviceofLocation', 'editor': editorName}) }}" title="{{ __('Search and select serviceof location') }}">{{ __('Services of location') }}</a></li>
+            {% endif %}
+            </ul>
+        </div>
+        {% form_theme finderForm with [
+            '@MUYourCityModule/Form/bootstrap_3.html.twig',
+            'ZikulaFormExtensionBundle:Form:form_div_layout.html.twig'
+        ] %}
+        {{ form_start(finderForm, {attr: { id: 'mUYourCityModuleSelectorForm' }}) }}
+        {{ form_errors(finderForm) }}
+        <fieldset>
+            <legend>{{ __('Search and select location') }}</legend>
+            {% if featureActivationHelper.isEnabled(constant('MU\\YourCityModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'location') %}
+                {{ form_row(finderForm.categories) }}
+            {% endif %}
+            {{ form_row(finderForm.onlyImages) }}
+            <div id="imageFieldRow">
+                {{ form_row(finderForm.imageField) }}
+            </div>
+            {{ form_row(finderForm.pasteAs) }}
+            <br />
+            <div class="form-group">
+                <label class="col-sm-3 control-label">{{ __('Location') }}:</label>
+                <div class="col-sm-9">
+                    <div id="muyourcitymoduleItemContainer">
+                        {% if not onlyImages %}
+                            <ul>
+                        {% endif %}
+                            {% for location in items %}
+                                {% if not onlyImages or (attribute(location, imageField) is not empty and attribute(location, imageField ~ 'Meta').isImage) %}
+                                {% if not onlyImages %}
+                                    <li>
+                                {% endif %}
+                                    {% set itemId = location.createCompositeIdentifier() %}
+                                    <a href="#" data-itemid="{{ itemId }}">
+                                        {% if onlyImages %}
+                                            {% set thumbOptions = attribute(thumbRuntimeOptions, 'location' ~ imageField[:1]|upper ~ imageField[1:]) %}
+                                            <img src="{{ attribute(location, imageField).getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-rounded" />
+                                        {% else %}
+                                            {{ location|muyourcitymodule_formattedTitle }}
+                                        {% endif %}
+                                    </a>
+                                    <input type="hidden" id="path{{ itemId }}" value="{{ path('muyourcitymodule_location_display', { 'id': location.id, 'slug': location.slug }) }}" />
+                                    <input type="hidden" id="url{{ itemId }}" value="{{ url('muyourcitymodule_location_display', { 'id': location.id, 'slug': location.slug }) }}" />
+                                    <input type="hidden" id="title{{ itemId }}" value="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}" />
+                                    <input type="hidden" id="desc{{ itemId }}" value="{% set description %}{% if location.description is not empty %}{{ location.description }}{% endif %}
+                                    {% endset %}{{ description|striptags|e('html_attr') }}" />
+                                    {% if onlyImages %}
+                                        <input type="hidden" id="imagePath{{ itemId }}" value="/{{ attribute(location, imageField).getPathname() }}" />
+                                    {% endif %}
+                                {% if not onlyImages %}
+                                    </li>
+                                {% endif %}
+                                {% endif %}
+                            {% else %}
+                                {% if not onlyImages %}<li>{% endif %}{{ __('No locations found.') }}{% if not onlyImages %}</li>{% endif %}
+                            {% endfor %}
+                        {% if not onlyImages %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            {{ form_row(finderForm.sort) }}
+            {{ form_row(finderForm.sortdir) }}
+            {{ form_row(finderForm.num) }}
+            <div id="searchTermRow">
+                {{ form_row(finderForm.q) }}
+            </div>
+            <div>
+                {{ pager({ display: 'page', rowcount: pager.numitems, limit: pager.itemsperpage, posvar: 'pos', maxpages: 10, route: 'muyourcitymodule_external_finder'}) }}
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                    {{ form_widget(finderForm.update) }}
+                    {{ form_widget(finderForm.cancel) }}
+                </div>
+            </div>
+        </fieldset>
+        {{ form_end(finderForm) }}
+    </div>
+
+    {#
+    <div class="muyourcitymodule-finderform">
+        <fieldset>
+            {{ render(controller('MUYourCityModule:Location:edit')) }}
+        </fieldset>
+    </div>
+    #}
+
+    <script type="text/javascript">
+    /* <![CDATA[ */
+        ( function($) {
+            $(document).ready(function() {
+                mUYourCityModule.finder.onLoad();
+            });
+        })(jQuery);
+    /* ]]> */
+    </script>
+{% endblock %}

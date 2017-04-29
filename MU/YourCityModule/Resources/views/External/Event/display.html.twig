@@ -1,0 +1,59 @@
+{# Purpose of this template: Display one certain event within an external context #}
+{{ pageAddAsset('javascript', asset('magnific-popup/jquery.magnific-popup.min.js')) }}
+{{ pageAddAsset('stylesheet', asset('magnific-popup/magnific-popup.css')) }}
+{{ pageAddAsset('javascript', zasset('@MUYourCityModule:js/MUYourCityModule.js')) }}
+<div id="event{$event.id}" class="muyourcitymodule-external-event">
+{% if displayMode == 'link' %}
+    <p class="muyourcitymodule-external-link">
+    <a href="{{ path('muyourcitymodule_event_display', { 'id': event.id }) }}" title="{{ event|muyourcitymodule_formattedTitle|e('html_attr') }}">
+    {{ event|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.events.filter') }}
+    </a>
+    </p>
+{% endif %}
+{% if hasPermission('MUYourCityModule::', '::', 'ACCESS_EDIT') %}
+    {# for normal users without edit permission show only the actual file per default #}
+    {% if displayMode == 'embed' %}
+        <p class="muyourcitymodule-external-title">
+            <strong>{{ event|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.events.filter') }}</strong>
+        </p>
+    {% endif %}
+{% endif %}
+
+{% if displayMode == 'link' %}
+{% elseif displayMode == 'embed' %}
+    <div class="muyourcitymodule-external-snippet">
+        {% if event.imageOfEvent is not empty and event.imageOfEventMeta|default %}
+                    <a href="{{ event.imageOfEventUrl }}" title="{{ event|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if event.imageOfEventMeta.isImage %} class="image-link"{% endif %}>
+        {% if event.imageOfEventMeta.isImage %}
+            {% set thumbOptions = attribute(thumbRuntimeOptions, 'eventImageOfEvent') %}
+            <img src="{{ event.imageOfEvent.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ event|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+        {% else %}
+            {{ __('Download') }} ({{ event.imageOfEventMeta.size|muyourcitymodule_fileSize(event.imageOfEvent.getPathname(), false, false) }})
+        {% endif %}
+        </a>
+        {% else %}&nbsp;{% endif %}
+    </div>
+
+    {# you can distinguish the context like this: #}
+    {# % if source == 'contentType' %}
+        ...
+    {% elseif source == 'scribite' %}
+        ...
+    {% endif % #}
+
+    {# you can enable more details about the item: #}
+    {#
+        <p class="muyourcitymodule-external-description">
+            {% if event.description is not empty %}{{ event.description }}<br />{% endif %}
+            {% if featureActivationHelper.isEnabled(constant('MU\\YourCityModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'event') %}
+                <dl class="category-list">
+                {% for propName, catMapping in event.categories %}
+                    <dt>{{ propName }}</dt>
+                    <dd>{{ catMapping.category.display_name[app.request.locale]|default(catMapping.category.name) }}</dd>
+                {% endfor %}
+                </dl>
+            {% endif %}
+        </p>
+    #}
+{% endif %}
+</div>

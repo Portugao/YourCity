@@ -1,0 +1,56 @@
+{# purpose of this template: dishes atom feed #}
+<?xml version="1.0" encoding="{% set charset = pageGetVar('meta.charset') %}{% if charset == 'ISO-8859-15' %}ISO-8859-1{% else %}{{ charset }}{% endif %}" ?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title type="text">{{ __('Latest dishes') }}</title>
+    <subtitle type="text">{{ __('A direct feed showing the list of dishes') }} - {{ getModVar('ZConfig', 'slogan') }}</subtitle>
+    <author>
+        <name>{{ getModVar('ZConfig', 'sitename') }}</name>
+    </author>
+{% set amountOfItems = items|length %}
+{% if amountOfItems > 0 %}
+{% set uniqueID %}tag:{{ app.request.getSchemeAndHttpHost()|replace({ 'http://': '', '/': '' }) }},{{ items.first.createdDate|date('Y-m-d') }}:{{ path('muyourcitymodule_dish_' ~ routeArea ~ 'display', { 'id': items.first.id }) }}{% endset %}
+    <id>{{ uniqueID }}</id>
+    <updated>{{ items[0].updatedDate|date('Y-m-dTH:M:SZ') }}</updated>
+{% endif %}
+    <link rel="alternate" type="text/html" hreflang="{{ app.request.locale }}" href="{{ url('muyourcitymodule_dish_' ~ routeArea ~ 'index') }}" />
+    <link rel="self" type="application/atom+xml" href="{{ app.request.getSchemeAndHttpHost() ~ app.request.getBasePath() }}" />
+    <rights>Copyright (c) {{ 'now'|date('Y') }}, {{ app.request.getSchemeAndHttpHost()|e }}</rights>
+{% for dish in items %}
+    {{ block('entry') }}
+{% endfor %}
+</feed>
+{% block entry %}
+    <entry>
+        {{ block('entry_content') }}
+    </entry>
+{% endblock %}
+{% block entry_content %}
+    <title type="html">{{ dish|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.dishes') }}</title>
+    <link rel="alternate" type="text/html" href="{{ url('muyourcitymodule_dish_' ~ routeArea ~ 'display', { 'id': dish.id }) }}" />
+    {% set uniqueID %}tag:{{ app.request.getSchemeAndHttpHost()|replace({ 'http://': '', '/': '' }) }},{{ dish.createdDate|date('Y-m-d') }}:{{ path('muyourcitymodule_dish_' ~ routeArea ~ 'display', { 'id': dish.id }) }}{% endset %}
+    <id>{{ uniqueID }}</id>
+    {% if dish.updatedDate|default %}
+        <updated>{{ dish.updatedDate|date('Y-m-dTH:M:SZ') }}</updated>
+    {% endif %}
+    {% if dish.createdDate|default %}
+        <published>{{ dish.createdDate|date('Y-m-dTH:M:SZ') }}</published>
+    {% endif %}
+    {% if dish.createdBy|default and dish.createdBy.getUid() > 0 %}
+        {% set creatorAttributes = dish.createdBy.getAttributes() %}
+        <author>
+           <name>{{ creatorAttributes.get('realname')|default(creatorAttributes.get('name'))|default(dish.createdBy.getUname()) }}</name>
+           <uri>{{ creatorAttributes.get('_UYOURHOMEPAGE')|default('-') }}</uri>
+           <email>{{ dish.createdBy.getEmail() }}</email>
+        </author>
+    {% endif %}
+    <summary type="html">
+        <![CDATA[
+        {{ dish.description|truncate(150, true, '&hellip;')|default('-') }}
+        ]]>
+    </summary>
+    <content type="html">
+        <![CDATA[
+        {{ dish.name|replace({ '<br>': '<br />' }) }}
+        ]]>
+    </content>
+{% endblock %}

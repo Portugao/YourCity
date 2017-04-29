@@ -1,0 +1,59 @@
+{# Purpose of this template: Display one certain location within an external context #}
+{{ pageAddAsset('javascript', asset('magnific-popup/jquery.magnific-popup.min.js')) }}
+{{ pageAddAsset('stylesheet', asset('magnific-popup/magnific-popup.css')) }}
+{{ pageAddAsset('javascript', zasset('@MUYourCityModule:js/MUYourCityModule.js')) }}
+<div id="location{$location.id}" class="muyourcitymodule-external-location">
+{% if displayMode == 'link' %}
+    <p class="muyourcitymodule-external-link">
+    <a href="{{ path('muyourcitymodule_location_display', { 'id': location.id, 'slug': location.slug }) }}" title="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}">
+    {{ location|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.locations.filter') }}
+    </a>
+    </p>
+{% endif %}
+{% if hasPermission('MUYourCityModule::', '::', 'ACCESS_EDIT') %}
+    {# for normal users without edit permission show only the actual file per default #}
+    {% if displayMode == 'embed' %}
+        <p class="muyourcitymodule-external-title">
+            <strong>{{ location|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.locations.filter') }}</strong>
+        </p>
+    {% endif %}
+{% endif %}
+
+{% if displayMode == 'link' %}
+{% elseif displayMode == 'embed' %}
+    <div class="muyourcitymodule-external-snippet">
+        {% if location.logoOfYourLocation is not empty and location.logoOfYourLocationMeta|default %}
+                    <a href="{{ location.logoOfYourLocationUrl }}" title="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if location.logoOfYourLocationMeta.isImage %} class="image-link"{% endif %}>
+        {% if location.logoOfYourLocationMeta.isImage %}
+            {% set thumbOptions = attribute(thumbRuntimeOptions, 'locationLogoOfYourLocation') %}
+            <img src="{{ location.logoOfYourLocation.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+        {% else %}
+            {{ __('Download') }} ({{ location.logoOfYourLocationMeta.size|muyourcitymodule_fileSize(location.logoOfYourLocation.getPathname(), false, false) }})
+        {% endif %}
+        </a>
+        {% else %}&nbsp;{% endif %}
+    </div>
+
+    {# you can distinguish the context like this: #}
+    {# % if source == 'contentType' %}
+        ...
+    {% elseif source == 'scribite' %}
+        ...
+    {% endif % #}
+
+    {# you can enable more details about the item: #}
+    {#
+        <p class="muyourcitymodule-external-description">
+            {% if location.description is not empty %}{{ location.description }}<br />{% endif %}
+            {% if featureActivationHelper.isEnabled(constant('MU\\YourCityModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'location') %}
+                <dl class="category-list">
+                {% for propName, catMapping in location.categories %}
+                    <dt>{{ propName }}</dt>
+                    <dd>{{ catMapping.category.display_name[app.request.locale]|default(catMapping.category.name) }}</dd>
+                {% endfor %}
+                </dl>
+            {% endif %}
+        </p>
+    #}
+{% endif %}
+</div>

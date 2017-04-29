@@ -1,0 +1,16 @@
+{# Purpose of this template: Display item information for previewing from other modules #}
+<dl id="offer{{ offer.id }}">
+<dt>{{ offer|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.offers.filter') }}</dt>
+<dd>{% if offer.imageOfOffer is not empty and offer.imageOfOfferMeta|default %}
+            <a href="{{ offer.imageOfOfferUrl }}" title="{{ offer|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if offer.imageOfOfferMeta.isImage %} class="image-link"{% endif %}>
+{% if offer.imageOfOfferMeta.isImage %}
+    {% set thumbOptions = attribute(thumbRuntimeOptions, 'offerImageOfOffer') %}
+    <img src="{{ offer.imageOfOffer.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ offer|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+{% else %}
+    {{ __('Download') }} ({{ offer.imageOfOfferMeta.size|muyourcitymodule_fileSize(offer.imageOfOffer.getPathname(), false, false) }})
+{% endif %}
+</a>
+{% else %}&nbsp;{% endif %}
+</dd>
+{% if offer.text is not empty %}<dd>{{ offer.text }}</dd>{% endif %}
+</dl>

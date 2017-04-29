@@ -1,0 +1,770 @@
+application "YourCity" {
+    documentation "Your City is an application to manage locations in your city."
+    vendor "MU"
+    author "Michael Ueberschaer"
+    email "info@homepages-mit-zikula.de"
+    url "http://homepages-mit-zikula.de"
+    prefix "yourcity"
+    generatorSettings {
+        settingsContainer "Settings"
+        targetCoreVersion ZK14
+        versionAllGeneratedFiles false
+        generatePoweredByBacklinksIntoFooterTemplates false
+        generateTests false
+        markFiles "Resources/public/css/style.css,\r\nResources/views/Abonnement/view.html.twig,\r\nResources/views/Branch/display.html.twig,\r\nResources/views/Event/display.html.twig,\r\nResources/views/MenuOfLocation/display.html.twig,\r\nResources/views/Location/display.html.twig,\r\nResources/views/Offer/display.html.twig,\r\nResources/views/Offer/view.html.twig,\r\nResources/views/Part/display.html.twig,\r\nResources/views/SpecialOfLocation/display.html.twig,\r\nResources/views/SpecialOfLocation/view.html.twig,\r\nResources/views/ServiceOfLocation/display.html.twig,\r\nResources/views/SpecialOfLocation/view.html.twig"
+    }
+    entities {
+        entity "branch" {
+            nameMultiple "branches"
+            displayPattern "#name#"
+            fields {
+                string "name" translatable
+            ,
+                string "descriptionForGoogle" nullable translatable {
+                    documentation "Only 170 characters."
+                    mandatory false
+                    length 170
+                },
+                text "description" translatable {
+                    documentation "Only 2000 characters."
+                    mandatory false
+                },
+                upload "imageofBranch" {
+                    mandatory false
+                }
+            }
+            actions {
+                mainAction "Index",
+                viewAction "View",
+                displayAction "Display",
+                editAction "Edit"
+            ,
+                deleteAction "Delete"
+            }
+        },
+        entity "location" leading geographical categorisable categorisableMultiSelection {
+            nameMultiple "locations"
+            displayPattern "#name# #zipCode# #city# #street# #numberOfStreet#"
+            workflow STANDARD
+            hasTray true
+            fields {
+                string "name" {
+                    sluggablePosition 1
+                },
+                string "slogan" nullable translatable {
+                    mandatory false
+                    displayType NONE
+                    sluggablePosition 0
+                },
+                upload "logoOfYourLocation" {
+                    mandatory false
+                    maxSize "100k"
+                    maxWidth 400
+                    maxHeight 400
+                    allowLandscape false
+                    allowPortrait false
+                },
+                string "descriptionForGoogle" nullable translatable {
+                    mandatory false
+                    displayType NONE
+                },
+                text "description" nullable translatable {
+                    documentation "Maximum 2000 characters."
+                    mandatory false
+                },
+                text "description2" nullable translatable {
+                    documentation "Maximum 2000 characters.\r\nPremium option."
+                    mandatory false
+                },
+                upload "imageOfLocation" {
+                    mandatory false
+                },
+                string "street" {
+                    mandatory false
+                },
+                string "numberOfStreet" {
+                    mandatory false
+                },
+                string "zipCode" {
+                    mandatory false
+                    sluggablePosition 2
+                },
+                string "city" {
+                    mandatory false
+                },
+                string "telefon" {
+                    mandatory false
+                },
+                string "mobil" {
+                    mandatory false
+                },
+                url "homepage" {
+                    mandatory false
+                },
+                boolean "closedForEver" {
+                    mandatory false
+                    displayType NONE
+                }
+            ,
+                boolean "agreement" ajaxTogglability {
+                    mandatory false
+                    displayType NONE
+                },
+                boolean "unclearTimes" ajaxTogglability {
+                    mandatory false
+                    displayType NONE
+                },
+                text "openingHours" {
+                    documentation "Make extended informations about the opening hours!"
+                    mandatory false
+                },
+                boolean "closedOnMonday" {
+                    mandatory false
+                displayType NONE
+                },
+                time "startOnMonday" nullable {
+                    mandatory false
+                },
+                time "endOnMonday" nullable {
+                    mandatory false
+                },
+                time "start2OnMonday" nullable {
+                    mandatory false
+                },
+                time "end2OnMonday" nullable {
+                    mandatory false
+                },
+                boolean "closedOnTuesday" {
+                    mandatory false
+                displayType NONE
+                },
+                time "startOnTuesday" nullable {
+                    mandatory false
+                },
+                time "endOnTuesday" nullable {
+                    mandatory false
+                },
+                time "start2OnTuesday" nullable {
+                    mandatory false
+                },
+                time "end2OnTuesday" nullable {
+                    mandatory false
+                },
+                boolean "closedOnWednesday" {
+                    mandatory false
+                displayType NONE
+                },
+                time "startOnWednesday" nullable {
+                    mandatory false
+                },
+                time "endOnWednesday" nullable {
+                    mandatory false
+                },
+                time "start2OnWednesday" nullable {
+                    mandatory false
+                },
+                time "end2OnWednesday" nullable {
+                    mandatory false
+                },
+                boolean "closedOnThursday" {
+                    mandatory false
+                displayType NONE
+                },
+                time "startOnThursday" nullable {
+                    mandatory false
+                },
+                time "endOnThursday" nullable {
+                    mandatory false
+                },
+                time "start2OnThursday" nullable {
+                    mandatory false
+                },
+                time "end2OnThursday" nullable {
+                    mandatory false
+                },
+                boolean "closedOnFriday" {
+                    mandatory false
+                displayType NONE
+                },
+                time "startOnFriday" nullable {
+                    mandatory false
+                },
+                time "endOnFriday" nullable {
+                    mandatory false
+                },
+                time "start2OnFriday" nullable {
+                    mandatory false
+                },
+                time "end2OnFriday" nullable {
+                    mandatory false
+                },
+                boolean "closedOnSaturday" {
+                    mandatory false
+                displayType NONE
+                }
+            ,
+                time "startOnSaturday" nullable {
+                    mandatory false
+                },
+                time "endOnSaturday" nullable {
+                    mandatory false
+                },
+                time "star2tOnSaturday" nullable {
+                    mandatory false
+                },
+                time "end2OnSaturday" nullable {
+                    mandatory false
+                },
+                boolean "closedOnSunday" {
+                    mandatory false
+                displayType NONE
+                },
+                time "startOnSunday" nullable {
+                    mandatory false
+                },
+                time "endOnSunday" nullable {
+                    mandatory false
+                },
+                time "start2OnSunday" nullable {
+                    mandatory false
+                },
+                time "end2OnSunday" nullable {
+                    mandatory false
+                }
+            ,
+                user "owner" nullable {
+                    mandatory false
+                    displayType NONE
+                    onAccountDeletionCreator DELETE
+                },
+                user "admin1" nullable {
+                    mandatory false
+                    displayType NONE
+                    onAccountDeletionCreator DELETE
+                },
+                user "admin2" nullable {
+                    mandatory false
+                    displayType NONE
+                    onAccountDeletionCreator DELETE
+                }
+            }
+            actions {
+                mainAction "Index",
+                viewAction "View",
+                displayAction "Display",
+                editAction "Edit"
+            ,
+                deleteAction "Delete"
+            }
+        },
+        entity "part" {
+            nameMultiple "parts"
+            displayPattern "#name#"
+            fields {
+                string "name"
+            ,
+                string "descriptionForGoogle" nullable translatable {
+                    documentation "Only 170 characters."
+                    mandatory false
+                },
+                text "description" nullable {
+                    documentation "Only 2000 characters."
+                    mandatory false
+                },
+                upload "imageOfPart" {
+                    mandatory false
+                }
+            }
+            actions {
+                mainAction "Index",
+                viewAction "View",
+                displayAction "Display",
+                editAction "Edit",
+                deleteAction "Delete"
+            }
+        },
+        entity "imageOfLocation" {
+            nameMultiple "imagesOfLocation"
+            displayPattern "#name#"
+            fields {
+                string "name" translatable {
+                    mandatory false
+                },
+                text "description" translatable {
+                    documentation "Maximum 2000 characters."
+                    mandatory false
+                },
+                upload "image",
+                integer "positionOfImage" {
+                    defaultValue "0"
+                    displayType NONE
+                }
+            }
+            actions {
+                mainAction "Index",
+                viewAction "View",
+                displayAction "Display",
+                editAction "Edit",
+                deleteAction "Delete"
+            }
+        },
+        entity "fileOfLocation" {
+            nameMultiple "filesOfLocation"
+            displayPattern "#name#"
+            fields {
+                string "name" translatable,
+                text "description" translatable {
+                    documentation "Maximum 2000 characters."
+                    mandatory false
+                },
+                upload "fileOfFile" {
+                    allowedExtensions "pdf,doc,docx,xls"
+                    mimeTypes "application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel"
+                },
+                integer "positionOfFile" {
+                    defaultValue "0"
+                    displayType NONE
+                }
+            }
+            actions {
+                mainAction "Index",
+                viewAction "View",
+                displayAction "Display",
+                editAction "Edit",
+                deleteAction "Delete"
+            }
+        },
+        entity "offer" {
+            nameMultiple "offers"
+            displayPattern "#name#"
+            hasArchive true
+            hasTray true
+            fields {
+                string "name" translatable {
+                    documentation "Only 100 characters; better only 57."
+                    length 100
+                },
+                text "text" nullable translatable {
+                    mandatory false
+                    length 4000
+                },
+                url "urlToOfferOnHomepage" {
+                    mandatory false
+                },
+                upload "imageOfOffer" {
+                    mandatory false
+                },
+                decimal "priceOfOffer" currency {
+                    defaultValue "0.00"
+                    mandatory false
+                },
+                decimal "normalPrice" currency {
+                    defaultValue "0.00"
+                    mandatory false
+                }
+            ,
+                integer "percentOfOffer" nullable percentage {
+                    defaultValue ""
+                    mandatory false
+                    length 3
+                },
+                datetime "effectivFrom",
+                datetime "effectivUntil"
+            ,
+                datetime "enddate" endDate {
+                    documentation "On this date the offer will get put into the archive."
+                    displayType NONE
+                }
+            }
+            actions {
+                mainAction "Index",
+                viewAction "View",
+                displayAction "Display",
+                editAction "Edit",
+                deleteAction "Delete"
+            }
+        },
+        entity "menuOfLocation" {
+            nameMultiple "menusOfLocation"
+            displayPattern "#name#"
+            hasTray true
+            fields {
+                string "name" translatable {
+                    documentation "For example evening menu.\r\nMaximum 100 characters, better ony 57 characters.\r\nPlease do not enter your location name. It will get added automaticly."
+                length 100
+                },
+                text "description" nullable translatable {
+                    documentation "Maximum 2000 characters."
+                    mandatory false
+                    length 2000
+                },
+                upload "imageOfMenu" {
+                    mandatory false
+                },
+                integer "positionOfMenu" {
+                    defaultValue "0"
+                displayType NONE
+                },
+                datetime "effectivFrom",
+                datetime "effectivUntil" endDate
+            }
+            actions {
+                mainAction "Index",
+                viewAction "View",
+                displayAction "Display",
+                editAction "Edit",
+                deleteAction "Delete"
+            }
+        },
+        entity "partOfMenu" {
+            nameMultiple "partsOfMenu"
+            displayPattern "#name#"
+            fields {
+                string "name" translatable {
+                    documentation "For example drinks."
+                },
+                text "description" translatable {
+                    documentation "Maximum 2000 characters."
+                    mandatory false
+                },
+                integer "positionOfPart" {
+                    defaultValue "0"
+                displayType NONE
+                }
+            }
+            actions {
+                mainAction "Index",
+                displayAction "Display",
+                editAction "Edit",
+                deleteAction "Delete"
+            ,
+                viewAction "View"
+            }
+        },
+        entity "dish" categorisable categorisableMultiSelection {
+            nameMultiple "dishes"
+            displayPattern "#name#"
+            fields {
+                string "name" translatable,
+                text "description" nullable translatable {
+                    documentation "Maximum 2000 characters."
+                    mandatory false
+                },
+                upload "imageOfDish" {
+                    mandatory false
+                },
+                decimal "priceOfDish" currency {
+                    defaultValue "0.00"
+                },
+                integer "positionOfDish" {
+                    defaultValue "0"
+                }
+            }
+            actions {
+                mainAction "Index",
+                displayAction "Display",
+                editAction "Edit",
+                deleteAction "Delete"
+            ,
+                viewAction "View"
+            }
+        },
+        entity "event" geographical categorisable {
+            nameMultiple "events"
+            displayPattern "#name#"
+            hasArchive true
+            hasTray true
+            fields {
+                string "name" translatable {
+                    documentation "Maximum 100 characters."
+                    length 100
+                },
+                text "description" nullable translatable {
+                    documentation "Maximum 2000 characters."
+                    mandatory false
+                },
+                upload "imageOfEvent" {
+                    mandatory false
+                },
+                string "street" {
+                    mandatory false
+                },
+                string "numberOfStreet" {
+                    mandatory false
+                },
+                string "zipCode",
+                string "city"
+            ,
+                datetime "startDate",
+                datetime "endDate",
+                datetime "start2Date" {
+                    documentation ""
+                    mandatory false
+                },
+                datetime "end2Date" endDate {
+                    mandatory false
+                }
+            }
+            actions {
+                mainAction "Index",
+                viewAction "View",
+                displayAction "Display",
+                editAction "Edit",
+                deleteAction "Delete"
+            }
+        }
+    ,
+        entity "product" categorisable categorisableMultiSelection {
+            nameMultiple "products"
+            displayPattern "#name#"
+            fields {
+                string "name" translatable {
+                    documentation "Maximum 100 characters, better only 57."
+                    length 100
+                },
+                text "description" nullable translatable {
+                    mandatory false
+                },
+                list "today" translatable {
+                    mandatory false
+                    items {
+                        listItem "none" ( "none" ),
+                        listItem  "oneToTen" ( "1-10" ),
+                        listItem  "elevenToTwentyFive" ( "11-25" ),
+                        listItem  "twentySixToFifty" ( "26-50" ),
+                        listItem  "moreThanFifty" ( ">50" )
+                    }
+                },
+                boolean "monday" ajaxTogglability {
+                    mandatory false
+                },
+                boolean "tuesday" ajaxTogglability {
+                    mandatory false
+                },
+                boolean "wednesday" ajaxTogglability {
+                    mandatory false
+                },
+                boolean "thursday" ajaxTogglability {
+                    mandatory false
+                },
+                boolean "friday" ajaxTogglability {
+                    mandatory false
+                },
+                boolean "saturday" ajaxTogglability {
+                    mandatory false
+                },
+                boolean "sunday" ajaxTogglability {
+                    mandatory false
+                }
+            ,
+                decimal "priceOfProduct" currency {
+                    defaultValue "0.00"
+                    mandatory false
+                }
+            }
+            actions {
+                mainAction "Index",
+                viewAction "View",
+                displayAction "Display",
+                editAction "Edit",
+                deleteAction "Delete"
+            }
+        }
+    ,
+        entity "specialOfLocation" {
+            nameMultiple "specialsOfLocation"
+            displayPattern "#name#"
+            fields {
+                string "name" translatable {
+                    documentation "Only 100 characters, better only 57."
+                    length 100
+                },
+                text "description" nullable translatable {
+                    documentation "Only 2000 characters."
+                    mandatory false
+                },
+                string "iconForSpecial" {
+                    documentation "Enter a bootstrap icon."
+                    mandatory false
+                }
+            }
+            actions {
+                mainAction "Index",
+                viewAction "View",
+                displayAction "Display",
+                editAction "Edit",
+                deleteAction "Delete"
+            }
+        }
+    ,
+        entity "serviceofLocation" {
+            nameMultiple "servicesOfLocation"
+            displayPattern "#name#"
+            fields {
+                string "name" translatable {
+                    documentation "Only 100 characters."
+                    length 100
+                },
+                text "description" nullable translatable {
+                    mandatory false
+                }
+            ,
+                string "iconForService" {
+                    documentation "Enter a bootstrap icon."
+                    mandatory false
+                }
+            }
+            actions {
+                mainAction "Index",
+                viewAction "View",
+                displayAction "Display",
+                editAction "Edit",
+                deleteAction "Delete"
+            }
+        }
+    ,
+        entity "abonnement" {
+            nameMultiple "abonnements"
+            displayPattern "#name#"
+            ownerPermission true
+            fields {
+                string "name" {
+                    defaultValue "abo"
+                    mandatory false
+                }
+            }
+            actions {
+                mainAction "Index",
+                viewAction "View",
+                editAction "Edit",
+                deleteAction "Delete"
+            }
+        }
+    }
+    relations {
+        one2many {
+            source 
+            "location"
+            sourceAlias "location"
+            target "imageOfLocation"
+            targetAlias "imagesOfLocation"
+            orderBy "positionOfImage"
+        },
+        one2many {
+            source "location"
+            sourceAlias "location"
+            target "fileOfLocation"
+            targetAlias "filesOfLocation"
+            orderBy "positionOfFile"
+        },
+        many2many {
+            source "location"
+            sourceAlias "locations"
+            target "branch"
+            targetAlias "branches"
+            refClass "LocationBranch"
+            orderBy "name"
+            orderByReverse "name"
+        },
+        many2many {
+            source "location"
+            sourceAlias "locations"
+            target "part"
+            targetAlias "parts"
+            refClass "LocationPart"
+            orderBy "name"
+            orderByReverse "name"
+        },
+        one2many {
+            source "location"
+            sourceAlias "location"
+            target "offer"
+            targetAlias "offers"
+        },
+        one2many {
+            source "location"
+            sourceAlias "location"
+            target "menuOfLocation"
+            targetAlias "menuOfLocation"
+            orderBy "positionOfMenu"
+        },
+        one2many {
+            source "menuOfLocation"
+            sourceAlias "menuOfLocation"
+            target "dish"
+            targetAlias "dishes"
+            orderBy "positionOfDish"
+        },
+        one2many {
+            source "menuOfLocation"
+            sourceAlias "menuOfLocation"
+            target "partOfMenu"
+            targetAlias "partsOfMenu"
+            orderBy "positionOfPart"
+        },
+        one2many {
+            source "partOfMenu"
+            sourceAlias "partOfMenu"
+            target "dish"
+            targetAlias "dishes"
+            orderBy "positionOfDish"
+        },
+        one2many {
+            source "location"
+            sourceAlias "location"
+            target "event"
+            targetAlias "events"
+        }
+    ,
+        one2many {
+            source "location"
+            sourceAlias "location"
+            target "product"
+            targetAlias "products"
+            orderBy "name"
+        },
+        one2many {
+            source "location"
+            sourceAlias "location"
+            target "dish"
+            targetAlias "dishes"
+            orderBy "positionOfDish"
+        }
+    ,
+        many2many {
+            source "location"
+            sourceAlias "locations"
+            target "specialOfLocation"
+            targetAlias "specialsOfLocation"
+            refClass "LocationSpecialOfLocation"
+            orderBy "name"
+        },
+        many2many {
+            source "location"
+            sourceAlias "locations"
+            target "serviceofLocation"
+            targetAlias "servicesOfLocation"
+            refClass "LocationServiceofLocation"
+            orderBy "name"
+        }
+    ,
+        one2many {
+            source "location"
+            sourceAlias "location"
+            target "abonnement"
+            targetAlias "abonnements"
+        }
+    }
+    variables {
+        varContainer "generalSettings" {
+            vars {
+                textVar "city" {
+                    value "Bremen"
+                },
+                textVar "areaCode" {
+                    value "0421"
+                }
+            }
+        }
+    }
+}

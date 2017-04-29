@@ -1,0 +1,9 @@
+{# purpose of this template: dishes view xml view #}
+<?xml version="1.0" encoding="{{ pageGetVar('meta.charset') }}" ?>
+<dishes>
+{% for dish in items %}
+    {{ include('@MUYourCityModule/Dish/include.xml.twig') }}
+{% else %}
+    <noDish />
+{% endfor %}
+</dishes>

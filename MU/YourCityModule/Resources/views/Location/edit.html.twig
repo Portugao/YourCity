@@ -1,0 +1,242 @@
+{# purpose of this template: build the form to edit an instance of location #}
+{% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
+{% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
+
+{% block header %}
+    {{ parent() }}
+    {{ pageAddAsset('javascript', zasset('@MUYourCityModule:js/MUYourCityModule.Validation.js'), 98) }}
+    {{ pageAddAsset('javascript', zasset('@MUYourCityModule:js/MUYourCityModule.EditFunctions.js'), 99) }}
+    {{ pageAddAsset('javascript', asset('typeahead/typeahead.bundle.min.js')) }}
+{% endblock %}
+{% block title mode == 'create' ? __('Create location') : __('Edit location') %}
+{% block admin_page_icon mode == 'create' ? 'plus' : 'pencil-square-o' %}
+{% block content %}
+    <div class="muyourcitymodule-location muyourcitymodule-edit">
+        {% form_theme form with [
+            '@MUYourCityModule/Form/bootstrap_3.html.twig',
+            'ZikulaFormExtensionBundle:Form:form_div_layout.html.twig'
+        ] %}
+        {{ form_start(form, {attr: {id: 'locationEditForm', class: 'muyourcity-edit-form'}}) }}
+        {{ form_errors(form) }}
+        {% if translationsEnabled == true %}
+            <div class="zikula-bootstrap-tab-container">
+                <ul class="{{ form.vars.id|lower }}-translation-locales nav nav-tabs">
+                    {% for language in supportedLanguages %}
+                        <li{% if language == app.request.locale %} class="active"{% endif %}>
+                            <a href="#" data-toggle="tab" data-target=".{{ form.vars.id|lower }}-translations-fields-{{ language }}">
+                                {% if not form.vars.valid %}
+                                    <span class="label label-danger"><i class="fa fa-warning"></i><span class="sr-only">{{ __('Errors') }}</span></span>
+                                {% endif %}
+                                {% set hasRequiredFields = language in localesWithMandatoryFields %}
+                                {% if hasRequiredFields %}<span class="required">{% endif %}{{ language|languageName|safeHtml }}{% if hasRequiredFields %}</span>{% endif %}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <div class="{{ form.vars.id|lower }}-translation-fields tab-content">
+                    {% for language in supportedLanguages %}
+                        <div class="{{ form.vars.id|lower }}-translations-fields-{{ language }} tab-pane fade{% if language == app.request.locale %} active in{% endif %}">
+                            <fieldset>
+                                <legend>{{ language|languageName|safeHtml }}</legend>
+                                {% if language == app.request.locale %}
+                                    {{ form_row(form.slogan) }}
+                                    {{ form_row(form.descriptionForGoogle) }}
+                                    {{ form_row(form.description) }}
+                                    {{ form_row(form.description2) }}
+                                {% else %}
+                                    {{ form_row(attribute(form, 'translations' ~ language)) }}
+                                {% endif %}
+                            </fieldset>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            {% set language = app.request.locale %}
+            <fieldset>
+                <legend>{{ language|languageName|safeHtml }}</legend>
+                {{ form_row(form.slogan) }}
+                {{ form_row(form.descriptionForGoogle) }}
+                {{ form_row(form.description) }}
+                {{ form_row(form.description2) }}
+            </fieldset>
+        {% endif %}
+        <fieldset>
+            <legend>{{ __('Further properties') }}</legend>
+            {{ form_row(form.name) }}
+            {{ form_row(form.logoOfYourLocation) }}
+            {{ form_row(form.imageOfLocation) }}
+            {{ form_row(form.street) }}
+            {{ form_row(form.numberOfStreet) }}
+            {{ form_row(form.zipCode) }}
+            {{ form_row(form.city) }}
+            {{ form_row(form.telefon) }}
+            {{ form_row(form.mobil) }}
+            {{ form_row(form.homepage) }}
+            {{ form_row(form.closedForEver) }}
+            {{ form_row(form.agreement) }}
+            {{ form_row(form.unclearTimes) }}
+            {{ form_row(form.openingHours) }}
+            {{ form_row(form.closedOnMonday) }}
+            {{ form_row(form.startOnMonday) }}
+            {{ form_row(form.endOnMonday) }}
+            {{ form_row(form.start2OnMonday) }}
+            {{ form_row(form.end2OnMonday) }}
+            {{ form_row(form.closedOnTuesday) }}
+            {{ form_row(form.startOnTuesday) }}
+            {{ form_row(form.endOnTuesday) }}
+            {{ form_row(form.start2OnTuesday) }}
+            {{ form_row(form.end2OnTuesday) }}
+            {{ form_row(form.closedOnWednesday) }}
+            {{ form_row(form.startOnWednesday) }}
+            {{ form_row(form.endOnWednesday) }}
+            {{ form_row(form.start2OnWednesday) }}
+            {{ form_row(form.end2OnWednesday) }}
+            {{ form_row(form.closedOnThursday) }}
+            {{ form_row(form.startOnThursday) }}
+            {{ form_row(form.endOnThursday) }}
+            {{ form_row(form.start2OnThursday) }}
+            {{ form_row(form.end2OnThursday) }}
+            {{ form_row(form.closedOnFriday) }}
+            {{ form_row(form.startOnFriday) }}
+            {{ form_row(form.endOnFriday) }}
+            {{ form_row(form.start2OnFriday) }}
+            {{ form_row(form.end2OnFriday) }}
+            {{ form_row(form.closedOnSaturday) }}
+            {{ form_row(form.startOnSaturday) }}
+            {{ form_row(form.endOnSaturday) }}
+            {{ form_row(form.star2tOnSaturday) }}
+            {{ form_row(form.end2OnSaturday) }}
+            {{ form_row(form.closedOnSunday) }}
+            {{ form_row(form.startOnSunday) }}
+            {{ form_row(form.endOnSunday) }}
+            {{ form_row(form.start2OnSunday) }}
+            {{ form_row(form.end2OnSunday) }}
+            {{ form_row(form.owner) }}
+            {{ form_row(form.admin1) }}
+            {{ form_row(form.admin2) }}
+            {{ form_row(form.latitude) }}
+            {{ form_row(form.longitude) }}
+        </fieldset>
+        
+        <fieldset class="muyourcitymodule-map">
+            <legend>{{ __('Map') }}</legend>
+            <div id="mapContainer" class="muyourcitymodule-mapcontainer">
+            </div>
+        </fieldset>
+        
+        {{ include(
+            '@MUYourCityModule/Branch/includeSelectMany.html.twig',
+            { group: 'location', alias: 'branches', aliasReverse: 'locations', mandatory: false, idPrefix: 'yourcityLocation_Branches', linkingItem: location, displayMode: 'choices' }
+        ) }}
+        {{ include(
+            '@MUYourCityModule/Part/includeSelectMany.html.twig',
+            { group: 'location', alias: 'parts', aliasReverse: 'locations', mandatory: false, idPrefix: 'yourcityLocation_Parts', linkingItem: location, displayMode: 'choices' }
+        ) }}
+        {{ include(
+            '@MUYourCityModule/SpecialOfLocation/includeSelectMany.html.twig',
+            { group: 'location', alias: 'specialsOfLocation', aliasReverse: 'locations', mandatory: false, idPrefix: 'yourcityLocation_SpecialsOfLocation', linkingItem: location, displayMode: 'choices' }
+        ) }}
+        {{ include(
+            '@MUYourCityModule/ServiceofLocation/includeSelectMany.html.twig',
+            { group: 'location', alias: 'servicesOfLocation', aliasReverse: 'locations', mandatory: false, idPrefix: 'yourcityLocation_ServicesOfLocation', linkingItem: location, displayMode: 'choices' }
+        ) }}
+        {% if featureActivationHelper.isEnabled(constant('MU\\YourCityModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'location') %}
+            {{ include('@MUYourCityModule/Helper/includeCategoriesEdit.html.twig', { obj: location }) }}
+        {% endif %}
+        {% if mode != 'create' %}
+            {{ include('@MUYourCityModule/Helper/includeStandardFieldsEdit.html.twig', { obj: location }) }}
+        {% endif %}
+        
+        {% set hookId = mode != 'create' ? location.id : null %}
+        {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.locations.form_edit', id=hookId) %}
+        {% if hooks is iterable and hooks|length > 0 %}
+            {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
+                <fieldset>
+                    <legend>{{ providerArea }}</legend>
+                    {{ hook }}
+                </fieldset>
+            {% endfor %}
+        {% endif %}
+        
+        <fieldset>
+            <legend>{{ __('Communication') }}</legend>
+            {{ form_row(form.additionalNotificationRemarks) }}
+        </fieldset>
+        
+        {% if form.moderationSpecificCreator is defined %}
+            <fieldset id="moderationFieldsSection">
+                <legend>{{ __('Moderation') }} <i class="fa fa-expand"></i></legend>
+                <div id="moderationFieldsContent">
+                    {{ form_row(form.moderationSpecificCreator) }}
+                    {{ form_row(form.moderationSpecificCreationDate) }}
+                </div>
+            </fieldset>
+        {% endif %}
+        
+        {# include return control #}
+        {% if mode == 'create' %}
+            <fieldset>
+                <legend>{{ __('Return control') }}</legend>
+                {{ form_row(form.repeatCreation) }}
+            </fieldset>
+        {% endif %}
+        
+        {# include possible submit actions #}
+        <div class="form-group form-buttons">
+            <div class="col-sm-offset-3 col-sm-9">
+                {% for action in actions %}
+                    {{ form_widget(attribute(form, action.id)) }}
+                {% endfor %}
+                {{ form_widget(form.reset) }}
+                {{ form_widget(form.cancel) }}
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+{% block footer %}
+    {{ parent() }}
+    {% set editImage = '<span class="fa fa-pencil-square-o"></span>' %}
+    {% set removeImage = '<span class="fa fa-trash-o"></span>' %}
+    
+    {% set geoScripts %}
+        {% set useGeoLocation = getModVar('MUYourCityModule', 'enableLocationGeoLocation', false) %}
+        {{ pageAddAsset('javascript', 'https://maps.google.com/maps/api/js?key=' ~ getModVar('MUYourCityModule', 'googleMapsApiKey', '') ~ '&amp;language=' ~ app.request.locale ~ '&amp;sensor=false') }}
+        {{ pageAddAsset('javascript', app.request.basePath ~ '/plugins/Mapstraction/lib/vendor/mxn/mxn.js?(googlev3)') }}
+        {% if useGeoLocation == true %}
+            {{ pageAddAsset('javascript', app.request.basePath ~ '/plugins/Mapstraction/lib/vendor/mxn/mxn.geocoder.js') }}
+            {{ pageAddAsset('javascript', app.request.basePath ~ '/plugins/Mapstraction/lib/vendor/mxn/mxn.googlev3.geocoder.js') }}
+        {% endif %}
+        <script type="text/javascript">
+        /* <![CDATA[ */
+            ( function($) {
+                $(document).ready(function() {
+                    mUYourCityInitGeographicalEditing({{ location.latitude|muyourcitymodule_geoData }}, {{ location.longitude|muyourcitymodule_geoData }}, '{{ getModVar('MUYourCityModule', 'defaultMapType', 'roadmap') }}', {{ getModVar('MUYourCityModule', 'defaultZoomLevel', 18) }}, '{{ mode }}', {% if useGeoLocation == true %}true{% else %}false{% endif %});
+                });
+            })(jQuery);
+        /* ]]> */
+        </script>
+    {% endset %}
+    {{ pageAddAsset('footer', geoScripts) }}
+    
+    <script type="text/javascript">
+    /* <![CDATA[ */
+        
+        ( function($) {
+            $(document).ready(function() {
+                // initialise auto completion for user fields
+                mUYourCityInitUserField('muyourcitymodule_location_owner', 'getLocationOwnerUsers');
+                mUYourCityInitUserField('muyourcitymodule_location_admin1', 'getLocationAdmin1Users');
+                mUYourCityInitUserField('muyourcitymodule_location_admin2', 'getLocationAdmin2Users');
+                {% if form.moderationSpecificCreator is defined %}
+                    mUYourCityInitUserField('muyourcitymodule_location_moderationSpecificCreator', 'getCommonUsersList');
+                {% endif %}
+                mUYourCityInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ location.id }}{% endif %}');
+                mUYourCityInitUploadField('muyourcitymodule_location_logoOfYourLocation_logoOfYourLocation');
+                mUYourCityInitUploadField('muyourcitymodule_location_imageOfLocation_imageOfLocation');
+            });
+        })(jQuery);
+    /* ]]> */
+    </script>
+{% endblock %}

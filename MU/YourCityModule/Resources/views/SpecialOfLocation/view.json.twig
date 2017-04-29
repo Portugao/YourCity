@@ -1,0 +1,7 @@
+{# purpose of this template: specials of location view json view #}
+[
+{% for specialOfLocation in items %}
+    {% if not loop.first %},{% endif %}
+    {{ specialOfLocation.toJson() }}
+{% endfor %}
+]

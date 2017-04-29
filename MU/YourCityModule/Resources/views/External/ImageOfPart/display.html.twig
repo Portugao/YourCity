@@ -1,0 +1,51 @@
+{# Purpose of this template: Display one certain image of part within an external context #}
+{{ pageAddAsset('javascript', asset('magnific-popup/jquery.magnific-popup.min.js')) }}
+{{ pageAddAsset('stylesheet', asset('magnific-popup/magnific-popup.css')) }}
+{{ pageAddAsset('javascript', zasset('@MUYourCityModule:js/MUYourCityModule.js')) }}
+<div id="imageOfPart{$imageOfPart.id}" class="muyourcitymodule-external-imageofpart">
+{% if displayMode == 'link' %}
+    <p class="muyourcitymodule-external-link">
+    <a href="{{ path('muyourcitymodule_imageofpart_display', { 'id': imageOfPart.id }) }}" title="{{ imageOfPart.getTitleFromDisplayPattern()|e('html_attr') }}">
+    {{ imageOfPart.getTitleFromDisplayPattern()|notifyFilters('yourcity.filter_hooks.imagesofpart.filter') }}
+    </a>
+    </p>
+{% endif %}
+{% if hasPermission('MUYourCityModule::', '::', 'ACCESS_EDIT') %}
+    {# for normal users without edit permission show only the actual file per default #}
+    {% if displayMode == 'embed' %}
+        <p class="muyourcitymodule-external-title">
+            <strong>{{ imageOfPart.getTitleFromDisplayPattern()|notifyFilters('yourcity.filter_hooks.imagesofpart.filter') }}</strong>
+        </p>
+    {% endif %}
+{% endif %}
+
+{% if displayMode == 'link' %}
+{% elseif displayMode == 'embed' %}
+    <div class="muyourcitymodule-external-snippet">
+        {% if imageOfPart.fileOfImageMeta|default %}
+        <a href="{{ imageOfPart.fileOfImageUrl }}" title="{{ imageOfPart.getTitleFromDisplayPattern()|e('html_attr') }}"{% if imageOfPart.fileOfImageMeta.isImage %} class="image-link"{% endif %}>
+        {% if imageOfPart.fileOfImageMeta.isImage %}
+            {% set thumbOptions = attribute(thumbRuntimeOptions, 'imageOfPartFileOfImage') %}
+            <img src="{{ imageOfPart.fileOfImage.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ imageOfPart.getTitleFromDisplayPattern()|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+        {% else %}
+            {{ __('Download') }} ({{ imageOfPart.fileOfImageMeta.size|muyourcitymodule_fileSize(imageOfPart.fileOfImage.getPathname(), false, false) }})
+        {% endif %}
+        </a>
+        {% endif %}
+    </div>
+
+    {# you can distinguish the context like this: #}
+    {# % if source == 'contentType' %}
+        ...
+    {% elseif source == 'scribite' %}
+        ...
+    {% endif % #}
+
+    {# you can enable more details about the item: #}
+    {#
+        <p class="muyourcitymodule-external-description">
+            {% if imageOfPart.name is not empty %}{{ imageOfPart.name }}<br />{% endif %}
+        </p>
+    #}
+{% endif %}
+</div>

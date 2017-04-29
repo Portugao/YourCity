@@ -1,0 +1,16 @@
+{# purpose of this template: parts view csv view #}
+{% spaceless %}"{{ __('Name') }}";"{{ __('Description for google') }}";"{{ __('Description') }}";"{{ __('Image of part') }}";"{{ __('Workflow state') }}"
+;"{{ __('Locations') }}"
+{% endspaceless %}
+{% for part in items %}
+{% spaceless %}
+    "{{ part.name }}";"{{ part.descriptionForGoogle }}";"{{ part.description|safeHtml }}";"{{ part.imageOfPart }}";"{{ part.workflowState|muyourcitymodule_objectState(false)|lower }}"
+    ;"
+    {% if part.locations|default %}
+        {% for relatedItem in part.locations %}
+        {{ relatedItem|muyourcitymodule_formattedTitle }}{% if not loop.last %}, {% endif %}
+        {% endfor %}
+    {% endif %}
+    "
+{% endspaceless %}
+{% endfor %}

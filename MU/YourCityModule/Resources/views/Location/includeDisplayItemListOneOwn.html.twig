@@ -1,0 +1,73 @@
+{# purpose of this template: inclusion template for display of related locations #}
+{% set hasAdminPermission = hasPermission('MUYourCityModule:Location:', '::', 'ACCESS_COMMENT') %}
+
+<div class="row">
+    <div class="col-md-2">
+        {% if item.logoOfYourLocation is not empty and item.logoOfYourLocationMeta.isImage %}
+            <img src="{{ item.logoOfYourLocation.getPathname()|imagine_filter('zkroot', relationThumbRuntimeOptions) }}" alt="{{ item|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ relationThumbRuntimeOptions.thumbnail.size[0] }}" height="{{ relationThumbRuntimeOptions.thumbnail.size[1] }}" class="img-rounded" />
+        {% endif %}
+    </div>
+    <div class="col-md-10">
+        <h2>{{ item|muyourcitymodule_formattedTitle }}</h2>
+    </div>
+</div>
+{% if item.menuOfLocation|default %}
+    <h2>{{ __('Menus') }}</h2>
+    {% for menu in item.menuOfLocation %}
+    {% if menu|length <= 4 %}
+        <div class="col-md-12 abo-location-list">
+    {% else %}
+        <div class="col-md-6 abo-location-list">
+    {% endif %}
+        {{ include(
+        '@MUYourCityModule/MenuOfLocation/includeDisplayItemListOneOwn.html.twig',
+            { item: menu }
+        ) }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% if item.offers|default %}
+    <h2>{{ __('Offers') }}</h2>
+    {% for offer in item.offers %}
+    {% if item.offers|length <= 4 %}
+        <div class="col-md-12 abo-location-list">
+    {% else %}
+        <div class="col-md-6 abo-location-list">
+    {% endif %}
+        {{ include(
+        '@MUYourCityModule/Offer/includeDisplayItemListOneOwn.html.twig',
+            { item: offer }
+        ) }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% if item.products|default %}
+    <h2>{{ __('Products') }}</h2>
+    {% for product in item.products %}
+    {% if item.products|length <= 4 %}
+        <div class="col-md-6 abo-location-list">
+    {% else %}
+        <div class="col-md-4 abo-location-list">
+    {% endif %}
+        {{ include(
+        '@MUYourCityModule/Product/includeDisplayItemListOneOwn.html.twig',
+            { item: product }
+        ) }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% if item.product|default %}
+    {% for product in item.product %}
+    <div class="col-md-6 abo-location-list">
+        {{ include(
+            '@MUYourCityModule/Product/includeDisplayItemListOneOwn.html.twig',
+                { item: product }
+            ) }}
+    </div>
+    {% endfor %}
+{% endif %}
+
+

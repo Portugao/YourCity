@@ -1,0 +1,9 @@
+{# purpose of this template: specials of location view xml view #}
+<?xml version="1.0" encoding="{{ pageGetVar('meta.charset') }}" ?>
+<specialsOfLocation>
+{% for specialOfLocation in items %}
+    {{ include('@MUYourCityModule/SpecialOfLocation/include.xml.twig') }}
+{% else %}
+    <noSpecialOfLocation />
+{% endfor %}
+</specialsOfLocation>

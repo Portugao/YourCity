@@ -1,0 +1,56 @@
+{# purpose of this template: branches atom feed #}
+<?xml version="1.0" encoding="{% set charset = pageGetVar('meta.charset') %}{% if charset == 'ISO-8859-15' %}ISO-8859-1{% else %}{{ charset }}{% endif %}" ?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title type="text">{{ __('Latest branches') }}</title>
+    <subtitle type="text">{{ __('A direct feed showing the list of branches') }} - {{ getModVar('ZConfig', 'slogan') }}</subtitle>
+    <author>
+        <name>{{ getModVar('ZConfig', 'sitename') }}</name>
+    </author>
+{% set amountOfItems = items|length %}
+{% if amountOfItems > 0 %}
+{% set uniqueID %}tag:{{ app.request.getSchemeAndHttpHost()|replace({ 'http://': '', '/': '' }) }},{{ items.first.createdDate|date('Y-m-d') }}:{{ path('muyourcitymodule_branch_' ~ routeArea ~ 'display', { 'id': items.first.id }) }}{% endset %}
+    <id>{{ uniqueID }}</id>
+    <updated>{{ items[0].updatedDate|date('Y-m-dTH:M:SZ') }}</updated>
+{% endif %}
+    <link rel="alternate" type="text/html" hreflang="{{ app.request.locale }}" href="{{ url('muyourcitymodule_branch_' ~ routeArea ~ 'index') }}" />
+    <link rel="self" type="application/atom+xml" href="{{ app.request.getSchemeAndHttpHost() ~ app.request.getBasePath() }}" />
+    <rights>Copyright (c) {{ 'now'|date('Y') }}, {{ app.request.getSchemeAndHttpHost()|e }}</rights>
+{% for branch in items %}
+    {{ block('entry') }}
+{% endfor %}
+</feed>
+{% block entry %}
+    <entry>
+        {{ block('entry_content') }}
+    </entry>
+{% endblock %}
+{% block entry_content %}
+    <title type="html">{{ branch|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.branches') }}</title>
+    <link rel="alternate" type="text/html" href="{{ url('muyourcitymodule_branch_' ~ routeArea ~ 'display', { 'id': branch.id }) }}" />
+    {% set uniqueID %}tag:{{ app.request.getSchemeAndHttpHost()|replace({ 'http://': '', '/': '' }) }},{{ branch.createdDate|date('Y-m-d') }}:{{ path('muyourcitymodule_branch_' ~ routeArea ~ 'display', { 'id': branch.id }) }}{% endset %}
+    <id>{{ uniqueID }}</id>
+    {% if branch.updatedDate|default %}
+        <updated>{{ branch.updatedDate|date('Y-m-dTH:M:SZ') }}</updated>
+    {% endif %}
+    {% if branch.createdDate|default %}
+        <published>{{ branch.createdDate|date('Y-m-dTH:M:SZ') }}</published>
+    {% endif %}
+    {% if branch.createdBy|default and branch.createdBy.getUid() > 0 %}
+        {% set creatorAttributes = branch.createdBy.getAttributes() %}
+        <author>
+           <name>{{ creatorAttributes.get('realname')|default(creatorAttributes.get('name'))|default(branch.createdBy.getUname()) }}</name>
+           <uri>{{ creatorAttributes.get('_UYOURHOMEPAGE')|default('-') }}</uri>
+           <email>{{ branch.createdBy.getEmail() }}</email>
+        </author>
+    {% endif %}
+    <summary type="html">
+        <![CDATA[
+        {{ branch.description|truncate(150, true, '&hellip;')|default('-') }}
+        ]]>
+    </summary>
+    <content type="html">
+        <![CDATA[
+        {{ branch.name|replace({ '<br>': '<br />' }) }}
+        ]]>
+    </content>
+{% endblock %}

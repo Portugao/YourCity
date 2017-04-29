@@ -1,0 +1,5 @@
+muyourcitymodule:
+    # define routing support for these controllers
+    resource: "@MUYourCityModule/Controller"
+    # enable support for defining routes by annotations
+    type: annotation

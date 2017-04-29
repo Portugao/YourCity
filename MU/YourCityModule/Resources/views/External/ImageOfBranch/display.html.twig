@@ -1,0 +1,51 @@
+{# Purpose of this template: Display one certain image of branch within an external context #}
+{{ pageAddAsset('javascript', asset('magnific-popup/jquery.magnific-popup.min.js')) }}
+{{ pageAddAsset('stylesheet', asset('magnific-popup/magnific-popup.css')) }}
+{{ pageAddAsset('javascript', zasset('@MUYourCityModule:js/MUYourCityModule.js')) }}
+<div id="imageOfBranch{$imageOfBranch.id}" class="muyourcitymodule-external-imageofbranch">
+{% if displayMode == 'link' %}
+    <p class="muyourcitymodule-external-link">
+    <a href="{{ path('muyourcitymodule_imageofbranch_display', { 'id': imageOfBranch.id }) }}" title="{{ imageOfBranch.getTitleFromDisplayPattern()|e('html_attr') }}">
+    {{ imageOfBranch.getTitleFromDisplayPattern()|notifyFilters('yourcity.filter_hooks.imagesofbranch.filter') }}
+    </a>
+    </p>
+{% endif %}
+{% if hasPermission('MUYourCityModule::', '::', 'ACCESS_EDIT') %}
+    {# for normal users without edit permission show only the actual file per default #}
+    {% if displayMode == 'embed' %}
+        <p class="muyourcitymodule-external-title">
+            <strong>{{ imageOfBranch.getTitleFromDisplayPattern()|notifyFilters('yourcity.filter_hooks.imagesofbranch.filter') }}</strong>
+        </p>
+    {% endif %}
+{% endif %}
+
+{% if displayMode == 'link' %}
+{% elseif displayMode == 'embed' %}
+    <div class="muyourcitymodule-external-snippet">
+        {% if imageOfBranch.fileOfImageMeta|default %}
+        <a href="{{ imageOfBranch.fileOfImageUrl }}" title="{{ imageOfBranch.getTitleFromDisplayPattern()|e('html_attr') }}"{% if imageOfBranch.fileOfImageMeta.isImage %} class="image-link"{% endif %}>
+        {% if imageOfBranch.fileOfImageMeta.isImage %}
+            {% set thumbOptions = attribute(thumbRuntimeOptions, 'imageOfBranchFileOfImage') %}
+            <img src="{{ imageOfBranch.fileOfImage.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ imageOfBranch.getTitleFromDisplayPattern()|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+        {% else %}
+            {{ __('Download') }} ({{ imageOfBranch.fileOfImageMeta.size|muyourcitymodule_fileSize(imageOfBranch.fileOfImage.getPathname(), false, false) }})
+        {% endif %}
+        </a>
+        {% endif %}
+    </div>
+
+    {# you can distinguish the context like this: #}
+    {# % if source == 'contentType' %}
+        ...
+    {% elseif source == 'scribite' %}
+        ...
+    {% endif % #}
+
+    {# you can enable more details about the item: #}
+    {#
+        <p class="muyourcitymodule-external-description">
+            {% if imageOfBranch.name is not empty %}{{ imageOfBranch.name }}<br />{% endif %}
+        </p>
+    #}
+{% endif %}
+</div>

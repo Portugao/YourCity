@@ -1,0 +1,16 @@
+{# purpose of this template: branches xml inclusion template #}
+<branch id="{{ branch.id }}" createdon="{{ branch.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ branch.updatedDate|localizeddate('medium', 'short') }}">
+    <id>{{ branch.id }}</id>
+    <name><![CDATA[{{ branch.name }}]]></name>
+    <descriptionForGoogle><![CDATA[{{ branch.descriptionForGoogle }}]]></descriptionForGoogle>
+    <description><![CDATA[{{ branch.description|safeHtml }}]]></description>
+    <imageofBranch{% if branch.imageofBranch is not empty and branch.imageofBranchMeta|default %} extension="{{ branch.imageofBranchMeta.extension }}" size="{{ branch.imageofBranchMeta.size }}" isImage="{% if branch.imageofBranchMeta.isImage %}true{% else %}false{% endif %}"{% if branch.imageofBranchMeta.isImage %} width="{{ branch.imageofBranchMeta.width }}" height="{{ branch.imageofBranchMeta.height }}" format="{{ branch.imageofBranchMeta.format }}"{% endif %}{% endif %}>{{ branch.imageofBranch }}</imageofBranch>
+    <workflowState>{{ branch.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
+    <locations>
+    {% if branch.locations|default %}
+        {% for relatedItem in branch.locations %}
+        <location>{{ relatedItem|muyourcitymodule_formattedTitle }}</location>
+        {% endfor %}
+    {% endif %}
+    </locations>
+</branch>

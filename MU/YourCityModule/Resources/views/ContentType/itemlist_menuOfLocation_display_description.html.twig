@@ -1,0 +1,13 @@
+{# Purpose of this template: Display menus of location within an external context #}
+<dl>
+    {% for menuOfLocation in items %}
+        <dt>{{ menuOfLocation|muyourcitymodule_formattedTitle }}</dt>
+        {% if menuOfLocation.description %}
+            <dd>{{ menuOfLocation.description|striptags|truncate(200, true, '&hellip;') }}</dd>
+        {% endif %}
+        <dd><a href="{{ path('muyourcitymodule_menuoflocation_display', { 'id': menuOfLocation.id }) }}">{{ __('Read more') }}</a>
+        </dd>
+    {% else %}
+        <dt>{{ __('No entries found.') }}</dt>
+    {% endfor %}
+</dl>

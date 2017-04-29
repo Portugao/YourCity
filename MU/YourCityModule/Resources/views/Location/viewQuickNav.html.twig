@@ -1,0 +1,157 @@
+{# purpose of this template: locations view filter form #}
+{% if hasPermission('MUYourCityModule:Location:', '::', 'ACCESS_EDIT') %}
+    {% form_theme quickNavForm with [
+        'bootstrap_3_layout.html.twig'
+    ] %}
+    {{ form_start(quickNavForm, {attr: {id: 'mUYourCityModuleLocationQuickNavForm', class: 'muyourcitymodule-quicknav navbar-form', role: 'navigation'}}) }}
+    {{ form_errors(quickNavForm) }}
+    <a href="#collapseLocationQuickNav" role="button" data-toggle="collapse" class="btn btn-default" aria-expanded="false" aria-controls="collapseLocationQuickNav">
+        <i class="fa fa-filter" aria-hidden="true"></i> {{ __('Filter') }}
+    </a>
+    <div id="collapseLocationQuickNav" class="collapse">
+        <fieldset>
+            <h3>{{ __('Quick navigation') }}</h3>
+            {% set categoriesEnabled = featureActivationHelper.isEnabled(constant('MU\\YourCityModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'location') %}
+            {% if (categoryFilter is defined and categoryFilter != true) or not categoriesEnabled %}
+                <div class="hidden">
+            {% else %}
+                <div class="row">
+                    <div class="col-sm-3">
+            {% endif %}
+                {{ form_row(quickNavForm.categories) }}
+            {% if (categoryFilter is defined and categoryFilter != true) or not categoriesEnabled %}
+                </div>
+            {% else %}
+                    </div>
+                    <div class="col-sm-9">
+            {% endif %}
+            {% if workflowStateFilter is defined and workflowStateFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.workflowState) }}
+            {% if workflowStateFilter is defined and workflowStateFilter != true %}
+                </div>
+            {% endif %}
+            {% if ownerFilter is defined and ownerFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.owner) }}
+            {% if ownerFilter is defined and ownerFilter != true %}
+                </div>
+            {% endif %}
+            {% if admin1Filter is defined and admin1Filter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.admin1) }}
+            {% if admin1Filter is defined and admin1Filter != true %}
+                </div>
+            {% endif %}
+            {% if admin2Filter is defined and admin2Filter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.admin2) }}
+            {% if admin2Filter is defined and admin2Filter != true %}
+                </div>
+            {% endif %}
+            {% if searchFilter is defined and searchFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.q) }}
+            {% if searchFilter is defined and searchFilter != true %}
+                </div>
+            {% endif %}
+            {% if sorting is defined and sorting != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.sort) }}
+                {{ form_row(quickNavForm.sortdir) }}
+            {% if sorting is defined and sorting != true %}
+                </div>
+            {% endif %}
+            {% if pageSizeSelector is defined and pageSizeSelector != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.num) }}
+            {% if pageSizeSelector is defined and pageSizeSelector != true %}
+                </div>
+            {% endif %}
+            {% if closedForEverFilter is defined and closedForEverFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.closedForEver) }}
+            {% if closedForEverFilter is defined and closedForEverFilter != true %}
+                </div>
+            {% endif %}
+            {% if agreementFilter is defined and agreementFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.agreement) }}
+            {% if agreementFilter is defined and agreementFilter != true %}
+                </div>
+            {% endif %}
+            {% if unclearTimesFilter is defined and unclearTimesFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.unclearTimes) }}
+            {% if unclearTimesFilter is defined and unclearTimesFilter != true %}
+                </div>
+            {% endif %}
+            {% if closedOnMondayFilter is defined and closedOnMondayFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.closedOnMonday) }}
+            {% if closedOnMondayFilter is defined and closedOnMondayFilter != true %}
+                </div>
+            {% endif %}
+            {% if closedOnTuesdayFilter is defined and closedOnTuesdayFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.closedOnTuesday) }}
+            {% if closedOnTuesdayFilter is defined and closedOnTuesdayFilter != true %}
+                </div>
+            {% endif %}
+            {% if closedOnWednesdayFilter is defined and closedOnWednesdayFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.closedOnWednesday) }}
+            {% if closedOnWednesdayFilter is defined and closedOnWednesdayFilter != true %}
+                </div>
+            {% endif %}
+            {% if closedOnThursdayFilter is defined and closedOnThursdayFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.closedOnThursday) }}
+            {% if closedOnThursdayFilter is defined and closedOnThursdayFilter != true %}
+                </div>
+            {% endif %}
+            {% if closedOnFridayFilter is defined and closedOnFridayFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.closedOnFriday) }}
+            {% if closedOnFridayFilter is defined and closedOnFridayFilter != true %}
+                </div>
+            {% endif %}
+            {% if closedOnSaturdayFilter is defined and closedOnSaturdayFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.closedOnSaturday) }}
+            {% if closedOnSaturdayFilter is defined and closedOnSaturdayFilter != true %}
+                </div>
+            {% endif %}
+            {% if closedOnSundayFilter is defined and closedOnSundayFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.closedOnSunday) }}
+            {% if closedOnSundayFilter is defined and closedOnSundayFilter != true %}
+                </div>
+            {% endif %}
+            {{ form_widget(quickNavForm.updateview) }}
+            {% if (categoryFilter is defined and categoryFilter != true) or not categoriesEnabled %}
+            {% else %}
+                    </div>
+                </div>
+            {% endif %}
+        </fieldset>
+    </div>
+    {{ form_end(quickNavForm) }}
+{% endif %}

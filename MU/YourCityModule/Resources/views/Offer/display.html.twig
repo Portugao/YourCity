@@ -1,0 +1,110 @@
+{# purpose of this template: offers display view #}
+{% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
+{% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
+{% block pageTitle %}{{ offer|muyourcitymodule_formattedTitle|default(__('Offer')) }}{% endblock %}
+{% block title %}
+    {% set templateTitle = offer|muyourcitymodule_formattedTitle|default(__('Offer')) %}
+    {{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.offers.filter') }}{% if routeArea == 'admin' %} <small>({{ offer.workflowState|muyourcitymodule_objectState(false)|lower }})</small>{% endif %}
+    {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: offer, area: routeArea, context: 'display' }) %}
+    <div class="dropdown">
+        <a id="itemActions{{ offer.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
+        {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
+    </div>
+{% endblock %}
+{% block admin_page_icon 'eye' %}
+{% block content %}
+    {% set isQuickView = app.request.query.getBoolean('raw', false) %}
+    <div class="muyourcitymodule-offer muyourcitymodule-display">
+
+    <dl>
+        {% if offer.workflowState is not empty and routeArea == 'admin' %}
+            <dt>{{ __('State') }}</dt>
+            <dd>{{ offer.workflowState|muyourcitymodule_listEntry('offer', 'workflowState') }}</dd>
+        {% endif %}
+        {#% if offer.name is not empty %}
+            <dt>{{ __('Name') }}</dt>
+            <dd>{{ offer.name }}</dd>
+        {% endif %#}
+        
+        {% if offer.effectivFrom is not empty %}
+            <h3>{{ __('Effectiv from') }} 
+            {{ offer.effectivFrom|localizeddate('medium', 'short') }}
+        {% endif %}
+        {% if offer.effectivUntil is not empty %}
+            - {#{ __('Effectiv until') }#} 
+            {{ offer.effectivUntil|localizeddate('medium', 'short') }}</h3>
+        {% endif %}
+        
+        {% if offer.percentOfOffer != 0 %}
+        {% if offer.priceOfOffer > 0 %}
+            <h3>{{ __('Price of offer') }}</h3>
+            {{ offer.priceOfOffer|localizedcurrency('EUR') }}
+        {% endif %}
+        {% if offer.normalPrice > 0 %}
+            <h3>{{ __('Normal price') }}</h3>
+            {{ offer.normalPrice|localizedcurrency('EUR') }}
+        {% endif %}
+        {% else %}
+            {{ __('Percent of offer') }}
+            <p class="percentOfferDisplay">{{ offer.percentOfOffer }}%</p>
+        {% endif %}
+
+        
+        {% if offer.text is not empty %}
+            <dt>{{ __('Text') }}</dt>
+            <dd>{{ offer.text|safeHtml }}</dd>
+        {% endif %}
+        {% if offer.urlToOfferOnHomepage is not empty %}
+            <dt>{{ __('Url to offer on homepage') }}</dt>
+            <dd>{% if offer.urlToOfferOnHomepage is not empty %}
+            {% if not isQuickView %}
+            <a href="{{ offer.urlToOfferOnHomepage }}" title="{{ __('Visit this page') }}" class="fa fa-external-link-square"></a>
+            {% else %}
+                {{ offer.urlToOfferOnHomepage }}
+            {% endif %}
+            {% else %}&nbsp;{% endif %}
+            </dd>
+        {% endif %}
+        {% if offer.imageOfOffer is not empty %}
+            <dt>{{ __('Image of offer') }}</dt>
+            <dd>{% if offer.imageOfOffer is not empty and offer.imageOfOfferMeta|default %}
+                        <a href="{{ offer.imageOfOfferUrl }}" title="{{ offer|muyourcitymodule_formattedTitle|default(__('Offer'))|e('html_attr') }}"{% if offer.imageOfOfferMeta.isImage %} class="image-link"{% endif %}>
+            {% if offer.imageOfOfferMeta.isImage %}
+                {% set thumbOptions = attribute(thumbRuntimeOptions, 'offerImageOfOffer') %}
+                <img src="{{ offer.imageOfOffer.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ offer|muyourcitymodule_formattedTitle|default(__('Offer'))|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+            {% else %}
+                {{ __('Download') }} ({{ offer.imageOfOfferMeta.size|muyourcitymodule_fileSize(offer.imageOfOffer.getPathname(), false, false) }})
+            {% endif %}
+            </a>
+            {% else %}&nbsp;{% endif %}
+            </dd>
+        {% endif %}
+
+        {% if offer.location|default %}
+            <dt>{{ __('Location') }}</dt>
+            <dd>
+              {% if not isQuickView %}
+                  <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': offer.location.id, 'slug': offer.location.slug }) }}">{% spaceless %}
+                    {{ offer.location|muyourcitymodule_formattedTitle|default(__('Offer')) }}
+                  {% endspaceless %}</a>
+                  <a id="locationItem{{ offer.location.id }}Display" href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': offer.location.id, 'slug': offer.location.slug, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ offer.location|muyourcitymodule_formattedTitle|default(__('Location'))|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
+              {% else %}
+                  {{ offer.location|muyourcitymodule_formattedTitle|default(__('Offer')) }}
+              {% endif %}
+            </dd>
+        {% endif %}
+        
+    </dl>
+
+    {#{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: offer }) }#}
+
+    {{ block('display_hooks') }}
+</div>
+{% endblock %}
+{% block display_hooks %}
+    {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.offers.display_view', id=offer.id, urlObject=currentUrlObject) %}
+    {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
+        <h4>{{ providerArea }}</h4>
+        {{ hook }}
+    {% endfor %}
+{% endblock %}

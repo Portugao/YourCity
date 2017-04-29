@@ -1,0 +1,13 @@
+{# Purpose of this template: Display parts of menu within an external context #}
+<dl>
+    {% for partOfMenu in items %}
+        <dt>{{ partOfMenu|muyourcitymodule_formattedTitle }}</dt>
+        {% if partOfMenu.description %}
+            <dd>{{ partOfMenu.description|striptags|truncate(200, true, '&hellip;') }}</dd>
+        {% endif %}
+        <dd><a href="{{ path('muyourcitymodule_partofmenu_display', { 'id': partOfMenu.id }) }}">{{ __('Read more') }}</a>
+        </dd>
+    {% else %}
+        <dt>{{ __('No entries found.') }}</dt>
+    {% endfor %}
+</dl>

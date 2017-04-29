@@ -1,0 +1,10 @@
+{# purpose of this template: files of location xml inclusion template #}
+<fileoflocation id="{{ fileOfLocation.id }}" createdon="{{ fileOfLocation.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ fileOfLocation.updatedDate|localizeddate('medium', 'short') }}">
+    <id>{{ fileOfLocation.id }}</id>
+    <name><![CDATA[{{ fileOfLocation.name }}]]></name>
+    <description><![CDATA[{{ fileOfLocation.description|safeHtml }}]]></description>
+    <fileOfFile{% if fileOfLocation.fileOfFile is not empty and fileOfLocation.fileOfFileMeta|default %} extension="{{ fileOfLocation.fileOfFileMeta.extension }}" size="{{ fileOfLocation.fileOfFileMeta.size }}" isImage="{% if fileOfLocation.fileOfFileMeta.isImage %}true{% else %}false{% endif %}"{% if fileOfLocation.fileOfFileMeta.isImage %} width="{{ fileOfLocation.fileOfFileMeta.width }}" height="{{ fileOfLocation.fileOfFileMeta.height }}" format="{{ fileOfLocation.fileOfFileMeta.format }}"{% endif %}{% endif %}>{{ fileOfLocation.fileOfFile }}</fileOfFile>
+    <positionOfFile>{{ fileOfLocation.positionOfFile }}</positionOfFile>
+    <workflowState>{{ fileOfLocation.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
+    <location>{% if fileOfLocation.location|default %}{{ fileOfLocation.location|muyourcitymodule_formattedTitle }}{% endif %}</location>
+</fileoflocation>

@@ -1,0 +1,7 @@
+{# purpose of this template: menus of location index view #}
+{% extends routeArea == 'admin' ? 'MUYourCityModule::adminBase.html.twig' : 'MUYourCityModule::base.html.twig' %}
+{% block title __('menus of location') %}
+{% block admin_page_icon 'home' %}
+{% block content %}
+    <p>{{ __('Welcome to the menu of location section of the Your city application.') }}</p>
+{% endblock %}

@@ -1,0 +1,16 @@
+{# Purpose of this template: Display item information for previewing from other modules #}
+<dl id="imageOfLocation{{ imageOfLocation.id }}">
+<dt>{{ imageOfLocation|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.imagesoflocation.filter') }}</dt>
+<dd>{% if imageOfLocation.imageMeta|default %}
+<a href="{{ imageOfLocation.imageUrl }}" title="{{ imageOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if imageOfLocation.imageMeta.isImage %} class="image-link"{% endif %}>
+{% if imageOfLocation.imageMeta.isImage %}
+    {% set thumbOptions = attribute(thumbRuntimeOptions, 'imageOfLocationImage') %}
+    <img src="{{ imageOfLocation.image.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ imageOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+{% else %}
+    {{ __('Download') }} ({{ imageOfLocation.imageMeta.size|muyourcitymodule_fileSize(imageOfLocation.image.getPathname(), false, false) }})
+{% endif %}
+</a>
+{% endif %}
+</dd>
+{% if imageOfLocation.description is not empty %}<dd>{{ imageOfLocation.description }}</dd>{% endif %}
+</dl>

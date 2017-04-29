@@ -1,0 +1,15 @@
+{# purpose of this template: events view kml view #}
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+<Document>
+{% for event in items %}
+    <Placemark>
+        <name>{{ event.getName() }}</name>
+        <description><![CDATA[{{ event.getDescription() }}<br /><a href="{{ url('muyourcitymodule_event_display', { 'id': event.id }) }}">{{ __('Details') }}</a>]]></description>
+        <Point>
+            <coordinates>{{ event.getLongitude() }}, {{ event.getLatitude() }}, 0</coordinates>
+        </Point>
+    </Placemark>
+{% endfor %}
+</Document>
+</kml>

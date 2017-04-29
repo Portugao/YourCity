@@ -1,0 +1,16 @@
+{# Purpose of this template: Display item information for previewing from other modules #}
+<dl id="branch{{ branch.id }}">
+<dt>{{ branch|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.branches.filter') }}</dt>
+<dd>{% if branch.imageofBranch is not empty and branch.imageofBranchMeta|default %}
+            <a href="{{ branch.imageofBranchUrl }}" title="{{ branch|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if branch.imageofBranchMeta.isImage %} class="image-link"{% endif %}>
+{% if branch.imageofBranchMeta.isImage %}
+    {% set thumbOptions = attribute(thumbRuntimeOptions, 'branchImageofBranch') %}
+    <img src="{{ branch.imageofBranch.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ branch|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+{% else %}
+    {{ __('Download') }} ({{ branch.imageofBranchMeta.size|muyourcitymodule_fileSize(branch.imageofBranch.getPathname(), false, false) }})
+{% endif %}
+</a>
+{% else %}&nbsp;{% endif %}
+</dd>
+{% if branch.description is not empty %}<dd>{{ branch.description }}</dd>{% endif %}
+</dl>

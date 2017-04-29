@@ -1,0 +1,341 @@
+{# purpose of this template: module configuration page #}
+{% extends 'MUYourCityModule::adminBase.html.twig' %}
+{% block title __('Settings') %}
+{% block admin_page_icon 'wrench' %}
+{% block content %}
+    <div class="muyourcitymodule-config">
+        {% form_theme form with [
+            '@MUYourCityModule/Form/bootstrap_3.html.twig',
+            'ZikulaFormExtensionBundle:Form:form_div_layout.html.twig'
+        ] %}
+        {{ form_start(form) }}
+        <div class="zikula-bootstrap-tab-container">
+            <ul class="nav nav-tabs">
+            {% set tabTitle = __('General settings') %}
+            <li role="presentation" class="active">
+                <a id="vars1Tab" href="#tab1" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
+            </li>
+            {% set tabTitle = __('Moderation') %}
+            <li role="presentation">
+                <a id="vars2Tab" href="#tab2" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
+            </li>
+            {% set tabTitle = __('List views') %}
+            <li role="presentation">
+                <a id="vars3Tab" href="#tab3" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
+            </li>
+            {% set tabTitle = __('Images') %}
+            <li role="presentation" class=" dropdown">
+                <a id="imagesTabDrop" class="dropdown-toggle" href="#" data-toggle="dropdown" aria-controls="imagesTabDropSections" aria-expanded="false" title="{{ tabTitle|e('html_attr') }}">{{ tabTitle }}<span class="caret"></span></a>
+                <ul id="imagesTabDropSections" class="dropdown-menu" aria-labelledby="imagesTabDrop">
+                <li>
+                    <a id="imagesBranchImageofBranchTab" href="#tabImagesBranchImageofBranch" role="tab" data-toggle="tab" aria-controls="tabImagesBranchImageofBranch">{{ __('Branches imageof branch') }}</a>
+                </li>
+                <li>
+                    <a id="imagesLocationLogoOfYourLocationTab" href="#tabImagesLocationLogoOfYourLocation" role="tab" data-toggle="tab" aria-controls="tabImagesLocationLogoOfYourLocation">{{ __('Locations logo of your location') }}</a>
+                </li>
+                <li>
+                    <a id="imagesLocationImageOfLocationTab" href="#tabImagesLocationImageOfLocation" role="tab" data-toggle="tab" aria-controls="tabImagesLocationImageOfLocation">{{ __('Locations image of location') }}</a>
+                </li>
+                <li>
+                    <a id="imagesPartImageOfPartTab" href="#tabImagesPartImageOfPart" role="tab" data-toggle="tab" aria-controls="tabImagesPartImageOfPart">{{ __('Parts image of part') }}</a>
+                </li>
+                <li>
+                    <a id="imagesImageOfLocationImageTab" href="#tabImagesImageOfLocationImage" role="tab" data-toggle="tab" aria-controls="tabImagesImageOfLocationImage">{{ __('Images of location image') }}</a>
+                </li>
+                <li>
+                    <a id="imagesOfferImageOfOfferTab" href="#tabImagesOfferImageOfOffer" role="tab" data-toggle="tab" aria-controls="tabImagesOfferImageOfOffer">{{ __('Offers image of offer') }}</a>
+                </li>
+                <li>
+                    <a id="imagesMenuOfLocationImageOfMenuTab" href="#tabImagesMenuOfLocationImageOfMenu" role="tab" data-toggle="tab" aria-controls="tabImagesMenuOfLocationImageOfMenu">{{ __('Menus of location image of menu') }}</a>
+                </li>
+                <li>
+                    <a id="imagesDishImageOfDishTab" href="#tabImagesDishImageOfDish" role="tab" data-toggle="tab" aria-controls="tabImagesDishImageOfDish">{{ __('Dishes image of dish') }}</a>
+                </li>
+                <li>
+                    <a id="imagesEventImageOfEventTab" href="#tabImagesEventImageOfEvent" role="tab" data-toggle="tab" aria-controls="tabImagesEventImageOfEvent">{{ __('Events image of event') }}</a>
+                </li>
+                </ul>
+            </li>
+            {% set tabTitle = __('Integration') %}
+            <li role="presentation">
+                <a id="vars5Tab" href="#tab5" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
+            </li>
+            {% set tabTitle = __('Geo') %}
+            <li role="presentation">
+                <a id="vars6Tab" href="#tab6" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
+            </li>
+            </ul>
+
+            {{ form_errors(form) }}
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active" id="tab1" aria-labelledby="vars1Tab">
+                    {% set tabTitle = __('General settings') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                    
+                        <p class="alert alert-info">{{ __('Here you can manage all basic settings for this application.') }}</p>
+                    
+                        {{ form_row(form.city) }}
+                        {{ form_row(form.areaCode) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tab2" aria-labelledby="vars2Tab">
+                    {% set tabTitle = __('Moderation') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                    
+                        <p class="alert alert-info">{{ __('Here you can assign moderation groups for enhanced workflow actions.')|nl2br }}</p>
+                    
+                        {{ form_row(form.moderationGroupForLocations) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tab3" aria-labelledby="vars3Tab">
+                    {% set tabTitle = __('List views') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                    
+                        <p class="alert alert-info">{{ __('Here you can configure parameters for list views.')|nl2br }}</p>
+                    
+                        {{ form_row(form.branchEntriesPerPage) }}
+                        {{ form_row(form.linkOwnBranchesOnAccountPage) }}
+                        {{ form_row(form.locationEntriesPerPage) }}
+                        {{ form_row(form.linkOwnLocationsOnAccountPage) }}
+                        {{ form_row(form.partEntriesPerPage) }}
+                        {{ form_row(form.linkOwnPartsOnAccountPage) }}
+                        {{ form_row(form.imageOfLocationEntriesPerPage) }}
+                        {{ form_row(form.linkOwnImagesOfLocationOnAccountPage) }}
+                        {{ form_row(form.fileOfLocationEntriesPerPage) }}
+                        {{ form_row(form.linkOwnFilesOfLocationOnAccountPage) }}
+                        {{ form_row(form.offerEntriesPerPage) }}
+                        {{ form_row(form.linkOwnOffersOnAccountPage) }}
+                        {{ form_row(form.menuOfLocationEntriesPerPage) }}
+                        {{ form_row(form.linkOwnMenusOfLocationOnAccountPage) }}
+                        {{ form_row(form.partOfMenuEntriesPerPage) }}
+                        {{ form_row(form.linkOwnPartsOfMenuOnAccountPage) }}
+                        {{ form_row(form.dishEntriesPerPage) }}
+                        {{ form_row(form.linkOwnDishesOnAccountPage) }}
+                        {{ form_row(form.eventEntriesPerPage) }}
+                        {{ form_row(form.linkOwnEventsOnAccountPage) }}
+                        {{ form_row(form.productEntriesPerPage) }}
+                        {{ form_row(form.linkOwnProductsOnAccountPage) }}
+                        {{ form_row(form.specialOfLocationEntriesPerPage) }}
+                        {{ form_row(form.linkOwnSpecialsOfLocationOnAccountPage) }}
+                        {{ form_row(form.serviceofLocationEntriesPerPage) }}
+                        {{ form_row(form.linkOwnServicesOfLocationOnAccountPage) }}
+                        {{ form_row(form.abonnementEntriesPerPage) }}
+                        {{ form_row(form.linkOwnAbonnementsOnAccountPage) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tabImagesBranchImageofBranch" aria-labelledby="imagesBranchImageofBranchTab">
+                    {% set tabTitle = __('Image settings for branches imageof branch') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                
+                        {{ form_row(form.enableShrinkingForBranchImageofBranch) }}
+                        <div id="shrinkDetailsBranchImageofBranch">
+                        {{ form_row(form.shrinkWidthBranchImageofBranch) }}
+                        {{ form_row(form.shrinkHeightBranchImageofBranch) }}
+                        </div>
+                        {{ form_row(form.thumbnailModeBranchImageofBranch) }}
+                        {{ form_row(form.thumbnailWidthBranchImageofBranchView) }}
+                        {{ form_row(form.thumbnailHeightBranchImageofBranchView) }}
+                        {{ form_row(form.thumbnailWidthBranchImageofBranchDisplay) }}
+                        {{ form_row(form.thumbnailHeightBranchImageofBranchDisplay) }}
+                        {{ form_row(form.thumbnailWidthBranchImageofBranchEdit) }}
+                        {{ form_row(form.thumbnailHeightBranchImageofBranchEdit) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tabImagesLocationLogoOfYourLocation" aria-labelledby="imagesLocationLogoOfYourLocationTab">
+                    {% set tabTitle = __('Image settings for locations logo of your location') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                
+                        {{ form_row(form.enableShrinkingForLocationLogoOfYourLocation) }}
+                        <div id="shrinkDetailsLocationLogoOfYourLocation">
+                        {{ form_row(form.shrinkWidthLocationLogoOfYourLocation) }}
+                        {{ form_row(form.shrinkHeightLocationLogoOfYourLocation) }}
+                        </div>
+                        {{ form_row(form.thumbnailModeLocationLogoOfYourLocation) }}
+                        {{ form_row(form.thumbnailWidthLocationLogoOfYourLocationView) }}
+                        {{ form_row(form.thumbnailHeightLocationLogoOfYourLocationView) }}
+                        {{ form_row(form.thumbnailWidthLocationLogoOfYourLocationDisplay) }}
+                        {{ form_row(form.thumbnailHeightLocationLogoOfYourLocationDisplay) }}
+                        {{ form_row(form.thumbnailWidthLocationLogoOfYourLocationEdit) }}
+                        {{ form_row(form.thumbnailHeightLocationLogoOfYourLocationEdit) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tabImagesLocationImageOfLocation" aria-labelledby="imagesLocationImageOfLocationTab">
+                    {% set tabTitle = __('Image settings for locations image of location') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                
+                        {{ form_row(form.enableShrinkingForLocationImageOfLocation) }}
+                        <div id="shrinkDetailsLocationImageOfLocation">
+                        {{ form_row(form.shrinkWidthLocationImageOfLocation) }}
+                        {{ form_row(form.shrinkHeightLocationImageOfLocation) }}
+                        </div>
+                        {{ form_row(form.thumbnailModeLocationImageOfLocation) }}
+                        {{ form_row(form.thumbnailWidthLocationImageOfLocationView) }}
+                        {{ form_row(form.thumbnailHeightLocationImageOfLocationView) }}
+                        {{ form_row(form.thumbnailWidthLocationImageOfLocationDisplay) }}
+                        {{ form_row(form.thumbnailHeightLocationImageOfLocationDisplay) }}
+                        {{ form_row(form.thumbnailWidthLocationImageOfLocationEdit) }}
+                        {{ form_row(form.thumbnailHeightLocationImageOfLocationEdit) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tabImagesPartImageOfPart" aria-labelledby="imagesPartImageOfPartTab">
+                    {% set tabTitle = __('Image settings for parts image of part') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                
+                        {{ form_row(form.enableShrinkingForPartImageOfPart) }}
+                        <div id="shrinkDetailsPartImageOfPart">
+                        {{ form_row(form.shrinkWidthPartImageOfPart) }}
+                        {{ form_row(form.shrinkHeightPartImageOfPart) }}
+                        </div>
+                        {{ form_row(form.thumbnailModePartImageOfPart) }}
+                        {{ form_row(form.thumbnailWidthPartImageOfPartView) }}
+                        {{ form_row(form.thumbnailHeightPartImageOfPartView) }}
+                        {{ form_row(form.thumbnailWidthPartImageOfPartDisplay) }}
+                        {{ form_row(form.thumbnailHeightPartImageOfPartDisplay) }}
+                        {{ form_row(form.thumbnailWidthPartImageOfPartEdit) }}
+                        {{ form_row(form.thumbnailHeightPartImageOfPartEdit) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tabImagesImageOfLocationImage" aria-labelledby="imagesImageOfLocationImageTab">
+                    {% set tabTitle = __('Image settings for images of location image') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                
+                        {{ form_row(form.enableShrinkingForImageOfLocationImage) }}
+                        <div id="shrinkDetailsImageOfLocationImage">
+                        {{ form_row(form.shrinkWidthImageOfLocationImage) }}
+                        {{ form_row(form.shrinkHeightImageOfLocationImage) }}
+                        </div>
+                        {{ form_row(form.thumbnailModeImageOfLocationImage) }}
+                        {{ form_row(form.thumbnailWidthImageOfLocationImageView) }}
+                        {{ form_row(form.thumbnailHeightImageOfLocationImageView) }}
+                        {{ form_row(form.thumbnailWidthImageOfLocationImageDisplay) }}
+                        {{ form_row(form.thumbnailHeightImageOfLocationImageDisplay) }}
+                        {{ form_row(form.thumbnailWidthImageOfLocationImageEdit) }}
+                        {{ form_row(form.thumbnailHeightImageOfLocationImageEdit) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tabImagesOfferImageOfOffer" aria-labelledby="imagesOfferImageOfOfferTab">
+                    {% set tabTitle = __('Image settings for offers image of offer') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                
+                        {{ form_row(form.enableShrinkingForOfferImageOfOffer) }}
+                        <div id="shrinkDetailsOfferImageOfOffer">
+                        {{ form_row(form.shrinkWidthOfferImageOfOffer) }}
+                        {{ form_row(form.shrinkHeightOfferImageOfOffer) }}
+                        </div>
+                        {{ form_row(form.thumbnailModeOfferImageOfOffer) }}
+                        {{ form_row(form.thumbnailWidthOfferImageOfOfferView) }}
+                        {{ form_row(form.thumbnailHeightOfferImageOfOfferView) }}
+                        {{ form_row(form.thumbnailWidthOfferImageOfOfferDisplay) }}
+                        {{ form_row(form.thumbnailHeightOfferImageOfOfferDisplay) }}
+                        {{ form_row(form.thumbnailWidthOfferImageOfOfferEdit) }}
+                        {{ form_row(form.thumbnailHeightOfferImageOfOfferEdit) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tabImagesMenuOfLocationImageOfMenu" aria-labelledby="imagesMenuOfLocationImageOfMenuTab">
+                    {% set tabTitle = __('Image settings for menus of location image of menu') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                
+                        {{ form_row(form.enableShrinkingForMenuOfLocationImageOfMenu) }}
+                        <div id="shrinkDetailsMenuOfLocationImageOfMenu">
+                        {{ form_row(form.shrinkWidthMenuOfLocationImageOfMenu) }}
+                        {{ form_row(form.shrinkHeightMenuOfLocationImageOfMenu) }}
+                        </div>
+                        {{ form_row(form.thumbnailModeMenuOfLocationImageOfMenu) }}
+                        {{ form_row(form.thumbnailWidthMenuOfLocationImageOfMenuView) }}
+                        {{ form_row(form.thumbnailHeightMenuOfLocationImageOfMenuView) }}
+                        {{ form_row(form.thumbnailWidthMenuOfLocationImageOfMenuDisplay) }}
+                        {{ form_row(form.thumbnailHeightMenuOfLocationImageOfMenuDisplay) }}
+                        {{ form_row(form.thumbnailWidthMenuOfLocationImageOfMenuEdit) }}
+                        {{ form_row(form.thumbnailHeightMenuOfLocationImageOfMenuEdit) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tabImagesDishImageOfDish" aria-labelledby="imagesDishImageOfDishTab">
+                    {% set tabTitle = __('Image settings for dishes image of dish') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                
+                        {{ form_row(form.enableShrinkingForDishImageOfDish) }}
+                        <div id="shrinkDetailsDishImageOfDish">
+                        {{ form_row(form.shrinkWidthDishImageOfDish) }}
+                        {{ form_row(form.shrinkHeightDishImageOfDish) }}
+                        </div>
+                        {{ form_row(form.thumbnailModeDishImageOfDish) }}
+                        {{ form_row(form.thumbnailWidthDishImageOfDishView) }}
+                        {{ form_row(form.thumbnailHeightDishImageOfDishView) }}
+                        {{ form_row(form.thumbnailWidthDishImageOfDishDisplay) }}
+                        {{ form_row(form.thumbnailHeightDishImageOfDishDisplay) }}
+                        {{ form_row(form.thumbnailWidthDishImageOfDishEdit) }}
+                        {{ form_row(form.thumbnailHeightDishImageOfDishEdit) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tabImagesEventImageOfEvent" aria-labelledby="imagesEventImageOfEventTab">
+                    {% set tabTitle = __('Image settings for events image of event') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                
+                        {{ form_row(form.enableShrinkingForEventImageOfEvent) }}
+                        <div id="shrinkDetailsEventImageOfEvent">
+                        {{ form_row(form.shrinkWidthEventImageOfEvent) }}
+                        {{ form_row(form.shrinkHeightEventImageOfEvent) }}
+                        </div>
+                        {{ form_row(form.thumbnailModeEventImageOfEvent) }}
+                        {{ form_row(form.thumbnailWidthEventImageOfEventView) }}
+                        {{ form_row(form.thumbnailHeightEventImageOfEventView) }}
+                        {{ form_row(form.thumbnailWidthEventImageOfEventDisplay) }}
+                        {{ form_row(form.thumbnailHeightEventImageOfEventDisplay) }}
+                        {{ form_row(form.thumbnailWidthEventImageOfEventEdit) }}
+                        {{ form_row(form.thumbnailHeightEventImageOfEventEdit) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tab5" aria-labelledby="vars5Tab">
+                    {% set tabTitle = __('Integration') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                    
+                        <p class="alert alert-info">{{ __('These options allow you to configure integration aspects.')|nl2br }}</p>
+                    
+                        {{ form_row(form.enabledFinderTypes) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tab6" aria-labelledby="vars6Tab">
+                    {% set tabTitle = __('Geo') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                    
+                        <p class="alert alert-info">{{ __('Here you can define settings related to geographical features.')|nl2br }}</p>
+                    
+                        {{ form_row(form.googleMapsApiKey) }}
+                        {{ form_row(form.defaultLatitude) }}
+                        {{ form_row(form.defaultLongitude) }}
+                        {{ form_row(form.defaultMapType) }}
+                        {{ form_row(form.defaultZoomLevel) }}
+                        {{ form_row(form.enableLocationGeoLocation) }}
+                        {{ form_row(form.enableEventGeoLocation) }}
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                {{ form_widget(form.save) }}
+                {{ form_widget(form.cancel) }}
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+{% block footer %}
+    {{ parent() }}
+    {{ pageAddAsset('javascript', zasset('@MUYourCityModule:js/MUYourCityModule.Config.js')) }}
+{% endblock %}

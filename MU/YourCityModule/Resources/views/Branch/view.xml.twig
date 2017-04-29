@@ -1,0 +1,9 @@
+{# purpose of this template: branches view xml view #}
+<?xml version="1.0" encoding="{{ pageGetVar('meta.charset') }}" ?>
+<branches>
+{% for branch in items %}
+    {{ include('@MUYourCityModule/Branch/include.xml.twig') }}
+{% else %}
+    <noBranch />
+{% endfor %}
+</branches>

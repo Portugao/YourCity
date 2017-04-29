@@ -1,0 +1,129 @@
+{# purpose of this template: products view filter form #}
+{% if hasPermission('MUYourCityModule:Product:', '::', 'ACCESS_EDIT') %}
+    {% form_theme quickNavForm with [
+        'bootstrap_3_layout.html.twig'
+    ] %}
+    {{ form_start(quickNavForm, {attr: {id: 'mUYourCityModuleProductQuickNavForm', class: 'muyourcitymodule-quicknav navbar-form', role: 'navigation'}}) }}
+    {{ form_errors(quickNavForm) }}
+    <a href="#collapseProductQuickNav" role="button" data-toggle="collapse" class="btn btn-default" aria-expanded="false" aria-controls="collapseProductQuickNav">
+        <i class="fa fa-filter" aria-hidden="true"></i> {{ __('Filter') }}
+    </a>
+    <div id="collapseProductQuickNav" class="collapse">
+        <fieldset>
+            <h3>{{ __('Quick navigation') }}</h3>
+            {% set categoriesEnabled = featureActivationHelper.isEnabled(constant('MU\\YourCityModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'product') %}
+            {% if (categoryFilter is defined and categoryFilter != true) or not categoriesEnabled %}
+                <div class="hidden">
+            {% else %}
+                <div class="row">
+                    <div class="col-sm-3">
+            {% endif %}
+                {{ form_row(quickNavForm.categories) }}
+            {% if (categoryFilter is defined and categoryFilter != true) or not categoriesEnabled %}
+                </div>
+            {% else %}
+                    </div>
+                    <div class="col-sm-9">
+            {% endif %}
+            {% if locationFilter is defined and locationFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.location) }}
+            {% if locationFilter is defined and locationFilter != true %}
+                </div>
+            {% endif %}
+            {% if workflowStateFilter is defined and workflowStateFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.workflowState) }}
+            {% if workflowStateFilter is defined and workflowStateFilter != true %}
+                </div>
+            {% endif %}
+            {% if todayFilter is defined and todayFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.today) }}
+            {% if todayFilter is defined and todayFilter != true %}
+                </div>
+            {% endif %}
+            {% if searchFilter is defined and searchFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.q) }}
+            {% if searchFilter is defined and searchFilter != true %}
+                </div>
+            {% endif %}
+            {% if sorting is defined and sorting != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.sort) }}
+                {{ form_row(quickNavForm.sortdir) }}
+            {% if sorting is defined and sorting != true %}
+                </div>
+            {% endif %}
+            {% if pageSizeSelector is defined and pageSizeSelector != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.num) }}
+            {% if pageSizeSelector is defined and pageSizeSelector != true %}
+                </div>
+            {% endif %}
+            {% if mondayFilter is defined and mondayFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.monday) }}
+            {% if mondayFilter is defined and mondayFilter != true %}
+                </div>
+            {% endif %}
+            {% if tuesdayFilter is defined and tuesdayFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.tuesday) }}
+            {% if tuesdayFilter is defined and tuesdayFilter != true %}
+                </div>
+            {% endif %}
+            {% if wednesdayFilter is defined and wednesdayFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.wednesday) }}
+            {% if wednesdayFilter is defined and wednesdayFilter != true %}
+                </div>
+            {% endif %}
+            {% if thursdayFilter is defined and thursdayFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.thursday) }}
+            {% if thursdayFilter is defined and thursdayFilter != true %}
+                </div>
+            {% endif %}
+            {% if fridayFilter is defined and fridayFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.friday) }}
+            {% if fridayFilter is defined and fridayFilter != true %}
+                </div>
+            {% endif %}
+            {% if saturdayFilter is defined and saturdayFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.saturday) }}
+            {% if saturdayFilter is defined and saturdayFilter != true %}
+                </div>
+            {% endif %}
+            {% if sundayFilter is defined and sundayFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.sunday) }}
+            {% if sundayFilter is defined and sundayFilter != true %}
+                </div>
+            {% endif %}
+            {{ form_widget(quickNavForm.updateview) }}
+            {% if (categoryFilter is defined and categoryFilter != true) or not categoriesEnabled %}
+            {% else %}
+                    </div>
+                </div>
+            {% endif %}
+        </fieldset>
+    </div>
+    {{ form_end(quickNavForm) }}
+{% endif %}

@@ -1,0 +1,106 @@
+{# purpose of this template: dishes display view #}
+{% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
+{% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
+{% block pageTitle %}{{ dish|muyourcitymodule_formattedTitle|default(__('Dish')) }}{% endblock %}
+{% block title %}
+    {% set templateTitle = dish|muyourcitymodule_formattedTitle|default(__('Dish')) %}
+    {{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.dishes.filter') }}
+    {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: dish, area: routeArea, context: 'display' }) %}
+    <div class="dropdown">
+        <a id="itemActions{{ dish.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
+        {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
+    </div>
+{% endblock %}
+{% block admin_page_icon 'eye' %}
+{% block content %}
+    {% set isQuickView = app.request.query.getBoolean('raw', false) %}
+    <div class="muyourcitymodule-dish muyourcitymodule-display">
+
+    <dl>
+        {% if dish.name is not empty %}
+            <dt>{{ __('Name') }}</dt>
+            <dd>{{ dish.name }}</dd>
+        {% endif %}
+        {% if dish.description is not empty %}
+            <dt>{{ __('Description') }}</dt>
+            <dd>{{ dish.description|safeHtml }}</dd>
+        {% endif %}
+        {% if dish.imageOfDish is not empty %}
+            <dt>{{ __('Image of dish') }}</dt>
+            <dd>{% if dish.imageOfDish is not empty and dish.imageOfDishMeta|default %}
+                        <a href="{{ dish.imageOfDishUrl }}" title="{{ dish|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if dish.imageOfDishMeta.isImage %} class="image-link"{% endif %}>
+            {% if dish.imageOfDishMeta.isImage %}
+                {% set thumbOptions = attribute(thumbRuntimeOptions, 'dishImageOfDish') %}
+                <img src="{{ dish.imageOfDish.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ dish|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+            {% else %}
+                {{ __('Download') }} ({{ dish.imageOfDishMeta.size|muyourcitymodule_fileSize(dish.imageOfDish.getPathname(), false, false) }})
+            {% endif %}
+            </a>
+            {% else %}&nbsp;{% endif %}
+            </dd>
+        {% endif %}
+        {% if dish.priceOfDish is not empty %}
+            <dt>{{ __('Price of dish') }}</dt>
+            <dd>{{ dish.priceOfDish|localizedcurrency('EUR') }}</dd>
+        {% endif %}
+        {% if dish.positionOfDish is not empty %}
+            <dt>{{ __('Position of dish') }}</dt>
+            <dd>{{ dish.positionOfDish }}</dd>
+        {% endif %}
+        {% if dish.menuOfLocation|default %}
+            <dt>{{ __('Menu of location') }}</dt>
+            <dd>
+              {% if not isQuickView %}
+                  <a href="{{ path('muyourcitymodule_menuoflocation_' ~ routeArea ~ 'display', { 'id': dish.menuOfLocation.id }) }}">{% spaceless %}
+                    {{ dish.menuOfLocation|muyourcitymodule_formattedTitle }}
+                  {% endspaceless %}</a>
+                  <a id="menuOfLocationItem{{ dish.menuOfLocation.id }}Display" href="{{ path('muyourcitymodule_menuoflocation_' ~ routeArea ~ 'display', { 'id': dish.menuOfLocation.id, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ dish.menuOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
+              {% else %}
+                  {{ dish.menuOfLocation|muyourcitymodule_formattedTitle }}
+              {% endif %}
+            </dd>
+        {% endif %}
+        {% if dish.partOfMenu|default %}
+            <dt>{{ __('Part of menu') }}</dt>
+            <dd>
+              {% if not isQuickView %}
+                  <a href="{{ path('muyourcitymodule_partofmenu_' ~ routeArea ~ 'display', { 'id': dish.partOfMenu.id }) }}">{% spaceless %}
+                    {{ dish.partOfMenu|muyourcitymodule_formattedTitle }}
+                  {% endspaceless %}</a>
+                  <a id="partOfMenuItem{{ dish.partOfMenu.id }}Display" href="{{ path('muyourcitymodule_partofmenu_' ~ routeArea ~ 'display', { 'id': dish.partOfMenu.id, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ dish.partOfMenu|muyourcitymodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
+              {% else %}
+                  {{ dish.partOfMenu|muyourcitymodule_formattedTitle }}
+              {% endif %}
+            </dd>
+        {% endif %}
+        {% if dish.location|default %}
+            <dt>{{ __('Location') }}</dt>
+            <dd>
+              {% if not isQuickView %}
+                  <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': dish.location.id, 'slug': dish.location.slug }) }}">{% spaceless %}
+                    {{ dish.location|muyourcitymodule_formattedTitle }}
+                  {% endspaceless %}</a>
+                  <a id="locationItem{{ dish.location.id }}Display" href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': dish.location.id, 'slug': dish.location.slug, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ dish.location|muyourcitymodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
+              {% else %}
+                  {{ dish.location|muyourcitymodule_formattedTitle }}
+              {% endif %}
+            </dd>
+        {% endif %}
+        
+    </dl>
+
+    {% if featureActivationHelper.isEnabled(constant('MU\\YourCityModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'dish') %}
+        {{ include('@MUYourCityModule/Helper/includeCategoriesDisplay.html.twig', { obj: dish }) }}
+    {% endif %}
+    {{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: dish }) }}
+
+    {{ block('display_hooks') }}
+</div>
+{% endblock %}
+{% block display_hooks %}
+    {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.dishes.display_view', id=dish.id, urlObject=currentUrlObject) %}
+    {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
+        <h4>{{ providerArea }}</h4>
+        {{ hook }}
+    {% endfor %}
+{% endblock %}

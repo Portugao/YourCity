@@ -1,0 +1,7 @@
+{# purpose of this template: menus of location view json view #}
+[
+{% for menuOfLocation in items %}
+    {% if not loop.first %},{% endif %}
+    {{ menuOfLocation.toJson() }}
+{% endfor %}
+]

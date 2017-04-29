@@ -1,0 +1,69 @@
+{# purpose of this template: files of location display view #}
+{% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
+{% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
+{% block pageTitle %}{{ fileOfLocation|muyourcitymodule_formattedTitle|default(__('File of location')) }}{% endblock %}
+{% block title %}
+    {% set templateTitle = fileOfLocation|muyourcitymodule_formattedTitle|default(__('File of location')) %}
+    {{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.filesoflocation.filter') }}
+    {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: fileOfLocation, area: routeArea, context: 'display' }) %}
+    <div class="dropdown">
+        <a id="itemActions{{ fileOfLocation.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
+        {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
+    </div>
+{% endblock %}
+{% block admin_page_icon 'eye' %}
+{% block content %}
+    {% set isQuickView = app.request.query.getBoolean('raw', false) %}
+    <div class="muyourcitymodule-fileoflocation muyourcitymodule-display">
+
+    <dl>
+        {% if fileOfLocation.name is not empty %}
+            <dt>{{ __('Name') }}</dt>
+            <dd>{{ fileOfLocation.name }}</dd>
+        {% endif %}
+        {% if fileOfLocation.description is not empty %}
+            <dt>{{ __('Description') }}</dt>
+            <dd>{{ fileOfLocation.description|safeHtml }}</dd>
+        {% endif %}
+        {% if fileOfLocation.fileOfFile is not empty %}
+            <dt>{{ __('File of file') }}</dt>
+            <dd>{% if fileOfLocation.fileOfFileMeta|default %}
+            <a href="{{ fileOfLocation.fileOfFileUrl }}" title="{{ fileOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if fileOfLocation.fileOfFileMeta.isImage %} class="image-link"{% endif %}>
+            {% if fileOfLocation.fileOfFileMeta.isImage %}
+                {% set thumbOptions = attribute(thumbRuntimeOptions, 'fileOfLocationFileOfFile') %}
+                <img src="{{ fileOfLocation.fileOfFile.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ fileOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+            {% else %}
+                {{ __('Download') }} ({{ fileOfLocation.fileOfFileMeta.size|muyourcitymodule_fileSize(fileOfLocation.fileOfFile.getPathname(), false, false) }})
+            {% endif %}
+            </a>
+            {% endif %}
+            </dd>
+        {% endif %}
+        {% if fileOfLocation.location|default %}
+            <dt>{{ __('Location') }}</dt>
+            <dd>
+              {% if not isQuickView %}
+                  <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': fileOfLocation.location.id, 'slug': fileOfLocation.location.slug }) }}">{% spaceless %}
+                    {{ fileOfLocation.location|muyourcitymodule_formattedTitle }}
+                  {% endspaceless %}</a>
+                  <a id="locationItem{{ fileOfLocation.location.id }}Display" href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': fileOfLocation.location.id, 'slug': fileOfLocation.location.slug, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ fileOfLocation.location|muyourcitymodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
+              {% else %}
+                  {{ fileOfLocation.location|muyourcitymodule_formattedTitle }}
+              {% endif %}
+            </dd>
+        {% endif %}
+        
+    </dl>
+
+    {{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: fileOfLocation }) }}
+
+    {{ block('display_hooks') }}
+</div>
+{% endblock %}
+{% block display_hooks %}
+    {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.filesoflocation.display_view', id=fileOfLocation.id, urlObject=currentUrlObject) %}
+    {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
+        <h4>{{ providerArea }}</h4>
+        {{ hook }}
+    {% endfor %}
+{% endblock %}

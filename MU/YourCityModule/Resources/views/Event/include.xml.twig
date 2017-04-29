@@ -1,0 +1,19 @@
+{# purpose of this template: events xml inclusion template #}
+<event id="{{ event.id }}" createdon="{{ event.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ event.updatedDate|localizeddate('medium', 'short') }}">
+    <id>{{ event.id }}</id>
+    <name><![CDATA[{{ event.name }}]]></name>
+    <description><![CDATA[{{ event.description|safeHtml }}]]></description>
+    <imageOfEvent{% if event.imageOfEvent is not empty and event.imageOfEventMeta|default %} extension="{{ event.imageOfEventMeta.extension }}" size="{{ event.imageOfEventMeta.size }}" isImage="{% if event.imageOfEventMeta.isImage %}true{% else %}false{% endif %}"{% if event.imageOfEventMeta.isImage %} width="{{ event.imageOfEventMeta.width }}" height="{{ event.imageOfEventMeta.height }}" format="{{ event.imageOfEventMeta.format }}"{% endif %}{% endif %}>{{ event.imageOfEvent }}</imageOfEvent>
+    <street><![CDATA[{{ event.street }}]]></street>
+    <numberOfStreet><![CDATA[{{ event.numberOfStreet }}]]></numberOfStreet>
+    <zipCode><![CDATA[{{ event.zipCode }}]]></zipCode>
+    <city><![CDATA[{{ event.city }}]]></city>
+    <startDate>{{ event.startDate|localizeddate('medium', 'short') }}</startDate>
+    <endDate>{{ event.endDate|localizeddate('medium', 'short') }}</endDate>
+    <start2Date>{{ event.start2Date|localizeddate('medium', 'short') }}</start2Date>
+    <end2Date>{{ event.end2Date|localizeddate('medium', 'short') }}</end2Date>
+    <latitude>{{ event.latitude|muyourcitymodule_geoData }}</latitude>
+    <longitude>{{ event.longitude|muyourcitymodule_geoData }}</longitude>
+    <workflowState>{{ event.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
+    <location>{% if event.location|default %}{{ event.location|muyourcitymodule_formattedTitle }}{% endif %}</location>
+</event>

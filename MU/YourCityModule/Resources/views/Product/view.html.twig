@@ -1,0 +1,280 @@
+{# purpose of this template: products list view #}
+{% extends routeArea == 'admin' ? 'MUYourCityModule::adminBase.html.twig' : 'MUYourCityModule::base.html.twig' %}
+{% block title own ? __('My products') : __('Product list') %}
+{% block admin_page_icon 'list-alt' %}
+{% block content %}
+<div class="muyourcitymodule-product muyourcitymodule-view">
+
+    {{ block('page_nav_links') }}
+
+    {{ include('@MUYourCityModule/Product/viewQuickNav.html.twig', { workflowStateFilter: false }) }}{# see template file for available options #}
+
+    {% if routeArea == 'admin' %}
+    <form action="{{ path('muyourcitymodule_product_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="productsViewForm" class="form-horizontal" role="form">
+        <div>
+    {% endif %}
+        <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover table-condensed">
+            <colgroup>
+                {% if routeArea == 'admin' %}
+                    <col id="cSelect" />
+                {% endif %}
+                <col id="cItemActions" />
+                <col id="cName" />
+                <col id="cDescription" />
+                <col id="cToday" />
+                <col id="cMonday" />
+                <col id="cTuesday" />
+                <col id="cWednesday" />
+                <col id="cThursday" />
+                <col id="cFriday" />
+                <col id="cSaturday" />
+                <col id="cSunday" />
+                <col id="cPriceOfProduct" />
+                <col id="cLocation" />
+            </colgroup>
+            <thead>
+            <tr>
+                {% if routeArea == 'admin' %}
+                    <th id="hSelect" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}text-center z-w02">
+                        <input type="checkbox" class="muyourcity-mass-toggle" />
+                    </th>
+                {% endif %}
+                <th id="hItemActions" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}z-order-unsorted z-w02">{{ __('Actions') }}</th>
+                <th id="hName" scope="col" class="text-left">
+                    <a href="{{ sort.name.url }}" title="{{ __f('Sort by %s', {'%s': 'name'}) }}" class="{{ sort.name.class }}">{{ __('Name') }}</a>
+                </th>
+                <th id="hDescription" scope="col" class="text-left">
+                    <a href="{{ sort.description.url }}" title="{{ __f('Sort by %s', {'%s': 'description'}) }}" class="{{ sort.description.class }}">{{ __('Description') }}</a>
+                </th>
+                <th id="hToday" scope="col" class="text-left">
+                    <a href="{{ sort.today.url }}" title="{{ __f('Sort by %s', {'%s': 'today'}) }}" class="{{ sort.today.class }}">{{ __('Today') }}</a>
+                </th>
+                <th id="hMonday" scope="col" class="text-center">
+                    <a href="{{ sort.monday.url }}" title="{{ __f('Sort by %s', {'%s': 'monday'}) }}" class="{{ sort.monday.class }}">{{ __('Monday') }}</a>
+                </th>
+                <th id="hTuesday" scope="col" class="text-center">
+                    <a href="{{ sort.tuesday.url }}" title="{{ __f('Sort by %s', {'%s': 'tuesday'}) }}" class="{{ sort.tuesday.class }}">{{ __('Tuesday') }}</a>
+                </th>
+                <th id="hWednesday" scope="col" class="text-center">
+                    <a href="{{ sort.wednesday.url }}" title="{{ __f('Sort by %s', {'%s': 'wednesday'}) }}" class="{{ sort.wednesday.class }}">{{ __('Wednesday') }}</a>
+                </th>
+                <th id="hThursday" scope="col" class="text-center">
+                    <a href="{{ sort.thursday.url }}" title="{{ __f('Sort by %s', {'%s': 'thursday'}) }}" class="{{ sort.thursday.class }}">{{ __('Thursday') }}</a>
+                </th>
+                <th id="hFriday" scope="col" class="text-center">
+                    <a href="{{ sort.friday.url }}" title="{{ __f('Sort by %s', {'%s': 'friday'}) }}" class="{{ sort.friday.class }}">{{ __('Friday') }}</a>
+                </th>
+                <th id="hSaturday" scope="col" class="text-center">
+                    <a href="{{ sort.saturday.url }}" title="{{ __f('Sort by %s', {'%s': 'saturday'}) }}" class="{{ sort.saturday.class }}">{{ __('Saturday') }}</a>
+                </th>
+                <th id="hSunday" scope="col" class="text-center">
+                    <a href="{{ sort.sunday.url }}" title="{{ __f('Sort by %s', {'%s': 'sunday'}) }}" class="{{ sort.sunday.class }}">{{ __('Sunday') }}</a>
+                </th>
+                <th id="hPriceOfProduct" scope="col" class="text-right">
+                    <a href="{{ sort.priceOfProduct.url }}" title="{{ __f('Sort by %s', {'%s': 'price of product'}) }}" class="{{ sort.priceOfProduct.class }}">{{ __('Price of product') }}</a>
+                </th>
+                <th id="hLocation" scope="col" class="text-left">
+                    <a href="{{ sort.location.url }}" title="{{ __f('Sort by %s', {'%s': 'location'}) }}" class="{{ sort.location.class }}">{{ __('Location') }}</a>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+        
+        {% for product in items %}
+            <tr>
+                {% if routeArea == 'admin' %}
+                    <td headers="hSelect" class="fixed-column text-center z-w02">
+                        <input type="checkbox" name="items[]" value="{{ product.id }}" class="muyourcity-toggle-checkbox" />
+                    </td>
+                {% endif %}
+                <td id="itemActions{{ product.id }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
+                    {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: product, area: routeArea, context: 'view' }) %}
+                    <div class="dropdown">
+                        <a id="itemActions{{ product.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
+                        {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
+                    </div>
+                </td>
+                <td headers="hName" class="text-left">
+                    <a href="{{ path('muyourcitymodule_product_' ~ routeArea ~ 'display', { 'id': product.id }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ product.name|notifyFilters('muyourcitymodule.filterhook.products') }}</a>
+                </td>
+                <td headers="hDescription" class="text-left">
+                    {{ product.description|safeHtml|truncate(50) }}
+                </td>
+                <td headers="hToday" class="text-left">
+                    {{ product.today|muyourcitymodule_listEntry('product', 'today') }}
+                </td>
+                <td headers="hMonday" class="text-center">
+                    {% set itemid = product.createCompositeIdentifier() %}
+                    <a id="toggleMonday{{ itemid }}" href="javascript:void(0);" class="muyourcity-ajax-toggle hidden" data-object-type="product" data-field-name="monday" data-item-id="{{ itemid }}">
+                        <i class="fa fa-check{% if not product.monday %} hidden{% endif %}" id="yesMonday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
+                        <i class="fa fa-times{% if product.monday %} hidden{% endif %}" id="noMonday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
+                    </a>
+                    <noscript><div id="noscriptMonday{{ itemid }}">
+                        {% if product.monday %}
+                            <i class="fa fa-check" title="{{ __('Yes') }}"></i>
+                        {% else %}
+                            <i class="fa fa-times" title="{{ __('No') }}"></i>
+                        {% endif %}
+                    </div></noscript>
+                </td>
+                <td headers="hTuesday" class="text-center">
+                    {% set itemid = product.createCompositeIdentifier() %}
+                    <a id="toggleTuesday{{ itemid }}" href="javascript:void(0);" class="muyourcity-ajax-toggle hidden" data-object-type="product" data-field-name="tuesday" data-item-id="{{ itemid }}">
+                        <i class="fa fa-check{% if not product.tuesday %} hidden{% endif %}" id="yesTuesday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
+                        <i class="fa fa-times{% if product.tuesday %} hidden{% endif %}" id="noTuesday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
+                    </a>
+                    <noscript><div id="noscriptTuesday{{ itemid }}">
+                        {% if product.tuesday %}
+                            <i class="fa fa-check" title="{{ __('Yes') }}"></i>
+                        {% else %}
+                            <i class="fa fa-times" title="{{ __('No') }}"></i>
+                        {% endif %}
+                    </div></noscript>
+                </td>
+                <td headers="hWednesday" class="text-center">
+                    {% set itemid = product.createCompositeIdentifier() %}
+                    <a id="toggleWednesday{{ itemid }}" href="javascript:void(0);" class="muyourcity-ajax-toggle hidden" data-object-type="product" data-field-name="wednesday" data-item-id="{{ itemid }}">
+                        <i class="fa fa-check{% if not product.wednesday %} hidden{% endif %}" id="yesWednesday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
+                        <i class="fa fa-times{% if product.wednesday %} hidden{% endif %}" id="noWednesday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
+                    </a>
+                    <noscript><div id="noscriptWednesday{{ itemid }}">
+                        {% if product.wednesday %}
+                            <i class="fa fa-check" title="{{ __('Yes') }}"></i>
+                        {% else %}
+                            <i class="fa fa-times" title="{{ __('No') }}"></i>
+                        {% endif %}
+                    </div></noscript>
+                </td>
+                <td headers="hThursday" class="text-center">
+                    {% set itemid = product.createCompositeIdentifier() %}
+                    <a id="toggleThursday{{ itemid }}" href="javascript:void(0);" class="muyourcity-ajax-toggle hidden" data-object-type="product" data-field-name="thursday" data-item-id="{{ itemid }}">
+                        <i class="fa fa-check{% if not product.thursday %} hidden{% endif %}" id="yesThursday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
+                        <i class="fa fa-times{% if product.thursday %} hidden{% endif %}" id="noThursday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
+                    </a>
+                    <noscript><div id="noscriptThursday{{ itemid }}">
+                        {% if product.thursday %}
+                            <i class="fa fa-check" title="{{ __('Yes') }}"></i>
+                        {% else %}
+                            <i class="fa fa-times" title="{{ __('No') }}"></i>
+                        {% endif %}
+                    </div></noscript>
+                </td>
+                <td headers="hFriday" class="text-center">
+                    {% set itemid = product.createCompositeIdentifier() %}
+                    <a id="toggleFriday{{ itemid }}" href="javascript:void(0);" class="muyourcity-ajax-toggle hidden" data-object-type="product" data-field-name="friday" data-item-id="{{ itemid }}">
+                        <i class="fa fa-check{% if not product.friday %} hidden{% endif %}" id="yesFriday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
+                        <i class="fa fa-times{% if product.friday %} hidden{% endif %}" id="noFriday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
+                    </a>
+                    <noscript><div id="noscriptFriday{{ itemid }}">
+                        {% if product.friday %}
+                            <i class="fa fa-check" title="{{ __('Yes') }}"></i>
+                        {% else %}
+                            <i class="fa fa-times" title="{{ __('No') }}"></i>
+                        {% endif %}
+                    </div></noscript>
+                </td>
+                <td headers="hSaturday" class="text-center">
+                    {% set itemid = product.createCompositeIdentifier() %}
+                    <a id="toggleSaturday{{ itemid }}" href="javascript:void(0);" class="muyourcity-ajax-toggle hidden" data-object-type="product" data-field-name="saturday" data-item-id="{{ itemid }}">
+                        <i class="fa fa-check{% if not product.saturday %} hidden{% endif %}" id="yesSaturday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
+                        <i class="fa fa-times{% if product.saturday %} hidden{% endif %}" id="noSaturday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
+                    </a>
+                    <noscript><div id="noscriptSaturday{{ itemid }}">
+                        {% if product.saturday %}
+                            <i class="fa fa-check" title="{{ __('Yes') }}"></i>
+                        {% else %}
+                            <i class="fa fa-times" title="{{ __('No') }}"></i>
+                        {% endif %}
+                    </div></noscript>
+                </td>
+                <td headers="hSunday" class="text-center">
+                    {% set itemid = product.createCompositeIdentifier() %}
+                    <a id="toggleSunday{{ itemid }}" href="javascript:void(0);" class="muyourcity-ajax-toggle hidden" data-object-type="product" data-field-name="sunday" data-item-id="{{ itemid }}">
+                        <i class="fa fa-check{% if not product.sunday %} hidden{% endif %}" id="yesSunday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
+                        <i class="fa fa-times{% if product.sunday %} hidden{% endif %}" id="noSunday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
+                    </a>
+                    <noscript><div id="noscriptSunday{{ itemid }}">
+                        {% if product.sunday %}
+                            <i class="fa fa-check" title="{{ __('Yes') }}"></i>
+                        {% else %}
+                            <i class="fa fa-times" title="{{ __('No') }}"></i>
+                        {% endif %}
+                    </div></noscript>
+                </td>
+                <td headers="hPriceOfProduct" class="text-right">
+                    {{ product.priceOfProduct|localizedcurrency('EUR') }}
+                </td>
+                <td headers="hLocation" class="text-left">
+                    {% if product.location|default %}
+                        <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': product.location.id, 'slug': product.location.slug }) }}">{% spaceless %}
+                          {{ product.location|muyourcitymodule_formattedTitle }}
+                        {% endspaceless %}</a>
+                        <a id="locationItem{{ product.id }}_rel_{{ product.location.id }}Display" href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', {'id': product.location.id, 'slug': product.location.slug, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ product.location|muyourcitymodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
+                    {% else %}
+                        {{ __('Not set.') }}
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
+                <td class="text-left" colspan="{% if routeArea == 'admin' %}14{% else %}13{% endif %}">
+            {{ __('No products found.') }}
+              </td>
+            </tr>
+        {% endfor %}
+        
+            </tbody>
+        </table>
+        </div>
+        
+        {% if all != 1 and pager|default %}
+            {{ pager({ rowcount: pager.amountOfItems, limit: pager.itemsPerPage, display: 'page', route: 'muyourcitymodule_product_' ~ routeArea ~ 'view'}) }}
+        {% endif %}
+    {% if routeArea == 'admin' %}
+            <fieldset>
+                <label for="mUYourCityModuleAction" class="col-sm-3 control-label">{{ __('With selected products') }}</label>
+                <div class="col-sm-6">
+                    <select id="mUYourCityModuleAction" name="action" class="form-control input-sm">
+                        <option value="">{{ __('Choose action') }}</option>
+                        <option value="delete" title="{{ __('Delete content permanently.') }}">{{ __('Delete') }}</option>
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <input type="submit" value="{{ __('Submit') }}" class="btn btn-default btn-sm" />
+                </div>
+            </fieldset>
+        </div>
+    </form>
+    {% endif %}
+
+    {{ block('display_hooks') }}
+</div>
+{% endblock %}
+{% block page_nav_links %}
+    <p>
+        {% if canBeCreated %}
+            {% if hasPermission('MUYourCityModule:Product:', '::', 'ACCESS_EDIT') %}
+                {% set createTitle = __('Create product') %}
+                <a href="{{ path('muyourcitymodule_product_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
+            {% endif %}
+        {% endif %}
+        {% if all == 1 %}
+            {% set linkTitle = __('Back to paginated view') %}
+            <a href="{{ path('muyourcitymodule_product_' ~ routeArea ~ 'view') }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
+        {% else %}
+            {% set linkTitle = __('Show all entries') %}
+            <a href="{{ path('muyourcitymodule_product_' ~ routeArea ~ 'view', { all: 1 }) }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
+        {% endif %}
+    </p>
+{% endblock %}
+{% block display_hooks %}
+    
+    {# here you can activate calling display hooks for the view page if you need it #}
+    {# % if routeArea != 'admin' %}
+        {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.products.display_view', urlObject=currentUrlObject) %}
+        {% for providerArea, hook in hooks %}
+            {{ hook }}
+        {% endfor %}
+    {% endif % #}
+{% endblock %}

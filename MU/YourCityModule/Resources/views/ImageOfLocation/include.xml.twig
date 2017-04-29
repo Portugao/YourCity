@@ -1,0 +1,10 @@
+{# purpose of this template: images of location xml inclusion template #}
+<imageoflocation id="{{ imageOfLocation.id }}" createdon="{{ imageOfLocation.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ imageOfLocation.updatedDate|localizeddate('medium', 'short') }}">
+    <id>{{ imageOfLocation.id }}</id>
+    <name><![CDATA[{{ imageOfLocation.name }}]]></name>
+    <description><![CDATA[{{ imageOfLocation.description|safeHtml }}]]></description>
+    <image{% if imageOfLocation.image is not empty and imageOfLocation.imageMeta|default %} extension="{{ imageOfLocation.imageMeta.extension }}" size="{{ imageOfLocation.imageMeta.size }}" isImage="{% if imageOfLocation.imageMeta.isImage %}true{% else %}false{% endif %}"{% if imageOfLocation.imageMeta.isImage %} width="{{ imageOfLocation.imageMeta.width }}" height="{{ imageOfLocation.imageMeta.height }}" format="{{ imageOfLocation.imageMeta.format }}"{% endif %}{% endif %}>{{ imageOfLocation.image }}</image>
+    <positionOfImage>{{ imageOfLocation.positionOfImage }}</positionOfImage>
+    <workflowState>{{ imageOfLocation.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
+    <location>{% if imageOfLocation.location|default %}{{ imageOfLocation.location|muyourcitymodule_formattedTitle }}{% endif %}</location>
+</imageoflocation>

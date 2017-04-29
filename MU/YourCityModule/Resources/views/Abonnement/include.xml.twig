@@ -1,0 +1,7 @@
+{# purpose of this template: abonnements xml inclusion template #}
+<abonnement id="{{ abonnement.id }}" createdon="{{ abonnement.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ abonnement.updatedDate|localizeddate('medium', 'short') }}">
+    <id>{{ abonnement.id }}</id>
+    <name><![CDATA[{{ abonnement.name }}]]></name>
+    <workflowState>{{ abonnement.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
+    <location>{% if abonnement.location|default %}{{ abonnement.location|muyourcitymodule_formattedTitle }}{% endif %}</location>
+</abonnement>

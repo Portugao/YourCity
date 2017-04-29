@@ -1,0 +1,9 @@
+{# purpose of this template: parts view xml view #}
+<?xml version="1.0" encoding="{{ pageGetVar('meta.charset') }}" ?>
+<parts>
+{% for part in items %}
+    {{ include('@MUYourCityModule/Part/include.xml.twig') }}
+{% else %}
+    <noPart />
+{% endfor %}
+</parts>

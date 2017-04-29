@@ -1,0 +1,79 @@
+{
+    "name": "mu/yourcity-module",
+    "version": "1.0.0",
+    "description": "Your cityisanapplicationtomanagelocationsinyourcity",
+    "type": "zikula-module",
+    "license": "LGPL-3.0+",
+    "authors": [
+        {
+            "name": "Michael Ueberschaer",
+            "email": "info@homepages-mit-zikula.de",
+            "homepage": "http://homepages-mit-zikula.de",
+            "role": "owner"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "MU\\YourCityModule\\": "" }
+    },
+    "require": {
+        "php": ">=5.4.1"
+    },
+    "suggest": {
+    },
+    "extra": {
+        "zikula": {
+            "core-compatibility": ">=1.4.6 <3.0",
+            "class": "MU\\YourCityModule\\MUYourCityModule",
+            "displayname": "Your city",
+            "url": "yourcity",
+            "capabilities": {
+                "user": {"route": "muyourcitymodule_location_index"},
+                "admin": {"route": "muyourcitymodule_location_adminindex"},
+                "categorizable": {
+                    "entities": [
+                        "MU\\YourCityModule\\Entity\\LocationEntity",
+                        "MU\\YourCityModule\\Entity\\DishEntity",
+                        "MU\\YourCityModule\\Entity\\EventEntity",
+                        "MU\\YourCityModule\\Entity\\ProductEntity"
+                    ]
+                },
+                "hook_subscriber": {"class": "MU\\YourCityModule\\Container\\HookContainer"}
+            },
+            "securityschema": {
+                "MUYourCityModule::": "::",
+                "MUYourCityModule:ItemListBlock:": "Block title::",
+                "MUYourCityModule:ModerationBlock:": "Block title::",
+                "MUYourCityModule:Branch:": "Branch ID::",
+                "MUYourCityModule:Location:Branch": "Location ID:Branch ID:",
+                "MUYourCityModule:Location:": "Location ID::",
+                "MUYourCityModule:Part:": "Part ID::",
+                "MUYourCityModule:Location:Part": "Location ID:Part ID:",
+                "MUYourCityModule:ImageOfLocation:": "ImageOfLocation ID::",
+                "MUYourCityModule:Location:ImageOfLocation": "Location ID:ImageOfLocation ID:",
+                "MUYourCityModule:FileOfLocation:": "FileOfLocation ID::",
+                "MUYourCityModule:Location:FileOfLocation": "Location ID:FileOfLocation ID:",
+                "MUYourCityModule:Offer:": "Offer ID::",
+                "MUYourCityModule:Location:Offer": "Location ID:Offer ID:",
+                "MUYourCityModule:MenuOfLocation:": "MenuOfLocation ID::",
+                "MUYourCityModule:Location:MenuOfLocation": "Location ID:MenuOfLocation ID:",
+                "MUYourCityModule:PartOfMenu:": "PartOfMenu ID::",
+                "MUYourCityModule:MenuOfLocation:PartOfMenu": "MenuOfLocation ID:PartOfMenu ID:",
+                "MUYourCityModule:Dish:": "Dish ID::",
+                "MUYourCityModule:MenuOfLocation:Dish": "MenuOfLocation ID:Dish ID:",
+                "MUYourCityModule:PartOfMenu:Dish": "PartOfMenu ID:Dish ID:",
+                "MUYourCityModule:Location:Dish": "Location ID:Dish ID:",
+                "MUYourCityModule:Event:": "Event ID::",
+                "MUYourCityModule:Location:Event": "Location ID:Event ID:",
+                "MUYourCityModule:Product:": "Product ID::",
+                "MUYourCityModule:Location:Product": "Location ID:Product ID:",
+                "MUYourCityModule:SpecialOfLocation:": "SpecialOfLocation ID::",
+                "MUYourCityModule:Location:SpecialOfLocation": "Location ID:SpecialOfLocation ID:",
+                "MUYourCityModule:ServiceofLocation:": "ServiceofLocation ID::",
+                "MUYourCityModule:Location:ServiceofLocation": "Location ID:ServiceofLocation ID:",
+                "MUYourCityModule:Abonnement:": "Abonnement ID::",
+                "MUYourCityModule:Location:Abonnement": "Location ID:Abonnement ID:",
+                "MUYourCityModule::Ajax": "::"
+            }
+        }
+    }
+}

@@ -1,0 +1,7 @@
+{# purpose of this template: products index view #}
+{% extends routeArea == 'admin' ? 'MUYourCityModule::adminBase.html.twig' : 'MUYourCityModule::base.html.twig' %}
+{% block title __('products') %}
+{% block admin_page_icon 'home' %}
+{% block content %}
+    <p>{{ __('Welcome to the product section of the Your city application.') }}</p>
+{% endblock %}

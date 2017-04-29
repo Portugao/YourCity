@@ -1,0 +1,16 @@
+{# Purpose of this template: Display item information for previewing from other modules #}
+<dl id="imageOfBranch{{ imageOfBranch.id }}">
+<dt>{{ imageOfBranch.getTitleFromDisplayPattern()|notifyFilters('yourcity.filter_hooks.imagesofbranch.filter') }}</dt>
+<dd>{% if imageOfBranch.fileOfImageMeta|default %}
+<a href="{{ imageOfBranch.fileOfImageUrl }}" title="{{ imageOfBranch.getTitleFromDisplayPattern()|e('html_attr') }}"{% if imageOfBranch.fileOfImageMeta.isImage %} class="image-link"{% endif %}>
+{% if imageOfBranch.fileOfImageMeta.isImage %}
+    {% set thumbOptions = attribute(thumbRuntimeOptions, 'imageOfBranchFileOfImage') %}
+    <img src="{{ imageOfBranch.fileOfImage.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ imageOfBranch.getTitleFromDisplayPattern()|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+{% else %}
+    {{ __('Download') }} ({{ imageOfBranch.fileOfImageMeta.size|muyourcitymodule_fileSize(imageOfBranch.fileOfImage.getPathname(), false, false) }})
+{% endif %}
+</a>
+{% endif %}
+</dd>
+{% if imageOfBranch.name is not empty %}<dd>{{ imageOfBranch.name }}</dd>{% endif %}
+</dl>

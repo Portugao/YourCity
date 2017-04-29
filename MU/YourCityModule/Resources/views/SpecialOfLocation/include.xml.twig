@@ -1,0 +1,15 @@
+{# purpose of this template: specials of location xml inclusion template #}
+<specialoflocation id="{{ specialOfLocation.id }}" createdon="{{ specialOfLocation.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ specialOfLocation.updatedDate|localizeddate('medium', 'short') }}">
+    <id>{{ specialOfLocation.id }}</id>
+    <name><![CDATA[{{ specialOfLocation.name }}]]></name>
+    <description><![CDATA[{{ specialOfLocation.description|safeHtml }}]]></description>
+    <iconForSpecial><![CDATA[{{ specialOfLocation.iconForSpecial }}]]></iconForSpecial>
+    <workflowState>{{ specialOfLocation.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
+    <locations>
+    {% if specialOfLocation.locations|default %}
+        {% for relatedItem in specialOfLocation.locations %}
+        <location>{{ relatedItem|muyourcitymodule_formattedTitle }}</location>
+        {% endfor %}
+    {% endif %}
+    </locations>
+</specialoflocation>

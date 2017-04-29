@@ -1,0 +1,12 @@
+services:
+    mu_yourcity_module.link_container:
+        class: MU\YourCityModule\Container\LinkContainer
+        arguments:
+            - "@translator.default"
+            - "@router"
+            - "@zikula_permissions_module.api.permission"
+            - "@zikula_extensions_module.api.variable"
+            - "@zikula_users_module.current_user"
+            - "@mu_yourcity_module.controller_helper"
+        tags:
+            - { name: zikula.link_container }

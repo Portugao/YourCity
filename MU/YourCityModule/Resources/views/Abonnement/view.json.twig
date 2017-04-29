@@ -1,0 +1,7 @@
+{# purpose of this template: abonnements view json view #}
+[
+{% for abonnement in items %}
+    {% if not loop.first %},{% endif %}
+    {{ abonnement.toJson() }}
+{% endfor %}
+]

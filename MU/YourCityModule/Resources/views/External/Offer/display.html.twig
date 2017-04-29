@@ -1,0 +1,51 @@
+{# Purpose of this template: Display one certain offer within an external context #}
+{{ pageAddAsset('javascript', asset('magnific-popup/jquery.magnific-popup.min.js')) }}
+{{ pageAddAsset('stylesheet', asset('magnific-popup/magnific-popup.css')) }}
+{{ pageAddAsset('javascript', zasset('@MUYourCityModule:js/MUYourCityModule.js')) }}
+<div id="offer{$offer.id}" class="muyourcitymodule-external-offer">
+{% if displayMode == 'link' %}
+    <p class="muyourcitymodule-external-link">
+    <a href="{{ path('muyourcitymodule_offer_display', { 'id': offer.id }) }}" title="{{ offer|muyourcitymodule_formattedTitle|e('html_attr') }}">
+    {{ offer|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.offers.filter') }}
+    </a>
+    </p>
+{% endif %}
+{% if hasPermission('MUYourCityModule::', '::', 'ACCESS_EDIT') %}
+    {# for normal users without edit permission show only the actual file per default #}
+    {% if displayMode == 'embed' %}
+        <p class="muyourcitymodule-external-title">
+            <strong>{{ offer|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.offers.filter') }}</strong>
+        </p>
+    {% endif %}
+{% endif %}
+
+{% if displayMode == 'link' %}
+{% elseif displayMode == 'embed' %}
+    <div class="muyourcitymodule-external-snippet">
+        {% if offer.imageOfOffer is not empty and offer.imageOfOfferMeta|default %}
+                    <a href="{{ offer.imageOfOfferUrl }}" title="{{ offer|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if offer.imageOfOfferMeta.isImage %} class="image-link"{% endif %}>
+        {% if offer.imageOfOfferMeta.isImage %}
+            {% set thumbOptions = attribute(thumbRuntimeOptions, 'offerImageOfOffer') %}
+            <img src="{{ offer.imageOfOffer.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ offer|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+        {% else %}
+            {{ __('Download') }} ({{ offer.imageOfOfferMeta.size|muyourcitymodule_fileSize(offer.imageOfOffer.getPathname(), false, false) }})
+        {% endif %}
+        </a>
+        {% else %}&nbsp;{% endif %}
+    </div>
+
+    {# you can distinguish the context like this: #}
+    {# % if source == 'contentType' %}
+        ...
+    {% elseif source == 'scribite' %}
+        ...
+    {% endif % #}
+
+    {# you can enable more details about the item: #}
+    {#
+        <p class="muyourcitymodule-external-description">
+            {% if offer.text is not empty %}{{ offer.text }}<br />{% endif %}
+        </p>
+    #}
+{% endif %}
+</div>

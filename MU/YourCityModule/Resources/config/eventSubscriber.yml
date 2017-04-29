@@ -1,0 +1,79 @@
+services:
+    # Event subscribers and listeners
+    mu_yourcity_module.entity_lifecycle_listener:
+        class: MU\YourCityModule\Listener\EntityLifecycleListener
+        arguments:
+            - "@service_container"
+            - "@event_dispatcher"
+            - "@logger"
+            - "@translator.default"
+        tags:
+            - { name: doctrine.event_subscriber }
+    
+    mu_yourcity_module.kernel_listener:
+        class: MU\YourCityModule\Listener\KernelListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    mu_yourcity_module.installer_listener:
+        class: MU\YourCityModule\Listener\InstallerListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    mu_yourcity_module.moduledispatch_listener:
+        class: MU\YourCityModule\Listener\ModuleDispatchListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    mu_yourcity_module.mailer_listener:
+        class: MU\YourCityModule\Listener\MailerListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    mu_yourcity_module.theme_listener:
+        class: MU\YourCityModule\Listener\ThemeListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    mu_yourcity_module.userlogin_listener:
+        class: MU\YourCityModule\Listener\UserLoginListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    mu_yourcity_module.userlogout_listener:
+        class: MU\YourCityModule\Listener\UserLogoutListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    mu_yourcity_module.user_listener:
+        class: MU\YourCityModule\Listener\UserListener
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.entity_factory"
+            - "@zikula_users_module.current_user"
+            - "@logger"
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    mu_yourcity_module.userregistration_listener:
+        class: MU\YourCityModule\Listener\UserRegistrationListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    mu_yourcity_module.users_listener:
+        class: MU\YourCityModule\Listener\UsersListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    mu_yourcity_module.group_listener:
+        class: MU\YourCityModule\Listener\GroupListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    mu_yourcity_module.thirdparty_listener:
+        class: MU\YourCityModule\Listener\ThirdPartyListener
+        arguments:
+            - "@mu_yourcity_module.workflow_helper"
+        tags:
+            - { name: kernel.event_subscriber }
+    

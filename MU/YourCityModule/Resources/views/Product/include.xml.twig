@@ -1,0 +1,17 @@
+{# purpose of this template: products xml inclusion template #}
+<product id="{{ product.id }}" createdon="{{ product.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ product.updatedDate|localizeddate('medium', 'short') }}">
+    <id>{{ product.id }}</id>
+    <name><![CDATA[{{ product.name }}]]></name>
+    <description><![CDATA[{{ product.description|safeHtml }}]]></description>
+    <today>{{ product.today|muyourcitymodule_listEntry('product', 'today') }}</today>
+    <monday>{% if not product.monday %}0{% else %}1{% endif %}</monday>
+    <tuesday>{% if not product.tuesday %}0{% else %}1{% endif %}</tuesday>
+    <wednesday>{% if not product.wednesday %}0{% else %}1{% endif %}</wednesday>
+    <thursday>{% if not product.thursday %}0{% else %}1{% endif %}</thursday>
+    <friday>{% if not product.friday %}0{% else %}1{% endif %}</friday>
+    <saturday>{% if not product.saturday %}0{% else %}1{% endif %}</saturday>
+    <sunday>{% if not product.sunday %}0{% else %}1{% endif %}</sunday>
+    <priceOfProduct>{{ product.priceOfProduct|localizedcurrency('EUR') }}</priceOfProduct>
+    <workflowState>{{ product.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
+    <location>{% if product.location|default %}{{ product.location|muyourcitymodule_formattedTitle }}{% endif %}</location>
+</product>

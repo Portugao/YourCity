@@ -1,0 +1,16 @@
+{# purpose of this template: specials of location view csv view #}
+{% spaceless %}"{{ __('Name') }}";"{{ __('Description') }}";"{{ __('Icon for special') }}";"{{ __('Workflow state') }}"
+;"{{ __('Locations') }}"
+{% endspaceless %}
+{% for specialOfLocation in items %}
+{% spaceless %}
+    "{{ specialOfLocation.name }}";"{{ specialOfLocation.description|safeHtml }}";"{{ specialOfLocation.iconForSpecial }}";"{{ specialOfLocation.workflowState|muyourcitymodule_objectState(false)|lower }}"
+    ;"
+    {% if specialOfLocation.locations|default %}
+        {% for relatedItem in specialOfLocation.locations %}
+        {{ relatedItem|muyourcitymodule_formattedTitle }}{% if not loop.last %}, {% endif %}
+        {% endfor %}
+    {% endif %}
+    "
+{% endspaceless %}
+{% endfor %}

@@ -1,0 +1,433 @@
+{# purpose of this template: locations list view #}
+{% extends routeArea == 'admin' ? 'MUYourCityModule::adminBase.html.twig' : 'MUYourCityModule::base.html.twig' %}
+{% block title own ? __('My locations') : __('Location list') %}
+{% block admin_page_icon 'list-alt' %}
+{% block content %}
+<div class="muyourcitymodule-location muyourcitymodule-view">
+
+    {{ block('page_nav_links') }}
+
+    {{ include('@MUYourCityModule/Location/viewQuickNav.html.twig') }}{# see template file for available options #}
+
+    {% if routeArea == 'admin' %}
+    <form action="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="locationsViewForm" class="form-horizontal" role="form">
+        <div>
+    {% endif %}
+        <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover table-condensed">
+            <colgroup>
+                {% if routeArea == 'admin' %}
+                    <col id="cSelect" />
+                {% endif %}
+                <col id="cItemActions" />
+                {% if routeArea == 'admin' %}
+                <col id="cWorkflowState" />
+                {% endif %}
+                <col id="cName" />
+                <col id="cLogoOfYourLocation" />
+                <col id="cDescription" />
+                <col id="cDescription2" />
+                <col id="cImageOfLocation" />
+                <col id="cStreet" />
+                <col id="cNumberOfStreet" />
+                <col id="cZipCode" />
+                <col id="cCity" />
+                <col id="cTelefon" />
+                <col id="cMobil" />
+                <col id="cHomepage" />
+                <col id="cOpeningHours" />
+                <col id="cStartOnMonday" />
+                <col id="cEndOnMonday" />
+                <col id="cStart2OnMonday" />
+                <col id="cEnd2OnMonday" />
+                <col id="cStartOnTuesday" />
+                <col id="cEndOnTuesday" />
+                <col id="cStart2OnTuesday" />
+                <col id="cEnd2OnTuesday" />
+                <col id="cStartOnWednesday" />
+                <col id="cEndOnWednesday" />
+                <col id="cStart2OnWednesday" />
+                <col id="cEnd2OnWednesday" />
+                <col id="cStartOnThursday" />
+                <col id="cEndOnThursday" />
+                <col id="cStart2OnThursday" />
+                <col id="cEnd2OnThursday" />
+                <col id="cStartOnFriday" />
+                <col id="cEndOnFriday" />
+                <col id="cStart2OnFriday" />
+                <col id="cEnd2OnFriday" />
+                <col id="cStartOnSaturday" />
+                <col id="cEndOnSaturday" />
+                <col id="cStar2tOnSaturday" />
+                <col id="cEnd2OnSaturday" />
+                <col id="cStartOnSunday" />
+                <col id="cEndOnSunday" />
+                <col id="cStart2OnSunday" />
+                <col id="cEnd2OnSunday" />
+            </colgroup>
+            <thead>
+            <tr>
+                {% if routeArea == 'admin' %}
+                    <th id="hSelect" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}text-center z-w02">
+                        <input type="checkbox" class="muyourcity-mass-toggle" />
+                    </th>
+                {% endif %}
+                <th id="hItemActions" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}z-order-unsorted z-w02">{{ __('Actions') }}</th>
+                {% if routeArea == 'admin' %}
+                <th id="hWorkflowState" scope="col" class="text-left">
+                    <a href="{{ sort.workflowState.url }}" title="{{ __f('Sort by %s', {'%s': 'state'}) }}" class="{{ sort.workflowState.class }}">{{ __('State') }}</a>
+                </th>
+                {% endif %}
+                <th id="hName" scope="col" class="text-left">
+                    <a href="{{ sort.name.url }}" title="{{ __f('Sort by %s', {'%s': 'name'}) }}" class="{{ sort.name.class }}">{{ __('Name') }}</a>
+                </th>
+                <th id="hLogoOfYourLocation" scope="col" class="text-left">
+                    <a href="{{ sort.logoOfYourLocation.url }}" title="{{ __f('Sort by %s', {'%s': 'logo of your location'}) }}" class="{{ sort.logoOfYourLocation.class }}">{{ __('Logo of your location') }}</a>
+                </th>
+                <th id="hDescription" scope="col" class="text-left">
+                    <a href="{{ sort.description.url }}" title="{{ __f('Sort by %s', {'%s': 'description'}) }}" class="{{ sort.description.class }}">{{ __('Description') }}</a>
+                </th>
+                <th id="hDescription2" scope="col" class="text-left">
+                    <a href="{{ sort.description2.url }}" title="{{ __f('Sort by %s', {'%s': 'description 2'}) }}" class="{{ sort.description2.class }}">{{ __('Description 2') }}</a>
+                </th>
+                <th id="hImageOfLocation" scope="col" class="text-left">
+                    <a href="{{ sort.imageOfLocation.url }}" title="{{ __f('Sort by %s', {'%s': 'image of location'}) }}" class="{{ sort.imageOfLocation.class }}">{{ __('Image of location') }}</a>
+                </th>
+                <th id="hStreet" scope="col" class="text-left">
+                    <a href="{{ sort.street.url }}" title="{{ __f('Sort by %s', {'%s': 'street'}) }}" class="{{ sort.street.class }}">{{ __('Street') }}</a>
+                </th>
+                <th id="hNumberOfStreet" scope="col" class="text-left">
+                    <a href="{{ sort.numberOfStreet.url }}" title="{{ __f('Sort by %s', {'%s': 'number of street'}) }}" class="{{ sort.numberOfStreet.class }}">{{ __('Number of street') }}</a>
+                </th>
+                <th id="hZipCode" scope="col" class="text-left">
+                    <a href="{{ sort.zipCode.url }}" title="{{ __f('Sort by %s', {'%s': 'zip code'}) }}" class="{{ sort.zipCode.class }}">{{ __('Zip code') }}</a>
+                </th>
+                <th id="hCity" scope="col" class="text-left">
+                    <a href="{{ sort.city.url }}" title="{{ __f('Sort by %s', {'%s': 'city'}) }}" class="{{ sort.city.class }}">{{ __('City') }}</a>
+                </th>
+                <th id="hTelefon" scope="col" class="text-left">
+                    <a href="{{ sort.telefon.url }}" title="{{ __f('Sort by %s', {'%s': 'telefon'}) }}" class="{{ sort.telefon.class }}">{{ __('Telefon') }}</a>
+                </th>
+                <th id="hMobil" scope="col" class="text-left">
+                    <a href="{{ sort.mobil.url }}" title="{{ __f('Sort by %s', {'%s': 'mobil'}) }}" class="{{ sort.mobil.class }}">{{ __('Mobil') }}</a>
+                </th>
+                <th id="hHomepage" scope="col" class="text-center">
+                    <a href="{{ sort.homepage.url }}" title="{{ __f('Sort by %s', {'%s': 'homepage'}) }}" class="{{ sort.homepage.class }}">{{ __('Homepage') }}</a>
+                </th>
+                <th id="hOpeningHours" scope="col" class="text-left">
+                    <a href="{{ sort.openingHours.url }}" title="{{ __f('Sort by %s', {'%s': 'opening hours'}) }}" class="{{ sort.openingHours.class }}">{{ __('Opening hours') }}</a>
+                </th>
+                <th id="hStartOnMonday" scope="col" class="text-left">
+                    <a href="{{ sort.startOnMonday.url }}" title="{{ __f('Sort by %s', {'%s': 'start on monday'}) }}" class="{{ sort.startOnMonday.class }}">{{ __('Start on monday') }}</a>
+                </th>
+                <th id="hEndOnMonday" scope="col" class="text-left">
+                    <a href="{{ sort.endOnMonday.url }}" title="{{ __f('Sort by %s', {'%s': 'end on monday'}) }}" class="{{ sort.endOnMonday.class }}">{{ __('End on monday') }}</a>
+                </th>
+                <th id="hStart2OnMonday" scope="col" class="text-left">
+                    <a href="{{ sort.start2OnMonday.url }}" title="{{ __f('Sort by %s', {'%s': 'start 2 on monday'}) }}" class="{{ sort.start2OnMonday.class }}">{{ __('Start 2 on monday') }}</a>
+                </th>
+                <th id="hEnd2OnMonday" scope="col" class="text-left">
+                    <a href="{{ sort.end2OnMonday.url }}" title="{{ __f('Sort by %s', {'%s': 'end 2 on monday'}) }}" class="{{ sort.end2OnMonday.class }}">{{ __('End 2 on monday') }}</a>
+                </th>
+                <th id="hStartOnTuesday" scope="col" class="text-left">
+                    <a href="{{ sort.startOnTuesday.url }}" title="{{ __f('Sort by %s', {'%s': 'start on tuesday'}) }}" class="{{ sort.startOnTuesday.class }}">{{ __('Start on tuesday') }}</a>
+                </th>
+                <th id="hEndOnTuesday" scope="col" class="text-left">
+                    <a href="{{ sort.endOnTuesday.url }}" title="{{ __f('Sort by %s', {'%s': 'end on tuesday'}) }}" class="{{ sort.endOnTuesday.class }}">{{ __('End on tuesday') }}</a>
+                </th>
+                <th id="hStart2OnTuesday" scope="col" class="text-left">
+                    <a href="{{ sort.start2OnTuesday.url }}" title="{{ __f('Sort by %s', {'%s': 'start 2 on tuesday'}) }}" class="{{ sort.start2OnTuesday.class }}">{{ __('Start 2 on tuesday') }}</a>
+                </th>
+                <th id="hEnd2OnTuesday" scope="col" class="text-left">
+                    <a href="{{ sort.end2OnTuesday.url }}" title="{{ __f('Sort by %s', {'%s': 'end 2 on tuesday'}) }}" class="{{ sort.end2OnTuesday.class }}">{{ __('End 2 on tuesday') }}</a>
+                </th>
+                <th id="hStartOnWednesday" scope="col" class="text-left">
+                    <a href="{{ sort.startOnWednesday.url }}" title="{{ __f('Sort by %s', {'%s': 'start on wednesday'}) }}" class="{{ sort.startOnWednesday.class }}">{{ __('Start on wednesday') }}</a>
+                </th>
+                <th id="hEndOnWednesday" scope="col" class="text-left">
+                    <a href="{{ sort.endOnWednesday.url }}" title="{{ __f('Sort by %s', {'%s': 'end on wednesday'}) }}" class="{{ sort.endOnWednesday.class }}">{{ __('End on wednesday') }}</a>
+                </th>
+                <th id="hStart2OnWednesday" scope="col" class="text-left">
+                    <a href="{{ sort.start2OnWednesday.url }}" title="{{ __f('Sort by %s', {'%s': 'start 2 on wednesday'}) }}" class="{{ sort.start2OnWednesday.class }}">{{ __('Start 2 on wednesday') }}</a>
+                </th>
+                <th id="hEnd2OnWednesday" scope="col" class="text-left">
+                    <a href="{{ sort.end2OnWednesday.url }}" title="{{ __f('Sort by %s', {'%s': 'end 2 on wednesday'}) }}" class="{{ sort.end2OnWednesday.class }}">{{ __('End 2 on wednesday') }}</a>
+                </th>
+                <th id="hStartOnThursday" scope="col" class="text-left">
+                    <a href="{{ sort.startOnThursday.url }}" title="{{ __f('Sort by %s', {'%s': 'start on thursday'}) }}" class="{{ sort.startOnThursday.class }}">{{ __('Start on thursday') }}</a>
+                </th>
+                <th id="hEndOnThursday" scope="col" class="text-left">
+                    <a href="{{ sort.endOnThursday.url }}" title="{{ __f('Sort by %s', {'%s': 'end on thursday'}) }}" class="{{ sort.endOnThursday.class }}">{{ __('End on thursday') }}</a>
+                </th>
+                <th id="hStart2OnThursday" scope="col" class="text-left">
+                    <a href="{{ sort.start2OnThursday.url }}" title="{{ __f('Sort by %s', {'%s': 'start 2 on thursday'}) }}" class="{{ sort.start2OnThursday.class }}">{{ __('Start 2 on thursday') }}</a>
+                </th>
+                <th id="hEnd2OnThursday" scope="col" class="text-left">
+                    <a href="{{ sort.end2OnThursday.url }}" title="{{ __f('Sort by %s', {'%s': 'end 2 on thursday'}) }}" class="{{ sort.end2OnThursday.class }}">{{ __('End 2 on thursday') }}</a>
+                </th>
+                <th id="hStartOnFriday" scope="col" class="text-left">
+                    <a href="{{ sort.startOnFriday.url }}" title="{{ __f('Sort by %s', {'%s': 'start on friday'}) }}" class="{{ sort.startOnFriday.class }}">{{ __('Start on friday') }}</a>
+                </th>
+                <th id="hEndOnFriday" scope="col" class="text-left">
+                    <a href="{{ sort.endOnFriday.url }}" title="{{ __f('Sort by %s', {'%s': 'end on friday'}) }}" class="{{ sort.endOnFriday.class }}">{{ __('End on friday') }}</a>
+                </th>
+                <th id="hStart2OnFriday" scope="col" class="text-left">
+                    <a href="{{ sort.start2OnFriday.url }}" title="{{ __f('Sort by %s', {'%s': 'start 2 on friday'}) }}" class="{{ sort.start2OnFriday.class }}">{{ __('Start 2 on friday') }}</a>
+                </th>
+                <th id="hEnd2OnFriday" scope="col" class="text-left">
+                    <a href="{{ sort.end2OnFriday.url }}" title="{{ __f('Sort by %s', {'%s': 'end 2 on friday'}) }}" class="{{ sort.end2OnFriday.class }}">{{ __('End 2 on friday') }}</a>
+                </th>
+                <th id="hStartOnSaturday" scope="col" class="text-left">
+                    <a href="{{ sort.startOnSaturday.url }}" title="{{ __f('Sort by %s', {'%s': 'start on saturday'}) }}" class="{{ sort.startOnSaturday.class }}">{{ __('Start on saturday') }}</a>
+                </th>
+                <th id="hEndOnSaturday" scope="col" class="text-left">
+                    <a href="{{ sort.endOnSaturday.url }}" title="{{ __f('Sort by %s', {'%s': 'end on saturday'}) }}" class="{{ sort.endOnSaturday.class }}">{{ __('End on saturday') }}</a>
+                </th>
+                <th id="hStar2tOnSaturday" scope="col" class="text-left">
+                    <a href="{{ sort.star2tOnSaturday.url }}" title="{{ __f('Sort by %s', {'%s': 'star 2t on saturday'}) }}" class="{{ sort.star2tOnSaturday.class }}">{{ __('Star 2t on saturday') }}</a>
+                </th>
+                <th id="hEnd2OnSaturday" scope="col" class="text-left">
+                    <a href="{{ sort.end2OnSaturday.url }}" title="{{ __f('Sort by %s', {'%s': 'end 2 on saturday'}) }}" class="{{ sort.end2OnSaturday.class }}">{{ __('End 2 on saturday') }}</a>
+                </th>
+                <th id="hStartOnSunday" scope="col" class="text-left">
+                    <a href="{{ sort.startOnSunday.url }}" title="{{ __f('Sort by %s', {'%s': 'start on sunday'}) }}" class="{{ sort.startOnSunday.class }}">{{ __('Start on sunday') }}</a>
+                </th>
+                <th id="hEndOnSunday" scope="col" class="text-left">
+                    <a href="{{ sort.endOnSunday.url }}" title="{{ __f('Sort by %s', {'%s': 'end on sunday'}) }}" class="{{ sort.endOnSunday.class }}">{{ __('End on sunday') }}</a>
+                </th>
+                <th id="hStart2OnSunday" scope="col" class="text-left">
+                    <a href="{{ sort.start2OnSunday.url }}" title="{{ __f('Sort by %s', {'%s': 'start 2 on sunday'}) }}" class="{{ sort.start2OnSunday.class }}">{{ __('Start 2 on sunday') }}</a>
+                </th>
+                <th id="hEnd2OnSunday" scope="col" class="text-left">
+                    <a href="{{ sort.end2OnSunday.url }}" title="{{ __f('Sort by %s', {'%s': 'end 2 on sunday'}) }}" class="{{ sort.end2OnSunday.class }}">{{ __('End 2 on sunday') }}</a>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+        
+        {% for location in items %}
+            <tr>
+                {% if routeArea == 'admin' %}
+                    <td headers="hSelect" class="fixed-column text-center z-w02">
+                        <input type="checkbox" name="items[]" value="{{ location.id }}" class="muyourcity-toggle-checkbox" />
+                    </td>
+                {% endif %}
+                <td id="itemActions{{ location.id }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
+                    {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: location, area: routeArea, context: 'view' }) %}
+                    <div class="dropdown">
+                        <a id="itemActions{{ location.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
+                        {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
+                    </div>
+                </td>
+                {% if routeArea == 'admin' %}<td headers="hWorkflowState" class="text-left nowrap">
+                    {{ location.workflowState|muyourcitymodule_objectState }}
+                </td>
+                {% endif %}<td headers="hName" class="text-left">
+                    <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': location.id, 'slug': location.slug }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ location.name|notifyFilters('muyourcitymodule.filterhook.locations') }}</a>
+                </td>
+                <td headers="hLogoOfYourLocation" class="text-left">
+                    {% if location.logoOfYourLocation is not empty and location.logoOfYourLocationMeta|default %}
+                                <a href="{{ location.logoOfYourLocationUrl }}" title="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if location.logoOfYourLocationMeta.isImage %} class="image-link"{% endif %}>
+                    {% if location.logoOfYourLocationMeta.isImage %}
+                        {% set thumbOptions = attribute(thumbRuntimeOptions, 'locationLogoOfYourLocation') %}
+                        <img src="{{ location.logoOfYourLocation.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+                    {% else %}
+                        {{ __('Download') }} ({{ location.logoOfYourLocationMeta.size|muyourcitymodule_fileSize(location.logoOfYourLocation.getPathname(), false, false) }})
+                    {% endif %}
+                    </a>
+                    {% else %}&nbsp;{% endif %}
+                </td>
+                <td headers="hDescription" class="text-left">
+                    {{ location.description|safeHtml|truncate(50) }}
+                </td>
+                <td headers="hDescription2" class="text-left">
+                    {{ location.description2|safeHtml|truncate(50) }}
+                </td>
+                <td headers="hImageOfLocation" class="text-left">
+                    {% if location.imageOfLocation is not empty and location.imageOfLocationMeta|default %}
+                                <a href="{{ location.imageOfLocationUrl }}" title="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if location.imageOfLocationMeta.isImage %} class="image-link"{% endif %}>
+                    {% if location.imageOfLocationMeta.isImage %}
+                        {% set thumbOptions = attribute(thumbRuntimeOptions, 'locationImageOfLocation') %}
+                        <img src="{{ location.imageOfLocation.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+                    {% else %}
+                        {{ __('Download') }} ({{ location.imageOfLocationMeta.size|muyourcitymodule_fileSize(location.imageOfLocation.getPathname(), false, false) }})
+                    {% endif %}
+                    </a>
+                    {% else %}&nbsp;{% endif %}
+                </td>
+                <td headers="hStreet" class="text-left">
+                    {{ location.street }}
+                </td>
+                <td headers="hNumberOfStreet" class="text-left">
+                    {{ location.numberOfStreet }}
+                </td>
+                <td headers="hZipCode" class="text-left">
+                    {{ location.zipCode }}
+                </td>
+                <td headers="hCity" class="text-left">
+                    {{ location.city }}
+                </td>
+                <td headers="hTelefon" class="text-left">
+                    {{ location.telefon }}
+                </td>
+                <td headers="hMobil" class="text-left">
+                    {{ location.mobil }}
+                </td>
+                <td headers="hHomepage" class="text-center">
+                    {% if location.homepage is not empty %}
+                    <a href="{{ location.homepage }}" title="{{ __('Visit this page') }}" class="fa fa-external-link-square"></a>
+                    {% else %}&nbsp;{% endif %}
+                </td>
+                <td headers="hOpeningHours" class="text-left">
+                    {{ location.openingHours|safeHtml|truncate(50) }}
+                </td>
+                <td headers="hStartOnMonday" class="text-left">
+                    {{ location.startOnMonday|localizeddate('none', 'short') }}
+                </td>
+                <td headers="hEndOnMonday" class="text-left">
+                    {{ location.endOnMonday|localizeddate('none', 'short') }}
+                </td>
+                <td headers="hStart2OnMonday" class="text-left">
+                    {{ location.start2OnMonday|localizeddate('none', 'short') }}
+                </td>
+                <td headers="hEnd2OnMonday" class="text-left">
+                    {{ location.end2OnMonday|localizeddate('none', 'short') }}
+                </td>
+                <td headers="hStartOnTuesday" class="text-left">
+                    {{ location.startOnTuesday|localizeddate('none', 'short') }}
+                </td>
+                <td headers="hEndOnTuesday" class="text-left">
+                    {{ location.endOnTuesday|localizeddate('none', 'short') }}
+                </td>
+                <td headers="hStart2OnTuesday" class="text-left">
+                    {{ location.start2OnTuesday|localizeddate('none', 'short') }}
+                </td>
+                <td headers="hEnd2OnTuesday" class="text-left">
+                    {{ location.end2OnTuesday|localizeddate('none', 'short') }}
+                </td>
+                <td headers="hStartOnWednesday" class="text-left">
+                    {{ location.startOnWednesday|localizeddate('none', 'short') }}
+                </td>
+                <td headers="hEndOnWednesday" class="text-left">
+                    {{ location.endOnWednesday|localizeddate('none', 'short') }}
+                </td>
+                <td headers="hStart2OnWednesday" class="text-left">
+                    {{ location.start2OnWednesday|localizeddate('none', 'short') }}
+                </td>
+                <td headers="hEnd2OnWednesday" class="text-left">
+                    {{ location.end2OnWednesday|localizeddate('none', 'short') }}
+                </td>
+                <td headers="hStartOnThursday" class="text-left">
+                    {{ location.startOnThursday|localizeddate('none', 'short') }}
+                </td>
+                <td headers="hEndOnThursday" class="text-left">
+                    {{ location.endOnThursday|localizeddate('none', 'short') }}
+                </td>
+                <td headers="hStart2OnThursday" class="text-left">
+                    {{ location.start2OnThursday|localizeddate('none', 'short') }}
+                </td>
+                <td headers="hEnd2OnThursday" class="text-left">
+                    {{ location.end2OnThursday|localizeddate('none', 'short') }}
+                </td>
+                <td headers="hStartOnFriday" class="text-left">
+                    {{ location.startOnFriday|localizeddate('none', 'short') }}
+                </td>
+                <td headers="hEndOnFriday" class="text-left">
+                    {{ location.endOnFriday|localizeddate('none', 'short') }}
+                </td>
+                <td headers="hStart2OnFriday" class="text-left">
+                    {{ location.start2OnFriday|localizeddate('none', 'short') }}
+                </td>
+                <td headers="hEnd2OnFriday" class="text-left">
+                    {{ location.end2OnFriday|localizeddate('none', 'short') }}
+                </td>
+                <td headers="hStartOnSaturday" class="text-left">
+                    {{ location.startOnSaturday|localizeddate('none', 'short') }}
+                </td>
+                <td headers="hEndOnSaturday" class="text-left">
+                    {{ location.endOnSaturday|localizeddate('none', 'short') }}
+                </td>
+                <td headers="hStar2tOnSaturday" class="text-left">
+                    {{ location.star2tOnSaturday|localizeddate('none', 'short') }}
+                </td>
+                <td headers="hEnd2OnSaturday" class="text-left">
+                    {{ location.end2OnSaturday|localizeddate('none', 'short') }}
+                </td>
+                <td headers="hStartOnSunday" class="text-left">
+                    {{ location.startOnSunday|localizeddate('none', 'short') }}
+                </td>
+                <td headers="hEndOnSunday" class="text-left">
+                    {{ location.endOnSunday|localizeddate('none', 'short') }}
+                </td>
+                <td headers="hStart2OnSunday" class="text-left">
+                    {{ location.start2OnSunday|localizeddate('none', 'short') }}
+                </td>
+                <td headers="hEnd2OnSunday" class="text-left">
+                    {{ location.end2OnSunday|localizeddate('none', 'short') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
+                <td class="text-left" colspan="{% if routeArea == 'admin' %}44{% else %}43{% endif %}">
+            {{ __('No locations found.') }}
+              </td>
+            </tr>
+        {% endfor %}
+        
+            </tbody>
+        </table>
+        </div>
+        
+        {% if all != 1 and pager|default %}
+            {{ pager({ rowcount: pager.amountOfItems, limit: pager.itemsPerPage, display: 'page', route: 'muyourcitymodule_location_' ~ routeArea ~ 'view'}) }}
+        {% endif %}
+    {% if routeArea == 'admin' %}
+            <fieldset>
+                <label for="mUYourCityModuleAction" class="col-sm-3 control-label">{{ __('With selected locations') }}</label>
+                <div class="col-sm-6">
+                    <select id="mUYourCityModuleAction" name="action" class="form-control input-sm">
+                        <option value="">{{ __('Choose action') }}</option>
+                        <option value="approve" title="{{ __('Update content and approve for immediate publishing.') }}">{{ __('Approve') }}</option>
+                        <option value="unpublish" title="{{ __('Hide content temporarily.') }}">{{ __('Unpublish') }}</option>
+                        <option value="publish" title="{{ __('Make content available again.') }}">{{ __('Publish') }}</option>
+                        <option value="delete" title="{{ __('Delete content permanently.') }}">{{ __('Delete') }}</option>
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <input type="submit" value="{{ __('Submit') }}" class="btn btn-default btn-sm" />
+                </div>
+            </fieldset>
+        </div>
+    </form>
+    {% endif %}
+
+    {{ block('display_hooks') }}
+</div>
+{% endblock %}
+{% block page_nav_links %}
+    <p>
+        {% if canBeCreated %}
+            {% if hasPermission('MUYourCityModule:Location:', '::', 'ACCESS_COMMENT') %}
+                {% set createTitle = __('Create location') %}
+                <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
+            {% endif %}
+        {% endif %}
+        {% if all == 1 %}
+            {% set linkTitle = __('Back to paginated view') %}
+            <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'view') }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
+        {% else %}
+            {% set linkTitle = __('Show all entries') %}
+            <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'view', { all: 1 }) }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
+        {% endif %}
+    </p>
+{% endblock %}
+{% block display_hooks %}
+    
+    {# here you can activate calling display hooks for the view page if you need it #}
+    {# % if routeArea != 'admin' %}
+        {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.locations.display_view', urlObject=currentUrlObject) %}
+        {% for providerArea, hook in hooks %}
+            {{ hook }}
+        {% endfor %}
+    {% endif % #}
+{% endblock %}

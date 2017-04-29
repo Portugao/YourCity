@@ -1,0 +1,817 @@
+services:
+    # Form types
+    
+    mu_yourcity_module.form.type.branchquicknav:
+        class: MU\YourCityModule\Form\Type\QuickNavigation\BranchQuickNavType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.listentries_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.locationquicknav:
+        class: MU\YourCityModule\Form\Type\QuickNavigation\LocationQuickNavType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.listentries_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.partquicknav:
+        class: MU\YourCityModule\Form\Type\QuickNavigation\PartQuickNavType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.listentries_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.imageoflocationquicknav:
+        class: MU\YourCityModule\Form\Type\QuickNavigation\ImageOfLocationQuickNavType
+        arguments:
+            - "@translator.default"
+            - "@request_stack"
+            - "@mu_yourcity_module.entity_display_helper"
+            - "@mu_yourcity_module.listentries_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.fileoflocationquicknav:
+        class: MU\YourCityModule\Form\Type\QuickNavigation\FileOfLocationQuickNavType
+        arguments:
+            - "@translator.default"
+            - "@request_stack"
+            - "@mu_yourcity_module.entity_display_helper"
+            - "@mu_yourcity_module.listentries_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.offerquicknav:
+        class: MU\YourCityModule\Form\Type\QuickNavigation\OfferQuickNavType
+        arguments:
+            - "@translator.default"
+            - "@request_stack"
+            - "@mu_yourcity_module.entity_display_helper"
+            - "@mu_yourcity_module.listentries_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.menuoflocationquicknav:
+        class: MU\YourCityModule\Form\Type\QuickNavigation\MenuOfLocationQuickNavType
+        arguments:
+            - "@translator.default"
+            - "@request_stack"
+            - "@mu_yourcity_module.entity_display_helper"
+            - "@mu_yourcity_module.listentries_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.partofmenuquicknav:
+        class: MU\YourCityModule\Form\Type\QuickNavigation\PartOfMenuQuickNavType
+        arguments:
+            - "@translator.default"
+            - "@request_stack"
+            - "@mu_yourcity_module.entity_display_helper"
+            - "@mu_yourcity_module.listentries_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.dishquicknav:
+        class: MU\YourCityModule\Form\Type\QuickNavigation\DishQuickNavType
+        arguments:
+            - "@translator.default"
+            - "@request_stack"
+            - "@mu_yourcity_module.entity_display_helper"
+            - "@mu_yourcity_module.listentries_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.eventquicknav:
+        class: MU\YourCityModule\Form\Type\QuickNavigation\EventQuickNavType
+        arguments:
+            - "@translator.default"
+            - "@request_stack"
+            - "@mu_yourcity_module.entity_display_helper"
+            - "@mu_yourcity_module.listentries_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.productquicknav:
+        class: MU\YourCityModule\Form\Type\QuickNavigation\ProductQuickNavType
+        arguments:
+            - "@translator.default"
+            - "@request_stack"
+            - "@mu_yourcity_module.entity_display_helper"
+            - "@mu_yourcity_module.listentries_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.specialoflocationquicknav:
+        class: MU\YourCityModule\Form\Type\QuickNavigation\SpecialOfLocationQuickNavType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.listentries_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.serviceoflocationquicknav:
+        class: MU\YourCityModule\Form\Type\QuickNavigation\ServiceofLocationQuickNavType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.listentries_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.abonnementquicknav:
+        class: MU\YourCityModule\Form\Type\QuickNavigation\AbonnementQuickNavType
+        arguments:
+            - "@translator.default"
+            - "@request_stack"
+            - "@mu_yourcity_module.entity_display_helper"
+            - "@mu_yourcity_module.listentries_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.handler.branch:
+        class: MU\YourCityModule\Form\Handler\Branch\EditHandler
+        arguments:
+            - "@kernel"
+            - "@translator.default"
+            - "@form.factory"
+            - "@request_stack"
+            - "@router"
+            - "@logger"
+            - "@zikula_permissions_module.api.permission"
+            - "@zikula_extensions_module.api.variable"
+            - "@zikula_users_module.current_user"
+            - "@zikula_groups_module.group_application_repository"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.controller_helper"
+            - "@mu_yourcity_module.model_helper"
+            - "@mu_yourcity_module.workflow_helper"
+            - "@mu_yourcity_module.hook_helper"
+            - "@mu_yourcity_module.translatable_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        calls:
+            - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.branch:
+        class: MU\YourCityModule\Form\Type\BranchType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.collection_filter_helper"
+            - "@mu_yourcity_module.entity_display_helper"
+            - "@zikula_extensions_module.api.variable"
+            - "@mu_yourcity_module.translatable_helper"
+            - "@mu_yourcity_module.listentries_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.handler.location:
+        class: MU\YourCityModule\Form\Handler\Location\EditHandler
+        arguments:
+            - "@kernel"
+            - "@translator.default"
+            - "@form.factory"
+            - "@request_stack"
+            - "@router"
+            - "@logger"
+            - "@zikula_permissions_module.api.permission"
+            - "@zikula_extensions_module.api.variable"
+            - "@zikula_users_module.current_user"
+            - "@zikula_groups_module.group_application_repository"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.controller_helper"
+            - "@mu_yourcity_module.model_helper"
+            - "@mu_yourcity_module.workflow_helper"
+            - "@mu_yourcity_module.hook_helper"
+            - "@mu_yourcity_module.translatable_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        calls:
+            - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.location:
+        class: MU\YourCityModule\Form\Type\LocationType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.collection_filter_helper"
+            - "@mu_yourcity_module.entity_display_helper"
+            - "@zikula_extensions_module.api.variable"
+            - "@mu_yourcity_module.translatable_helper"
+            - "@mu_yourcity_module.listentries_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.handler.part:
+        class: MU\YourCityModule\Form\Handler\Part\EditHandler
+        arguments:
+            - "@kernel"
+            - "@translator.default"
+            - "@form.factory"
+            - "@request_stack"
+            - "@router"
+            - "@logger"
+            - "@zikula_permissions_module.api.permission"
+            - "@zikula_extensions_module.api.variable"
+            - "@zikula_users_module.current_user"
+            - "@zikula_groups_module.group_application_repository"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.controller_helper"
+            - "@mu_yourcity_module.model_helper"
+            - "@mu_yourcity_module.workflow_helper"
+            - "@mu_yourcity_module.hook_helper"
+            - "@mu_yourcity_module.translatable_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        calls:
+            - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.part:
+        class: MU\YourCityModule\Form\Type\PartType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.collection_filter_helper"
+            - "@mu_yourcity_module.entity_display_helper"
+            - "@zikula_extensions_module.api.variable"
+            - "@mu_yourcity_module.translatable_helper"
+            - "@mu_yourcity_module.listentries_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.handler.imageoflocation:
+        class: MU\YourCityModule\Form\Handler\ImageOfLocation\EditHandler
+        arguments:
+            - "@kernel"
+            - "@translator.default"
+            - "@form.factory"
+            - "@request_stack"
+            - "@router"
+            - "@logger"
+            - "@zikula_permissions_module.api.permission"
+            - "@zikula_extensions_module.api.variable"
+            - "@zikula_users_module.current_user"
+            - "@zikula_groups_module.group_application_repository"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.controller_helper"
+            - "@mu_yourcity_module.model_helper"
+            - "@mu_yourcity_module.workflow_helper"
+            - "@mu_yourcity_module.hook_helper"
+            - "@mu_yourcity_module.translatable_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        calls:
+            - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.imageoflocation:
+        class: MU\YourCityModule\Form\Type\ImageOfLocationType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.collection_filter_helper"
+            - "@mu_yourcity_module.entity_display_helper"
+            - "@zikula_extensions_module.api.variable"
+            - "@mu_yourcity_module.translatable_helper"
+            - "@mu_yourcity_module.listentries_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.handler.fileoflocation:
+        class: MU\YourCityModule\Form\Handler\FileOfLocation\EditHandler
+        arguments:
+            - "@kernel"
+            - "@translator.default"
+            - "@form.factory"
+            - "@request_stack"
+            - "@router"
+            - "@logger"
+            - "@zikula_permissions_module.api.permission"
+            - "@zikula_extensions_module.api.variable"
+            - "@zikula_users_module.current_user"
+            - "@zikula_groups_module.group_application_repository"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.controller_helper"
+            - "@mu_yourcity_module.model_helper"
+            - "@mu_yourcity_module.workflow_helper"
+            - "@mu_yourcity_module.hook_helper"
+            - "@mu_yourcity_module.translatable_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        calls:
+            - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.fileoflocation:
+        class: MU\YourCityModule\Form\Type\FileOfLocationType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.collection_filter_helper"
+            - "@mu_yourcity_module.entity_display_helper"
+            - "@zikula_extensions_module.api.variable"
+            - "@mu_yourcity_module.translatable_helper"
+            - "@mu_yourcity_module.listentries_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.handler.offer:
+        class: MU\YourCityModule\Form\Handler\Offer\EditHandler
+        arguments:
+            - "@kernel"
+            - "@translator.default"
+            - "@form.factory"
+            - "@request_stack"
+            - "@router"
+            - "@logger"
+            - "@zikula_permissions_module.api.permission"
+            - "@zikula_extensions_module.api.variable"
+            - "@zikula_users_module.current_user"
+            - "@zikula_groups_module.group_application_repository"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.controller_helper"
+            - "@mu_yourcity_module.model_helper"
+            - "@mu_yourcity_module.workflow_helper"
+            - "@mu_yourcity_module.hook_helper"
+            - "@mu_yourcity_module.translatable_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        calls:
+            - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.offer:
+        class: MU\YourCityModule\Form\Type\OfferType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.collection_filter_helper"
+            - "@mu_yourcity_module.entity_display_helper"
+            - "@zikula_extensions_module.api.variable"
+            - "@mu_yourcity_module.translatable_helper"
+            - "@mu_yourcity_module.listentries_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.handler.menuoflocation:
+        class: MU\YourCityModule\Form\Handler\MenuOfLocation\EditHandler
+        arguments:
+            - "@kernel"
+            - "@translator.default"
+            - "@form.factory"
+            - "@request_stack"
+            - "@router"
+            - "@logger"
+            - "@zikula_permissions_module.api.permission"
+            - "@zikula_extensions_module.api.variable"
+            - "@zikula_users_module.current_user"
+            - "@zikula_groups_module.group_application_repository"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.controller_helper"
+            - "@mu_yourcity_module.model_helper"
+            - "@mu_yourcity_module.workflow_helper"
+            - "@mu_yourcity_module.hook_helper"
+            - "@mu_yourcity_module.translatable_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        calls:
+            - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.menuoflocation:
+        class: MU\YourCityModule\Form\Type\MenuOfLocationType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.collection_filter_helper"
+            - "@mu_yourcity_module.entity_display_helper"
+            - "@zikula_extensions_module.api.variable"
+            - "@mu_yourcity_module.translatable_helper"
+            - "@mu_yourcity_module.listentries_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.handler.partofmenu:
+        class: MU\YourCityModule\Form\Handler\PartOfMenu\EditHandler
+        arguments:
+            - "@kernel"
+            - "@translator.default"
+            - "@form.factory"
+            - "@request_stack"
+            - "@router"
+            - "@logger"
+            - "@zikula_permissions_module.api.permission"
+            - "@zikula_extensions_module.api.variable"
+            - "@zikula_users_module.current_user"
+            - "@zikula_groups_module.group_application_repository"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.controller_helper"
+            - "@mu_yourcity_module.model_helper"
+            - "@mu_yourcity_module.workflow_helper"
+            - "@mu_yourcity_module.hook_helper"
+            - "@mu_yourcity_module.translatable_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        calls:
+            - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.partofmenu:
+        class: MU\YourCityModule\Form\Type\PartOfMenuType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.collection_filter_helper"
+            - "@mu_yourcity_module.entity_display_helper"
+            - "@zikula_extensions_module.api.variable"
+            - "@mu_yourcity_module.translatable_helper"
+            - "@mu_yourcity_module.listentries_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.handler.dish:
+        class: MU\YourCityModule\Form\Handler\Dish\EditHandler
+        arguments:
+            - "@kernel"
+            - "@translator.default"
+            - "@form.factory"
+            - "@request_stack"
+            - "@router"
+            - "@logger"
+            - "@zikula_permissions_module.api.permission"
+            - "@zikula_extensions_module.api.variable"
+            - "@zikula_users_module.current_user"
+            - "@zikula_groups_module.group_application_repository"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.controller_helper"
+            - "@mu_yourcity_module.model_helper"
+            - "@mu_yourcity_module.workflow_helper"
+            - "@mu_yourcity_module.hook_helper"
+            - "@mu_yourcity_module.translatable_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        calls:
+            - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.dish:
+        class: MU\YourCityModule\Form\Type\DishType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.collection_filter_helper"
+            - "@mu_yourcity_module.entity_display_helper"
+            - "@zikula_extensions_module.api.variable"
+            - "@mu_yourcity_module.translatable_helper"
+            - "@mu_yourcity_module.listentries_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.handler.event:
+        class: MU\YourCityModule\Form\Handler\Event\EditHandler
+        arguments:
+            - "@kernel"
+            - "@translator.default"
+            - "@form.factory"
+            - "@request_stack"
+            - "@router"
+            - "@logger"
+            - "@zikula_permissions_module.api.permission"
+            - "@zikula_extensions_module.api.variable"
+            - "@zikula_users_module.current_user"
+            - "@zikula_groups_module.group_application_repository"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.controller_helper"
+            - "@mu_yourcity_module.model_helper"
+            - "@mu_yourcity_module.workflow_helper"
+            - "@mu_yourcity_module.hook_helper"
+            - "@mu_yourcity_module.translatable_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        calls:
+            - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.event:
+        class: MU\YourCityModule\Form\Type\EventType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.collection_filter_helper"
+            - "@mu_yourcity_module.entity_display_helper"
+            - "@zikula_extensions_module.api.variable"
+            - "@mu_yourcity_module.translatable_helper"
+            - "@mu_yourcity_module.listentries_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.handler.product:
+        class: MU\YourCityModule\Form\Handler\Product\EditHandler
+        arguments:
+            - "@kernel"
+            - "@translator.default"
+            - "@form.factory"
+            - "@request_stack"
+            - "@router"
+            - "@logger"
+            - "@zikula_permissions_module.api.permission"
+            - "@zikula_extensions_module.api.variable"
+            - "@zikula_users_module.current_user"
+            - "@zikula_groups_module.group_application_repository"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.controller_helper"
+            - "@mu_yourcity_module.model_helper"
+            - "@mu_yourcity_module.workflow_helper"
+            - "@mu_yourcity_module.hook_helper"
+            - "@mu_yourcity_module.translatable_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        calls:
+            - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.product:
+        class: MU\YourCityModule\Form\Type\ProductType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.collection_filter_helper"
+            - "@mu_yourcity_module.entity_display_helper"
+            - "@zikula_extensions_module.api.variable"
+            - "@mu_yourcity_module.translatable_helper"
+            - "@mu_yourcity_module.listentries_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.handler.specialoflocation:
+        class: MU\YourCityModule\Form\Handler\SpecialOfLocation\EditHandler
+        arguments:
+            - "@kernel"
+            - "@translator.default"
+            - "@form.factory"
+            - "@request_stack"
+            - "@router"
+            - "@logger"
+            - "@zikula_permissions_module.api.permission"
+            - "@zikula_extensions_module.api.variable"
+            - "@zikula_users_module.current_user"
+            - "@zikula_groups_module.group_application_repository"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.controller_helper"
+            - "@mu_yourcity_module.model_helper"
+            - "@mu_yourcity_module.workflow_helper"
+            - "@mu_yourcity_module.hook_helper"
+            - "@mu_yourcity_module.translatable_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        calls:
+            - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.specialoflocation:
+        class: MU\YourCityModule\Form\Type\SpecialOfLocationType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.collection_filter_helper"
+            - "@mu_yourcity_module.entity_display_helper"
+            - "@zikula_extensions_module.api.variable"
+            - "@mu_yourcity_module.translatable_helper"
+            - "@mu_yourcity_module.listentries_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.handler.serviceoflocation:
+        class: MU\YourCityModule\Form\Handler\ServiceofLocation\EditHandler
+        arguments:
+            - "@kernel"
+            - "@translator.default"
+            - "@form.factory"
+            - "@request_stack"
+            - "@router"
+            - "@logger"
+            - "@zikula_permissions_module.api.permission"
+            - "@zikula_extensions_module.api.variable"
+            - "@zikula_users_module.current_user"
+            - "@zikula_groups_module.group_application_repository"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.controller_helper"
+            - "@mu_yourcity_module.model_helper"
+            - "@mu_yourcity_module.workflow_helper"
+            - "@mu_yourcity_module.hook_helper"
+            - "@mu_yourcity_module.translatable_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        calls:
+            - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.serviceoflocation:
+        class: MU\YourCityModule\Form\Type\ServiceofLocationType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.collection_filter_helper"
+            - "@mu_yourcity_module.entity_display_helper"
+            - "@zikula_extensions_module.api.variable"
+            - "@mu_yourcity_module.translatable_helper"
+            - "@mu_yourcity_module.listentries_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.handler.abonnement:
+        class: MU\YourCityModule\Form\Handler\Abonnement\EditHandler
+        arguments:
+            - "@kernel"
+            - "@translator.default"
+            - "@form.factory"
+            - "@request_stack"
+            - "@router"
+            - "@logger"
+            - "@zikula_permissions_module.api.permission"
+            - "@zikula_extensions_module.api.variable"
+            - "@zikula_users_module.current_user"
+            - "@zikula_groups_module.group_application_repository"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.controller_helper"
+            - "@mu_yourcity_module.model_helper"
+            - "@mu_yourcity_module.workflow_helper"
+            - "@mu_yourcity_module.hook_helper"
+            - "@mu_yourcity_module.translatable_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        calls:
+            - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.abonnement:
+        class: MU\YourCityModule\Form\Type\AbonnementType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.collection_filter_helper"
+            - "@mu_yourcity_module.entity_display_helper"
+            - "@mu_yourcity_module.listentries_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.deleteentity:
+        class: MU\YourCityModule\Form\DeleteEntityType
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.block.itemlist:
+        class: MU\YourCityModule\Block\Form\Type\ItemListBlockType
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.branchfinder:
+        class: MU\YourCityModule\Form\Type\Finder\BranchFinderType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.locationfinder:
+        class: MU\YourCityModule\Form\Type\Finder\LocationFinderType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.partfinder:
+        class: MU\YourCityModule\Form\Type\Finder\PartFinderType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.imageoflocationfinder:
+        class: MU\YourCityModule\Form\Type\Finder\ImageOfLocationFinderType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.fileoflocationfinder:
+        class: MU\YourCityModule\Form\Type\Finder\FileOfLocationFinderType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.offerfinder:
+        class: MU\YourCityModule\Form\Type\Finder\OfferFinderType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.menuoflocationfinder:
+        class: MU\YourCityModule\Form\Type\Finder\MenuOfLocationFinderType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.partofmenufinder:
+        class: MU\YourCityModule\Form\Type\Finder\PartOfMenuFinderType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.dishfinder:
+        class: MU\YourCityModule\Form\Type\Finder\DishFinderType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.eventfinder:
+        class: MU\YourCityModule\Form\Type\Finder\EventFinderType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.productfinder:
+        class: MU\YourCityModule\Form\Type\Finder\ProductFinderType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.specialoflocationfinder:
+        class: MU\YourCityModule\Form\Type\Finder\SpecialOfLocationFinderType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.serviceoflocationfinder:
+        class: MU\YourCityModule\Form\Type\Finder\ServiceofLocationFinderType
+        arguments:
+            - "@translator.default"
+            - "@mu_yourcity_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_yourcity_module.form.type.config:
+        class: MU\YourCityModule\Form\Type\ConfigType
+        arguments:
+            - "@translator.default"
+            - "@=service('zikula_extensions_module.api.variable').getAll('MUYourCityModule')"
+            - "@zikula_groups_module.group_repository"
+        tags:
+            - { name: form.type }

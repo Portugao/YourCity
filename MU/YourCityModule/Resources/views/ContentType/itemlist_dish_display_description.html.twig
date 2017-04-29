@@ -1,0 +1,13 @@
+{# Purpose of this template: Display dishes within an external context #}
+<dl>
+    {% for dish in items %}
+        <dt>{{ dish|muyourcitymodule_formattedTitle }}</dt>
+        {% if dish.description %}
+            <dd>{{ dish.description|striptags|truncate(200, true, '&hellip;') }}</dd>
+        {% endif %}
+        <dd><a href="{{ path('muyourcitymodule_dish_display', { 'id': dish.id }) }}">{{ __('Read more') }}</a>
+        </dd>
+    {% else %}
+        <dt>{{ __('No entries found.') }}</dt>
+    {% endfor %}
+</dl>

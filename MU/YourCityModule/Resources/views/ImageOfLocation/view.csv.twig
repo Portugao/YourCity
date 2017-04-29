@@ -1,0 +1,10 @@
+{# purpose of this template: images of location view csv view #}
+{% spaceless %}"{{ __('Name') }}";"{{ __('Description') }}";"{{ __('Image') }}";"{{ __('Position of image') }}";"{{ __('Workflow state') }}"
+;"{{ __('Location') }}"
+{% endspaceless %}
+{% for imageOfLocation in items %}
+{% spaceless %}
+    "{{ imageOfLocation.name }}";"{{ imageOfLocation.description|safeHtml }}";"{{ imageOfLocation.image }}";"{{ imageOfLocation.positionOfImage }}";"{{ imageOfLocation.workflowState|muyourcitymodule_objectState(false)|lower }}"
+    ;"{% if imageOfLocation.location|default %}{{ imageOfLocation.location|muyourcitymodule_formattedTitle }}{% endif %}"
+{% endspaceless %}
+{% endfor %}

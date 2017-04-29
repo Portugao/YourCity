@@ -1,0 +1,9 @@
+{# purpose of this template: events view xml view #}
+<?xml version="1.0" encoding="{{ pageGetVar('meta.charset') }}" ?>
+<events>
+{% for event in items %}
+    {{ include('@MUYourCityModule/Event/include.xml.twig') }}
+{% else %}
+    <noEvent />
+{% endfor %}
+</events>

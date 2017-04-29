@@ -1,0 +1,26 @@
+{# Purpose of this template: Display item information for previewing from other modules #}
+<dl id="dish{{ dish.id }}">
+<dt>{{ dish|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.dishes.filter') }}</dt>
+<dd>{% if dish.imageOfDish is not empty and dish.imageOfDishMeta|default %}
+            <a href="{{ dish.imageOfDishUrl }}" title="{{ dish|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if dish.imageOfDishMeta.isImage %} class="image-link"{% endif %}>
+{% if dish.imageOfDishMeta.isImage %}
+    {% set thumbOptions = attribute(thumbRuntimeOptions, 'dishImageOfDish') %}
+    <img src="{{ dish.imageOfDish.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ dish|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+{% else %}
+    {{ __('Download') }} ({{ dish.imageOfDishMeta.size|muyourcitymodule_fileSize(dish.imageOfDish.getPathname(), false, false) }})
+{% endif %}
+</a>
+{% else %}&nbsp;{% endif %}
+</dd>
+{% if dish.description is not empty %}<dd>{{ dish.description }}</dd>{% endif %}
+{% if featureActivationHelper.isEnabled(constant('MU\\YourCityModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'dish') %}
+    <dd>
+        <dl class="category-list">
+        {% for propName, catMapping in dish.categories %}
+            <dt>{{ propName }}</dt>
+            <dd>{{ catMapping.category.display_name[app.request.locale]|default(catMapping.category.name) }}</dd>
+        {% endfor %}
+        </dl>
+    </dd>
+{% endif %}
+</dl>

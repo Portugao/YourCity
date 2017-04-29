@@ -1,0 +1,228 @@
+{# purpose of this template: offers list view #}
+{% extends routeArea == 'admin' ? 'MUYourCityModule::adminBase.html.twig' : 'MUYourCityModule::base.html.twig' %}
+{% block title own ? __('My offers') : __('Offer list') %}
+{% block admin_page_icon 'list-alt' %}
+{% block content %}
+<div class="muyourcitymodule-offer muyourcitymodule-view">
+
+    {{ block('page_nav_links') }}
+
+    {{ include('@MUYourCityModule/Offer/viewQuickNav.html.twig')  }}{# see template file for available options #}
+
+    {% if routeArea == 'admin' %}
+    <form action="{{ path('muyourcitymodule_offer_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="offersViewForm" class="form-horizontal" role="form">
+        <div>
+    {% endif %}
+    {% if routeArea != 'admin' %}
+        {% for offer in items %}
+            <div class="col-md-4">
+                {% set thumbOptions = attribute(thumbRuntimeOptions, 'offerImageOfOffer') %}
+                {% if offer.imageOfOffer is not empty %}
+                    <div style="backround: url({{ offer.imageOfOffer.getPathname()|imagine_filter('zkroot', thumbOptions) }})" class="offer-view-box">
+                {% else %}
+                    <div class="offer-view-box">
+                {% endif %}
+                <p class="offer-list-title"><a href="{{ path('muyourcitymodule_offer_' ~ routeArea ~ 'display', { 'id': offer.id }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ offer.name|notifyFilters('muyourcitymodule.filterhook.offers') }}</a></p>
+                {{ offer.text|safeHtml|truncate(100) }}<br />
+                {% if offer.percentOfOffer != 0 %}
+                    <span class="percentOffer">{{ offer.percentOfOffer }}%</span><br />
+                {% endif %}
+                {% if offer.percentOfOffer == 0 %}
+                {% if offer.priceOfOffer != '0.00' %}
+                    <span class="offerPrice">{{ offer.priceOfOffer|localizedcurrency('EUR') }}</span>
+                {% endif %}<br />
+                {% if offer.normalPrice != '0.00' %}
+                <span class="normalPrice">{{ offer.normalPrice|localizedcurrency('EUR') }}</span><br />
+                {% endif %}
+                {% endif %}                
+                {% if offer.location|default %}
+                    <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': offer.location.id, 'slug': offer.location.slug }) }}">{% spaceless %}
+                          {{ offer.location|muyourcitymodule_formattedTitle|default(__('Location')) }}
+                    {% endspaceless %}</a>
+                        <a id="locationItem{{ offer.id }}_rel_{{ offer.location.id }}Display" href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', {'id': offer.location.id, 'slug': offer.location.slug, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ offer.location|muyourcitymodule_formattedTitle|default(__('Location'))|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
+                {% else %}
+                    {{ __('Not set.') }}
+                {% endif %} 
+                </div>          
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% if routeArea == 'admin' %}
+        <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover table-condensed">
+            <colgroup>
+                {% if routeArea == 'admin' %}
+                    <col id="cSelect" />
+                {% endif %}
+                <col id="cItemActions" />
+                {% if routeArea == 'admin' %}
+                <col id="cWorkflowState" />
+                {% endif %}
+                <col id="cName" />
+                <col id="cText" />
+                <col id="cUrlToOfferOnHomepage" />
+                <col id="cImageOfOffer" />
+                <col id="cPriceOfOffer" />
+                <col id="cNormalPrice" />
+                <col id="cLocation" />
+            </colgroup>
+            <thead>
+            <tr>
+                {% if routeArea == 'admin' %}
+                    <th id="hSelect" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}text-center z-w02">
+                        <input type="checkbox" class="muyourcity-mass-toggle" />
+                    </th>
+                {% endif %}
+                <th id="hItemActions" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}z-order-unsorted z-w02">{{ __('Actions') }}</th>
+                {% if routeArea == 'admin' %}
+                <th id="hWorkflowState" scope="col" class="text-left">
+                    <a href="{{ sort.workflowState.url }}" title="{{ __f('Sort by %s', {'%s': 'state'}) }}" class="{{ sort.workflowState.class }}">{{ __('State') }}</a>
+                </th>
+                {% endif %}
+                <th id="hName" scope="col" class="text-left">
+                    <a href="{{ sort.name.url }}" title="{{ __f('Sort by %s', {'%s': 'name'}) }}" class="{{ sort.name.class }}">{{ __('Name') }}</a>
+                </th>
+                <th id="hText" scope="col" class="text-left">
+                    <a href="{{ sort.text.url }}" title="{{ __f('Sort by %s', {'%s': 'text'}) }}" class="{{ sort.text.class }}">{{ __('Text') }}</a>
+                </th>
+                <th id="hUrlToOfferOnHomepage" scope="col" class="text-center">
+                    <a href="{{ sort.urlToOfferOnHomepage.url }}" title="{{ __f('Sort by %s', {'%s': 'url to offer on homepage'}) }}" class="{{ sort.urlToOfferOnHomepage.class }}">{{ __('Url to offer on homepage') }}</a>
+                </th>
+                <th id="hImageOfOffer" scope="col" class="text-left">
+                    <a href="{{ sort.imageOfOffer.url }}" title="{{ __f('Sort by %s', {'%s': 'image of offer'}) }}" class="{{ sort.imageOfOffer.class }}">{{ __('Image of offer') }}</a>
+                </th>
+                <th id="hPriceOfOffer" scope="col" class="text-right">
+                    <a href="{{ sort.priceOfOffer.url }}" title="{{ __f('Sort by %s', {'%s': 'price of offer'}) }}" class="{{ sort.priceOfOffer.class }}">{{ __('Price of offer') }}</a>
+                </th>
+                <th id="hNormalPrice" scope="col" class="text-right">
+                    <a href="{{ sort.normalPrice.url }}" title="{{ __f('Sort by %s', {'%s': 'normal price'}) }}" class="{{ sort.normalPrice.class }}">{{ __('Normal price') }}</a>
+                </th>
+                <th id="hLocation" scope="col" class="text-left">
+                    <a href="{{ sort.location.url }}" title="{{ __f('Sort by %s', {'%s': 'location'}) }}" class="{{ sort.location.class }}">{{ __('Location') }}</a>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+        
+        {% for offer in items %}
+            <tr>
+                {% if routeArea == 'admin' %}
+                    <td headers="hSelect" class="fixed-column text-center z-w02">
+                        <input type="checkbox" name="items[]" value="{{ offer.id }}" class="muyourcity-toggle-checkbox" />
+                    </td>
+                {% endif %}
+                <td id="itemActions{{ offer.id }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
+                    {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: offer, area: routeArea, context: 'view' }) %}
+                    <div class="dropdown">
+                        <a id="itemActions{{ offer.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
+                        {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
+                    </div>
+                </td>
+                {% if routeArea == 'admin' %}<td headers="hWorkflowState" class="text-left nowrap">
+                    {{ offer.workflowState|muyourcitymodule_objectState }}
+                </td>
+                {% endif %}<td headers="hName" class="text-left">
+                    <a href="{{ path('muyourcitymodule_offer_' ~ routeArea ~ 'display', { 'id': offer.id }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ offer.name|notifyFilters('muyourcitymodule.filterhook.offers') }}</a>
+                </td>
+                <td headers="hText" class="text-left">
+                    {{ offer.text|safeHtml|truncate(50) }}
+                </td>
+                <td headers="hUrlToOfferOnHomepage" class="text-center">
+                    {% if offer.urlToOfferOnHomepage is not empty %}
+                    <a href="{{ offer.urlToOfferOnHomepage }}" title="{{ __('Visit this page') }}" class="fa fa-external-link-square"></a>
+                    {% else %}&nbsp;{% endif %}
+                </td>
+                <td headers="hImageOfOffer" class="text-left">
+                    {% if offer.imageOfOffer is not empty and offer.imageOfOfferMeta|default %}
+                                <a href="{{ offer.imageOfOfferUrl }}" title="{{ offer|muyourcitymodule_formattedTitle|default(__('Offer'))|e('html_attr') }}"{% if offer.imageOfOfferMeta.isImage %} class="image-link"{% endif %}>
+                    {% if offer.imageOfOfferMeta.isImage %}
+                        {% set thumbOptions = attribute(thumbRuntimeOptions, 'offerImageOfOffer') %}
+                        <img src="{{ offer.imageOfOffer.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ offer|muyourcitymodule_formattedTitle|default(__('Offer'))|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+                    {% else %}
+                        {{ __('Download') }} ({{ offer.imageOfOfferMeta.size|muyourcitymodule_fileSize(offer.imageOfOffer.getPathname(), false, false) }})
+                    {% endif %}
+                    </a>
+                    {% else %}&nbsp;{% endif %}
+                </td>
+                <td headers="hPriceOfOffer" class="text-right">
+                    {{ offer.priceOfOffer|localizedcurrency('EUR') }}
+                </td>
+                <td headers="hNormalPrice" class="text-right">
+                    {{ offer.normalPrice|localizedcurrency('EUR') }}
+                </td>
+                <td headers="hLocation" class="text-left">
+                    {% if offer.location|default %}
+                        <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': offer.location.id, 'slug': offer.location.slug }) }}">{% spaceless %}
+                          {{ offer.location|muyourcitymodule_formattedTitle|default(__('Offer')) }}
+                        {% endspaceless %}</a>
+                        <a id="locationItem{{ offer.id }}_rel_{{ offer.location.id }}Display" href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', {'id': offer.location.id, 'slug': offer.location.slug, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ offer|muyourcitymodule_formattedTitle|default(__('Offer')) }}"><span class="fa fa-id-card-o"></span></a>
+                    {% else %}
+                        {{ __('Not set.') }}
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
+                <td class="text-left" colspan="{% if routeArea == 'admin' %}10{% else %}9{% endif %}">
+            {{ __('No offers found.') }}
+              </td>
+            </tr>
+        {% endfor %}
+        
+            </tbody>
+        </table>
+        {% endif %}
+        </div>
+        
+        {% if all != 1 and pager|default %}
+            {{ pager({ rowcount: pager.amountOfItems, limit: pager.itemsPerPage, display: 'page', route: 'muyourcitymodule_offer_' ~ routeArea ~ 'view'}) }}
+        {% endif %}
+    {% if routeArea == 'admin' %}
+            <fieldset>
+                <label for="mUYourCityModuleAction" class="col-sm-3 control-label">{{ __('With selected offers') }}</label>
+                <div class="col-sm-6">
+                    <select id="mUYourCityModuleAction" name="action" class="form-control input-sm">
+                        <option value="">{{ __('Choose action') }}</option>
+                        <option value="unpublish" title="{{ __('Hide content temporarily.') }}">{{ __('Unpublish') }}</option>
+                        <option value="publish" title="{{ __('Make content available again.') }}">{{ __('Publish') }}</option>
+                        <option value="delete" title="{{ __('Delete content permanently.') }}">{{ __('Delete') }}</option>
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <input type="submit" value="{{ __('Submit') }}" class="btn btn-default btn-sm" />
+                </div>
+            </fieldset>
+        </div>
+    </form>
+    {% endif %}
+
+    {{ block('display_hooks') }}
+</div>
+{% endblock %}
+{% block page_nav_links %}
+    <p>
+        {% if canBeCreated %}
+            {% if hasPermission('MUYourCityModule:Offer:', '::', 'ACCESS_EDIT') %}
+                {% set createTitle = __('Create offer') %}
+                <a href="{{ path('muyourcitymodule_offer_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
+            {% endif %}
+        {% endif %}
+        {% if all == 1 %}
+            {% set linkTitle = __('Back to paginated view') %}
+            <a href="{{ path('muyourcitymodule_offer_' ~ routeArea ~ 'view') }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
+        {% else %}
+            {% set linkTitle = __('Show all entries') %}
+            <a href="{{ path('muyourcitymodule_offer_' ~ routeArea ~ 'view', { all: 1 }) }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
+        {% endif %}
+    </p>
+{% endblock %}
+{% block display_hooks %}
+    
+    {# here you can activate calling display hooks for the view page if you need it #}
+    {# % if routeArea != 'admin' %}
+        {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.offers.display_view', urlObject=currentUrlObject) %}
+        {% for providerArea, hook in hooks %}
+            {{ hook }}
+        {% endfor %}
+    {% endif % #}
+{% endblock %}

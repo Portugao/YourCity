@@ -1,0 +1,26 @@
+{# Purpose of this template: Display item information for previewing from other modules #}
+<dl id="event{{ event.id }}">
+<dt>{{ event|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.events.filter') }}</dt>
+<dd>{% if event.imageOfEvent is not empty and event.imageOfEventMeta|default %}
+            <a href="{{ event.imageOfEventUrl }}" title="{{ event|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if event.imageOfEventMeta.isImage %} class="image-link"{% endif %}>
+{% if event.imageOfEventMeta.isImage %}
+    {% set thumbOptions = attribute(thumbRuntimeOptions, 'eventImageOfEvent') %}
+    <img src="{{ event.imageOfEvent.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ event|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+{% else %}
+    {{ __('Download') }} ({{ event.imageOfEventMeta.size|muyourcitymodule_fileSize(event.imageOfEvent.getPathname(), false, false) }})
+{% endif %}
+</a>
+{% else %}&nbsp;{% endif %}
+</dd>
+{% if event.description is not empty %}<dd>{{ event.description }}</dd>{% endif %}
+{% if featureActivationHelper.isEnabled(constant('MU\\YourCityModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'event') %}
+    <dd>
+        <dl class="category-list">
+        {% for propName, catMapping in event.categories %}
+            <dt>{{ propName }}</dt>
+            <dd>{{ catMapping.category.display_name[app.request.locale]|default(catMapping.category.name) }}</dd>
+        {% endfor %}
+        </dl>
+    </dd>
+{% endif %}
+</dl>

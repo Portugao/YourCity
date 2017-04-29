@@ -1,0 +1,7 @@
+{# purpose of this template: parts of menu index view #}
+{% extends routeArea == 'admin' ? 'MUYourCityModule::adminBase.html.twig' : 'MUYourCityModule::base.html.twig' %}
+{% block title __('parts of menu') %}
+{% block admin_page_icon 'home' %}
+{% block content %}
+    <p>{{ __('Welcome to the part of menu section of the Your city application.') }}</p>
+{% endblock %}

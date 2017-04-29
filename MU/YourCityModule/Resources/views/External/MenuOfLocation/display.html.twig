@@ -1,0 +1,51 @@
+{# Purpose of this template: Display one certain menu of location within an external context #}
+{{ pageAddAsset('javascript', asset('magnific-popup/jquery.magnific-popup.min.js')) }}
+{{ pageAddAsset('stylesheet', asset('magnific-popup/magnific-popup.css')) }}
+{{ pageAddAsset('javascript', zasset('@MUYourCityModule:js/MUYourCityModule.js')) }}
+<div id="menuOfLocation{$menuOfLocation.id}" class="muyourcitymodule-external-menuoflocation">
+{% if displayMode == 'link' %}
+    <p class="muyourcitymodule-external-link">
+    <a href="{{ path('muyourcitymodule_menuoflocation_display', { 'id': menuOfLocation.id }) }}" title="{{ menuOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}">
+    {{ menuOfLocation|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.menusoflocation.filter') }}
+    </a>
+    </p>
+{% endif %}
+{% if hasPermission('MUYourCityModule::', '::', 'ACCESS_EDIT') %}
+    {# for normal users without edit permission show only the actual file per default #}
+    {% if displayMode == 'embed' %}
+        <p class="muyourcitymodule-external-title">
+            <strong>{{ menuOfLocation|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.menusoflocation.filter') }}</strong>
+        </p>
+    {% endif %}
+{% endif %}
+
+{% if displayMode == 'link' %}
+{% elseif displayMode == 'embed' %}
+    <div class="muyourcitymodule-external-snippet">
+        {% if menuOfLocation.imageOfMenu is not empty and menuOfLocation.imageOfMenuMeta|default %}
+                    <a href="{{ menuOfLocation.imageOfMenuUrl }}" title="{{ menuOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if menuOfLocation.imageOfMenuMeta.isImage %} class="image-link"{% endif %}>
+        {% if menuOfLocation.imageOfMenuMeta.isImage %}
+            {% set thumbOptions = attribute(thumbRuntimeOptions, 'menuOfLocationImageOfMenu') %}
+            <img src="{{ menuOfLocation.imageOfMenu.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ menuOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+        {% else %}
+            {{ __('Download') }} ({{ menuOfLocation.imageOfMenuMeta.size|muyourcitymodule_fileSize(menuOfLocation.imageOfMenu.getPathname(), false, false) }})
+        {% endif %}
+        </a>
+        {% else %}&nbsp;{% endif %}
+    </div>
+
+    {# you can distinguish the context like this: #}
+    {# % if source == 'contentType' %}
+        ...
+    {% elseif source == 'scribite' %}
+        ...
+    {% endif % #}
+
+    {# you can enable more details about the item: #}
+    {#
+        <p class="muyourcitymodule-external-description">
+            {% if menuOfLocation.description is not empty %}{{ menuOfLocation.description }}<br />{% endif %}
+        </p>
+    #}
+{% endif %}
+</div>

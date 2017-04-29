@@ -1,0 +1,52 @@
+workflow:
+    workflows:
+        muyourcitymodule_none:
+            type: state_machine
+            marking_store:
+                type: single_state
+                arguments:
+                    - workflowState
+            supports:
+                - MU\YourCityModule\Entity\BranchEntity
+                - MU\YourCityModule\Entity\PartEntity
+                - MU\YourCityModule\Entity\ImageOfLocationEntity
+                - MU\YourCityModule\Entity\FileOfLocationEntity
+                - MU\YourCityModule\Entity\OfferEntity
+                - MU\YourCityModule\Entity\MenuOfLocationEntity
+                - MU\YourCityModule\Entity\PartOfMenuEntity
+                - MU\YourCityModule\Entity\DishEntity
+                - MU\YourCityModule\Entity\EventEntity
+                - MU\YourCityModule\Entity\ProductEntity
+                - MU\YourCityModule\Entity\SpecialOfLocationEntity
+                - MU\YourCityModule\Entity\ServiceofLocationEntity
+            places:
+                - initial
+                - approved
+                - deleted
+                - suspended
+                - archived
+            transitions:
+                submit:
+                    from: initial
+                    to: approved
+                unpublish:
+                    from: approved
+                    to: suspended
+                publish:
+                    from: suspended
+                    to: approved
+                updateapproved:
+                    from: approved
+                    to: approved
+                archive:
+                    from: [approved, suspended]
+                    to: archived
+                updatesuspended:
+                    from: suspended
+                    to: suspended
+                updatearchived:
+                    from: archived
+                    to: archived
+                delete:
+                    from: [approved, suspended, archived]
+                    to: deleted

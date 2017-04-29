@@ -1,0 +1,11 @@
+{# Purpose of this template: Display abonnements within an external context #}
+<dl>
+    {% for abonnement in items %}
+        <dt>{{ abonnement|muyourcitymodule_formattedTitle }}</dt>
+        {% if abonnement.name %}
+            <dd>{{ abonnement.name|striptags|truncate(200, true, '&hellip;') }}</dd>
+        {% endif %}
+    {% else %}
+        <dt>{{ __('No entries found.') }}</dt>
+    {% endfor %}
+</dl>

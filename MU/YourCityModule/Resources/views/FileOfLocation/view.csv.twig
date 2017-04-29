@@ -1,0 +1,10 @@
+{# purpose of this template: files of location view csv view #}
+{% spaceless %}"{{ __('Name') }}";"{{ __('Description') }}";"{{ __('File of file') }}";"{{ __('Position of file') }}";"{{ __('Workflow state') }}"
+;"{{ __('Location') }}"
+{% endspaceless %}
+{% for fileOfLocation in items %}
+{% spaceless %}
+    "{{ fileOfLocation.name }}";"{{ fileOfLocation.description|safeHtml }}";"{{ fileOfLocation.fileOfFile }}";"{{ fileOfLocation.positionOfFile }}";"{{ fileOfLocation.workflowState|muyourcitymodule_objectState(false)|lower }}"
+    ;"{% if fileOfLocation.location|default %}{{ fileOfLocation.location|muyourcitymodule_formattedTitle }}{% endif %}"
+{% endspaceless %}
+{% endfor %}

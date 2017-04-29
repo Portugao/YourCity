@@ -1,0 +1,6 @@
+{# purpose of this template: inclusion template for display of related abonnements #}
+{% set hasAdminPermission = hasPermission('MUYourCityModule:Abonnement:', '::', 'ACCESS_EDIT') %}
+{% set hasEditPermission = hasPermission('MUYourCityModule:Abonnement:', '::', 'ACCESS_EDIT') %}
+<h4>
+    {{ item|muyourcitymodule_formattedTitle }}
+</h4>

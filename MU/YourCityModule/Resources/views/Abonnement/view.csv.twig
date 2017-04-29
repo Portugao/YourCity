@@ -1,0 +1,10 @@
+{# purpose of this template: abonnements view csv view #}
+{% spaceless %}"{{ __('Name') }}";"{{ __('Workflow state') }}"
+;"{{ __('Location') }}"
+{% endspaceless %}
+{% for abonnement in items %}
+{% spaceless %}
+    "{{ abonnement.name }}";"{{ abonnement.workflowState|muyourcitymodule_objectState(false)|lower }}"
+    ;"{% if abonnement.location|default %}{{ abonnement.location|muyourcitymodule_formattedTitle }}{% endif %}"
+{% endspaceless %}
+{% endfor %}

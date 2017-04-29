@@ -1,0 +1,51 @@
+body {
+    background-color: #ddd;
+    margin: 10px;
+    text-align: left;
+}
+
+#muyourcitymoduleItemContainer {
+    background-color: #eee;
+    height: 300px;
+    overflow: auto;
+    padding: 5px;
+}
+
+#muyourcitymoduleItemContainer ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#muyourcitymoduleItemContainer a {
+    color: #000;
+    margin: 0.1em 0.2em;
+    text-decoration: underline;
+}
+#muyourcitymoduleItemContainer a:hover,
+#muyourcitymoduleItemContainer a:focus,
+#muyourcitymoduleItemContainer a:active {
+    color: #900;
+    text-decoration: none;
+}
+
+#muyourcitymoduleItemContainer a img {
+    border: none;
+}
+
+#muyourcitymoduleItemContainer a img {
+    border: 1px solid #ccc;
+    background-color: #f5f5f5;
+    padding: 0.5em;
+}
+#muyourcitymoduleItemContainer a:hover img,
+#muyourcitymoduleItemContainer a:focus img,
+#muyourcitymoduleItemContainer a:active img {
+    background-color: #fff;
+}
+
+.muyourcitymodule-finderform fieldset,
+.muyourcitymodule-finderform fieldset legend {
+    background-color: #fff;
+    border: none;
+}

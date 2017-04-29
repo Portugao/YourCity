@@ -1,0 +1,7 @@
+{# purpose of this template: services of location view json view #}
+[
+{% for serviceofLocation in items %}
+    {% if not loop.first %},{% endif %}
+    {{ serviceofLocation.toJson() }}
+{% endfor %}
+]

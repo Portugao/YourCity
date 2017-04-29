@@ -1,0 +1,7 @@
+{# purpose of this template: files of location view json view #}
+[
+{% for fileOfLocation in items %}
+    {% if not loop.first %},{% endif %}
+    {{ fileOfLocation.toJson() }}
+{% endfor %}
+]

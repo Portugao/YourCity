@@ -1,0 +1,9 @@
+{# purpose of this template: abonnements view xml view #}
+<?xml version="1.0" encoding="{{ pageGetVar('meta.charset') }}" ?>
+<abonnements>
+{% for abonnement in items %}
+    {{ include('@MUYourCityModule/Abonnement/include.xml.twig') }}
+{% else %}
+    <noAbonnement />
+{% endfor %}
+</abonnements>

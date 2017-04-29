@@ -1,0 +1,7 @@
+{# purpose of this template: branches view json view #}
+[
+{% for branch in items %}
+    {% if not loop.first %},{% endif %}
+    {{ branch.toJson() }}
+{% endfor %}
+]

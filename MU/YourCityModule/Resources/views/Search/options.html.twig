@@ -1,0 +1,86 @@
+{# Purpose of this template: Display search options #}
+<input type="hidden" id="mUYourCityModuleActive" name="active[MUYourCityModule]" value="1" />
+{% if active_branch is defined %}
+    <div>
+        <input type="checkbox" id="active_mUYourCityModuleBranches" name="mUYourCityModuleSearchTypes[]" value="branch"{% if active_branch %} checked="checked"{% endif %} />
+        <label for="active_mUYourCityModuleBranches">{{ __('Branches', 'muyourcitymodule') }}</label>
+    </div>
+{% endif %}
+{% if active_location is defined %}
+    <div>
+        <input type="checkbox" id="active_mUYourCityModuleLocations" name="mUYourCityModuleSearchTypes[]" value="location"{% if active_location %} checked="checked"{% endif %} />
+        <label for="active_mUYourCityModuleLocations">{{ __('Locations', 'muyourcitymodule') }}</label>
+    </div>
+{% endif %}
+{% if active_part is defined %}
+    <div>
+        <input type="checkbox" id="active_mUYourCityModuleParts" name="mUYourCityModuleSearchTypes[]" value="part"{% if active_part %} checked="checked"{% endif %} />
+        <label for="active_mUYourCityModuleParts">{{ __('Parts', 'muyourcitymodule') }}</label>
+    </div>
+{% endif %}
+{% if active_imageOfLocation is defined %}
+    <div>
+        <input type="checkbox" id="active_mUYourCityModuleImagesOfLocation" name="mUYourCityModuleSearchTypes[]" value="imageOfLocation"{% if active_imageOfLocation %} checked="checked"{% endif %} />
+        <label for="active_mUYourCityModuleImagesOfLocation">{{ __('Images of location', 'muyourcitymodule') }}</label>
+    </div>
+{% endif %}
+{% if active_fileOfLocation is defined %}
+    <div>
+        <input type="checkbox" id="active_mUYourCityModuleFilesOfLocation" name="mUYourCityModuleSearchTypes[]" value="fileOfLocation"{% if active_fileOfLocation %} checked="checked"{% endif %} />
+        <label for="active_mUYourCityModuleFilesOfLocation">{{ __('Files of location', 'muyourcitymodule') }}</label>
+    </div>
+{% endif %}
+{% if active_offer is defined %}
+    <div>
+        <input type="checkbox" id="active_mUYourCityModuleOffers" name="mUYourCityModuleSearchTypes[]" value="offer"{% if active_offer %} checked="checked"{% endif %} />
+        <label for="active_mUYourCityModuleOffers">{{ __('Offers', 'muyourcitymodule') }}</label>
+    </div>
+{% endif %}
+{% if active_menuOfLocation is defined %}
+    <div>
+        <input type="checkbox" id="active_mUYourCityModuleMenusOfLocation" name="mUYourCityModuleSearchTypes[]" value="menuOfLocation"{% if active_menuOfLocation %} checked="checked"{% endif %} />
+        <label for="active_mUYourCityModuleMenusOfLocation">{{ __('Menus of location', 'muyourcitymodule') }}</label>
+    </div>
+{% endif %}
+{% if active_partOfMenu is defined %}
+    <div>
+        <input type="checkbox" id="active_mUYourCityModulePartsOfMenu" name="mUYourCityModuleSearchTypes[]" value="partOfMenu"{% if active_partOfMenu %} checked="checked"{% endif %} />
+        <label for="active_mUYourCityModulePartsOfMenu">{{ __('Parts of menu', 'muyourcitymodule') }}</label>
+    </div>
+{% endif %}
+{% if active_dish is defined %}
+    <div>
+        <input type="checkbox" id="active_mUYourCityModuleDishes" name="mUYourCityModuleSearchTypes[]" value="dish"{% if active_dish %} checked="checked"{% endif %} />
+        <label for="active_mUYourCityModuleDishes">{{ __('Dishes', 'muyourcitymodule') }}</label>
+    </div>
+{% endif %}
+{% if active_event is defined %}
+    <div>
+        <input type="checkbox" id="active_mUYourCityModuleEvents" name="mUYourCityModuleSearchTypes[]" value="event"{% if active_event %} checked="checked"{% endif %} />
+        <label for="active_mUYourCityModuleEvents">{{ __('Events', 'muyourcitymodule') }}</label>
+    </div>
+{% endif %}
+{% if active_product is defined %}
+    <div>
+        <input type="checkbox" id="active_mUYourCityModuleProducts" name="mUYourCityModuleSearchTypes[]" value="product"{% if active_product %} checked="checked"{% endif %} />
+        <label for="active_mUYourCityModuleProducts">{{ __('Products', 'muyourcitymodule') }}</label>
+    </div>
+{% endif %}
+{% if active_specialOfLocation is defined %}
+    <div>
+        <input type="checkbox" id="active_mUYourCityModuleSpecialsOfLocation" name="mUYourCityModuleSearchTypes[]" value="specialOfLocation"{% if active_specialOfLocation %} checked="checked"{% endif %} />
+        <label for="active_mUYourCityModuleSpecialsOfLocation">{{ __('Specials of location', 'muyourcitymodule') }}</label>
+    </div>
+{% endif %}
+{% if active_serviceofLocation is defined %}
+    <div>
+        <input type="checkbox" id="active_mUYourCityModuleServicesOfLocation" name="mUYourCityModuleSearchTypes[]" value="serviceofLocation"{% if active_serviceofLocation %} checked="checked"{% endif %} />
+        <label for="active_mUYourCityModuleServicesOfLocation">{{ __('Services of location', 'muyourcitymodule') }}</label>
+    </div>
+{% endif %}
+{% if active_abonnement is defined %}
+    <div>
+        <input type="checkbox" id="active_mUYourCityModuleAbonnements" name="mUYourCityModuleSearchTypes[]" value="abonnement"{% if active_abonnement %} checked="checked"{% endif %} />
+        <label for="active_mUYourCityModuleAbonnements">{{ __('Abonnements', 'muyourcitymodule') }}</label>
+    </div>
+{% endif %}

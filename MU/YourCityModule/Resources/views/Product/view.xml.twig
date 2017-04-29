@@ -1,0 +1,9 @@
+{# purpose of this template: products view xml view #}
+<?xml version="1.0" encoding="{{ pageGetVar('meta.charset') }}" ?>
+<products>
+{% for product in items %}
+    {{ include('@MUYourCityModule/Product/include.xml.twig') }}
+{% else %}
+    <noProduct />
+{% endfor %}
+</products>

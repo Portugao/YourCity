@@ -1,0 +1,10 @@
+{# purpose of this template: events view csv view #}
+{% spaceless %}"{{ __('Name') }}";"{{ __('Description') }}";"{{ __('Image of event') }}";"{{ __('Street') }}";"{{ __('Number of street') }}";"{{ __('Zip code') }}";"{{ __('City') }}";"{{ __('Start date') }}";"{{ __('End date') }}";"{{ __('Start 2 date') }}";"{{ __('End 2 date') }}";"{{ __('Latitude') }}";"{{ __('Longitude') }}";"{{ __('Workflow state') }}"
+;"{{ __('Location') }}"
+{% endspaceless %}
+{% for event in items %}
+{% spaceless %}
+    "{{ event.name }}";"{{ event.description|safeHtml }}";"{{ event.imageOfEvent }}";"{{ event.street }}";"{{ event.numberOfStreet }}";"{{ event.zipCode }}";"{{ event.city }}";"{{ event.startDate|localizeddate('medium', 'short') }}";"{{ event.endDate|localizeddate('medium', 'short') }}";"{{ event.start2Date|localizeddate('medium', 'short') }}";"{{ event.end2Date|localizeddate('medium', 'short') }}";"{{ event.latitude|muyourcitymodule_geoData }}";"{{ event.longitude|muyourcitymodule_geoData }}";"{{ event.workflowState|muyourcitymodule_objectState(false)|lower }}"
+    ;"{% if event.location|default %}{{ event.location|muyourcitymodule_formattedTitle }}{% endif %}"
+{% endspaceless %}
+{% endfor %}

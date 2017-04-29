@@ -1,0 +1,13 @@
+{# Purpose of this template: Display branches within an external context #}
+<dl>
+    {% for branch in items %}
+        <dt>{{ branch|muyourcitymodule_formattedTitle }}</dt>
+        {% if branch.description %}
+            <dd>{{ branch.description|striptags|truncate(200, true, '&hellip;') }}</dd>
+        {% endif %}
+        <dd><a href="{{ path('muyourcitymodule_branch_display', { 'id': branch.id }) }}">{{ __('Read more') }}</a>
+        </dd>
+    {% else %}
+        <dt>{{ __('No entries found.') }}</dt>
+    {% endfor %}
+</dl>

@@ -1,0 +1,149 @@
+services:
+    # Helper services
+    mu_yourcity_module.archive_helper:
+        class: MU\YourCityModule\Helper\ArchiveHelper
+        arguments:
+            - "@translator.default"
+            - "@request_stack"
+            - "@logger"
+            - "@zikula_permissions_module.api.permission"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.workflow_helper"
+            - "@mu_yourcity_module.hook_helper"
+    
+    mu_yourcity_module.category_helper:
+        class: MU\YourCityModule\Helper\CategoryHelper
+        arguments:
+            - "@translator.default"
+            - "@request_stack"
+            - "@logger"
+            - "@zikula_users_module.current_user"
+            - "@zikula_categories_module.api.category_registry"
+            - "@zikula_categories_module.api.category_permission"
+    
+    mu_yourcity_module.collection_filter_helper:
+        class: MU\YourCityModule\Helper\CollectionFilterHelper
+        arguments:
+            - "@request_stack"
+            - "@zikula_users_module.current_user"
+            - "@mu_yourcity_module.category_helper"
+            - "@=service('zikula_extensions_module.api.variable').get('MUYourCityModule', 'showOnlyOwnEntries', false)"
+    
+    mu_yourcity_module.controller_helper:
+        class: MU\YourCityModule\Helper\ControllerHelper
+        arguments:
+            - "@translator.default"
+            - "@request_stack"
+            - "@mu_yourcity_module.archive_helper"
+            - "@logger"
+            - "@form.factory"
+            - "@zikula_extensions_module.api.variable"
+            - "@zikula_users_module.current_user"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.collection_filter_helper"
+            - "@mu_yourcity_module.model_helper"
+            - "@mu_yourcity_module.image_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+    
+    mu_yourcity_module.entity_display_helper:
+        class: MU\YourCityModule\Helper\EntityDisplayHelper
+        arguments:
+            - "@translator.default"
+            - "@request_stack"
+            - "@mu_yourcity_module.listentries_helper"
+    
+    mu_yourcity_module.feature_activation_helper:
+        class: MU\YourCityModule\Helper\FeatureActivationHelper
+    
+    mu_yourcity_module.hook_helper:
+        class: MU\YourCityModule\Helper\HookHelper
+        arguments:
+            - "@hook_dispatcher"
+    
+    mu_yourcity_module.image_helper:
+        class: MU\YourCityModule\Helper\ImageHelper
+        arguments:
+            - "@translator.default"
+            - "@session"
+            - "@zikula_extensions_module.api.variable"
+    
+    mu_yourcity_module.listentries_helper:
+        class: MU\YourCityModule\Helper\ListEntriesHelper
+        arguments:
+            - "@translator.default"
+    
+    mu_yourcity_module.model_helper:
+        class: MU\YourCityModule\Helper\ModelHelper
+        arguments:
+            - "@mu_yourcity_module.entity_factory"
+    
+    mu_yourcity_module.notification_helper:
+        class: MU\YourCityModule\Helper\NotificationHelper
+        arguments:
+            - "@kernel"
+            - "@translator.default"
+            - "@session"
+            - "@router"
+            - "@request_stack"
+            - "@zikula_extensions_module.api.variable"
+            - "@twig"
+            - "@zikula_mailer_module.api.mailer"
+            - "@zikula_groups_module.group_repository"
+            - "@mu_yourcity_module.entity_display_helper"
+            - "@mu_yourcity_module.workflow_helper"
+    
+    mu_yourcity_module.search_helper:
+        class: MU\YourCityModule\Helper\SearchHelper
+        arguments:
+            - "@translator.default"
+            - "@zikula_permissions_module.api.permission"
+            - "@templating.engine.twig"
+            - "@session"
+            - "@request_stack"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.controller_helper"
+            - "@mu_yourcity_module.entity_display_helper"
+            - "@mu_yourcity_module.feature_activation_helper"
+            - "@mu_yourcity_module.category_helper"
+        tags:
+            - { name: zikula.searchable_module, bundleName: MUYourCityModule }
+    
+    mu_yourcity_module.translatable_helper:
+        class: MU\YourCityModule\Helper\TranslatableHelper
+        arguments:
+            - "@translator.default"
+            - "@request_stack"
+            - "@zikula_extensions_module.api.variable"
+            - "@zikula_settings_module.locale_api"
+            - "@mu_yourcity_module.entity_factory"
+    
+    mu_yourcity_module.upload_helper:
+        class: MU\YourCityModule\Helper\UploadHelper
+        arguments:
+            - "@translator.default"
+            - "@session"
+            - "@liip_imagine.cache.manager"
+            - "@logger"
+            - "@zikula_users_module.current_user"
+            - "@=service('zikula_extensions_module.api.variable').getAll('MUYourCityModule')"
+            - "%datadir%"
+    
+    mu_yourcity_module.view_helper:
+        class: MU\YourCityModule\Helper\ViewHelper
+        arguments:
+            - "@twig"
+            - "@twig.loader"
+            - "@request_stack"
+            - "@zikula_permissions_module.api.permission"
+            - "@zikula_extensions_module.api.variable"
+            - "@zikula_core.common.theme.pagevars"
+            - "@mu_yourcity_module.controller_helper"
+    
+    mu_yourcity_module.workflow_helper:
+        class: MU\YourCityModule\Helper\WorkflowHelper
+        arguments:
+            - "@translator.default"
+            - "@logger"
+            - "@zikula_permissions_module.api.permission"
+            - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.listentries_helper"

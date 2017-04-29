@@ -1,0 +1,39 @@
+{# Purpose of this template: Display one certain file of location within an external context #}
+<div id="fileOfLocation{$fileOfLocation.id}" class="muyourcitymodule-external-fileoflocation">
+{% if displayMode == 'link' %}
+    <p class="muyourcitymodule-external-link">
+    <a href="{{ path('muyourcitymodule_fileoflocation_display', { 'id': fileOfLocation.id }) }}" title="{{ fileOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}">
+    {{ fileOfLocation|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.filesoflocation.filter') }}
+    </a>
+    </p>
+{% endif %}
+{% if hasPermission('MUYourCityModule::', '::', 'ACCESS_EDIT') %}
+    {# for normal users without edit permission show only the actual file per default #}
+    {% if displayMode == 'embed' %}
+        <p class="muyourcitymodule-external-title">
+            <strong>{{ fileOfLocation|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.filesoflocation.filter') }}</strong>
+        </p>
+    {% endif %}
+{% endif %}
+
+{% if displayMode == 'link' %}
+{% elseif displayMode == 'embed' %}
+    <div class="muyourcitymodule-external-snippet">
+        &nbsp;
+    </div>
+
+    {# you can distinguish the context like this: #}
+    {# % if source == 'contentType' %}
+        ...
+    {% elseif source == 'scribite' %}
+        ...
+    {% endif % #}
+
+    {# you can enable more details about the item: #}
+    {#
+        <p class="muyourcitymodule-external-description">
+            {% if fileOfLocation.description is not empty %}{{ fileOfLocation.description }}<br />{% endif %}
+        </p>
+    #}
+{% endif %}
+</div>

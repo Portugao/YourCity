@@ -1,0 +1,26 @@
+{# Purpose of this template: Display item information for previewing from other modules #}
+<dl id="location{{ location.id }}">
+<dt>{{ location|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.locations.filter') }}</dt>
+<dd>{% if location.logoOfYourLocation is not empty and location.logoOfYourLocationMeta|default %}
+            <a href="{{ location.logoOfYourLocationUrl }}" title="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if location.logoOfYourLocationMeta.isImage %} class="image-link"{% endif %}>
+{% if location.logoOfYourLocationMeta.isImage %}
+    {% set thumbOptions = attribute(thumbRuntimeOptions, 'locationLogoOfYourLocation') %}
+    <img src="{{ location.logoOfYourLocation.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+{% else %}
+    {{ __('Download') }} ({{ location.logoOfYourLocationMeta.size|muyourcitymodule_fileSize(location.logoOfYourLocation.getPathname(), false, false) }})
+{% endif %}
+</a>
+{% else %}&nbsp;{% endif %}
+</dd>
+{% if location.description is not empty %}<dd>{{ location.description }}</dd>{% endif %}
+{% if featureActivationHelper.isEnabled(constant('MU\\YourCityModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'location') %}
+    <dd>
+        <dl class="category-list">
+        {% for propName, catMapping in location.categories %}
+            <dt>{{ propName }}</dt>
+            <dd>{{ catMapping.category.display_name[app.request.locale]|default(catMapping.category.name) }}</dd>
+        {% endfor %}
+        </dl>
+    </dd>
+{% endif %}
+</dl>

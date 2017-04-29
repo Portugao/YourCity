@@ -1,0 +1,13 @@
+{# Purpose of this template: Display images of branch within an external context #}
+<dl>
+    {% for imageOfBranch in items %}
+        <dt>{{ imageOfBranch.getTitleFromDisplayPattern() }}</dt>
+        {% if imageOfBranch.name %}
+            <dd>{{ imageOfBranch.name|striptags|truncate(200, true, '&hellip;') }}</dd>
+        {% endif %}
+        <dd><a href="{{ path('muyourcitymodule_imageofbranch_display', { 'id': imageOfBranch.id }) }}">{{ __('Read more') }}</a>
+        </dd>
+    {% else %}
+        <dt>{{ __('No entries found.') }}</dt>
+    {% endfor %}
+</dl>

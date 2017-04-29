@@ -1,0 +1,84 @@
+{# purpose of this template: parts of menu display view #}
+{% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
+{% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
+{% block pageTitle %}{{ partOfMenu|muyourcitymodule_formattedTitle|default(__('Part of menu')) }}{% endblock %}
+{% block title %}
+    {% set templateTitle = partOfMenu|muyourcitymodule_formattedTitle|default(__('Part of menu')) %}
+    {{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.partsofmenu.filter') }}
+    {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: partOfMenu, area: routeArea, context: 'display' }) %}
+    <div class="dropdown">
+        <a id="itemActions{{ partOfMenu.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
+        {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
+    </div>
+{% endblock %}
+{% block admin_page_icon 'eye' %}
+{% block content %}
+    {% set isQuickView = app.request.query.getBoolean('raw', false) %}
+    <div class="muyourcitymodule-partofmenu muyourcitymodule-display">
+
+    <div class="row">
+        <div class="col-sm-9">
+    <dl>
+        {% if partOfMenu.name is not empty %}
+            <dt>{{ __('Name') }}</dt>
+            <dd>{{ partOfMenu.name }}</dd>
+        {% endif %}
+        {% if partOfMenu.description is not empty %}
+            <dt>{{ __('Description') }}</dt>
+            <dd>{{ partOfMenu.description|safeHtml }}</dd>
+        {% endif %}
+        {% if partOfMenu.menuOfLocation|default %}
+            <dt>{{ __('Menu of location') }}</dt>
+            <dd>
+              {% if not isQuickView %}
+                  <a href="{{ path('muyourcitymodule_menuoflocation_' ~ routeArea ~ 'display', { 'id': partOfMenu.menuOfLocation.id }) }}">{% spaceless %}
+                    {{ partOfMenu.menuOfLocation|muyourcitymodule_formattedTitle }}
+                  {% endspaceless %}</a>
+                  <a id="menuOfLocationItem{{ partOfMenu.menuOfLocation.id }}Display" href="{{ path('muyourcitymodule_menuoflocation_' ~ routeArea ~ 'display', { 'id': partOfMenu.menuOfLocation.id, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ partOfMenu.menuOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
+              {% else %}
+                  {{ partOfMenu.menuOfLocation|muyourcitymodule_formattedTitle }}
+              {% endif %}
+            </dd>
+        {% endif %}
+        
+    </dl>
+
+    {{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: partOfMenu }) }}
+
+    {{ block('display_hooks') }}
+        </div>
+        <div class="col-sm-3">
+            {{ block('related_items') }}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block related_items %}
+    {% if routeArea == 'admin' %}
+        <h4>{{ __('Dishes') }}</h4>
+    {% else %}
+        <h3>{{ __('Dishes') }}</h3>
+    {% endif %}
+    
+    {% if partOfMenu.dishes|default %}
+        {{ include(
+            '@MUYourCityModule/Dish/includeDisplayItemListMany.html.twig',
+            { items: partOfMenu.dishes }
+        ) }}
+    {% endif %}
+    
+    {% set mayManage = hasPermission('MUYourCityModule:Dish:', '::', 'ACCESS_EDIT') %}
+    {% if mayManage %}
+        <p class="managelink">
+            {% set createTitle = __('Create dish') %}
+            <a href="{{ path('muyourcitymodule_dish_' ~ routeArea ~ 'edit', { partOfMenu: partOfMenu.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
+        </p>
+    {% endif %}
+{% endblock %}
+{% block display_hooks %}
+    {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.partsofmenu.display_view', id=partOfMenu.id, urlObject=currentUrlObject) %}
+    {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
+        <h4>{{ providerArea }}</h4>
+        {{ hook }}
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,89 @@
+{# purpose of this template: parts display view #}
+{% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
+{% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
+{% block pageTitle %}{{ part|muyourcitymodule_formattedTitle|default(__('Part')) }}{% endblock %}
+{% block title %}
+    {% set templateTitle = part|muyourcitymodule_formattedTitle|default(__('Part')) %}
+    {{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.parts.filter') }}
+    {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: part, area: routeArea, context: 'display' }) %}
+    <div class="dropdown">
+        <a id="itemActions{{ part.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
+        {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
+    </div>
+{% endblock %}
+{% block admin_page_icon 'eye' %}
+{% block content %}
+    {% set isQuickView = app.request.query.getBoolean('raw', false) %}
+    <div class="muyourcitymodule-part muyourcitymodule-display">
+
+    <div class="row">
+        <div class="col-sm-9">
+    <dl>
+        {% if part.name is not empty %}
+            <dt>{{ __('Name') }}</dt>
+            <dd>{{ part.name }}</dd>
+        {% endif %}
+        {% if part.descriptionForGoogle is not empty %}
+            <dt>{{ __('Description for google') }}</dt>
+            <dd>{{ part.descriptionForGoogle }}</dd>
+        {% endif %}
+        {% if part.description is not empty %}
+            <dt>{{ __('Description') }}</dt>
+            <dd>{{ part.description|safeHtml }}</dd>
+        {% endif %}
+        {% if part.imageOfPart is not empty %}
+            <dt>{{ __('Image of part') }}</dt>
+            <dd>{% if part.imageOfPart is not empty and part.imageOfPartMeta|default %}
+                        <a href="{{ part.imageOfPartUrl }}" title="{{ part|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if part.imageOfPartMeta.isImage %} class="image-link"{% endif %}>
+            {% if part.imageOfPartMeta.isImage %}
+                {% set thumbOptions = attribute(thumbRuntimeOptions, 'partImageOfPart') %}
+                <img src="{{ part.imageOfPart.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ part|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+            {% else %}
+                {{ __('Download') }} ({{ part.imageOfPartMeta.size|muyourcitymodule_fileSize(part.imageOfPart.getPathname(), false, false) }})
+            {% endif %}
+            </a>
+            {% else %}&nbsp;{% endif %}
+            </dd>
+        {% endif %}
+        
+    </dl>
+
+    {{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: part }) }}
+
+    {{ block('display_hooks') }}
+        </div>
+        <div class="col-sm-3">
+            {{ block('related_items') }}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block related_items %}
+    {% if routeArea == 'admin' %}
+        <h4>{{ __('Locations') }}</h4>
+    {% else %}
+        <h3>{{ __('Locations') }}</h3>
+    {% endif %}
+    
+    {% if part.locations|default %}
+        {{ include(
+            '@MUYourCityModule/Location/includeDisplayItemListMany.html.twig',
+            { items: part.locations }
+        ) }}
+    {% endif %}
+    
+    {% set mayManage = hasPermission('MUYourCityModule:Location:', '::', 'ACCESS_COMMENT') %}
+    {% if mayManage %}
+        <p class="managelink">
+            {% set createTitle = __('Create location') %}
+            <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'edit', { parts: part.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
+        </p>
+    {% endif %}
+{% endblock %}
+{% block display_hooks %}
+    {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.parts.display_view', id=part.id, urlObject=currentUrlObject) %}
+    {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
+        <h4>{{ providerArea }}</h4>
+        {{ hook }}
+    {% endfor %}
+{% endblock %}

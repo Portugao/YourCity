@@ -1,0 +1,13 @@
+{# Purpose of this template: Display locations within an external context #}
+<dl>
+    {% for location in items %}
+        <dt>{{ location|muyourcitymodule_formattedTitle }}</dt>
+        {% if location.description %}
+            <dd>{{ location.description|striptags|truncate(200, true, '&hellip;') }}</dd>
+        {% endif %}
+        <dd><a href="{{ path('muyourcitymodule_location_display', { 'id': location.id, 'slug': location.slug }) }}">{{ __('Read more') }}</a>
+        </dd>
+    {% else %}
+        <dt>{{ __('No entries found.') }}</dt>
+    {% endfor %}
+</dl>

@@ -1,0 +1,56 @@
+{# purpose of this template: parts of menu atom feed #}
+<?xml version="1.0" encoding="{% set charset = pageGetVar('meta.charset') %}{% if charset == 'ISO-8859-15' %}ISO-8859-1{% else %}{{ charset }}{% endif %}" ?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title type="text">{{ __('Latest parts of menu') }}</title>
+    <subtitle type="text">{{ __('A direct feed showing the list of parts of menu') }} - {{ getModVar('ZConfig', 'slogan') }}</subtitle>
+    <author>
+        <name>{{ getModVar('ZConfig', 'sitename') }}</name>
+    </author>
+{% set amountOfItems = items|length %}
+{% if amountOfItems > 0 %}
+{% set uniqueID %}tag:{{ app.request.getSchemeAndHttpHost()|replace({ 'http://': '', '/': '' }) }},{{ items.first.createdDate|date('Y-m-d') }}:{{ path('muyourcitymodule_partofmenu_' ~ routeArea ~ 'display', { 'id': items.first.id }) }}{% endset %}
+    <id>{{ uniqueID }}</id>
+    <updated>{{ items[0].updatedDate|date('Y-m-dTH:M:SZ') }}</updated>
+{% endif %}
+    <link rel="alternate" type="text/html" hreflang="{{ app.request.locale }}" href="{{ url('muyourcitymodule_partofmenu_' ~ routeArea ~ 'index') }}" />
+    <link rel="self" type="application/atom+xml" href="{{ app.request.getSchemeAndHttpHost() ~ app.request.getBasePath() }}" />
+    <rights>Copyright (c) {{ 'now'|date('Y') }}, {{ app.request.getSchemeAndHttpHost()|e }}</rights>
+{% for partOfMenu in items %}
+    {{ block('entry') }}
+{% endfor %}
+</feed>
+{% block entry %}
+    <entry>
+        {{ block('entry_content') }}
+    </entry>
+{% endblock %}
+{% block entry_content %}
+    <title type="html">{{ partOfMenu|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.partsofmenu') }}</title>
+    <link rel="alternate" type="text/html" href="{{ url('muyourcitymodule_partofmenu_' ~ routeArea ~ 'display', { 'id': partOfMenu.id }) }}" />
+    {% set uniqueID %}tag:{{ app.request.getSchemeAndHttpHost()|replace({ 'http://': '', '/': '' }) }},{{ partOfMenu.createdDate|date('Y-m-d') }}:{{ path('muyourcitymodule_partofmenu_' ~ routeArea ~ 'display', { 'id': partOfMenu.id }) }}{% endset %}
+    <id>{{ uniqueID }}</id>
+    {% if partOfMenu.updatedDate|default %}
+        <updated>{{ partOfMenu.updatedDate|date('Y-m-dTH:M:SZ') }}</updated>
+    {% endif %}
+    {% if partOfMenu.createdDate|default %}
+        <published>{{ partOfMenu.createdDate|date('Y-m-dTH:M:SZ') }}</published>
+    {% endif %}
+    {% if partOfMenu.createdBy|default and partOfMenu.createdBy.getUid() > 0 %}
+        {% set creatorAttributes = partOfMenu.createdBy.getAttributes() %}
+        <author>
+           <name>{{ creatorAttributes.get('realname')|default(creatorAttributes.get('name'))|default(partOfMenu.createdBy.getUname()) }}</name>
+           <uri>{{ creatorAttributes.get('_UYOURHOMEPAGE')|default('-') }}</uri>
+           <email>{{ partOfMenu.createdBy.getEmail() }}</email>
+        </author>
+    {% endif %}
+    <summary type="html">
+        <![CDATA[
+        {{ partOfMenu.description|truncate(150, true, '&hellip;')|default('-') }}
+        ]]>
+    </summary>
+    <content type="html">
+        <![CDATA[
+        {{ partOfMenu.name|replace({ '<br>': '<br />' }) }}
+        ]]>
+    </content>
+{% endblock %}

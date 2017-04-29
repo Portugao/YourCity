@@ -1,0 +1,9 @@
+{# purpose of this template: images of location view xml view #}
+<?xml version="1.0" encoding="{{ pageGetVar('meta.charset') }}" ?>
+<imagesOfLocation>
+{% for imageOfLocation in items %}
+    {{ include('@MUYourCityModule/ImageOfLocation/include.xml.twig') }}
+{% else %}
+    <noImageOfLocation />
+{% endfor %}
+</imagesOfLocation>
