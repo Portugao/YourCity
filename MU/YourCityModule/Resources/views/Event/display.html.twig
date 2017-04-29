@@ -80,11 +80,11 @@
             <dd>
               {% if not isQuickView %}
                   <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': event.location.id, 'slug': event.location.slug }) }}">{% spaceless %}
-                    {{ event.location.getTitleFromDisplayPattern() }}
+                    {{ event.location|muyourcitymodule_formattedTitle }}
                   {% endspaceless %}</a>
-                  <a id="locationItem{{ event.location.id }}Display" href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': event.location.id, 'slug': event.location.slug, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ event.location.getTitleFromDisplayPattern()|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
+                  <a id="locationItem{{ event.location.id }}Display" href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': event.location.id, 'slug': event.location.slug, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ event.location|muyourcitymodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
               {% else %}
-                  {{ event.location.getTitleFromDisplayPattern() }}
+                  {{ event.location|muyourcitymodule_formattedTitle }}
               {% endif %}
             </dd>
         {% endif %}
