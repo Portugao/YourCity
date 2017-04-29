@@ -47,6 +47,104 @@
             {% if pageSizeSelector is defined and pageSizeSelector != true %}
                 </div>
             {% endif %}
+            {% if showMenusFilter is defined and showMenusFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.showMenus) }}
+            {% if showMenusFilter is defined and showMenusFilter != true %}
+                </div>
+            {% endif %}
+            {% if sendMessageForMenusFilter is defined and sendMessageForMenusFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.sendMessageForMenus) }}
+            {% if sendMessageForMenusFilter is defined and sendMessageForMenusFilter != true %}
+                </div>
+            {% endif %}
+            {% if showOffersFilter is defined and showOffersFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.showOffers) }}
+            {% if showOffersFilter is defined and showOffersFilter != true %}
+                </div>
+            {% endif %}
+            {% if sendMessageForOffersFilter is defined and sendMessageForOffersFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.sendMessageForOffers) }}
+            {% if sendMessageForOffersFilter is defined and sendMessageForOffersFilter != true %}
+                </div>
+            {% endif %}
+            {% if showEventsFilter is defined and showEventsFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.showEvents) }}
+            {% if showEventsFilter is defined and showEventsFilter != true %}
+                </div>
+            {% endif %}
+            {% if sendMessageForEventsFilter is defined and sendMessageForEventsFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.sendMessageForEvents) }}
+            {% if sendMessageForEventsFilter is defined and sendMessageForEventsFilter != true %}
+                </div>
+            {% endif %}
+            {% if showProductsFilter is defined and showProductsFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.showProducts) }}
+            {% if showProductsFilter is defined and showProductsFilter != true %}
+                </div>
+            {% endif %}
+            {% if sendMessageForProductsFilter is defined and sendMessageForProductsFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.sendMessageForProducts) }}
+            {% if sendMessageForProductsFilter is defined and sendMessageForProductsFilter != true %}
+                </div>
+            {% endif %}
+            {% if showOptionOneFilter is defined and showOptionOneFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.showOptionOne) }}
+            {% if showOptionOneFilter is defined and showOptionOneFilter != true %}
+                </div>
+            {% endif %}
+            {% if sendMessageToOptionOneFilter is defined and sendMessageToOptionOneFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.sendMessageToOptionOne) }}
+            {% if sendMessageToOptionOneFilter is defined and sendMessageToOptionOneFilter != true %}
+                </div>
+            {% endif %}
+            {% if showOptionTwoFilter is defined and showOptionTwoFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.showOptionTwo) }}
+            {% if showOptionTwoFilter is defined and showOptionTwoFilter != true %}
+                </div>
+            {% endif %}
+            {% if sendMessageToOptionTwoFilter is defined and sendMessageToOptionTwoFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.sendMessageToOptionTwo) }}
+            {% if sendMessageToOptionTwoFilter is defined and sendMessageToOptionTwoFilter != true %}
+                </div>
+            {% endif %}
+            {% if showOptionThreeFilter is defined and showOptionThreeFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.showOptionThree) }}
+            {% if showOptionThreeFilter is defined and showOptionThreeFilter != true %}
+                </div>
+            {% endif %}
+            {% if sendMessageToOptionThreeFilter is defined and sendMessageToOptionThreeFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.sendMessageToOptionThree) }}
+            {% if sendMessageToOptionThreeFilter is defined and sendMessageToOptionThreeFilter != true %}
+                </div>
+            {% endif %}
             {{ form_widget(quickNavForm.updateview) }}
         </fieldset>
     </div>
