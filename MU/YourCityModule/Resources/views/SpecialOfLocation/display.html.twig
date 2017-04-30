@@ -17,30 +17,40 @@
     <div class="muyourcitymodule-specialoflocation muyourcitymodule-display">
 
     <div class="row">
-        <div class="col-sm-9">
-    <dl>
-        {% if specialOfLocation.name is not empty %}
+        <div class="col-sm-12">
+
+        {#% if specialOfLocation.name is not empty %}
             <dt>{{ __('Name') }}</dt>
             <dd>{{ specialOfLocation.name }}</dd>
         {% endif %}
-        {% if specialOfLocation.description is not empty %}
-            <dt>{{ __('Description') }}</dt>
-            <dd>{{ specialOfLocation.description|safeHtml }}</dd>
-        {% endif %}
         {% if specialOfLocation.iconForSpecial is not empty %}
-            <dt>{{ __('Icon for special') }}</dt>
-            <dd>{{ specialOfLocation.iconForSpecial }}</dd>
+            <span id="icon">{{ specialOfLocation.iconForSpecial|raw }}</span>
+        {% endif %#}
+        {% if specialOfLocation.description is not empty %}
+            <h4>{{ __('Description') }}</h4>
+            {{ specialOfLocation.description|safeHtml }}
         {% endif %}
         
-    </dl>
+        {% if routeArea == 'admin' %}
+            <h4>{{ __('Locations') }}</h4>
+        {% else %}
+            <h3>{{ __('Locations') }}</h3>
+        {% endif %}
+    
+        {% if specialOfLocation.locations|default %}
+            {{ include(
+               '@MUYourCityModule/Location/includeDisplayItemListMany.html.twig',
+                { items: specialOfLocation.locations }
+            ) }}
+        {% endif %}
 
-    {{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: specialOfLocation }) }}
+    {#{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: specialOfLocation }) }#}
 
     {{ block('display_hooks') }}
         </div>
-        <div class="col-sm-3">
+        {#<div class="col-sm-3">
             {{ block('related_items') }}
-        </div>
+        </div>#}
     </div>
 </div>
 {% endblock %}

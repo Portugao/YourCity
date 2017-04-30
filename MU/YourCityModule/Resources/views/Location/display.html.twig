@@ -257,11 +257,35 @@
                 { items: location.specialsOfLocation }
             ) }}
             {% endif %}
+            
+            {% if location.servicesOfLocation|default %}
+            <h3>{{ __('Services of location') }}</h3>
+            {{ include(
+                '@MUYourCityModule/SpecialOfLocation/includeDisplayItemListMany.html.twig',
+                { items: location.servicesOfLocation }
+            ) }}
+            {% endif %}
+            
         </div>
         <br style="clear: both;" />
         {#% if location.latitude != '0.0000000' and location.longitude != '0.0000000' %#}
         <h3 class="muyourcitymodule-map">{{ __('Map') }}</h3>
-        <div id="mapContainer" class="muyourcitymodule-mapcontainer"></div>        
+        <div id="mapContainer" class="muyourcitymodule-mapcontainer"></div>
+        
+        <div class="col-md-12">    
+            {% if location.filesOfLocation|default %}
+                {% if routeArea == 'admin' %}
+                    <h4>{{ __('Files of location') }}</h4>
+                {% else %}
+                   <h3>{{ __('Files of location') }}</h3>
+                {% endif %}
+                {{ include(
+                    '@MUYourCityModule/FileOfLocation/includeDisplayItemListMany.html.twig',
+                    { items: location.filesOfLocation }
+                ) }}
+            {% endif %}        
+        </div>
+              
         </div>
         <div class="col-sm-4">
             {{ block('related_items') }}
@@ -293,18 +317,6 @@
             {% set createTitle = __('Create image of location') %}
             <a href="{{ path('muyourcitymodule_imageoflocation_' ~ routeArea ~ 'edit', { location: location.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
         </p>
-    {% endif %}
-    {% if routeArea == 'admin' %}
-        <h4>{{ __('Files of location') }}</h4>
-    {% else %}
-        <h3>{{ __('Files of location') }}</h3>
-    {% endif %}
-    
-    {% if location.filesOfLocation|default %}
-        {{ include(
-            '@MUYourCityModule/FileOfLocation/includeDisplayItemListMany.html.twig',
-            { items: location.filesOfLocation }
-        ) }}
     {% endif %}
     
     {% set mayManage = hasPermission('MUYourCityModule:FileOfLocation:', '::', 'ACCESS_EDIT') %}
