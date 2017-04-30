@@ -3,7 +3,7 @@
 {% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
 {% block pageTitle %}{{ part.getTitleFromDisplayPattern()|default(__('Part')) }}{% endblock %}
 {% block title %}
-    {% set templateTitle = part.getTitleFromDisplayPattern()|default(__('Part')) %}
+    {% set templateTitle = part|muyourcitymodule_formattedTitle|default(__('Part')) %}
     {{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.parts.filter') }}
     {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: part, area: routeArea, context: 'display' }) %}
     <div class="dropdown">

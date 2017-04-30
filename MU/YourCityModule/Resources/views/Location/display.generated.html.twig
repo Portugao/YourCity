@@ -462,6 +462,7 @@
             <a href="{{ path('muyourcitymodule_serviceoflocation_' ~ routeArea ~ 'edit', { locations: location.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
         </p>
     {% endif %}
+    
     {% if routeArea == 'admin' %}
         <h4>{{ __('Abonnements') }}</h4>
     {% else %}

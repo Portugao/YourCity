@@ -3,7 +3,7 @@
 {% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
 {% block pageTitle %}{{ branch|muyourcitymodule_formattedTitle|default(__('Branch')) }}{% endblock %}
 {% block title %}
-    {% set templateTitle = branch.getTitleFromDisplayPattern()|default(__('Branch')) %}
+    {% set templateTitle = branch|muyourcitymodule_formattedTitle|default(__('Branch')) %}
     {{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.branches.filter') }}
     {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: branch, area: routeArea, context: 'display' }) %}
     <div class="dropdown">
@@ -18,17 +18,29 @@
 
     <div class="row">
         <div class="col-sm-12">
-    {% if branch.imagesOfBranch|default %}
-        {{ include(
-            '@MUYourCityModule/ImageOfBranch/includeDisplayItemListMany.html.twig',
-            { items: branch.imagesOfBranch }
-        ) }}
-    {% endif %}
-    
-    {% if routeArea != 'admin' %}
-        <h4>{{ __('Locations') }}</h4>
-    {% endif %}
+        
+        {% if branch.imageOfBranch is not empty %}
+        <div id="imageOfBranch">
+            {% if branch.imageOfBranch is not empty and branch.imageOfBranchMeta|default %}
+                        <a href="{{ branch.imageOfBranchUrl }}" title="{{ branch|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if branch.imageOfBranchMeta.isImage %} class="image-link"{% endif %}>
+            {% if branch.imageOfBranchMeta.isImage %}
+                {% set thumbOptions = attribute(thumbRuntimeOptions, 'branchImageOfBranch') %}
+                <img src="{{ branch.imageOfBranch.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ branch|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+            {% else %}
+                {{ __('Download') }} ({{ branch.imageOfBranchMeta.size|muyourcitymodule_fileSize(branch.imageOfBranch.getPathname(), false, false) }})
+            {% endif %}
+            </a>
+            {% else %}&nbsp;{% endif %}
+        </div>
+        {% endif %}
+        
+        {% if branch.description is not empty %}
+            <h4>{{ __('Description') }}</h4>
+            {{ branch.description|safeHtml }}
+        {% endif %}
+        <br style="clear: both;" />
 
+    
     {% if branch.locations|default %}
         {{ include(
             '@MUYourCityModule/Location/includeDisplayItemListMany.html.twig',
