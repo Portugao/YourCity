@@ -7,7 +7,7 @@
             <img src="{{ item.logoOfYourLocation.getPathname()|imagine_filter('zkroot', relationThumbRuntimeOptions) }}" alt="{{ item|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ relationThumbRuntimeOptions.thumbnail.size[0] }}" height="{{ relationThumbRuntimeOptions.thumbnail.size[1] }}" class="img-rounded" />
         {% endif %}
     </div>
-    <div class="col-md-10">
+    <div class="col-md-10 location-h2">
         <h2><a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': item.id, 'slug': item.slug }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ item.name|notifyFilters('muyourcitymodule.filterhook.locations') }}
         {{ item|muyourcitymodule_formattedTitle }}</a></h2>
     </div>
