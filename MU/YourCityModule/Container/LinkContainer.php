@@ -41,6 +41,17 @@ class LinkContainer extends AbstractLinkContainer
             if (!$this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_OVERVIEW)) {
                 return $links;
             }
+            
+            if (true === $this->variableApi->get('MUYourCityModule', 'linkOwnAbonnementsOnAccountPage', true)) {
+            	$objectType = 'abonnement';
+            	if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
+            		$links[] = [
+            				'url' => $this->router->generate('muyourcitymodule_' . strtolower($objectType) . '_view', ['own' => 1]),
+            				'text' => $this->__('My abonnements', 'muyourcitymodule'),
+            				'icon' => 'list-alt'
+            		];
+            	}
+            }
 
             if (true === $this->variableApi->get('MUYourCityModule', 'linkOwnBranchesOnAccountPage', true)) {
                 $objectType = 'branch';
@@ -185,16 +196,7 @@ class LinkContainer extends AbstractLinkContainer
                 }
             }
 
-            if (true === $this->variableApi->get('MUYourCityModule', 'linkOwnAbonnementsOnAccountPage', true)) {
-                $objectType = 'abonnement';
-                if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
-                    $links[] = [
-                        'url' => $this->router->generate('muyourcitymodule_' . strtolower($objectType) . '_view', ['own' => 1]),
-                        'text' => $this->__('My abonnements', 'muyourcitymodule'),
-                        'icon' => 'list-alt'
-                    ];
-                }
-            }
+
 
             if ($this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {
                 $links[] = [
@@ -227,6 +229,15 @@ class LinkContainer extends AbstractLinkContainer
                     'icon' => 'wrench'
                 ];
             }
+        }
+        
+        if (in_array('abonnement', $allowedObjectTypes)
+        	&& $this->permissionApi->hasPermission($this->getBundleName() . ':Abonnement:', '::', $permLevel)) {
+        		$links[] = [
+        				'url' => $this->router->generate('muyourcitymodule_abonnement_' . $routeArea . 'view'),
+        				'text' => $this->__('Abonnements', 'muyourcitymodule'),
+        				'title' => $this->__('Abonnement list', 'muyourcitymodule')
+        		];
         }
         
         if (in_array('branch', $allowedObjectTypes)
@@ -339,14 +350,7 @@ class LinkContainer extends AbstractLinkContainer
             ];
         }
         }
-        if (in_array('abonnement', $allowedObjectTypes)
-            && $this->permissionApi->hasPermission($this->getBundleName() . ':Abonnement:', '::', $permLevel)) {
-            $links[] = [
-                'url' => $this->router->generate('muyourcitymodule_abonnement_' . $routeArea . 'view'),
-                'text' => $this->__('Abonnements', 'muyourcitymodule'),
-                'title' => $this->__('Abonnement list', 'muyourcitymodule')
-            ];
-        }
+
         if ($routeArea == 'admin' && $this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {
             $links[] = [
                 'url' => $this->router->generate('muyourcitymodule_config_config'),
