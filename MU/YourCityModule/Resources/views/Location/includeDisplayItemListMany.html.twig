@@ -7,7 +7,7 @@
 <ul class="list-group muyourcitymodule-related-item-list location">
 {% for item in items %}
     {% if hasAdminPermission or item.workflowState == 'approved' %}
-    <li class="list-group-item">
+    <li class="list-group-item col-sm-3">
 <h4 class="list-group-item-heading">
 {% spaceless %}
 {% if not nolink %}

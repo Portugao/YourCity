@@ -1,7 +1,7 @@
 {# purpose of this template: branches display view #}
 {% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
 {% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
-{% block pageTitle %}{{ branch.getTitleFromDisplayPattern()|default(__('Branch')) }}{% endblock %}
+{% block pageTitle %}{{ branch|muyourcitymodule_formattedTitle|default(__('Branch')) }}{% endblock %}
 {% block title %}
     {% set templateTitle = branch.getTitleFromDisplayPattern()|default(__('Branch')) %}
     {{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.branches.filter') }}
@@ -17,73 +17,77 @@
     <div class="muyourcitymodule-branch muyourcitymodule-display">
 
     <div class="row">
-        <div class="col-sm-9">
+        <div class="col-sm-12">
     {% if branch.imagesOfBranch|default %}
         {{ include(
             '@MUYourCityModule/ImageOfBranch/includeDisplayItemListMany.html.twig',
             { items: branch.imagesOfBranch }
         ) }}
     {% endif %}
-    <dl>
-        {#% if branch.name is not empty %}
-            <dt>{{ __('Name') }}</dt>
-            <dd>{{ branch.name }}</dd>
-        {% endif %#}
-        
-    </dl>
-
-    {#{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: branch }) }#}
-
-    {{ block('display_hooks') }}
-        </div>
-        <div class="col-sm-3">
-            {{ block('related_items') }}
-        </div>
-    </div>
-</div>
-{% endblock %}
-{% block related_items %}
-    {#% if routeArea == 'admin' %}
-        <h4>{{ __('Images of branch') }}</h4>
-    {% else %}
-        <h3>{{ __('Images of branch') }}</h3>
-    {% endif %}
     
-    {% if branch.imagesOfBranch|default %}
-        {{ include(
-            '@MUYourCityModule/ImageOfBranch/includeDisplayItemListMany.html.twig',
-            { items: branch.imagesOfBranch }
-        ) }}
-    {% endif %#}
-    
-    {% set mayManage = hasPermission('MUYourCityModule:ImageOfBranch:', '::', 'ACCESS_EDIT') %}
-    {% if mayManage %}
-        <p class="managelink">
-            {% set createTitle = __('Create image of branch') %}
-            <a href="{{ path('muyourcitymodule_imageofbranch_' ~ routeArea ~ 'edit', { branch: branch.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
-        </p>
-    {% endif %}
-    {% if routeArea == 'admin' %}
+    {% if routeArea != 'admin' %}
         <h4>{{ __('Locations') }}</h4>
-    {% else %}
-        <h3>{{ __('Locations') }}</h3>
     {% endif %}
-    
+
     {% if branch.locations|default %}
         {{ include(
             '@MUYourCityModule/Location/includeDisplayItemListMany.html.twig',
             { items: branch.locations }
         ) }}
     {% endif %}
+        
+    {#{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: branch }) }#}
+
+    {{ block('display_hooks') }}
+        </div>
+        {#<div class="col-sm-3">
+            {{ block('related_items') }}
+        </div>#}
+    </div>
+</div>
+{% endblock %}
+{#% block related_items %#}
+    {#% if routeArea == 'admin' %}
+        <h4>{{ __('Images of branch') }}</h4>
+    {% else %}
+        <h3>{{ __('Images of branch') }}</h3>
+    {% endif %#}
     
-    {% set mayManage = hasPermission('MUYourCityModule:Location:', '::', 'ACCESS_COMMENT') %}
+    {#% if branch.imagesOfBranch|default %}
+        {{ include(
+            '@MUYourCityModule/ImageOfBranch/includeDisplayItemListMany.html.twig',
+            { items: branch.imagesOfBranch }
+        ) }}
+    {% endif %#}
+    
+    {#% set mayManage = hasPermission('MUYourCityModule:ImageOfBranch:', '::', 'ACCESS_EDIT') %}
+    {% if mayManage %}
+        <p class="managelink">
+            {% set createTitle = __('Create image of branch') %}
+            <a href="{{ path('muyourcitymodule_imageofbranch_' ~ routeArea ~ 'edit', { branch: branch.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
+        </p>
+    {% endif %#}
+    {#% if routeArea == 'admin' %}
+        <h4>{{ __('Locations') }}</h4>
+    {% else %}
+        <h3>{{ __('Locations') }}</h3>
+    {% endif %#}
+    
+    {#% if branch.locations|default %}
+        {{ include(
+            '@MUYourCityModule/Location/includeDisplayItemListMany.html.twig',
+            { items: branch.locations }
+        ) }}
+    {% endif %#}
+    
+    {#% set mayManage = hasPermission('MUYourCityModule:Location:', '::', 'ACCESS_COMMENT') %}
     {% if mayManage %}
         <p class="managelink">
             {% set createTitle = __('Create location') %}
             <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'edit', { branches: branch.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
         </p>
-    {% endif %}
-{% endblock %}
+    {% endif %#}
+{#% endblock %#}
 {% block display_hooks %}
     {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.branches.display_view', id=branch.id, urlObject=currentUrlObject) %}
     {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
