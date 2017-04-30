@@ -3,7 +3,20 @@
 {% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
 {% block pageTitle %}{{ location|muyourcitymodule_formattedTitle|default(__('Location')) }}{% endblock %}
 {% block title %}
-    {% set templateTitle = location.getTitleFromDisplayPattern()|default(__('Location')) %}
+    <div id="location-logo">
+            {% if location.logoOfYourLocation is not empty and location.logoOfYourLocationMeta|default %}
+                        <a href="{{ location.logoOfYourLocationUrl }}" title="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if location.logoOfYourLocationMeta.isImage %} class="image-link"{% endif %}>
+            {% if location.logoOfYourLocationMeta.isImage %}
+                {% set thumbOptions = attribute(thumbRuntimeOptions, 'locationLogoOfYourLocation') %}
+                <img src="{{ location.logoOfYourLocation.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+            {% else %}
+                {{ __('Download') }} ({{ location.logoOfYourLocationMeta.size|muyourcitymodule_fileSize(location.logoOfYourLocation.getPathname(), false, false) }})
+            {% endif %}
+            </a>
+            {% else %}&nbsp;{% endif %}    
+    </div>
+    
+    {% set templateTitle = location|muyourcitymodule_formattedTitle|default(__('Location')) %}
     {{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.locations.filter') }}{% if routeArea == 'admin' %} <small>({{ location.workflowState|muyourcitymodule_objectState(false)|lower }})</small>{% endif %}
     {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: location, area: routeArea, context: 'display' }) %}
     <div class="dropdown">
@@ -13,12 +26,12 @@
 {% endblock %}
 {% block admin_page_icon 'eye' %}
 {% block content %}
+    
     {% set isQuickView = app.request.query.getBoolean('raw', false) %}
     <div class="muyourcitymodule-location muyourcitymodule-display">
-
     <div class="row">
         <div class="col-sm-8">
-        <div class="col-sm-6">
+        <div class="col-sm-7">
         {% if location.workflowState is not empty and routeArea == 'admin' %}
             <dt>{{ __('State') }}</dt>
             <dd>{{ location.workflowState|muyourcitymodule_listEntry('location', 'workflowState') }}</dd>
@@ -79,10 +92,10 @@
         {% if location.agreement == false %}
 
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-5 col-xs-6">
                 {{ __('Monday') }}
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 col-sm-7 col-xs-6">
             {% if location.closedOnMonday == false %}
                 {{ location.startOnMonday|localizeddate('none', 'short') }} -   
                 {% if location.endOnMonday is not empty %}
@@ -101,10 +114,10 @@
         </div>
         
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-5 col-xs-6">
                 {{ __('Tuesday') }}
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 col-sm-7 col-xs-6">
             {% if location.closedOnTuesday == false %}
                 {{ location.startOnTuesday|localizeddate('none', 'short') }} -   
                 {% if location.endOnTuesday is not empty %}
@@ -123,10 +136,10 @@
         </div>
         
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 col-xs-6">
                 {{ __('Wednesday') }}
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 col-xs-6">
             {% if location.closedOnWednesday == false %}
                 {{ location.startOnWednesday|localizeddate('none', 'short') }} -   
                 {% if location.endOnWednesday is not empty %}
@@ -145,10 +158,10 @@
         </div>
         
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 col-xs-6">
                 {{ __('Thursday') }}
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 col-xs-6">
             {% if location.closedOnThursday == false %}
                 {{ location.startOnThursday|localizeddate('none', 'short') }} -   
                 {% if location.endOnThursday is not empty %}
@@ -167,10 +180,10 @@
         </div>
         
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 col-xs-6">
                 {{ __('Friday') }}
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 col-xs-6">
             {% if location.closedOnFriday == false %}
                 {{ location.startOnFriday|localizeddate('none', 'short') }} -   
                 {% if location.endOnFriday is not empty %}
@@ -189,10 +202,10 @@
         </div>
         
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 col-xs-6">
                 {{ __('Saturday') }}
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 col-xs-6">
             {% if location.closedOnSaturday == false %}
                 {{ location.startOnSaturday|localizeddate('none', 'short') }} -   
                 {% if location.endOnSaturday is not empty %}
@@ -211,10 +224,10 @@
         </div>
         
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 col-xs-6">
                 {{ __('Sunday') }}
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 col-xs-6">
             {% if location.closedOnSunday == false %}
                 {{ location.startOnSunday|localizeddate('none', 'short') }} -   
                 {% if location.endOnSunday is not empty %}
@@ -249,7 +262,7 @@
 
         {{ block('display_hooks') }}
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-5">
             {% if location.specialsOfLocation|default %}
             <h3>{{ __('Specials of location') }}</h3>
             {{ include(
