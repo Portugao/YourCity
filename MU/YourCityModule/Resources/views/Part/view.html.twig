@@ -21,9 +21,7 @@
                 {% endif %}
                 <col id="cItemActions" />
                 <col id="cName" />
-                <col id="cDescriptionForGoogle" />
                 <col id="cDescription" />
-                <col id="cImageOfPart" />
             </colgroup>
             <thead>
             <tr>
@@ -61,28 +59,13 @@
                 <td headers="hName" class="text-left">
                     <a href="{{ path('muyourcitymodule_part_' ~ routeArea ~ 'display', { 'id': part.id }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ part.name|notifyFilters('muyourcitymodule.filterhook.parts') }}</a>
                 </td>
-                <td headers="hDescriptionForGoogle" class="text-left">
-                    {{ part.descriptionForGoogle }}
-                </td>
                 <td headers="hDescription" class="text-left">
                     {{ part.description|safeHtml|truncate(50) }}
-                </td>
-                <td headers="hImageOfPart" class="text-left">
-                    {% if part.imageOfPart is not empty and part.imageOfPartMeta|default %}
-                                <a href="{{ part.imageOfPartUrl }}" title="{{ part|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if part.imageOfPartMeta.isImage %} class="image-link"{% endif %}>
-                    {% if part.imageOfPartMeta.isImage %}
-                        {% set thumbOptions = attribute(thumbRuntimeOptions, 'partImageOfPart') %}
-                        <img src="{{ part.imageOfPart.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ part|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
-                    {% else %}
-                        {{ __('Download') }} ({{ part.imageOfPartMeta.size|muyourcitymodule_fileSize(part.imageOfPart.getPathname(), false, false) }})
-                    {% endif %}
-                    </a>
-                    {% else %}&nbsp;{% endif %}
                 </td>
             </tr>
         {% else %}
             <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
-                <td class="text-left" colspan="{% if routeArea == 'admin' %}6{% else %}5{% endif %}">
+                <td class="text-left" colspan="{% if routeArea == 'admin' %}4{% else %}3{% endif %}">
             {{ __('No parts found.') }}
               </td>
             </tr>
