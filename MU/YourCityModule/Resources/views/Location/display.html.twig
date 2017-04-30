@@ -43,7 +43,7 @@
             {{ include('@MUYourCityModule/Helper/includeCategoriesDisplay.html.twig', { obj: location }) }}
         {% endif %}
         {% if location.description is not empty %}
-            {{ location.description }}<br />
+            {{ location.description|safeHtml }}<br />
         {% endif %}
 
         {% if location.street is not empty %}
