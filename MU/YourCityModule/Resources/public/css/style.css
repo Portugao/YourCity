@@ -152,6 +152,7 @@ div.muyourcitymodule-view .avatar img {
 
 .abo-location-list > h2 {
 	font-size: 1.5em;
+	margin: 20px 0 0 0;
 }
 
 #locationImage {
@@ -184,4 +185,9 @@ div.muyourcitymodule-view .avatar img {
 .percentOfferDisplay {
 	font-size: 3em;
 	color: #ff0000;
+}
+
+#imageOfPart {
+	float: right;
+	margin: 0 0 15px 15px;
 }
