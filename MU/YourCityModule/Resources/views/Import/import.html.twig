@@ -1,0 +1,25 @@
+{# purpose of this template: module configuration page #}
+{% extends 'MUYourCityModule::adminBase.html.twig' %}
+{% block title __('Import') %}
+{% block admin_page_icon 'wrench' %}
+{% block content %}
+    <div class="muyourcitymodule-import">
+        {% form_theme form with [
+            '@MUYourCityModule/Form/bootstrap_3.html.twig',
+            'ZikulaFormExtensionBundle:Form:form_div_layout.html.twig'
+        ] %}
+        {{ form_start(form) }}
+        
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                {{ form_widget(form.import) }}
+                {{ form_widget(form.cancel) }}
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+{% block footer %}
+    {{ parent() }}
+    {{ pageAddAsset('javascript', zasset('@MUYourCityModule:js/MUYourCityModule.Config.js')) }}
+{% endblock %}
