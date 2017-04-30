@@ -23,7 +23,7 @@ div#z-maincontent.z-module-yourcity table tbody tr td {
 }
 
 div.muyourcitymodule-mapcontainer {
-    height: 400px;
+    height: 300px;
 }
 
 
@@ -141,6 +141,14 @@ div.muyourcitymodule-view .avatar img {
 
 
 /*****************OWN**********************/
+
+#location-logo {
+	float: right;
+}
+
+.location-h2 h2 {
+	font-size: 1.6em;
+}
 
 .abo-location-list {
 	posititon: relative;
