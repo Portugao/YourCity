@@ -15,30 +15,46 @@
 {% block content %}
     {% set isQuickView = app.request.query.getBoolean('raw', false) %}
     <div class="muyourcitymodule-part muyourcitymodule-display">
-
+        
     <div class="row">
-        <div class="col-sm-9">
-    {% if part.imagesOfPart|default %}
+        <div class="col-sm-12">
+        
+        {% if part.imageOfPart is not empty %}
+        <div id="imageOfPart">
+            {% if part.imageOfPart is not empty and part.imageOfPartMeta|default %}
+                        <a href="{{ part.imageOfPartUrl }}" title="{{ part|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if part.imageOfPartMeta.isImage %} class="image-link"{% endif %}>
+            {% if part.imageOfPartMeta.isImage %}
+                {% set thumbOptions = attribute(thumbRuntimeOptions, 'partImageOfPart') %}
+                <img src="{{ part.imageOfPart.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ part|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+            {% else %}
+                {{ __('Download') }} ({{ part.imageOfPartMeta.size|muyourcitymodule_fileSize(part.imageOfPart.getPathname(), false, false) }})
+            {% endif %}
+            </a>
+            {% else %}&nbsp;{% endif %}
+        </div>
+        {% endif %}
+        
+        {% if part.description is not empty %}
+            {{ __('Description') }}
+            {{ part.description|safeHtml }}
+        {% endif %}
+        <br style="clear: both;" />
+
+    
+    {% if part.locations|default %}
         {{ include(
-            '@MUYourCityModule/ImageOfPart/includeDisplayItemListMany.html.twig',
-            { items: part.imagesOfPart }
+            '@MUYourCityModule/Location/includeDisplayItemListMany.html.twig',
+            { items: part.locations }
         ) }}
     {% endif %}
-    <dl>
-        {#% if part.name is not empty %}
-            <dt>{{ __('Name') }}</dt>
-            <dd>{{ part.name }}</dd>
-        {% endif %#}
-        
-    </dl>
 
     {#{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: part }) }#}
 
     {{ block('display_hooks') }}
         </div>
-        <div class="col-sm-3">
+       {# <div class="col-sm-3">
             {{ block('related_items') }}
-        </div>
+        </div>#}
     </div>
 </div>
 {% endblock %}
@@ -49,6 +65,10 @@
         <h3>{{ __('Images of part') }}</h3>
     {% endif %#}
     
+    {% if routeArea != 'admin' %}
+        <h4>{{ __('Locations') }}</h4>
+    {% endif %}
+    
     {#% if part.imagesOfPart|default %}
         {{ include(
             '@MUYourCityModule/ImageOfPart/includeDisplayItemListMany.html.twig',
@@ -56,33 +76,33 @@
         ) }}
     {% endif %#}
     
-    {% set mayManage = hasPermission('MUYourCityModule:ImageOfPart:', '::', 'ACCESS_EDIT') %}
+    {#% set mayManage = hasPermission('MUYourCityModule:ImageOfPart:', '::', 'ACCESS_EDIT') %}
     {% if mayManage %}
         <p class="managelink">
             {% set createTitle = __('Create image of part') %}
             <a href="{{ path('muyourcitymodule_imageofpart_' ~ routeArea ~ 'edit', { part: part.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
         </p>
-    {% endif %}
+    {% endif %#}
     {% if routeArea == 'admin' %}
         <h4>{{ __('Locations') }}</h4>
     {% else %}
         <h3>{{ __('Locations') }}</h3>
     {% endif %}
     
-    {% if part.locations|default %}
+    {#% if part.locations|default %}
         {{ include(
             '@MUYourCityModule/Location/includeDisplayItemListMany.html.twig',
             { items: part.locations }
         ) }}
-    {% endif %}
+    {% endif %#}
     
-    {% set mayManage = hasPermission('MUYourCityModule:Location:', '::', 'ACCESS_COMMENT') %}
+    {#% set mayManage = hasPermission('MUYourCityModule:Location:', '::', 'ACCESS_COMMENT') %}
     {% if mayManage %}
         <p class="managelink">
             {% set createTitle = __('Create location') %}
             <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'edit', { parts: part.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
         </p>
-    {% endif %}
+    {% endif %#}
 {% endblock %}
 {% block display_hooks %}
     {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.parts.display_view', id=part.id, urlObject=currentUrlObject) %}
