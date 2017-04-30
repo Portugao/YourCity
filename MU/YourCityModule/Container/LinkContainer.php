@@ -350,6 +350,15 @@ class LinkContainer extends AbstractLinkContainer
             ];
         }
         }
+        
+        if ($routeArea == 'admin' && $this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {
+        	$links[] = [
+        			'url' => $this->router->generate('muyourcitymodule_import_import'),
+        			'text' => $this->__('Import', 'muyourcitymodule'),
+        			'title' => $this->__('Import the old table', 'muyourcitymodule'),
+        			'icon' => 'wrench'
+        	];
+        }
 
         if ($routeArea == 'admin' && $this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {
             $links[] = [
