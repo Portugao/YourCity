@@ -6,7 +6,7 @@
 {% if items|default and items|length > 0 %}
 <ul class="list-group muyourcitymodule-related-item-list serviceoflocation">
 {% for item in items %}
-<li class="list-group-item">{{ item.name }}</li>
+<li class="list-group-item"><a href="{{ path('muyourcitymodule_serviceOflocation_' ~ routeArea ~ 'display', { 'id': item.id }) }}">{{ item.name }}</a></li>
 {% endfor %}
 </ul>
 {% endif %}

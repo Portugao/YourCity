@@ -4,9 +4,9 @@
     {% set nolink = false %}
 {% endif %}
 {% if items|default and items|length > 0 %}
-<ul class="list-group muyourcitymodule-related-item-list serviceoflocation">
+<ul class="list-group muyourcitymodule-related-item-list serviceOfLocation">
 {% for item in items %}
-<li class="list-group-item">{{ item.iconForSpecial|raw }} {{ item.name }}</li>
+<li class="list-group-item">{{ item.iconForSpecial|raw }} <a href="{{ path('muyourcitymodule_specialoflocation_' ~ routeArea ~ 'display', { 'id': item.id }) }}">{{ item.name }}</a></li>
 {% endfor %}
 </ul>
 {% endif %}
