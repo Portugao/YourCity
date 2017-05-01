@@ -343,6 +343,39 @@ abstract class AbstractLocationType extends AbstractType
             'required' => false,
         ]);
         
+        $builder->add('bsagStop', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            'label' => $this->__('Bsag stop') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => '',
+                'title' => $this->__('Enter the bsag stop of the location')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('tram', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            'label' => $this->__('Tram') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => '',
+                'title' => $this->__('Enter the tram of the location')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('bus', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            'label' => $this->__('Bus') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => '',
+                'title' => $this->__('Enter the bus of the location')
+            ],
+            'required' => false,
+        ]);
+        
         $builder->add('closedForEver', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
             'label' => $this->__('Closed for ever') . ':',
             'attr' => [

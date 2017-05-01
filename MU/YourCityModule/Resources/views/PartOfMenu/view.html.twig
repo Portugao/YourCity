@@ -60,7 +60,7 @@
                     </div>
                 </td>
                 <td headers="hName" class="text-left">
-                    <a href="{{ path('muyourcitymodule_partofmenu_' ~ routeArea ~ 'display', { 'id': partOfMenu.id }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ partOfMenu.name|notifyFilters('muyourcitymodule.filterhook.partsofmenu') }}</a>
+                    <a href="{{ path('muyourcitymodule_partofmenu_' ~ routeArea ~ 'display', { 'id': partOfMenu.id }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ partOfMenu.name|notifyFilters('muyourcitymodule.filterhook.partsofmenu')|safeHtml }}</a>
                 </td>
                 <td headers="hDescription" class="text-left">
                     {{ partOfMenu.description|safeHtml|truncate(50) }}

@@ -11,7 +11,7 @@ application "YourCity" {
         versionAllGeneratedFiles false
         generatePoweredByBacklinksIntoFooterTemplates false
         generateTests false
-        markFiles "Controller/AbonnementControllper.php,\r\nResources/public/css/style.css,\r\nResources/views/Abonnement/view.html.twig,\r\nResources/views/Branch/display.html.twig,\r\nResources/views/Branch/view.html.twig,\r\nResources/views/Event/display.html.twig,\r\nResources/views/Event/view.html.twig,\r\nResources/views/MenuOfLocation/display.html.twig,\r\nResources/views/MenuOfLocation/view.html.twig,\r\nResources/views/Location/display.html.twig,\r\nResources/views/Location/view.html.twig,\r\nResources/views/Offer/display.html.twig,\r\nResources/views/Offer/view.html.twig,\r\nResources/views/Part/display.html.twig,\r\nResources/views/Part/view.html.twig,\r\nResources/views/SpecialOfLocation/display.html.twig,\r\nResources/views/SpecialOfLocation/view.html.twig,\r\nResources/views/SpecialOfLocation/view.html.twig,\r\nResources/views/ServiceOfLocation/display.html.twig,\r\nResources/views/SpecialOfLocation/view.html.twig"
+        markFiles "Container/LinkContainer.php,\r\nController/AbonnementController.php,\r\nResources/public/css/style.css,\r\nResources/views/Abonnement/view.html.twig,\r\nResources/views/Branch/display.html.twig,\r\nResources/views/Branch/view.html.twig,\r\nResources/views/Event/display.html.twig,\r\nResources/views/Event/view.html.twig,\r\nResources/views/FileOfLocatiojn/display.html.twig,\r\nResources/views/FileOfLocation/view.html.twig,\r\nResources/views/ImageOfLocation/display.html.twig,\r\nResources/views/ImageOfLocation/view.html.twig,\r\nResources/views/MenuOfLocation/display.html.twig,\r\nResources/views/MenuOfLocation/view.html.twig,\r\nResources/views/Location/display.html.twig,\r\nResources/views/Location/view.html.twig,\r\nResources/views/Offer/display.html.twig,\r\nResources/views/Offer/view.html.twig,\r\nResources/views/Part/display.html.twig,\r\nResources/views/Part/view.html.twig,\r\nResources/views/Product/view.html.twig,\r\nResources/views/Product/display.html.twig,\r\nResources/views/Part/view.html.twig,\r\nResources/views/SpecialOfLocation/display.html.twig,\r\nResources/views/SpecialOfLocation/view.html.twig,\r\nResources/views/ServiceOfLocation/view.html.twig,\r\nResources/views/ServiceOfLocation/display.html.twig,\r\nResources/views/SpecialOfLocation/view.html.twig"
     }
     entities {
         entity "branch" {
@@ -26,7 +26,7 @@ application "YourCity" {
                     displayType NONE
                     length 170
                 },
-                text "description" translatable {
+                text "description" nullable translatable {
                     documentation "Only 2000 characters."
                     mandatory false
                 },
@@ -101,6 +101,16 @@ application "YourCity" {
                     mandatory false
                 },
                 url "homepage" {
+                    mandatory false
+                },
+                string "bsagStop" {
+                    mandatory false
+                }
+            ,
+                string "tram" {
+                    mandatory false
+                },
+                string "bus" {
                     mandatory false
                 },
                 boolean "closedForEver" {
@@ -270,7 +280,7 @@ application "YourCity" {
                     mandatory false
                 displayType NONE
                 },
-                text "description" nullable {
+                text "description" nullable translatable {
                     documentation "Only 2000 characters."
                     mandatory false
                 },
@@ -502,11 +512,11 @@ application "YourCity" {
             ,
                 datetime "startDate",
                 datetime "endDate",
-                datetime "start2Date" {
+                datetime "start2Date" nullable {
                     documentation ""
                     mandatory false
                 },
-                datetime "end2Date" endDate {
+                datetime "end2Date" nullable endDate {
                     mandatory false
                 }
             }
@@ -588,9 +598,13 @@ application "YourCity" {
                     documentation "Only 2000 characters."
                     mandatory false
                 },
+                string "descriptionForGoogle" nullable translatable {
+                    mandatory false
+                },
                 string "iconForSpecial" {
                     documentation "Enter a bootstrap icon."
                     mandatory false
+                displayType DISPLAY
                 }
             }
             actions {
@@ -615,9 +629,13 @@ application "YourCity" {
                 displayType NONE
                 }
             ,
+                string "descriptionForGoogle" nullable translatable {
+                    mandatory false
+                },
                 string "iconForService" {
                     documentation "Enter a bootstrap icon."
                     mandatory false
+                displayType DISPLAY
                 }
             }
             actions {
@@ -649,15 +667,21 @@ application "YourCity" {
                 boolean "showOffers" ajaxTogglability {
                     mandatory false
                 },
-                boolean "sendMessageForOffers" ajaxTogglability,
+                boolean "sendMessageForOffers" ajaxTogglability {
+                    mandatory false
+                },
                 boolean "showEvents" ajaxTogglability {
                     mandatory false
                 },
                 boolean "sendMessageForEvents" ajaxTogglability {
                     mandatory false
                 },
-                boolean "showProducts" ajaxTogglability,
-                boolean "sendMessageForProducts" ajaxTogglability,
+                boolean "showProducts" ajaxTogglability {
+                    mandatory false
+                },
+                boolean "sendMessageForProducts" ajaxTogglability {
+                    mandatory false
+                },
                 boolean "showOptionOne" ajaxTogglability {
                     mandatory false
                     visible false
@@ -739,6 +763,7 @@ application "YourCity" {
             sourceAlias "location"
             target "menuOfLocation"
             targetAlias "menuOfLocation"
+            nullable false
             orderBy "positionOfMenu"
         },
         one2many {
@@ -774,6 +799,7 @@ application "YourCity" {
             sourceAlias "location"
             target "product"
             targetAlias "products"
+            nullable false
             orderBy "name"
         },
         one2many {
@@ -791,6 +817,7 @@ application "YourCity" {
             targetAlias "specialsOfLocation"
             refClass "LocationSpecialOfLocation"
             orderBy "name"
+        orderByReverse "name"
         },
         many2many {
             source "location"
@@ -799,6 +826,7 @@ application "YourCity" {
             targetAlias "servicesOfLocation"
             refClass "LocationServiceofLocation"
             orderBy "name"
+        orderByReverse "name"
         }
     ,
         one2many {

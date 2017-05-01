@@ -80,7 +80,7 @@
                     </div>
                 </td>
                 <td headers="hName" class="text-left">
-                    <a href="{{ path('muyourcitymodule_dish_' ~ routeArea ~ 'display', { 'id': dish.id }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ dish.name|notifyFilters('muyourcitymodule.filterhook.dishes') }}</a>
+                    <a href="{{ path('muyourcitymodule_dish_' ~ routeArea ~ 'display', { 'id': dish.id }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ dish.name|notifyFilters('muyourcitymodule.filterhook.dishes')|safeHtml }}</a>
                 </td>
                 <td headers="hDescription" class="text-left">
                     {{ dish.description|safeHtml|truncate(50) }}

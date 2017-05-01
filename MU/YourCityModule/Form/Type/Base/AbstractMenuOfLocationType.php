@@ -282,8 +282,6 @@ abstract class AbstractMenuOfLocationType extends AbstractType
             'multiple' => false,
             'expanded' => false,
             'query_builder' => $queryBuilder,
-            'placeholder' => $this->__('Please choose an option'),
-            'required' => false,
             'label' => $this->__('Location'),
             'attr' => [
                 'title' => $this->__('Choose the location')

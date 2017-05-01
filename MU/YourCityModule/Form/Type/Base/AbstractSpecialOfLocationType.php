@@ -162,6 +162,17 @@ abstract class AbstractSpecialOfLocationType extends AbstractType
             'required' => false,
         ]);
         
+        $builder->add('descriptionForGoogle', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            'label' => $this->__('Description for google') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => '',
+                'title' => $this->__('Enter the description for google of the special of location')
+            ],
+            'required' => false,
+        ]);
+        
         if ($this->variableApi->getSystemVar('multilingual') && $this->featureActivationHelper->isEnabled(FeatureActivationHelper::TRANSLATIONS, 'specialOfLocation')) {
             $supportedLanguages = $this->translatableHelper->getSupportedLanguages('specialOfLocation');
             if (is_array($supportedLanguages) && count($supportedLanguages) > 1) {

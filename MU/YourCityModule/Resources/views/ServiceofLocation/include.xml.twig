@@ -3,6 +3,7 @@
     <id>{{ serviceOfLocation.id }}</id>
     <name><![CDATA[{{ serviceOfLocation.name }}]]></name>
     <description><![CDATA[{{ serviceOfLocation.description|safeHtml }}]]></description>
+    <descriptionForGoogle><![CDATA[{{ serviceOfLocation.descriptionForGoogle }}]]></descriptionForGoogle>
     <iconForService><![CDATA[{{ serviceOfLocation.iconForService }}]]></iconForService>
     <workflowState>{{ serviceOfLocation.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
     <locations>

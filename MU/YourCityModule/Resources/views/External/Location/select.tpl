@@ -56,6 +56,9 @@
                     <option value="telefon"{if $sort eq 'telefon'} selected="selected"{/if}>{gt text='Telefon'}</option>
                     <option value="mobil"{if $sort eq 'mobil'} selected="selected"{/if}>{gt text='Mobil'}</option>
                     <option value="homepage"{if $sort eq 'homepage'} selected="selected"{/if}>{gt text='Homepage'}</option>
+                    <option value="bsagStop"{if $sort eq 'bsagStop'} selected="selected"{/if}>{gt text='Bsag stop'}</option>
+                    <option value="tram"{if $sort eq 'tram'} selected="selected"{/if}>{gt text='Tram'}</option>
+                    <option value="bus"{if $sort eq 'bus'} selected="selected"{/if}>{gt text='Bus'}</option>
                     <option value="openingHours"{if $sort eq 'openingHours'} selected="selected"{/if}>{gt text='Opening hours'}</option>
                     <option value="startOnMonday"{if $sort eq 'startOnMonday'} selected="selected"{/if}>{gt text='Start on monday'}</option>
                     <option value="endOnMonday"{if $sort eq 'endOnMonday'} selected="selected"{/if}>{gt text='End on monday'}</option>

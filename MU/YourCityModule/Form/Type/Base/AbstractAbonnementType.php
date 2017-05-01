@@ -158,7 +158,7 @@ abstract class AbstractAbonnementType extends AbstractType
                 'class' => '',
                 'title' => $this->__('send message for offers ?')
             ],
-            'required' => true,
+            'required' => false,
         ]);
         
         $builder->add('showEvents', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
@@ -185,7 +185,7 @@ abstract class AbstractAbonnementType extends AbstractType
                 'class' => '',
                 'title' => $this->__('show products ?')
             ],
-            'required' => true,
+            'required' => false,
         ]);
         
         $builder->add('sendMessageForProducts', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
@@ -194,7 +194,7 @@ abstract class AbstractAbonnementType extends AbstractType
                 'class' => '',
                 'title' => $this->__('send message for products ?')
             ],
-            'required' => true,
+            'required' => false,
         ]);
         
         $builder->add('showOptionOne', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [

@@ -3,7 +3,7 @@
 {% if displayMode == 'link' %}
     <p class="muyourcitymodule-external-link">
     <a href="{{ path('muyourcitymodule_specialoflocation_display', { 'id': specialOfLocation.id }) }}" title="{{ specialOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}">
-    {{ specialOfLocation|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.specialsoflocation.filter') }}
+    {{ specialOfLocation|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.specialsoflocation.filter')|safeHtml }}
     </a>
     </p>
 {% endif %}
@@ -11,7 +11,7 @@
     {# for normal users without edit permission show only the actual file per default #}
     {% if displayMode == 'embed' %}
         <p class="muyourcitymodule-external-title">
-            <strong>{{ specialOfLocation|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.specialsoflocation.filter') }}</strong>
+            <strong>{{ specialOfLocation|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.specialsoflocation.filter')|safeHtml }}</strong>
         </p>
     {% endif %}
 {% endif %}

@@ -140,7 +140,7 @@ abstract class AbstractServiceOfLocationController extends AbstractController
         
         $sortableColumns->addColumns([
             new Column('name'),
-            new Column('iconForService'),
+            new Column('descriptionForGoogle'),
             new Column('createdBy'),
             new Column('createdDate'),
             new Column('updatedBy'),

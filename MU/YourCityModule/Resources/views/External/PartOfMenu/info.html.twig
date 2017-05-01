@@ -1,5 +1,5 @@
 {# Purpose of this template: Display item information for previewing from other modules #}
 <dl id="partOfMenu{{ partOfMenu.id }}">
-<dt>{{ partOfMenu|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.partsofmenu.filter') }}</dt>
+<dt>{{ partOfMenu|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.partsofmenu.filter')|safeHtml }}</dt>
 {% if partOfMenu.description is not empty %}<dd>{{ partOfMenu.description }}</dd>{% endif %}
 </dl>

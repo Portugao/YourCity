@@ -143,7 +143,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Used to determine moderator user accounts for sending email notifications.')
                 ],
                 'help' => $this->__('Used to determine moderator user accounts for sending email notifications.'),
-                'data' => isset($this->moduleVars['moderationGroupForLocations']) ? $this->moduleVars['moderationGroupForLocations'] : '',
+                'data' => isset($this->moduleVars['moderationGroupForLocations']) ? intval($this->moduleVars['moderationGroupForLocations']) : intval(2),
                 'attr' => [
                     'maxlength' => 255,
                     'title' => $this->__('Choose the moderation group for locations.')

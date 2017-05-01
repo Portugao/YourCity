@@ -57,7 +57,7 @@ abstract class AbstractSpecialOfLocationRepository extends EntityRepository
         return [
             'name',
             'description',
-            'iconForSpecial',
+            'descriptionForGoogle',
             'createdBy',
             'createdDate',
             'updatedBy',

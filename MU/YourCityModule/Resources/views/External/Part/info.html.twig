@@ -1,6 +1,6 @@
 {# Purpose of this template: Display item information for previewing from other modules #}
 <dl id="part{{ part.id }}">
-<dt>{{ part|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.parts.filter') }}</dt>
+<dt>{{ part|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.parts.filter')|safeHtml }}</dt>
 <dd>{% if part.imageOfPart is not empty and part.imageOfPartMeta|default %}
             <a href="{{ part.imageOfPartUrl }}" title="{{ part|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if part.imageOfPartMeta.isImage %} class="image-link"{% endif %}>
 {% if part.imageOfPartMeta.isImage %}

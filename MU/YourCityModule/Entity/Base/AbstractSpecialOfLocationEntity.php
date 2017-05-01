@@ -87,6 +87,14 @@ abstract class AbstractSpecialOfLocationEntity extends EntityAccess implements T
     protected $description = '';
     
     /**
+     * @Gedmo\Translatable
+     * @ORM\Column(length=255, nullable=true)
+     * @Assert\Length(min="0", max="255")
+     * @var string $descriptionForGoogle
+     */
+    protected $descriptionForGoogle = '';
+    
+    /**
      * Enter a bootstrap icon.
      * @ORM\Column(length=255)
      * @Assert\NotNull()
@@ -110,6 +118,7 @@ abstract class AbstractSpecialOfLocationEntity extends EntityAccess implements T
      * Bidirectional - Many specialsOfLocation [specials of location] are linked by many locations [locations] (INVERSE SIDE).
      *
      * @ORM\ManyToMany(targetEntity="MU\YourCityModule\Entity\LocationEntity", mappedBy="specialsOfLocation")
+     * @ORM\OrderBy({"name" = "ASC"})
      * @var \MU\YourCityModule\Entity\LocationEntity[] $locations
      */
     protected $locations = null;
@@ -245,6 +254,30 @@ abstract class AbstractSpecialOfLocationEntity extends EntityAccess implements T
     {
         if ($this->description !== $description) {
             $this->description = $description;
+        }
+    }
+    
+    /**
+     * Returns the description for google.
+     *
+     * @return string
+     */
+    public function getDescriptionForGoogle()
+    {
+        return $this->descriptionForGoogle;
+    }
+    
+    /**
+     * Sets the description for google.
+     *
+     * @param string $descriptionForGoogle
+     *
+     * @return void
+     */
+    public function setDescriptionForGoogle($descriptionForGoogle)
+    {
+        if ($this->descriptionForGoogle !== $descriptionForGoogle) {
+            $this->descriptionForGoogle = $descriptionForGoogle;
         }
     }
     

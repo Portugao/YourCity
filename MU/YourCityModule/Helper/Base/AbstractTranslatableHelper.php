@@ -94,7 +94,7 @@ abstract class AbstractTranslatableHelper
                 $fields = ['slogan', 'descriptionForGoogle', 'description', 'description2'];
                 break;
             case 'part':
-                $fields = ['descriptionForGoogle'];
+                $fields = ['descriptionForGoogle', 'description'];
                 break;
             case 'imageOfLocation':
                 $fields = ['name', 'description'];
@@ -121,10 +121,10 @@ abstract class AbstractTranslatableHelper
                 $fields = ['name', 'description', 'today'];
                 break;
             case 'specialOfLocation':
-                $fields = ['name', 'description'];
+                $fields = ['name', 'description', 'descriptionForGoogle'];
                 break;
             case 'serviceOfLocation':
-                $fields = ['name', 'description'];
+                $fields = ['name', 'description', 'descriptionForGoogle'];
                 break;
         }
     

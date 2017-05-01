@@ -1,6 +1,6 @@
 {# Purpose of this template: Display item information for previewing from other modules #}
 <dl id="location{{ location.id }}">
-<dt>{{ location|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.locations.filter') }}</dt>
+<dt>{{ location|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.locations.filter')|safeHtml }}</dt>
 <dd>{% if location.logoOfYourLocation is not empty and location.logoOfYourLocationMeta|default %}
             <a href="{{ location.logoOfYourLocationUrl }}" title="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if location.logoOfYourLocationMeta.isImage %} class="image-link"{% endif %}>
 {% if location.logoOfYourLocationMeta.isImage %}

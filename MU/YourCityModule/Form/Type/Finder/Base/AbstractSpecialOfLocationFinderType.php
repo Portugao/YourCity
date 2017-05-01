@@ -129,7 +129,7 @@ abstract class AbstractSpecialOfLocationFinderType extends AbstractType
                 'choices' => [
                     $this->__('Name') => 'name',
                     $this->__('Description') => 'description',
-                    $this->__('Icon for special') => 'iconForSpecial',
+                    $this->__('Description for google') => 'descriptionForGoogle',
                     $this->__('Creation date') => 'createdDate',
                     $this->__('Creator') => 'createdBy',
                     $this->__('Update date') => 'updatedDate',

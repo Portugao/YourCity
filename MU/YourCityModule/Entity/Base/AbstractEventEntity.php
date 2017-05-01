@@ -170,16 +170,14 @@ abstract class AbstractEventEntity extends EntityAccess implements Translatable
     protected $endDate;
     
     /**
-     * @ORM\Column(type="datetime")
-     * @Assert\NotNull()
+     * @ORM\Column(type="datetime", nullable=true)
      * @Assert\DateTime()
      * @var DateTime $start2Date
      */
     protected $start2Date;
     
     /**
-     * @ORM\Column(type="datetime")
-     * @Assert\NotNull()
+     * @ORM\Column(type="datetime", nullable=true)
      * @Assert\DateTime()
      * @var DateTime $end2Date
      */
@@ -595,6 +593,8 @@ abstract class AbstractEventEntity extends EntityAccess implements Translatable
         if ($this->start2Date !== $start2Date) {
             if (is_object($start2Date) && $start2Date instanceOf \DateTime) {
                 $this->start2Date = $start2Date;
+            } elseif (null === $start2Date || empty($start2Date)) {
+                $this->start2Date = null;
             } else {
                 $this->start2Date = new \DateTime($start2Date);
             }
@@ -623,6 +623,8 @@ abstract class AbstractEventEntity extends EntityAccess implements Translatable
         if ($this->end2Date !== $end2Date) {
             if (is_object($end2Date) && $end2Date instanceOf \DateTime) {
                 $this->end2Date = $end2Date;
+            } elseif (null === $end2Date || empty($end2Date)) {
+                $this->end2Date = null;
             } else {
                 $this->end2Date = new \DateTime($end2Date);
             }

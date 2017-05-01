@@ -35,7 +35,7 @@
     </item>
 {% endblock %}
 {% block entry_content %}
-    <title><![CDATA[{% if abonnement.updatedDate|default %}{{ abonnement.updatedDate|localizeddate('medium', 'short') }} - {% endif %}{{ abonnement|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.abonnements') }}]]></title>
+    <title><![CDATA[{% if abonnement.updatedDate|default %}{{ abonnement.updatedDate|localizeddate('medium', 'short') }} - {% endif %}{{ abonnement|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.abonnements')|safeHtml }}]]></title>
     <link>{{ url('muyourcitymodule_abonnement_' ~ routeArea ~ 'view') }}</link>
     <guid>{{ url('muyourcitymodule_abonnement_' ~ routeArea ~ 'view') }}</guid>
     {% if abonnement.createdBy|default and abonnement.createdBy.getUid() > 0 %}

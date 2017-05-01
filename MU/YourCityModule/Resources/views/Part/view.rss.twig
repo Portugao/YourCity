@@ -35,7 +35,7 @@
     </item>
 {% endblock %}
 {% block entry_content %}
-    <title><![CDATA[{% if part.updatedDate|default %}{{ part.updatedDate|localizeddate('medium', 'short') }} - {% endif %}{{ part|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.parts') }}]]></title>
+    <title><![CDATA[{% if part.updatedDate|default %}{{ part.updatedDate|localizeddate('medium', 'short') }} - {% endif %}{{ part|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.parts')|safeHtml }}]]></title>
     <link>{{ url('muyourcitymodule_part_' ~ routeArea ~ 'display', { 'id': part.id }) }}</link>
     <guid>{{ url('muyourcitymodule_part_' ~ routeArea ~ 'display', { 'id': part.id }) }}</guid>
     {% if part.createdBy|default and part.createdBy.getUid() > 0 %}

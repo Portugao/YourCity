@@ -1,6 +1,6 @@
 {# Purpose of this template: Display item information for previewing from other modules #}
 <dl id="dish{{ dish.id }}">
-<dt>{{ dish|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.dishes.filter') }}</dt>
+<dt>{{ dish|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.dishes.filter')|safeHtml }}</dt>
 <dd>{% if dish.imageOfDish is not empty and dish.imageOfDishMeta|default %}
             <a href="{{ dish.imageOfDishUrl }}" title="{{ dish|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if dish.imageOfDishMeta.isImage %} class="image-link"{% endif %}>
 {% if dish.imageOfDishMeta.isImage %}

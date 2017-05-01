@@ -25,7 +25,7 @@
     </entry>
 {% endblock %}
 {% block entry_content %}
-    <title type="html">{{ branch|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.branches') }}</title>
+    <title type="html">{{ branch|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.branches')|safeHtml }}</title>
     <link rel="alternate" type="text/html" href="{{ url('muyourcitymodule_branch_' ~ routeArea ~ 'display', { 'id': branch.id }) }}" />
     {% set uniqueID %}tag:{{ app.request.getSchemeAndHttpHost()|replace({ 'http://': '', '/': '' }) }},{{ branch.createdDate|date('Y-m-d') }}:{{ path('muyourcitymodule_branch_' ~ routeArea ~ 'display', { 'id': branch.id }) }}{% endset %}
     <id>{{ uniqueID }}</id>

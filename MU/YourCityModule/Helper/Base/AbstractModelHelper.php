@@ -75,6 +75,7 @@ abstract class AbstractModelHelper
                 break;
             case 'menuOfLocation':
                 $result = true;
+                $result &= $this->hasExistingInstances('location');
                 break;
             case 'partOfMenu':
                 $result = true;
@@ -87,6 +88,7 @@ abstract class AbstractModelHelper
                 break;
             case 'product':
                 $result = true;
+                $result &= $this->hasExistingInstances('location');
                 break;
             case 'specialOfLocation':
                 $result = true;

@@ -1,6 +1,6 @@
 {# Purpose of this template: Display item information for previewing from other modules #}
 <dl id="branch{{ branch.id }}">
-<dt>{{ branch|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.branches.filter') }}</dt>
+<dt>{{ branch|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.branches.filter')|safeHtml }}</dt>
 <dd>{% if branch.imageOfBranch is not empty and branch.imageOfBranchMeta|default %}
             <a href="{{ branch.imageOfBranchUrl }}" title="{{ branch|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if branch.imageOfBranchMeta.isImage %} class="image-link"{% endif %}>
 {% if branch.imageOfBranchMeta.isImage %}

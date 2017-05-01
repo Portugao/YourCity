@@ -1,6 +1,6 @@
 {# Purpose of this template: Display item information for previewing from other modules #}
 <dl id="event{{ event.id }}">
-<dt>{{ event|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.events.filter') }}</dt>
+<dt>{{ event|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.events.filter')|safeHtml }}</dt>
 <dd>{% if event.imageOfEvent is not empty and event.imageOfEventMeta|default %}
             <a href="{{ event.imageOfEventUrl }}" title="{{ event|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if event.imageOfEventMeta.isImage %} class="image-link"{% endif %}>
 {% if event.imageOfEventMeta.isImage %}

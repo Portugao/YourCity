@@ -73,7 +73,7 @@
         
         {{ include(
             '@MUYourCityModule/Location/includeSelectOne.html.twig',
-            { group: 'product', alias: 'location', aliasReverse: 'products', mandatory: false, idPrefix: 'yourcityProduct_Location', linkingItem: product, displayMode: 'choices' }
+            { group: 'product', alias: 'location', aliasReverse: 'products', mandatory: true, idPrefix: 'yourcityProduct_Location', linkingItem: product, displayMode: 'choices' }
         ) }}
         {% if featureActivationHelper.isEnabled(constant('MU\\YourCityModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'product') %}
             {{ include('@MUYourCityModule/Helper/includeCategoriesEdit.html.twig', { obj: product }) }}

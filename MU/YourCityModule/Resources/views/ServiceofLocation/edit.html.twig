@@ -41,6 +41,7 @@
                                 {% if language == app.request.locale %}
                                     {{ form_row(form.name) }}
                                     {{ form_row(form.description) }}
+                                    {{ form_row(form.descriptionForGoogle) }}
                                 {% else %}
                                     {{ form_row(attribute(form, 'translations' ~ language)) }}
                                 {% endif %}
@@ -55,6 +56,7 @@
                 <legend>{{ language|languageName|safeHtml }}</legend>
                 {{ form_row(form.name) }}
                 {{ form_row(form.description) }}
+                {{ form_row(form.descriptionForGoogle) }}
             </fieldset>
         {% endif %}
         <fieldset>

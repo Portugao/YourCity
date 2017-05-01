@@ -159,7 +159,11 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
      * Bidirectional - Many menuOfLocation [menus of location] are linked by one location [location] (OWNING SIDE).
      *
      * @ORM\ManyToOne(targetEntity="MU\YourCityModule\Entity\LocationEntity", inversedBy="menuOfLocation")
-     * @ORM\JoinTable(name="mu_yourcity_location")
+     * @ORM\JoinTable(name="mu_yourcity_location",
+     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
+     * )
+     * @Assert\NotNull(message="Choosing a location is required.")
      * @Assert\Type(type="MU\YourCityModule\Entity\LocationEntity")
      * @var \MU\YourCityModule\Entity\LocationEntity $location
      */

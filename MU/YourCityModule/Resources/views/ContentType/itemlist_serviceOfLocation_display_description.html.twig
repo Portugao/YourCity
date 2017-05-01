@@ -1,0 +1,13 @@
+{# Purpose of this template: Display services of location within an external context #}
+<dl>
+    {% for serviceOfLocation in items %}
+        <dt>{{ serviceOfLocation|muyourcitymodule_formattedTitle }}</dt>
+        {% if serviceOfLocation.description %}
+            <dd>{{ serviceOfLocation.description|striptags|truncate(200, true, '&hellip;') }}</dd>
+        {% endif %}
+        <dd><a href="{{ path('muyourcitymodule_serviceoflocation_display', { 'id': serviceOfLocation.id }) }}">{{ __('Read more') }}</a>
+        </dd>
+    {% else %}
+        <dt>{{ __('No entries found.') }}</dt>
+    {% endfor %}
+</dl>

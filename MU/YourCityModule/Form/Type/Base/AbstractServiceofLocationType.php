@@ -157,6 +157,17 @@ abstract class AbstractServiceOfLocationType extends AbstractType
             'required' => false,
         ]);
         
+        $builder->add('descriptionForGoogle', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            'label' => $this->__('Description for google') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => '',
+                'title' => $this->__('Enter the description for google of the service of location')
+            ],
+            'required' => false,
+        ]);
+        
         if ($this->variableApi->getSystemVar('multilingual') && $this->featureActivationHelper->isEnabled(FeatureActivationHelper::TRANSLATIONS, 'serviceOfLocation')) {
             $supportedLanguages = $this->translatableHelper->getSupportedLanguages('serviceOfLocation');
             if (is_array($supportedLanguages) && count($supportedLanguages) > 1) {

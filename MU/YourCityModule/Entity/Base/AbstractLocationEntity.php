@@ -240,6 +240,30 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     protected $homepage = '';
     
     /**
+     * @ORM\Column(length=255)
+     * @Assert\NotNull()
+     * @Assert\Length(min="0", max="255")
+     * @var string $bsagStop
+     */
+    protected $bsagStop = '';
+    
+    /**
+     * @ORM\Column(length=255)
+     * @Assert\NotNull()
+     * @Assert\Length(min="0", max="255")
+     * @var string $tram
+     */
+    protected $tram = '';
+    
+    /**
+     * @ORM\Column(length=255)
+     * @Assert\NotNull()
+     * @Assert\Length(min="0", max="255")
+     * @var string $bus
+     */
+    protected $bus = '';
+    
+    /**
      * @ORM\Column(type="boolean")
      * @Assert\NotNull()
      * @Assert\Type(type="bool")
@@ -623,8 +647,12 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
      * Bidirectional - One location [location] has many menuOfLocation [menus of location] (INVERSE SIDE).
      *
      * @ORM\OneToMany(targetEntity="MU\YourCityModule\Entity\MenuOfLocationEntity", mappedBy="location")
-     * @ORM\JoinTable(name="mu_yourcity_locationmenuoflocation")
+     * @ORM\JoinTable(name="mu_yourcity_locationmenuoflocation",
+     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
+     * )
      * @ORM\OrderBy({"positionOfMenu" = "ASC"})
+     * @Assert\NotNull(message="Choosing at least one of the menu of location is required.")
      * @var \MU\YourCityModule\Entity\MenuOfLocationEntity[] $menuOfLocation
      */
     protected $menuOfLocation = null;
@@ -642,8 +670,12 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
      * Bidirectional - One location [location] has many products [products] (INVERSE SIDE).
      *
      * @ORM\OneToMany(targetEntity="MU\YourCityModule\Entity\ProductEntity", mappedBy="location")
-     * @ORM\JoinTable(name="mu_yourcity_locationproducts")
+     * @ORM\JoinTable(name="mu_yourcity_locationproducts",
+     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
+     * )
      * @ORM\OrderBy({"name" = "ASC"})
+     * @Assert\NotNull(message="Choosing at least one of the products is required.")
      * @var \MU\YourCityModule\Entity\ProductEntity[] $products
      */
     protected $products = null;
@@ -1213,6 +1245,78 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     {
         if ($this->homepage !== $homepage) {
             $this->homepage = isset($homepage) ? $homepage : '';
+        }
+    }
+    
+    /**
+     * Returns the bsag stop.
+     *
+     * @return string
+     */
+    public function getBsagStop()
+    {
+        return $this->bsagStop;
+    }
+    
+    /**
+     * Sets the bsag stop.
+     *
+     * @param string $bsagStop
+     *
+     * @return void
+     */
+    public function setBsagStop($bsagStop)
+    {
+        if ($this->bsagStop !== $bsagStop) {
+            $this->bsagStop = isset($bsagStop) ? $bsagStop : '';
+        }
+    }
+    
+    /**
+     * Returns the tram.
+     *
+     * @return string
+     */
+    public function getTram()
+    {
+        return $this->tram;
+    }
+    
+    /**
+     * Sets the tram.
+     *
+     * @param string $tram
+     *
+     * @return void
+     */
+    public function setTram($tram)
+    {
+        if ($this->tram !== $tram) {
+            $this->tram = isset($tram) ? $tram : '';
+        }
+    }
+    
+    /**
+     * Returns the bus.
+     *
+     * @return string
+     */
+    public function getBus()
+    {
+        return $this->bus;
+    }
+    
+    /**
+     * Sets the bus.
+     *
+     * @param string $bus
+     *
+     * @return void
+     */
+    public function setBus($bus)
+    {
+        if ($this->bus !== $bus) {
+            $this->bus = isset($bus) ? $bus : '';
         }
     }
     

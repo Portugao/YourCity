@@ -35,7 +35,7 @@
     </item>
 {% endblock %}
 {% block entry_content %}
-    <title><![CDATA[{% if serviceOfLocation.updatedDate|default %}{{ serviceOfLocation.updatedDate|localizeddate('medium', 'short') }} - {% endif %}{{ serviceOfLocation|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.servicesoflocation') }}]]></title>
+    <title><![CDATA[{% if serviceOfLocation.updatedDate|default %}{{ serviceOfLocation.updatedDate|localizeddate('medium', 'short') }} - {% endif %}{{ serviceOfLocation|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.servicesoflocation')|safeHtml }}]]></title>
     <link>{{ url('muyourcitymodule_serviceoflocation_' ~ routeArea ~ 'display', { 'id': serviceOfLocation.id }) }}</link>
     <guid>{{ url('muyourcitymodule_serviceoflocation_' ~ routeArea ~ 'display', { 'id': serviceOfLocation.id }) }}</guid>
     {% if serviceOfLocation.createdBy|default and serviceOfLocation.createdBy.getUid() > 0 %}

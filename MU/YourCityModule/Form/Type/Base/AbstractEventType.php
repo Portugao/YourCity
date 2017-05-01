@@ -293,7 +293,7 @@ abstract class AbstractEventType extends AbstractType
                 'title' => $this->__('Enter the start 2 date of the event')
             ],
             'required' => false,
-            'empty_data' => date('Y-m-d H:i:s'),
+            'empty_data' => null,
             'with_seconds' => true,
             'date_widget' => 'single_text',
             'time_widget' => 'single_text'
@@ -307,7 +307,7 @@ abstract class AbstractEventType extends AbstractType
                 'title' => $this->__('Enter the end 2 date of the event')
             ],
             'required' => false,
-            'empty_data' => date('Y-m-d H:i:s'),
+            'empty_data' => null,
             'with_seconds' => true,
             'date_widget' => 'single_text',
             'time_widget' => 'single_text'

@@ -141,7 +141,7 @@ abstract class AbstractSpecialOfLocationController extends AbstractController
         $sortableColumns->addColumns([
             new Column('name'),
             new Column('description'),
-            new Column('iconForSpecial'),
+            new Column('descriptionForGoogle'),
             new Column('createdBy'),
             new Column('createdDate'),
             new Column('updatedBy'),

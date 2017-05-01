@@ -1713,6 +1713,12 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchMobil'] = '%' . $fragment . '%';
             $filters[] = 'tbl.homepage = :searchHomepage';
             $parameters['searchHomepage'] = $fragment;
+            $filters[] = 'tbl.bsagStop LIKE :searchBsagStop';
+            $parameters['searchBsagStop'] = '%' . $fragment . '%';
+            $filters[] = 'tbl.tram LIKE :searchTram';
+            $parameters['searchTram'] = '%' . $fragment . '%';
+            $filters[] = 'tbl.bus LIKE :searchBus';
+            $parameters['searchBus'] = '%' . $fragment . '%';
             $filters[] = 'tbl.openingHours LIKE :searchOpeningHours';
             $parameters['searchOpeningHours'] = '%' . $fragment . '%';
             $filters[] = 'tbl.startOnMonday = :searchStartOnMonday';
@@ -1903,6 +1909,8 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchName'] = '%' . $fragment . '%';
             $filters[] = 'tbl.description LIKE :searchDescription';
             $parameters['searchDescription'] = '%' . $fragment . '%';
+            $filters[] = 'tbl.descriptionForGoogle LIKE :searchDescriptionForGoogle';
+            $parameters['searchDescriptionForGoogle'] = '%' . $fragment . '%';
             $filters[] = 'tbl.iconForSpecial LIKE :searchIconForSpecial';
             $parameters['searchIconForSpecial'] = '%' . $fragment . '%';
         }
@@ -1911,6 +1919,8 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchName'] = '%' . $fragment . '%';
             $filters[] = 'tbl.description LIKE :searchDescription';
             $parameters['searchDescription'] = '%' . $fragment . '%';
+            $filters[] = 'tbl.descriptionForGoogle LIKE :searchDescriptionForGoogle';
+            $parameters['searchDescriptionForGoogle'] = '%' . $fragment . '%';
             $filters[] = 'tbl.iconForService LIKE :searchIconForService';
             $parameters['searchIconForService'] = '%' . $fragment . '%';
         }

@@ -99,7 +99,7 @@ abstract class AbstractAbonnementEntity extends EntityAccess
     
     /**
      * @ORM\Column(type="boolean")
-     * @Assert\IsTrue(message="This option is mandatory.")
+     * @Assert\NotNull()
      * @Assert\Type(type="bool")
      * @var boolean $sendMessageForOffers
      */
@@ -123,7 +123,7 @@ abstract class AbstractAbonnementEntity extends EntityAccess
     
     /**
      * @ORM\Column(type="boolean")
-     * @Assert\IsTrue(message="This option is mandatory.")
+     * @Assert\NotNull()
      * @Assert\Type(type="bool")
      * @var boolean $showProducts
      */
@@ -131,7 +131,7 @@ abstract class AbstractAbonnementEntity extends EntityAccess
     
     /**
      * @ORM\Column(type="boolean")
-     * @Assert\IsTrue(message="This option is mandatory.")
+     * @Assert\NotNull()
      * @Assert\Type(type="bool")
      * @var boolean $sendMessageForProducts
      */

@@ -166,6 +166,22 @@ abstract class AbstractPartType extends AbstractType
             'required' => false,
         ]);
         
+        $builder->add('description', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
+            'label' => $this->__('Description') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Only 2000 characters.')
+            ],
+            'help' => $this->__('Only 2000 characters.'),
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 2000,
+                'class' => '',
+                'title' => $this->__('Enter the description of the part')
+            ],
+            'required' => false,
+        ]);
+        
         if ($this->variableApi->getSystemVar('multilingual') && $this->featureActivationHelper->isEnabled(FeatureActivationHelper::TRANSLATIONS, 'part')) {
             $supportedLanguages = $this->translatableHelper->getSupportedLanguages('part');
             if (is_array($supportedLanguages) && count($supportedLanguages) > 1) {
@@ -194,22 +210,6 @@ abstract class AbstractPartType extends AbstractType
                 'title' => $this->__('Enter the name of the part')
             ],
             'required' => true,
-        ]);
-        
-        $builder->add('description', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
-            'label' => $this->__('Description') . ':',
-            'label_attr' => [
-                'class' => 'tooltips',
-                'title' => $this->__('Only 2000 characters.')
-            ],
-            'help' => $this->__('Only 2000 characters.'),
-            'empty_data' => '',
-            'attr' => [
-                'maxlength' => 2000,
-                'class' => '',
-                'title' => $this->__('Enter the description of the part')
-            ],
-            'required' => false,
         ]);
         
         $builder->add('imageOfPart', 'MU\YourCityModule\Form\Type\Field\UploadType', [

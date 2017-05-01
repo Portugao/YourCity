@@ -25,7 +25,7 @@
     </entry>
 {% endblock %}
 {% block entry_content %}
-    <title type="html">{{ menuOfLocation|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.menusoflocation') }}</title>
+    <title type="html">{{ menuOfLocation|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.menusoflocation')|safeHtml }}</title>
     <link rel="alternate" type="text/html" href="{{ url('muyourcitymodule_menuoflocation_' ~ routeArea ~ 'display', { 'id': menuOfLocation.id }) }}" />
     {% set uniqueID %}tag:{{ app.request.getSchemeAndHttpHost()|replace({ 'http://': '', '/': '' }) }},{{ menuOfLocation.createdDate|date('Y-m-d') }}:{{ path('muyourcitymodule_menuoflocation_' ~ routeArea ~ 'display', { 'id': menuOfLocation.id }) }}{% endset %}
     <id>{{ uniqueID }}</id>

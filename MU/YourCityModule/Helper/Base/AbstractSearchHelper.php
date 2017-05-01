@@ -199,6 +199,9 @@ abstract class AbstractSearchHelper extends AbstractSearchable
                     $whereArray[] = 'tbl.telefon';
                     $whereArray[] = 'tbl.mobil';
                     $whereArray[] = 'tbl.homepage';
+                    $whereArray[] = 'tbl.bsagStop';
+                    $whereArray[] = 'tbl.tram';
+                    $whereArray[] = 'tbl.bus';
                     $whereArray[] = 'tbl.openingHours';
                     break;
                 case 'part':
@@ -264,12 +267,14 @@ abstract class AbstractSearchHelper extends AbstractSearchable
                     $whereArray[] = 'tbl.workflowState';
                     $whereArray[] = 'tbl.name';
                     $whereArray[] = 'tbl.description';
+                    $whereArray[] = 'tbl.descriptionForGoogle';
                     $whereArray[] = 'tbl.iconForSpecial';
                     break;
                 case 'serviceOfLocation':
                     $whereArray[] = 'tbl.workflowState';
                     $whereArray[] = 'tbl.name';
                     $whereArray[] = 'tbl.description';
+                    $whereArray[] = 'tbl.descriptionForGoogle';
                     $whereArray[] = 'tbl.iconForService';
                     break;
                 case 'abonnement':

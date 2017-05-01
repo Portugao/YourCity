@@ -35,7 +35,7 @@
     </item>
 {% endblock %}
 {% block entry_content %}
-    <title><![CDATA[{% if branch.updatedDate|default %}{{ branch.updatedDate|localizeddate('medium', 'short') }} - {% endif %}{{ branch|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.branches') }}]]></title>
+    <title><![CDATA[{% if branch.updatedDate|default %}{{ branch.updatedDate|localizeddate('medium', 'short') }} - {% endif %}{{ branch|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.branches')|safeHtml }}]]></title>
     <link>{{ url('muyourcitymodule_branch_' ~ routeArea ~ 'display', { 'id': branch.id }) }}</link>
     <guid>{{ url('muyourcitymodule_branch_' ~ routeArea ~ 'display', { 'id': branch.id }) }}</guid>
     {% if branch.createdBy|default and branch.createdBy.getUid() > 0 %}

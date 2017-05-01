@@ -56,7 +56,7 @@ abstract class AbstractServiceOfLocationRepository extends EntityRepository
     {
         return [
             'name',
-            'iconForService',
+            'descriptionForGoogle',
             'createdBy',
             'createdDate',
             'updatedBy',

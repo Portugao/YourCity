@@ -6,7 +6,7 @@
 {% if displayMode == 'link' %}
     <p class="muyourcitymodule-external-link">
     <a href="{{ path('muyourcitymodule_branch_display', { 'id': branch.id }) }}" title="{{ branch|muyourcitymodule_formattedTitle|e('html_attr') }}">
-    {{ branch|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.branches.filter') }}
+    {{ branch|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.branches.filter')|safeHtml }}
     </a>
     </p>
 {% endif %}
@@ -14,7 +14,7 @@
     {# for normal users without edit permission show only the actual file per default #}
     {% if displayMode == 'embed' %}
         <p class="muyourcitymodule-external-title">
-            <strong>{{ branch|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.branches.filter') }}</strong>
+            <strong>{{ branch|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.branches.filter')|safeHtml }}</strong>
         </p>
     {% endif %}
 {% endif %}

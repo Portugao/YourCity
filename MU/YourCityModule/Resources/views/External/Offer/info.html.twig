@@ -1,6 +1,6 @@
 {# Purpose of this template: Display item information for previewing from other modules #}
 <dl id="offer{{ offer.id }}">
-<dt>{{ offer|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.offers.filter') }}</dt>
+<dt>{{ offer|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.offers.filter')|safeHtml }}</dt>
 <dd>{% if offer.imageOfOffer is not empty and offer.imageOfOfferMeta|default %}
             <a href="{{ offer.imageOfOfferUrl }}" title="{{ offer|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if offer.imageOfOfferMeta.isImage %} class="image-link"{% endif %}>
 {% if offer.imageOfOfferMeta.isImage %}

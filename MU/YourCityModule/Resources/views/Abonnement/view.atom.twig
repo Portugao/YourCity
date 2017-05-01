@@ -25,7 +25,7 @@
     </entry>
 {% endblock %}
 {% block entry_content %}
-    <title type="html">{{ abonnement|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.abonnements') }}</title>
+    <title type="html">{{ abonnement|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.abonnements')|safeHtml }}</title>
     <link rel="alternate" type="text/html" href="{{ url('muyourcitymodule_abonnement_' ~ routeArea ~ 'view') }}" />
     {% set uniqueID %}tag:{{ app.request.getSchemeAndHttpHost()|replace({ 'http://': '', '/': '' }) }},{{ abonnement.createdDate|date('Y-m-d') }}:{{ path('muyourcitymodule_abonnement_' ~ routeArea ~ 'view') }}{% endset %}
     <id>{{ uniqueID }}</id>

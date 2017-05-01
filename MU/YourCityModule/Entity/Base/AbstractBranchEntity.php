@@ -89,8 +89,7 @@ abstract class AbstractBranchEntity extends EntityAccess implements Translatable
     /**
      * Only 2000 characters.
      * @Gedmo\Translatable
-     * @ORM\Column(type="text", length=2000)
-     * @Assert\NotNull()
+     * @ORM\Column(type="text", length=2000, nullable=true)
      * @Assert\Length(min="0", max="2000")
      * @var text $description
      */
@@ -299,7 +298,7 @@ abstract class AbstractBranchEntity extends EntityAccess implements Translatable
     public function setDescription($description)
     {
         if ($this->description !== $description) {
-            $this->description = isset($description) ? $description : '';
+            $this->description = $description;
         }
     }
     

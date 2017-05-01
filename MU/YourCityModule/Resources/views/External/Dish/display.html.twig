@@ -6,7 +6,7 @@
 {% if displayMode == 'link' %}
     <p class="muyourcitymodule-external-link">
     <a href="{{ path('muyourcitymodule_dish_display', { 'id': dish.id }) }}" title="{{ dish|muyourcitymodule_formattedTitle|e('html_attr') }}">
-    {{ dish|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.dishes.filter') }}
+    {{ dish|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.dishes.filter')|safeHtml }}
     </a>
     </p>
 {% endif %}
@@ -14,7 +14,7 @@
     {# for normal users without edit permission show only the actual file per default #}
     {% if displayMode == 'embed' %}
         <p class="muyourcitymodule-external-title">
-            <strong>{{ dish|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.dishes.filter') }}</strong>
+            <strong>{{ dish|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.dishes.filter')|safeHtml }}</strong>
         </p>
     {% endif %}
 {% endif %}

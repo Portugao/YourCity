@@ -25,7 +25,7 @@
     </entry>
 {% endblock %}
 {% block entry_content %}
-    <title type="html">{{ product|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.products') }}</title>
+    <title type="html">{{ product|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.products')|safeHtml }}</title>
     <link rel="alternate" type="text/html" href="{{ url('muyourcitymodule_product_' ~ routeArea ~ 'display', { 'id': product.id }) }}" />
     {% set uniqueID %}tag:{{ app.request.getSchemeAndHttpHost()|replace({ 'http://': '', '/': '' }) }},{{ product.createdDate|date('Y-m-d') }}:{{ path('muyourcitymodule_product_' ~ routeArea ~ 'display', { 'id': product.id }) }}{% endset %}
     <id>{{ uniqueID }}</id>

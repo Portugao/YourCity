@@ -6,7 +6,7 @@
 {% if displayMode == 'link' %}
     <p class="muyourcitymodule-external-link">
     <a href="{{ path('muyourcitymodule_event_display', { 'id': event.id }) }}" title="{{ event|muyourcitymodule_formattedTitle|e('html_attr') }}">
-    {{ event|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.events.filter') }}
+    {{ event|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.events.filter')|safeHtml }}
     </a>
     </p>
 {% endif %}
@@ -14,7 +14,7 @@
     {# for normal users without edit permission show only the actual file per default #}
     {% if displayMode == 'embed' %}
         <p class="muyourcitymodule-external-title">
-            <strong>{{ event|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.events.filter') }}</strong>
+            <strong>{{ event|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.events.filter')|safeHtml }}</strong>
         </p>
     {% endif %}
 {% endif %}

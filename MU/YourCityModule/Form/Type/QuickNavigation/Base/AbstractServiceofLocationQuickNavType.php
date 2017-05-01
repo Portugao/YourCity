@@ -152,7 +152,7 @@ abstract class AbstractServiceOfLocationQuickNavType extends AbstractType
                 ],
                 'choices' =>             [
                     $this->__('Name') => 'name',
-                    $this->__('Icon for service') => 'iconForService',
+                    $this->__('Description for google') => 'descriptionForGoogle',
                     $this->__('Creation date') => 'createdDate',
                     $this->__('Creator') => 'createdBy',
                     $this->__('Update date') => 'updatedDate',
