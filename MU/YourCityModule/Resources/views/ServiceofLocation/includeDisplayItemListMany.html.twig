@@ -1,12 +1,11 @@
 {# purpose of this template: inclusion template for display of related services of location #}
 {% set hasAdminPermission = hasPermission('MUYourCityModule:ServiceOfLocation:', '::', 'ACCESS_EDIT') %}
-{% if nolink is not defined %}
-    {% set nolink = false %}
-{% endif %}
 {% if items|default and items|length > 0 %}
 <ul class="list-group muyourcitymodule-related-item-list serviceoflocation">
 {% for item in items %}
-<li class="list-group-item"><a href="{{ path('muyourcitymodule_serviceOflocation_' ~ routeArea ~ 'display', { 'id': item.id }) }}">{{ item.name }}</a></li>
+    {% if hasAdminPermission or item.workflowState == 'approved' %}
+    <li class="list-group-item"><a href="{{ path('muyourcitymodule_serviceOflocation_' ~ routeArea ~ 'display', { 'id': item.id }) }}">{{ item.name }}</a></li>
+    {% endif %}
 {% endfor %}
 </ul>
 {% endif %}
