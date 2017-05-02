@@ -21,7 +21,6 @@
                 {% endif %}
                 <col id="cItemActions" />
                 <col id="cName" />
-                <col id="cIconForService" />
             </colgroup>
             <thead>
             <tr>
@@ -33,9 +32,6 @@
                 <th id="hItemActions" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}z-order-unsorted z-w02">{{ __('Actions') }}</th>
                 <th id="hName" scope="col" class="text-left">
                     <a href="{{ sort.name.url }}" title="{{ __f('Sort by %s', {'%s': 'name'}) }}" class="{{ sort.name.class }}">{{ __('Name') }}</a>
-                </th>
-                <th id="hIconForService" scope="col" class="text-left">
-                    <a href="{{ sort.iconForService.url }}" title="{{ __f('Sort by %s', {'%s': 'icon for service'}) }}" class="{{ sort.iconForService.class }}">{{ __('Icon for service') }}</a>
                 </th>
             </tr>
             </thead>
@@ -57,9 +53,6 @@
                 </td>
                 <td headers="hName" class="text-left">
                     <a href="{{ path('muyourcitymodule_serviceOflocation_' ~ routeArea ~ 'display', { 'id': serviceOfLocation.id }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ serviceOfLocation.name|notifyFilters('muyourcitymodule.filterhook.servicesoflocation') }}</a>
-                </td>
-                <td headers="hIconForService" class="text-left">
-                    {{ serviceOfLocation.iconForService }}
                 </td>
             </tr>
         {% else %}

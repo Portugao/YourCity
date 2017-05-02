@@ -1,16 +1,16 @@
 {# purpose of this template: inclusion template for display of related specials of location #}
 {% set removeImage = '<span class="fa fa-trash-o"></span>' %}
 
-<input type="hidden" id="{{ idPrefix }}" name="{{ idPrefix }}" value="{% if items is defined and items is iterable %}{% for item in items %}{{ item.id }}{% if not loop.last %},{% endif %}{% endfor %}{% endif %}" />
+<input type="hidden" id="{{ idPrefix }}" name="{{ idPrefix }}" value="{% if items is defined and items is iterable %}{% for item in items %}{{ item.getKey() }}{% if not loop.last %},{% endif %}{% endfor %}{% endif %}" />
 <input type="hidden" id="{{ idPrefix }}Mode" name="{{ idPrefix }}Mode" value="0" />
 
 <ul id="{{ idPrefix }}ReferenceList">
 {% if items is defined and items is iterable %}
 {% for item in items %}
-{% set idPrefixItem = idPrefix ~ 'Reference_' ~ item.id %}
+{% set idPrefixItem = idPrefix ~ 'Reference_' ~ item.getKey() %}
 <li id="{{ idPrefixItem }}">
     {{ item|muyourcitymodule_formattedTitle }}
-     <a id="{{ idPrefixItem }}Remove" href="javascript:mUYourCityRemoveRelatedItem('{{ idPrefix }}', '{{ item.id }}');">{{ removeImage|raw }}</a>
+     <a id="{{ idPrefixItem }}Remove" href="javascript:mUYourCityRemoveRelatedItem('{{ idPrefix }}', '{{ item.getKey() }}');">{{ removeImage|raw }}</a>
 </li>
 {% endfor %}
 {% endif %}

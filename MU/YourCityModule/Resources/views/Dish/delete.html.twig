@@ -28,7 +28,7 @@
     </div>
 {% endblock %}
 {% block display_hooks %}
-    {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.dishes.form_delete', id=dish.id) %}
+    {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.dishes.form_delete', id=dish.getKey()) %}
     {% if hooks is iterable and hooks|length > 0 %}
         {% for providerArea, hook in hooks %}
             <fieldset>

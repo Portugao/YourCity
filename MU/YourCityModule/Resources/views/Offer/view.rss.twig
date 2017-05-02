@@ -36,8 +36,8 @@
 {% endblock %}
 {% block entry_content %}
     <title><![CDATA[{% if offer.updatedDate|default %}{{ offer.updatedDate|localizeddate('medium', 'short') }} - {% endif %}{{ offer|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.offers')|safeHtml }}]]></title>
-    <link>{{ url('muyourcitymodule_offer_' ~ routeArea ~ 'display', { 'id': offer.id }) }}</link>
-    <guid>{{ url('muyourcitymodule_offer_' ~ routeArea ~ 'display', { 'id': offer.id }) }}</guid>
+    <link>{{ url('muyourcitymodule_offer_' ~ routeArea ~ 'display', { 'id': offer.getId() }) }}</link>
+    <guid>{{ url('muyourcitymodule_offer_' ~ routeArea ~ 'display', { 'id': offer.getId() }) }}</guid>
     {% if offer.createdBy|default and offer.createdBy.getUid() > 0 %}
         {% set creatorAttributes = offer.createdBy.getAttributes() %}
         <author>{{ offer.createdBy.getEmail() }} ({{ creatorAttributes.get('realname')|default(creatorAttributes.get('name'))|default(offer.createdBy.getUname()) }})</author>

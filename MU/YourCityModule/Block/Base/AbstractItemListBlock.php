@@ -14,34 +14,12 @@ namespace MU\YourCityModule\Block\Base;
 
 use Zikula\BlocksModule\AbstractBlockHandler;
 use Zikula\Core\AbstractBundle;
-use MU\YourCityModule\Helper\FeatureActivationHelper;
 
 /**
  * Generic item list block base class.
  */
 abstract class AbstractItemListBlock extends AbstractBlockHandler
 {
-    /**
-     * List of object types allowing categorisation.
-     *
-     * @var array
-     */
-    protected $categorisableObjectTypes;
-    
-    /**
-     * ItemListBlock constructor.
-     *
-     * @param AbstractBundle $bundle An AbstractBundle instance
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function __construct(AbstractBundle $bundle)
-    {
-        parent::__construct($bundle);
-    
-        $this->categorisableObjectTypes = ['location', 'dish', 'event', 'product'];
-    }
-    
     /**
      * Display the block content.
      *
@@ -60,11 +38,6 @@ abstract class AbstractItemListBlock extends AbstractBlockHandler
         $defaults = $this->getDefaults();
         $properties = array_merge($defaults, $properties);
     
-        $featureActivationHelper = $this->get('mu_yourcity_module.feature_activation_helper');
-        if ($featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, $properties['objectType'])) {
-            $properties = $this->resolveCategoryIds($properties);
-        }
-    
         $controllerHelper = $this->get('mu_yourcity_module.controller_helper');
         $contextArgs = ['name' => 'list'];
         if (!isset($properties['objectType']) || !in_array($properties['objectType'], $controllerHelper->getObjectTypes('block', $contextArgs))) {
@@ -79,28 +52,11 @@ abstract class AbstractItemListBlock extends AbstractBlockHandler
         $orderBy = $this->get('mu_yourcity_module.model_helper')->resolveSortParameter($objectType, $properties['sorting']);
         $qb = $repository->genericBaseQuery($properties['filter'], $orderBy);
     
-        // fetch category registries
-        $catProperties = null;
-        if (in_array($objectType, $this->categorisableObjectTypes)) {
-            if ($featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, $properties['objectType'])) {
-                $categoryHelper = $this->get('mu_yourcity_module.category_helper');
-                $catProperties = $categoryHelper->getAllProperties($objectType);
-                // apply category filters
-                if (is_array($properties['catIds']) && count($properties['catIds']) > 0) {
-                    $qb = $categoryHelper->buildFilterClauses($qb, $objectType, $properties['catIds']);
-                }
-            }
-        }
-    
         // get objects from database
         $currentPage = 1;
         $resultsPerPage = $properties['amount'];
         $query = $repository->getSelectWherePaginatedQuery($qb, $currentPage, $resultsPerPage);
         list($entities, $objectCount) = $repository->retrieveCollectionResult($query, true);
-    
-        if ($featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, $objectType)) {
-            $entities = $this->get('mu_yourcity_module.category_helper')->filterEntitiesByPermission($entities);
-        }
     
         // set a block title
         if (empty($properties['title'])) {
@@ -114,9 +70,6 @@ abstract class AbstractItemListBlock extends AbstractBlockHandler
             'objectType' => $objectType,
             'items' => $entities
         ];
-        if ($featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, $properties['objectType'])) {
-            $templateParameters['properties'] = $properties;
-        }
     
         $templateParameters = $this->get('mu_yourcity_module.controller_helper')->addTemplateParameters($properties['objectType'], $templateParameters, 'block', []);
     
@@ -190,10 +143,7 @@ abstract class AbstractItemListBlock extends AbstractBlockHandler
         }
     
         return [
-            'object_type' => $objectType,
-            'is_categorisable' => in_array($objectType, $this->categorisableObjectTypes),
-            'category_helper' => $this->get('mu_yourcity_module.category_helper'),
-            'feature_activation_helper' => $this->get('mu_yourcity_module.feature_activation_helper')
+            'object_type' => $objectType
         ];
     }
     
@@ -226,24 +176,4 @@ abstract class AbstractItemListBlock extends AbstractBlockHandler
         return $defaults;
     }
     
-    
-    /**
-     * Resolves category filter ids.
-     *
-     * @param array $properties The block properties array
-     *
-     * @return array The updated block properties
-     */
-    protected function resolveCategoryIds(array $properties)
-    {
-        if (!isset($properties['catIds'])) {
-            $categoryHelper = $this->get('mu_yourcity_module.category_helper');
-            $primaryRegistry = $categoryHelper->getPrimaryProperty($properties['objectType']);
-            $properties['catIds'] = [$primaryRegistry => []];
-        } elseif (!is_array($properties['catIds'])) {
-            $properties['catIds'] = explode(',', $properties['catIds']);
-        }
-    
-        return $properties;
-    }
 }

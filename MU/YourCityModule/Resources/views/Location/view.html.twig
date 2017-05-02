@@ -36,34 +36,6 @@
                 <col id="cMobil" />
                 <col id="cHomepage" />
                 <col id="cOpeningHours" />
-                <col id="cStartOnMonday" />
-                <col id="cEndOnMonday" />
-                <col id="cStart2OnMonday" />
-                <col id="cEnd2OnMonday" />
-                <col id="cStartOnTuesday" />
-                <col id="cEndOnTuesday" />
-                <col id="cStart2OnTuesday" />
-                <col id="cEnd2OnTuesday" />
-                <col id="cStartOnWednesday" />
-                <col id="cEndOnWednesday" />
-                <col id="cStart2OnWednesday" />
-                <col id="cEnd2OnWednesday" />
-                <col id="cStartOnThursday" />
-                <col id="cEndOnThursday" />
-                <col id="cStart2OnThursday" />
-                <col id="cEnd2OnThursday" />
-                <col id="cStartOnFriday" />
-                <col id="cEndOnFriday" />
-                <col id="cStart2OnFriday" />
-                <col id="cEnd2OnFriday" />
-                <col id="cStartOnSaturday" />
-                <col id="cEndOnSaturday" />
-                <col id="cStar2tOnSaturday" />
-                <col id="cEnd2OnSaturday" />
-                <col id="cStartOnSunday" />
-                <col id="cEndOnSunday" />
-                <col id="cStart2OnSunday" />
-                <col id="cEnd2OnSunday" />
             </colgroup>
             <thead>
             <tr>
@@ -116,90 +88,6 @@
                 </th>
                 <th id="hOpeningHours" scope="col" class="text-left">
                     <a href="{{ sort.openingHours.url }}" title="{{ __f('Sort by %s', {'%s': 'opening hours'}) }}" class="{{ sort.openingHours.class }}">{{ __('Opening hours') }}</a>
-                </th>
-                <th id="hStartOnMonday" scope="col" class="text-left">
-                    <a href="{{ sort.startOnMonday.url }}" title="{{ __f('Sort by %s', {'%s': 'start on monday'}) }}" class="{{ sort.startOnMonday.class }}">{{ __('Start on monday') }}</a>
-                </th>
-                <th id="hEndOnMonday" scope="col" class="text-left">
-                    <a href="{{ sort.endOnMonday.url }}" title="{{ __f('Sort by %s', {'%s': 'end on monday'}) }}" class="{{ sort.endOnMonday.class }}">{{ __('End on monday') }}</a>
-                </th>
-                <th id="hStart2OnMonday" scope="col" class="text-left">
-                    <a href="{{ sort.start2OnMonday.url }}" title="{{ __f('Sort by %s', {'%s': 'start 2 on monday'}) }}" class="{{ sort.start2OnMonday.class }}">{{ __('Start 2 on monday') }}</a>
-                </th>
-                <th id="hEnd2OnMonday" scope="col" class="text-left">
-                    <a href="{{ sort.end2OnMonday.url }}" title="{{ __f('Sort by %s', {'%s': 'end 2 on monday'}) }}" class="{{ sort.end2OnMonday.class }}">{{ __('End 2 on monday') }}</a>
-                </th>
-                <th id="hStartOnTuesday" scope="col" class="text-left">
-                    <a href="{{ sort.startOnTuesday.url }}" title="{{ __f('Sort by %s', {'%s': 'start on tuesday'}) }}" class="{{ sort.startOnTuesday.class }}">{{ __('Start on tuesday') }}</a>
-                </th>
-                <th id="hEndOnTuesday" scope="col" class="text-left">
-                    <a href="{{ sort.endOnTuesday.url }}" title="{{ __f('Sort by %s', {'%s': 'end on tuesday'}) }}" class="{{ sort.endOnTuesday.class }}">{{ __('End on tuesday') }}</a>
-                </th>
-                <th id="hStart2OnTuesday" scope="col" class="text-left">
-                    <a href="{{ sort.start2OnTuesday.url }}" title="{{ __f('Sort by %s', {'%s': 'start 2 on tuesday'}) }}" class="{{ sort.start2OnTuesday.class }}">{{ __('Start 2 on tuesday') }}</a>
-                </th>
-                <th id="hEnd2OnTuesday" scope="col" class="text-left">
-                    <a href="{{ sort.end2OnTuesday.url }}" title="{{ __f('Sort by %s', {'%s': 'end 2 on tuesday'}) }}" class="{{ sort.end2OnTuesday.class }}">{{ __('End 2 on tuesday') }}</a>
-                </th>
-                <th id="hStartOnWednesday" scope="col" class="text-left">
-                    <a href="{{ sort.startOnWednesday.url }}" title="{{ __f('Sort by %s', {'%s': 'start on wednesday'}) }}" class="{{ sort.startOnWednesday.class }}">{{ __('Start on wednesday') }}</a>
-                </th>
-                <th id="hEndOnWednesday" scope="col" class="text-left">
-                    <a href="{{ sort.endOnWednesday.url }}" title="{{ __f('Sort by %s', {'%s': 'end on wednesday'}) }}" class="{{ sort.endOnWednesday.class }}">{{ __('End on wednesday') }}</a>
-                </th>
-                <th id="hStart2OnWednesday" scope="col" class="text-left">
-                    <a href="{{ sort.start2OnWednesday.url }}" title="{{ __f('Sort by %s', {'%s': 'start 2 on wednesday'}) }}" class="{{ sort.start2OnWednesday.class }}">{{ __('Start 2 on wednesday') }}</a>
-                </th>
-                <th id="hEnd2OnWednesday" scope="col" class="text-left">
-                    <a href="{{ sort.end2OnWednesday.url }}" title="{{ __f('Sort by %s', {'%s': 'end 2 on wednesday'}) }}" class="{{ sort.end2OnWednesday.class }}">{{ __('End 2 on wednesday') }}</a>
-                </th>
-                <th id="hStartOnThursday" scope="col" class="text-left">
-                    <a href="{{ sort.startOnThursday.url }}" title="{{ __f('Sort by %s', {'%s': 'start on thursday'}) }}" class="{{ sort.startOnThursday.class }}">{{ __('Start on thursday') }}</a>
-                </th>
-                <th id="hEndOnThursday" scope="col" class="text-left">
-                    <a href="{{ sort.endOnThursday.url }}" title="{{ __f('Sort by %s', {'%s': 'end on thursday'}) }}" class="{{ sort.endOnThursday.class }}">{{ __('End on thursday') }}</a>
-                </th>
-                <th id="hStart2OnThursday" scope="col" class="text-left">
-                    <a href="{{ sort.start2OnThursday.url }}" title="{{ __f('Sort by %s', {'%s': 'start 2 on thursday'}) }}" class="{{ sort.start2OnThursday.class }}">{{ __('Start 2 on thursday') }}</a>
-                </th>
-                <th id="hEnd2OnThursday" scope="col" class="text-left">
-                    <a href="{{ sort.end2OnThursday.url }}" title="{{ __f('Sort by %s', {'%s': 'end 2 on thursday'}) }}" class="{{ sort.end2OnThursday.class }}">{{ __('End 2 on thursday') }}</a>
-                </th>
-                <th id="hStartOnFriday" scope="col" class="text-left">
-                    <a href="{{ sort.startOnFriday.url }}" title="{{ __f('Sort by %s', {'%s': 'start on friday'}) }}" class="{{ sort.startOnFriday.class }}">{{ __('Start on friday') }}</a>
-                </th>
-                <th id="hEndOnFriday" scope="col" class="text-left">
-                    <a href="{{ sort.endOnFriday.url }}" title="{{ __f('Sort by %s', {'%s': 'end on friday'}) }}" class="{{ sort.endOnFriday.class }}">{{ __('End on friday') }}</a>
-                </th>
-                <th id="hStart2OnFriday" scope="col" class="text-left">
-                    <a href="{{ sort.start2OnFriday.url }}" title="{{ __f('Sort by %s', {'%s': 'start 2 on friday'}) }}" class="{{ sort.start2OnFriday.class }}">{{ __('Start 2 on friday') }}</a>
-                </th>
-                <th id="hEnd2OnFriday" scope="col" class="text-left">
-                    <a href="{{ sort.end2OnFriday.url }}" title="{{ __f('Sort by %s', {'%s': 'end 2 on friday'}) }}" class="{{ sort.end2OnFriday.class }}">{{ __('End 2 on friday') }}</a>
-                </th>
-                <th id="hStartOnSaturday" scope="col" class="text-left">
-                    <a href="{{ sort.startOnSaturday.url }}" title="{{ __f('Sort by %s', {'%s': 'start on saturday'}) }}" class="{{ sort.startOnSaturday.class }}">{{ __('Start on saturday') }}</a>
-                </th>
-                <th id="hEndOnSaturday" scope="col" class="text-left">
-                    <a href="{{ sort.endOnSaturday.url }}" title="{{ __f('Sort by %s', {'%s': 'end on saturday'}) }}" class="{{ sort.endOnSaturday.class }}">{{ __('End on saturday') }}</a>
-                </th>
-                <th id="hStar2tOnSaturday" scope="col" class="text-left">
-                    <a href="{{ sort.star2tOnSaturday.url }}" title="{{ __f('Sort by %s', {'%s': 'star 2t on saturday'}) }}" class="{{ sort.star2tOnSaturday.class }}">{{ __('Star 2t on saturday') }}</a>
-                </th>
-                <th id="hEnd2OnSaturday" scope="col" class="text-left">
-                    <a href="{{ sort.end2OnSaturday.url }}" title="{{ __f('Sort by %s', {'%s': 'end 2 on saturday'}) }}" class="{{ sort.end2OnSaturday.class }}">{{ __('End 2 on saturday') }}</a>
-                </th>
-                <th id="hStartOnSunday" scope="col" class="text-left">
-                    <a href="{{ sort.startOnSunday.url }}" title="{{ __f('Sort by %s', {'%s': 'start on sunday'}) }}" class="{{ sort.startOnSunday.class }}">{{ __('Start on sunday') }}</a>
-                </th>
-                <th id="hEndOnSunday" scope="col" class="text-left">
-                    <a href="{{ sort.endOnSunday.url }}" title="{{ __f('Sort by %s', {'%s': 'end on sunday'}) }}" class="{{ sort.endOnSunday.class }}">{{ __('End on sunday') }}</a>
-                </th>
-                <th id="hStart2OnSunday" scope="col" class="text-left">
-                    <a href="{{ sort.start2OnSunday.url }}" title="{{ __f('Sort by %s', {'%s': 'start 2 on sunday'}) }}" class="{{ sort.start2OnSunday.class }}">{{ __('Start 2 on sunday') }}</a>
-                </th>
-                <th id="hEnd2OnSunday" scope="col" class="text-left">
-                    <a href="{{ sort.end2OnSunday.url }}" title="{{ __f('Sort by %s', {'%s': 'end 2 on sunday'}) }}" class="{{ sort.end2OnSunday.class }}">{{ __('End 2 on sunday') }}</a>
                 </th>
             </tr>
             </thead>
@@ -281,94 +169,10 @@
                 <td headers="hOpeningHours" class="text-left">
                     {{ location.openingHours|safeHtml|truncate(50) }}
                 </td>
-                <td headers="hStartOnMonday" class="text-left">
-                    {{ location.startOnMonday|localizeddate('none', 'short') }}
-                </td>
-                <td headers="hEndOnMonday" class="text-left">
-                    {{ location.endOnMonday|localizeddate('none', 'short') }}
-                </td>
-                <td headers="hStart2OnMonday" class="text-left">
-                    {{ location.start2OnMonday|localizeddate('none', 'short') }}
-                </td>
-                <td headers="hEnd2OnMonday" class="text-left">
-                    {{ location.end2OnMonday|localizeddate('none', 'short') }}
-                </td>
-                <td headers="hStartOnTuesday" class="text-left">
-                    {{ location.startOnTuesday|localizeddate('none', 'short') }}
-                </td>
-                <td headers="hEndOnTuesday" class="text-left">
-                    {{ location.endOnTuesday|localizeddate('none', 'short') }}
-                </td>
-                <td headers="hStart2OnTuesday" class="text-left">
-                    {{ location.start2OnTuesday|localizeddate('none', 'short') }}
-                </td>
-                <td headers="hEnd2OnTuesday" class="text-left">
-                    {{ location.end2OnTuesday|localizeddate('none', 'short') }}
-                </td>
-                <td headers="hStartOnWednesday" class="text-left">
-                    {{ location.startOnWednesday|localizeddate('none', 'short') }}
-                </td>
-                <td headers="hEndOnWednesday" class="text-left">
-                    {{ location.endOnWednesday|localizeddate('none', 'short') }}
-                </td>
-                <td headers="hStart2OnWednesday" class="text-left">
-                    {{ location.start2OnWednesday|localizeddate('none', 'short') }}
-                </td>
-                <td headers="hEnd2OnWednesday" class="text-left">
-                    {{ location.end2OnWednesday|localizeddate('none', 'short') }}
-                </td>
-                <td headers="hStartOnThursday" class="text-left">
-                    {{ location.startOnThursday|localizeddate('none', 'short') }}
-                </td>
-                <td headers="hEndOnThursday" class="text-left">
-                    {{ location.endOnThursday|localizeddate('none', 'short') }}
-                </td>
-                <td headers="hStart2OnThursday" class="text-left">
-                    {{ location.start2OnThursday|localizeddate('none', 'short') }}
-                </td>
-                <td headers="hEnd2OnThursday" class="text-left">
-                    {{ location.end2OnThursday|localizeddate('none', 'short') }}
-                </td>
-                <td headers="hStartOnFriday" class="text-left">
-                    {{ location.startOnFriday|localizeddate('none', 'short') }}
-                </td>
-                <td headers="hEndOnFriday" class="text-left">
-                    {{ location.endOnFriday|localizeddate('none', 'short') }}
-                </td>
-                <td headers="hStart2OnFriday" class="text-left">
-                    {{ location.start2OnFriday|localizeddate('none', 'short') }}
-                </td>
-                <td headers="hEnd2OnFriday" class="text-left">
-                    {{ location.end2OnFriday|localizeddate('none', 'short') }}
-                </td>
-                <td headers="hStartOnSaturday" class="text-left">
-                    {{ location.startOnSaturday|localizeddate('none', 'short') }}
-                </td>
-                <td headers="hEndOnSaturday" class="text-left">
-                    {{ location.endOnSaturday|localizeddate('none', 'short') }}
-                </td>
-                <td headers="hStar2tOnSaturday" class="text-left">
-                    {{ location.star2tOnSaturday|localizeddate('none', 'short') }}
-                </td>
-                <td headers="hEnd2OnSaturday" class="text-left">
-                    {{ location.end2OnSaturday|localizeddate('none', 'short') }}
-                </td>
-                <td headers="hStartOnSunday" class="text-left">
-                    {{ location.startOnSunday|localizeddate('none', 'short') }}
-                </td>
-                <td headers="hEndOnSunday" class="text-left">
-                    {{ location.endOnSunday|localizeddate('none', 'short') }}
-                </td>
-                <td headers="hStart2OnSunday" class="text-left">
-                    {{ location.start2OnSunday|localizeddate('none', 'short') }}
-                </td>
-                <td headers="hEnd2OnSunday" class="text-left">
-                    {{ location.end2OnSunday|localizeddate('none', 'short') }}
-                </td>
             </tr>
         {% else %}
             <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
-                <td class="text-left" colspan="{% if routeArea == 'admin' %}44{% else %}43{% endif %}">
+                <td class="text-left" colspan="{% if routeArea == 'admin' %}19{% else %}18{% endif %}">
             {{ __('No locations found.') }}
               </td>
             </tr>

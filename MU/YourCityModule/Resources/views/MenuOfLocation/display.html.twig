@@ -3,6 +3,22 @@
 {% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
 {% block pageTitle %}{{ menuOfLocation|muyourcitymodule_formattedTitle|default(__('Menu of location')) }}{% endblock %}
 {% block title %}
+
+    <div id="imageOfMenu">
+        {% if menuOfLocation.imageOfMenu is not empty %}
+            {% if menuOfLocation.imageOfMenu is not empty and menuOfLocation.imageOfMenuMeta|default %}
+                        <a href="{{ menuOfLocation.imageOfMenuUrl }}" title="{{ menuOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if menuOfLocation.imageOfMenuMeta.isImage %} class="image-link"{% endif %}>
+            {% if menuOfLocation.imageOfMenuMeta.isImage %}
+                {% set thumbOptions = attribute(thumbRuntimeOptions, 'menuOfLocationImageOfMenu') %}
+                <img src="{{ menuOfLocation.imageOfMenu.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ menuOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+            {% else %}
+                {{ __('Download') }} ({{ menuOfLocation.imageOfMenuMeta.size|muyourcitymodule_fileSize(menuOfLocation.imageOfMenu.getPathname(), false, false) }})
+            {% endif %}
+            </a>
+            {% else %}&nbsp;{% endif %}
+        {% endif %}
+    </div>
+    
     {% set templateTitle = menuOfLocation|muyourcitymodule_formattedTitle|default(__('Menu of location')) %}
     {{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.menusoflocation.filter') }}{% if routeArea == 'admin' %} <small>({{ menuOfLocation.workflowState|muyourcitymodule_objectState(false)|lower }})</small>{% endif %}
     {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: menuOfLocation, area: routeArea, context: 'display' }) %}
@@ -16,46 +32,32 @@
     {% set isQuickView = app.request.query.getBoolean('raw', false) %}
     <div class="muyourcitymodule-menuoflocation muyourcitymodule-display">
 
+
     <div class="row">
-        <div class="col-sm-9">
-    <dl>
+        <div class="col-sm-12">
+
         {% if menuOfLocation.workflowState is not empty and routeArea == 'admin' %}
             <dt>{{ __('State') }}</dt>
             <dd>{{ menuOfLocation.workflowState|muyourcitymodule_listEntry('menuOfLocation', 'workflowState') }}</dd>
         {% endif %}
-        {% if menuOfLocation.name is not empty %}
+        {#% if menuOfLocation.name is not empty %}
             <dt>{{ __('Name') }}</dt>
             <dd>{{ menuOfLocation.name }}</dd>
-        {% endif %}
+        {% endif %#}
         {% if menuOfLocation.description is not empty %}
-            <dt>{{ __('Description') }}</dt>
-            <dd>{{ menuOfLocation.description|safeHtml }}</dd>
+            <h4>{{ __('Description') }}</h4>
+            {{ menuOfLocation.description|safeHtml }}
         {% endif %}
-        {% if menuOfLocation.imageOfMenu is not empty %}
-            <dt>{{ __('Image of menu') }}</dt>
-            <dd>{% if menuOfLocation.imageOfMenu is not empty and menuOfLocation.imageOfMenuMeta|default %}
-                        <a href="{{ menuOfLocation.imageOfMenuUrl }}" title="{{ menuOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if menuOfLocation.imageOfMenuMeta.isImage %} class="image-link"{% endif %}>
-            {% if menuOfLocation.imageOfMenuMeta.isImage %}
-                {% set thumbOptions = attribute(thumbRuntimeOptions, 'menuOfLocationImageOfMenu') %}
-                <img src="{{ menuOfLocation.imageOfMenu.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ menuOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
-            {% else %}
-                {{ __('Download') }} ({{ menuOfLocation.imageOfMenuMeta.size|muyourcitymodule_fileSize(menuOfLocation.imageOfMenu.getPathname(), false, false) }})
-            {% endif %}
-            </a>
-            {% else %}&nbsp;{% endif %}
-            </dd>
-        {% endif %}
+
         {% if menuOfLocation.effectivFrom is not empty %}
-            <dt>{{ __('Effectiv from') }}</dt>
-            <dd>{{ menuOfLocation.effectivFrom|localizeddate('medium', 'short') }}</dd>
+            <h3>{{ __('Effectiv from') }}
+            {{ menuOfLocation.effectivFrom|localizeddate('medium', 'short') }}
         {% endif %}
         {% if menuOfLocation.effectivUntil is not empty %}
-            <dt>{{ __('Effectiv until') }}</dt>
-            <dd>{{ menuOfLocation.effectivUntil|localizeddate('medium', 'short') }}</dd>
+            - {#{ __('Effectiv until') }#}
+            {{ menuOfLocation.effectivUntil|localizeddate('medium', 'short') }}</h3>
         {% endif %}
         {% if menuOfLocation.location|default %}
-            <dt>{{ __('Location') }}</dt>
-            <dd>
               {% if not isQuickView %}
                   <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': menuOfLocation.location.id, 'slug': menuOfLocation.location.slug }) }}">{% spaceless %}
                     {{ menuOfLocation.location|muyourcitymodule_formattedTitle }}
@@ -64,18 +66,29 @@
               {% else %}
                   {{ menuOfLocation.location|muyourcitymodule_formattedTitle }}
               {% endif %}
-            </dd>
+        {% endif %}<br style="clear: both;" />
+
+        {% if menuOfLocation.partsOfMenu|default %}
+            {{ include(
+                '@MUYourCityModule/PartOfMenu/includeDisplayItemListMany.html.twig',
+                { items: menuOfLocation.partsOfMenu }
+            ) }}
+        {% endif %}
+                
+        {% if menuOfLocation.dishes|default %}
+            {{ include(
+                '@MUYourCityModule/Dish/includeDisplayItemListMany.html.twig',
+                { items: menuOfLocation.dishes }
+            ) }}
         {% endif %}
         
-    </dl>
-
     {#{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: menuOfLocation }) }#}
 
     {{ block('display_hooks') }}
         </div>
-        <div class="col-sm-3">
+        {#<div class="col-sm-3">
             {{ block('related_items') }}
-        </div>
+        </div>#}
     </div>
 </div>
 {% endblock %}

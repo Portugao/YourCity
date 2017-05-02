@@ -77,6 +77,8 @@ abstract class AbstractOfferEntity extends EntityAccess implements Translatable
     protected $name = '';
     
     /**
+     * Enter a description of this offer.
+     You can also give informations about the price if you do not wint to use the special field for it.
      * @Gedmo\Translatable
      * @ORM\Column(type="text", length=4000, nullable=true)
      * @Assert\Length(min="0", max="4000")
@@ -85,6 +87,7 @@ abstract class AbstractOfferEntity extends EntityAccess implements Translatable
     protected $text = '';
     
     /**
+     * If there is a special page on your homepage, enter the url here.
      * @ORM\Column(length=255)
      * @Assert\NotNull()
      * @Assert\Length(min="0", max="255")
@@ -123,6 +126,7 @@ abstract class AbstractOfferEntity extends EntityAccess implements Translatable
     protected $imageOfOfferUrl = '';
     
     /**
+     * Here you can enter the lower price for this offer.
      * @ORM\Column(type="decimal", precision=10, scale=2)
      * @Assert\Type(type="numeric")
      * @Assert\NotNull()
@@ -132,6 +136,7 @@ abstract class AbstractOfferEntity extends EntityAccess implements Translatable
     protected $priceOfOffer = 0.00;
     
     /**
+     * Here you can enter the normal price.
      * @ORM\Column(type="decimal", precision=10, scale=2)
      * @Assert\Type(type="numeric")
      * @Assert\NotNull()
@@ -141,6 +146,7 @@ abstract class AbstractOfferEntity extends EntityAccess implements Translatable
     protected $normalPrice = 0.00;
     
     /**
+     * If you enter something here, the informations for the prices will not get shown.
      * @ORM\Column(type="smallint", nullable=true)
      * @Assert\Type(type="integer")
      * @Assert\LessThan(value=1000)
@@ -149,6 +155,7 @@ abstract class AbstractOfferEntity extends EntityAccess implements Translatable
     protected $percentOfOffer = 0;
     
     /**
+     * Enter here the date and time for the start of the offer.
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank()
      * @Assert\DateTime()
@@ -157,6 +164,7 @@ abstract class AbstractOfferEntity extends EntityAccess implements Translatable
     protected $effectivFrom;
     
     /**
+     * Enter here the date and time for the end of the offer.
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank()
      * @Assert\DateTime()
@@ -166,6 +174,7 @@ abstract class AbstractOfferEntity extends EntityAccess implements Translatable
     
     /**
      * On this date the offer will get put into the archive.
+     if you wish, that the offer is still there after the end, enter none.
      * @ORM\Column(type="datetime")
      * @Assert\NotNull()
      * @Assert\DateTime()
@@ -188,7 +197,11 @@ abstract class AbstractOfferEntity extends EntityAccess implements Translatable
      * Bidirectional - Many offers [offers] are linked by one location [location] (OWNING SIDE).
      *
      * @ORM\ManyToOne(targetEntity="MU\YourCityModule\Entity\LocationEntity", inversedBy="offers")
-     * @ORM\JoinTable(name="mu_yourcity_location")
+     * @ORM\JoinTable(name="mu_yourcity_location",
+     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
+     * )
+     * @Assert\NotNull(message="Choosing a location is required.")
      * @Assert\Type(type="MU\YourCityModule\Entity\LocationEntity")
      * @var \MU\YourCityModule\Entity\LocationEntity $location
      */
@@ -646,27 +659,25 @@ abstract class AbstractOfferEntity extends EntityAccess implements Translatable
      */
     public function createUrlArgs()
     {
-        $args = [];
-    
-        $args['id'] = $this['id'];
+        $args = [
+            'id' => $this->getId()
+        ];
     
         if (property_exists($this, 'slug')) {
-            $args['slug'] = $this['slug'];
+            $args['slug'] = $this->getSlug();
         }
     
         return $args;
     }
     
     /**
-     * Create concatenated identifier string (for composite keys).
+     * Returns the primary key.
      *
-     * @return String concatenated identifiers
+     * @return integer The identifier
      */
-    public function createCompositeIdentifier()
+    public function getKey()
     {
-        $itemId = $this['id'];
-    
-        return $itemId;
+        return $this->getId();
     }
     
     /**
@@ -709,7 +720,7 @@ abstract class AbstractOfferEntity extends EntityAccess implements Translatable
      */
     public function __toString()
     {
-        return 'Offer ' . $this->createCompositeIdentifier() . ': ' . $this->getName();
+        return 'Offer ' . $this->getKey() . ': ' . $this->getName();
     }
     
     /**
@@ -725,7 +736,7 @@ abstract class AbstractOfferEntity extends EntityAccess implements Translatable
     public function __clone()
     {
         // if the entity has no identity do nothing, do NOT throw an exception
-        if (!($this->id)) {
+        if (!$this->id) {
             return;
         }
     

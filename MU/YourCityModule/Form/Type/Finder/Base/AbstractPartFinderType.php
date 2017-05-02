@@ -152,7 +152,6 @@ abstract class AbstractPartFinderType extends AbstractType
                 'empty_data' => '',
                 'choices' => [
                     $this->__('Name') => 'name',
-                    $this->__('Description') => 'description',
                     $this->__('Creation date') => 'createdDate',
                     $this->__('Creator') => 'createdBy',
                     $this->__('Update date') => 'updatedDate',

@@ -144,7 +144,7 @@ abstract class AbstractArchiveHelper
     {
         $today = date('Y-m-d H:i:s');
     
-        $affectedEntities = $this->getObjectsToBeArchived('event', 'end2Date', $today);
+        $affectedEntities = $this->getObjectsToBeArchived('event', 'inViewUntil', $today);
         foreach ($affectedEntities as $entity) {
             $this->archiveSingleObject($entity);
         }

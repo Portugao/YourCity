@@ -54,6 +54,9 @@
                 <li>
                     <a id="imagesEventImageOfEventTab" href="#tabImagesEventImageOfEvent" role="tab" data-toggle="tab" aria-controls="tabImagesEventImageOfEvent">{{ __('Events image of event') }}</a>
                 </li>
+                <li>
+                    <a id="imagesProductImageOfProductTab" href="#tabImagesProductImageOfProduct" role="tab" data-toggle="tab" aria-controls="tabImagesProductImageOfProduct">{{ __('Products image of product') }}</a>
+                </li>
                 </ul>
             </li>
             {% set tabTitle = __('Integration') %}
@@ -295,6 +298,25 @@
                         {{ form_row(form.thumbnailHeightEventImageOfEventDisplay) }}
                         {{ form_row(form.thumbnailWidthEventImageOfEventEdit) }}
                         {{ form_row(form.thumbnailHeightEventImageOfEventEdit) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tabImagesProductImageOfProduct" aria-labelledby="imagesProductImageOfProductTab">
+                    {% set tabTitle = __('Image settings for products image of product') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                
+                        {{ form_row(form.enableShrinkingForProductImageOfProduct) }}
+                        <div id="shrinkDetailsProductImageOfProduct">
+                        {{ form_row(form.shrinkWidthProductImageOfProduct) }}
+                        {{ form_row(form.shrinkHeightProductImageOfProduct) }}
+                        </div>
+                        {{ form_row(form.thumbnailModeProductImageOfProduct) }}
+                        {{ form_row(form.thumbnailWidthProductImageOfProductView) }}
+                        {{ form_row(form.thumbnailHeightProductImageOfProductView) }}
+                        {{ form_row(form.thumbnailWidthProductImageOfProductDisplay) }}
+                        {{ form_row(form.thumbnailHeightProductImageOfProductDisplay) }}
+                        {{ form_row(form.thumbnailWidthProductImageOfProductEdit) }}
+                        {{ form_row(form.thumbnailHeightProductImageOfProductEdit) }}
                     </fieldset>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="tab5" aria-labelledby="vars5Tab">

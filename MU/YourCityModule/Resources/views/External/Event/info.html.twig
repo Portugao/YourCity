@@ -1,5 +1,5 @@
 {# Purpose of this template: Display item information for previewing from other modules #}
-<dl id="event{{ event.id }}">
+<dl id="event{{ event.getKey() }}">
 <dt>{{ event|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.events.filter')|safeHtml }}</dt>
 <dd>{% if event.imageOfEvent is not empty and event.imageOfEventMeta|default %}
             <a href="{{ event.imageOfEventUrl }}" title="{{ event|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if event.imageOfEventMeta.isImage %} class="image-link"{% endif %}>
@@ -13,14 +13,4 @@
 {% else %}&nbsp;{% endif %}
 </dd>
 {% if event.description is not empty %}<dd>{{ event.description }}</dd>{% endif %}
-{% if featureActivationHelper.isEnabled(constant('MU\\YourCityModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'event') %}
-    <dd>
-        <dl class="category-list">
-        {% for propName, catMapping in event.categories %}
-            <dt>{{ propName }}</dt>
-            <dd>{{ catMapping.category.display_name[app.request.locale]|default(catMapping.category.name) }}</dd>
-        {% endfor %}
-        </dl>
-    </dd>
-{% endif %}
 </dl>

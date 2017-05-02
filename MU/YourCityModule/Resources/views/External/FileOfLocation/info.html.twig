@@ -1,5 +1,5 @@
 {# Purpose of this template: Display item information for previewing from other modules #}
-<dl id="fileOfLocation{{ fileOfLocation.id }}">
+<dl id="fileOfLocation{{ fileOfLocation.getKey() }}">
 <dt>{{ fileOfLocation|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.filesoflocation.filter')|safeHtml }}</dt>
 {% if fileOfLocation.description is not empty %}<dd>{{ fileOfLocation.description }}</dd>{% endif %}
 </dl>

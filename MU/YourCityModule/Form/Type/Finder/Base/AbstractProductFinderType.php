@@ -68,9 +68,7 @@ abstract class AbstractProductFinderType extends AbstractType
             ])
         ;
 
-        if ($this->featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, $options['objectType'])) {
-            $this->addCategoriesField($builder, $options);
-        }
+        $this->addImageFields($builder, $options);
         $this->addPasteAsField($builder, $options);
         $this->addSortingFields($builder, $options);
         $this->addAmountField($builder, $options);
@@ -96,26 +94,21 @@ abstract class AbstractProductFinderType extends AbstractType
     }
 
     /**
-     * Adds a categories field.
+     * Adds fields for image insertion options.
      *
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      */
-    public function addCategoriesField(FormBuilderInterface $builder, array $options)
+    public function addImageFields(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('categories', 'Zikula\CategoriesModule\Form\Type\CategoriesType', [
-            'label' => $this->__('Categories') . ':',
-            'empty_data' => [],
-            'attr' => [
-                'class' => 'category-selector',
-                'title' => $this->__('This is an optional filter.')
-            ],
-            'help' => $this->__('This is an optional filter.'),
-            'required' => false,
-            'multiple' => true,
-            'module' => 'MUYourCityModule',
-            'entity' => ucfirst($options['objectType']) . 'Entity',
-            'entityCategoryClass' => 'MU\YourCityModule\Entity\\' . ucfirst($options['objectType']) . 'CategoryEntity'
+        $builder->add('onlyImages', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            'label' => $this->__('Only images'),
+            'empty_data' => false,
+            'help' => $this->__('Enable this option to insert images'),
+            'required' => false
+        ]);
+        $builder->add('imageField', 'Symfony\Component\Form\Extension\Core\Type\HiddenType', [
+            'data' => 'imageOfProduct'
         ]);
     }
 
@@ -133,7 +126,11 @@ abstract class AbstractProductFinderType extends AbstractType
             'choices' => [
                 $this->__('Relative link to the product') => 1,
                 $this->__('Absolute url to the product') => 2,
-                $this->__('ID of product') => 3
+                $this->__('ID of product') => 3,
+                $this->__('Relative link to the image') => 6,
+                $this->__('Image') => 7,
+                $this->__('Image with relative link to the product') => 8,
+                $this->__('Image with absolute url to the product') => 9
             ],
             'choices_as_values' => true,
             'multiple' => false,
@@ -156,6 +153,7 @@ abstract class AbstractProductFinderType extends AbstractType
                 'choices' => [
                     $this->__('Name') => 'name',
                     $this->__('Description') => 'description',
+                    $this->__('Kind of product') => 'kindOfProduct',
                     $this->__('Today') => 'today',
                     $this->__('Monday') => 'monday',
                     $this->__('Tuesday') => 'tuesday',

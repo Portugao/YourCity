@@ -5,7 +5,7 @@
 {% for event in items %}
     <Placemark>
         <name>{{ event.getName() }}</name>
-        <description><![CDATA[{{ event.getDescription() }}<br /><a href="{{ url('muyourcitymodule_event_display', { 'id': event.id }) }}">{{ __('Details') }}</a>]]></description>
+        <description><![CDATA[{{ event.getDescription() }}<br /><a href="{{ url('muyourcitymodule_event_display', { 'id': event.getId() }) }}">{{ __('Details') }}</a>]]></description>
         <Point>
             <coordinates>{{ event.getLongitude() }}, {{ event.getLatitude() }}, 0</coordinates>
         </Point>

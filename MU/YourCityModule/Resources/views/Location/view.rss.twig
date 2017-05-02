@@ -36,13 +36,12 @@
 {% endblock %}
 {% block entry_content %}
     <title><![CDATA[{% if location.updatedDate|default %}{{ location.updatedDate|localizeddate('medium', 'short') }} - {% endif %}{{ location|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.locations')|safeHtml }}]]></title>
-    <link>{{ url('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': location.id, 'slug': location.slug }) }}</link>
-    <guid>{{ url('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': location.id, 'slug': location.slug }) }}</guid>
+    <link>{{ url('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': location.getId(), 'slug': location.slug }) }}</link>
+    <guid>{{ url('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': location.getId(), 'slug': location.slug }) }}</guid>
     {% if location.createdBy|default and location.createdBy.getUid() > 0 %}
         {% set creatorAttributes = location.createdBy.getAttributes() %}
         <author>{{ location.createdBy.getEmail() }} ({{ creatorAttributes.get('realname')|default(creatorAttributes.get('name'))|default(location.createdBy.getUname()) }})</author>
     {% endif %}
-    <category><![CDATA[{{ __('Categories') }}: {% for propName, catMapping in location.categories %}{{ catMapping.category.display_name[lang] }}{% if not loop.last %}, {% endif %}{% endfor %}]]></category>
     <description>
         <![CDATA[
         {{ location.description|replace({ '<br>': '<br />' }) }}

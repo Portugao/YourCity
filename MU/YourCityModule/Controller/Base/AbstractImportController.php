@@ -36,7 +36,7 @@ abstract class AbstractImportController extends AbstractController
             throw new AccessDeniedException();
         }
         
-        $form = $this->createForm('MU\YourCityModule\Form\Type\ImportType');
+        $form = $this->createForm('MU\YourCityModule\Form\ImportType');
         
         if ($form->handleRequest($request)->isValid()) {
             if ($form->get('save')->isClicked()) {
@@ -63,5 +63,77 @@ abstract class AbstractImportController extends AbstractController
         
         // render the config form
         return $this->render('@MUYourCityModule/Import/import.html.twig', $templateParameters);
+    }
+    
+    /**
+     *
+     * Build data array for creating collection
+     * @param array $result
+     * @return array of values
+     */
+    private function buildArrayForDatas($module , $result)
+    {
+    	if ($module == 'Downloads') {
+    		$result['title'] = utf8_encode($result['title']);
+    		$result['title'] = html_entity_decode($result['title'], ENT_COMPAT);
+    		$result['description'] = utf8_encode($result['description']);
+    		$data[] = array('id' => $result['cid'],
+    				'parent_id' => $result['pid'],
+    				'inFrontend' => 1,
+    				'name' => $result['title'],
+    				'description' => $result['description']);
+    	}
+    	return $data;
+    }
+    
+    /**
+     *
+     * Get files of module
+     * @param string $module    the module to work with
+     *
+     * @return an array of files
+     */
+    private function getDatas()
+    {
+    	$table = 'clip_pubdata3';
+    	//$moduletable = $this->getPraefix(). $table;
+    	$connect = $this->getDBConnection();
+    	// ask the DB for entries in the module table
+    	// handle the access to the module file table
+    	// build sql
+    	$query = "SELECT * FROM " . $table . " ORDER by id";
+    	// prepare the sql query
+    	$sql = $connect->query($query);
+    	$connect = null;
+    	return $sql;
+    }
+    
+
+    /**
+     * Get a connection to DB
+     *
+     * @return a connection
+     */
+    private function getDBConnection()
+    {
+    	//get host, db, user and pw
+    	$databases = ServiceUtil::getManager()->getArgument('databases');
+    	$connName = Doctrine_Manager::getInstance()->getCurrentConnection()->getName();
+    	$host = $databases[$connName]['host'];
+    	$dbname = $databases[$connName]['dbname'];
+    	$dbuser = $databases[$connName]['user'];
+    	$dbpassword = $databases[$connName]['password'];
+    	try {
+    		$connect = new PDO("mysql:host=$host;dbname=$dbname", $dbuser, $dbpassword);
+    	}
+    	catch (PDOException $e) {
+    		$this->__('Connection to database failed');
+    	}
+    	if (is_object($connect)) {
+    		return $connect;
+    	} else {
+    		return false;
+    	}
+    
     }
 }

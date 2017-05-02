@@ -25,7 +25,6 @@ use Zikula\Component\SortableColumns\SortableColumns;
 use Zikula\Core\Controller\AbstractController;
 use Zikula\Core\RouteUrl;
 use MU\YourCityModule\Entity\AbonnementEntity;
-use MU\YourCityModule\Helper\FeatureActivationHelper;
 
 /**
  * Abonnement controller base class.
@@ -149,13 +148,6 @@ abstract class AbstractAbonnementController extends AbstractController
             new Column('sendMessageForEvents'),
             new Column('showProducts'),
             new Column('sendMessageForProducts'),
-            new Column('showOptionOne'),
-            new Column('sendMessageToOptionOne'),
-            new Column('showOptionTwo'),
-            new Column('sendMessageToOptionTwo'),
-            new Column('showOptionThree'),
-            new Column('sendMessageToOptionThree'),
-            new Column('positionOfAbo'),
             new Column('location'),
             new Column('createdBy'),
             new Column('createdDate'),
@@ -287,7 +279,7 @@ abstract class AbstractAbonnementController extends AbstractController
             throw new AccessDeniedException();
         }
         $logger = $this->get('logger');
-        $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => 'abonnement', 'id' => $abonnement->createCompositeIdentifier()];
+        $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => 'abonnement', 'id' => $abonnement->getKey()];
         
         $abonnement->initWorkflow();
         

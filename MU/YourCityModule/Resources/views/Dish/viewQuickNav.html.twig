@@ -11,20 +11,6 @@
     <div id="collapseDishQuickNav" class="collapse">
         <fieldset>
             <h3>{{ __('Quick navigation') }}</h3>
-            {% set categoriesEnabled = featureActivationHelper.isEnabled(constant('MU\\YourCityModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'dish') %}
-            {% if (categoryFilter is defined and categoryFilter != true) or not categoriesEnabled %}
-                <div class="hidden">
-            {% else %}
-                <div class="row">
-                    <div class="col-sm-3">
-            {% endif %}
-                {{ form_row(quickNavForm.categories) }}
-            {% if (categoryFilter is defined and categoryFilter != true) or not categoriesEnabled %}
-                </div>
-            {% else %}
-                    </div>
-                    <div class="col-sm-9">
-            {% endif %}
             {% if menuOfLocationFilter is defined and menuOfLocationFilter != true %}
                 <div class="hidden">
             {% endif %}
@@ -53,6 +39,13 @@
             {% if workflowStateFilter is defined and workflowStateFilter != true %}
                 </div>
             {% endif %}
+            {% if kindOfDishFilter is defined and kindOfDishFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.kindOfDish) }}
+            {% if kindOfDishFilter is defined and kindOfDishFilter != true %}
+                </div>
+            {% endif %}
             {% if searchFilter is defined and searchFilter != true %}
                 <div class="hidden">
             {% endif %}
@@ -76,11 +69,6 @@
                 </div>
             {% endif %}
             {{ form_widget(quickNavForm.updateview) }}
-            {% if (categoryFilter is defined and categoryFilter != true) or not categoriesEnabled %}
-            {% else %}
-                    </div>
-                </div>
-            {% endif %}
         </fieldset>
     </div>
     {{ form_end(quickNavForm) }}

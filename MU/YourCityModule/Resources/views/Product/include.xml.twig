@@ -1,8 +1,10 @@
 {# purpose of this template: products xml inclusion template #}
-<product id="{{ product.id }}" createdon="{{ product.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ product.updatedDate|localizeddate('medium', 'short') }}">
+<product id="{{ product.getId() }}" createdon="{{ product.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ product.updatedDate|localizeddate('medium', 'short') }}">
     <id>{{ product.id }}</id>
     <name><![CDATA[{{ product.name }}]]></name>
     <description><![CDATA[{{ product.description|safeHtml }}]]></description>
+    <kindOfProduct>{{ product.kindOfProduct|muyourcitymodule_listEntry('product', 'kindOfProduct') }}</kindOfProduct>
+    <imageOfProduct{% if product.imageOfProduct is not empty and product.imageOfProductMeta|default %} extension="{{ product.imageOfProductMeta.extension }}" size="{{ product.imageOfProductMeta.size }}" isImage="{% if product.imageOfProductMeta.isImage %}true{% else %}false{% endif %}"{% if product.imageOfProductMeta.isImage %} width="{{ product.imageOfProductMeta.width }}" height="{{ product.imageOfProductMeta.height }}" format="{{ product.imageOfProductMeta.format }}"{% endif %}{% endif %}>{{ product.imageOfProduct }}</imageOfProduct>
     <today>{{ product.today|muyourcitymodule_listEntry('product', 'today') }}</today>
     <monday>{% if not product.monday %}0{% else %}1{% endif %}</monday>
     <tuesday>{% if not product.tuesday %}0{% else %}1{% endif %}</tuesday>

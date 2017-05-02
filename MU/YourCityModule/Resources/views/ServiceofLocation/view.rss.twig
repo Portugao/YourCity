@@ -36,8 +36,8 @@
 {% endblock %}
 {% block entry_content %}
     <title><![CDATA[{% if serviceOfLocation.updatedDate|default %}{{ serviceOfLocation.updatedDate|localizeddate('medium', 'short') }} - {% endif %}{{ serviceOfLocation|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.servicesoflocation')|safeHtml }}]]></title>
-    <link>{{ url('muyourcitymodule_serviceoflocation_' ~ routeArea ~ 'display', { 'id': serviceOfLocation.id }) }}</link>
-    <guid>{{ url('muyourcitymodule_serviceoflocation_' ~ routeArea ~ 'display', { 'id': serviceOfLocation.id }) }}</guid>
+    <link>{{ url('muyourcitymodule_serviceoflocation_' ~ routeArea ~ 'display', { 'id': serviceOfLocation.getId() }) }}</link>
+    <guid>{{ url('muyourcitymodule_serviceoflocation_' ~ routeArea ~ 'display', { 'id': serviceOfLocation.getId() }) }}</guid>
     {% if serviceOfLocation.createdBy|default and serviceOfLocation.createdBy.getUid() > 0 %}
         {% set creatorAttributes = serviceOfLocation.createdBy.getAttributes() %}
         <author>{{ serviceOfLocation.createdBy.getEmail() }} ({{ creatorAttributes.get('realname')|default(creatorAttributes.get('name'))|default(serviceOfLocation.createdBy.getUname()) }})</author>

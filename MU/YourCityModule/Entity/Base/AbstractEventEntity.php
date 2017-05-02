@@ -13,7 +13,6 @@
 namespace MU\YourCityModule\Entity\Base;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Translatable\Translatable;
 use Symfony\Component\HttpFoundation\File\File;
@@ -75,6 +74,7 @@ abstract class AbstractEventEntity extends EntityAccess implements Translatable
     protected $workflowState = 'initial';
     
     /**
+     * Maximum 100 characters; better only 57 for SEO.
      * @Gedmo\Translatable
      * @ORM\Column(length=100)
      * @Assert\NotBlank()
@@ -120,6 +120,14 @@ abstract class AbstractEventEntity extends EntityAccess implements Translatable
      * @var string $imageOfEventUrl
      */
     protected $imageOfEventUrl = '';
+    
+    /**
+     * @ORM\Column(length=255)
+     * @Assert\NotBlank()
+     * @YourCityAssert\ListEntry(entityName="event", propertyName="kindOfEvent", multiple=true)
+     * @var string $kindOfEvent
+     */
+    protected $kindOfEvent = 'other';
     
     /**
      * @ORM\Column(length=255)
@@ -183,6 +191,16 @@ abstract class AbstractEventEntity extends EntityAccess implements Translatable
      */
     protected $end2Date;
     
+    /**
+     * Here you can enter the date and time until this event will appear in the overview of events.
+     Then it will get put into the archive. You only are able to reuse it as model.
+     If you do not enter a value, this event will be shown further after the end.
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\DateTime()
+     * @var DateTime $inViewUntil
+     */
+    protected $inViewUntil;
+    
     
     /**
      * Used locale to override Translation listener's locale.
@@ -195,18 +213,14 @@ abstract class AbstractEventEntity extends EntityAccess implements Translatable
     protected $locale;
     
     /**
-     * @ORM\OneToMany(targetEntity="\MU\YourCityModule\Entity\EventCategoryEntity", 
-     *                mappedBy="entity", cascade={"all"}, 
-     *                orphanRemoval=true)
-     * @var \MU\YourCityModule\Entity\EventCategoryEntity
-     */
-    protected $categories = null;
-    
-    /**
      * Bidirectional - Many events [events] are linked by one location [location] (OWNING SIDE).
      *
      * @ORM\ManyToOne(targetEntity="MU\YourCityModule\Entity\LocationEntity", inversedBy="events")
-     * @ORM\JoinTable(name="mu_yourcity_location")
+     * @ORM\JoinTable(name="mu_yourcity_location",
+     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
+     * )
+     * @Assert\NotNull(message="Choosing a location is required.")
      * @Assert\Type(type="MU\YourCityModule\Entity\LocationEntity")
      * @var \MU\YourCityModule\Entity\LocationEntity $location
      */
@@ -223,7 +237,6 @@ abstract class AbstractEventEntity extends EntityAccess implements Translatable
     public function __construct()
     {
         $this->initWorkflow();
-        $this->categories = new ArrayCollection();
     }
     
     /**
@@ -416,6 +429,30 @@ abstract class AbstractEventEntity extends EntityAccess implements Translatable
     {
         if ($this->imageOfEventMeta !== $imageOfEventMeta) {
             $this->imageOfEventMeta = $imageOfEventMeta;
+        }
+    }
+    
+    /**
+     * Returns the kind of event.
+     *
+     * @return string
+     */
+    public function getKindOfEvent()
+    {
+        return $this->kindOfEvent;
+    }
+    
+    /**
+     * Sets the kind of event.
+     *
+     * @param string $kindOfEvent
+     *
+     * @return void
+     */
+    public function setKindOfEvent($kindOfEvent)
+    {
+        if ($this->kindOfEvent !== $kindOfEvent) {
+            $this->kindOfEvent = isset($kindOfEvent) ? $kindOfEvent : '';
         }
     }
     
@@ -632,6 +669,36 @@ abstract class AbstractEventEntity extends EntityAccess implements Translatable
     }
     
     /**
+     * Returns the in view until.
+     *
+     * @return DateTime
+     */
+    public function getInViewUntil()
+    {
+        return $this->inViewUntil;
+    }
+    
+    /**
+     * Sets the in view until.
+     *
+     * @param DateTime $inViewUntil
+     *
+     * @return void
+     */
+    public function setInViewUntil($inViewUntil)
+    {
+        if ($this->inViewUntil !== $inViewUntil) {
+            if (is_object($inViewUntil) && $inViewUntil instanceOf \DateTime) {
+                $this->inViewUntil = $inViewUntil;
+            } elseif (null === $inViewUntil || empty($inViewUntil)) {
+                $this->inViewUntil = null;
+            } else {
+                $this->inViewUntil = new \DateTime($inViewUntil);
+            }
+        }
+    }
+    
+    /**
      * Returns the locale.
      *
      * @return string
@@ -655,59 +722,6 @@ abstract class AbstractEventEntity extends EntityAccess implements Translatable
         }
     }
     
-    /**
-     * Returns the categories.
-     *
-     * @return ArrayCollection[]
-     */
-    public function getCategories()
-    {
-        return $this->categories;
-    }
-    
-    
-    /**
-     * Sets the categories.
-     *
-     * @param ArrayCollection $categories
-     *
-     * @return void
-     */
-    public function setCategories(ArrayCollection $categories)
-    {
-        foreach ($this->categories as $category) {
-            if (false === $key = $this->collectionContains($categories, $category)) {
-                $this->categories->removeElement($category);
-            } else {
-                $categories->remove($key);
-            }
-        }
-        foreach ($categories as $category) {
-            $this->categories->add($category);
-        }
-    }
-    
-    /**
-     * Checks if a collection contains an element based only on two criteria (categoryRegistryId, category).
-     *
-     * @param ArrayCollection $collection
-     * @param \MU\YourCityModule\Entity\EventCategoryEntity $element
-     *
-     * @return bool|int
-     */
-    private function collectionContains(ArrayCollection $collection, \MU\YourCityModule\Entity\EventCategoryEntity $element)
-    {
-        foreach ($collection as $key => $category) {
-            /** @var \MU\YourCityModule\Entity\EventCategoryEntity $category */
-            if ($category->getCategoryRegistryId() == $element->getCategoryRegistryId()
-                && $category->getCategory() == $element->getCategory()
-            ) {
-                return $key;
-            }
-        }
-    
-        return false;
-    }
     
     /**
      * Returns the location.
@@ -750,27 +764,25 @@ abstract class AbstractEventEntity extends EntityAccess implements Translatable
      */
     public function createUrlArgs()
     {
-        $args = [];
-    
-        $args['id'] = $this['id'];
+        $args = [
+            'id' => $this->getId()
+        ];
     
         if (property_exists($this, 'slug')) {
-            $args['slug'] = $this['slug'];
+            $args['slug'] = $this->getSlug();
         }
     
         return $args;
     }
     
     /**
-     * Create concatenated identifier string (for composite keys).
+     * Returns the primary key.
      *
-     * @return String concatenated identifiers
+     * @return integer The identifier
      */
-    public function createCompositeIdentifier()
+    public function getKey()
     {
-        $itemId = $this['id'];
-    
-        return $itemId;
+        return $this->getId();
     }
     
     /**
@@ -813,7 +825,7 @@ abstract class AbstractEventEntity extends EntityAccess implements Translatable
      */
     public function __toString()
     {
-        return 'Event ' . $this->createCompositeIdentifier() . ': ' . $this->getName();
+        return 'Event ' . $this->getKey() . ': ' . $this->getName();
     }
     
     /**
@@ -829,7 +841,7 @@ abstract class AbstractEventEntity extends EntityAccess implements Translatable
     public function __clone()
     {
         // if the entity has no identity do nothing, do NOT throw an exception
-        if (!($this->id)) {
+        if (!$this->id) {
             return;
         }
     
@@ -851,14 +863,5 @@ abstract class AbstractEventEntity extends EntityAccess implements Translatable
         $this->setUpdatedBy(null);
         $this->setUpdatedDate(null);
     
-    
-        // clone categories
-        $categories = $this->categories;
-        $this->categories = new ArrayCollection();
-        foreach ($categories as $c) {
-            $newCat = clone $c;
-            $this->categories->add($newCat);
-            $newCat->setEntity($this);
-        }
     }
 }

@@ -120,9 +120,6 @@ abstract class AbstractLocationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addEntityFields($builder, $options);
-        if ($this->featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, 'location')) {
-            $this->addCategoriesField($builder, $options);
-        }
         $this->addOutgoingRelationshipFields($builder, $options);
         $this->addAdditionalNotificationRemarksField($builder, $options);
         $this->addModerationFields($builder, $options);
@@ -158,6 +155,11 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('slogan', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
             'label' => $this->__('Slogan') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Slogan or additional name of your company.')
+            ],
+            'help' => $this->__('Slogan or additional name of your company.'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 255,
@@ -169,9 +171,16 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('descriptionForGoogle', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
             'label' => $this->__('Description for google') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Enter the description for google and Co.
+                Only 170 characters are allowed.')
+            ],
+            'help' => $this->__('Enter the description for google and Co.
+            Only 170 characters are allowed.'),
             'empty_data' => '',
             'attr' => [
-                'maxlength' => 255,
+                'maxlength' => 170,
                 'class' => '',
                 'title' => $this->__('Enter the description for google of the location')
             ],
@@ -182,9 +191,11 @@ abstract class AbstractLocationType extends AbstractType
             'label' => $this->__('Description') . ':',
             'label_attr' => [
                 'class' => 'tooltips',
-                'title' => $this->__('Maximum 2000 characters.')
+                'title' => $this->__('Enter a description of your location (company) and your products.
+                Maximum 2000 characters.')
             ],
-            'help' => $this->__('Maximum 2000 characters.'),
+            'help' => $this->__('Enter a description of your location (company) and your products.
+            Maximum 2000 characters.'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 2000,
@@ -233,6 +244,11 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('name', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
             'label' => $this->__('Name') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Enter the name of your company. If your company is registered somewhere, enter the exact name-')
+            ],
+            'help' => $this->__('Enter the name of your company. If your company is registered somewhere, enter the exact name-'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 255,
@@ -242,8 +258,29 @@ abstract class AbstractLocationType extends AbstractType
             'required' => true,
         ]);
         
+        $builder->add('letterForOrder', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            'label' => $this->__('Letter for order') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Enter the letter for ordering of the location.')
+            ],
+            'help' => $this->__('Enter the letter for ordering of the location.'),
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => '',
+                'title' => $this->__('Enter the letter for order of the location')
+            ],
+            'required' => true,
+        ]);
+        
         $builder->add('logoOfYourLocation', 'MU\YourCityModule\Form\Type\Field\UploadType', [
             'label' => $this->__('Logo of your location') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('If your location has a logo, you can upload it here.')
+            ],
+            'help' => $this->__('If your location has a logo, you can upload it here.'),
             'attr' => [
                 'class' => ' validate-upload',
                 'title' => $this->__('Enter the logo of your location of the location')
@@ -256,6 +293,11 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('imageOfLocation', 'MU\YourCityModule\Form\Type\Field\UploadType', [
             'label' => $this->__('Image of location') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Here you can upload an image, that represents your company.')
+            ],
+            'help' => $this->__('Here you can upload an image, that represents your company.'),
             'attr' => [
                 'class' => ' validate-upload',
                 'title' => $this->__('Enter the image of location of the location')
@@ -910,28 +952,6 @@ abstract class AbstractLocationType extends AbstractType
     }
 
     /**
-     * Adds a categories field.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
-    public function addCategoriesField(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add('categories', 'Zikula\CategoriesModule\Form\Type\CategoriesType', [
-            'label' => $this->__('Categories') . ':',
-            'empty_data' => [],
-            'attr' => [
-                'class' => 'category-selector'
-            ],
-            'required' => false,
-            'multiple' => true,
-            'module' => 'MUYourCityModule',
-            'entity' => 'LocationEntity',
-            'entityCategoryClass' => 'MU\YourCityModule\Entity\LocationCategoryEntity'
-        ]);
-    }
-
-    /**
      * Adds fields for outgoing relationships.
      *
      * @param FormBuilderInterface $builder The form builder
@@ -951,10 +971,13 @@ abstract class AbstractLocationType extends AbstractType
             'class' => 'MUYourCityModule:BranchEntity',
             'choice_label' => $choiceLabelClosure,
             'multiple' => true,
-            'expanded' => false,
+            'expanded' => true,
             'query_builder' => $queryBuilder,
             'required' => false,
             'label' => $this->__('Branches'),
+            'label_attr' => [
+                'class' => 'checkbox-inline'
+            ],
             'attr' => [
                 'title' => $this->__('Choose the branches')
             ]
@@ -991,10 +1014,13 @@ abstract class AbstractLocationType extends AbstractType
             'class' => 'MUYourCityModule:SpecialOfLocationEntity',
             'choice_label' => $choiceLabelClosure,
             'multiple' => true,
-            'expanded' => false,
+            'expanded' => true,
             'query_builder' => $queryBuilder,
             'required' => false,
             'label' => $this->__('Specials of location'),
+            'label_attr' => [
+                'class' => 'checkbox-inline'
+            ],
             'attr' => [
                 'title' => $this->__('Choose the specials of location')
             ]
@@ -1011,10 +1037,13 @@ abstract class AbstractLocationType extends AbstractType
             'class' => 'MUYourCityModule:ServiceOfLocationEntity',
             'choice_label' => $choiceLabelClosure,
             'multiple' => true,
-            'expanded' => false,
+            'expanded' => true,
             'query_builder' => $queryBuilder,
             'required' => false,
             'label' => $this->__('Services of location'),
+            'label_attr' => [
+                'class' => 'checkbox-inline'
+            ],
             'attr' => [
                 'title' => $this->__('Choose the services of location')
             ]

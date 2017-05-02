@@ -66,34 +66,6 @@ abstract class AbstractItemList extends \Content_AbstractContentType implements 
     protected $filter;
     
     /**
-     * List of object types allowing categorisation.
-     *
-     * @var array
-     */
-    protected $categorisableObjectTypes;
-    
-    /**
-     * List of category registries for different trees.
-     *
-     * @var array
-     */
-    protected $catRegistries;
-    
-    /**
-     * List of category properties for different trees.
-     *
-     * @var array
-     */
-    protected $catProperties;
-    
-    /**
-     * List of category ids with sub arrays for each registry.
-     *
-     * @var array
-     */
-    protected $catIds;
-    
-    /**
      * ItemList constructor.
      */
     public function __construct()
@@ -162,56 +134,6 @@ abstract class AbstractItemList extends \Content_AbstractContentType implements 
         $this->template = isset($data['template']) ? $data['template'] : 'itemlist_' . $this->objectType . '_display.html.twig';
         $this->customTemplate = isset($data['customTemplate']) ? $data['customTemplate'] : '';
         $this->filter = isset($data['filter']) ? $data['filter'] : '';
-        $featureActivationHelper = $this->container->get('mu_yourcity_module.feature_activation_helper');
-        if ($featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, $this->objectType)) {
-            $this->categorisableObjectTypes = ['location', 'dish', 'event', 'product'];
-            $categoryHelper = $this->container->get('mu_yourcity_module.category_helper');
-    
-            // fetch category properties
-            $this->catRegistries = [];
-            $this->catProperties = [];
-            if (in_array($this->objectType, $this->categorisableObjectTypes)) {
-                $entityFactory = $this->container->get('mu_yourcity_module.entity_factory');
-                $idFields = $entityFactory->getIdFields($this->objectType);
-                $this->catRegistries = $categoryHelper->getAllPropertiesWithMainCat($this->objectType, $idFields[0]);
-                $this->catProperties = $categoryHelper->getAllProperties($this->objectType);
-            }
-    
-            if (!isset($data['catIds'])) {
-                $primaryRegistry = $categoryHelper->getPrimaryProperty($this->objectType);
-                $data['catIds'] = [$primaryRegistry => []];
-                // backwards compatibility
-                if (isset($data['catId'])) {
-                    $data['catIds'][$primaryRegistry][] = $data['catId'];
-                    unset($data['catId']);
-                }
-            } elseif (!is_array($data['catIds'])) {
-                $data['catIds'] = explode(',', $data['catIds']);
-            }
-    
-            foreach ($this->catRegistries as $registryId => $registryCid) {
-                $propName = '';
-                foreach ($this->catProperties as $propertyName => $propertyId) {
-                    if ($propertyId == $registryId) {
-                        $propName = $propertyName;
-                        break;
-                    }
-                }
-                $data['catIds'][$propName] = [];
-                if (isset($data['catids' . $propName])) {
-                    $data['catIds'][$propName] = $data['catids' . $propName];
-                }
-                if (!is_array($data['catIds'][$propName])) {
-                    if ($data['catIds'][$propName]) {
-                        $data['catIds'][$propName] = [$data['catIds'][$propName]];
-                    } else {
-                        $data['catIds'][$propName] = [];
-                    }
-                }
-            }
-    
-            $this->catIds = $data['catIds'];
-        }
     }
     
     /**
@@ -228,30 +150,14 @@ abstract class AbstractItemList extends \Content_AbstractContentType implements 
         $orderBy = $this->container->get('mu_yourcity_module.model_helper')->resolveSortParameter($this->objectType, $this->sorting);
         $qb = $repository->genericBaseQuery($this->filter, $orderBy);
     
-        $featureActivationHelper = $this->container->get('mu_yourcity_module.feature_activation_helper');
-        if ($featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, $this->objectType)) {
-            // apply category filters
-            if (in_array($this->objectType, $this->categorisableObjectTypes)) {
-                if (is_array($this->catIds) && count($this->catIds) > 0) {
-                    $categoryHelper = $this->container->get('mu_yourcity_module.category_helper');
-                    $qb = $categoryHelper->buildFilterClauses($qb, $this->objectType, $this->catIds);
-                }
-            }
-        }
-    
         // get objects from database
         $currentPage = 1;
         $resultsPerPage = isset($this->amount) ? $this->amount : 1;
         $query = $repository->getSelectWherePaginatedQuery($qb, $currentPage, $resultsPerPage);
         list($entities, $objectCount) = $repository->retrieveCollectionResult($query, true);
     
-        if ($featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, $this->objectType)) {
-            $entities = $categoryHelper->filterEntitiesByPermission($entities);
-        }
-    
         $data = [
             'objectType' => $this->objectType,
-            'catids' => $this->catIds,
             'sorting' => $this->sorting,
             'amount' => $this->amount,
             'template' => $this->template,
@@ -264,11 +170,6 @@ abstract class AbstractItemList extends \Content_AbstractContentType implements 
             'objectType' => $this->objectType,
             'items' => $entities
         ];
-    
-        if ($featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, $this->objectType)) {
-            $templateParameters['registries'] = $this->catRegistries;
-            $templateParameters['properties'] = $this->catProperties;
-        }
     
         $templateParameters = $this->container->get('mu_yourcity_module.controller_helper')->addTemplateParameters($this->objectType, $templateParameters, 'contentType', []);
     
@@ -344,50 +245,6 @@ abstract class AbstractItemList extends \Content_AbstractContentType implements 
     
         // ensure our custom plugins are loaded
         array_push($this->view->plugins_dir, 'modules/MU/YourCityModule/Resources/views/plugins');
-    
-        $featureActivationHelper = $this->container->get('mu_yourcity_module.feature_activation_helper');
-        if ($featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, $this->objectType)) {
-            // assign category data
-            $this->view->assign('registries', $this->catRegistries)
-                       ->assign('properties', $this->catProperties);
-    
-            // assign categories lists for simulating category selectors
-            $translator = $this->container->get('translator.default');
-            $locale = $this->container->get('request_stack')->getCurrentRequest()->getLocale();
-            $categories = [];
-            $categoryApi = $this->container->get('zikula_categories_module.api.category');
-            foreach ($this->catRegistries as $registryId => $registryCid) {
-                $propName = '';
-                foreach ($this->catProperties as $propertyName => $propertyId) {
-                    if ($propertyId == $registryId) {
-                        $propName = $propertyName;
-                        break;
-                    }
-                }
-    
-                //$mainCategory = $categoryApi->getCategoryById($registryCid);
-                $cats = $categoryApi->getSubCategories($registryCid, true, true, false, true, false, null, '', null, 'sort_value');
-                $catsForDropdown = [
-                    [
-                        'value' => '',
-                        'text' => $translator->__('All')
-                    ]
-                ];
-                foreach ($cats as $category) {
-                    $categoryName = isset($category['display_name'][$locale]) ? $category['display_name'][$locale] : $category['name'];
-                    $catsForDropdown[] = [
-                        'value' => $category->getId(),
-                        'text' => $categoryName
-                    ];
-                }
-                $categories[$propName] = $catsForDropdown;
-            }
-    
-            $this->view->assign('categories', $categories)
-                       ->assign('categoryHelper', $this->container->get('mu_yourcity_module.category_helper'));
-        }
-        $this->view->assign('featureActivationHelper', $featureActivationHelper)
-                   ->assign('objectType', $this->objectType);
     }
     
     /**

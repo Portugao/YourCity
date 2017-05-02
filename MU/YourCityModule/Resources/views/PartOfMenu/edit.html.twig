@@ -64,13 +64,13 @@
         
         {{ include(
             '@MUYourCityModule/MenuOfLocation/includeSelectOne.html.twig',
-            { group: 'partofmenu', alias: 'menuOfLocation', aliasReverse: 'partsOfMenu', mandatory: false, idPrefix: 'yourcityPartOfMenu_MenuOfLocation', linkingItem: partofmenu, displayMode: 'choices' }
+            { group: 'partofmenu', alias: 'menuOfLocation', aliasReverse: 'partsOfMenu', mandatory: true, idPrefix: 'yourcityPartOfMenu_MenuOfLocation', linkingItem: partofmenu, displayMode: 'choices' }
         ) }}
         {% if mode != 'create' %}
             {{ include('@MUYourCityModule/Helper/includeStandardFieldsEdit.html.twig', { obj: partofmenu }) }}
         {% endif %}
         
-        {% set hookId = mode != 'create' ? partofmenu.id : null %}
+        {% set hookId = mode != 'create' ? partofmenu.getKey() : null %}
         {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.partsofmenu.form_edit', id=hookId) %}
         {% if hooks is iterable and hooks|length > 0 %}
             {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
@@ -126,7 +126,7 @@
                 {% if form.moderationSpecificCreator is defined %}
                     mUYourCityInitUserField('muyourcitymodule_partofmenu_moderationSpecificCreator', 'getCommonUsersList');
                 {% endif %}
-                mUYourCityInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ partofmenu.id }}{% endif %}');
+                mUYourCityInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ partofmenu.getKey() }}{% endif %}');
             });
         })(jQuery);
     /* ]]> */

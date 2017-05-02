@@ -7,14 +7,20 @@
     {% for part in item.partsOfMenu %}
         {{ part|muyourcitymodule_formattedTitle }}
     {% endfor %}
-
 {% endif %}
 
 {% if item.dishes %}
     {% for dish in item.dishes %}
-        <h4>{{ dish|muyourcitymodule_formattedTitle }}</h4>
-        <p>{{ dish.description }}</p>
-        <p>{{ dish.priceOfDish|localizedcurrency('EUR') }}</p>
+        {% if dish|length <= 4 %}
+            <div class="col-md-6 abo-location-list">
+        {% else %}
+            <div class="col-md-4 abo-location-list">
+        {% endif %}
+        {{ include(
+        '@MUYourCityModule/Dish/includeDisplayItemListOneOwn.html.twig',
+            { item: dish }
+        ) }}
+        </div>
     {% endfor %}
 
 {% endif %}

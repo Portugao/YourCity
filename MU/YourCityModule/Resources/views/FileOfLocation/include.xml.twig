@@ -1,5 +1,5 @@
 {# purpose of this template: files of location xml inclusion template #}
-<fileoflocation id="{{ fileOfLocation.id }}" createdon="{{ fileOfLocation.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ fileOfLocation.updatedDate|localizeddate('medium', 'short') }}">
+<fileoflocation id="{{ fileOfLocation.getId() }}" createdon="{{ fileOfLocation.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ fileOfLocation.updatedDate|localizeddate('medium', 'short') }}">
     <id>{{ fileOfLocation.id }}</id>
     <name><![CDATA[{{ fileOfLocation.name }}]]></name>
     <description><![CDATA[{{ fileOfLocation.description|safeHtml }}]]></description>

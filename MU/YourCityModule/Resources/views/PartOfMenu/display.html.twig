@@ -17,19 +17,17 @@
     <div class="muyourcitymodule-partofmenu muyourcitymodule-display">
 
     <div class="row">
-        <div class="col-sm-9">
-    <dl>
-        {% if partOfMenu.name is not empty %}
+        <div class="col-sm-12">
+        {#% if partOfMenu.name is not empty %}
             <dt>{{ __('Name') }}</dt>
             <dd>{{ partOfMenu.name }}</dd>
-        {% endif %}
+        {% endif %#}
         {% if partOfMenu.description is not empty %}
-            <dt>{{ __('Description') }}</dt>
-            <dd>{{ partOfMenu.description|safeHtml }}</dd>
+            <h4>{{ __('Description') }}</h4>
+            {{ partOfMenu.description|safeHtml }}
         {% endif %}
-        {% if partOfMenu.menuOfLocation|default %}
-            <dt>{{ __('Menu of location') }}</dt>
-            <dd>
+        {#% if partOfMenu.menuOfLocation|default %}
+            <h4>{{ __('Menu of location') }}</h4>
               {% if not isQuickView %}
                   <a href="{{ path('muyourcitymodule_menuoflocation_' ~ routeArea ~ 'display', { 'id': partOfMenu.menuOfLocation.id }) }}">{% spaceless %}
                     {{ partOfMenu.menuOfLocation|muyourcitymodule_formattedTitle }}
@@ -38,18 +36,22 @@
               {% else %}
                   {{ partOfMenu.menuOfLocation|muyourcitymodule_formattedTitle }}
               {% endif %}
-            </dd>
-        {% endif %}
+        {% endif %#}
         
-    </dl>
+        {% if partOfMenu.dishes|default %}
+            {{ include(
+                '@MUYourCityModule/Dish/includeDisplayItemListMany.html.twig',
+                { items: partOfMenu.dishes }
+            ) }}
+        {% endif %}
 
-    {{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: partOfMenu }) }}
+    {#{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: partOfMenu }) }#}
 
     {{ block('display_hooks') }}
         </div>
-        <div class="col-sm-3">
+        {#<div class="col-sm-3">
             {{ block('related_items') }}
-        </div>
+        </div>#}
     </div>
 </div>
 {% endblock %}

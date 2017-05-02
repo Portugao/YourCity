@@ -1,5 +1,5 @@
 {# purpose of this template: menus of location xml inclusion template #}
-<menuoflocation id="{{ menuOfLocation.id }}" createdon="{{ menuOfLocation.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ menuOfLocation.updatedDate|localizeddate('medium', 'short') }}">
+<menuoflocation id="{{ menuOfLocation.getId() }}" createdon="{{ menuOfLocation.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ menuOfLocation.updatedDate|localizeddate('medium', 'short') }}">
     <id>{{ menuOfLocation.id }}</id>
     <name><![CDATA[{{ menuOfLocation.name }}]]></name>
     <description><![CDATA[{{ menuOfLocation.description|safeHtml }}]]></description>
@@ -7,6 +7,7 @@
     <positionOfMenu>{{ menuOfLocation.positionOfMenu }}</positionOfMenu>
     <effectivFrom>{{ menuOfLocation.effectivFrom|localizeddate('medium', 'short') }}</effectivFrom>
     <effectivUntil>{{ menuOfLocation.effectivUntil|localizeddate('medium', 'short') }}</effectivUntil>
+    <kindOfMenu>{{ menuOfLocation.kindOfMenu|muyourcitymodule_listEntry('menuOfLocation', 'kindOfMenu') }}</kindOfMenu>
     <workflowState>{{ menuOfLocation.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
     <location>{% if menuOfLocation.location|default %}{{ menuOfLocation.location|muyourcitymodule_formattedTitle }}{% endif %}</location>
     <dishes>

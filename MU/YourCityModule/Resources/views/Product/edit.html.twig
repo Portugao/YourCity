@@ -41,7 +41,6 @@
                                 {% if language == app.request.locale %}
                                     {{ form_row(form.name) }}
                                     {{ form_row(form.description) }}
-                                    {{ form_row(form.today) }}
                                 {% else %}
                                     {{ form_row(attribute(form, 'translations' ~ language)) }}
                                 {% endif %}
@@ -56,11 +55,13 @@
                 <legend>{{ language|languageName|safeHtml }}</legend>
                 {{ form_row(form.name) }}
                 {{ form_row(form.description) }}
-                {{ form_row(form.today) }}
             </fieldset>
         {% endif %}
         <fieldset>
             <legend>{{ __('Further properties') }}</legend>
+            {{ form_row(form.kindOfProduct) }}
+            {{ form_row(form.imageOfProduct) }}
+            {{ form_row(form.today) }}
             {{ form_row(form.monday) }}
             {{ form_row(form.tuesday) }}
             {{ form_row(form.wednesday) }}
@@ -75,14 +76,11 @@
             '@MUYourCityModule/Location/includeSelectOne.html.twig',
             { group: 'product', alias: 'location', aliasReverse: 'products', mandatory: true, idPrefix: 'yourcityProduct_Location', linkingItem: product, displayMode: 'choices' }
         ) }}
-        {% if featureActivationHelper.isEnabled(constant('MU\\YourCityModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'product') %}
-            {{ include('@MUYourCityModule/Helper/includeCategoriesEdit.html.twig', { obj: product }) }}
-        {% endif %}
         {% if mode != 'create' %}
             {{ include('@MUYourCityModule/Helper/includeStandardFieldsEdit.html.twig', { obj: product }) }}
         {% endif %}
         
-        {% set hookId = mode != 'create' ? product.id : null %}
+        {% set hookId = mode != 'create' ? product.getKey() : null %}
         {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.products.form_edit', id=hookId) %}
         {% if hooks is iterable and hooks|length > 0 %}
             {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
@@ -138,7 +136,8 @@
                 {% if form.moderationSpecificCreator is defined %}
                     mUYourCityInitUserField('muyourcitymodule_product_moderationSpecificCreator', 'getCommonUsersList');
                 {% endif %}
-                mUYourCityInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ product.id }}{% endif %}');
+                mUYourCityInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ product.getKey() }}{% endif %}');
+                mUYourCityInitUploadField('muyourcitymodule_product_imageOfProduct_imageOfProduct');
             });
         })(jQuery);
     /* ]]> */

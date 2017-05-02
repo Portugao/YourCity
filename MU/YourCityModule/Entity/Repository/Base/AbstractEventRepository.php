@@ -59,14 +59,12 @@ abstract class AbstractEventRepository extends EntityRepository
             'name',
             'description',
             'imageOfEvent',
+            'kindOfEvent',
             'street',
             'numberOfStreet',
             'zipCode',
             'city',
-            'startDate',
-            'endDate',
-            'start2Date',
-            'end2Date',
+            'inViewUntil',
             'latitude',
             'longitude',
             'createdBy',
@@ -295,7 +293,7 @@ abstract class AbstractEventRepository extends EntityRepository
     /**
      * Adds an array of id filters to given query instance.
      *
-     * @param mixed        $idList The array of ids to use to retrieve the object
+     * @param array        $idList The array of ids to use to retrieve the object
      * @param QueryBuilder $qb     Query builder to be enhanced
      *
      * @return QueryBuilder Enriched query builder instance
@@ -312,15 +310,7 @@ abstract class AbstractEventRepository extends EntityRepository
                 throw new InvalidArgumentException('Invalid identifier received.');
             }
     
-            if (is_array($id)) {
-                $andX = $qb->expr()->andX();
-                foreach ($id as $fieldName => $fieldValue) {
-                    $andX->add($qb->expr()->eq('tbl.' . $fieldName, $fieldValue));
-                }
-                $orX->add($andX);
-            } else {
-                $orX->add($qb->expr()->eq('tbl.id', $id));
-            }
+            $orX->add($qb->expr()->eq('tbl.id', $id));
         }
     
         $qb->andWhere($orX);
@@ -716,8 +706,6 @@ abstract class AbstractEventRepository extends EntityRepository
     {
         $selection = ', tblLocation';
     
-        $selection = ', tblCategories';
-    
         return $selection;
     }
     
@@ -731,8 +719,6 @@ abstract class AbstractEventRepository extends EntityRepository
     protected function addJoinsToFrom(QueryBuilder $qb)
     {
         $qb->leftJoin('tbl.location', 'tblLocation');
-    
-        $qb->leftJoin('tbl.categories', 'tblCategories');
     
         return $qb;
     }

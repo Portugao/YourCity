@@ -2,10 +2,10 @@
 {{ pageAddAsset('javascript', asset('magnific-popup/jquery.magnific-popup.min.js')) }}
 {{ pageAddAsset('stylesheet', asset('magnific-popup/magnific-popup.css')) }}
 {{ pageAddAsset('javascript', zasset('@MUYourCityModule:js/MUYourCityModule.js')) }}
-<div id="offer{$offer.id}" class="muyourcitymodule-external-offer">
+<div id="offer{$offer->getKey()}" class="muyourcitymodule-external-offer">
 {% if displayMode == 'link' %}
     <p class="muyourcitymodule-external-link">
-    <a href="{{ path('muyourcitymodule_offer_display', { 'id': offer.id }) }}" title="{{ offer|muyourcitymodule_formattedTitle|e('html_attr') }}">
+    <a href="{{ path('muyourcitymodule_offer_display', { 'id': offer.getId() }) }}" title="{{ offer|muyourcitymodule_formattedTitle|e('html_attr') }}">
     {{ offer|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.offers.filter')|safeHtml }}
     </a>
     </p>

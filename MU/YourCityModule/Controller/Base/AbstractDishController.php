@@ -25,7 +25,6 @@ use Zikula\Component\SortableColumns\SortableColumns;
 use Zikula\Core\Controller\AbstractController;
 use Zikula\Core\RouteUrl;
 use MU\YourCityModule\Entity\DishEntity;
-use MU\YourCityModule\Helper\FeatureActivationHelper;
 
 /**
  * Dish controller base class.
@@ -127,7 +126,7 @@ abstract class AbstractDishController extends AbstractController
             throw new AccessDeniedException();
         }
         // create identifier for permission check
-        $instanceId = $dish->createCompositeIdentifier();
+        $instanceId = $dish->getKey();
         if (!$this->hasPermission('MUYourCityModule:' . ucfirst($objectType) . ':', $instanceId . '::', $permLevel)) {
             throw new AccessDeniedException();
         }
@@ -137,13 +136,6 @@ abstract class AbstractDishController extends AbstractController
             'routeArea' => $isAdmin ? 'admin' : '',
             $objectType => $dish
         ];
-        
-        $featureActivationHelper = $this->get('mu_yourcity_module.feature_activation_helper');
-        if ($featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, $objectType)) {
-            if (!$this->get('mu_yourcity_module.category_helper')->hasPermission($dish)) {
-                throw new AccessDeniedException();
-            }
-        }
         
         $controllerHelper = $this->get('mu_yourcity_module.controller_helper');
         $templateParameters = $controllerHelper->processDisplayActionParameters($objectType, $templateParameters, true);
@@ -267,7 +259,7 @@ abstract class AbstractDishController extends AbstractController
             throw new AccessDeniedException();
         }
         $logger = $this->get('logger');
-        $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => 'dish', 'id' => $dish->createCompositeIdentifier()];
+        $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => 'dish', 'id' => $dish->getKey()];
         
         $dish->initWorkflow();
         
@@ -401,6 +393,7 @@ abstract class AbstractDishController extends AbstractController
         $sortableColumns->addColumns([
             new Column('name'),
             new Column('description'),
+            new Column('kindOfDish'),
             new Column('imageOfDish'),
             new Column('priceOfDish'),
             new Column('positionOfDish'),
@@ -415,11 +408,6 @@ abstract class AbstractDishController extends AbstractController
         $sortableColumns->setOrderBy($sortableColumns->getColumn($sort), strtoupper($sortdir));
         
         $templateParameters = $controllerHelper->processViewActionParameters($objectType, $sortableColumns, $templateParameters, true);
-        
-        $featureActivationHelper = $this->get('mu_yourcity_module.feature_activation_helper');
-        if ($featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, $objectType)) {
-            $templateParameters['items'] = $this->get('mu_yourcity_module.category_helper')->filterEntitiesByPermission($templateParameters['items']);
-        }
         
         foreach ($templateParameters['items'] as $k => $entity) {
             $entity->initWorkflow();

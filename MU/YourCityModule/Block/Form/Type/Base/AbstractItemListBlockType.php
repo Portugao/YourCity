@@ -14,12 +14,9 @@ namespace MU\YourCityModule\Block\Form\Type\Base;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
-use MU\YourCityModule\Helper\FeatureActivationHelper;
 
 /**
  * List block form type base class.
@@ -54,21 +51,10 @@ abstract class AbstractItemListBlockType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addObjectTypeField($builder, $options);
-        if ($options['feature_activation_helper']->isEnabled(FeatureActivationHelper::CATEGORIES, $options['object_type'])) {
-            $this->addCategoriesField($builder, $options);
-        }
         $this->addSortingField($builder, $options);
         $this->addAmountField($builder, $options);
         $this->addTemplateFields($builder, $options);
         $this->addFilterField($builder, $options);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function buildView(FormView $view, FormInterface $form, array $options)
-    {
-        $view->vars['isCategorisable'] = $options['is_categorisable'];
     }
 
     /**
@@ -105,35 +91,6 @@ abstract class AbstractItemListBlockType extends AbstractType
             'choices_as_values' => true,
             'multiple' => false,
             'expanded' => false
-        ]);
-    }
-
-    /**
-     * Adds a categories field.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
-    public function addCategoriesField(FormBuilderInterface $builder, array $options)
-    {
-        if (!$options['is_categorisable'] || null === $options['category_helper']) {
-            return;
-        }
-    
-        $hasMultiSelection = $options['category_helper']->hasMultipleSelection($options['object_type']);
-        $builder->add('categories', 'Zikula\CategoriesModule\Form\Type\CategoriesType', [
-            'label' => ($hasMultiSelection ? $this->__('Categories') : $this->__('Category')) . ':',
-            'empty_data' => $hasMultiSelection ? [] : null,
-            'attr' => [
-                'class' => 'category-selector',
-                'title' => $this->__('This is an optional filter.')
-            ],
-            'help' => $this->__('This is an optional filter.'),
-            'required' => false,
-            'multiple' => $hasMultiSelection,
-            'module' => 'MUYourCityModule',
-            'entity' => ucfirst($options['object_type']) . 'Entity',
-            'entityCategoryClass' => 'MU\YourCityModule\Entity\\' . ucfirst($options['object_type']) . 'CategoryEntity'
         ]);
     }
 
@@ -244,18 +201,11 @@ abstract class AbstractItemListBlockType extends AbstractType
     {
         $resolver
             ->setDefaults([
-                'object_type' => 'location',
-                'is_categorisable' => false,
-                'category_helper' => null,
-                'feature_activation_helper' => null
+                'object_type' => 'location'
             ])
             ->setRequired(['object_type'])
-            ->setOptional(['is_categorisable', 'category_helper', 'feature_activation_helper'])
             ->setAllowedTypes([
-                'object_type' => 'string',
-                'is_categorisable' => 'bool',
-                'category_helper' => 'object',
-                'feature_activation_helper' => 'object'
+                'object_type' => 'string'
             ])
         ;
     }

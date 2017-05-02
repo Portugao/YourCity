@@ -36,13 +36,12 @@
 {% endblock %}
 {% block entry_content %}
     <title><![CDATA[{% if event.updatedDate|default %}{{ event.updatedDate|localizeddate('medium', 'short') }} - {% endif %}{{ event|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.events')|safeHtml }}]]></title>
-    <link>{{ url('muyourcitymodule_event_' ~ routeArea ~ 'display', { 'id': event.id }) }}</link>
-    <guid>{{ url('muyourcitymodule_event_' ~ routeArea ~ 'display', { 'id': event.id }) }}</guid>
+    <link>{{ url('muyourcitymodule_event_' ~ routeArea ~ 'display', { 'id': event.getId() }) }}</link>
+    <guid>{{ url('muyourcitymodule_event_' ~ routeArea ~ 'display', { 'id': event.getId() }) }}</guid>
     {% if event.createdBy|default and event.createdBy.getUid() > 0 %}
         {% set creatorAttributes = event.createdBy.getAttributes() %}
         <author>{{ event.createdBy.getEmail() }} ({{ creatorAttributes.get('realname')|default(creatorAttributes.get('name'))|default(event.createdBy.getUname()) }})</author>
     {% endif %}
-    <category><![CDATA[{{ __('Categories') }}: {% for propName, catMapping in event.categories %}{{ catMapping.category.display_name[lang] }}{% if not loop.last %}, {% endif %}{% endfor %}]]></category>
     <description>
         <![CDATA[
         {{ event.description|replace({ '<br>': '<br />' }) }}

@@ -1,5 +1,5 @@
 {# Purpose of this template: Display item information for previewing from other modules #}
-<dl id="specialOfLocation{{ specialOfLocation.id }}">
+<dl id="specialOfLocation{{ specialOfLocation.getKey() }}">
 <dt>{{ specialOfLocation|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.specialsoflocation.filter')|safeHtml }}</dt>
 {% if specialOfLocation.description is not empty %}<dd>{{ specialOfLocation.description }}</dd>{% endif %}
 </dl>

@@ -25,7 +25,6 @@ use Zikula\Component\SortableColumns\SortableColumns;
 use Zikula\Core\Controller\AbstractController;
 use Zikula\Core\RouteUrl;
 use MU\YourCityModule\Entity\MenuOfLocationEntity;
-use MU\YourCityModule\Helper\FeatureActivationHelper;
 
 /**
  * Menu of location controller base class.
@@ -145,6 +144,7 @@ abstract class AbstractMenuOfLocationController extends AbstractController
             new Column('imageOfMenu'),
             new Column('effectivFrom'),
             new Column('effectivUntil'),
+            new Column('kindOfMenu'),
             new Column('location'),
             new Column('createdBy'),
             new Column('createdDate'),
@@ -210,7 +210,7 @@ abstract class AbstractMenuOfLocationController extends AbstractController
             throw new AccessDeniedException();
         }
         // create identifier for permission check
-        $instanceId = $menuOfLocation->createCompositeIdentifier();
+        $instanceId = $menuOfLocation->getKey();
         if (!$this->hasPermission('MUYourCityModule:' . ucfirst($objectType) . ':', $instanceId . '::', $permLevel)) {
             throw new AccessDeniedException();
         }
@@ -343,7 +343,7 @@ abstract class AbstractMenuOfLocationController extends AbstractController
             throw new AccessDeniedException();
         }
         $logger = $this->get('logger');
-        $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => 'menu of location', 'id' => $menuOfLocation->createCompositeIdentifier()];
+        $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => 'menu of location', 'id' => $menuOfLocation->getKey()];
         
         $menuOfLocation->initWorkflow();
         

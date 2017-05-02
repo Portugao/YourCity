@@ -60,6 +60,7 @@
         <fieldset>
             <legend>{{ __('Further properties') }}</legend>
             {{ form_row(form.imageOfEvent) }}
+            {{ form_row(form.kindOfEvent) }}
             {{ form_row(form.street) }}
             {{ form_row(form.numberOfStreet) }}
             {{ form_row(form.zipCode) }}
@@ -68,6 +69,7 @@
             {{ form_row(form.endDate) }}
             {{ form_row(form.start2Date) }}
             {{ form_row(form.end2Date) }}
+            {{ form_row(form.inViewUntil) }}
             {{ form_row(form.latitude) }}
             {{ form_row(form.longitude) }}
         </fieldset>
@@ -80,16 +82,13 @@
         
         {{ include(
             '@MUYourCityModule/Location/includeSelectOne.html.twig',
-            { group: 'event', alias: 'location', aliasReverse: 'events', mandatory: false, idPrefix: 'yourcityEvent_Location', linkingItem: event, displayMode: 'choices' }
+            { group: 'event', alias: 'location', aliasReverse: 'events', mandatory: true, idPrefix: 'yourcityEvent_Location', linkingItem: event, displayMode: 'choices' }
         ) }}
-        {% if featureActivationHelper.isEnabled(constant('MU\\YourCityModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'event') %}
-            {{ include('@MUYourCityModule/Helper/includeCategoriesEdit.html.twig', { obj: event }) }}
-        {% endif %}
         {% if mode != 'create' %}
             {{ include('@MUYourCityModule/Helper/includeStandardFieldsEdit.html.twig', { obj: event }) }}
         {% endif %}
         
-        {% set hookId = mode != 'create' ? event.id : null %}
+        {% set hookId = mode != 'create' ? event.getKey() : null %}
         {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.events.form_edit', id=hookId) %}
         {% if hooks is iterable and hooks|length > 0 %}
             {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
@@ -165,10 +164,11 @@
                 {% if form.moderationSpecificCreator is defined %}
                     mUYourCityInitUserField('muyourcitymodule_event_moderationSpecificCreator', 'getCommonUsersList');
                 {% endif %}
-                mUYourCityInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ event.id }}{% endif %}');
+                mUYourCityInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ event.getKey() }}{% endif %}');
                 mUYourCityInitUploadField('muyourcitymodule_event_imageOfEvent_imageOfEvent');
                 mUYourCityInitDateField('muyourcitymodule_event_start2Date');
                 mUYourCityInitDateField('muyourcitymodule_event_end2Date');
+                mUYourCityInitDateField('muyourcitymodule_event_inViewUntil');
             });
         })(jQuery);
     /* ]]> */

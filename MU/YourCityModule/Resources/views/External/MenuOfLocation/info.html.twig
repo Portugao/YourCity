@@ -1,5 +1,5 @@
 {# Purpose of this template: Display item information for previewing from other modules #}
-<dl id="menuOfLocation{{ menuOfLocation.id }}">
+<dl id="menuOfLocation{{ menuOfLocation.getKey() }}">
 <dt>{{ menuOfLocation|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.menusoflocation.filter')|safeHtml }}</dt>
 <dd>{% if menuOfLocation.imageOfMenu is not empty and menuOfLocation.imageOfMenuMeta|default %}
             <a href="{{ menuOfLocation.imageOfMenuUrl }}" title="{{ menuOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if menuOfLocation.imageOfMenuMeta.isImage %} class="image-link"{% endif %}>

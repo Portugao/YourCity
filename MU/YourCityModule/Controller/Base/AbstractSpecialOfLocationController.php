@@ -25,7 +25,6 @@ use Zikula\Component\SortableColumns\SortableColumns;
 use Zikula\Core\Controller\AbstractController;
 use Zikula\Core\RouteUrl;
 use MU\YourCityModule\Entity\SpecialOfLocationEntity;
-use MU\YourCityModule\Helper\FeatureActivationHelper;
 
 /**
  * Special of location controller base class.
@@ -206,7 +205,7 @@ abstract class AbstractSpecialOfLocationController extends AbstractController
             throw new AccessDeniedException();
         }
         // create identifier for permission check
-        $instanceId = $specialOfLocation->createCompositeIdentifier();
+        $instanceId = $specialOfLocation->getKey();
         if (!$this->hasPermission('MUYourCityModule:' . ucfirst($objectType) . ':', $instanceId . '::', $permLevel)) {
             throw new AccessDeniedException();
         }
@@ -339,7 +338,7 @@ abstract class AbstractSpecialOfLocationController extends AbstractController
             throw new AccessDeniedException();
         }
         $logger = $this->get('logger');
-        $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => 'special of location', 'id' => $specialOfLocation->createCompositeIdentifier()];
+        $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => 'special of location', 'id' => $specialOfLocation->getKey()];
         
         $specialOfLocation->initWorkflow();
         

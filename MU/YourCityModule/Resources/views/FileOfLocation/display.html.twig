@@ -7,7 +7,7 @@
     {{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.filesoflocation.filter')|safeHtml }}
     {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: fileOfLocation, area: routeArea, context: 'display' }) %}
     <div class="dropdown">
-        <a id="itemActions{{ fileOfLocation.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
+        <a id="itemActions{{ fileOfLocation.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
         {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
     </div>
 {% endblock %}
@@ -43,10 +43,10 @@
             <dt>{{ __('Location') }}</dt>
             <dd>
               {% if not isQuickView %}
-                  <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': fileOfLocation.location.id, 'slug': fileOfLocation.location.slug }) }}">{% spaceless %}
+                  <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': fileOfLocation.location.getId(), 'slug': fileOfLocation.location.slug }) }}">{% spaceless %}
                     {{ fileOfLocation.location|muyourcitymodule_formattedTitle }}
                   {% endspaceless %}</a>
-                  <a id="locationItem{{ fileOfLocation.location.id }}Display" href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': fileOfLocation.location.id, 'slug': fileOfLocation.location.slug, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ fileOfLocation.location|muyourcitymodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
+                  <a id="locationItem{{ fileOfLocation.location.getKey() }}Display" href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': fileOfLocation.location.getId(), 'slug': fileOfLocation.location.slug, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ fileOfLocation.location|muyourcitymodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
               {% else %}
                   {{ fileOfLocation.location|muyourcitymodule_formattedTitle }}
               {% endif %}
@@ -61,7 +61,7 @@
 </div>
 {% endblock %}
 {% block display_hooks %}
-    {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.filesoflocation.display_view', id=fileOfLocation.id, urlObject=currentUrlObject) %}
+    {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.filesoflocation.display_view', id=fileOfLocation.getKey(), urlObject=currentUrlObject) %}
     {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
         <h4>{{ providerArea }}</h4>
         {{ hook }}

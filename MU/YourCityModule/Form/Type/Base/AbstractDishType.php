@@ -120,9 +120,6 @@ abstract class AbstractDishType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addEntityFields($builder, $options);
-        if ($this->featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, 'dish')) {
-            $this->addCategoriesField($builder, $options);
-        }
         $this->addIncomingRelationshipFields($builder, $options);
         $this->addModerationFields($builder, $options);
         $this->addReturnControlField($builder, $options);
@@ -201,6 +198,28 @@ abstract class AbstractDishType extends AbstractType
             }
         }
         
+        $listEntries = $this->listHelper->getEntries('dish', 'kindOfDish');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('kindOfDish', 'MU\YourCityModule\Form\Type\Field\MultiListType', [
+            'label' => $this->__('Kind of dish') . ':',
+            'empty_data' => 'other',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('Choose the kind of dish')
+            ],
+            'required' => true,
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => true,
+            'expanded' => false
+        ]);
+        
         $builder->add('imageOfDish', 'MU\YourCityModule\Form\Type\Field\UploadType', [
             'label' => $this->__('Image of dish') . ':',
             'attr' => [
@@ -237,28 +256,6 @@ abstract class AbstractDishType extends AbstractType
             ],
             'required' => true,
             'scale' => 0
-        ]);
-    }
-
-    /**
-     * Adds a categories field.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
-    public function addCategoriesField(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add('categories', 'Zikula\CategoriesModule\Form\Type\CategoriesType', [
-            'label' => $this->__('Categories') . ':',
-            'empty_data' => [],
-            'attr' => [
-                'class' => 'category-selector'
-            ],
-            'required' => false,
-            'multiple' => true,
-            'module' => 'MUYourCityModule',
-            'entity' => 'DishEntity',
-            'entityCategoryClass' => 'MU\YourCityModule\Entity\DishCategoryEntity'
         ]);
     }
 
@@ -326,8 +323,6 @@ abstract class AbstractDishType extends AbstractType
             'multiple' => false,
             'expanded' => false,
             'query_builder' => $queryBuilder,
-            'placeholder' => $this->__('Please choose an option'),
-            'required' => false,
             'label' => $this->__('Location'),
             'attr' => [
                 'title' => $this->__('Choose the location')
@@ -450,6 +445,7 @@ abstract class AbstractDishType extends AbstractType
                     return $this->entityFactory->createDish();
                 },
                 'error_mapping' => [
+                    'isKindOfDishValueAllowed' => 'kindOfDish',
                     'imageOfDish' => 'imageOfDish.imageOfDish',
                 ],
                 'mode' => 'create',

@@ -480,6 +480,9 @@ abstract class AbstractEntityDisplayHelper
         if ($objectType == 'event') {
             return 'imageOfEvent';
         }
+        if ($objectType == 'product') {
+            return 'imageOfProduct';
+        }
     
         return '';
     }

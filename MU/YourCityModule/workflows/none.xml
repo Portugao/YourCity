@@ -24,24 +24,11 @@
             <title>Archived</title>
             <description>Content has reached the end and became archived.</description>
         </state>
-        <state id="deferred">
-            <title>Deferred</title>
-            <description>Content has not been submitted yet or has been waiting, but was rejected.</description>
-        </state>
     </states>
     <!-- define actions and assign their availability to certain states -->
     <!-- available permissions: overview, read, comment, moderate, edit, add, delete, admin -->
     <actions>
         <!-- From state: Initial -->
-        <action id="defer">
-            <title>Defer</title>
-            <description>Defer content for later submission.</description>
-            <permission>edit</permission>
-            <nextState>deferred</nextState>
-        
-            <operation>update</operation>
-        </action>
-        
         <action id="submit">
             <title>Submit</title>
             <description>Submit content.</description>
@@ -122,26 +109,6 @@
             <operation>update</operation>
         </action>
         
-        <!-- From state: Deferred -->
-        <action id="submit">
-            <title>Submit</title>
-            <description>Submit content.</description>
-            <permission>edit</permission>
-            <state>deferred</state>
-            <nextState>approved</nextState>
-        
-            <operation>update</operation>
-        </action>
-        
-        <action id="update">
-            <title>Update</title>
-            <description>Update content.</description>
-            <permission>edit</permission>
-            <state>deferred</state>
-        
-            <operation>update</operation>
-        </action>
-        
     
         <!-- Actions for destroying objects -->
         <action id="delete">
@@ -169,16 +136,6 @@
             <description>Delete content permanently.</description>
             <permission>delete</permission>
             <state>archived</state>
-            <nextState>deleted</nextState>
-        
-            <operation>delete</operation>
-        </action>
-        
-        <action id="delete">
-            <title>Delete</title>
-            <description>Delete content permanently.</description>
-            <permission>delete</permission>
-            <state>deferred</state>
             <nextState>deleted</nextState>
         
             <operation>delete</operation>

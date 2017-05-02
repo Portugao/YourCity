@@ -66,12 +66,15 @@ abstract class AbstractModelHelper
                 break;
             case 'imageOfLocation':
                 $result = true;
+                $result &= $this->hasExistingInstances('location');
                 break;
             case 'fileOfLocation':
                 $result = true;
+                $result &= $this->hasExistingInstances('location');
                 break;
             case 'offer':
                 $result = true;
+                $result &= $this->hasExistingInstances('location');
                 break;
             case 'menuOfLocation':
                 $result = true;
@@ -79,12 +82,15 @@ abstract class AbstractModelHelper
                 break;
             case 'partOfMenu':
                 $result = true;
+                $result &= $this->hasExistingInstances('menuOfLocation');
                 break;
             case 'dish':
                 $result = true;
+                $result &= $this->hasExistingInstances('location');
                 break;
             case 'event':
                 $result = true;
+                $result &= $this->hasExistingInstances('location');
                 break;
             case 'product':
                 $result = true;
@@ -98,6 +104,7 @@ abstract class AbstractModelHelper
                 break;
             case 'abonnement':
                 $result = true;
+                $result &= $this->hasExistingInstances('location');
                 break;
         }
     
@@ -137,17 +144,7 @@ abstract class AbstractModelHelper
     
         $sortParam = '';
         if ($sorting == 'newest') {
-            $idFields = $this->entityFactory->getIdFields($objectType);
-            if (count($idFields) == 1) {
-                $sortParam = $idFields[0] . ' DESC';
-            } else {
-                foreach ($idFields as $idField) {
-                    if (!empty($sortParam)) {
-                        $sortParam .= ', ';
-                    }
-                    $sortParam .= $idField . ' DESC';
-                }
-            }
+            $sortParam = $this->entityFactory->getIdField($objectType) . ' DESC';
         } elseif ($sorting == 'default') {
             $repository = $this->entityFactory->getRepository($objectType);
             $sortParam = $repository->getDefaultSortingField() . ' ASC';

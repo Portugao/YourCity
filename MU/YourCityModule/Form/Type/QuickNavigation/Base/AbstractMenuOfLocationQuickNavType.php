@@ -171,6 +171,26 @@ abstract class AbstractMenuOfLocationQuickNavType extends AbstractType
             'multiple' => false,
             'expanded' => false
         ]);
+        $listEntries = $this->listHelper->getEntries('menuOfLocation', 'kindOfMenu');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('kindOfMenu', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            'label' => $this->__('Kind of menu'),
+            'attr' => [
+                'class' => 'input-sm'
+            ],
+            'required' => false,
+            'placeholder' => $this->__('All'),
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => false,
+            'expanded' => false
+        ]);
     }
 
     /**
@@ -212,6 +232,7 @@ abstract class AbstractMenuOfLocationQuickNavType extends AbstractType
                     $this->__('Image of menu') => 'imageOfMenu',
                     $this->__('Effectiv from') => 'effectivFrom',
                     $this->__('Effectiv until') => 'effectivUntil',
+                    $this->__('Kind of menu') => 'kindOfMenu',
                     $this->__('Creation date') => 'createdDate',
                     $this->__('Creator') => 'createdBy',
                     $this->__('Update date') => 'updatedDate',

@@ -59,7 +59,6 @@ abstract class AbstractLocationRepository extends EntityRepository
             'name',
             'logoOfYourLocation',
             'description',
-            'description2',
             'imageOfLocation',
             'street',
             'numberOfStreet',
@@ -72,34 +71,6 @@ abstract class AbstractLocationRepository extends EntityRepository
             'tram',
             'bus',
             'openingHours',
-            'startOnMonday',
-            'endOnMonday',
-            'start2OnMonday',
-            'end2OnMonday',
-            'startOnTuesday',
-            'endOnTuesday',
-            'start2OnTuesday',
-            'end2OnTuesday',
-            'startOnWednesday',
-            'endOnWednesday',
-            'start2OnWednesday',
-            'end2OnWednesday',
-            'startOnThursday',
-            'endOnThursday',
-            'start2OnThursday',
-            'end2OnThursday',
-            'startOnFriday',
-            'endOnFriday',
-            'start2OnFriday',
-            'end2OnFriday',
-            'startOnSaturday',
-            'endOnSaturday',
-            'star2tOnSaturday',
-            'end2OnSaturday',
-            'startOnSunday',
-            'endOnSunday',
-            'start2OnSunday',
-            'end2OnSunday',
             'latitude',
             'longitude',
             'createdBy',
@@ -401,7 +372,7 @@ abstract class AbstractLocationRepository extends EntityRepository
     /**
      * Adds an array of id filters to given query instance.
      *
-     * @param mixed        $idList The array of ids to use to retrieve the object
+     * @param array        $idList The array of ids to use to retrieve the object
      * @param QueryBuilder $qb     Query builder to be enhanced
      *
      * @return QueryBuilder Enriched query builder instance
@@ -418,15 +389,7 @@ abstract class AbstractLocationRepository extends EntityRepository
                 throw new InvalidArgumentException('Invalid identifier received.');
             }
     
-            if (is_array($id)) {
-                $andX = $qb->expr()->andX();
-                foreach ($id as $fieldName => $fieldValue) {
-                    $andX->add($qb->expr()->eq('tbl.' . $fieldName, $fieldValue));
-                }
-                $orX->add($andX);
-            } else {
-                $orX->add($qb->expr()->eq('tbl.id', $id));
-            }
+            $orX->add($qb->expr()->eq('tbl.id', $id));
         }
     
         $qb->andWhere($orX);
@@ -868,8 +831,6 @@ abstract class AbstractLocationRepository extends EntityRepository
     {
         $selection = ', tblImagesOfLocation, tblFilesOfLocation, tblBranches, tblParts, tblOffers, tblMenuOfLocation, tblEvents, tblProducts, tblDishes, tblSpecialsOfLocation, tblServicesOfLocation, tblAbonnements';
     
-        $selection = ', tblCategories';
-    
         return $selection;
     }
     
@@ -894,8 +855,6 @@ abstract class AbstractLocationRepository extends EntityRepository
         $qb->leftJoin('tbl.specialsOfLocation', 'tblSpecialsOfLocation');
         $qb->leftJoin('tbl.servicesOfLocation', 'tblServicesOfLocation');
         $qb->leftJoin('tbl.abonnements', 'tblAbonnements');
-    
-        $qb->leftJoin('tbl.categories', 'tblCategories');
     
         return $qb;
     }

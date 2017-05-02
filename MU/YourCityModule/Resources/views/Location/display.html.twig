@@ -52,9 +52,6 @@
             </div>
         {% endif %}
         
-        {% if featureActivationHelper.isEnabled(constant('MU\\YourCityModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'location') %}
-            {{ include('@MUYourCityModule/Helper/includeCategoriesDisplay.html.twig', { obj: location }) }}
-        {% endif %}
         {% if location.description is not empty %}
             {{ location.description|safeHtml }}<br />
         {% endif %}
@@ -87,6 +84,7 @@
             {% endif %}
             {% else %}&nbsp;{% endif %}<br />
         {% endif %}
+               
         <h3>{{ __('Opening hours') }}</h3>
         
         {% if location.agreement == false %}
@@ -279,9 +277,21 @@
             ) }}
             {% endif %}
             
+            {% if location.bsagStop is not empty %}
+                <h3>{{ __('Public transport') }}</h3>
+                <h4>{{ location.bsagStop }}</h4>
+                {% if location.tram is not empty %}
+                    <span class="location-tram">{{ location.tram }}</span><br />
+                {% endif %}
+        
+                {% if location.bus is not empty %}
+                    <span class="location-tram">{{ location.bus }}</span><br />
+                {% endif %}
+            {% endif %}
+            
         </div>
         <br style="clear: both;" />
-        {#% if location.latitude != '0.0000000' and location.longitude != '0.0000000' %#}
+
         <h3 class="muyourcitymodule-map">{{ __('Map') }}</h3>
         <div id="mapContainer" class="muyourcitymodule-mapcontainer"></div>
         

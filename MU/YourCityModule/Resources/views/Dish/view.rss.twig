@@ -36,13 +36,12 @@
 {% endblock %}
 {% block entry_content %}
     <title><![CDATA[{% if dish.updatedDate|default %}{{ dish.updatedDate|localizeddate('medium', 'short') }} - {% endif %}{{ dish|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.dishes')|safeHtml }}]]></title>
-    <link>{{ url('muyourcitymodule_dish_' ~ routeArea ~ 'display', { 'id': dish.id }) }}</link>
-    <guid>{{ url('muyourcitymodule_dish_' ~ routeArea ~ 'display', { 'id': dish.id }) }}</guid>
+    <link>{{ url('muyourcitymodule_dish_' ~ routeArea ~ 'display', { 'id': dish.getId() }) }}</link>
+    <guid>{{ url('muyourcitymodule_dish_' ~ routeArea ~ 'display', { 'id': dish.getId() }) }}</guid>
     {% if dish.createdBy|default and dish.createdBy.getUid() > 0 %}
         {% set creatorAttributes = dish.createdBy.getAttributes() %}
         <author>{{ dish.createdBy.getEmail() }} ({{ creatorAttributes.get('realname')|default(creatorAttributes.get('name'))|default(dish.createdBy.getUname()) }})</author>
     {% endif %}
-    <category><![CDATA[{{ __('Categories') }}: {% for propName, catMapping in dish.categories %}{{ catMapping.category.display_name[lang] }}{% if not loop.last %}, {% endif %}{% endfor %}]]></category>
     <description>
         <![CDATA[
         {{ dish.description|replace({ '<br>': '<br />' }) }}

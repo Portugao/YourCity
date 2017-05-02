@@ -1,5 +1,5 @@
 {# purpose of this template: abonnements xml inclusion template #}
-<abonnement id="{{ abonnement.id }}" createdon="{{ abonnement.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ abonnement.updatedDate|localizeddate('medium', 'short') }}">
+<abonnement id="{{ abonnement.getId() }}" createdon="{{ abonnement.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ abonnement.updatedDate|localizeddate('medium', 'short') }}">
     <id>{{ abonnement.id }}</id>
     <name><![CDATA[{{ abonnement.name }}]]></name>
     <showMenus>{% if not abonnement.showMenus %}0{% else %}1{% endif %}</showMenus>

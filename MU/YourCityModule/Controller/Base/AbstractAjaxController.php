@@ -152,7 +152,7 @@ abstract class AbstractAjaxController extends AbstractController
         $slimItems = [];
         $component = 'MUYourCityModule:' . ucfirst($objectType) . ':';
         foreach ($entities as $item) {
-            $itemId = $item->createCompositeIdentifier();
+            $itemId = $item->getKey();
             if (!$this->hasPermission($component, $itemId . '::', ACCESS_READ)) {
                 continue;
             }

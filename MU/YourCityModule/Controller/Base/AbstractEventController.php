@@ -25,7 +25,6 @@ use Zikula\Component\SortableColumns\SortableColumns;
 use Zikula\Core\Controller\AbstractController;
 use Zikula\Core\RouteUrl;
 use MU\YourCityModule\Entity\EventEntity;
-use MU\YourCityModule\Helper\FeatureActivationHelper;
 
 /**
  * Event controller base class.
@@ -143,14 +142,12 @@ abstract class AbstractEventController extends AbstractController
             new Column('name'),
             new Column('description'),
             new Column('imageOfEvent'),
+            new Column('kindOfEvent'),
             new Column('street'),
             new Column('numberOfStreet'),
             new Column('zipCode'),
             new Column('city'),
-            new Column('startDate'),
-            new Column('endDate'),
-            new Column('start2Date'),
-            new Column('end2Date'),
+            new Column('inViewUntil'),
             new Column('location'),
             new Column('latitude'),
             new Column('longitude'),
@@ -162,11 +159,6 @@ abstract class AbstractEventController extends AbstractController
         $sortableColumns->setOrderBy($sortableColumns->getColumn($sort), strtoupper($sortdir));
         
         $templateParameters = $controllerHelper->processViewActionParameters($objectType, $sortableColumns, $templateParameters, true);
-        
-        $featureActivationHelper = $this->get('mu_yourcity_module.feature_activation_helper');
-        if ($featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, $objectType)) {
-            $templateParameters['items'] = $this->get('mu_yourcity_module.category_helper')->filterEntitiesByPermission($templateParameters['items']);
-        }
         
         foreach ($templateParameters['items'] as $k => $entity) {
             $entity->initWorkflow();
@@ -223,7 +215,7 @@ abstract class AbstractEventController extends AbstractController
             throw new AccessDeniedException();
         }
         // create identifier for permission check
-        $instanceId = $event->createCompositeIdentifier();
+        $instanceId = $event->getKey();
         if (!$this->hasPermission('MUYourCityModule:' . ucfirst($objectType) . ':', $instanceId . '::', $permLevel)) {
             throw new AccessDeniedException();
         }
@@ -233,13 +225,6 @@ abstract class AbstractEventController extends AbstractController
             'routeArea' => $isAdmin ? 'admin' : '',
             $objectType => $event
         ];
-        
-        $featureActivationHelper = $this->get('mu_yourcity_module.feature_activation_helper');
-        if ($featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, $objectType)) {
-            if (!$this->get('mu_yourcity_module.category_helper')->hasPermission($event)) {
-                throw new AccessDeniedException();
-            }
-        }
         
         $controllerHelper = $this->get('mu_yourcity_module.controller_helper');
         $templateParameters = $controllerHelper->processDisplayActionParameters($objectType, $templateParameters, true);
@@ -363,7 +348,7 @@ abstract class AbstractEventController extends AbstractController
             throw new AccessDeniedException();
         }
         $logger = $this->get('logger');
-        $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => 'event', 'id' => $event->createCompositeIdentifier()];
+        $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => 'event', 'id' => $event->getKey()];
         
         $event->initWorkflow();
         

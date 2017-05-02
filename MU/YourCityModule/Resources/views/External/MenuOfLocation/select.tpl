@@ -7,7 +7,7 @@
             <div class="col-sm-9">
                 <select id="{$baseID}Id" name="id" class="form-control">
                     {foreach item='menuOfLocation' from=$items}
-                        <option value="{$menuOfLocation.id}"{if $selectedId eq $menuOfLocation.id} selected="selected"{/if}>{$menuOfLocation->getName()}</option>
+                        <option value="{$menuOfLocation->getKey()}"{if $selectedId eq $menuOfLocation->getKey()} selected="selected"{/if}>{$menuOfLocation->getName()}</option>
                     {foreachelse}
                         <option value="0">{gt text='No entries found.'}</option>
                     {/foreach}
@@ -24,6 +24,7 @@
                     <option value="imageOfMenu"{if $sort eq 'imageOfMenu'} selected="selected"{/if}>{gt text='Image of menu'}</option>
                     <option value="effectivFrom"{if $sort eq 'effectivFrom'} selected="selected"{/if}>{gt text='Effectiv from'}</option>
                     <option value="effectivUntil"{if $sort eq 'effectivUntil'} selected="selected"{/if}>{gt text='Effectiv until'}</option>
+                    <option value="kindOfMenu"{if $sort eq 'kindOfMenu'} selected="selected"{/if}>{gt text='Kind of menu'}</option>
                     <option value="createdDate"{if $sort eq 'createdDate'} selected="selected"{/if}>{gt text='Creation date'}</option>
                     <option value="createdBy"{if $sort eq 'createdBy'} selected="selected"{/if}>{gt text='Creator'}</option>
                     <option value="updatedDate"{if $sort eq 'updatedDate'} selected="selected"{/if}>{gt text='Update date'}</option>

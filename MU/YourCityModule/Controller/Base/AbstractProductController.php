@@ -25,7 +25,6 @@ use Zikula\Component\SortableColumns\SortableColumns;
 use Zikula\Core\Controller\AbstractController;
 use Zikula\Core\RouteUrl;
 use MU\YourCityModule\Entity\ProductEntity;
-use MU\YourCityModule\Helper\FeatureActivationHelper;
 
 /**
  * Product controller base class.
@@ -141,6 +140,7 @@ abstract class AbstractProductController extends AbstractController
         $sortableColumns->addColumns([
             new Column('name'),
             new Column('description'),
+            new Column('kindOfProduct'),
             new Column('today'),
             new Column('monday'),
             new Column('tuesday'),
@@ -159,11 +159,6 @@ abstract class AbstractProductController extends AbstractController
         $sortableColumns->setOrderBy($sortableColumns->getColumn($sort), strtoupper($sortdir));
         
         $templateParameters = $controllerHelper->processViewActionParameters($objectType, $sortableColumns, $templateParameters, true);
-        
-        $featureActivationHelper = $this->get('mu_yourcity_module.feature_activation_helper');
-        if ($featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, $objectType)) {
-            $templateParameters['items'] = $this->get('mu_yourcity_module.category_helper')->filterEntitiesByPermission($templateParameters['items']);
-        }
         
         foreach ($templateParameters['items'] as $k => $entity) {
             $entity->initWorkflow();
@@ -220,7 +215,7 @@ abstract class AbstractProductController extends AbstractController
             throw new AccessDeniedException();
         }
         // create identifier for permission check
-        $instanceId = $product->createCompositeIdentifier();
+        $instanceId = $product->getKey();
         if (!$this->hasPermission('MUYourCityModule:' . ucfirst($objectType) . ':', $instanceId . '::', $permLevel)) {
             throw new AccessDeniedException();
         }
@@ -230,13 +225,6 @@ abstract class AbstractProductController extends AbstractController
             'routeArea' => $isAdmin ? 'admin' : '',
             $objectType => $product
         ];
-        
-        $featureActivationHelper = $this->get('mu_yourcity_module.feature_activation_helper');
-        if ($featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, $objectType)) {
-            if (!$this->get('mu_yourcity_module.category_helper')->hasPermission($product)) {
-                throw new AccessDeniedException();
-            }
-        }
         
         $controllerHelper = $this->get('mu_yourcity_module.controller_helper');
         $templateParameters = $controllerHelper->processDisplayActionParameters($objectType, $templateParameters, true);
@@ -360,7 +348,7 @@ abstract class AbstractProductController extends AbstractController
             throw new AccessDeniedException();
         }
         $logger = $this->get('logger');
-        $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => 'product', 'id' => $product->createCompositeIdentifier()];
+        $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => 'product', 'id' => $product->getKey()];
         
         $product->initWorkflow();
         

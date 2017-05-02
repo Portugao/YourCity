@@ -233,13 +233,18 @@ abstract class AbstractMenuOfLocationType extends AbstractType
         
         $builder->add('effectivFrom', 'Symfony\Component\Form\Extension\Core\Type\DateTimeType', [
             'label' => $this->__('Effectiv from') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Here you can create complete menus for your location and special mnus like the menu of the day and more.')
+            ],
+            'help' => $this->__('Here you can create complete menus for your location and special mnus like the menu of the day and more.'),
             'empty_data' => '',
             'attr' => [
                 'class' => '',
                 'title' => $this->__('Enter the effectiv from of the menu of location')
             ],
-            'required' => true,
-            'empty_data' => date('Y-m-d H:i:s'),
+            'required' => false,
+            'empty_data' => null,
             'with_seconds' => true,
             'date_widget' => 'single_text',
             'time_widget' => 'single_text'
@@ -252,11 +257,33 @@ abstract class AbstractMenuOfLocationType extends AbstractType
                 'class' => '',
                 'title' => $this->__('Enter the effectiv until of the menu of location')
             ],
-            'required' => true,
-            'empty_data' => date('Y-m-d H:i:s'),
+            'required' => false,
+            'empty_data' => null,
             'with_seconds' => true,
             'date_widget' => 'single_text',
             'time_widget' => 'single_text'
+        ]);
+        
+        $listEntries = $this->listHelper->getEntries('menuOfLocation', 'kindOfMenu');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('kindOfMenu', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            'label' => $this->__('Kind of menu') . ':',
+            'empty_data' => '1',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('Choose the kind of menu')
+            ],
+            'required' => true,
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => false,
+            'expanded' => false
         ]);
     }
 

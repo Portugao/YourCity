@@ -1,8 +1,11 @@
 {# Purpose of this template: Display one certain product within an external context #}
-<div id="product{$product.id}" class="muyourcitymodule-external-product">
+{{ pageAddAsset('javascript', asset('magnific-popup/jquery.magnific-popup.min.js')) }}
+{{ pageAddAsset('stylesheet', asset('magnific-popup/magnific-popup.css')) }}
+{{ pageAddAsset('javascript', zasset('@MUYourCityModule:js/MUYourCityModule.js')) }}
+<div id="product{$product->getKey()}" class="muyourcitymodule-external-product">
 {% if displayMode == 'link' %}
     <p class="muyourcitymodule-external-link">
-    <a href="{{ path('muyourcitymodule_product_display', { 'id': product.id }) }}" title="{{ product|muyourcitymodule_formattedTitle|e('html_attr') }}">
+    <a href="{{ path('muyourcitymodule_product_display', { 'id': product.getId() }) }}" title="{{ product|muyourcitymodule_formattedTitle|e('html_attr') }}">
     {{ product|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.products.filter')|safeHtml }}
     </a>
     </p>
@@ -19,7 +22,16 @@
 {% if displayMode == 'link' %}
 {% elseif displayMode == 'embed' %}
     <div class="muyourcitymodule-external-snippet">
-        &nbsp;
+        {% if product.imageOfProduct is not empty and product.imageOfProductMeta|default %}
+                    <a href="{{ product.imageOfProductUrl }}" title="{{ product|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if product.imageOfProductMeta.isImage %} class="image-link"{% endif %}>
+        {% if product.imageOfProductMeta.isImage %}
+            {% set thumbOptions = attribute(thumbRuntimeOptions, 'productImageOfProduct') %}
+            <img src="{{ product.imageOfProduct.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ product|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+        {% else %}
+            {{ __('Download') }} ({{ product.imageOfProductMeta.size|muyourcitymodule_fileSize(product.imageOfProduct.getPathname(), false, false) }})
+        {% endif %}
+        </a>
+        {% else %}&nbsp;{% endif %}
     </div>
 
     {# you can distinguish the context like this: #}
@@ -33,14 +45,6 @@
     {#
         <p class="muyourcitymodule-external-description">
             {% if product.description is not empty %}{{ product.description }}<br />{% endif %}
-            {% if featureActivationHelper.isEnabled(constant('MU\\YourCityModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'product') %}
-                <dl class="category-list">
-                {% for propName, catMapping in product.categories %}
-                    <dt>{{ propName }}</dt>
-                    <dd>{{ catMapping.category.display_name[app.request.locale]|default(catMapping.category.name) }}</dd>
-                {% endfor %}
-                </dl>
-            {% endif %}
         </p>
     #}
 {% endif %}

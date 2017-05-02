@@ -1,7 +1,8 @@
 {# purpose of this template: locations xml inclusion template #}
-<location id="{{ location.id }}" createdon="{{ location.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ location.updatedDate|localizeddate('medium', 'short') }}">
+<location id="{{ location.getId() }}" createdon="{{ location.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ location.updatedDate|localizeddate('medium', 'short') }}">
     <id>{{ location.id }}</id>
     <name><![CDATA[{{ location.name }}]]></name>
+    <letterForOrder><![CDATA[{{ location.letterForOrder }}]]></letterForOrder>
     <slogan><![CDATA[{{ location.slogan }}]]></slogan>
     <logoOfYourLocation{% if location.logoOfYourLocation is not empty and location.logoOfYourLocationMeta|default %} extension="{{ location.logoOfYourLocationMeta.extension }}" size="{{ location.logoOfYourLocationMeta.size }}" isImage="{% if location.logoOfYourLocationMeta.isImage %}true{% else %}false{% endif %}"{% if location.logoOfYourLocationMeta.isImage %} width="{{ location.logoOfYourLocationMeta.width }}" height="{{ location.logoOfYourLocationMeta.height }}" format="{{ location.logoOfYourLocationMeta.format }}"{% endif %}{% endif %}>{{ location.logoOfYourLocation }}</logoOfYourLocation>
     <descriptionForGoogle><![CDATA[{{ location.descriptionForGoogle }}]]></descriptionForGoogle>

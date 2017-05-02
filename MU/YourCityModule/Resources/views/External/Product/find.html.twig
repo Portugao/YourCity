@@ -56,32 +56,51 @@
         {{ form_errors(finderForm) }}
         <fieldset>
             <legend>{{ __('Search and select product') }}</legend>
-            {% if featureActivationHelper.isEnabled(constant('MU\\YourCityModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'product') %}
-                {{ form_row(finderForm.categories) }}
-            {% endif %}
+            {{ form_row(finderForm.onlyImages) }}
+            <div id="imageFieldRow">
+                {{ form_row(finderForm.imageField) }}
+            </div>
             {{ form_row(finderForm.pasteAs) }}
             <br />
             <div class="form-group">
                 <label class="col-sm-3 control-label">{{ __('Product') }}:</label>
                 <div class="col-sm-9">
                     <div id="muyourcitymoduleItemContainer">
-                        <ul>
+                        {% if not onlyImages %}
+                            <ul>
+                        {% endif %}
                             {% for product in items %}
-                                <li>
-                                    {% set itemId = product.createCompositeIdentifier() %}
+                                {% if not onlyImages or (attribute(product, imageField) is not empty and attribute(product, imageField ~ 'Meta').isImage) %}
+                                {% if not onlyImages %}
+                                    <li>
+                                {% endif %}
+                                    {% set itemId = product.getKey() %}
                                     <a href="#" data-itemid="{{ itemId }}">
-                                        {{ product|muyourcitymodule_formattedTitle }}
+                                        {% if onlyImages %}
+                                            {% set thumbOptions = attribute(thumbRuntimeOptions, 'product' ~ imageField[:1]|upper ~ imageField[1:]) %}
+                                            <img src="{{ attribute(product, imageField).getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ product|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-rounded" />
+                                        {% else %}
+                                            {{ product|muyourcitymodule_formattedTitle }}
+                                        {% endif %}
                                     </a>
-                                    <input type="hidden" id="path{{ itemId }}" value="{{ path('muyourcitymodule_product_display', { 'id': product.id }) }}" />
-                                    <input type="hidden" id="url{{ itemId }}" value="{{ url('muyourcitymodule_product_display', { 'id': product.id }) }}" />
+                                    <input type="hidden" id="path{{ itemId }}" value="{{ path('muyourcitymodule_product_display', { 'id': product.getId() }) }}" />
+                                    <input type="hidden" id="url{{ itemId }}" value="{{ url('muyourcitymodule_product_display', { 'id': product.getId() }) }}" />
                                     <input type="hidden" id="title{{ itemId }}" value="{{ product|muyourcitymodule_formattedTitle|e('html_attr') }}" />
                                     <input type="hidden" id="desc{{ itemId }}" value="{% set description %}{% if product.description is not empty %}{{ product.description }}{% endif %}
                                     {% endset %}{{ description|striptags|e('html_attr') }}" />
-                                </li>
+                                    {% if onlyImages %}
+                                        <input type="hidden" id="imagePath{{ itemId }}" value="/{{ attribute(product, imageField).getPathname() }}" />
+                                    {% endif %}
+                                {% if not onlyImages %}
+                                    </li>
+                                {% endif %}
+                                {% endif %}
                             {% else %}
-                                <li>{{ __('No products found.') }}</li>
+                                {% if not onlyImages %}<li>{% endif %}{{ __('No products found.') }}{% if not onlyImages %}</li>{% endif %}
                             {% endfor %}
-                        </ul>
+                        {% if not onlyImages %}
+                            </ul>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -89,7 +108,9 @@
             {{ form_row(finderForm.sort) }}
             {{ form_row(finderForm.sortdir) }}
             {{ form_row(finderForm.num) }}
-            {{ form_row(finderForm.q) }}
+            <div id="searchTermRow">
+                {{ form_row(finderForm.q) }}
+            </div>
             <div>
                 {{ pager({ display: 'page', rowcount: pager.numitems, limit: pager.itemsperpage, posvar: 'pos', maxpages: 10, route: 'muyourcitymodule_external_finder'}) }}
             </div>

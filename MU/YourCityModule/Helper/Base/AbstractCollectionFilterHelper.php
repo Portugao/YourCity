@@ -31,7 +31,6 @@ use MU\YourCityModule\Entity\SpecialOfLocationEntity;
 use MU\YourCityModule\Entity\ServiceOfLocationEntity;
 use MU\YourCityModule\Entity\AbonnementEntity;
 use MU\YourCityModule\Entity\Factory\YourCityFactory;
-use MU\YourCityModule\Helper\CategoryHelper;
 
 /**
  * Entity collection filter helper base class.
@@ -49,11 +48,6 @@ abstract class AbstractCollectionFilterHelper
     protected $currentUserApi;
 
     /**
-     * @var CategoryHelper
-     */
-    private $categoryHelper;
-
-    /**
      * @var bool Fallback value to determine whether only own entries should be selected or not
      */
     protected $showOnlyOwnEntries = false;
@@ -61,20 +55,17 @@ abstract class AbstractCollectionFilterHelper
     /**
      * CollectionFilterHelper constructor.
      *
-     * @param RequestStack   $requestStack        RequestStack service instance
+     * @param RequestStack $requestStack RequestStack service instance
      * @param CurrentUserApi        $currentUserApi        CurrentUserApi service instance
-     * @param CategoryHelper $categoryHelper      CategoryHelper service instance
      * @param bool           $showOnlyOwnEntries  Fallback value to determine whether only own entries should be selected or not
      */
     public function __construct(
         RequestStack $requestStack,
         CurrentUserApi $currentUserApi,
-        CategoryHelper $categoryHelper,
         $showOnlyOwnEntries)
     {
         $this->request = $requestStack->getCurrentRequest();
         $this->currentUserApi = $currentUserApi;
-        $this->categoryHelper = $categoryHelper;
         $this->showOnlyOwnEntries = $showOnlyOwnEntries;
     }
 
@@ -282,8 +273,6 @@ abstract class AbstractCollectionFilterHelper
     {
         $parameters = [];
     
-        $parameters['catId'] = $this->request->query->get('catId', '');
-        $parameters['catIdList'] = $this->categoryHelper->retrieveCategoriesFromRequest('location', 'GET');
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
         $parameters['owner'] = (int) $this->request->query->get('owner', 0);
         $parameters['admin1'] = (int) $this->request->query->get('admin1', 0);
@@ -392,6 +381,7 @@ abstract class AbstractCollectionFilterHelper
     
         $parameters['location'] = $this->request->query->get('location', 0);
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
+        $parameters['kindOfMenu'] = $this->request->query->get('kindOfMenu', '');
         $parameters['q'] = $this->request->query->get('q', '');
     
         return $parameters;
@@ -428,12 +418,11 @@ abstract class AbstractCollectionFilterHelper
     {
         $parameters = [];
     
-        $parameters['catId'] = $this->request->query->get('catId', '');
-        $parameters['catIdList'] = $this->categoryHelper->retrieveCategoriesFromRequest('dish', 'GET');
         $parameters['menuOfLocation'] = $this->request->query->get('menuOfLocation', 0);
         $parameters['partOfMenu'] = $this->request->query->get('partOfMenu', 0);
         $parameters['location'] = $this->request->query->get('location', 0);
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
+        $parameters['kindOfDish'] = $this->request->query->get('kindOfDish', '');
         $parameters['q'] = $this->request->query->get('q', '');
     
         return $parameters;
@@ -451,10 +440,9 @@ abstract class AbstractCollectionFilterHelper
     {
         $parameters = [];
     
-        $parameters['catId'] = $this->request->query->get('catId', '');
-        $parameters['catIdList'] = $this->categoryHelper->retrieveCategoriesFromRequest('event', 'GET');
         $parameters['location'] = $this->request->query->get('location', 0);
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
+        $parameters['kindOfEvent'] = $this->request->query->get('kindOfEvent', '');
         $parameters['q'] = $this->request->query->get('q', '');
     
         return $parameters;
@@ -472,10 +460,9 @@ abstract class AbstractCollectionFilterHelper
     {
         $parameters = [];
     
-        $parameters['catId'] = $this->request->query->get('catId', '');
-        $parameters['catIdList'] = $this->categoryHelper->retrieveCategoriesFromRequest('product', 'GET');
         $parameters['location'] = $this->request->query->get('location', 0);
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
+        $parameters['kindOfProduct'] = $this->request->query->get('kindOfProduct', '');
         $parameters['today'] = $this->request->query->get('today', '');
         $parameters['q'] = $this->request->query->get('q', '');
         $parameters['monday'] = $this->request->query->get('monday', '');
@@ -618,20 +605,7 @@ abstract class AbstractCollectionFilterHelper
     
         $parameters = $this->getViewQuickNavParametersForLocation();
         foreach ($parameters as $k => $v) {
-            if ($k == 'catId') {
-                // single category filter
-                if ($v > 0) {
-                    $qb->andWhere('tblCategories.category = :category')
-                       ->setParameter('category', $v);
-                }
-            } elseif ($k == 'catIdList') {
-                // multi category filter
-                /* old
-                $qb->andWhere('tblCategories.category IN (:categories)')
-                   ->setParameter('categories', $v);
-                 */
-                $qb = $this->categoryHelper->buildFilterClauses($qb, 'location', $v);
-            } elseif (in_array($k, ['q', 'searchterm'])) {
+            if (in_array($k, ['q', 'searchterm'])) {
                 // quick search
                 if (!empty($v)) {
                     $repository = $this->entityFactory->getRepository('location');
@@ -952,20 +926,7 @@ abstract class AbstractCollectionFilterHelper
     
         $parameters = $this->getViewQuickNavParametersForDish();
         foreach ($parameters as $k => $v) {
-            if ($k == 'catId') {
-                // single category filter
-                if ($v > 0) {
-                    $qb->andWhere('tblCategories.category = :category')
-                       ->setParameter('category', $v);
-                }
-            } elseif ($k == 'catIdList') {
-                // multi category filter
-                /* old
-                $qb->andWhere('tblCategories.category IN (:categories)')
-                   ->setParameter('categories', $v);
-                 */
-                $qb = $this->categoryHelper->buildFilterClauses($qb, 'dish', $v);
-            } elseif (in_array($k, ['q', 'searchterm'])) {
+            if (in_array($k, ['q', 'searchterm'])) {
                 // quick search
                 if (!empty($v)) {
                     $repository = $this->entityFactory->getRepository('dish');
@@ -1009,20 +970,7 @@ abstract class AbstractCollectionFilterHelper
     
         $parameters = $this->getViewQuickNavParametersForEvent();
         foreach ($parameters as $k => $v) {
-            if ($k == 'catId') {
-                // single category filter
-                if ($v > 0) {
-                    $qb->andWhere('tblCategories.category = :category')
-                       ->setParameter('category', $v);
-                }
-            } elseif ($k == 'catIdList') {
-                // multi category filter
-                /* old
-                $qb->andWhere('tblCategories.category IN (:categories)')
-                   ->setParameter('categories', $v);
-                 */
-                $qb = $this->categoryHelper->buildFilterClauses($qb, 'event', $v);
-            } elseif (in_array($k, ['q', 'searchterm'])) {
+            if (in_array($k, ['q', 'searchterm'])) {
                 // quick search
                 if (!empty($v)) {
                     $repository = $this->entityFactory->getRepository('event');
@@ -1066,20 +1014,7 @@ abstract class AbstractCollectionFilterHelper
     
         $parameters = $this->getViewQuickNavParametersForProduct();
         foreach ($parameters as $k => $v) {
-            if ($k == 'catId') {
-                // single category filter
-                if ($v > 0) {
-                    $qb->andWhere('tblCategories.category = :category')
-                       ->setParameter('category', $v);
-                }
-            } elseif ($k == 'catIdList') {
-                // multi category filter
-                /* old
-                $qb->andWhere('tblCategories.category IN (:categories)')
-                   ->setParameter('categories', $v);
-                 */
-                $qb = $this->categoryHelper->buildFilterClauses($qb, 'product', $v);
-            } elseif (in_array($k, ['q', 'searchterm'])) {
+            if (in_array($k, ['q', 'searchterm'])) {
                 // quick search
                 if (!empty($v)) {
                     $repository = $this->entityFactory->getRepository('product');
@@ -1451,7 +1386,7 @@ abstract class AbstractCollectionFilterHelper
         }
         
         $endDate = $this->request->query->get('effectivUntil', date('Y-m-d H:i:s'));
-        $qb->andWhere('tbl.effectivUntil >= :endDate')
+        $qb->andWhere('(tbl.effectivUntil >= :endDate OR tbl.effectivUntil IS NULL)')
            ->setParameter('endDate', $endDate);
     
         return $qb;
@@ -1536,8 +1471,8 @@ abstract class AbstractCollectionFilterHelper
             $qb = $this->addCreatorFilter($qb);
         }
         
-        $endDate = $this->request->query->get('end2Date', date('Y-m-d H:i:s'));
-        $qb->andWhere('(tbl.end2Date >= :endDate OR tbl.end2Date IS NULL)')
+        $endDate = $this->request->query->get('inViewUntil', date('Y-m-d H:i:s'));
+        $qb->andWhere('(tbl.inViewUntil >= :endDate OR tbl.inViewUntil IS NULL)')
            ->setParameter('endDate', $endDate);
     
         return $qb;
@@ -1639,10 +1574,6 @@ abstract class AbstractCollectionFilterHelper
         if (!in_array('workflowState', array_keys($parameters)) || empty($parameters['workflowState'])) {
             // per default we show approved abonnements only
             $onlineStates = ['approved'];
-            if ($showOnlyOwnEntries) {
-                // allow the owner to see his deferred abonnements
-                $onlineStates[] = 'deferred';
-            }
             $qb->andWhere('tbl.workflowState IN (:onlineStates)')
                ->setParameter('onlineStates', $onlineStates);
         }
@@ -1687,6 +1618,8 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchWorkflowState'] = $fragment;
             $filters[] = 'tbl.name LIKE :searchName';
             $parameters['searchName'] = '%' . $fragment . '%';
+            $filters[] = 'tbl.letterForOrder LIKE :searchLetterForOrder';
+            $parameters['searchLetterForOrder'] = '%' . $fragment . '%';
             $filters[] = 'tbl.slogan LIKE :searchSlogan';
             $parameters['searchSlogan'] = '%' . $fragment . '%';
             $filters[] = 'tbl.logoOfYourLocation = :searchLogoOfYourLocation';
@@ -1847,6 +1780,8 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchEffectivFrom'] = $fragment;
             $filters[] = 'tbl.effectivUntil = :searchEffectivUntil';
             $parameters['searchEffectivUntil'] = $fragment;
+            $filters[] = 'tbl.kindOfMenu = :searchKindOfMenu';
+            $parameters['searchKindOfMenu'] = $fragment;
         }
         if ($objectType == 'partOfMenu') {
             $filters[] = 'tbl.name LIKE :searchName';
@@ -1861,6 +1796,8 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchName'] = '%' . $fragment . '%';
             $filters[] = 'tbl.description LIKE :searchDescription';
             $parameters['searchDescription'] = '%' . $fragment . '%';
+            $filters[] = 'tbl.kindOfDish = :searchKindOfDish';
+            $parameters['searchKindOfDish'] = $fragment;
             $filters[] = 'tbl.imageOfDish = :searchImageOfDish';
             $parameters['searchImageOfDish'] = $fragment;
             $filters[] = 'tbl.priceOfDish = :searchPriceOfDish';
@@ -1877,6 +1814,8 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchDescription'] = '%' . $fragment . '%';
             $filters[] = 'tbl.imageOfEvent = :searchImageOfEvent';
             $parameters['searchImageOfEvent'] = $fragment;
+            $filters[] = 'tbl.kindOfEvent = :searchKindOfEvent';
+            $parameters['searchKindOfEvent'] = $fragment;
             $filters[] = 'tbl.street LIKE :searchStreet';
             $parameters['searchStreet'] = '%' . $fragment . '%';
             $filters[] = 'tbl.numberOfStreet LIKE :searchNumberOfStreet';
@@ -1893,12 +1832,18 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchStart2Date'] = $fragment;
             $filters[] = 'tbl.end2Date = :searchEnd2Date';
             $parameters['searchEnd2Date'] = $fragment;
+            $filters[] = 'tbl.inViewUntil = :searchInViewUntil';
+            $parameters['searchInViewUntil'] = $fragment;
         }
         if ($objectType == 'product') {
             $filters[] = 'tbl.name LIKE :searchName';
             $parameters['searchName'] = '%' . $fragment . '%';
             $filters[] = 'tbl.description LIKE :searchDescription';
             $parameters['searchDescription'] = '%' . $fragment . '%';
+            $filters[] = 'tbl.kindOfProduct = :searchKindOfProduct';
+            $parameters['searchKindOfProduct'] = $fragment;
+            $filters[] = 'tbl.imageOfProduct = :searchImageOfProduct';
+            $parameters['searchImageOfProduct'] = $fragment;
             $filters[] = 'tbl.today = :searchToday';
             $parameters['searchToday'] = $fragment;
             $filters[] = 'tbl.priceOfProduct = :searchPriceOfProduct';

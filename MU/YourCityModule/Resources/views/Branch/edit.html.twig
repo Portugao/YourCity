@@ -68,7 +68,7 @@
             {{ include('@MUYourCityModule/Helper/includeStandardFieldsEdit.html.twig', { obj: branch }) }}
         {% endif %}
         
-        {% set hookId = mode != 'create' ? branch.id : null %}
+        {% set hookId = mode != 'create' ? branch.getKey() : null %}
         {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.branches.form_edit', id=hookId) %}
         {% if hooks is iterable and hooks|length > 0 %}
             {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
@@ -124,7 +124,7 @@
                 {% if form.moderationSpecificCreator is defined %}
                     mUYourCityInitUserField('muyourcitymodule_branch_moderationSpecificCreator', 'getCommonUsersList');
                 {% endif %}
-                mUYourCityInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ branch.id }}{% endif %}');
+                mUYourCityInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ branch.getKey() }}{% endif %}');
                 mUYourCityInitUploadField('muyourcitymodule_branch_imageOfBranch_imageOfBranch');
             });
         })(jQuery);

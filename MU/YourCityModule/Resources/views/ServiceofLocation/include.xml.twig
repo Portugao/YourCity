@@ -1,5 +1,5 @@
 {# purpose of this template: services of location xml inclusion template #}
-<serviceoflocation id="{{ serviceOfLocation.id }}" createdon="{{ serviceOfLocation.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ serviceOfLocation.updatedDate|localizeddate('medium', 'short') }}">
+<serviceoflocation id="{{ serviceOfLocation.getId() }}" createdon="{{ serviceOfLocation.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ serviceOfLocation.updatedDate|localizeddate('medium', 'short') }}">
     <id>{{ serviceOfLocation.id }}</id>
     <name><![CDATA[{{ serviceOfLocation.name }}]]></name>
     <description><![CDATA[{{ serviceOfLocation.description|safeHtml }}]]></description>

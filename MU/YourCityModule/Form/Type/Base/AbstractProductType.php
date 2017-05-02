@@ -14,8 +14,11 @@ namespace MU\YourCityModule\Form\Type\Base;
 
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
@@ -117,13 +120,27 @@ abstract class AbstractProductType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addEntityFields($builder, $options);
-        if ($this->featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, 'product')) {
-            $this->addCategoriesField($builder, $options);
-        }
         $this->addIncomingRelationshipFields($builder, $options);
         $this->addModerationFields($builder, $options);
         $this->addReturnControlField($builder, $options);
         $this->addSubmitButtons($builder, $options);
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            $entity = $event->getData();
+            foreach (['imageOfProduct'] as $uploadFieldName) {
+                $entity[$uploadFieldName] = [
+                    $uploadFieldName => $entity[$uploadFieldName] instanceof File ? $entity[$uploadFieldName]->getPathname() : null
+                ];
+            }
+        });
+        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
+            $entity = $event->getData();
+            foreach (['imageOfProduct'] as $uploadFieldName) {
+                if (is_array($entity[$uploadFieldName])) {
+                    $entity[$uploadFieldName] = $entity[$uploadFieldName][$uploadFieldName];
+                }
+            }
+        });
     }
 
     /**
@@ -162,29 +179,6 @@ abstract class AbstractProductType extends AbstractType
             'required' => false,
         ]);
         
-        $listEntries = $this->listHelper->getEntries('product', 'today');
-        $choices = [];
-        $choiceAttributes = [];
-        foreach ($listEntries as $entry) {
-            $choices[$entry['text']] = $entry['value'];
-            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
-        }
-        $builder->add('today', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
-            'label' => $this->__('Today') . ':',
-            'empty_data' => '',
-            'attr' => [
-                'class' => '',
-                'title' => $this->__('Choose the today')
-            ],
-            'required' => false,
-            'placeholder' => $this->__('Choose an option'),
-            'choices' => $choices,
-            'choices_as_values' => true,
-            'choice_attr' => $choiceAttributes,
-            'multiple' => false,
-            'expanded' => false
-        ]);
-        
         if ($this->variableApi->getSystemVar('multilingual') && $this->featureActivationHelper->isEnabled(FeatureActivationHelper::TRANSLATIONS, 'product')) {
             $supportedLanguages = $this->translatableHelper->getSupportedLanguages('product');
             if (is_array($supportedLanguages) && count($supportedLanguages) > 1) {
@@ -203,6 +197,68 @@ abstract class AbstractProductType extends AbstractType
                 }
             }
         }
+        
+        $listEntries = $this->listHelper->getEntries('product', 'kindOfProduct');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('kindOfProduct', 'MU\YourCityModule\Form\Type\Field\MultiListType', [
+            'label' => $this->__('Kind of product') . ':',
+            'empty_data' => 'other',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('Choose the kind of product')
+            ],
+            'required' => true,
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => true,
+            'expanded' => false
+        ]);
+        
+        $builder->add('imageOfProduct', 'MU\YourCityModule\Form\Type\Field\UploadType', [
+            'label' => $this->__('Image of product') . ':',
+            'attr' => [
+                'class' => ' validate-upload',
+                'title' => $this->__('Enter the image of product of the product')
+            ],
+            'required' => false && $options['mode'] == 'create',
+            'entity' => $options['entity'],
+            'allowed_extensions' => 'gif, jpeg, jpg, png',
+            'allowed_size' => ''
+        ]);
+        
+        $listEntries = $this->listHelper->getEntries('product', 'today');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('today', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            'label' => $this->__('Today') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Enter, how often your product is available today. If you leave empty your customer will see, that there is no information for today.')
+            ],
+            'help' => $this->__('Enter, how often your product is available today. If you leave empty your customer will see, that there is no information for today.'),
+            'empty_data' => '',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('Choose the today')
+            ],
+            'required' => false,
+            'placeholder' => $this->__('Choose an option'),
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => false,
+            'expanded' => false
+        ]);
         
         $builder->add('monday', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
             'label' => $this->__('Monday') . ':',
@@ -279,28 +335,6 @@ abstract class AbstractProductType extends AbstractType
             
             
             'scale' => 2
-        ]);
-    }
-
-    /**
-     * Adds a categories field.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
-    public function addCategoriesField(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add('categories', 'Zikula\CategoriesModule\Form\Type\CategoriesType', [
-            'label' => $this->__('Categories') . ':',
-            'empty_data' => [],
-            'attr' => [
-                'class' => 'category-selector'
-            ],
-            'required' => false,
-            'multiple' => true,
-            'module' => 'MUYourCityModule',
-            'entity' => 'ProductEntity',
-            'entityCategoryClass' => 'MU\YourCityModule\Entity\ProductCategoryEntity'
         ]);
     }
 
@@ -448,6 +482,8 @@ abstract class AbstractProductType extends AbstractType
                     return $this->entityFactory->createProduct();
                 },
                 'error_mapping' => [
+                    'isKindOfProductValueAllowed' => 'kindOfProduct',
+                    'imageOfProduct' => 'imageOfProduct.imageOfProduct',
                 ],
                 'mode' => 'create',
                 'actions' => [],
@@ -456,7 +492,7 @@ abstract class AbstractProductType extends AbstractType
                 'filter_by_ownership' => true,
                 'inline_usage' => false
             ])
-            ->setRequired(['mode', 'actions'])
+            ->setRequired(['entity', 'mode', 'actions'])
             ->setAllowedTypes([
                 'mode' => 'string',
                 'actions' => 'array',

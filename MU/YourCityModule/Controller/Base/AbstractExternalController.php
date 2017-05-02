@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Zikula\Core\Controller\AbstractController;
 use Zikula\Core\Response\PlainResponse;
-use MU\YourCityModule\Helper\FeatureActivationHelper;
 
 /**
  * Controller for external calls base class.
@@ -50,22 +49,14 @@ abstract class AbstractExternalController extends AbstractController
         
         $entityFactory = $this->get('mu_yourcity_module.entity_factory');
         $repository = $entityFactory->getRepository($objectType);
-        $idValues = $controllerHelper->retrieveIdentifier($request, [], $objectType);
-        
-        $hasIdentifier = $controllerHelper->isValidIdentifier($idValues);
-        if (!$hasIdentifier) {
-            return new Response($this->__('Error! Invalid identifier received.'));
-        }
         
         // assign object data fetched from the database
-        $entity = $repository->selectById($idValues);
+        $entity = $repository->selectById($id);
         if (null === $entity) {
             return new Response($this->__('No such item.'));
         }
         
         $entity->initWorkflow();
-        
-        $instance = $entity->createCompositeIdentifier() . '::';
         
         $templateParameters = [
             'objectType' => $objectType,
@@ -184,13 +175,6 @@ abstract class AbstractExternalController extends AbstractController
         $query = $repository->getQueryFromBuilder($qb);
         
         list($entities, $objectCount) = $repository->retrieveCollectionResult($query, true);
-        
-        if (in_array($objectType, ['location', 'dish', 'event', 'product'])) {
-            $featureActivationHelper = $this->get('mu_yourcity_module.feature_activation_helper');
-            if ($featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, $objectType)) {
-                $entities = $this->get('mu_yourcity_module.category_helper')->filterEntitiesByPermission($entities);
-            }
-        }
         
         foreach ($entities as $k => $entity) {
             $entity->initWorkflow();

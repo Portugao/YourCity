@@ -25,7 +25,6 @@ use Zikula\Component\SortableColumns\SortableColumns;
 use Zikula\Core\Controller\AbstractController;
 use Zikula\Core\RouteUrl;
 use MU\YourCityModule\Entity\OfferEntity;
-use MU\YourCityModule\Helper\FeatureActivationHelper;
 
 /**
  * Offer controller base class.
@@ -214,7 +213,7 @@ abstract class AbstractOfferController extends AbstractController
             throw new AccessDeniedException();
         }
         // create identifier for permission check
-        $instanceId = $offer->createCompositeIdentifier();
+        $instanceId = $offer->getKey();
         if (!$this->hasPermission('MUYourCityModule:' . ucfirst($objectType) . ':', $instanceId . '::', $permLevel)) {
             throw new AccessDeniedException();
         }
@@ -347,7 +346,7 @@ abstract class AbstractOfferController extends AbstractController
             throw new AccessDeniedException();
         }
         $logger = $this->get('logger');
-        $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => 'offer', 'id' => $offer->createCompositeIdentifier()];
+        $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => 'offer', 'id' => $offer->getKey()];
         
         $offer->initWorkflow();
         

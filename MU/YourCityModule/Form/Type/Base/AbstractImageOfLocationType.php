@@ -160,7 +160,7 @@ abstract class AbstractImageOfLocationType extends AbstractType
                 'class' => '',
                 'title' => $this->__('Enter the name of the image of location')
             ],
-            'required' => false,
+            'required' => true,
         ]);
         
         $builder->add('description', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
@@ -245,8 +245,6 @@ abstract class AbstractImageOfLocationType extends AbstractType
             'multiple' => false,
             'expanded' => false,
             'query_builder' => $queryBuilder,
-            'placeholder' => $this->__('Please choose an option'),
-            'required' => false,
             'label' => $this->__('Location'),
             'attr' => [
                 'title' => $this->__('Choose the location')

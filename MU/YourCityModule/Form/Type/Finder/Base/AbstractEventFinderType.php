@@ -68,9 +68,6 @@ abstract class AbstractEventFinderType extends AbstractType
             ])
         ;
 
-        if ($this->featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, $options['objectType'])) {
-            $this->addCategoriesField($builder, $options);
-        }
         $this->addImageFields($builder, $options);
         $this->addPasteAsField($builder, $options);
         $this->addSortingFields($builder, $options);
@@ -94,30 +91,6 @@ abstract class AbstractEventFinderType extends AbstractType
                 ]
             ])
         ;
-    }
-
-    /**
-     * Adds a categories field.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
-    public function addCategoriesField(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add('categories', 'Zikula\CategoriesModule\Form\Type\CategoriesType', [
-            'label' => $this->__('Category') . ':',
-            'empty_data' => null,
-            'attr' => [
-                'class' => 'category-selector',
-                'title' => $this->__('This is an optional filter.')
-            ],
-            'help' => $this->__('This is an optional filter.'),
-            'required' => false,
-            'multiple' => false,
-            'module' => 'MUYourCityModule',
-            'entity' => ucfirst($options['objectType']) . 'Entity',
-            'entityCategoryClass' => 'MU\YourCityModule\Entity\\' . ucfirst($options['objectType']) . 'CategoryEntity'
-        ]);
     }
 
     /**
@@ -181,14 +154,12 @@ abstract class AbstractEventFinderType extends AbstractType
                     $this->__('Name') => 'name',
                     $this->__('Description') => 'description',
                     $this->__('Image of event') => 'imageOfEvent',
+                    $this->__('Kind of event') => 'kindOfEvent',
                     $this->__('Street') => 'street',
                     $this->__('Number of street') => 'numberOfStreet',
                     $this->__('Zip code') => 'zipCode',
                     $this->__('City') => 'city',
-                    $this->__('Start date') => 'startDate',
-                    $this->__('End date') => 'endDate',
-                    $this->__('Start 2 date') => 'start2Date',
-                    $this->__('End 2 date') => 'end2Date',
+                    $this->__('In view until') => 'inViewUntil',
                     $this->__('Creation date') => 'createdDate',
                     $this->__('Creator') => 'createdBy',
                     $this->__('Update date') => 'updatedDate',

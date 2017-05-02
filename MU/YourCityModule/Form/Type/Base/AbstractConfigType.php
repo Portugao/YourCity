@@ -143,7 +143,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Used to determine moderator user accounts for sending email notifications.')
                 ],
                 'help' => $this->__('Used to determine moderator user accounts for sending email notifications.'),
-                'data' => isset($this->moduleVars['moderationGroupForLocations']) ? intval($this->moduleVars['moderationGroupForLocations']) : intval(2),
+                'data' => isset($this->moduleVars['moderationGroupForLocations']) ? $this->moduleVars['moderationGroupForLocations'] : '',
                 'attr' => [
                     'maxlength' => 255,
                     'title' => $this->__('Choose the moderation group for locations.')
@@ -2028,6 +2028,169 @@ abstract class AbstractConfigType extends AbstractType
                 'help' => $this->__('Thumbnail height on edit pages in pixels.'),
                 'required' => false,
                 'data' => isset($this->moduleVars['thumbnailHeightEventImageOfEventEdit']) ? intval($this->moduleVars['thumbnailHeightEventImageOfEventEdit']) : intval(180),
+                'empty_data' => intval('180'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail height edit.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('enableShrinkingForProductImageOfProduct', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+                'label' => $this->__('Enable shrinking') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image.')
+                ],
+                'help' => $this->__('Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image.'),
+                'required' => false,
+                'data' => (bool)(isset($this->moduleVars['enableShrinkingForProductImageOfProduct']) ? $this->moduleVars['enableShrinkingForProductImageOfProduct'] : false),
+                'attr' => [
+                    'title' => $this->__('The enable shrinking option.'),
+                    'class' => 'shrink-enabler'
+                ],
+            ])
+            ->add('shrinkWidthProductImageOfProduct', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+                'label' => $this->__('Shrink width') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('The maximum image width in pixels.')
+                ],
+                'help' => $this->__('The maximum image width in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['shrinkWidthProductImageOfProduct']) ? intval($this->moduleVars['shrinkWidthProductImageOfProduct']) : intval(800),
+                'empty_data' => intval('800'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the shrink width.') . ' ' . $this->__('Only digits are allowed.'),
+                    'class' => 'shrinkdimension-shrinkwidthproductimageofproduct'
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('shrinkHeightProductImageOfProduct', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+                'label' => $this->__('Shrink height') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('The maximum image height in pixels.')
+                ],
+                'help' => $this->__('The maximum image height in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['shrinkHeightProductImageOfProduct']) ? intval($this->moduleVars['shrinkHeightProductImageOfProduct']) : intval(600),
+                'empty_data' => intval('600'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the shrink height.') . ' ' . $this->__('Only digits are allowed.'),
+                    'class' => 'shrinkdimension-shrinkheightproductimageofproduct'
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailModeProductImageOfProduct', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+                'label' => $this->__('Thumbnail mode') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail mode (inset or outbound).')
+                ],
+                'help' => $this->__('Thumbnail mode (inset or outbound).'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailModeProductImageOfProduct']) ? $this->moduleVars['thumbnailModeProductImageOfProduct'] : '',
+                'empty_data' => 'inset',
+                'attr' => [
+                    'title' => $this->__('Choose the thumbnail mode.')
+                ],'choices' => [
+                    $this->__('Inset') => 'inset'
+                    ,$this->__('Outbound') => 'outbound'
+                ],
+                'choices_as_values' => true,
+                'multiple' => false
+            ])
+            ->add('thumbnailWidthProductImageOfProductView', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+                'label' => $this->__('Thumbnail width view') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail width on view pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail width on view pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailWidthProductImageOfProductView']) ? intval($this->moduleVars['thumbnailWidthProductImageOfProductView']) : intval(32),
+                'empty_data' => intval('32'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail width view.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailHeightProductImageOfProductView', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+                'label' => $this->__('Thumbnail height view') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail height on view pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail height on view pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailHeightProductImageOfProductView']) ? intval($this->moduleVars['thumbnailHeightProductImageOfProductView']) : intval(24),
+                'empty_data' => intval('24'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail height view.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailWidthProductImageOfProductDisplay', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+                'label' => $this->__('Thumbnail width display') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail width on display pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail width on display pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailWidthProductImageOfProductDisplay']) ? intval($this->moduleVars['thumbnailWidthProductImageOfProductDisplay']) : intval(240),
+                'empty_data' => intval('240'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail width display.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailHeightProductImageOfProductDisplay', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+                'label' => $this->__('Thumbnail height display') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail height on display pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail height on display pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailHeightProductImageOfProductDisplay']) ? intval($this->moduleVars['thumbnailHeightProductImageOfProductDisplay']) : intval(180),
+                'empty_data' => intval('180'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail height display.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailWidthProductImageOfProductEdit', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+                'label' => $this->__('Thumbnail width edit') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail width on edit pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail width on edit pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailWidthProductImageOfProductEdit']) ? intval($this->moduleVars['thumbnailWidthProductImageOfProductEdit']) : intval(240),
+                'empty_data' => intval('240'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail width edit.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailHeightProductImageOfProductEdit', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+                'label' => $this->__('Thumbnail height edit') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail height on edit pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail height on edit pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailHeightProductImageOfProductEdit']) ? intval($this->moduleVars['thumbnailHeightProductImageOfProductEdit']) : intval(180),
                 'empty_data' => intval('180'),
                 'attr' => [
                     'maxlength' => 4,

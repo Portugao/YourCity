@@ -17,18 +17,27 @@
     <div class="muyourcitymodule-product muyourcitymodule-display">
 
     <dl>
-        {% if product.name is not empty %}
+        {#% if product.name is not empty %}
             <dt>{{ __('Name') }}</dt>
             <dd>{{ product.name }}</dd>
-        {% endif %}
+        {% endif %#}
         {% if product.description is not empty %}
             <dt>{{ __('Description') }}</dt>
             <dd>{{ product.description|safeHtml }}</dd>
         {% endif %}
+        {% if product.kindOfProduct is not empty %}
+            <dt>{{ __('Kind of product') }}</dt>
+            <dd>{{ product.kindOfProduct|muyourcitymodule_listEntry('product', 'kindOfProduct') }}</dd>
+        {% endif %}
+        <h3>{{ __('Availability today') }}</h3>
         {% if product.today is not empty %}
             <dt>{{ __('Today') }}</dt>
             <dd>{{ product.today|muyourcitymodule_listEntry('product', 'today') }}</dd>
+        {% else %}
+            {{ __('No information about the availability today.') }}
         {% endif %}
+        <h3>{{ __('General availability on weekdays') }}</h3>
+        {% if product.monday == true or product.tuesday == true or product.wednesday == true or product.thursday == true or product.friday == true or product.saturday == true  or product.sunday == true %}
         {% if product.monday is not empty %}
             <dt>{{ __('Monday') }}</dt>
             <dd>{% set itemid = product.createCompositeIdentifier() %}
@@ -141,8 +150,11 @@
             </div></noscript>
             </dd>
         {% endif %}
+        {% else %}
+           {{ __('No informations available') }}
+        {% endif %}
         {% if product.priceOfProduct is not empty %}
-            <dt>{{ __('Price of product') }}</dt>
+            <h3>{{ __('Price of product') }}</h3>
             <dd>{{ product.priceOfProduct|localizedcurrency('EUR') }}</dd>
         {% endif %}
         {% if product.location|default %}
@@ -164,7 +176,7 @@
     {% if featureActivationHelper.isEnabled(constant('MU\\YourCityModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'product') %}
         {{ include('@MUYourCityModule/Helper/includeCategoriesDisplay.html.twig', { obj: product }) }}
     {% endif %}
-    {{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: product }) }}
+    {#{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: product }) }#}
 
     {{ block('display_hooks') }}
 </div>

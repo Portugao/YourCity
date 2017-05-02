@@ -399,27 +399,25 @@ abstract class AbstractSpecialOfLocationEntity extends EntityAccess implements T
      */
     public function createUrlArgs()
     {
-        $args = [];
-    
-        $args['id'] = $this['id'];
+        $args = [
+            'id' => $this->getId()
+        ];
     
         if (property_exists($this, 'slug')) {
-            $args['slug'] = $this['slug'];
+            $args['slug'] = $this->getSlug();
         }
     
         return $args;
     }
     
     /**
-     * Create concatenated identifier string (for composite keys).
+     * Returns the primary key.
      *
-     * @return String concatenated identifiers
+     * @return integer The identifier
      */
-    public function createCompositeIdentifier()
+    public function getKey()
     {
-        $itemId = $this['id'];
-    
-        return $itemId;
+        return $this->getId();
     }
     
     /**
@@ -462,7 +460,7 @@ abstract class AbstractSpecialOfLocationEntity extends EntityAccess implements T
      */
     public function __toString()
     {
-        return 'Special of location ' . $this->createCompositeIdentifier() . ': ' . $this->getName();
+        return 'Special of location ' . $this->getKey() . ': ' . $this->getName();
     }
     
     /**
@@ -478,7 +476,7 @@ abstract class AbstractSpecialOfLocationEntity extends EntityAccess implements T
     public function __clone()
     {
         // if the entity has no identity do nothing, do NOT throw an exception
-        if (!($this->id)) {
+        if (!$this->id) {
             return;
         }
     

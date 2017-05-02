@@ -7,7 +7,7 @@
             <div class="col-sm-9">
                 <select id="{$baseID}Id" name="id" class="form-control">
                     {foreach item='fileOfLocation' from=$items}
-                        <option value="{$fileOfLocation.id}"{if $selectedId eq $fileOfLocation.id} selected="selected"{/if}>{$fileOfLocation->getName()}</option>
+                        <option value="{$fileOfLocation->getKey()}"{if $selectedId eq $fileOfLocation->getKey()} selected="selected"{/if}>{$fileOfLocation->getName()}</option>
                     {foreachelse}
                         <option value="0">{gt text='No entries found.'}</option>
                     {/foreach}

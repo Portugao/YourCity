@@ -122,8 +122,8 @@ abstract class AbstractEditHandler extends EditHandler
             'entity' => $this->entityRef,
             'mode' => $this->templateParameters['mode'],
             'actions' => $this->templateParameters['actions'],
-            'has_moderate_permission' => $this->permissionApi->hasPermission($this->permissionComponent, $this->createCompositeIdentifier() . '::', ACCESS_MODERATE),
-            'filter_by_ownership' => !$this->permissionApi->hasPermission($this->permissionComponent, $this->createCompositeIdentifier() . '::', ACCESS_ADD)
+            'has_moderate_permission' => $this->permissionApi->hasPermission($this->permissionComponent, $this->idValue . '::', ACCESS_MODERATE),
+            'filter_by_ownership' => !$this->permissionApi->hasPermission($this->permissionComponent, $this->idValue . '::', ACCESS_ADD)
         ];
     
         $workflowRoles = $this->prepareWorkflowAdditions(false);
@@ -242,7 +242,6 @@ abstract class AbstractEditHandler extends EditHandler
     
         $message = '';
         switch ($args['commandName']) {
-            case 'defer':
             case 'submit':
                 if ($this->templateParameters['mode'] == 'create') {
                     $message = $this->__('Done! Location created.');
@@ -282,9 +281,9 @@ abstract class AbstractEditHandler extends EditHandler
         try {
             // execute the workflow action
             $success = $this->workflowHelper->executeAction($entity, $action);
-        } catch(\Exception $e) {
-            $flashBag->add('error', $this->__f('Sorry, but an error occured during the %action% action. Please apply the changes again!', ['%action%' => $action]) . ' ' . $e->getMessage());
-            $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->currentUserApi->get('uname'), 'entity' => 'location', 'id' => $entity->createCompositeIdentifier(), 'errorMessage' => $e->getMessage()];
+        } catch(\Exception $exception) {
+            $flashBag->add('error', $this->__f('Sorry, but an error occured during the %action% action. Please apply the changes again!', ['%action%' => $action]) . ' ' . $exception->getMessage());
+            $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->currentUserApi->get('uname'), 'entity' => 'location', 'id' => $entity->getKey(), 'errorMessage' => $exception->getMessage()];
             $this->logger->error('{app}: User {user} tried to edit the {entity} with id {id}, but failed. Error details: {errorMessage}.', $logArgs);
         }
     
@@ -340,9 +339,7 @@ abstract class AbstractEditHandler extends EditHandler
             case 'userDisplay':
             case 'adminDisplay':
                 if ($args['commandName'] != 'delete' && !($this->templateParameters['mode'] == 'create' && $args['commandName'] == 'cancel')) {
-                    foreach ($this->idFields as $idField) {
-                        $urlArgs[$idField] = $this->idValues[$idField];
-                    }
+                    $urlArgs[$this->idField] = $this->idValue;
     
                     return $this->router->generate($routePrefix . 'display', $urlArgs);
                 }

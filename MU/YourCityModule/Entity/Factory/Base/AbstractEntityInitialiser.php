@@ -152,6 +152,15 @@ abstract class AbstractEntityInitialiser
      */
     public function initMenuOfLocation(MenuOfLocationEntity $entity)
     {
+        $listEntries = $this->listEntriesHelper->getKindOfMenuEntriesForMenuOfLocation();
+        $items = [];
+        foreach ($listEntries as $listEntry) {
+            if (true === $listEntry['default']) {
+                $items[] = $listEntry['value'];
+            }
+        }
+        $entity->setKindOfMenu(implode('###', $items));
+
 
         return $entity;
     }
@@ -178,6 +187,14 @@ abstract class AbstractEntityInitialiser
      */
     public function initDish(DishEntity $entity)
     {
+        $listEntries = $this->listEntriesHelper->getKindOfDishEntriesForDish();
+        foreach ($listEntries as $listEntry) {
+            if (true === $listEntry['default']) {
+                $entity->setKindOfDish($listEntry['value']);
+                break;
+            }
+        }
+
 
         return $entity;
     }
@@ -191,6 +208,14 @@ abstract class AbstractEntityInitialiser
      */
     public function initEvent(EventEntity $entity)
     {
+        $listEntries = $this->listEntriesHelper->getKindOfEventEntriesForEvent();
+        foreach ($listEntries as $listEntry) {
+            if (true === $listEntry['default']) {
+                $entity->setKindOfEvent($listEntry['value']);
+                break;
+            }
+        }
+
 
         $entity->setLatitude($this->defaultLatitude);
         $entity->setLongitude($this->defaultLongitude);
@@ -207,6 +232,14 @@ abstract class AbstractEntityInitialiser
      */
     public function initProduct(ProductEntity $entity)
     {
+        $listEntries = $this->listEntriesHelper->getKindOfProductEntriesForProduct();
+        foreach ($listEntries as $listEntry) {
+            if (true === $listEntry['default']) {
+                $entity->setKindOfProduct($listEntry['value']);
+                break;
+            }
+        }
+
         $listEntries = $this->listEntriesHelper->getTodayEntriesForProduct();
         $items = [];
         foreach ($listEntries as $listEntry) {

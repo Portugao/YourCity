@@ -25,10 +25,8 @@ use Zikula\PermissionsModule\Api\PermissionApi;
 use Zikula\SearchModule\Entity\SearchResultEntity;
 use Zikula\SearchModule\AbstractSearchable;
 use MU\YourCityModule\Entity\Factory\EntityFactory;
-use MU\YourCityModule\Helper\CategoryHelper;
 use MU\YourCityModule\Helper\ControllerHelper;
 use MU\YourCityModule\Helper\EntityDisplayHelper;
-use MU\YourCityModule\Helper\FeatureActivationHelper;
 
 /**
  * Search helper base class.
@@ -73,16 +71,6 @@ abstract class AbstractSearchHelper extends AbstractSearchable
     protected $entityDisplayHelper;
     
     /**
-     * @var FeatureActivationHelper
-     */
-    private $featureActivationHelper;
-    
-    /**
-     * @var CategoryHelper
-     */
-    private $categoryHelper;
-    
-    /**
      * SearchHelper constructor.
      *
      * @param TranslatorInterface $translator          Translator service instance
@@ -93,8 +81,6 @@ abstract class AbstractSearchHelper extends AbstractSearchable
      * @param EntityFactory       $entityFactory       EntityFactory service instance
      * @param ControllerHelper    $controllerHelper    ControllerHelper service instance
      * @param EntityDisplayHelper $entityDisplayHelper EntityDisplayHelper service instance
-     * @param FeatureActivationHelper $featureActivationHelper FeatureActivationHelper service instance
-     * @param CategoryHelper      $categoryHelper      CategoryHelper service instance
      */
     public function __construct(
         TranslatorInterface $translator,
@@ -104,10 +90,7 @@ abstract class AbstractSearchHelper extends AbstractSearchable
         RequestStack $requestStack,
         EntityFactory $entityFactory,
         ControllerHelper $controllerHelper,
-        EntityDisplayHelper $entityDisplayHelper,
-        FeatureActivationHelper $featureActivationHelper,
-        CategoryHelper $categoryHelper
-    ) {
+        EntityDisplayHelper $entityDisplayHelper) {
         $this->setTranslator($translator);
         $this->permissionApi = $permissionApi;
         $this->templateEngine = $templateEngine;
@@ -116,8 +99,6 @@ abstract class AbstractSearchHelper extends AbstractSearchable
         $this->entityFactory = $entityFactory;
         $this->controllerHelper = $controllerHelper;
         $this->entityDisplayHelper = $entityDisplayHelper;
-        $this->featureActivationHelper = $featureActivationHelper;
-        $this->categoryHelper = $categoryHelper;
     }
     
     /**
@@ -186,6 +167,7 @@ abstract class AbstractSearchHelper extends AbstractSearchable
                 case 'location':
                     $whereArray[] = 'tbl.workflowState';
                     $whereArray[] = 'tbl.name';
+                    $whereArray[] = 'tbl.letterForOrder';
                     $whereArray[] = 'tbl.slogan';
                     $whereArray[] = 'tbl.logoOfYourLocation';
                     $whereArray[] = 'tbl.descriptionForGoogle';
@@ -235,6 +217,7 @@ abstract class AbstractSearchHelper extends AbstractSearchable
                     $whereArray[] = 'tbl.name';
                     $whereArray[] = 'tbl.description';
                     $whereArray[] = 'tbl.imageOfMenu';
+                    $whereArray[] = 'tbl.kindOfMenu';
                     break;
                 case 'partOfMenu':
                     $whereArray[] = 'tbl.workflowState';
@@ -245,6 +228,7 @@ abstract class AbstractSearchHelper extends AbstractSearchable
                     $whereArray[] = 'tbl.workflowState';
                     $whereArray[] = 'tbl.name';
                     $whereArray[] = 'tbl.description';
+                    $whereArray[] = 'tbl.kindOfDish';
                     $whereArray[] = 'tbl.imageOfDish';
                     break;
                 case 'event':
@@ -252,6 +236,7 @@ abstract class AbstractSearchHelper extends AbstractSearchable
                     $whereArray[] = 'tbl.name';
                     $whereArray[] = 'tbl.description';
                     $whereArray[] = 'tbl.imageOfEvent';
+                    $whereArray[] = 'tbl.kindOfEvent';
                     $whereArray[] = 'tbl.street';
                     $whereArray[] = 'tbl.numberOfStreet';
                     $whereArray[] = 'tbl.zipCode';
@@ -261,6 +246,8 @@ abstract class AbstractSearchHelper extends AbstractSearchable
                     $whereArray[] = 'tbl.workflowState';
                     $whereArray[] = 'tbl.name';
                     $whereArray[] = 'tbl.description';
+                    $whereArray[] = 'tbl.kindOfProduct';
+                    $whereArray[] = 'tbl.imageOfProduct';
                     $whereArray[] = 'tbl.today';
                     break;
                 case 'specialOfLocation':
@@ -313,18 +300,9 @@ abstract class AbstractSearchHelper extends AbstractSearchable
                 $urlArgs = $entity->createUrlArgs();
                 $hasDisplayAction = in_array($objectType, $entitiesWithDisplayAction);
     
-                $instanceId = $entity->createCompositeIdentifier();
                 // perform permission check
-                if (!$this->permissionApi->hasPermission('MUYourCityModule:' . ucfirst($objectType) . ':', $instanceId . '::', ACCESS_OVERVIEW)) {
+                if (!$this->permissionApi->hasPermission('MUYourCityModule:' . ucfirst($objectType) . ':', $entity->getKey() . '::', ACCESS_OVERVIEW)) {
                     continue;
-                }
-    
-                if (in_array($objectType, ['location', 'dish', 'event', 'product'])) {
-                    if ($this->featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, $objectType)) {
-                        if (!$this->categoryHelper->hasPermission($entity)) {
-                            continue;
-                        }
-                    }
                 }
     
                 $description = !empty($descriptionFieldName) ? $entity[$descriptionFieldName] : '';

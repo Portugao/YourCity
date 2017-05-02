@@ -1,5 +1,5 @@
 {# purpose of this template: offers xml inclusion template #}
-<offer id="{{ offer.id }}" createdon="{{ offer.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ offer.updatedDate|localizeddate('medium', 'short') }}">
+<offer id="{{ offer.getId() }}" createdon="{{ offer.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ offer.updatedDate|localizeddate('medium', 'short') }}">
     <id>{{ offer.id }}</id>
     <name><![CDATA[{{ offer.name }}]]></name>
     <text><![CDATA[{{ offer.text|safeHtml }}]]></text>

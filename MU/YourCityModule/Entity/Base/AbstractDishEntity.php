@@ -13,7 +13,6 @@
 namespace MU\YourCityModule\Entity\Base;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Translatable\Translatable;
 use Symfony\Component\HttpFoundation\File\File;
@@ -87,6 +86,14 @@ abstract class AbstractDishEntity extends EntityAccess implements Translatable
     protected $description = '';
     
     /**
+     * @ORM\Column(length=255)
+     * @Assert\NotBlank()
+     * @YourCityAssert\ListEntry(entityName="dish", propertyName="kindOfDish", multiple=true)
+     * @var string $kindOfDish
+     */
+    protected $kindOfDish = 'other';
+    
+    /**
      * Image of dish meta data array.
      *
      * @ORM\Column(type="array")
@@ -147,14 +154,6 @@ abstract class AbstractDishEntity extends EntityAccess implements Translatable
     protected $locale;
     
     /**
-     * @ORM\OneToMany(targetEntity="\MU\YourCityModule\Entity\DishCategoryEntity", 
-     *                mappedBy="entity", cascade={"all"}, 
-     *                orphanRemoval=true)
-     * @var \MU\YourCityModule\Entity\DishCategoryEntity
-     */
-    protected $categories = null;
-    
-    /**
      * Bidirectional - Many dishes [dishes] are linked by one menuOfLocation [menu of location] (OWNING SIDE).
      *
      * @ORM\ManyToOne(targetEntity="MU\YourCityModule\Entity\MenuOfLocationEntity", inversedBy="dishes")
@@ -178,7 +177,11 @@ abstract class AbstractDishEntity extends EntityAccess implements Translatable
      * Bidirectional - Many dishes [dishes] are linked by one location [location] (OWNING SIDE).
      *
      * @ORM\ManyToOne(targetEntity="MU\YourCityModule\Entity\LocationEntity", inversedBy="dishes")
-     * @ORM\JoinTable(name="mu_yourcity_location")
+     * @ORM\JoinTable(name="mu_yourcity_location",
+     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
+     * )
+     * @Assert\NotNull(message="Choosing a location is required.")
      * @Assert\Type(type="MU\YourCityModule\Entity\LocationEntity")
      * @var \MU\YourCityModule\Entity\LocationEntity $location
      */
@@ -195,7 +198,6 @@ abstract class AbstractDishEntity extends EntityAccess implements Translatable
     public function __construct()
     {
         $this->initWorkflow();
-        $this->categories = new ArrayCollection();
     }
     
     /**
@@ -316,6 +318,30 @@ abstract class AbstractDishEntity extends EntityAccess implements Translatable
     {
         if ($this->description !== $description) {
             $this->description = $description;
+        }
+    }
+    
+    /**
+     * Returns the kind of dish.
+     *
+     * @return string
+     */
+    public function getKindOfDish()
+    {
+        return $this->kindOfDish;
+    }
+    
+    /**
+     * Sets the kind of dish.
+     *
+     * @param string $kindOfDish
+     *
+     * @return void
+     */
+    public function setKindOfDish($kindOfDish)
+    {
+        if ($this->kindOfDish !== $kindOfDish) {
+            $this->kindOfDish = isset($kindOfDish) ? $kindOfDish : '';
         }
     }
     
@@ -463,59 +489,6 @@ abstract class AbstractDishEntity extends EntityAccess implements Translatable
         }
     }
     
-    /**
-     * Returns the categories.
-     *
-     * @return ArrayCollection[]
-     */
-    public function getCategories()
-    {
-        return $this->categories;
-    }
-    
-    
-    /**
-     * Sets the categories.
-     *
-     * @param ArrayCollection $categories
-     *
-     * @return void
-     */
-    public function setCategories(ArrayCollection $categories)
-    {
-        foreach ($this->categories as $category) {
-            if (false === $key = $this->collectionContains($categories, $category)) {
-                $this->categories->removeElement($category);
-            } else {
-                $categories->remove($key);
-            }
-        }
-        foreach ($categories as $category) {
-            $this->categories->add($category);
-        }
-    }
-    
-    /**
-     * Checks if a collection contains an element based only on two criteria (categoryRegistryId, category).
-     *
-     * @param ArrayCollection $collection
-     * @param \MU\YourCityModule\Entity\DishCategoryEntity $element
-     *
-     * @return bool|int
-     */
-    private function collectionContains(ArrayCollection $collection, \MU\YourCityModule\Entity\DishCategoryEntity $element)
-    {
-        foreach ($collection as $key => $category) {
-            /** @var \MU\YourCityModule\Entity\DishCategoryEntity $category */
-            if ($category->getCategoryRegistryId() == $element->getCategoryRegistryId()
-                && $category->getCategory() == $element->getCategory()
-            ) {
-                return $key;
-            }
-        }
-    
-        return false;
-    }
     
     /**
      * Returns the menu of location.
@@ -602,27 +575,25 @@ abstract class AbstractDishEntity extends EntityAccess implements Translatable
      */
     public function createUrlArgs()
     {
-        $args = [];
-    
-        $args['id'] = $this['id'];
+        $args = [
+            'id' => $this->getId()
+        ];
     
         if (property_exists($this, 'slug')) {
-            $args['slug'] = $this['slug'];
+            $args['slug'] = $this->getSlug();
         }
     
         return $args;
     }
     
     /**
-     * Create concatenated identifier string (for composite keys).
+     * Returns the primary key.
      *
-     * @return String concatenated identifiers
+     * @return integer The identifier
      */
-    public function createCompositeIdentifier()
+    public function getKey()
     {
-        $itemId = $this['id'];
-    
-        return $itemId;
+        return $this->getId();
     }
     
     /**
@@ -665,7 +636,7 @@ abstract class AbstractDishEntity extends EntityAccess implements Translatable
      */
     public function __toString()
     {
-        return 'Dish ' . $this->createCompositeIdentifier() . ': ' . $this->getName();
+        return 'Dish ' . $this->getKey() . ': ' . $this->getName();
     }
     
     /**
@@ -681,7 +652,7 @@ abstract class AbstractDishEntity extends EntityAccess implements Translatable
     public function __clone()
     {
         // if the entity has no identity do nothing, do NOT throw an exception
-        if (!($this->id)) {
+        if (!$this->id) {
             return;
         }
     
@@ -703,14 +674,5 @@ abstract class AbstractDishEntity extends EntityAccess implements Translatable
         $this->setUpdatedBy(null);
         $this->setUpdatedDate(null);
     
-    
-        // clone categories
-        $categories = $this->categories;
-        $this->categories = new ArrayCollection();
-        foreach ($categories as $c) {
-            $newCat = clone $c;
-            $this->categories->add($newCat);
-            $newCat->setEntity($this);
-        }
     }
 }

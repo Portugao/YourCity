@@ -29,14 +29,6 @@
             "capabilities": {
                 "user": {"route": "muyourcitymodule_location_index"},
                 "admin": {"route": "muyourcitymodule_location_adminindex"},
-                "categorizable": {
-                    "entities": [
-                        "MU\\YourCityModule\\Entity\\LocationEntity",
-                        "MU\\YourCityModule\\Entity\\DishEntity",
-                        "MU\\YourCityModule\\Entity\\EventEntity",
-                        "MU\\YourCityModule\\Entity\\ProductEntity"
-                    ]
-                },
                 "hook_subscriber": {"class": "MU\\YourCityModule\\Container\\HookContainer"}
             },
             "securityschema": {

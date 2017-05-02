@@ -108,15 +108,6 @@ abstract class AbstractCategoryHelper
     
         $result = false;
         switch ($objectType) {
-            case 'location':
-                $result = true;
-                break;
-            case 'dish':
-                $result = true;
-                break;
-            case 'event':
-                $result = false;
-                break;
             case 'product':
                 $result = true;
                 break;

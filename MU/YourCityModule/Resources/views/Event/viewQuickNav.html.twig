@@ -11,20 +11,6 @@
     <div id="collapseEventQuickNav" class="collapse">
         <fieldset>
             <h3>{{ __('Quick navigation') }}</h3>
-            {% set categoriesEnabled = featureActivationHelper.isEnabled(constant('MU\\YourCityModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'event') %}
-            {% if (categoryFilter is defined and categoryFilter != true) or not categoriesEnabled %}
-                <div class="hidden">
-            {% else %}
-                <div class="row">
-                    <div class="col-sm-3">
-            {% endif %}
-                {{ form_row(quickNavForm.categories) }}
-            {% if (categoryFilter is defined and categoryFilter != true) or not categoriesEnabled %}
-                </div>
-            {% else %}
-                    </div>
-                    <div class="col-sm-9">
-            {% endif %}
             {% if locationFilter is defined and locationFilter != true %}
                 <div class="hidden">
             {% endif %}
@@ -37,6 +23,13 @@
             {% endif %}
                 {{ form_row(quickNavForm.workflowState) }}
             {% if workflowStateFilter is defined and workflowStateFilter != true %}
+                </div>
+            {% endif %}
+            {% if kindOfEventFilter is defined and kindOfEventFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.kindOfEvent) }}
+            {% if kindOfEventFilter is defined and kindOfEventFilter != true %}
                 </div>
             {% endif %}
             {% if searchFilter is defined and searchFilter != true %}
@@ -62,11 +55,6 @@
                 </div>
             {% endif %}
             {{ form_widget(quickNavForm.updateview) }}
-            {% if (categoryFilter is defined and categoryFilter != true) or not categoriesEnabled %}
-            {% else %}
-                    </div>
-                </div>
-            {% endif %}
         </fieldset>
     </div>
     {{ form_end(quickNavForm) }}

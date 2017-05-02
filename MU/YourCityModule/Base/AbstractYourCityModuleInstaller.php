@@ -16,7 +16,6 @@ use Doctrine\DBAL\Connection;
 use RuntimeException;
 use Zikula\Core\AbstractExtensionInstaller;
 use Zikula_Workflow_Util;
-use Zikula\CategoriesModule\Entity\CategoryRegistryEntity;
 
 /**
  * Installer base class.
@@ -178,6 +177,16 @@ abstract class AbstractYourCityModuleInstaller extends AbstractExtensionInstalle
         $this->setVar('thumbnailHeightEventImageOfEventDisplay', '180');
         $this->setVar('thumbnailWidthEventImageOfEventEdit', '240');
         $this->setVar('thumbnailHeightEventImageOfEventEdit', '180');
+        $this->setVar('enableShrinkingForProductImageOfProduct', false);
+        $this->setVar('shrinkWidthProductImageOfProduct', '800');
+        $this->setVar('shrinkHeightProductImageOfProduct', '600');
+        $this->setVar('thumbnailModeProductImageOfProduct',  'inset' );
+        $this->setVar('thumbnailWidthProductImageOfProductView', '32');
+        $this->setVar('thumbnailHeightProductImageOfProductView', '24');
+        $this->setVar('thumbnailWidthProductImageOfProductDisplay', '240');
+        $this->setVar('thumbnailHeightProductImageOfProductDisplay', '180');
+        $this->setVar('thumbnailWidthProductImageOfProductEdit', '240');
+        $this->setVar('thumbnailHeightProductImageOfProductEdit', '180');
         $this->setVar('enabledFinderTypes', [ 'branch' ,  'location' ,  'part' ,  'imageOfLocation' ,  'fileOfLocation' ,  'offer' ,  'menuOfLocation' ,  'partOfMenu' ,  'dish' ,  'event' ,  'product' ,  'specialOfLocation' ,  'serviceOfLocation' ]);
         $this->setVar('googleMapsApiKey', '');
         $this->setVar('defaultLatitude', '0.00');
@@ -187,85 +196,8 @@ abstract class AbstractYourCityModuleInstaller extends AbstractExtensionInstalle
         $this->setVar('enableLocationGeoLocation', false);
         $this->setVar('enableEventGeoLocation', false);
     
-        $categoryRegistryIdsPerEntity = [];
-    
-        // add default entry for category registry (property named Main)
-        $categoryHelper = new \MU\YourCityModule\Helper\CategoryHelper(
-            $this->container->get('translator.default'),
-            $this->container->get('request_stack'),
-            $logger,
-            $this->container->get('zikula_users_module.current_user'),
-            $this->container->get('zikula_categories_module.api.category_registry'),
-            $this->container->get('zikula_categories_module.api.category_permission')
-        );
-        $categoryGlobal = $this->container->get('zikula_categories_module.api.category')->getCategoryByPath('/__SYSTEM__/Modules/Global');
-    
-        $registry = new CategoryRegistryEntity();
-        $registry->setModname('MUYourCityModule');
-        $registry->setEntityname('LocationEntity');
-        $registry->setProperty($categoryHelper->getPrimaryProperty('Location'));
-        $registry->setCategory_Id($categoryGlobal['id']);
-    
-        try {
-            $entityManager = $this->container->get('doctrine.orm.default_entity_manager');
-            $entityManager->persist($registry);
-            $entityManager->flush();
-        } catch (\Exception $e) {
-            $this->addFlash('error', $this->__f('Error! Could not create a category registry for the %entity% entity.', ['%entity%' => 'location']));
-            $logger->error('{app}: User {user} could not create a category registry for {entities} during installation. Error details: {errorMessage}.', ['app' => 'MUYourCityModule', 'user' => $userName, 'entities' => 'locations', 'errorMessage' => $e->getMessage()]);
-        }
-        $categoryRegistryIdsPerEntity['location'] = $registry->getId();
-    
-        $registry = new CategoryRegistryEntity();
-        $registry->setModname('MUYourCityModule');
-        $registry->setEntityname('DishEntity');
-        $registry->setProperty($categoryHelper->getPrimaryProperty('Dish'));
-        $registry->setCategory_Id($categoryGlobal['id']);
-    
-        try {
-            $entityManager = $this->container->get('doctrine.orm.default_entity_manager');
-            $entityManager->persist($registry);
-            $entityManager->flush();
-        } catch (\Exception $e) {
-            $this->addFlash('error', $this->__f('Error! Could not create a category registry for the %entity% entity.', ['%entity%' => 'dish']));
-            $logger->error('{app}: User {user} could not create a category registry for {entities} during installation. Error details: {errorMessage}.', ['app' => 'MUYourCityModule', 'user' => $userName, 'entities' => 'dishes', 'errorMessage' => $e->getMessage()]);
-        }
-        $categoryRegistryIdsPerEntity['dish'] = $registry->getId();
-    
-        $registry = new CategoryRegistryEntity();
-        $registry->setModname('MUYourCityModule');
-        $registry->setEntityname('EventEntity');
-        $registry->setProperty($categoryHelper->getPrimaryProperty('Event'));
-        $registry->setCategory_Id($categoryGlobal['id']);
-    
-        try {
-            $entityManager = $this->container->get('doctrine.orm.default_entity_manager');
-            $entityManager->persist($registry);
-            $entityManager->flush();
-        } catch (\Exception $e) {
-            $this->addFlash('error', $this->__f('Error! Could not create a category registry for the %entity% entity.', ['%entity%' => 'event']));
-            $logger->error('{app}: User {user} could not create a category registry for {entities} during installation. Error details: {errorMessage}.', ['app' => 'MUYourCityModule', 'user' => $userName, 'entities' => 'events', 'errorMessage' => $e->getMessage()]);
-        }
-        $categoryRegistryIdsPerEntity['event'] = $registry->getId();
-    
-        $registry = new CategoryRegistryEntity();
-        $registry->setModname('MUYourCityModule');
-        $registry->setEntityname('ProductEntity');
-        $registry->setProperty($categoryHelper->getPrimaryProperty('Product'));
-        $registry->setCategory_Id($categoryGlobal['id']);
-    
-        try {
-            $entityManager = $this->container->get('doctrine.orm.default_entity_manager');
-            $entityManager->persist($registry);
-            $entityManager->flush();
-        } catch (\Exception $e) {
-            $this->addFlash('error', $this->__f('Error! Could not create a category registry for the %entity% entity.', ['%entity%' => 'product']));
-            $logger->error('{app}: User {user} could not create a category registry for {entities} during installation. Error details: {errorMessage}.', ['app' => 'MUYourCityModule', 'user' => $userName, 'entities' => 'products', 'errorMessage' => $e->getMessage()]);
-        }
-        $categoryRegistryIdsPerEntity['product'] = $registry->getId();
-    
         // create the default data
-        $this->createDefaultData($categoryRegistryIdsPerEntity);
+        $this->createDefaultData();
     
         // install subscriber hooks
         $this->hookApi->installSubscriberHooks($this->bundle->getMetaData());
@@ -320,9 +252,6 @@ abstract class AbstractYourCityModuleInstaller extends AbstractExtensionInstalle
             
             // rename existing permission rules
             $this->renamePermissionsFor14();
-            
-            // rename existing category registries
-            $this->renameCategoryRegistriesFor14();
             
             // rename all tables
             $this->renameTablesFor14();
@@ -387,23 +316,6 @@ abstract class AbstractYourCityModuleInstaller extends AbstractExtensionInstalle
             UPDATE $dbName.group_perms
             SET component = CONCAT('MUYourCityModule', SUBSTRING(component, $componentLength))
             WHERE component LIKE 'YourCity%';
-        ");
-    }
-    
-    /**
-     * Renames all category registries stored for this app.
-     */
-    protected function renameCategoryRegistriesFor14()
-    {
-        $conn = $this->getConnection();
-        $dbName = $this->getDbName();
-    
-        $componentLength = strlen('YourCity') + 1;
-    
-        $conn->executeQuery("
-            UPDATE $dbName.categories_registry
-            SET modname = CONCAT('MUYourCityModule', SUBSTRING(modname, $componentLength))
-            WHERE modname LIKE 'YourCity%';
         ");
     }
     
@@ -571,13 +483,6 @@ abstract class AbstractYourCityModuleInstaller extends AbstractExtensionInstalle
         // remove all module vars
         $this->delVars();
     
-        // remove category registry entries
-        $categoryRegistryApi = $this->container->get('zikula_categories_module.api.category_registry');
-        // assume that not more than five registries exist
-        for ($i = 1; $i <= 5; $i++) {
-            $categoryRegistryApi->deleteRegistry('MUYourCityModule');
-        }
-    
         // remove all thumbnails
         $manager = $this->container->get('systemplugin.imagine.manager');
         $manager->setModule('MUYourCityModule');
@@ -603,7 +508,6 @@ abstract class AbstractYourCityModuleInstaller extends AbstractExtensionInstalle
         $classNames[] = 'MU\YourCityModule\Entity\BranchTranslationEntity';
         $classNames[] = 'MU\YourCityModule\Entity\LocationEntity';
         $classNames[] = 'MU\YourCityModule\Entity\LocationTranslationEntity';
-        $classNames[] = 'MU\YourCityModule\Entity\LocationCategoryEntity';
         $classNames[] = 'MU\YourCityModule\Entity\PartEntity';
         $classNames[] = 'MU\YourCityModule\Entity\PartTranslationEntity';
         $classNames[] = 'MU\YourCityModule\Entity\ImageOfLocationEntity';
@@ -618,13 +522,10 @@ abstract class AbstractYourCityModuleInstaller extends AbstractExtensionInstalle
         $classNames[] = 'MU\YourCityModule\Entity\PartOfMenuTranslationEntity';
         $classNames[] = 'MU\YourCityModule\Entity\DishEntity';
         $classNames[] = 'MU\YourCityModule\Entity\DishTranslationEntity';
-        $classNames[] = 'MU\YourCityModule\Entity\DishCategoryEntity';
         $classNames[] = 'MU\YourCityModule\Entity\EventEntity';
         $classNames[] = 'MU\YourCityModule\Entity\EventTranslationEntity';
-        $classNames[] = 'MU\YourCityModule\Entity\EventCategoryEntity';
         $classNames[] = 'MU\YourCityModule\Entity\ProductEntity';
         $classNames[] = 'MU\YourCityModule\Entity\ProductTranslationEntity';
-        $classNames[] = 'MU\YourCityModule\Entity\ProductCategoryEntity';
         $classNames[] = 'MU\YourCityModule\Entity\SpecialOfLocationEntity';
         $classNames[] = 'MU\YourCityModule\Entity\SpecialOfLocationTranslationEntity';
         $classNames[] = 'MU\YourCityModule\Entity\ServiceOfLocationEntity';
@@ -637,11 +538,9 @@ abstract class AbstractYourCityModuleInstaller extends AbstractExtensionInstalle
     /**
      * Create the default data for MUYourCityModule.
      *
-     * @param array $categoryRegistryIdsPerEntity List of category registry ids
-     *
      * @return void
      */
-    protected function createDefaultData($categoryRegistryIdsPerEntity)
+    protected function createDefaultData()
     {
         $entityManager = $this->container->get('doctrine.orm.default_entity_manager');
         $logger = $this->container->get('logger');

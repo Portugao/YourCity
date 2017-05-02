@@ -1,5 +1,5 @@
 {# purpose of this template: parts of menu xml inclusion template #}
-<partofmenu id="{{ partOfMenu.id }}" createdon="{{ partOfMenu.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ partOfMenu.updatedDate|localizeddate('medium', 'short') }}">
+<partofmenu id="{{ partOfMenu.getId() }}" createdon="{{ partOfMenu.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ partOfMenu.updatedDate|localizeddate('medium', 'short') }}">
     <id>{{ partOfMenu.id }}</id>
     <name><![CDATA[{{ partOfMenu.name }}]]></name>
     <description><![CDATA[{{ partOfMenu.description|safeHtml }}]]></description>

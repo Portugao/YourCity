@@ -4,7 +4,7 @@
 <Document>
     <Placemark>
         <name>{{ location.getName() }}</name>
-        <description><![CDATA[{{ location.getDescription() }}<br /><a href="{{ url('muyourcitymodule_location_display', { 'id': location.id, 'slug': location.slug }) }}">{{ __('Details') }}</a>]]></description>
+        <description><![CDATA[{{ location.getDescription() }}<br /><a href="{{ url('muyourcitymodule_location_display', { 'id': location.getId(), 'slug': location.slug }) }}">{{ __('Details') }}</a>]]></description>
         <Point>
             <coordinates>{{ location.getLongitude() }}, {{ location.getLatitude() }}, 0</coordinates>
         </Point>

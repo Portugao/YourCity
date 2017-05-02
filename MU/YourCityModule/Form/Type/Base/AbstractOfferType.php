@@ -165,6 +165,13 @@ abstract class AbstractOfferType extends AbstractType
         
         $builder->add('text', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
             'label' => $this->__('Text') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Enter a description of this offer.
+                You can also give informations about the price if you do not wint to use the special field for it.')
+            ],
+            'help' => $this->__('Enter a description of this offer.
+            You can also give informations about the price if you do not wint to use the special field for it.'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 4000,
@@ -195,6 +202,11 @@ abstract class AbstractOfferType extends AbstractType
         
         $builder->add('urlToOfferOnHomepage', 'Symfony\Component\Form\Extension\Core\Type\UrlType', [
             'label' => $this->__('Url to offer on homepage') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('If there is a special page on your homepage, enter the url here.')
+            ],
+            'help' => $this->__('If there is a special page on your homepage, enter the url here.'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 255,
@@ -218,6 +230,11 @@ abstract class AbstractOfferType extends AbstractType
         
         $builder->add('priceOfOffer', 'Symfony\Component\Form\Extension\Core\Type\MoneyType', [
             'label' => $this->__('Price of offer') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Here you can enter the lower price for this offer.')
+            ],
+            'help' => $this->__('Here you can enter the lower price for this offer.'),
             'empty_data' => '0.00',
             'attr' => [
                 'maxlength' => 15,
@@ -232,6 +249,11 @@ abstract class AbstractOfferType extends AbstractType
         
         $builder->add('normalPrice', 'Symfony\Component\Form\Extension\Core\Type\MoneyType', [
             'label' => $this->__('Normal price') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Here you can enter the normal price.')
+            ],
+            'help' => $this->__('Here you can enter the normal price.'),
             'empty_data' => '0.00',
             'attr' => [
                 'maxlength' => 15,
@@ -246,6 +268,11 @@ abstract class AbstractOfferType extends AbstractType
         
         $builder->add('percentOfOffer', 'Symfony\Component\Form\Extension\Core\Type\PercentType', [
             'label' => $this->__('Percent of offer') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('If you enter something here, the informations for the prices will not get shown.')
+            ],
+            'help' => $this->__('If you enter something here, the informations for the prices will not get shown.'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 3,
@@ -259,6 +286,11 @@ abstract class AbstractOfferType extends AbstractType
         
         $builder->add('effectivFrom', 'Symfony\Component\Form\Extension\Core\Type\DateTimeType', [
             'label' => $this->__('Effectiv from') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Enter here the date and time for the start of the offer.')
+            ],
+            'help' => $this->__('Enter here the date and time for the start of the offer.'),
             'empty_data' => '',
             'attr' => [
                 'class' => '',
@@ -273,6 +305,11 @@ abstract class AbstractOfferType extends AbstractType
         
         $builder->add('effectivUntil', 'Symfony\Component\Form\Extension\Core\Type\DateTimeType', [
             'label' => $this->__('Effectiv until') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Enter here the date and time for the end of the offer.')
+            ],
+            'help' => $this->__('Enter here the date and time for the end of the offer.'),
             'empty_data' => '',
             'attr' => [
                 'class' => '',
@@ -289,9 +326,11 @@ abstract class AbstractOfferType extends AbstractType
             'label' => $this->__('Enddate') . ':',
             'label_attr' => [
                 'class' => 'tooltips',
-                'title' => $this->__('On this date the offer will get put into the archive.')
+                'title' => $this->__('On this date the offer will get put into the archive.
+                if you wish, that the offer is still there after the end, enter none.')
             ],
-            'help' => $this->__('On this date the offer will get put into the archive.'),
+            'help' => $this->__('On this date the offer will get put into the archive.
+            if you wish, that the offer is still there after the end, enter none.'),
             'empty_data' => '',
             'attr' => [
                 'class' => '',
@@ -327,8 +366,6 @@ abstract class AbstractOfferType extends AbstractType
             'multiple' => false,
             'expanded' => false,
             'query_builder' => $queryBuilder,
-            'placeholder' => $this->__('Please choose an option'),
-            'required' => false,
             'label' => $this->__('Location'),
             'attr' => [
                 'title' => $this->__('Choose the location')

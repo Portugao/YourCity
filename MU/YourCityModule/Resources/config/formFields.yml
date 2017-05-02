@@ -6,6 +6,13 @@ services:
         tags:
             - { name: form.type }
     
+    mu_yourcity_module.form.type.field.multilist:
+        class: MU\YourCityModule\Form\Type\Field\MultiListType
+        arguments:
+            - "@mu_yourcity_module.listentries_helper"
+        tags:
+            - { name: form.type }
+    
     mu_yourcity_module.form.type.field.translation:
         class: MU\YourCityModule\Form\Type\Field\TranslationType
         tags:

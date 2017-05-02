@@ -56,9 +56,6 @@
         {{ form_errors(finderForm) }}
         <fieldset>
             <legend>{{ __('Search and select location') }}</legend>
-            {% if featureActivationHelper.isEnabled(constant('MU\\YourCityModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'location') %}
-                {{ form_row(finderForm.categories) }}
-            {% endif %}
             {{ form_row(finderForm.onlyImages) }}
             <div id="imageFieldRow">
                 {{ form_row(finderForm.imageField) }}
@@ -77,7 +74,7 @@
                                 {% if not onlyImages %}
                                     <li>
                                 {% endif %}
-                                    {% set itemId = location.createCompositeIdentifier() %}
+                                    {% set itemId = location.getKey() %}
                                     <a href="#" data-itemid="{{ itemId }}">
                                         {% if onlyImages %}
                                             {% set thumbOptions = attribute(thumbRuntimeOptions, 'location' ~ imageField[:1]|upper ~ imageField[1:]) %}
@@ -86,8 +83,8 @@
                                             {{ location|muyourcitymodule_formattedTitle }}
                                         {% endif %}
                                     </a>
-                                    <input type="hidden" id="path{{ itemId }}" value="{{ path('muyourcitymodule_location_display', { 'id': location.id, 'slug': location.slug }) }}" />
-                                    <input type="hidden" id="url{{ itemId }}" value="{{ url('muyourcitymodule_location_display', { 'id': location.id, 'slug': location.slug }) }}" />
+                                    <input type="hidden" id="path{{ itemId }}" value="{{ path('muyourcitymodule_location_display', { 'id': location.getId(), 'slug': location.slug }) }}" />
+                                    <input type="hidden" id="url{{ itemId }}" value="{{ url('muyourcitymodule_location_display', { 'id': location.getId(), 'slug': location.slug }) }}" />
                                     <input type="hidden" id="title{{ itemId }}" value="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}" />
                                     <input type="hidden" id="desc{{ itemId }}" value="{% set description %}{% if location.description is not empty %}{{ location.description }}{% endif %}
                                     {% endset %}{{ description|striptags|e('html_attr') }}" />

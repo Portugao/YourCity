@@ -1,5 +1,5 @@
 {# purpose of this template: parts xml inclusion template #}
-<part id="{{ part.id }}" createdon="{{ part.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ part.updatedDate|localizeddate('medium', 'short') }}">
+<part id="{{ part.getId() }}" createdon="{{ part.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ part.updatedDate|localizeddate('medium', 'short') }}">
     <id>{{ part.id }}</id>
     <name><![CDATA[{{ part.name }}]]></name>
     <descriptionForGoogle><![CDATA[{{ part.descriptionForGoogle }}]]></descriptionForGoogle>

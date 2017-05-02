@@ -118,7 +118,7 @@ abstract class AbstractTranslatableHelper
                 $fields = ['name', 'description'];
                 break;
             case 'product':
-                $fields = ['name', 'description', 'today'];
+                $fields = ['name', 'description'];
                 break;
             case 'specialOfLocation':
                 $fields = ['name', 'description', 'descriptionForGoogle'];

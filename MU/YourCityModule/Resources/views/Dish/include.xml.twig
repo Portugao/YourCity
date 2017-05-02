@@ -1,8 +1,9 @@
 {# purpose of this template: dishes xml inclusion template #}
-<dish id="{{ dish.id }}" createdon="{{ dish.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ dish.updatedDate|localizeddate('medium', 'short') }}">
+<dish id="{{ dish.getId() }}" createdon="{{ dish.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ dish.updatedDate|localizeddate('medium', 'short') }}">
     <id>{{ dish.id }}</id>
     <name><![CDATA[{{ dish.name }}]]></name>
     <description><![CDATA[{{ dish.description|safeHtml }}]]></description>
+    <kindOfDish>{{ dish.kindOfDish|muyourcitymodule_listEntry('dish', 'kindOfDish') }}</kindOfDish>
     <imageOfDish{% if dish.imageOfDish is not empty and dish.imageOfDishMeta|default %} extension="{{ dish.imageOfDishMeta.extension }}" size="{{ dish.imageOfDishMeta.size }}" isImage="{% if dish.imageOfDishMeta.isImage %}true{% else %}false{% endif %}"{% if dish.imageOfDishMeta.isImage %} width="{{ dish.imageOfDishMeta.width }}" height="{{ dish.imageOfDishMeta.height }}" format="{{ dish.imageOfDishMeta.format }}"{% endif %}{% endif %}>{{ dish.imageOfDish }}</imageOfDish>
     <priceOfDish>{{ dish.priceOfDish|localizedcurrency('EUR') }}</priceOfDish>
     <positionOfDish>{{ dish.positionOfDish }}</positionOfDish>

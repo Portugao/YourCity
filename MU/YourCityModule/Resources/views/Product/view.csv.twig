@@ -1,10 +1,10 @@
 {# purpose of this template: products view csv view #}
-{% spaceless %}"{{ __('Name') }}";"{{ __('Description') }}";"{{ __('Today') }}";"{{ __('Monday') }}";"{{ __('Tuesday') }}";"{{ __('Wednesday') }}";"{{ __('Thursday') }}";"{{ __('Friday') }}";"{{ __('Saturday') }}";"{{ __('Sunday') }}";"{{ __('Price of product') }}";"{{ __('Workflow state') }}"
+{% spaceless %}"{{ __('Name') }}";"{{ __('Description') }}";"{{ __('Kind of product') }}";"{{ __('Image of product') }}";"{{ __('Today') }}";"{{ __('Monday') }}";"{{ __('Tuesday') }}";"{{ __('Wednesday') }}";"{{ __('Thursday') }}";"{{ __('Friday') }}";"{{ __('Saturday') }}";"{{ __('Sunday') }}";"{{ __('Price of product') }}";"{{ __('Workflow state') }}"
 ;"{{ __('Location') }}"
 {% endspaceless %}
 {% for product in items %}
 {% spaceless %}
-    "{{ product.name }}";"{{ product.description|safeHtml }}";"{{ product.today|muyourcitymodule_listEntry('product', 'today') }}";"{% if not product.monday %}0{% else %}1{% endif %}";"{% if not product.tuesday %}0{% else %}1{% endif %}";"{% if not product.wednesday %}0{% else %}1{% endif %}";"{% if not product.thursday %}0{% else %}1{% endif %}";"{% if not product.friday %}0{% else %}1{% endif %}";"{% if not product.saturday %}0{% else %}1{% endif %}";"{% if not product.sunday %}0{% else %}1{% endif %}";"{{ product.priceOfProduct|localizedcurrency('EUR') }}";"{{ product.workflowState|muyourcitymodule_objectState(false)|lower }}"
+    "{{ product.name }}";"{{ product.description|safeHtml }}";"{{ product.kindOfProduct|muyourcitymodule_listEntry('product', 'kindOfProduct') }}";"{{ product.imageOfProduct }}";"{{ product.today|muyourcitymodule_listEntry('product', 'today') }}";"{% if not product.monday %}0{% else %}1{% endif %}";"{% if not product.tuesday %}0{% else %}1{% endif %}";"{% if not product.wednesday %}0{% else %}1{% endif %}";"{% if not product.thursday %}0{% else %}1{% endif %}";"{% if not product.friday %}0{% else %}1{% endif %}";"{% if not product.saturday %}0{% else %}1{% endif %}";"{% if not product.sunday %}0{% else %}1{% endif %}";"{{ product.priceOfProduct|localizedcurrency('EUR') }}";"{{ product.workflowState|muyourcitymodule_objectState(false)|lower }}"
     ;"{% if product.location|default %}{{ product.location|muyourcitymodule_formattedTitle }}{% endif %}"
 {% endspaceless %}
 {% endfor %}

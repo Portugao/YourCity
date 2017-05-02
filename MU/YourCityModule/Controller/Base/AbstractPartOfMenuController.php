@@ -25,7 +25,6 @@ use Zikula\Component\SortableColumns\SortableColumns;
 use Zikula\Core\Controller\AbstractController;
 use Zikula\Core\RouteUrl;
 use MU\YourCityModule\Entity\PartOfMenuEntity;
-use MU\YourCityModule\Helper\FeatureActivationHelper;
 
 /**
  * Part of menu controller base class.
@@ -127,7 +126,7 @@ abstract class AbstractPartOfMenuController extends AbstractController
             throw new AccessDeniedException();
         }
         // create identifier for permission check
-        $instanceId = $partOfMenu->createCompositeIdentifier();
+        $instanceId = $partOfMenu->getKey();
         if (!$this->hasPermission('MUYourCityModule:' . ucfirst($objectType) . ':', $instanceId . '::', $permLevel)) {
             throw new AccessDeniedException();
         }
@@ -260,7 +259,7 @@ abstract class AbstractPartOfMenuController extends AbstractController
             throw new AccessDeniedException();
         }
         $logger = $this->get('logger');
-        $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => 'part of menu', 'id' => $partOfMenu->createCompositeIdentifier()];
+        $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => 'part of menu', 'id' => $partOfMenu->getKey()];
         
         $partOfMenu->initWorkflow();
         

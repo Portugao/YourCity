@@ -61,6 +61,7 @@ abstract class AbstractMenuOfLocationRepository extends EntityRepository
             'imageOfMenu',
             'effectivFrom',
             'effectivUntil',
+            'kindOfMenu',
             'createdBy',
             'createdDate',
             'updatedBy',
@@ -287,7 +288,7 @@ abstract class AbstractMenuOfLocationRepository extends EntityRepository
     /**
      * Adds an array of id filters to given query instance.
      *
-     * @param mixed        $idList The array of ids to use to retrieve the object
+     * @param array        $idList The array of ids to use to retrieve the object
      * @param QueryBuilder $qb     Query builder to be enhanced
      *
      * @return QueryBuilder Enriched query builder instance
@@ -304,15 +305,7 @@ abstract class AbstractMenuOfLocationRepository extends EntityRepository
                 throw new InvalidArgumentException('Invalid identifier received.');
             }
     
-            if (is_array($id)) {
-                $andX = $qb->expr()->andX();
-                foreach ($id as $fieldName => $fieldValue) {
-                    $andX->add($qb->expr()->eq('tbl.' . $fieldName, $fieldValue));
-                }
-                $orX->add($andX);
-            } else {
-                $orX->add($qb->expr()->eq('tbl.id', $id));
-            }
+            $orX->add($qb->expr()->eq('tbl.id', $id));
         }
     
         $qb->andWhere($orX);

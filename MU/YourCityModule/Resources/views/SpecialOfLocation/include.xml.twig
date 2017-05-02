@@ -1,5 +1,5 @@
 {# purpose of this template: specials of location xml inclusion template #}
-<specialoflocation id="{{ specialOfLocation.id }}" createdon="{{ specialOfLocation.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ specialOfLocation.updatedDate|localizeddate('medium', 'short') }}">
+<specialoflocation id="{{ specialOfLocation.getId() }}" createdon="{{ specialOfLocation.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ specialOfLocation.updatedDate|localizeddate('medium', 'short') }}">
     <id>{{ specialOfLocation.id }}</id>
     <name><![CDATA[{{ specialOfLocation.name }}]]></name>
     <description><![CDATA[{{ specialOfLocation.description|safeHtml }}]]></description>

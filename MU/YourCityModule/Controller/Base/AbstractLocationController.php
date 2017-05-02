@@ -25,7 +25,6 @@ use Zikula\Component\SortableColumns\SortableColumns;
 use Zikula\Core\Controller\AbstractController;
 use Zikula\Core\RouteUrl;
 use MU\YourCityModule\Entity\LocationEntity;
-use MU\YourCityModule\Helper\FeatureActivationHelper;
 
 /**
  * Location controller base class.
@@ -143,7 +142,6 @@ abstract class AbstractLocationController extends AbstractController
             new Column('name'),
             new Column('logoOfYourLocation'),
             new Column('description'),
-            new Column('description2'),
             new Column('imageOfLocation'),
             new Column('street'),
             new Column('numberOfStreet'),
@@ -156,34 +154,6 @@ abstract class AbstractLocationController extends AbstractController
             new Column('tram'),
             new Column('bus'),
             new Column('openingHours'),
-            new Column('startOnMonday'),
-            new Column('endOnMonday'),
-            new Column('start2OnMonday'),
-            new Column('end2OnMonday'),
-            new Column('startOnTuesday'),
-            new Column('endOnTuesday'),
-            new Column('start2OnTuesday'),
-            new Column('end2OnTuesday'),
-            new Column('startOnWednesday'),
-            new Column('endOnWednesday'),
-            new Column('start2OnWednesday'),
-            new Column('end2OnWednesday'),
-            new Column('startOnThursday'),
-            new Column('endOnThursday'),
-            new Column('start2OnThursday'),
-            new Column('end2OnThursday'),
-            new Column('startOnFriday'),
-            new Column('endOnFriday'),
-            new Column('start2OnFriday'),
-            new Column('end2OnFriday'),
-            new Column('startOnSaturday'),
-            new Column('endOnSaturday'),
-            new Column('star2tOnSaturday'),
-            new Column('end2OnSaturday'),
-            new Column('startOnSunday'),
-            new Column('endOnSunday'),
-            new Column('start2OnSunday'),
-            new Column('end2OnSunday'),
             new Column('latitude'),
             new Column('longitude'),
             new Column('createdBy'),
@@ -194,11 +164,6 @@ abstract class AbstractLocationController extends AbstractController
         $sortableColumns->setOrderBy($sortableColumns->getColumn($sort), strtoupper($sortdir));
         
         $templateParameters = $controllerHelper->processViewActionParameters($objectType, $sortableColumns, $templateParameters, true);
-        
-        $featureActivationHelper = $this->get('mu_yourcity_module.feature_activation_helper');
-        if ($featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, $objectType)) {
-            $templateParameters['items'] = $this->get('mu_yourcity_module.category_helper')->filterEntitiesByPermission($templateParameters['items']);
-        }
         
         foreach ($templateParameters['items'] as $k => $entity) {
             $entity->initWorkflow();
@@ -255,7 +220,7 @@ abstract class AbstractLocationController extends AbstractController
             throw new AccessDeniedException();
         }
         // create identifier for permission check
-        $instanceId = $location->createCompositeIdentifier();
+        $instanceId = $location->getKey();
         if (!$this->hasPermission('MUYourCityModule:' . ucfirst($objectType) . ':', $instanceId . '::', $permLevel)) {
             throw new AccessDeniedException();
         }
@@ -265,13 +230,6 @@ abstract class AbstractLocationController extends AbstractController
             'routeArea' => $isAdmin ? 'admin' : '',
             $objectType => $location
         ];
-        
-        $featureActivationHelper = $this->get('mu_yourcity_module.feature_activation_helper');
-        if ($featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, $objectType)) {
-            if (!$this->get('mu_yourcity_module.category_helper')->hasPermission($location)) {
-                throw new AccessDeniedException();
-            }
-        }
         
         $controllerHelper = $this->get('mu_yourcity_module.controller_helper');
         $templateParameters = $controllerHelper->processDisplayActionParameters($objectType, $templateParameters, true);
@@ -395,7 +353,7 @@ abstract class AbstractLocationController extends AbstractController
             throw new AccessDeniedException();
         }
         $logger = $this->get('logger');
-        $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => 'location', 'id' => $location->createCompositeIdentifier()];
+        $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => 'location', 'id' => $location->getKey()];
         
         $location->initWorkflow();
         

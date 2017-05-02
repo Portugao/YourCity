@@ -65,12 +65,12 @@
                         <ul>
                             {% for serviceOfLocation in items %}
                                 <li>
-                                    {% set itemId = serviceOfLocation.createCompositeIdentifier() %}
+                                    {% set itemId = serviceOfLocation.getKey() %}
                                     <a href="#" data-itemid="{{ itemId }}">
                                         {{ serviceOfLocation|muyourcitymodule_formattedTitle }}
                                     </a>
-                                    <input type="hidden" id="path{{ itemId }}" value="{{ path('muyourcitymodule_serviceoflocation_display', { 'id': serviceOfLocation.id }) }}" />
-                                    <input type="hidden" id="url{{ itemId }}" value="{{ url('muyourcitymodule_serviceoflocation_display', { 'id': serviceOfLocation.id }) }}" />
+                                    <input type="hidden" id="path{{ itemId }}" value="{{ path('muyourcitymodule_serviceoflocation_display', { 'id': serviceOfLocation.getId() }) }}" />
+                                    <input type="hidden" id="url{{ itemId }}" value="{{ url('muyourcitymodule_serviceoflocation_display', { 'id': serviceOfLocation.getId() }) }}" />
                                     <input type="hidden" id="title{{ itemId }}" value="{{ serviceOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}" />
                                     <input type="hidden" id="desc{{ itemId }}" value="{% set description %}{% if serviceOfLocation.description is not empty %}{{ serviceOfLocation.description }}{% endif %}
                                     {% endset %}{{ description|striptags|e('html_attr') }}" />

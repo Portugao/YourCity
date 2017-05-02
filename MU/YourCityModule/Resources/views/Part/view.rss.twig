@@ -36,8 +36,8 @@
 {% endblock %}
 {% block entry_content %}
     <title><![CDATA[{% if part.updatedDate|default %}{{ part.updatedDate|localizeddate('medium', 'short') }} - {% endif %}{{ part|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.parts')|safeHtml }}]]></title>
-    <link>{{ url('muyourcitymodule_part_' ~ routeArea ~ 'display', { 'id': part.id }) }}</link>
-    <guid>{{ url('muyourcitymodule_part_' ~ routeArea ~ 'display', { 'id': part.id }) }}</guid>
+    <link>{{ url('muyourcitymodule_part_' ~ routeArea ~ 'display', { 'id': part.getId() }) }}</link>
+    <guid>{{ url('muyourcitymodule_part_' ~ routeArea ~ 'display', { 'id': part.getId() }) }}</guid>
     {% if part.createdBy|default and part.createdBy.getUid() > 0 %}
         {% set creatorAttributes = part.createdBy.getAttributes() %}
         <author>{{ part.createdBy.getEmail() }} ({{ creatorAttributes.get('realname')|default(creatorAttributes.get('name'))|default(part.createdBy.getUname()) }})</author>

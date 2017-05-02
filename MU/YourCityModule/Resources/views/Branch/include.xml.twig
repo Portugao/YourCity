@@ -1,5 +1,5 @@
 {# purpose of this template: branches xml inclusion template #}
-<branch id="{{ branch.id }}" createdon="{{ branch.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ branch.updatedDate|localizeddate('medium', 'short') }}">
+<branch id="{{ branch.getId() }}" createdon="{{ branch.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ branch.updatedDate|localizeddate('medium', 'short') }}">
     <id>{{ branch.id }}</id>
     <name><![CDATA[{{ branch.name }}]]></name>
     <descriptionForGoogle><![CDATA[{{ branch.descriptionForGoogle }}]]></descriptionForGoogle>

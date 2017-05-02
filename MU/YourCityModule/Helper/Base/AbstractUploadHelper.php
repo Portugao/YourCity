@@ -103,7 +103,7 @@ abstract class AbstractUploadHelper
         $this->moduleVars = $moduleVars;
         $this->dataDirectory = $dataDirectory;
 
-        $this->allowedObjectTypes = ['branch', 'location', 'part', 'imageOfLocation', 'fileOfLocation', 'offer', 'menuOfLocation', 'dish', 'event'];
+        $this->allowedObjectTypes = ['branch', 'location', 'part', 'imageOfLocation', 'fileOfLocation', 'offer', 'menuOfLocation', 'dish', 'event', 'product'];
         $this->imageFileTypes = ['gif', 'jpeg', 'jpg', 'png', 'swf'];
         $this->forbiddenFileTypes = ['cgi', 'pl', 'asp', 'phtml', 'php', 'php3', 'php4', 'php5', 'exe', 'com', 'bat', 'jsp', 'cfm', 'shtml'];
     }
@@ -356,6 +356,9 @@ abstract class AbstractUploadHelper
             case 'event':
                 $allowedExtensions = ['gif', 'jpeg', 'jpg', 'png'];
                     break;
+            case 'product':
+                $allowedExtensions = ['gif', 'jpeg', 'jpg', 'png'];
+                    break;
         }
     
         if (count($allowedExtensions) > 0) {
@@ -423,6 +426,9 @@ abstract class AbstractUploadHelper
                 $namingScheme = 0;
                     break;
             case 'event':
+                $namingScheme = 0;
+                    break;
+            case 'product':
                 $namingScheme = 0;
                     break;
         }
@@ -552,6 +558,9 @@ abstract class AbstractUploadHelper
             case 'event':
                 $basePath .= 'events/imageofevent/';
                 break;
+            case 'product':
+                $basePath .= 'products/imageofproduct/';
+                break;
             default:
                 throw new Exception($this->__('Error! Invalid object type received.'));
         }
@@ -625,6 +634,8 @@ abstract class AbstractUploadHelper
         $result &= $this->checkAndCreateUploadFolder('dish', 'imageOfDish', 'gif, jpeg, jpg, png');
     
         $result &= $this->checkAndCreateUploadFolder('event', 'imageOfEvent', 'gif, jpeg, jpg, png');
+    
+        $result &= $this->checkAndCreateUploadFolder('product', 'imageOfProduct', 'gif, jpeg, jpg, png');
     
         return $result;
     }

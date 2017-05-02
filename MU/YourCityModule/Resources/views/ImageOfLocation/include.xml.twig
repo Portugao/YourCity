@@ -1,5 +1,5 @@
 {# purpose of this template: images of location xml inclusion template #}
-<imageoflocation id="{{ imageOfLocation.id }}" createdon="{{ imageOfLocation.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ imageOfLocation.updatedDate|localizeddate('medium', 'short') }}">
+<imageoflocation id="{{ imageOfLocation.getId() }}" createdon="{{ imageOfLocation.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ imageOfLocation.updatedDate|localizeddate('medium', 'short') }}">
     <id>{{ imageOfLocation.id }}</id>
     <name><![CDATA[{{ imageOfLocation.name }}]]></name>
     <description><![CDATA[{{ imageOfLocation.description|safeHtml }}]]></description>

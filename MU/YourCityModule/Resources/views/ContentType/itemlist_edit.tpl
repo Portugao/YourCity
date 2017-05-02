@@ -9,37 +9,6 @@
     </div>
 </div>
 
-{if $featureActivationHelper->isEnabled(constant('MU\\YourCityModule\\Helper\\FeatureActivationHelper::CATEGORIES'), $objectType)}
-{formvolatile}
-{if $properties ne null && is_array($properties)}
-    {nocache}
-    {foreach key='registryId' item='registryCid' from=$registries}
-        {assign var='propName' value=''}
-        {foreach key='propertyName' item='propertyId' from=$properties}
-            {if $propertyId eq $registryId}
-                {assign var='propName' value=$propertyName}
-            {/if}
-        {/foreach}
-        <div class="form-group">
-            {assign var='hasMultiSelection' value=$categoryHelper->hasMultipleSelection($objectType, $propertyName)}
-            {gt text='Category' domain='muyourcitymodule' assign='categorySelectorLabel'}
-            {assign var='selectionMode' value='single'}
-            {if $hasMultiSelection eq true}
-                {gt text='Categories' domain='muyourcitymodule' assign='categorySelectorLabel'}
-                {assign var='selectionMode' value='multiple'}
-            {/if}
-            {formlabel for="mUYourCityModuleCatIds`$propertyName`" text=$categorySelectorLabel cssClass='col-sm-3 control-label'}
-            <div class="col-sm-9">
-                {formdropdownlist id="mUYourCityModuleCatIds`$propName`" items=$categories.$propName dataField="catids`$propName`" group='data' selectionMode=$selectionMode cssClass='form-control'}
-                <span class="help-block">{gt text='This is an optional filter.' domain='muyourcitymodule'}</span>
-            </div>
-        </div>
-    {/foreach}
-    {/nocache}
-{/if}
-{/formvolatile}
-{/if}
-
 <div class="form-group">
     {gt text='Sorting' domain='muyourcitymodule' assign='sortingLabel'}
     {formlabel text=$sortingLabel cssClass='col-sm-3 control-label'}

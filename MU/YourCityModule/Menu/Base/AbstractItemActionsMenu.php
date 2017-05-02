@@ -79,7 +79,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
         $currentUserId = $currentUserApi->isLoggedIn() ? $currentUserApi->get('uid') : 1;
         if ($entity instanceof BranchEntity) {
             $component = 'MUYourCityModule:Branch:';
-            $instance = $entity['id'] . '::';
+            $instance = $entity->getKey() . '::';
             $routePrefix = 'muyourcitymodule_branch_';
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
         
@@ -106,7 +106,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this branch'));
                 $menu->addChild($this->__('Reuse'), [
                     'route' => $routePrefix . $routeArea . 'edit',
-                    'routeParameters' => ['astemplate' => $entity['id']]
+                    'routeParameters' => ['astemplate' => $entity->getId()]
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new branch'));
             }
@@ -128,19 +128,19 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             // more actions for adding new related items
             
             $relatedComponent = 'MUYourCityModule:Location:';
-            $relatedInstance = $entity['id'] . '::';
+            $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_COMMENT)) {
                 $title = $this->__('Create location');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_location_' . $routeArea . 'edit',
-                    'routeParameters' => ['branches' => $entity['id']]
+                    'routeParameters' => ['branches' => $entity->getKey()]
                 ])->setAttribute('icon', 'fa fa-plus');
                 $menu[$title]->setLinkAttribute('title', $title);
             }
         }
         if ($entity instanceof LocationEntity) {
             $component = 'MUYourCityModule:Location:';
-            $instance = $entity['id'] . '::';
+            $instance = $entity->getKey() . '::';
             $routePrefix = 'muyourcitymodule_location_';
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
         
@@ -167,7 +167,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this location'));
                 $menu->addChild($this->__('Reuse'), [
                     'route' => $routePrefix . $routeArea . 'edit',
-                    'routeParameters' => ['astemplate' => $entity['id'], 'slug' => $entity['slug']]
+                    'routeParameters' => ['astemplate' => $entity->getId(), 'slug' => $entity['slug']]
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new location'));
             }
@@ -189,140 +189,140 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             // more actions for adding new related items
             
             $relatedComponent = 'MUYourCityModule:ImageOfLocation:';
-            $relatedInstance = $entity['id'] . '::';
+            $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
                 $title = $this->__('Create image of location');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_imageoflocation_' . $routeArea . 'edit',
-                    'routeParameters' => ['location' => $entity['id']]
+                    'routeParameters' => ['location' => $entity->getKey()]
                 ])->setAttribute('icon', 'fa fa-plus');
                 $menu[$title]->setLinkAttribute('title', $title);
             }
             
             $relatedComponent = 'MUYourCityModule:FileOfLocation:';
-            $relatedInstance = $entity['id'] . '::';
+            $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
                 $title = $this->__('Create file of location');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_fileoflocation_' . $routeArea . 'edit',
-                    'routeParameters' => ['location' => $entity['id']]
+                    'routeParameters' => ['location' => $entity->getKey()]
                 ])->setAttribute('icon', 'fa fa-plus');
                 $menu[$title]->setLinkAttribute('title', $title);
             }
             
             $relatedComponent = 'MUYourCityModule:Branch:';
-            $relatedInstance = $entity['id'] . '::';
+            $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
                 $title = $this->__('Create branch');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_branch_' . $routeArea . 'edit',
-                    'routeParameters' => ['locations' => $entity['id']]
+                    'routeParameters' => ['locations' => $entity->getKey()]
                 ])->setAttribute('icon', 'fa fa-plus');
                 $menu[$title]->setLinkAttribute('title', $title);
             }
             
             $relatedComponent = 'MUYourCityModule:Part:';
-            $relatedInstance = $entity['id'] . '::';
+            $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
                 $title = $this->__('Create part');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_part_' . $routeArea . 'edit',
-                    'routeParameters' => ['locations' => $entity['id']]
+                    'routeParameters' => ['locations' => $entity->getKey()]
                 ])->setAttribute('icon', 'fa fa-plus');
                 $menu[$title]->setLinkAttribute('title', $title);
             }
             
             $relatedComponent = 'MUYourCityModule:Offer:';
-            $relatedInstance = $entity['id'] . '::';
+            $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
                 $title = $this->__('Create offer');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_offer_' . $routeArea . 'edit',
-                    'routeParameters' => ['location' => $entity['id']]
+                    'routeParameters' => ['location' => $entity->getKey()]
                 ])->setAttribute('icon', 'fa fa-plus');
                 $menu[$title]->setLinkAttribute('title', $title);
             }
             
             $relatedComponent = 'MUYourCityModule:MenuOfLocation:';
-            $relatedInstance = $entity['id'] . '::';
+            $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
                 $title = $this->__('Create menu of location');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_menuoflocation_' . $routeArea . 'edit',
-                    'routeParameters' => ['location' => $entity['id']]
+                    'routeParameters' => ['location' => $entity->getKey()]
                 ])->setAttribute('icon', 'fa fa-plus');
                 $menu[$title]->setLinkAttribute('title', $title);
             }
             
             $relatedComponent = 'MUYourCityModule:Event:';
-            $relatedInstance = $entity['id'] . '::';
+            $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
                 $title = $this->__('Create event');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_event_' . $routeArea . 'edit',
-                    'routeParameters' => ['location' => $entity['id']]
+                    'routeParameters' => ['location' => $entity->getKey()]
                 ])->setAttribute('icon', 'fa fa-plus');
                 $menu[$title]->setLinkAttribute('title', $title);
             }
             
             $relatedComponent = 'MUYourCityModule:Product:';
-            $relatedInstance = $entity['id'] . '::';
+            $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
                 $title = $this->__('Create product');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_product_' . $routeArea . 'edit',
-                    'routeParameters' => ['location' => $entity['id']]
+                    'routeParameters' => ['location' => $entity->getKey()]
                 ])->setAttribute('icon', 'fa fa-plus');
                 $menu[$title]->setLinkAttribute('title', $title);
             }
             
             $relatedComponent = 'MUYourCityModule:Dish:';
-            $relatedInstance = $entity['id'] . '::';
+            $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
                 $title = $this->__('Create dish');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_dish_' . $routeArea . 'edit',
-                    'routeParameters' => ['location' => $entity['id']]
+                    'routeParameters' => ['location' => $entity->getKey()]
                 ])->setAttribute('icon', 'fa fa-plus');
                 $menu[$title]->setLinkAttribute('title', $title);
             }
             
             $relatedComponent = 'MUYourCityModule:SpecialOfLocation:';
-            $relatedInstance = $entity['id'] . '::';
+            $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
                 $title = $this->__('Create special of location');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_specialoflocation_' . $routeArea . 'edit',
-                    'routeParameters' => ['locations' => $entity['id']]
+                    'routeParameters' => ['locations' => $entity->getKey()]
                 ])->setAttribute('icon', 'fa fa-plus');
                 $menu[$title]->setLinkAttribute('title', $title);
             }
             
             $relatedComponent = 'MUYourCityModule:ServiceOfLocation:';
-            $relatedInstance = $entity['id'] . '::';
+            $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
                 $title = $this->__('Create service of location');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_serviceoflocation_' . $routeArea . 'edit',
-                    'routeParameters' => ['locations' => $entity['id']]
+                    'routeParameters' => ['locations' => $entity->getKey()]
                 ])->setAttribute('icon', 'fa fa-plus');
                 $menu[$title]->setLinkAttribute('title', $title);
             }
             
             $relatedComponent = 'MUYourCityModule:Abonnement:';
-            $relatedInstance = $entity['id'] . '::';
-            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_ADD)) {
+            $relatedInstance = $entity->getKey() . '::';
+            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
                 $title = $this->__('Create abonnement');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_abonnement_' . $routeArea . 'edit',
-                    'routeParameters' => ['location' => $entity['id']]
+                    'routeParameters' => ['location' => $entity->getKey()]
                 ])->setAttribute('icon', 'fa fa-plus');
                 $menu[$title]->setLinkAttribute('title', $title);
             }
         }
         if ($entity instanceof PartEntity) {
             $component = 'MUYourCityModule:Part:';
-            $instance = $entity['id'] . '::';
+            $instance = $entity->getKey() . '::';
             $routePrefix = 'muyourcitymodule_part_';
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
         
@@ -349,7 +349,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this part'));
                 $menu->addChild($this->__('Reuse'), [
                     'route' => $routePrefix . $routeArea . 'edit',
-                    'routeParameters' => ['astemplate' => $entity['id']]
+                    'routeParameters' => ['astemplate' => $entity->getId()]
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new part'));
             }
@@ -371,19 +371,19 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             // more actions for adding new related items
             
             $relatedComponent = 'MUYourCityModule:Location:';
-            $relatedInstance = $entity['id'] . '::';
+            $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_COMMENT)) {
                 $title = $this->__('Create location');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_location_' . $routeArea . 'edit',
-                    'routeParameters' => ['parts' => $entity['id']]
+                    'routeParameters' => ['parts' => $entity->getKey()]
                 ])->setAttribute('icon', 'fa fa-plus');
                 $menu[$title]->setLinkAttribute('title', $title);
             }
         }
         if ($entity instanceof ImageOfLocationEntity) {
             $component = 'MUYourCityModule:ImageOfLocation:';
-            $instance = $entity['id'] . '::';
+            $instance = $entity->getKey() . '::';
             $routePrefix = 'muyourcitymodule_imageoflocation_';
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
         
@@ -410,7 +410,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this image of location'));
                 $menu->addChild($this->__('Reuse'), [
                     'route' => $routePrefix . $routeArea . 'edit',
-                    'routeParameters' => ['astemplate' => $entity['id']]
+                    'routeParameters' => ['astemplate' => $entity->getId()]
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new image of location'));
             }
@@ -431,7 +431,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
         }
         if ($entity instanceof FileOfLocationEntity) {
             $component = 'MUYourCityModule:FileOfLocation:';
-            $instance = $entity['id'] . '::';
+            $instance = $entity->getKey() . '::';
             $routePrefix = 'muyourcitymodule_fileoflocation_';
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
         
@@ -458,7 +458,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this file of location'));
                 $menu->addChild($this->__('Reuse'), [
                     'route' => $routePrefix . $routeArea . 'edit',
-                    'routeParameters' => ['astemplate' => $entity['id']]
+                    'routeParameters' => ['astemplate' => $entity->getId()]
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new file of location'));
             }
@@ -479,7 +479,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
         }
         if ($entity instanceof OfferEntity) {
             $component = 'MUYourCityModule:Offer:';
-            $instance = $entity['id'] . '::';
+            $instance = $entity->getKey() . '::';
             $routePrefix = 'muyourcitymodule_offer_';
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
         
@@ -506,7 +506,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this offer'));
                 $menu->addChild($this->__('Reuse'), [
                     'route' => $routePrefix . $routeArea . 'edit',
-                    'routeParameters' => ['astemplate' => $entity['id']]
+                    'routeParameters' => ['astemplate' => $entity->getId()]
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new offer'));
             }
@@ -527,7 +527,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
         }
         if ($entity instanceof MenuOfLocationEntity) {
             $component = 'MUYourCityModule:MenuOfLocation:';
-            $instance = $entity['id'] . '::';
+            $instance = $entity->getKey() . '::';
             $routePrefix = 'muyourcitymodule_menuoflocation_';
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
         
@@ -554,7 +554,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this menu of location'));
                 $menu->addChild($this->__('Reuse'), [
                     'route' => $routePrefix . $routeArea . 'edit',
-                    'routeParameters' => ['astemplate' => $entity['id']]
+                    'routeParameters' => ['astemplate' => $entity->getId()]
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new menu of location'));
             }
@@ -576,30 +576,30 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             // more actions for adding new related items
             
             $relatedComponent = 'MUYourCityModule:Dish:';
-            $relatedInstance = $entity['id'] . '::';
+            $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
                 $title = $this->__('Create dish');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_dish_' . $routeArea . 'edit',
-                    'routeParameters' => ['menuoflocation' => $entity['id']]
+                    'routeParameters' => ['menuoflocation' => $entity->getKey()]
                 ])->setAttribute('icon', 'fa fa-plus');
                 $menu[$title]->setLinkAttribute('title', $title);
             }
             
             $relatedComponent = 'MUYourCityModule:PartOfMenu:';
-            $relatedInstance = $entity['id'] . '::';
+            $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
                 $title = $this->__('Create part of menu');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_partofmenu_' . $routeArea . 'edit',
-                    'routeParameters' => ['menuoflocation' => $entity['id']]
+                    'routeParameters' => ['menuoflocation' => $entity->getKey()]
                 ])->setAttribute('icon', 'fa fa-plus');
                 $menu[$title]->setLinkAttribute('title', $title);
             }
         }
         if ($entity instanceof PartOfMenuEntity) {
             $component = 'MUYourCityModule:PartOfMenu:';
-            $instance = $entity['id'] . '::';
+            $instance = $entity->getKey() . '::';
             $routePrefix = 'muyourcitymodule_partofmenu_';
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
         
@@ -626,7 +626,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this part of menu'));
                 $menu->addChild($this->__('Reuse'), [
                     'route' => $routePrefix . $routeArea . 'edit',
-                    'routeParameters' => ['astemplate' => $entity['id']]
+                    'routeParameters' => ['astemplate' => $entity->getId()]
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new part of menu'));
             }
@@ -648,19 +648,19 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             // more actions for adding new related items
             
             $relatedComponent = 'MUYourCityModule:Dish:';
-            $relatedInstance = $entity['id'] . '::';
+            $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
                 $title = $this->__('Create dish');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_dish_' . $routeArea . 'edit',
-                    'routeParameters' => ['partofmenu' => $entity['id']]
+                    'routeParameters' => ['partofmenu' => $entity->getKey()]
                 ])->setAttribute('icon', 'fa fa-plus');
                 $menu[$title]->setLinkAttribute('title', $title);
             }
         }
         if ($entity instanceof DishEntity) {
             $component = 'MUYourCityModule:Dish:';
-            $instance = $entity['id'] . '::';
+            $instance = $entity->getKey() . '::';
             $routePrefix = 'muyourcitymodule_dish_';
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
         
@@ -687,7 +687,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this dish'));
                 $menu->addChild($this->__('Reuse'), [
                     'route' => $routePrefix . $routeArea . 'edit',
-                    'routeParameters' => ['astemplate' => $entity['id']]
+                    'routeParameters' => ['astemplate' => $entity->getId()]
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new dish'));
             }
@@ -708,7 +708,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
         }
         if ($entity instanceof EventEntity) {
             $component = 'MUYourCityModule:Event:';
-            $instance = $entity['id'] . '::';
+            $instance = $entity->getKey() . '::';
             $routePrefix = 'muyourcitymodule_event_';
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
         
@@ -735,7 +735,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this event'));
                 $menu->addChild($this->__('Reuse'), [
                     'route' => $routePrefix . $routeArea . 'edit',
-                    'routeParameters' => ['astemplate' => $entity['id']]
+                    'routeParameters' => ['astemplate' => $entity->getId()]
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new event'));
             }
@@ -756,7 +756,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
         }
         if ($entity instanceof ProductEntity) {
             $component = 'MUYourCityModule:Product:';
-            $instance = $entity['id'] . '::';
+            $instance = $entity->getKey() . '::';
             $routePrefix = 'muyourcitymodule_product_';
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
         
@@ -783,7 +783,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this product'));
                 $menu->addChild($this->__('Reuse'), [
                     'route' => $routePrefix . $routeArea . 'edit',
-                    'routeParameters' => ['astemplate' => $entity['id']]
+                    'routeParameters' => ['astemplate' => $entity->getId()]
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new product'));
             }
@@ -804,7 +804,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
         }
         if ($entity instanceof SpecialOfLocationEntity) {
             $component = 'MUYourCityModule:SpecialOfLocation:';
-            $instance = $entity['id'] . '::';
+            $instance = $entity->getKey() . '::';
             $routePrefix = 'muyourcitymodule_specialoflocation_';
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
         
@@ -831,7 +831,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this special of location'));
                 $menu->addChild($this->__('Reuse'), [
                     'route' => $routePrefix . $routeArea . 'edit',
-                    'routeParameters' => ['astemplate' => $entity['id']]
+                    'routeParameters' => ['astemplate' => $entity->getId()]
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new special of location'));
             }
@@ -853,19 +853,19 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             // more actions for adding new related items
             
             $relatedComponent = 'MUYourCityModule:Location:';
-            $relatedInstance = $entity['id'] . '::';
+            $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_COMMENT)) {
                 $title = $this->__('Create location');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_location_' . $routeArea . 'edit',
-                    'routeParameters' => ['specialsoflocation' => $entity['id']]
+                    'routeParameters' => ['specialsoflocation' => $entity->getKey()]
                 ])->setAttribute('icon', 'fa fa-plus');
                 $menu[$title]->setLinkAttribute('title', $title);
             }
         }
         if ($entity instanceof ServiceOfLocationEntity) {
             $component = 'MUYourCityModule:ServiceOfLocation:';
-            $instance = $entity['id'] . '::';
+            $instance = $entity->getKey() . '::';
             $routePrefix = 'muyourcitymodule_serviceoflocation_';
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
         
@@ -892,7 +892,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this service of location'));
                 $menu->addChild($this->__('Reuse'), [
                     'route' => $routePrefix . $routeArea . 'edit',
-                    'routeParameters' => ['astemplate' => $entity['id']]
+                    'routeParameters' => ['astemplate' => $entity->getId()]
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new service of location'));
             }
@@ -914,36 +914,33 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             // more actions for adding new related items
             
             $relatedComponent = 'MUYourCityModule:Location:';
-            $relatedInstance = $entity['id'] . '::';
+            $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_COMMENT)) {
                 $title = $this->__('Create location');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_location_' . $routeArea . 'edit',
-                    'routeParameters' => ['servicesoflocation' => $entity['id']]
+                    'routeParameters' => ['servicesoflocation' => $entity->getKey()]
                 ])->setAttribute('icon', 'fa fa-plus');
                 $menu[$title]->setLinkAttribute('title', $title);
             }
         }
         if ($entity instanceof AbonnementEntity) {
             $component = 'MUYourCityModule:Abonnement:';
-            $instance = $entity['id'] . '::';
+            $instance = $entity->getKey() . '::';
             $routePrefix = 'muyourcitymodule_abonnement_';
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
         
             if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
-                // only allow editing for the owner or people with higher permissions
-                if ($isOwner || $permissionApi->hasPermission($component, $instance, ACCESS_ADD)) {
-                    $menu->addChild($this->__('Edit'), [
-                        'route' => $routePrefix . $routeArea . 'edit',
-                        'routeParameters' => $entity->createUrlArgs()
-                    ])->setAttribute('icon', 'fa fa-pencil-square-o');
-                    $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this abonnement'));
-                    $menu->addChild($this->__('Reuse'), [
-                        'route' => $routePrefix . $routeArea . 'edit',
-                        'routeParameters' => ['astemplate' => $entity['id']]
-                    ])->setAttribute('icon', 'fa fa-files-o');
-                    $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new abonnement'));
-                }
+                $menu->addChild($this->__('Edit'), [
+                    'route' => $routePrefix . $routeArea . 'edit',
+                    'routeParameters' => $entity->createUrlArgs()
+                ])->setAttribute('icon', 'fa fa-pencil-square-o');
+                $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this abonnement'));
+                $menu->addChild($this->__('Reuse'), [
+                    'route' => $routePrefix . $routeArea . 'edit',
+                    'routeParameters' => ['astemplate' => $entity->getId()]
+                ])->setAttribute('icon', 'fa fa-files-o');
+                $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new abonnement'));
             }
             if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
                 $menu->addChild($this->__('Delete'), [

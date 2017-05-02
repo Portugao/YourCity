@@ -74,7 +74,7 @@
                                 {% if not onlyImages %}
                                     <li>
                                 {% endif %}
-                                    {% set itemId = branch.createCompositeIdentifier() %}
+                                    {% set itemId = branch.getKey() %}
                                     <a href="#" data-itemid="{{ itemId }}">
                                         {% if onlyImages %}
                                             {% set thumbOptions = attribute(thumbRuntimeOptions, 'branch' ~ imageField[:1]|upper ~ imageField[1:]) %}
@@ -83,8 +83,8 @@
                                             {{ branch|muyourcitymodule_formattedTitle }}
                                         {% endif %}
                                     </a>
-                                    <input type="hidden" id="path{{ itemId }}" value="{{ path('muyourcitymodule_branch_display', { 'id': branch.id }) }}" />
-                                    <input type="hidden" id="url{{ itemId }}" value="{{ url('muyourcitymodule_branch_display', { 'id': branch.id }) }}" />
+                                    <input type="hidden" id="path{{ itemId }}" value="{{ path('muyourcitymodule_branch_display', { 'id': branch.getId() }) }}" />
+                                    <input type="hidden" id="url{{ itemId }}" value="{{ url('muyourcitymodule_branch_display', { 'id': branch.getId() }) }}" />
                                     <input type="hidden" id="title{{ itemId }}" value="{{ branch|muyourcitymodule_formattedTitle|e('html_attr') }}" />
                                     <input type="hidden" id="desc{{ itemId }}" value="{% set description %}{% if branch.description is not empty %}{{ branch.description }}{% endif %}
                                     {% endset %}{{ description|striptags|e('html_attr') }}" />

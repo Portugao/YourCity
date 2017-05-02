@@ -218,8 +218,6 @@ abstract class AbstractPartOfMenuType extends AbstractType
             'multiple' => false,
             'expanded' => false,
             'query_builder' => $queryBuilder,
-            'placeholder' => $this->__('Please choose an option'),
-            'required' => false,
             'label' => $this->__('Menu of location'),
             'attr' => [
                 'title' => $this->__('Choose the menu of location')

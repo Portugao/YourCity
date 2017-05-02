@@ -8,7 +8,7 @@
     </author>
 {% set amountOfItems = items|length %}
 {% if amountOfItems > 0 %}
-{% set uniqueID %}tag:{{ app.request.getSchemeAndHttpHost()|replace({ 'http://': '', '/': '' }) }},{{ items.first.createdDate|date('Y-m-d') }}:{{ path('muyourcitymodule_partofmenu_' ~ routeArea ~ 'display', { 'id': items.first.id }) }}{% endset %}
+{% set uniqueID %}tag:{{ app.request.getSchemeAndHttpHost()|replace({ 'http://': '', '/': '' }) }},{{ items.first.createdDate|date('Y-m-d') }}:{{ path('muyourcitymodule_partofmenu_' ~ routeArea ~ 'display', { 'id': items.first.getId() }) }}{% endset %}
     <id>{{ uniqueID }}</id>
     <updated>{{ items[0].updatedDate|date('Y-m-dTH:M:SZ') }}</updated>
 {% endif %}
@@ -26,8 +26,8 @@
 {% endblock %}
 {% block entry_content %}
     <title type="html">{{ partOfMenu|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.partsofmenu')|safeHtml }}</title>
-    <link rel="alternate" type="text/html" href="{{ url('muyourcitymodule_partofmenu_' ~ routeArea ~ 'display', { 'id': partOfMenu.id }) }}" />
-    {% set uniqueID %}tag:{{ app.request.getSchemeAndHttpHost()|replace({ 'http://': '', '/': '' }) }},{{ partOfMenu.createdDate|date('Y-m-d') }}:{{ path('muyourcitymodule_partofmenu_' ~ routeArea ~ 'display', { 'id': partOfMenu.id }) }}{% endset %}
+    <link rel="alternate" type="text/html" href="{{ url('muyourcitymodule_partofmenu_' ~ routeArea ~ 'display', { 'id': partOfMenu.getId() }) }}" />
+    {% set uniqueID %}tag:{{ app.request.getSchemeAndHttpHost()|replace({ 'http://': '', '/': '' }) }},{{ partOfMenu.createdDate|date('Y-m-d') }}:{{ path('muyourcitymodule_partofmenu_' ~ routeArea ~ 'display', { 'id': partOfMenu.getId() }) }}{% endset %}
     <id>{{ uniqueID }}</id>
     {% if partOfMenu.updatedDate|default %}
         <updated>{{ partOfMenu.updatedDate|date('Y-m-dTH:M:SZ') }}</updated>

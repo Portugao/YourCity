@@ -162,7 +162,6 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
         }
         
         $objectType = $entity->get_objectType();
-        $objectId = $entity->createCompositeIdentifier();
         
         $uploadFields = $this->getUploadFields($objectType);
         if (count($uploadFields) > 0) {
@@ -178,7 +177,7 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
         }
         
         $currentUserApi = $this->container->get('zikula_users_module.current_user');
-        $logArgs = ['app' => 'MUYourCityModule', 'user' => $currentUserApi->get('uname'), 'entity' => $objectType, 'id' => $objectId];
+        $logArgs = ['app' => 'MUYourCityModule', 'user' => $currentUserApi->get('uname'), 'entity' => $objectType, 'id' => $entity->getKey()];
         $this->logger->debug('{app}: User {user} removed the {entity} with id {id}.', $logArgs);
         
         // create the filter event and dispatch it
@@ -237,9 +236,8 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
             return;
         }
         
-        $objectId = $entity->createCompositeIdentifier();
         $currentUserApi = $this->container->get('zikula_users_module.current_user');
-        $logArgs = ['app' => 'MUYourCityModule', 'user' => $currentUserApi->get('uname'), 'entity' => $entity->get_objectType(), 'id' => $objectId];
+        $logArgs = ['app' => 'MUYourCityModule', 'user' => $currentUserApi->get('uname'), 'entity' => $entity->get_objectType(), 'id' => $entity->getKey()];
         $this->logger->debug('{app}: User {user} created the {entity} with id {id}.', $logArgs);
         
         // create the filter event and dispatch it
@@ -295,9 +293,8 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
             return;
         }
         
-        $objectId = $entity->createCompositeIdentifier();
         $currentUserApi = $this->container->get('zikula_users_module.current_user');
-        $logArgs = ['app' => 'MUYourCityModule', 'user' => $currentUserApi->get('uname'), 'entity' => $entity->get_objectType(), 'id' => $objectId];
+        $logArgs = ['app' => 'MUYourCityModule', 'user' => $currentUserApi->get('uname'), 'entity' => $entity->get_objectType(), 'id' => $entity->getKey()];
         $this->logger->debug('{app}: User {user} updated the {entity} with id {id}.', $logArgs);
         
         // create the filter event and dispatch it
@@ -409,6 +406,9 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
                 break;
             case 'event':
                 $uploadFields = ['imageOfEvent'];
+                break;
+            case 'product':
+                $uploadFields = ['imageOfProduct'];
                 break;
         }
 

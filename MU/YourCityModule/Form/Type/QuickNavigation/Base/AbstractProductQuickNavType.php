@@ -94,9 +94,6 @@ abstract class AbstractProductQuickNavType extends AbstractType
             ->add('tpl', 'Symfony\Component\Form\Extension\Core\Type\HiddenType')
         ;
 
-        if ($this->featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, 'product')) {
-            $this->addCategoriesField($builder, $options);
-        }
         $this->addIncomingRelationshipFields($builder, $options);
         $this->addListFields($builder, $options);
         $this->addSearchField($builder, $options);
@@ -108,32 +105,6 @@ abstract class AbstractProductQuickNavType extends AbstractType
             'attr' => [
                 'class' => 'btn btn-default btn-sm'
             ]
-        ]);
-    }
-
-    /**
-     * Adds a categories field.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
-    public function addCategoriesField(FormBuilderInterface $builder, array $options)
-    {
-        $objectType = 'product';
-    
-        $builder->add('categories', 'Zikula\CategoriesModule\Form\Type\CategoriesType', [
-            'label' => $this->__('Categories'),
-            'empty_data' => [],
-            'attr' => [
-                'class' => 'input-sm category-selector',
-                'title' => $this->__('This is an optional filter.')
-            ],
-            'help' => $this->__('This is an optional filter.'),
-            'required' => false,
-            'multiple' => true,
-            'module' => 'MUYourCityModule',
-            'entity' => ucfirst($objectType) . 'Entity',
-            'entityCategoryClass' => 'MU\YourCityModule\Entity\\' . ucfirst($objectType) . 'CategoryEntity'
         ]);
     }
 
@@ -201,6 +172,26 @@ abstract class AbstractProductQuickNavType extends AbstractType
             'multiple' => false,
             'expanded' => false
         ]);
+        $listEntries = $this->listHelper->getEntries('product', 'kindOfProduct');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('kindOfProduct', 'MU\YourCityModule\Form\Type\Field\MultiListType', [
+            'label' => $this->__('Kind of product'),
+            'attr' => [
+                'class' => 'input-sm'
+            ],
+            'required' => false,
+            'placeholder' => $this->__('All'),
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => true,
+            'expanded' => false
+        ]);
         $listEntries = $this->listHelper->getEntries('product', 'today');
         $choices = [];
         $choiceAttributes = [];
@@ -259,6 +250,7 @@ abstract class AbstractProductQuickNavType extends AbstractType
                 'choices' =>             [
                     $this->__('Name') => 'name',
                     $this->__('Description') => 'description',
+                    $this->__('Kind of product') => 'kindOfProduct',
                     $this->__('Today') => 'today',
                     $this->__('Monday') => 'monday',
                     $this->__('Tuesday') => 'tuesday',

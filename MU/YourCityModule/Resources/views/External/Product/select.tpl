@@ -2,37 +2,12 @@
 {assign var='baseID' value='product'}
 <div class="row">
     <div class="col-sm-8">
-
-        {if $properties ne null && is_array($properties)}
-            {gt text='All' assign='lblDefault'}
-            {nocache}
-            {foreach key='propertyName' item='propertyId' from=$properties}
-                <div class="form-group">
-                    {assign var='hasMultiSelection' value=$categoryHelper->hasMultipleSelection('product', $propertyName)}
-                    {gt text='Category' assign='categoryLabel'}
-                    {assign var='categorySelectorId' value='catid'}
-                    {assign var='categorySelectorName' value='catid'}
-                    {assign var='categorySelectorSize' value='1'}
-                    {if $hasMultiSelection eq true}
-                        {gt text='Categories' assign='categoryLabel'}
-                        {assign var='categorySelectorName' value='catids'}
-                        {assign var='categorySelectorId' value='catids__'}
-                        {assign var='categorySelectorSize' value='8'}
-                    {/if}
-                    <label for="{$baseID}_{$categorySelectorId}{$propertyName}" class="col-sm-3 control-label">{$categoryLabel}:</label>
-                    <div class="col-sm-9">
-                        {selector_category name="`$baseID`_`$categorySelectorName``$propertyName`" field='id' selectedValue=$catIds.$propertyName|default:null categoryRegistryModule='MUYourCityModule' categoryRegistryTable="`$objectType`Entity" categoryRegistryProperty=$propertyName defaultText=$lblDefault editLink=false multipleSize=$categorySelectorSize cssClass='form-control'}
-                    </div>
-                </div>
-            {/foreach}
-            {/nocache}
-        {/if}
         <div class="form-group">
             <label for="{$baseID}Id" class="col-sm-3 control-label">{gt text='Product'}:</label>
             <div class="col-sm-9">
                 <select id="{$baseID}Id" name="id" class="form-control">
                     {foreach item='product' from=$items}
-                        <option value="{$product.id}"{if $selectedId eq $product.id} selected="selected"{/if}>{$product->getName()}</option>
+                        <option value="{$product->getKey()}"{if $selectedId eq $product->getKey()} selected="selected"{/if}>{$product->getName()}</option>
                     {foreachelse}
                         <option value="0">{gt text='No entries found.'}</option>
                     {/foreach}
@@ -45,6 +20,7 @@
                 <select id="{$baseID}Sort" name="sort" class="form-control">
                     <option value="name"{if $sort eq 'name'} selected="selected"{/if}>{gt text='Name'}</option>
                     <option value="description"{if $sort eq 'description'} selected="selected"{/if}>{gt text='Description'}</option>
+                    <option value="kindOfProduct"{if $sort eq 'kindOfProduct'} selected="selected"{/if}>{gt text='Kind of product'}</option>
                     <option value="today"{if $sort eq 'today'} selected="selected"{/if}>{gt text='Today'}</option>
                     <option value="monday"{if $sort eq 'monday'} selected="selected"{/if}>{gt text='Monday'}</option>
                     <option value="tuesday"{if $sort eq 'tuesday'} selected="selected"{/if}>{gt text='Tuesday'}</option>

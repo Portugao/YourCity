@@ -9,6 +9,16 @@
 
     {{ include('@MUYourCityModule/Branch/viewQuickNav.html.twig', { workflowStateFilter: false }) }}{# see template file for available options #}
 
+    {% if routeArea != 'admin' and items %}
+        <ul id="branch-user-list">
+        {% for branch in items %}
+            <li><a href="{{ path('muyourcitymodule_branch_' ~ routeArea ~ 'display', { 'id': branch.id }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ branch.name|notifyFilters('muyourcitymodule.filterhook.branches') }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+    {% endif %}
+
+    {% if routeArea == 'admin' %}
     {% if routeArea == 'admin' %}
     <form action="{{ path('muyourcitymodule_branch_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="branchesViewForm" class="form-horizontal" role="form">
         <div>
@@ -34,9 +44,6 @@
                 <th id="hName" scope="col" class="text-left">
                     <a href="{{ sort.name.url }}" title="{{ __f('Sort by %s', {'%s': 'name'}) }}" class="{{ sort.name.class }}">{{ __('Name') }}</a>
                 </th>
-                <th id="hDescription" scope="col" class="text-left">
-                    <a href="{{ sort.description.url }}" title="{{ __f('Sort by %s', {'%s': 'description'}) }}" class="{{ sort.description.class }}">{{ __('Description') }}</a>
-                </th>
             </tr>
             </thead>
             <tbody>
@@ -57,9 +64,6 @@
                 </td>
                 <td headers="hName" class="text-left">
                     <a href="{{ path('muyourcitymodule_branch_' ~ routeArea ~ 'display', { 'id': branch.id }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ branch.name|notifyFilters('muyourcitymodule.filterhook.branches') }}</a>
-                </td>
-                <td headers="hDescriptionForGoogle" class="text-left">
-                    {{ branch.descriptionForGoogle }}
                 </td>
             </tr>
         {% else %}
@@ -92,6 +96,7 @@
             </fieldset>
         </div>
     </form>
+    {% endif %}
     {% endif %}
 
     {{ block('display_hooks') }}

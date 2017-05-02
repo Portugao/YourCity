@@ -2,10 +2,10 @@
 {{ pageAddAsset('javascript', asset('magnific-popup/jquery.magnific-popup.min.js')) }}
 {{ pageAddAsset('stylesheet', asset('magnific-popup/magnific-popup.css')) }}
 {{ pageAddAsset('javascript', zasset('@MUYourCityModule:js/MUYourCityModule.js')) }}
-<div id="menuOfLocation{$menuOfLocation.id}" class="muyourcitymodule-external-menuoflocation">
+<div id="menuOfLocation{$menuOfLocation->getKey()}" class="muyourcitymodule-external-menuoflocation">
 {% if displayMode == 'link' %}
     <p class="muyourcitymodule-external-link">
-    <a href="{{ path('muyourcitymodule_menuoflocation_display', { 'id': menuOfLocation.id }) }}" title="{{ menuOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}">
+    <a href="{{ path('muyourcitymodule_menuoflocation_display', { 'id': menuOfLocation.getId() }) }}" title="{{ menuOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}">
     {{ menuOfLocation|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.menusoflocation.filter')|safeHtml }}
     </a>
     </p>

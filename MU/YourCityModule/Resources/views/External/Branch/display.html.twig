@@ -2,10 +2,10 @@
 {{ pageAddAsset('javascript', asset('magnific-popup/jquery.magnific-popup.min.js')) }}
 {{ pageAddAsset('stylesheet', asset('magnific-popup/magnific-popup.css')) }}
 {{ pageAddAsset('javascript', zasset('@MUYourCityModule:js/MUYourCityModule.js')) }}
-<div id="branch{$branch.id}" class="muyourcitymodule-external-branch">
+<div id="branch{$branch->getKey()}" class="muyourcitymodule-external-branch">
 {% if displayMode == 'link' %}
     <p class="muyourcitymodule-external-link">
-    <a href="{{ path('muyourcitymodule_branch_display', { 'id': branch.id }) }}" title="{{ branch|muyourcitymodule_formattedTitle|e('html_attr') }}">
+    <a href="{{ path('muyourcitymodule_branch_display', { 'id': branch.getId() }) }}" title="{{ branch|muyourcitymodule_formattedTitle|e('html_attr') }}">
     {{ branch|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.branches.filter')|safeHtml }}
     </a>
     </p>

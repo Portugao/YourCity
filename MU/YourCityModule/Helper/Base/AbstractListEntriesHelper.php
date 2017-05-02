@@ -177,6 +177,9 @@ abstract class AbstractListEntriesHelper
                     case 'workflowState':
                         $result = false;
                         break;
+                    case 'kindOfMenu':
+                        $result = false;
+                        break;
                 }
                 break;
             case 'partOfMenu':
@@ -191,6 +194,9 @@ abstract class AbstractListEntriesHelper
                     case 'workflowState':
                         $result = false;
                         break;
+                    case 'kindOfDish':
+                        $result = true;
+                        break;
                 }
                 break;
             case 'event':
@@ -198,12 +204,18 @@ abstract class AbstractListEntriesHelper
                     case 'workflowState':
                         $result = false;
                         break;
+                    case 'kindOfEvent':
+                        $result = true;
+                        break;
                 }
                 break;
             case 'product':
                 switch ($fieldName) {
                     case 'workflowState':
                         $result = false;
+                        break;
+                    case 'kindOfProduct':
+                        $result = true;
                         break;
                     case 'today':
                         $result = false;
@@ -300,6 +312,9 @@ abstract class AbstractListEntriesHelper
                     case 'workflowState':
                         $entries = $this->getWorkflowStateEntriesForMenuOfLocation();
                         break;
+                    case 'kindOfMenu':
+                        $entries = $this->getKindOfMenuEntriesForMenuOfLocation();
+                        break;
                 }
                 break;
             case 'partOfMenu':
@@ -314,6 +329,9 @@ abstract class AbstractListEntriesHelper
                     case 'workflowState':
                         $entries = $this->getWorkflowStateEntriesForDish();
                         break;
+                    case 'kindOfDish':
+                        $entries = $this->getKindOfDishEntriesForDish();
+                        break;
                 }
                 break;
             case 'event':
@@ -321,12 +339,18 @@ abstract class AbstractListEntriesHelper
                     case 'workflowState':
                         $entries = $this->getWorkflowStateEntriesForEvent();
                         break;
+                    case 'kindOfEvent':
+                        $entries = $this->getKindOfEventEntriesForEvent();
+                        break;
                 }
                 break;
             case 'product':
                 switch ($fieldName) {
                     case 'workflowState':
                         $entries = $this->getWorkflowStateEntriesForProduct();
+                        break;
+                    case 'kindOfProduct':
+                        $entries = $this->getKindOfProductEntriesForProduct();
                         break;
                     case 'today':
                         $entries = $this->getTodayEntriesForProduct();
@@ -613,6 +637,81 @@ abstract class AbstractListEntriesHelper
     }
     
     /**
+     * Get 'kind of menu' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getKindOfMenuEntriesForMenuOfLocation()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => '1',
+            'text'    => $this->__('Menu'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => '2',
+            'text'    => $this->__('Menu of the day'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => '3',
+            'text'    => $this->__('Menu of the week'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => '4',
+            'text'    => $this->__('Evening menu'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => '5',
+            'text'    => $this->__('Starters'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => '6',
+            'text'    => $this->__('Dessert'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => '7',
+            'text'    => $this->__('Salads'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => '8',
+            'text'    => $this->__('Drink menu'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => '9',
+            'text'    => $this->__('Other'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
      * Get 'workflow state' list entries.
      *
      * @return array Array with desired list entries
@@ -657,6 +756,39 @@ abstract class AbstractListEntriesHelper
             'value'   => '!approved',
             'text'    => $this->__('All except approved'),
             'title'   => $this->__('Shows all items except these which are approved'),
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
+     * Get 'kind of dish' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getKindOfDishEntriesForDish()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => 'pork',
+            'text'    => $this->__('Pork'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => 'beef',
+            'text'    => $this->__('Beef'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => 'other',
+            'text'    => $this->__('Other'),
+            'title'   => '',
             'image'   => '',
             'default' => false
         ];
@@ -719,6 +851,39 @@ abstract class AbstractListEntriesHelper
     }
     
     /**
+     * Get 'kind of event' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getKindOfEventEntriesForEvent()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => 'concert',
+            'text'    => $this->__('Concert'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => 'music',
+            'text'    => $this->__('Music'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => 'other',
+            'text'    => $this->__('Other'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
      * Get 'workflow state' list entries.
      *
      * @return array Array with desired list entries
@@ -737,6 +902,32 @@ abstract class AbstractListEntriesHelper
             'value'   => '!approved',
             'text'    => $this->__('All except approved'),
             'title'   => $this->__('Shows all items except these which are approved'),
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
+     * Get 'kind of product' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getKindOfProductEntriesForProduct()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => 'apparel',
+            'text'    => $this->__('Apparel'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => 'other',
+            'text'    => $this->__('Other'),
+            'title'   => '',
             'image'   => '',
             'default' => false
         ];
@@ -852,13 +1043,6 @@ abstract class AbstractListEntriesHelper
     {
         $states = [];
         $states[] = [
-            'value'   => 'deferred',
-            'text'    => $this->__('Deferred'),
-            'title'   => $this->__('Content has not been submitted yet or has been waiting, but was rejected.'),
-            'image'   => '',
-            'default' => false
-        ];
-        $states[] = [
             'value'   => 'approved',
             'text'    => $this->__('Approved'),
             'title'   => $this->__('Content has been approved and is available online.'),
@@ -866,9 +1050,9 @@ abstract class AbstractListEntriesHelper
             'default' => false
         ];
         $states[] = [
-            'value'   => '!deferred',
-            'text'    => $this->__('All except deferred'),
-            'title'   => $this->__('Shows all items except these which are deferred'),
+            'value'   => 'suspended',
+            'text'    => $this->__('Suspended'),
+            'title'   => $this->__('Content has been approved, but is temporarily offline.'),
             'image'   => '',
             'default' => false
         ];
@@ -876,6 +1060,13 @@ abstract class AbstractListEntriesHelper
             'value'   => '!approved',
             'text'    => $this->__('All except approved'),
             'title'   => $this->__('Shows all items except these which are approved'),
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => '!suspended',
+            'text'    => $this->__('All except suspended'),
+            'title'   => $this->__('Shows all items except these which are suspended'),
             'image'   => '',
             'default' => false
         ];

@@ -71,13 +71,13 @@
         
         {{ include(
             '@MUYourCityModule/Location/includeSelectOne.html.twig',
-            { group: 'offer', alias: 'location', aliasReverse: 'offers', mandatory: false, idPrefix: 'yourcityOffer_Location', linkingItem: offer, displayMode: 'choices' }
+            { group: 'offer', alias: 'location', aliasReverse: 'offers', mandatory: true, idPrefix: 'yourcityOffer_Location', linkingItem: offer, displayMode: 'choices' }
         ) }}
         {% if mode != 'create' %}
             {{ include('@MUYourCityModule/Helper/includeStandardFieldsEdit.html.twig', { obj: offer }) }}
         {% endif %}
         
-        {% set hookId = mode != 'create' ? offer.id : null %}
+        {% set hookId = mode != 'create' ? offer.getKey() : null %}
         {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.offers.form_edit', id=hookId) %}
         {% if hooks is iterable and hooks|length > 0 %}
             {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
@@ -133,7 +133,7 @@
                 {% if form.moderationSpecificCreator is defined %}
                     mUYourCityInitUserField('muyourcitymodule_offer_moderationSpecificCreator', 'getCommonUsersList');
                 {% endif %}
-                mUYourCityInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ offer.id }}{% endif %}');
+                mUYourCityInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ offer.getKey() }}{% endif %}');
                 mUYourCityInitUploadField('muyourcitymodule_offer_imageOfOffer_imageOfOffer');
                 mUYourCityInitDateField('muyourcitymodule_offer_enddate');
             });

@@ -68,9 +68,6 @@ abstract class AbstractDishFinderType extends AbstractType
             ])
         ;
 
-        if ($this->featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, $options['objectType'])) {
-            $this->addCategoriesField($builder, $options);
-        }
         $this->addImageFields($builder, $options);
         $this->addPasteAsField($builder, $options);
         $this->addSortingFields($builder, $options);
@@ -94,30 +91,6 @@ abstract class AbstractDishFinderType extends AbstractType
                 ]
             ])
         ;
-    }
-
-    /**
-     * Adds a categories field.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
-    public function addCategoriesField(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add('categories', 'Zikula\CategoriesModule\Form\Type\CategoriesType', [
-            'label' => $this->__('Categories') . ':',
-            'empty_data' => [],
-            'attr' => [
-                'class' => 'category-selector',
-                'title' => $this->__('This is an optional filter.')
-            ],
-            'help' => $this->__('This is an optional filter.'),
-            'required' => false,
-            'multiple' => true,
-            'module' => 'MUYourCityModule',
-            'entity' => ucfirst($options['objectType']) . 'Entity',
-            'entityCategoryClass' => 'MU\YourCityModule\Entity\\' . ucfirst($options['objectType']) . 'CategoryEntity'
-        ]);
     }
 
     /**
@@ -180,6 +153,7 @@ abstract class AbstractDishFinderType extends AbstractType
                 'choices' => [
                     $this->__('Name') => 'name',
                     $this->__('Description') => 'description',
+                    $this->__('Kind of dish') => 'kindOfDish',
                     $this->__('Image of dish') => 'imageOfDish',
                     $this->__('Price of dish') => 'priceOfDish',
                     $this->__('Position of dish') => 'positionOfDish',

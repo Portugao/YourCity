@@ -56,9 +56,6 @@
         {{ form_errors(finderForm) }}
         <fieldset>
             <legend>{{ __('Search and select event') }}</legend>
-            {% if featureActivationHelper.isEnabled(constant('MU\\YourCityModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'event') %}
-                {{ form_row(finderForm.categories) }}
-            {% endif %}
             {{ form_row(finderForm.onlyImages) }}
             <div id="imageFieldRow">
                 {{ form_row(finderForm.imageField) }}
@@ -77,7 +74,7 @@
                                 {% if not onlyImages %}
                                     <li>
                                 {% endif %}
-                                    {% set itemId = event.createCompositeIdentifier() %}
+                                    {% set itemId = event.getKey() %}
                                     <a href="#" data-itemid="{{ itemId }}">
                                         {% if onlyImages %}
                                             {% set thumbOptions = attribute(thumbRuntimeOptions, 'event' ~ imageField[:1]|upper ~ imageField[1:]) %}
@@ -86,8 +83,8 @@
                                             {{ event|muyourcitymodule_formattedTitle }}
                                         {% endif %}
                                     </a>
-                                    <input type="hidden" id="path{{ itemId }}" value="{{ path('muyourcitymodule_event_display', { 'id': event.id }) }}" />
-                                    <input type="hidden" id="url{{ itemId }}" value="{{ url('muyourcitymodule_event_display', { 'id': event.id }) }}" />
+                                    <input type="hidden" id="path{{ itemId }}" value="{{ path('muyourcitymodule_event_display', { 'id': event.getId() }) }}" />
+                                    <input type="hidden" id="url{{ itemId }}" value="{{ url('muyourcitymodule_event_display', { 'id': event.getId() }) }}" />
                                     <input type="hidden" id="title{{ itemId }}" value="{{ event|muyourcitymodule_formattedTitle|e('html_attr') }}" />
                                     <input type="hidden" id="desc{{ itemId }}" value="{% set description %}{% if event.description is not empty %}{{ event.description }}{% endif %}
                                     {% endset %}{{ description|striptags|e('html_attr') }}" />

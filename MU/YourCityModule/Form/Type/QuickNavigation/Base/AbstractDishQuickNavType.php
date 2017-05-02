@@ -94,9 +94,6 @@ abstract class AbstractDishQuickNavType extends AbstractType
             ->add('tpl', 'Symfony\Component\Form\Extension\Core\Type\HiddenType')
         ;
 
-        if ($this->featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, 'dish')) {
-            $this->addCategoriesField($builder, $options);
-        }
         $this->addIncomingRelationshipFields($builder, $options);
         $this->addListFields($builder, $options);
         $this->addSearchField($builder, $options);
@@ -107,32 +104,6 @@ abstract class AbstractDishQuickNavType extends AbstractType
             'attr' => [
                 'class' => 'btn btn-default btn-sm'
             ]
-        ]);
-    }
-
-    /**
-     * Adds a categories field.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
-    public function addCategoriesField(FormBuilderInterface $builder, array $options)
-    {
-        $objectType = 'dish';
-    
-        $builder->add('categories', 'Zikula\CategoriesModule\Form\Type\CategoriesType', [
-            'label' => $this->__('Categories'),
-            'empty_data' => [],
-            'attr' => [
-                'class' => 'input-sm category-selector',
-                'title' => $this->__('This is an optional filter.')
-            ],
-            'help' => $this->__('This is an optional filter.'),
-            'required' => false,
-            'multiple' => true,
-            'module' => 'MUYourCityModule',
-            'entity' => ucfirst($objectType) . 'Entity',
-            'entityCategoryClass' => 'MU\YourCityModule\Entity\\' . ucfirst($objectType) . 'CategoryEntity'
         ]);
     }
 
@@ -228,6 +199,26 @@ abstract class AbstractDishQuickNavType extends AbstractType
             'multiple' => false,
             'expanded' => false
         ]);
+        $listEntries = $this->listHelper->getEntries('dish', 'kindOfDish');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('kindOfDish', 'MU\YourCityModule\Form\Type\Field\MultiListType', [
+            'label' => $this->__('Kind of dish'),
+            'attr' => [
+                'class' => 'input-sm'
+            ],
+            'required' => false,
+            'placeholder' => $this->__('All'),
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => true,
+            'expanded' => false
+        ]);
     }
 
     /**
@@ -266,6 +257,7 @@ abstract class AbstractDishQuickNavType extends AbstractType
                 'choices' =>             [
                     $this->__('Name') => 'name',
                     $this->__('Description') => 'description',
+                    $this->__('Kind of dish') => 'kindOfDish',
                     $this->__('Image of dish') => 'imageOfDish',
                     $this->__('Price of dish') => 'priceOfDish',
                     $this->__('Position of dish') => 'positionOfDish',

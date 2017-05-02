@@ -156,6 +156,7 @@ abstract class AbstractMenuOfLocationFinderType extends AbstractType
                     $this->__('Image of menu') => 'imageOfMenu',
                     $this->__('Effectiv from') => 'effectivFrom',
                     $this->__('Effectiv until') => 'effectivUntil',
+                    $this->__('Kind of menu') => 'kindOfMenu',
                     $this->__('Creation date') => 'createdDate',
                     $this->__('Creator') => 'createdBy',
                     $this->__('Update date') => 'updatedDate',

@@ -22,7 +22,6 @@
                 <col id="cItemActions" />
                 <col id="cName" />
                 <col id="cDescription" />
-                <col id="cIconForSpecial" />
             </colgroup>
             <thead>
             <tr>
@@ -37,9 +36,6 @@
                 </th>
                 <th id="hDescription" scope="col" class="text-left">
                     <a href="{{ sort.description.url }}" title="{{ __f('Sort by %s', {'%s': 'description'}) }}" class="{{ sort.description.class }}">{{ __('Description') }}</a>
-                </th>
-                <th id="hIconForSpecial" scope="col" class="text-left">
-                    <a href="{{ sort.iconForSpecial.url }}" title="{{ __f('Sort by %s', {'%s': 'icon for special'}) }}" class="{{ sort.iconForSpecial.class }}">{{ __('Icon for special') }}</a>
                 </th>
             </tr>
             </thead>
@@ -64,9 +60,6 @@
                 </td>
                 <td headers="hDescription" class="text-left">
                     {{ specialOfLocation.description|safeHtml|truncate(50) }}
-                </td>
-                <td headers="hIconForSpecial" class="text-left">
-                    {{ specialOfLocation.iconForSpecial }}
                 </td>
             </tr>
         {% else %}

@@ -1,6 +1,6 @@
 {# Purpose of this template: Display offers within an external context #}
 {% for offer in items %}
     <h3>{{ offer|muyourcitymodule_formattedTitle }}</h3>
-    <p><a href="{{ path('muyourcitymodule_offer_display', { 'id': offer.id }) }}">{{ __('Read more') }}</a>
+    <p><a href="{{ path('muyourcitymodule_offer_display', { 'id': offer.getId() }) }}">{{ __('Read more') }}</a>
     </p>
 {% endfor %}

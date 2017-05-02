@@ -24,21 +24,8 @@
  */
 function MUYourCityModule_workflow_standard_permissioncheck($obj, $permLevel, $currentUser, $actionId)
 {
-    // calculate the permission component
-    $objectType = $obj['_objectType'];
-    $component = 'MUYourCityModule:' . ucfirst($objectType) . ':';
-
-    // calculate the permission instance
-    $instance = $obj->createCompositeIdentifier() . '::';
-
-    // now perform the permission check
-    $result = SecurityUtil::checkPermission($component, $instance, $permLevel, $currentUser);
-
-    // check whether the current user is the owner
-    if (!$result && isset($obj['createdBy']) && $obj['createdBy']->getUid() == $currentUser) {
-        // allow author update operations for all states which occur before 'approved' in the object's life cycle.
-        $result = in_array($actionId, ['initial', 'waiting', 'accepted']);
-    }
+    // perform the permission check
+    $result = SecurityUtil::checkPermission('MUYourCityModule:' . ucfirst($obj->get_objectType()) . ':', $obj->getKey() . '::', $permLevel, $currentUser);
 
     return $result;
 }

@@ -25,7 +25,6 @@ use Zikula\Component\SortableColumns\SortableColumns;
 use Zikula\Core\Controller\AbstractController;
 use Zikula\Core\RouteUrl;
 use MU\YourCityModule\Entity\PartEntity;
-use MU\YourCityModule\Helper\FeatureActivationHelper;
 
 /**
  * Part controller base class.
@@ -140,7 +139,6 @@ abstract class AbstractPartController extends AbstractController
         
         $sortableColumns->addColumns([
             new Column('name'),
-            new Column('description'),
             new Column('createdBy'),
             new Column('createdDate'),
             new Column('updatedBy'),
@@ -205,7 +203,7 @@ abstract class AbstractPartController extends AbstractController
             throw new AccessDeniedException();
         }
         // create identifier for permission check
-        $instanceId = $part->createCompositeIdentifier();
+        $instanceId = $part->getKey();
         if (!$this->hasPermission('MUYourCityModule:' . ucfirst($objectType) . ':', $instanceId . '::', $permLevel)) {
             throw new AccessDeniedException();
         }
@@ -338,7 +336,7 @@ abstract class AbstractPartController extends AbstractController
             throw new AccessDeniedException();
         }
         $logger = $this->get('logger');
-        $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => 'part', 'id' => $part->createCompositeIdentifier()];
+        $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => 'part', 'id' => $part->getKey()];
         
         $part->initWorkflow();
         

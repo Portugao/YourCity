@@ -57,6 +57,7 @@ abstract class AbstractDishRepository extends EntityRepository
         return [
             'name',
             'description',
+            'kindOfDish',
             'imageOfDish',
             'priceOfDish',
             'positionOfDish',
@@ -286,7 +287,7 @@ abstract class AbstractDishRepository extends EntityRepository
     /**
      * Adds an array of id filters to given query instance.
      *
-     * @param mixed        $idList The array of ids to use to retrieve the object
+     * @param array        $idList The array of ids to use to retrieve the object
      * @param QueryBuilder $qb     Query builder to be enhanced
      *
      * @return QueryBuilder Enriched query builder instance
@@ -303,15 +304,7 @@ abstract class AbstractDishRepository extends EntityRepository
                 throw new InvalidArgumentException('Invalid identifier received.');
             }
     
-            if (is_array($id)) {
-                $andX = $qb->expr()->andX();
-                foreach ($id as $fieldName => $fieldValue) {
-                    $andX->add($qb->expr()->eq('tbl.' . $fieldName, $fieldValue));
-                }
-                $orX->add($andX);
-            } else {
-                $orX->add($qb->expr()->eq('tbl.id', $id));
-            }
+            $orX->add($qb->expr()->eq('tbl.id', $id));
         }
     
         $qb->andWhere($orX);
@@ -707,8 +700,6 @@ abstract class AbstractDishRepository extends EntityRepository
     {
         $selection = ', tblMenuOfLocation, tblPartOfMenu, tblLocation';
     
-        $selection = ', tblCategories';
-    
         return $selection;
     }
     
@@ -724,8 +715,6 @@ abstract class AbstractDishRepository extends EntityRepository
         $qb->leftJoin('tbl.menuOfLocation', 'tblMenuOfLocation');
         $qb->leftJoin('tbl.partOfMenu', 'tblPartOfMenu');
         $qb->leftJoin('tbl.location', 'tblLocation');
-    
-        $qb->leftJoin('tbl.categories', 'tblCategories');
     
         return $qb;
     }

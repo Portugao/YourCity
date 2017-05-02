@@ -94,9 +94,6 @@ abstract class AbstractEventQuickNavType extends AbstractType
             ->add('tpl', 'Symfony\Component\Form\Extension\Core\Type\HiddenType')
         ;
 
-        if ($this->featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, 'event')) {
-            $this->addCategoriesField($builder, $options);
-        }
         $this->addIncomingRelationshipFields($builder, $options);
         $this->addListFields($builder, $options);
         $this->addSearchField($builder, $options);
@@ -107,32 +104,6 @@ abstract class AbstractEventQuickNavType extends AbstractType
             'attr' => [
                 'class' => 'btn btn-default btn-sm'
             ]
-        ]);
-    }
-
-    /**
-     * Adds a categories field.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
-    public function addCategoriesField(FormBuilderInterface $builder, array $options)
-    {
-        $objectType = 'event';
-    
-        $builder->add('categories', 'Zikula\CategoriesModule\Form\Type\CategoriesType', [
-            'label' => $this->__('Category'),
-            'empty_data' => null,
-            'attr' => [
-                'class' => 'input-sm category-selector',
-                'title' => $this->__('This is an optional filter.')
-            ],
-            'help' => $this->__('This is an optional filter.'),
-            'required' => false,
-            'multiple' => false,
-            'module' => 'MUYourCityModule',
-            'entity' => ucfirst($objectType) . 'Entity',
-            'entityCategoryClass' => 'MU\YourCityModule\Entity\\' . ucfirst($objectType) . 'CategoryEntity'
         ]);
     }
 
@@ -200,6 +171,26 @@ abstract class AbstractEventQuickNavType extends AbstractType
             'multiple' => false,
             'expanded' => false
         ]);
+        $listEntries = $this->listHelper->getEntries('event', 'kindOfEvent');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('kindOfEvent', 'MU\YourCityModule\Form\Type\Field\MultiListType', [
+            'label' => $this->__('Kind of event'),
+            'attr' => [
+                'class' => 'input-sm'
+            ],
+            'required' => false,
+            'placeholder' => $this->__('All'),
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => true,
+            'expanded' => false
+        ]);
     }
 
     /**
@@ -239,14 +230,12 @@ abstract class AbstractEventQuickNavType extends AbstractType
                     $this->__('Name') => 'name',
                     $this->__('Description') => 'description',
                     $this->__('Image of event') => 'imageOfEvent',
+                    $this->__('Kind of event') => 'kindOfEvent',
                     $this->__('Street') => 'street',
                     $this->__('Number of street') => 'numberOfStreet',
                     $this->__('Zip code') => 'zipCode',
                     $this->__('City') => 'city',
-                    $this->__('Start date') => 'startDate',
-                    $this->__('End date') => 'endDate',
-                    $this->__('Start 2 date') => 'start2Date',
-                    $this->__('End 2 date') => 'end2Date',
+                    $this->__('In view until') => 'inViewUntil',
                     $this->__('Creation date') => 'createdDate',
                     $this->__('Creator') => 'createdBy',
                     $this->__('Update date') => 'updatedDate',

@@ -34,9 +34,6 @@
                 <th id="hName" scope="col" class="text-left">
                     <a href="{{ sort.name.url }}" title="{{ __f('Sort by %s', {'%s': 'name'}) }}" class="{{ sort.name.class }}">{{ __('Name') }}</a>
                 </th>
-                <th id="hDescription" scope="col" class="text-left">
-                    <a href="{{ sort.description.url }}" title="{{ __f('Sort by %s', {'%s': 'description'}) }}" class="{{ sort.description.class }}">{{ __('Description') }}</a>
-                </th>
             </tr>
             </thead>
             <tbody>
@@ -58,9 +55,6 @@
                 </td>
                 <td headers="hName" class="text-left">
                     <a href="{{ path('muyourcitymodule_part_' ~ routeArea ~ 'display', { 'id': part.id }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ part.name|notifyFilters('muyourcitymodule.filterhook.parts') }}</a>
-                </td>
-                <td headers="hDescription" class="text-left">
-                    {{ part.description|safeHtml|truncate(50) }}
                 </td>
             </tr>
         {% else %}

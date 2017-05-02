@@ -79,8 +79,7 @@ abstract class AbstractFileOfLocationEntity extends EntityAccess implements Tran
     /**
      * Maximum 2000 characters.
      * @Gedmo\Translatable
-     * @ORM\Column(type="text", length=2000)
-     * @Assert\NotNull()
+     * @ORM\Column(type="text", length=2000, nullable=true)
      * @Assert\Length(min="0", max="2000")
      * @var text $description
      */
@@ -139,7 +138,11 @@ abstract class AbstractFileOfLocationEntity extends EntityAccess implements Tran
      * Bidirectional - Many filesOfLocation [files of location] are linked by one location [location] (OWNING SIDE).
      *
      * @ORM\ManyToOne(targetEntity="MU\YourCityModule\Entity\LocationEntity", inversedBy="filesOfLocation")
-     * @ORM\JoinTable(name="mu_yourcity_location")
+     * @ORM\JoinTable(name="mu_yourcity_location",
+     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
+     * )
+     * @Assert\NotNull(message="Choosing a location is required.")
      * @Assert\Type(type="MU\YourCityModule\Entity\LocationEntity")
      * @var \MU\YourCityModule\Entity\LocationEntity $location
      */
@@ -275,7 +278,7 @@ abstract class AbstractFileOfLocationEntity extends EntityAccess implements Tran
     public function setDescription($description)
     {
         if ($this->description !== $description) {
-            $this->description = isset($description) ? $description : '';
+            $this->description = $description;
         }
     }
     
@@ -441,27 +444,25 @@ abstract class AbstractFileOfLocationEntity extends EntityAccess implements Tran
      */
     public function createUrlArgs()
     {
-        $args = [];
-    
-        $args['id'] = $this['id'];
+        $args = [
+            'id' => $this->getId()
+        ];
     
         if (property_exists($this, 'slug')) {
-            $args['slug'] = $this['slug'];
+            $args['slug'] = $this->getSlug();
         }
     
         return $args;
     }
     
     /**
-     * Create concatenated identifier string (for composite keys).
+     * Returns the primary key.
      *
-     * @return String concatenated identifiers
+     * @return integer The identifier
      */
-    public function createCompositeIdentifier()
+    public function getKey()
     {
-        $itemId = $this['id'];
-    
-        return $itemId;
+        return $this->getId();
     }
     
     /**
@@ -504,7 +505,7 @@ abstract class AbstractFileOfLocationEntity extends EntityAccess implements Tran
      */
     public function __toString()
     {
-        return 'File of location ' . $this->createCompositeIdentifier() . ': ' . $this->getName();
+        return 'File of location ' . $this->getKey() . ': ' . $this->getName();
     }
     
     /**
@@ -520,7 +521,7 @@ abstract class AbstractFileOfLocationEntity extends EntityAccess implements Tran
     public function __clone()
     {
         // if the entity has no identity do nothing, do NOT throw an exception
-        if (!($this->id)) {
+        if (!$this->id) {
             return;
         }
     

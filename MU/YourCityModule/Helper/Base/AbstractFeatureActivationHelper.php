@@ -18,11 +18,6 @@ namespace MU\YourCityModule\Helper\Base;
 abstract class AbstractFeatureActivationHelper
 {
     /**
-     * Categorisation feature
-     */
-    const CATEGORIES = 'categories';
-    
-    /**
      * Translation feature
      */
     const TRANSLATIONS = 'translations';
@@ -37,14 +32,6 @@ abstract class AbstractFeatureActivationHelper
      */
     public function isEnabled($feature, $objectType)
     {
-        if ($feature == self::CATEGORIES) {
-            $method = 'hasCategories';
-            if (method_exists($this, $method)) {
-                return $this->$method($objectType);
-            }
-    
-            return in_array($objectType, ['location', 'dish', 'event', 'product']);
-        }
         if ($feature == self::TRANSLATIONS) {
             $method = 'hasTranslations';
             if (method_exists($this, $method)) {

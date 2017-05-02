@@ -120,9 +120,6 @@ abstract class AbstractEventType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addEntityFields($builder, $options);
-        if ($this->featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, 'event')) {
-            $this->addCategoriesField($builder, $options);
-        }
         $this->addIncomingRelationshipFields($builder, $options);
         $this->addModerationFields($builder, $options);
         $this->addReturnControlField($builder, $options);
@@ -157,6 +154,11 @@ abstract class AbstractEventType extends AbstractType
         
         $builder->add('name', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
             'label' => $this->__('Name') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Maximum 100 characters; better only 57 for SEO.')
+            ],
+            'help' => $this->__('Maximum 100 characters; better only 57 for SEO.'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 100,
@@ -211,6 +213,28 @@ abstract class AbstractEventType extends AbstractType
             'entity' => $options['entity'],
             'allowed_extensions' => 'gif, jpeg, jpg, png',
             'allowed_size' => ''
+        ]);
+        
+        $listEntries = $this->listHelper->getEntries('event', 'kindOfEvent');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('kindOfEvent', 'MU\YourCityModule\Form\Type\Field\MultiListType', [
+            'label' => $this->__('Kind of event') . ':',
+            'empty_data' => 'other',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('Choose the kind of event')
+            ],
+            'required' => true,
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => true,
+            'expanded' => false
         ]);
         
         $builder->add('street', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
@@ -312,6 +336,29 @@ abstract class AbstractEventType extends AbstractType
             'date_widget' => 'single_text',
             'time_widget' => 'single_text'
         ]);
+        
+        $builder->add('inViewUntil', 'Symfony\Component\Form\Extension\Core\Type\DateTimeType', [
+            'label' => $this->__('In view until') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Here you can enter the date and time until this event will appear in the overview of events.
+                Then it will get put into the archive. You only are able to reuse it as model.
+                If you do not enter a value, this event will be shown further after the end.')
+            ],
+            'help' => $this->__('Here you can enter the date and time until this event will appear in the overview of events.
+            Then it will get put into the archive. You only are able to reuse it as model.
+            If you do not enter a value, this event will be shown further after the end.'),
+            'empty_data' => '',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('Enter the in view until of the event')
+            ],
+            'required' => false,
+            'empty_data' => null,
+            'with_seconds' => true,
+            'date_widget' => 'single_text',
+            'time_widget' => 'single_text'
+        ]);
         $this->addGeographicalFields($builder, $options);
     }
 
@@ -340,28 +387,6 @@ abstract class AbstractEventType extends AbstractType
     }
 
     /**
-     * Adds a categories field.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
-    public function addCategoriesField(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add('categories', 'Zikula\CategoriesModule\Form\Type\CategoriesType', [
-            'label' => $this->__('Category') . ':',
-            'empty_data' => null,
-            'attr' => [
-                'class' => 'category-selector'
-            ],
-            'required' => false,
-            'multiple' => false,
-            'module' => 'MUYourCityModule',
-            'entity' => 'EventEntity',
-            'entityCategoryClass' => 'MU\YourCityModule\Entity\EventCategoryEntity'
-        ]);
-    }
-
-    /**
      * Adds fields for incoming relationships.
      *
      * @param FormBuilderInterface $builder The form builder
@@ -383,8 +408,6 @@ abstract class AbstractEventType extends AbstractType
             'multiple' => false,
             'expanded' => false,
             'query_builder' => $queryBuilder,
-            'placeholder' => $this->__('Please choose an option'),
-            'required' => false,
             'label' => $this->__('Location'),
             'attr' => [
                 'title' => $this->__('Choose the location')
@@ -507,6 +530,7 @@ abstract class AbstractEventType extends AbstractType
                     return $this->entityFactory->createEvent();
                 },
                 'error_mapping' => [
+                    'isKindOfEventValueAllowed' => 'kindOfEvent',
                     'imageOfEvent' => 'imageOfEvent.imageOfEvent',
                 ],
                 'mode' => 'create',
