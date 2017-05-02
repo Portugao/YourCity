@@ -190,6 +190,8 @@ div.muyourcitymodule-view .avatar img {
 .item-list {
 	list-style-type: none;
 	font-size: 1.4em;
+	min-height: 120px;
+	margin: 0 0 10px 0;
 }
 
 .abo-location-list > h2 {
