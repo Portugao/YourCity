@@ -58,7 +58,7 @@
             {{ include('@MUYourCityModule/Helper/includeStandardFieldsEdit.html.twig', { obj: abonnement }) }}
         {% endif %}
         
-        {% set hookId = mode != 'create' ? abonnement.getKey() : null %}
+        {% set hookId = mode != 'create' ? abonnement.id : null %}
         {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.abonnements.form_edit', id=hookId) %}
         {% if hooks is iterable and hooks|length > 0 %}
             {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
@@ -114,7 +114,7 @@
                 {% if form.moderationSpecificCreator is defined %}
                     mUYourCityInitUserField('muyourcitymodule_abonnement_moderationSpecificCreator', 'getCommonUsersList');
                 {% endif %}
-                mUYourCityInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ abonnement.getKey() }}{% endif %}');
+                mUYourCityInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ abonnement.id }}{% endif %}');
             });
         })(jQuery);
     /* ]]> */

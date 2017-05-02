@@ -15,9 +15,9 @@
     <h2>{{ __('Menus') }}</h2>
     {% for menu in item.menuOfLocation %}
     {% if menu|length <= 4 %}
-        <div class="col-md-12 abo-location-list">
+        <div class="col-md-12 abo-location-list menu">
     {% else %}
-        <div class="col-md-6 abo-location-list">
+        <div class="col-md-6 abo-location-list menu">
     {% endif %}
         {{ include(
         '@MUYourCityModule/MenuOfLocation/includeDisplayItemListOneOwn.html.twig',
@@ -32,9 +32,9 @@
     <h2>{{ __('Offers') }}</h2>
     {% for offer in item.offers %}
     {% if item.offers|length <= 4 %}
-        <div class="col-md-12 abo-location-list">
+        <div class="col-md-12 abo-location-list offer">
     {% else %}
-        <div class="col-md-6 abo-location-list">
+        <div class="col-md-6 abo-location-list offer">
     {% endif %}
         {{ include(
         '@MUYourCityModule/Offer/includeDisplayItemListOneOwn.html.twig',
@@ -62,9 +62,9 @@
     <h2>{{ __('Products') }}</h2>
     {% for product in item.products %}
     {% if item.products|length <= 4 %}
-        <div class="col-md-6 abo-location-list">
+        <div class="col-md-6 abo-location-list product">
     {% else %}
-        <div class="col-md-4 abo-location-list">
+        <div class="col-md-4 abo-location-list product">
     {% endif %}
         {{ include(
         '@MUYourCityModule/Product/includeDisplayItemListOneOwn.html.twig',

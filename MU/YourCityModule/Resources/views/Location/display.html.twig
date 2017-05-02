@@ -16,6 +16,20 @@
             {% else %}&nbsp;{% endif %}    
     </div>
     
+            {% if location.imageOfLocation is not empty %}
+        <div id="locationImage">{% if location.imageOfLocation is not empty and location.imageOfLocationMeta|default %}
+                        <a href="{{ location.imageOfLocationUrl }}" title="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if location.imageOfLocationMeta.isImage %} class="image-link"{% endif %}>
+            {% if location.imageOfLocationMeta.isImage %}
+                {% set thumbOptions = attribute(thumbRuntimeOptions, 'locationImageOfLocation') %}
+                <img src="{{ location.imageOfLocation.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail img-responsive" />
+            {% else %}
+                {{ __('Download') }} ({{ location.imageOfLocationMeta.size|muyourcitymodule_fileSize(location.imageOfLocation.getPathname(), false, false) }})
+            {% endif %}
+            </a>
+            {% else %}&nbsp;{% endif %}
+            </div>
+        {% endif %}
+    
     {% set templateTitle = location|muyourcitymodule_formattedTitle|default(__('Location')) %}
     {{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.locations.filter') }}{% if routeArea == 'admin' %} <small>({{ location.workflowState|muyourcitymodule_objectState(false)|lower }})</small>{% endif %}
     {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: location, area: routeArea, context: 'display' }) %}
@@ -28,28 +42,15 @@
 {% block content %}
     
     {% set isQuickView = app.request.query.getBoolean('raw', false) %}
+    
     <div class="muyourcitymodule-location muyourcitymodule-display">
     <div class="row">
         <div class="col-sm-8">
+        
         <div class="col-sm-7">
         {% if location.workflowState is not empty and routeArea == 'admin' %}
             <dt>{{ __('State') }}</dt>
             <dd>{{ location.workflowState|muyourcitymodule_listEntry('location', 'workflowState') }}</dd>
-        {% endif %}
-        
-        {% if location.imageOfLocation is not empty %}
-  
-            <div id="locationImage">{% if location.imageOfLocation is not empty and location.imageOfLocationMeta|default %}
-                        <a href="{{ location.imageOfLocationUrl }}" title="{{ location.getTitleFromDisplayPattern()|e('html_attr') }}"{% if location.imageOfLocationMeta.isImage %} class="image-link"{% endif %}>
-            {% if location.imageOfLocationMeta.isImage %}
-                {% set thumbOptions = attribute(thumbRuntimeOptions, 'locationImageOfLocation') %}
-                <img src="{{ location.imageOfLocation.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ location.getTitleFromDisplayPattern()|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail img-responsive" />
-            {% else %}
-                {{ __('Download') }} ({{ location.imageOfLocationMeta.size|muyourcitymodule_fileSize(location.imageOfLocation.getPathname(), false, false) }})
-            {% endif %}
-            </a>
-            {% else %}&nbsp;{% endif %}
-            </div>
         {% endif %}
         
         {% if location.description is not empty %}

@@ -149,7 +149,7 @@
             {{ include('@MUYourCityModule/Helper/includeStandardFieldsEdit.html.twig', { obj: location }) }}
         {% endif %}
         
-        {% set hookId = mode != 'create' ? location.getKey() : null %}
+        {% set hookId = mode != 'create' ? location.id : null %}
         {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.locations.form_edit', id=hookId) %}
         {% if hooks is iterable and hooks|length > 0 %}
             {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
@@ -233,7 +233,7 @@
                 {% if form.moderationSpecificCreator is defined %}
                     mUYourCityInitUserField('muyourcitymodule_location_moderationSpecificCreator', 'getCommonUsersList');
                 {% endif %}
-                mUYourCityInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ location.getKey() }}{% endif %}');
+                mUYourCityInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ location.id }}{% endif %}');
                 mUYourCityInitUploadField('muyourcitymodule_location_logoOfYourLocation_logoOfYourLocation');
                 mUYourCityInitUploadField('muyourcitymodule_location_imageOfLocation_imageOfLocation');
             });

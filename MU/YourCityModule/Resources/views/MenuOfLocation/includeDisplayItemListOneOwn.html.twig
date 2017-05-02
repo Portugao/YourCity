@@ -12,9 +12,9 @@
 {% if item.dishes %}
     {% for dish in item.dishes %}
         {% if dish|length <= 4 %}
-            <div class="col-md-6 abo-location-list">
+            <div class="col-md-6 abo-location-list dish">
         {% else %}
-            <div class="col-md-4 abo-location-list">
+            <div class="col-md-4 abo-location-list dish">
         {% endif %}
         {{ include(
         '@MUYourCityModule/Dish/includeDisplayItemListOneOwn.html.twig',

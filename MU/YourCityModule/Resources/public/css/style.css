@@ -142,12 +142,24 @@ div.muyourcitymodule-view .avatar img {
 
 /*****************OWN**********************/
 
+.z-module-muyourcitymodule h2 {
+	font-size: 2em;
+}
+
 .list-group {
 	margin: 10px 0;
 }
 
+.abonnement-edit {
+	position: absolute;
+	top: 10px;
+	right: 25px;
+	z-index: 250;
+}
+
 #location-logo {
-	float: right;
+	float: left;
+	margin: 0 15px 0 0;
 }
 
 .location-h2 h2 {
@@ -160,12 +172,23 @@ div.muyourcitymodule-view .avatar img {
 	border: 1px solid #ddd;
 	padding: 5px;
 	margin: 10px 0 0 0;
-	backround: #efefef;
 }
 
 .abo-location-list > h2 {
 	font-size: 1.5em;
 	margin: 20px 0 0 0;
+}
+
+.abo {
+	background: #efefef;
+}
+
+.dish {
+	background: #eee;
+}
+
+.menu {
+	background: #ddd;
 }
 
 #branch-user-list {
@@ -174,6 +197,7 @@ div.muyourcitymodule-view .avatar img {
 
 #locationImage {
 	float: right;
+	margin: 0 25px 0 15px;
 }
 
 .location-tram:before {

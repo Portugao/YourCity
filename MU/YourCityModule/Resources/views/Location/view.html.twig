@@ -26,7 +26,6 @@
                 <col id="cName" />
                 <col id="cLogoOfYourLocation" />
                 <col id="cDescription" />
-                <col id="cDescription2" />
                 <col id="cImageOfLocation" />
                 <col id="cStreet" />
                 <col id="cNumberOfStreet" />
@@ -58,9 +57,6 @@
                 </th>
                 <th id="hDescription" scope="col" class="text-left">
                     <a href="{{ sort.description.url }}" title="{{ __f('Sort by %s', {'%s': 'description'}) }}" class="{{ sort.description.class }}">{{ __('Description') }}</a>
-                </th>
-                <th id="hDescription2" scope="col" class="text-left">
-                    <a href="{{ sort.description2.url }}" title="{{ __f('Sort by %s', {'%s': 'description 2'}) }}" class="{{ sort.description2.class }}">{{ __('Description 2') }}</a>
                 </th>
                 <th id="hImageOfLocation" scope="col" class="text-left">
                     <a href="{{ sort.imageOfLocation.url }}" title="{{ __f('Sort by %s', {'%s': 'image of location'}) }}" class="{{ sort.imageOfLocation.class }}">{{ __('Image of location') }}</a>
@@ -127,9 +123,6 @@
                 </td>
                 <td headers="hDescription" class="text-left">
                     {{ location.description|safeHtml|truncate(50) }}
-                </td>
-                <td headers="hDescription2" class="text-left">
-                    {{ location.description2|safeHtml|truncate(50) }}
                 </td>
                 <td headers="hImageOfLocation" class="text-left">
                     {% if location.imageOfLocation is not empty and location.imageOfLocationMeta|default %}

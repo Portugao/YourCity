@@ -88,7 +88,7 @@
             {{ include('@MUYourCityModule/Helper/includeStandardFieldsEdit.html.twig', { obj: event }) }}
         {% endif %}
         
-        {% set hookId = mode != 'create' ? event.getKey() : null %}
+        {% set hookId = mode != 'create' ? event.id : null %}
         {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.events.form_edit', id=hookId) %}
         {% if hooks is iterable and hooks|length > 0 %}
             {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
@@ -164,7 +164,7 @@
                 {% if form.moderationSpecificCreator is defined %}
                     mUYourCityInitUserField('muyourcitymodule_event_moderationSpecificCreator', 'getCommonUsersList');
                 {% endif %}
-                mUYourCityInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ event.getKey() }}{% endif %}');
+                mUYourCityInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ event.id }}{% endif %}');
                 mUYourCityInitUploadField('muyourcitymodule_event_imageOfEvent_imageOfEvent');
                 mUYourCityInitDateField('muyourcitymodule_event_start2Date');
                 mUYourCityInitDateField('muyourcitymodule_event_end2Date');
