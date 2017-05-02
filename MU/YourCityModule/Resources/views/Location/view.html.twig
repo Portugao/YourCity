@@ -8,7 +8,36 @@
     {{ block('page_nav_links') }}
 
     {{ include('@MUYourCityModule/Location/viewQuickNav.html.twig') }}{# see template file for available options #}
+    
+    {% if routeArea != 'admin' %}
+        {% if items %}
+            <ul>
+            {% for location in items %}
+                <li class="col-md-3 item-list">
+                {% if location.state == 'closed' %}
+                    {% set state = 'locationClosed' %}
+                {% endif %}
+                {% if location.state == 'open' %}
+                    {% set state = 'locationOpen' %}
+                {% endif %}
+                {% if location.state == 'agreement' %}
+                    {% set state = 'locationAgreement' %}
+                {% endif %}
+                    <span class="status-icon {{ state }}">{% if state == 'locationClosed' or state == 'locationAgreement' %}<i class="fa fa-circle-o" aria-hidden="true"></i>{% endif %}{% if state == 'locationOpen' %}<i class="fa fa-circle" aria-hidden="true"></i>{% endif %} <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': location.id, 'slug': location.slug }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ location.name|notifyFilters('muyourcitymodule.filterhook.locations') }}
+                    </a></span><br />
+                    {% for part in location.parts %}
+                        <a href="{{ path('muyourcitymodule_part_' ~ routeArea ~ 'display', { 'id': part.id }) }}">{{ part.name }}</a> 
+                    {% endfor %}<br />
+                    {% for branch in location.branches %}
+                        <a href="{{ path('muyourcitymodule_branch_' ~ routeArea ~ 'display', { 'id': branch.id }) }}">{{ branch.name }}</a>
+                    {% endfor %}
+                    
+                </li>
+            {% endfor %}
+        {% endif %}
+    {% endif %}
 
+    {% if routeArea == 'admin' %}
     {% if routeArea == 'admin' %}
     <form action="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="locationsViewForm" class="form-horizontal" role="form">
         <div>
@@ -174,6 +203,7 @@
             </tbody>
         </table>
         </div>
+        {% endif %}
         
         {% if all != 1 and pager|default %}
             {{ pager({ rowcount: pager.amountOfItems, limit: pager.itemsPerPage, display: 'page', route: 'muyourcitymodule_location_' ~ routeArea ~ 'view'}) }}

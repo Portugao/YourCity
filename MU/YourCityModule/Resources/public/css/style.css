@@ -157,6 +157,18 @@ div.muyourcitymodule-view .avatar img {
 	z-index: 250;
 }
 
+.locationAgreement {
+	color: #ff8040;
+}
+
+.locationOpen {
+	color: #008a00;
+}
+
+.locationClosed {
+	color: #ff0000;
+}
+
 #location-logo {
 	float: left;
 	margin: 0 15px 0 0;
@@ -166,12 +178,18 @@ div.muyourcitymodule-view .avatar img {
 	font-size: 1.6em;
 }
 
+.item-list,
 .abo-location-list {
 	position: relative;
 	border-radius: 5px;
 	border: 1px solid #ddd;
 	padding: 5px;
 	margin: 10px 0 0 0;
+}
+
+.item-list {
+	list-style-type: none;
+	font-size: 1.4em;
 }
 
 .abo-location-list > h2 {

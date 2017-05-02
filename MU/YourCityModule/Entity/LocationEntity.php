@@ -32,5 +32,32 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class LocationEntity extends BaseEntity
 {
-    // feel free to add your own methods here
+	/**
+	 * var string $state
+	 */
+	protected $state;
+	
+    /**
+     * Returns the mobil.
+     *
+     * @return string
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+    
+    /**
+     * Sets the mobil.
+     *
+     * @param string $mobil
+     *
+     * @return void
+     */
+    public function setState($state)
+    {
+        if ($this->state !== $state) {
+            $this->state = isset($state) ? $state : '';
+        }
+    }
 }

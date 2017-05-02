@@ -14,10 +14,164 @@ namespace MU\YourCityModule\Helper;
 
 use MU\YourCityModule\Helper\Base\AbstractControllerHelper;
 
+use Zikula\Component\SortableColumns\SortableColumns;
+use Zikula\Core\RouteUrl;
+use Zikula\UsersModule\Entity\UserEntity;
+
+
 /**
  * Helper implementation class for controller layer methods.
  */
 class ControllerHelper extends AbstractControllerHelper
 {
-    // feel free to add your own convenience methods here
+    /**
+     * Processes the parameters for a view action.
+     * This includes handling pagination, quick navigation forms and other aspects.
+     *
+     * @param string          $objectType         Name of treated entity type
+     * @param SortableColumns $sortableColumns    Used SortableColumns instance
+     * @param array           $templateParameters Template data
+     * @param boolean         $supportsHooks      Whether hooks are supported or not
+     *
+     * @return array Enriched template parameters used for creating the response
+     */
+    public function processViewActionParameters($objectType, SortableColumns $sortableColumns, array $templateParameters = [], $supportsHooks = false)
+    {
+        $contextArgs = ['controller' => $objectType, 'action' => 'view'];
+        if (!in_array($objectType, $this->getObjectTypes('controllerAction', $contextArgs))) {
+            throw new Exception($this->__('Error! Invalid object type received.'));
+        }
+    
+        $request = $this->request;
+        $repository = $this->entityFactory->getRepository($objectType);
+    
+        // parameter for used sorting field
+        $sort = $request->query->get('sort', '');
+        if (empty($sort) || !in_array($sort, $repository->getAllowedSortingFields())) {
+            $sort = $repository->getDefaultSortingField();
+            $request->query->set('sort', $sort);
+            // set default sorting in route parameters (e.g. for the pager)
+            $routeParams = $request->attributes->get('_route_params');
+            $routeParams['sort'] = $sort;
+            $request->attributes->set('_route_params', $routeParams);
+        }
+    
+        $templateParameters['all'] = 'csv' == $request->getRequestFormat() ? 1 : $request->query->getInt('all', 0);
+        $templateParameters['own'] = $request->query->getInt('own', $this->variableApi->get('MUYourCityModule', 'showOnlyOwnEntries', 0));
+    
+        $resultsPerPage = 0;
+        if ($templateParameters['all'] != 1) {
+            // the number of items displayed on a page for pagination
+            $resultsPerPage = $request->query->getInt('num', 0);
+            if (in_array($resultsPerPage, [0, 10])) {
+                $resultsPerPage = $this->variableApi->get('MUYourCityModule', $objectType . 'EntriesPerPage', 10);
+            }
+        }
+        $templateParameters['num'] = $resultsPerPage;
+        $templateParameters['tpl'] = $request->query->getAlnum('tpl', '');
+    
+        $templateParameters = $this->addTemplateParameters($objectType, $templateParameters, 'controllerAction', $contextArgs);
+    
+        $quickNavForm = $this->formFactory->create('MU\YourCityModule\Form\Type\QuickNavigation\\' . ucfirst($objectType) . 'QuickNavType', $templateParameters);
+        if ($quickNavForm->handleRequest($request) && $quickNavForm->isSubmitted()) {
+            $quickNavData = $quickNavForm->getData();
+            foreach ($quickNavData as $fieldName => $fieldValue) {
+                if ($fieldName == 'routeArea') {
+                    continue;
+                }
+                if (in_array($fieldName, ['all', 'own', 'num'])) {
+                    $templateParameters[$fieldName] = $fieldValue;
+                } else {
+                    // set filter as query argument, fetched inside repository
+                    if ($fieldValue instanceof UserEntity) {
+                        $fieldValue = $fieldValue->getUid();
+                    }
+                    $request->query->set($fieldName, $fieldValue);
+                }
+            }
+        }
+    
+        $urlParameters = $templateParameters;
+        foreach ($urlParameters as $parameterName => $parameterValue) {
+            if (false !== stripos($parameterName, 'thumbRuntimeOptions')) {
+                unset($urlParameters[$parameterName]);
+            }
+        }
+    
+        $sort = $sortableColumns->getSortColumn()->getName();
+        $sortdir = $sortableColumns->getSortDirection();
+        $sortableColumns->setAdditionalUrlParameters($urlParameters);
+    
+        $where = '';
+        if ($templateParameters['all'] == 1) {
+            // retrieve item list without pagination
+            $entities = $repository->selectWhere($where, $sort . ' ' . $sortdir);
+        } else {
+            // the current offset which is used to calculate the pagination
+            $currentPage = $request->query->getInt('pos', 1);
+    
+            // retrieve item list with pagination
+            list($entities, $objectCount) = $repository->selectWherePaginated($where, $sort . ' ' . $sortdir, $currentPage, $resultsPerPage);
+    
+            $templateParameters['currentPage'] = $currentPage;
+            $templateParameters['pager'] = [
+                'amountOfItems' => $objectCount,
+                'itemsPerPage' => $resultsPerPage
+            ];
+        }
+        if ($objectType == 'location') {
+        	$actualDay = $this->getActualDay();
+        	$locationEntities = array();
+        foreach ($entities as $entity) {
+        	
+        	if ($actualDay == 'Dienstag') {
+        		if ($entity['agreement'] == 1) {
+        			$entity['state'] = 'agreement';
+        			$locationEntities[] = $entity;        			
+        		} else {
+        		if ($entity['closedOnTuesday'] == 1) {
+        			$entity['state'] = 'closed';
+        			$locationEntities[] = $entity;
+        		} else {
+        			$entity['state'] = 'open';
+        			$locationEntities[] = $entity;
+        		}
+        	}
+        	}
+        }
+        $templateParameters['items'] = $locationEntities;
+        } else {
+        	$templateParameters['items'] = $entities;
+        }
+        
+    
+        $templateParameters['sort'] = $sort;
+        $templateParameters['sortdir'] = $sortdir;
+        //$templateParameters['items'] = $entities;
+    
+    
+        if (true === $supportsHooks) {
+            // build RouteUrl instance for display hooks
+            $urlParameters['_locale'] = $request->getLocale();
+            $templateParameters['currentUrlObject'] = new RouteUrl('muyourcitymodule_' . $objectType . '_' . /*$templateParameters['routeArea'] . */'view', $urlParameters);
+        }
+    
+        $templateParameters['sort'] = $sortableColumns->generateSortableColumns();
+        $templateParameters['quickNavForm'] = $quickNavForm->createView();
+    
+        $templateParameters['canBeCreated'] = $this->modelHelper->canBeCreated($objectType);
+    
+        return $templateParameters;
+    }
+    
+    private function getActualDay()
+    {
+    	$wochentage = array('Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag');
+    	
+    	$tag = date ( "w" );
+    	$year = date ( "Y" );
+    	
+    	return $wochentage[$tag];
+    	
+    }
 }
