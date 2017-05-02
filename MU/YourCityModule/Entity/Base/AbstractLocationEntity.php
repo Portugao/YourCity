@@ -77,6 +77,7 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     protected $workflowState = 'initial';
     
     /**
+     * Enter the name of your company. If your company is registered somewhere, enter the exact name-
      * @ORM\Column(length=255)
      * @Assert\NotBlank()
      * @Assert\Length(min="0", max="255")
@@ -85,6 +86,16 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     protected $name = '';
     
     /**
+     * Enter the letter for ordering of the location.
+     * @ORM\Column(length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(min="0", max="255")
+     * @var string $letterForOrder
+     */
+    protected $letterForOrder = '';
+    
+    /**
+     * Slogan or additional name of your company.
      * @Gedmo\Translatable
      * @ORM\Column(length=255, nullable=true)
      * @Assert\Length(min="0", max="255")
@@ -102,6 +113,7 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     protected $logoOfYourLocationMeta = [];
     
     /**
+     * If your location has a logo, you can upload it here.
      * @ORM\Column(length=255, nullable=true)
      * @Assert\Length(min="0", max="255")
      * @Assert\File(
@@ -127,15 +139,18 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     protected $logoOfYourLocationUrl = '';
     
     /**
+     * Enter the description for google and Co.
+     Only 170 characters are allowed.
      * @Gedmo\Translatable
-     * @ORM\Column(length=255, nullable=true)
-     * @Assert\Length(min="0", max="255")
+     * @ORM\Column(length=170, nullable=true)
+     * @Assert\Length(min="0", max="170")
      * @var string $descriptionForGoogle
      */
     protected $descriptionForGoogle = '';
     
     /**
-     * Maximum 2000 characters.
+     * Enter a description of your location (company) and your products.
+     Maximum 2000 characters.
      * @Gedmo\Translatable
      * @ORM\Column(type="text", length=2000, nullable=true)
      * @Assert\Length(min="0", max="2000")
@@ -163,6 +178,7 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     protected $imageOfLocationMeta = [];
     
     /**
+     * Here you can upload an image, that represents your company.
      * @ORM\Column(length=255, nullable=true)
      * @Assert\Length(min="0", max="255")
      * @Assert\File(
@@ -571,7 +587,7 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     
     
     /**
-     * @Gedmo\Slug(fields={"name", "zipCode"}, updatable=true, unique=true, separator="-", style="lower")
+     * @Gedmo\Slug(fields={"name"}, updatable=true, unique=true, separator="-", style="lower")
      * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\Length(min="1", max="255")
      * @var string $slug
@@ -589,19 +605,15 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     protected $locale;
     
     /**
-     * @ORM\OneToMany(targetEntity="\MU\YourCityModule\Entity\LocationCategoryEntity", 
-     *                mappedBy="entity", cascade={"all"}, 
-     *                orphanRemoval=true)
-     * @var \MU\YourCityModule\Entity\LocationCategoryEntity
-     */
-    protected $categories = null;
-    
-    /**
      * Bidirectional - One location [location] has many imagesOfLocation [images of location] (INVERSE SIDE).
      *
      * @ORM\OneToMany(targetEntity="MU\YourCityModule\Entity\ImageOfLocationEntity", mappedBy="location")
-     * @ORM\JoinTable(name="mu_yourcity_locationimagesoflocation")
+     * @ORM\JoinTable(name="mu_yourcity_locationimagesoflocation",
+     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
+     * )
      * @ORM\OrderBy({"positionOfImage" = "ASC"})
+     * @Assert\NotNull(message="Choosing at least one of the images of location is required.")
      * @var \MU\YourCityModule\Entity\ImageOfLocationEntity[] $imagesOfLocation
      */
     protected $imagesOfLocation = null;
@@ -610,8 +622,12 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
      * Bidirectional - One location [location] has many filesOfLocation [files of location] (INVERSE SIDE).
      *
      * @ORM\OneToMany(targetEntity="MU\YourCityModule\Entity\FileOfLocationEntity", mappedBy="location")
-     * @ORM\JoinTable(name="mu_yourcity_locationfilesoflocation")
+     * @ORM\JoinTable(name="mu_yourcity_locationfilesoflocation",
+     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
+     * )
      * @ORM\OrderBy({"positionOfFile" = "ASC"})
+     * @Assert\NotNull(message="Choosing at least one of the files of location is required.")
      * @var \MU\YourCityModule\Entity\FileOfLocationEntity[] $filesOfLocation
      */
     protected $filesOfLocation = null;
@@ -638,7 +654,11 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
      * Bidirectional - One location [location] has many offers [offers] (INVERSE SIDE).
      *
      * @ORM\OneToMany(targetEntity="MU\YourCityModule\Entity\OfferEntity", mappedBy="location")
-     * @ORM\JoinTable(name="mu_yourcity_locationoffers")
+     * @ORM\JoinTable(name="mu_yourcity_locationoffers",
+     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
+     * )
+     * @Assert\NotNull(message="Choosing at least one of the offers is required.")
      * @var \MU\YourCityModule\Entity\OfferEntity[] $offers
      */
     protected $offers = null;
@@ -661,7 +681,12 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
      * Bidirectional - One location [location] has many events [events] (INVERSE SIDE).
      *
      * @ORM\OneToMany(targetEntity="MU\YourCityModule\Entity\EventEntity", mappedBy="location")
-     * @ORM\JoinTable(name="mu_yourcity_locationevents")
+     * @ORM\JoinTable(name="mu_yourcity_locationevents",
+     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
+     * )
+     * @ORM\OrderBy({"startDate" = "ASC"})
+     * @Assert\NotNull(message="Choosing at least one of the events is required.")
      * @var \MU\YourCityModule\Entity\EventEntity[] $events
      */
     protected $events = null;
@@ -684,8 +709,12 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
      * Bidirectional - One location [location] has many dishes [dishes] (INVERSE SIDE).
      *
      * @ORM\OneToMany(targetEntity="MU\YourCityModule\Entity\DishEntity", mappedBy="location")
-     * @ORM\JoinTable(name="mu_yourcity_locationdishes")
+     * @ORM\JoinTable(name="mu_yourcity_locationdishes",
+     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
+     * )
      * @ORM\OrderBy({"positionOfDish" = "ASC"})
+     * @Assert\NotNull(message="Choosing at least one of the dishes is required.")
      * @var \MU\YourCityModule\Entity\DishEntity[] $dishes
      */
     protected $dishes = null;
@@ -712,7 +741,11 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
      * Bidirectional - One location [location] has many abonnements [abonnements] (INVERSE SIDE).
      *
      * @ORM\OneToMany(targetEntity="MU\YourCityModule\Entity\AbonnementEntity", mappedBy="location")
-     * @ORM\JoinTable(name="mu_yourcity_locationabonnements")
+     * @ORM\JoinTable(name="mu_yourcity_locationabonnements",
+     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
+     * )
+     * @Assert\NotNull(message="Choosing at least one of the abonnements is required.")
      * @var \MU\YourCityModule\Entity\AbonnementEntity[] $abonnements
      */
     protected $abonnements = null;
@@ -740,7 +773,6 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
         $this->parts = new ArrayCollection();
         $this->specialsOfLocation = new ArrayCollection();
         $this->servicesOfLocation = new ArrayCollection();
-        $this->categories = new ArrayCollection();
     }
     
     /**
@@ -837,6 +869,30 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     {
         if ($this->name !== $name) {
             $this->name = isset($name) ? $name : '';
+        }
+    }
+    
+    /**
+     * Returns the letter for order.
+     *
+     * @return string
+     */
+    public function getLetterForOrder()
+    {
+        return $this->letterForOrder;
+    }
+    
+    /**
+     * Sets the letter for order.
+     *
+     * @param string $letterForOrder
+     *
+     * @return void
+     */
+    public function setLetterForOrder($letterForOrder)
+    {
+        if ($this->letterForOrder !== $letterForOrder) {
+            $this->letterForOrder = isset($letterForOrder) ? $letterForOrder : '';
         }
     }
     
@@ -2544,59 +2600,6 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
         }
     }
     
-    /**
-     * Returns the categories.
-     *
-     * @return ArrayCollection[]
-     */
-    public function getCategories()
-    {
-        return $this->categories;
-    }
-    
-    
-    /**
-     * Sets the categories.
-     *
-     * @param ArrayCollection $categories
-     *
-     * @return void
-     */
-    public function setCategories(ArrayCollection $categories)
-    {
-        foreach ($this->categories as $category) {
-            if (false === $key = $this->collectionContains($categories, $category)) {
-                $this->categories->removeElement($category);
-            } else {
-                $categories->remove($key);
-            }
-        }
-        foreach ($categories as $category) {
-            $this->categories->add($category);
-        }
-    }
-    
-    /**
-     * Checks if a collection contains an element based only on two criteria (categoryRegistryId, category).
-     *
-     * @param ArrayCollection $collection
-     * @param \MU\YourCityModule\Entity\LocationCategoryEntity $element
-     *
-     * @return bool|int
-     */
-    private function collectionContains(ArrayCollection $collection, \MU\YourCityModule\Entity\LocationCategoryEntity $element)
-    {
-        foreach ($collection as $key => $category) {
-            /** @var \MU\YourCityModule\Entity\LocationCategoryEntity $category */
-            if ($category->getCategoryRegistryId() == $element->getCategoryRegistryId()
-                && $category->getCategory() == $element->getCategory()
-            ) {
-                return $key;
-            }
-        }
-    
-        return false;
-    }
     
     /**
      * Returns the images of location.
@@ -3276,27 +3279,25 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
      */
     public function createUrlArgs()
     {
-        $args = [];
-    
-        $args['id'] = $this['id'];
+        $args = [
+            'id' => $this->getId()
+        ];
     
         if (property_exists($this, 'slug')) {
-            $args['slug'] = $this['slug'];
+            $args['slug'] = $this->getSlug();
         }
     
         return $args;
     }
     
     /**
-     * Create concatenated identifier string (for composite keys).
+     * Returns the primary key.
      *
-     * @return String concatenated identifiers
+     * @return integer The identifier
      */
-    public function createCompositeIdentifier()
+    public function getKey()
     {
-        $itemId = $this['id'];
-    
-        return $itemId;
+        return $this->getId();
     }
     
     /**
@@ -3339,7 +3340,7 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
      */
     public function __toString()
     {
-        return 'Location ' . $this->createCompositeIdentifier() . ': ' . $this->getName();
+        return 'Location ' . $this->getKey() . ': ' . $this->getName();
     }
     
     /**
@@ -3355,7 +3356,7 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     public function __clone()
     {
         // if the entity has no identity do nothing, do NOT throw an exception
-        if (!($this->id)) {
+        if (!$this->id) {
             return;
         }
     
@@ -3380,14 +3381,5 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
         $this->setUpdatedBy(null);
         $this->setUpdatedDate(null);
     
-    
-        // clone categories
-        $categories = $this->categories;
-        $this->categories = new ArrayCollection();
-        foreach ($categories as $c) {
-            $newCat = clone $c;
-            $this->categories->add($newCat);
-            $newCat->setEntity($this);
-        }
     }
 }

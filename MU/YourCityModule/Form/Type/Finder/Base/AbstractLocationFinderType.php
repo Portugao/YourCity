@@ -68,9 +68,6 @@ abstract class AbstractLocationFinderType extends AbstractType
             ])
         ;
 
-        if ($this->featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, $options['objectType'])) {
-            $this->addCategoriesField($builder, $options);
-        }
         $this->addImageFields($builder, $options);
         $this->addPasteAsField($builder, $options);
         $this->addSortingFields($builder, $options);
@@ -94,30 +91,6 @@ abstract class AbstractLocationFinderType extends AbstractType
                 ]
             ])
         ;
-    }
-
-    /**
-     * Adds a categories field.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
-    public function addCategoriesField(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add('categories', 'Zikula\CategoriesModule\Form\Type\CategoriesType', [
-            'label' => $this->__('Categories') . ':',
-            'empty_data' => [],
-            'attr' => [
-                'class' => 'category-selector',
-                'title' => $this->__('This is an optional filter.')
-            ],
-            'help' => $this->__('This is an optional filter.'),
-            'required' => false,
-            'multiple' => true,
-            'module' => 'MUYourCityModule',
-            'entity' => ucfirst($options['objectType']) . 'Entity',
-            'entityCategoryClass' => 'MU\YourCityModule\Entity\\' . ucfirst($options['objectType']) . 'CategoryEntity'
-        ]);
     }
 
     /**
@@ -191,7 +164,6 @@ abstract class AbstractLocationFinderType extends AbstractType
                     $this->__('Name') => 'name',
                     $this->__('Logo of your location') => 'logoOfYourLocation',
                     $this->__('Description') => 'description',
-                    $this->__('Description 2') => 'description2',
                     $this->__('Image of location') => 'imageOfLocation',
                     $this->__('Street') => 'street',
                     $this->__('Number of street') => 'numberOfStreet',
@@ -204,34 +176,6 @@ abstract class AbstractLocationFinderType extends AbstractType
                     $this->__('Tram') => 'tram',
                     $this->__('Bus') => 'bus',
                     $this->__('Opening hours') => 'openingHours',
-                    $this->__('Start on monday') => 'startOnMonday',
-                    $this->__('End on monday') => 'endOnMonday',
-                    $this->__('Start 2 on monday') => 'start2OnMonday',
-                    $this->__('End 2 on monday') => 'end2OnMonday',
-                    $this->__('Start on tuesday') => 'startOnTuesday',
-                    $this->__('End on tuesday') => 'endOnTuesday',
-                    $this->__('Start 2 on tuesday') => 'start2OnTuesday',
-                    $this->__('End 2 on tuesday') => 'end2OnTuesday',
-                    $this->__('Start on wednesday') => 'startOnWednesday',
-                    $this->__('End on wednesday') => 'endOnWednesday',
-                    $this->__('Start 2 on wednesday') => 'start2OnWednesday',
-                    $this->__('End 2 on wednesday') => 'end2OnWednesday',
-                    $this->__('Start on thursday') => 'startOnThursday',
-                    $this->__('End on thursday') => 'endOnThursday',
-                    $this->__('Start 2 on thursday') => 'start2OnThursday',
-                    $this->__('End 2 on thursday') => 'end2OnThursday',
-                    $this->__('Start on friday') => 'startOnFriday',
-                    $this->__('End on friday') => 'endOnFriday',
-                    $this->__('Start 2 on friday') => 'start2OnFriday',
-                    $this->__('End 2 on friday') => 'end2OnFriday',
-                    $this->__('Start on saturday') => 'startOnSaturday',
-                    $this->__('End on saturday') => 'endOnSaturday',
-                    $this->__('Star 2t on saturday') => 'star2tOnSaturday',
-                    $this->__('End 2 on saturday') => 'end2OnSaturday',
-                    $this->__('Start on sunday') => 'startOnSunday',
-                    $this->__('End on sunday') => 'endOnSunday',
-                    $this->__('Start 2 on sunday') => 'start2OnSunday',
-                    $this->__('End 2 on sunday') => 'end2OnSunday',
                     $this->__('Creation date') => 'createdDate',
                     $this->__('Creator') => 'createdBy',
                     $this->__('Update date') => 'updatedDate',

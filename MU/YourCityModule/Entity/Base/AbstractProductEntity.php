@@ -13,9 +13,9 @@
 namespace MU\YourCityModule\Entity\Base;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Translatable\Translatable;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Zikula\Core\Doctrine\EntityAccess;
 use MU\YourCityModule\Traits\EntityWorkflowTrait;
@@ -86,13 +86,49 @@ abstract class AbstractProductEntity extends EntityAccess implements Translatabl
     protected $description = '';
     
     /**
-     * @Gedmo\Translatable
      * @ORM\Column(length=255)
-     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     * @YourCityAssert\ListEntry(entityName="product", propertyName="kindOfProduct", multiple=true)
+     * @var string $kindOfProduct
+     */
+    protected $kindOfProduct = 'other';
+    
+    /**
+     * Image of product meta data array.
+     *
+     * @ORM\Column(type="array")
+     * @Assert\Type(type="array")
+     * @var array $imageOfProductMeta
+     */
+    protected $imageOfProductMeta = [];
+    
+    /**
+     * @ORM\Column(length=255, nullable=true)
+     * @Assert\Length(min="0", max="255")
+     * @Assert\File(
+     *    mimeTypes = {"image/*"}
+     * )
+     * @Assert\Image(
+     * )
+     * @var string $imageOfProduct
+     */
+    protected $imageOfProduct = null;
+    
+    /**
+     * Full image of product path as url.
+     *
+     * @Assert\Type(type="string")
+     * @var string $imageOfProductUrl
+     */
+    protected $imageOfProductUrl = '';
+    
+    /**
+     * Enter, how often your product is available today. If you leave empty your customer will see, that there is no information for today.
+     * @ORM\Column(length=255, nullable=true)
      * @YourCityAssert\ListEntry(entityName="product", propertyName="today", multiple=false)
      * @var string $today
      */
-    protected $today = '';
+    protected $today = null;
     
     /**
      * @ORM\Column(type="boolean")
@@ -171,14 +207,6 @@ abstract class AbstractProductEntity extends EntityAccess implements Translatabl
     protected $locale;
     
     /**
-     * @ORM\OneToMany(targetEntity="\MU\YourCityModule\Entity\ProductCategoryEntity", 
-     *                mappedBy="entity", cascade={"all"}, 
-     *                orphanRemoval=true)
-     * @var \MU\YourCityModule\Entity\ProductCategoryEntity
-     */
-    protected $categories = null;
-    
-    /**
      * Bidirectional - Many products [products] are linked by one location [location] (OWNING SIDE).
      *
      * @ORM\ManyToOne(targetEntity="MU\YourCityModule\Entity\LocationEntity", inversedBy="products")
@@ -203,7 +231,6 @@ abstract class AbstractProductEntity extends EntityAccess implements Translatabl
     public function __construct()
     {
         $this->initWorkflow();
-        $this->categories = new ArrayCollection();
     }
     
     /**
@@ -328,6 +355,102 @@ abstract class AbstractProductEntity extends EntityAccess implements Translatabl
     }
     
     /**
+     * Returns the kind of product.
+     *
+     * @return string
+     */
+    public function getKindOfProduct()
+    {
+        return $this->kindOfProduct;
+    }
+    
+    /**
+     * Sets the kind of product.
+     *
+     * @param string $kindOfProduct
+     *
+     * @return void
+     */
+    public function setKindOfProduct($kindOfProduct)
+    {
+        if ($this->kindOfProduct !== $kindOfProduct) {
+            $this->kindOfProduct = isset($kindOfProduct) ? $kindOfProduct : '';
+        }
+    }
+    
+    /**
+     * Returns the image of product.
+     *
+     * @return string
+     */
+    public function getImageOfProduct()
+    {
+        return $this->imageOfProduct;
+    }
+    
+    /**
+     * Sets the image of product.
+     *
+     * @param string $imageOfProduct
+     *
+     * @return void
+     */
+    public function setImageOfProduct($imageOfProduct)
+    {
+        if ($this->imageOfProduct !== $imageOfProduct) {
+            $this->imageOfProduct = $imageOfProduct;
+        }
+    }
+    
+    /**
+     * Returns the image of product url.
+     *
+     * @return string
+     */
+    public function getImageOfProductUrl()
+    {
+        return $this->imageOfProductUrl;
+    }
+    
+    /**
+     * Sets the image of product url.
+     *
+     * @param string $imageOfProductUrl
+     *
+     * @return void
+     */
+    public function setImageOfProductUrl($imageOfProductUrl)
+    {
+        if ($this->imageOfProductUrl !== $imageOfProductUrl) {
+            $this->imageOfProductUrl = $imageOfProductUrl;
+        }
+    }
+    
+    /**
+     * Returns the image of product meta.
+     *
+     * @return array
+     */
+    public function getImageOfProductMeta()
+    {
+        return $this->imageOfProductMeta;
+    }
+    
+    /**
+     * Sets the image of product meta.
+     *
+     * @param array $imageOfProductMeta
+     *
+     * @return void
+     */
+    public function setImageOfProductMeta($imageOfProductMeta = [])
+    {
+        if ($this->imageOfProductMeta !== $imageOfProductMeta) {
+            $this->imageOfProductMeta = $imageOfProductMeta;
+        }
+    }
+    
+    /**
      * Returns the today.
      *
      * @return string
@@ -347,7 +470,7 @@ abstract class AbstractProductEntity extends EntityAccess implements Translatabl
     public function setToday($today)
     {
         if ($this->today !== $today) {
-            $this->today = isset($today) ? $today : '';
+            $this->today = $today;
         }
     }
     
@@ -567,59 +690,6 @@ abstract class AbstractProductEntity extends EntityAccess implements Translatabl
         }
     }
     
-    /**
-     * Returns the categories.
-     *
-     * @return ArrayCollection[]
-     */
-    public function getCategories()
-    {
-        return $this->categories;
-    }
-    
-    
-    /**
-     * Sets the categories.
-     *
-     * @param ArrayCollection $categories
-     *
-     * @return void
-     */
-    public function setCategories(ArrayCollection $categories)
-    {
-        foreach ($this->categories as $category) {
-            if (false === $key = $this->collectionContains($categories, $category)) {
-                $this->categories->removeElement($category);
-            } else {
-                $categories->remove($key);
-            }
-        }
-        foreach ($categories as $category) {
-            $this->categories->add($category);
-        }
-    }
-    
-    /**
-     * Checks if a collection contains an element based only on two criteria (categoryRegistryId, category).
-     *
-     * @param ArrayCollection $collection
-     * @param \MU\YourCityModule\Entity\ProductCategoryEntity $element
-     *
-     * @return bool|int
-     */
-    private function collectionContains(ArrayCollection $collection, \MU\YourCityModule\Entity\ProductCategoryEntity $element)
-    {
-        foreach ($collection as $key => $category) {
-            /** @var \MU\YourCityModule\Entity\ProductCategoryEntity $category */
-            if ($category->getCategoryRegistryId() == $element->getCategoryRegistryId()
-                && $category->getCategory() == $element->getCategory()
-            ) {
-                return $key;
-            }
-        }
-    
-        return false;
-    }
     
     /**
      * Returns the location.
@@ -662,27 +732,25 @@ abstract class AbstractProductEntity extends EntityAccess implements Translatabl
      */
     public function createUrlArgs()
     {
-        $args = [];
-    
-        $args['id'] = $this['id'];
+        $args = [
+            'id' => $this->getId()
+        ];
     
         if (property_exists($this, 'slug')) {
-            $args['slug'] = $this['slug'];
+            $args['slug'] = $this->getSlug();
         }
     
         return $args;
     }
     
     /**
-     * Create concatenated identifier string (for composite keys).
+     * Returns the primary key.
      *
-     * @return String concatenated identifiers
+     * @return integer The identifier
      */
-    public function createCompositeIdentifier()
+    public function getKey()
     {
-        $itemId = $this['id'];
-    
-        return $itemId;
+        return $this->getId();
     }
     
     /**
@@ -725,7 +793,7 @@ abstract class AbstractProductEntity extends EntityAccess implements Translatabl
      */
     public function __toString()
     {
-        return 'Product ' . $this->createCompositeIdentifier() . ': ' . $this->getName();
+        return 'Product ' . $this->getKey() . ': ' . $this->getName();
     }
     
     /**
@@ -741,7 +809,7 @@ abstract class AbstractProductEntity extends EntityAccess implements Translatabl
     public function __clone()
     {
         // if the entity has no identity do nothing, do NOT throw an exception
-        if (!($this->id)) {
+        if (!$this->id) {
             return;
         }
     
@@ -753,19 +821,15 @@ abstract class AbstractProductEntity extends EntityAccess implements Translatabl
         // reset workflow
         $this->resetWorkflow();
     
+        // reset upload fields
+        $this->setImageOfProduct(null);
+        $this->setImageOfProductMeta([]);
+        $this->setImageOfProductUrl('');
+    
         $this->setCreatedBy(null);
         $this->setCreatedDate(null);
         $this->setUpdatedBy(null);
         $this->setUpdatedDate(null);
     
-    
-        // clone categories
-        $categories = $this->categories;
-        $this->categories = new ArrayCollection();
-        foreach ($categories as $c) {
-            $newCat = clone $c;
-            $this->categories->add($newCat);
-            $newCat->setEntity($this);
-        }
     }
 }

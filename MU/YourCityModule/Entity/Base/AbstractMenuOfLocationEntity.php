@@ -129,20 +129,27 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
     protected $positionOfMenu = 0;
     
     /**
-     * @ORM\Column(type="datetime")
-     * @Assert\NotBlank()
+     * Here you can create complete menus for your location and special mnus like the menu of the day and more.
+     * @ORM\Column(type="datetime", nullable=true)
      * @Assert\DateTime()
      * @var DateTime $effectivFrom
      */
     protected $effectivFrom;
     
     /**
-     * @ORM\Column(type="datetime")
-     * @Assert\NotBlank()
+     * @ORM\Column(type="datetime", nullable=true)
      * @Assert\DateTime()
      * @var DateTime $effectivUntil
      */
     protected $effectivUntil;
+    
+    /**
+     * @ORM\Column(length=255)
+     * @Assert\NotBlank()
+     * @YourCityAssert\ListEntry(entityName="menuOfLocation", propertyName="kindOfMenu", multiple=false)
+     * @var string $kindOfMenu
+     */
+    protected $kindOfMenu = '1';
     
     
     /**
@@ -183,8 +190,12 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
      * Bidirectional - One menuOfLocation [menu of location] has many partsOfMenu [parts of menu] (INVERSE SIDE).
      *
      * @ORM\OneToMany(targetEntity="MU\YourCityModule\Entity\PartOfMenuEntity", mappedBy="menuOfLocation")
-     * @ORM\JoinTable(name="mu_yourcity_menuoflocationpartsofmenu")
+     * @ORM\JoinTable(name="mu_yourcity_menuoflocationpartsofmenu",
+     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
+     * )
      * @ORM\OrderBy({"positionOfPart" = "ASC"})
+     * @Assert\NotNull(message="Choosing at least one of the parts of menu is required.")
      * @var \MU\YourCityModule\Entity\PartOfMenuEntity[] $partsOfMenu
      */
     protected $partsOfMenu = null;
@@ -443,6 +454,8 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
         if ($this->effectivFrom !== $effectivFrom) {
             if (is_object($effectivFrom) && $effectivFrom instanceOf \DateTime) {
                 $this->effectivFrom = $effectivFrom;
+            } elseif (null === $effectivFrom || empty($effectivFrom)) {
+                $this->effectivFrom = null;
             } else {
                 $this->effectivFrom = new \DateTime($effectivFrom);
             }
@@ -471,9 +484,35 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
         if ($this->effectivUntil !== $effectivUntil) {
             if (is_object($effectivUntil) && $effectivUntil instanceOf \DateTime) {
                 $this->effectivUntil = $effectivUntil;
+            } elseif (null === $effectivUntil || empty($effectivUntil)) {
+                $this->effectivUntil = null;
             } else {
                 $this->effectivUntil = new \DateTime($effectivUntil);
             }
+        }
+    }
+    
+    /**
+     * Returns the kind of menu.
+     *
+     * @return string
+     */
+    public function getKindOfMenu()
+    {
+        return $this->kindOfMenu;
+    }
+    
+    /**
+     * Sets the kind of menu.
+     *
+     * @param string $kindOfMenu
+     *
+     * @return void
+     */
+    public function setKindOfMenu($kindOfMenu)
+    {
+        if ($this->kindOfMenu !== $kindOfMenu) {
+            $this->kindOfMenu = isset($kindOfMenu) ? $kindOfMenu : '';
         }
     }
     
@@ -643,27 +682,25 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
      */
     public function createUrlArgs()
     {
-        $args = [];
-    
-        $args['id'] = $this['id'];
+        $args = [
+            'id' => $this->getId()
+        ];
     
         if (property_exists($this, 'slug')) {
-            $args['slug'] = $this['slug'];
+            $args['slug'] = $this->getSlug();
         }
     
         return $args;
     }
     
     /**
-     * Create concatenated identifier string (for composite keys).
+     * Returns the primary key.
      *
-     * @return String concatenated identifiers
+     * @return integer The identifier
      */
-    public function createCompositeIdentifier()
+    public function getKey()
     {
-        $itemId = $this['id'];
-    
-        return $itemId;
+        return $this->getId();
     }
     
     /**
@@ -706,7 +743,7 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
      */
     public function __toString()
     {
-        return 'Menu of location ' . $this->createCompositeIdentifier() . ': ' . $this->getName();
+        return 'Menu of location ' . $this->getKey() . ': ' . $this->getName();
     }
     
     /**
@@ -722,7 +759,7 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
     public function __clone()
     {
         // if the entity has no identity do nothing, do NOT throw an exception
-        if (!($this->id)) {
+        if (!$this->id) {
             return;
         }
     
