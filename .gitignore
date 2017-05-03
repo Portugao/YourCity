@@ -15,6 +15,7 @@ local.properties
 .classpath
 .settings/
 .loadpath
+.gitignore
 
 # External tool builders
 .externalToolBuilders/
@@ -33,9 +34,7 @@ local.properties
 ################
 
 *.generated.*
-*.display.generated.html.twig
-*.view.generated.html.twig
-
+*.generated.html.twig
 
 #################
 ## Visual Studio
