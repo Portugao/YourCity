@@ -16,7 +16,8 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Core\Event\GenericEvent;
-use Zikula\UsersModule\Api\CurrentUserApi;
+use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
+use Zikula\UsersModule\Constant as UsersConstant;
 use Zikula\UsersModule\UserEvents;
 use MU\YourCityModule\Entity\Factory\EntityFactory;
 
@@ -36,7 +37,7 @@ abstract class AbstractUserListener implements EventSubscriberInterface
     protected $entityFactory;
     
     /**
-     * @var CurrentUserApi
+     * @var CurrentUserApiInterface
      */
     protected $currentUserApi;
     
@@ -50,7 +51,7 @@ abstract class AbstractUserListener implements EventSubscriberInterface
      *
      * @param TranslatorInterface $translator    Translator service instance
      * @param EntityFactory       $entityFactory EntityFactory service instance
-     * @param CurrentUserApi      $currentUserApi CurrentUserApi service instance
+     * @param CurrentUserApiInterface $currentUserApi CurrentUserApi service instance
      * @param LoggerInterface     $logger        Logger service instance
      *
      * @return void
@@ -58,7 +59,7 @@ abstract class AbstractUserListener implements EventSubscriberInterface
     public function __construct(
         TranslatorInterface $translator,
         EntityFactory $entityFactory,
-        CurrentUserApi $currentUserApi,
+        CurrentUserApiInterface $currentUserApi,
         LoggerInterface $logger
     ) {
         $this->translator = $translator;
@@ -122,21 +123,21 @@ abstract class AbstractUserListener implements EventSubscriberInterface
     
         
         $repo = $this->entityFactory->getRepository('branch');
-        // set creator to admin (2) for all branches created by this user
-        $repo->updateCreator($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
+        // set creator to admin (UsersConstant::USER_ID_ADMIN) for all branches created by this user
+        $repo->updateCreator($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
-        // set last editor to admin (2) for all branches updated by this user
-        $repo->updateLastEditor($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
+        // set last editor to admin (UsersConstant::USER_ID_ADMIN) for all branches updated by this user
+        $repo->updateLastEditor($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
         $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->currentUserApi->get('uname'), 'entities' => 'branches'];
         $this->logger->notice('{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.', $logArgs);
         
         $repo = $this->entityFactory->getRepository('location');
-        // set creator to admin (2) for all locations created by this user
-        $repo->updateCreator($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
+        // set creator to admin (UsersConstant::USER_ID_ADMIN) for all locations created by this user
+        $repo->updateCreator($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
-        // set last editor to admin (2) for all locations updated by this user
-        $repo->updateLastEditor($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
+        // set last editor to admin (UsersConstant::USER_ID_ADMIN) for all locations updated by this user
+        $repo->updateLastEditor($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         // delete all locations affected by this user
         $repo->deleteByUserField('owner', $userId, $this->translator, $this->logger, $this->currentUserApi);
         // delete all locations affected by this user
@@ -148,121 +149,121 @@ abstract class AbstractUserListener implements EventSubscriberInterface
         $this->logger->notice('{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.', $logArgs);
         
         $repo = $this->entityFactory->getRepository('part');
-        // set creator to admin (2) for all parts created by this user
-        $repo->updateCreator($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
+        // set creator to admin (UsersConstant::USER_ID_ADMIN) for all parts created by this user
+        $repo->updateCreator($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
-        // set last editor to admin (2) for all parts updated by this user
-        $repo->updateLastEditor($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
+        // set last editor to admin (UsersConstant::USER_ID_ADMIN) for all parts updated by this user
+        $repo->updateLastEditor($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
         $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->currentUserApi->get('uname'), 'entities' => 'parts'];
         $this->logger->notice('{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.', $logArgs);
         
         $repo = $this->entityFactory->getRepository('imageOfLocation');
-        // set creator to admin (2) for all images of location created by this user
-        $repo->updateCreator($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
+        // set creator to admin (UsersConstant::USER_ID_ADMIN) for all images of location created by this user
+        $repo->updateCreator($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
-        // set last editor to admin (2) for all images of location updated by this user
-        $repo->updateLastEditor($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
+        // set last editor to admin (UsersConstant::USER_ID_ADMIN) for all images of location updated by this user
+        $repo->updateLastEditor($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
         $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->currentUserApi->get('uname'), 'entities' => 'images of location'];
         $this->logger->notice('{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.', $logArgs);
         
         $repo = $this->entityFactory->getRepository('fileOfLocation');
-        // set creator to admin (2) for all files of location created by this user
-        $repo->updateCreator($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
+        // set creator to admin (UsersConstant::USER_ID_ADMIN) for all files of location created by this user
+        $repo->updateCreator($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
-        // set last editor to admin (2) for all files of location updated by this user
-        $repo->updateLastEditor($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
+        // set last editor to admin (UsersConstant::USER_ID_ADMIN) for all files of location updated by this user
+        $repo->updateLastEditor($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
         $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->currentUserApi->get('uname'), 'entities' => 'files of location'];
         $this->logger->notice('{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.', $logArgs);
         
         $repo = $this->entityFactory->getRepository('offer');
-        // set creator to admin (2) for all offers created by this user
-        $repo->updateCreator($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
+        // set creator to admin (UsersConstant::USER_ID_ADMIN) for all offers created by this user
+        $repo->updateCreator($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
-        // set last editor to admin (2) for all offers updated by this user
-        $repo->updateLastEditor($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
+        // set last editor to admin (UsersConstant::USER_ID_ADMIN) for all offers updated by this user
+        $repo->updateLastEditor($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
         $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->currentUserApi->get('uname'), 'entities' => 'offers'];
         $this->logger->notice('{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.', $logArgs);
         
         $repo = $this->entityFactory->getRepository('menuOfLocation');
-        // set creator to admin (2) for all menus of location created by this user
-        $repo->updateCreator($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
+        // set creator to admin (UsersConstant::USER_ID_ADMIN) for all menus of location created by this user
+        $repo->updateCreator($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
-        // set last editor to admin (2) for all menus of location updated by this user
-        $repo->updateLastEditor($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
+        // set last editor to admin (UsersConstant::USER_ID_ADMIN) for all menus of location updated by this user
+        $repo->updateLastEditor($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
         $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->currentUserApi->get('uname'), 'entities' => 'menus of location'];
         $this->logger->notice('{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.', $logArgs);
         
         $repo = $this->entityFactory->getRepository('partOfMenu');
-        // set creator to admin (2) for all parts of menu created by this user
-        $repo->updateCreator($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
+        // set creator to admin (UsersConstant::USER_ID_ADMIN) for all parts of menu created by this user
+        $repo->updateCreator($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
-        // set last editor to admin (2) for all parts of menu updated by this user
-        $repo->updateLastEditor($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
+        // set last editor to admin (UsersConstant::USER_ID_ADMIN) for all parts of menu updated by this user
+        $repo->updateLastEditor($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
         $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->currentUserApi->get('uname'), 'entities' => 'parts of menu'];
         $this->logger->notice('{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.', $logArgs);
         
         $repo = $this->entityFactory->getRepository('dish');
-        // set creator to admin (2) for all dishes created by this user
-        $repo->updateCreator($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
+        // set creator to admin (UsersConstant::USER_ID_ADMIN) for all dishes created by this user
+        $repo->updateCreator($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
-        // set last editor to admin (2) for all dishes updated by this user
-        $repo->updateLastEditor($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
+        // set last editor to admin (UsersConstant::USER_ID_ADMIN) for all dishes updated by this user
+        $repo->updateLastEditor($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
         $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->currentUserApi->get('uname'), 'entities' => 'dishes'];
         $this->logger->notice('{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.', $logArgs);
         
         $repo = $this->entityFactory->getRepository('event');
-        // set creator to admin (2) for all events created by this user
-        $repo->updateCreator($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
+        // set creator to admin (UsersConstant::USER_ID_ADMIN) for all events created by this user
+        $repo->updateCreator($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
-        // set last editor to admin (2) for all events updated by this user
-        $repo->updateLastEditor($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
+        // set last editor to admin (UsersConstant::USER_ID_ADMIN) for all events updated by this user
+        $repo->updateLastEditor($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
         $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->currentUserApi->get('uname'), 'entities' => 'events'];
         $this->logger->notice('{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.', $logArgs);
         
         $repo = $this->entityFactory->getRepository('product');
-        // set creator to admin (2) for all products created by this user
-        $repo->updateCreator($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
+        // set creator to admin (UsersConstant::USER_ID_ADMIN) for all products created by this user
+        $repo->updateCreator($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
-        // set last editor to admin (2) for all products updated by this user
-        $repo->updateLastEditor($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
+        // set last editor to admin (UsersConstant::USER_ID_ADMIN) for all products updated by this user
+        $repo->updateLastEditor($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
         $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->currentUserApi->get('uname'), 'entities' => 'products'];
         $this->logger->notice('{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.', $logArgs);
         
         $repo = $this->entityFactory->getRepository('specialOfLocation');
-        // set creator to admin (2) for all specials of location created by this user
-        $repo->updateCreator($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
+        // set creator to admin (UsersConstant::USER_ID_ADMIN) for all specials of location created by this user
+        $repo->updateCreator($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
-        // set last editor to admin (2) for all specials of location updated by this user
-        $repo->updateLastEditor($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
+        // set last editor to admin (UsersConstant::USER_ID_ADMIN) for all specials of location updated by this user
+        $repo->updateLastEditor($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
         $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->currentUserApi->get('uname'), 'entities' => 'specials of location'];
         $this->logger->notice('{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.', $logArgs);
         
         $repo = $this->entityFactory->getRepository('serviceOfLocation');
-        // set creator to admin (2) for all services of location created by this user
-        $repo->updateCreator($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
+        // set creator to admin (UsersConstant::USER_ID_ADMIN) for all services of location created by this user
+        $repo->updateCreator($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
-        // set last editor to admin (2) for all services of location updated by this user
-        $repo->updateLastEditor($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
+        // set last editor to admin (UsersConstant::USER_ID_ADMIN) for all services of location updated by this user
+        $repo->updateLastEditor($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
         $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->currentUserApi->get('uname'), 'entities' => 'services of location'];
         $this->logger->notice('{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.', $logArgs);
         
         $repo = $this->entityFactory->getRepository('abonnement');
-        // set creator to admin (2) for all abonnements created by this user
-        $repo->updateCreator($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
+        // set creator to admin (UsersConstant::USER_ID_ADMIN) for all abonnements created by this user
+        $repo->updateCreator($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
-        // set last editor to admin (2) for all abonnements updated by this user
-        $repo->updateLastEditor($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
+        // set last editor to admin (UsersConstant::USER_ID_ADMIN) for all abonnements updated by this user
+        $repo->updateLastEditor($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
         $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->currentUserApi->get('uname'), 'entities' => 'abonnements'];
         $this->logger->notice('{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.', $logArgs);

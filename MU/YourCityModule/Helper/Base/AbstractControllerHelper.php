@@ -22,8 +22,8 @@ use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\Component\SortableColumns\SortableColumns;
 use Zikula\Core\RouteUrl;
-use Zikula\ExtensionsModule\Api\VariableApi;
-use Zikula\UsersModule\Api\CurrentUserApi;
+use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
+use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
 use Zikula\UsersModule\Entity\UserEntity;
 use MU\YourCityModule\Entity\Factory\EntityFactory;
 use MU\YourCityModule\Helper\ArchiveHelper;
@@ -55,12 +55,12 @@ abstract class AbstractControllerHelper
     protected $formFactory;
 
     /**
-     * @var VariableApi
+     * @var VariableApiInterface
      */
     protected $variableApi;
 
     /**
-     * @var CurrentUserApi
+     * @var CurrentUserApiInterface
      */
     protected $currentUserApi;
 
@@ -97,8 +97,8 @@ abstract class AbstractControllerHelper
      * @param ArchiveHelper       $archiveHelper   ArchiveHelper service instance
      * @param LoggerInterface     $logger          Logger service instance
      * @param FormFactoryInterface $formFactory    FormFactory service instance
-     * @param VariableApi         $variableApi     VariableApi service instance
-     * @param CurrentUserApi      $currentUserApi  CurrentUserApi service instance
+     * @param VariableApiInterface $variableApi     VariableApi service instance
+     * @param CurrentUserApiInterface $currentUserApi  CurrentUserApi service instance
      * @param EntityFactory       $entityFactory   EntityFactory service instance
      * @param CollectionFilterHelper $collectionFilterHelper CollectionFilterHelper service instance
      * @param ModelHelper         $modelHelper     ModelHelper service instance
@@ -111,8 +111,8 @@ abstract class AbstractControllerHelper
         ArchiveHelper $archiveHelper,
         LoggerInterface $logger,
         FormFactoryInterface $formFactory,
-        VariableApi $variableApi,
-        CurrentUserApi $currentUserApi,
+        VariableApiInterface $variableApi,
+        CurrentUserApiInterface $currentUserApi,
         EntityFactory $entityFactory,
         CollectionFilterHelper $collectionFilterHelper,
         ModelHelper $modelHelper,

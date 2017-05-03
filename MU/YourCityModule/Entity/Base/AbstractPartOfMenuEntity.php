@@ -18,7 +18,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Translatable\Translatable;
 use Symfony\Component\Validator\Constraints as Assert;
 use Zikula\Core\Doctrine\EntityAccess;
-use MU\YourCityModule\Traits\EntityWorkflowTrait;
 use MU\YourCityModule\Traits\StandardFieldsTrait;
 use MU\YourCityModule\Validator\Constraints as YourCityAssert;
 
@@ -35,11 +34,6 @@ use MU\YourCityModule\Validator\Constraints as YourCityAssert;
  */
 abstract class AbstractPartOfMenuEntity extends EntityAccess implements Translatable
 {
-    /**
-     * Hook entity workflow field and behaviour.
-     */
-    use EntityWorkflowTrait;
-
     /**
      * Hook standard fields behaviour embedding createdBy, updatedBy, createdDate, updatedDate fields.
      */
@@ -141,7 +135,6 @@ abstract class AbstractPartOfMenuEntity extends EntityAccess implements Translat
      */
     public function __construct()
     {
-        $this->initWorkflow();
         $this->dishes = new ArrayCollection();
     }
     
@@ -489,11 +482,11 @@ abstract class AbstractPartOfMenuEntity extends EntityAccess implements Translat
     
         // otherwise proceed
     
-        // unset identifiers
+        // unset identifier
         $this->setId(0);
     
         // reset workflow
-        $this->resetWorkflow();
+        $this->setWorkflowState('initial');
     
         $this->setCreatedBy(null);
         $this->setCreatedDate(null);

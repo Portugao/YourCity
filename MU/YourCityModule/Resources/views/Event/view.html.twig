@@ -30,10 +30,6 @@
                 <col id="cNumberOfStreet" />
                 <col id="cZipCode" />
                 <col id="cCity" />
-                <col id="cStartDate" />
-                <col id="cEndDate" />
-                <col id="cStart2Date" />
-                <col id="cEnd2Date" />
                 <col id="cLocation" />
             </colgroup>
             <thead>
@@ -69,18 +65,6 @@
                 </th>
                 <th id="hCity" scope="col" class="text-left">
                     <a href="{{ sort.city.url }}" title="{{ __f('Sort by %s', {'%s': 'city'}) }}" class="{{ sort.city.class }}">{{ __('City') }}</a>
-                </th>
-                <th id="hStartDate" scope="col" class="text-left">
-                    <a href="{{ sort.startDate.url }}" title="{{ __f('Sort by %s', {'%s': 'start date'}) }}" class="{{ sort.startDate.class }}">{{ __('Start date') }}</a>
-                </th>
-                <th id="hEndDate" scope="col" class="text-left">
-                    <a href="{{ sort.endDate.url }}" title="{{ __f('Sort by %s', {'%s': 'end date'}) }}" class="{{ sort.endDate.class }}">{{ __('End date') }}</a>
-                </th>
-                <th id="hStart2Date" scope="col" class="text-left">
-                    <a href="{{ sort.start2Date.url }}" title="{{ __f('Sort by %s', {'%s': 'start 2 date'}) }}" class="{{ sort.start2Date.class }}">{{ __('Start 2 date') }}</a>
-                </th>
-                <th id="hEnd2Date" scope="col" class="text-left">
-                    <a href="{{ sort.end2Date.url }}" title="{{ __f('Sort by %s', {'%s': 'end 2 date'}) }}" class="{{ sort.end2Date.class }}">{{ __('End 2 date') }}</a>
                 </th>
                 <th id="hLocation" scope="col" class="text-left">
                     <a href="{{ sort.location.url }}" title="{{ __f('Sort by %s', {'%s': 'location'}) }}" class="{{ sort.location.class }}">{{ __('Location') }}</a>
@@ -135,18 +119,6 @@
                 </td>
                 <td headers="hCity" class="text-left">
                     {{ event.city }}
-                </td>
-                <td headers="hStartDate" class="text-left">
-                    {{ event.startDate|localizeddate('medium', 'short') }}
-                </td>
-                <td headers="hEndDate" class="text-left">
-                    {{ event.endDate|localizeddate('medium', 'short') }}
-                </td>
-                <td headers="hStart2Date" class="text-left">
-                    {{ event.start2Date|localizeddate('medium', 'short') }}
-                </td>
-                <td headers="hEnd2Date" class="text-left">
-                    {{ event.end2Date|localizeddate('medium', 'short') }}
                 </td>
                 <td headers="hLocation" class="text-left">
                     {% if event.location|default %}

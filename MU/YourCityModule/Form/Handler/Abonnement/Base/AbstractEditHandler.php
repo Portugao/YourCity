@@ -13,6 +13,7 @@
 namespace MU\YourCityModule\Form\Handler\Abonnement\Base;
 
 use MU\YourCityModule\Form\Handler\Common\EditHandler;
+use MU\YourCityModule\Form\Type\AbonnementType;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -101,7 +102,7 @@ abstract class AbstractEditHandler extends EditHandler
             'filter_by_ownership' => !$this->permissionApi->hasPermission($this->permissionComponent, $this->idValue . '::', ACCESS_ADD)
         ];
     
-        return $this->formFactory->create('MU\YourCityModule\Form\Type\AbonnementType', $this->entityRef, $options);
+        return $this->formFactory->create(AbonnementType::class, $this->entityRef, $options);
     }
 
 

@@ -18,7 +18,8 @@ workflow:
                 - MU\YourCityModule\Entity\EventEntity
                 - MU\YourCityModule\Entity\ProductEntity
                 - MU\YourCityModule\Entity\SpecialOfLocationEntity
-                - MU\YourCityModule\Entity\ServiceofLocationEntity
+                - MU\YourCityModule\Entity\ServiceOfLocationEntity
+                - MU\YourCityModule\Entity\AbonnementEntity
             places:
                 - initial
                 - approved

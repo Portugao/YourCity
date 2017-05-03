@@ -12,7 +12,12 @@
 
 namespace MU\YourCityModule\Form\Type\QuickNavigation\Base;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -89,9 +94,9 @@ abstract class AbstractAbonnementQuickNavType extends AbstractType
     {
         $builder
             ->setMethod('GET')
-            ->add('all', 'Symfony\Component\Form\Extension\Core\Type\HiddenType')
-            ->add('own', 'Symfony\Component\Form\Extension\Core\Type\HiddenType')
-            ->add('tpl', 'Symfony\Component\Form\Extension\Core\Type\HiddenType')
+            ->add('all', HiddenType::class)
+            ->add('own', HiddenType::class)
+            ->add('tpl', HiddenType::class)
         ;
 
         $this->addIncomingRelationshipFields($builder, $options);
@@ -100,7 +105,7 @@ abstract class AbstractAbonnementQuickNavType extends AbstractType
         $this->addSortingFields($builder, $options);
         $this->addAmountField($builder, $options);
         $this->addBooleanFields($builder, $options);
-        $builder->add('updateview', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
+        $builder->add('updateview', SubmitType::class, [
             'label' => $this->__('OK'),
             'attr' => [
                 'class' => 'btn btn-default btn-sm'
@@ -127,7 +132,7 @@ abstract class AbstractAbonnementQuickNavType extends AbstractType
         $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
             return $entityDisplayHelper->getFormattedTitle($entity);
         };
-        $builder->add('location', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
+        $builder->add('location', EntityType::class, [
             'class' => 'MUYourCityModule:LocationEntity',
             'choice_label' => $choiceLabelClosure,
             'placeholder' => $this->__('All'),
@@ -159,7 +164,7 @@ abstract class AbstractAbonnementQuickNavType extends AbstractType
             $choices[$entry['text']] = $entry['value'];
             $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
-        $builder->add('workflowState', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('workflowState', ChoiceType::class, [
             'label' => $this->__('State'),
             'attr' => [
                 'class' => 'input-sm'
@@ -182,7 +187,7 @@ abstract class AbstractAbonnementQuickNavType extends AbstractType
      */
     public function addSearchField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('q', 'Symfony\Component\Form\Extension\Core\Type\SearchType', [
+        $builder->add('q', SearchType::class, [
             'label' => $this->__('Search'),
             'attr' => [
                 'maxlength' => 255,
@@ -202,7 +207,7 @@ abstract class AbstractAbonnementQuickNavType extends AbstractType
     public function addSortingFields(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('sort', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            ->add('sort', ChoiceType::class, [
                 'label' => $this->__('Sort by'),
                 'attr' => [
                     'class' => 'input-sm'
@@ -226,7 +231,7 @@ abstract class AbstractAbonnementQuickNavType extends AbstractType
                 'required' => true,
                 'expanded' => false
             ])
-            ->add('sortdir', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            ->add('sortdir', ChoiceType::class, [
                 'label' => $this->__('Sort direction'),
                 'empty_data' => 'asc',
                 'attr' => [
@@ -251,7 +256,7 @@ abstract class AbstractAbonnementQuickNavType extends AbstractType
      */
     public function addAmountField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('num', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('num', ChoiceType::class, [
             'label' => $this->__('Page size'),
             'empty_data' => 20,
             'attr' => [
@@ -280,7 +285,7 @@ abstract class AbstractAbonnementQuickNavType extends AbstractType
      */
     public function addBooleanFields(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('showMenus', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('showMenus', ChoiceType::class, [
             'label' => $this->__('Show menus'),
             'attr' => [
                 'class' => 'input-sm'
@@ -293,7 +298,7 @@ abstract class AbstractAbonnementQuickNavType extends AbstractType
             ],
             'choices_as_values' => true
         ]);
-        $builder->add('sendMessageForMenus', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('sendMessageForMenus', ChoiceType::class, [
             'label' => $this->__('Send message for menus'),
             'attr' => [
                 'class' => 'input-sm'
@@ -306,7 +311,7 @@ abstract class AbstractAbonnementQuickNavType extends AbstractType
             ],
             'choices_as_values' => true
         ]);
-        $builder->add('showOffers', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('showOffers', ChoiceType::class, [
             'label' => $this->__('Show offers'),
             'attr' => [
                 'class' => 'input-sm'
@@ -319,7 +324,7 @@ abstract class AbstractAbonnementQuickNavType extends AbstractType
             ],
             'choices_as_values' => true
         ]);
-        $builder->add('sendMessageForOffers', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('sendMessageForOffers', ChoiceType::class, [
             'label' => $this->__('Send message for offers'),
             'attr' => [
                 'class' => 'input-sm'
@@ -332,7 +337,7 @@ abstract class AbstractAbonnementQuickNavType extends AbstractType
             ],
             'choices_as_values' => true
         ]);
-        $builder->add('showEvents', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('showEvents', ChoiceType::class, [
             'label' => $this->__('Show events'),
             'attr' => [
                 'class' => 'input-sm'
@@ -345,7 +350,7 @@ abstract class AbstractAbonnementQuickNavType extends AbstractType
             ],
             'choices_as_values' => true
         ]);
-        $builder->add('sendMessageForEvents', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('sendMessageForEvents', ChoiceType::class, [
             'label' => $this->__('Send message for events'),
             'attr' => [
                 'class' => 'input-sm'
@@ -358,7 +363,7 @@ abstract class AbstractAbonnementQuickNavType extends AbstractType
             ],
             'choices_as_values' => true
         ]);
-        $builder->add('showProducts', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('showProducts', ChoiceType::class, [
             'label' => $this->__('Show products'),
             'attr' => [
                 'class' => 'input-sm'
@@ -371,7 +376,7 @@ abstract class AbstractAbonnementQuickNavType extends AbstractType
             ],
             'choices_as_values' => true
         ]);
-        $builder->add('sendMessageForProducts', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('sendMessageForProducts', ChoiceType::class, [
             'label' => $this->__('Send message for products'),
             'attr' => [
                 'class' => 'input-sm'
@@ -384,7 +389,7 @@ abstract class AbstractAbonnementQuickNavType extends AbstractType
             ],
             'choices_as_values' => true
         ]);
-        $builder->add('showOptionOne', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('showOptionOne', ChoiceType::class, [
             'label' => $this->__('Show option one'),
             'attr' => [
                 'class' => 'input-sm'
@@ -397,7 +402,7 @@ abstract class AbstractAbonnementQuickNavType extends AbstractType
             ],
             'choices_as_values' => true
         ]);
-        $builder->add('sendMessageToOptionOne', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('sendMessageToOptionOne', ChoiceType::class, [
             'label' => $this->__('Send message to option one'),
             'attr' => [
                 'class' => 'input-sm'
@@ -410,7 +415,7 @@ abstract class AbstractAbonnementQuickNavType extends AbstractType
             ],
             'choices_as_values' => true
         ]);
-        $builder->add('showOptionTwo', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('showOptionTwo', ChoiceType::class, [
             'label' => $this->__('Show option two'),
             'attr' => [
                 'class' => 'input-sm'
@@ -423,7 +428,7 @@ abstract class AbstractAbonnementQuickNavType extends AbstractType
             ],
             'choices_as_values' => true
         ]);
-        $builder->add('sendMessageToOptionTwo', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('sendMessageToOptionTwo', ChoiceType::class, [
             'label' => $this->__('Send message to option two'),
             'attr' => [
                 'class' => 'input-sm'
@@ -436,7 +441,7 @@ abstract class AbstractAbonnementQuickNavType extends AbstractType
             ],
             'choices_as_values' => true
         ]);
-        $builder->add('showOptionThree', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('showOptionThree', ChoiceType::class, [
             'label' => $this->__('Show option three'),
             'attr' => [
                 'class' => 'input-sm'
@@ -449,7 +454,7 @@ abstract class AbstractAbonnementQuickNavType extends AbstractType
             ],
             'choices_as_values' => true
         ]);
-        $builder->add('sendMessageToOptionThree', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('sendMessageToOptionThree', ChoiceType::class, [
             'label' => $this->__('Send message to option three'),
             'attr' => [
                 'class' => 'input-sm'

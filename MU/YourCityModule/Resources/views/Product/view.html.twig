@@ -105,7 +105,7 @@
                     {{ product.today|muyourcitymodule_listEntry('product', 'today') }}
                 </td>
                 <td headers="hMonday" class="text-center">
-                    {% set itemid = product.createCompositeIdentifier() %}
+                    {% set itemid = product.getKey() %}
                     <a id="toggleMonday{{ itemid }}" href="javascript:void(0);" class="muyourcity-ajax-toggle hidden" data-object-type="product" data-field-name="monday" data-item-id="{{ itemid }}">
                         <i class="fa fa-check{% if not product.monday %} hidden{% endif %}" id="yesMonday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
                         <i class="fa fa-times{% if product.monday %} hidden{% endif %}" id="noMonday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
@@ -119,7 +119,7 @@
                     </div></noscript>
                 </td>
                 <td headers="hTuesday" class="text-center">
-                    {% set itemid = product.createCompositeIdentifier() %}
+                    {% set itemid = product.getKey() %}
                     <a id="toggleTuesday{{ itemid }}" href="javascript:void(0);" class="muyourcity-ajax-toggle hidden" data-object-type="product" data-field-name="tuesday" data-item-id="{{ itemid }}">
                         <i class="fa fa-check{% if not product.tuesday %} hidden{% endif %}" id="yesTuesday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
                         <i class="fa fa-times{% if product.tuesday %} hidden{% endif %}" id="noTuesday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
@@ -133,7 +133,7 @@
                     </div></noscript>
                 </td>
                 <td headers="hWednesday" class="text-center">
-                    {% set itemid = product.createCompositeIdentifier() %}
+                    {% set itemid = product.getKey() %}
                     <a id="toggleWednesday{{ itemid }}" href="javascript:void(0);" class="muyourcity-ajax-toggle hidden" data-object-type="product" data-field-name="wednesday" data-item-id="{{ itemid }}">
                         <i class="fa fa-check{% if not product.wednesday %} hidden{% endif %}" id="yesWednesday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
                         <i class="fa fa-times{% if product.wednesday %} hidden{% endif %}" id="noWednesday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
@@ -147,7 +147,7 @@
                     </div></noscript>
                 </td>
                 <td headers="hThursday" class="text-center">
-                    {% set itemid = product.createCompositeIdentifier() %}
+                    {% set itemid = product.getKey() %}
                     <a id="toggleThursday{{ itemid }}" href="javascript:void(0);" class="muyourcity-ajax-toggle hidden" data-object-type="product" data-field-name="thursday" data-item-id="{{ itemid }}">
                         <i class="fa fa-check{% if not product.thursday %} hidden{% endif %}" id="yesThursday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
                         <i class="fa fa-times{% if product.thursday %} hidden{% endif %}" id="noThursday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
@@ -161,7 +161,7 @@
                     </div></noscript>
                 </td>
                 <td headers="hFriday" class="text-center">
-                    {% set itemid = product.createCompositeIdentifier() %}
+                    {% set itemid = product.getKey() %}
                     <a id="toggleFriday{{ itemid }}" href="javascript:void(0);" class="muyourcity-ajax-toggle hidden" data-object-type="product" data-field-name="friday" data-item-id="{{ itemid }}">
                         <i class="fa fa-check{% if not product.friday %} hidden{% endif %}" id="yesFriday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
                         <i class="fa fa-times{% if product.friday %} hidden{% endif %}" id="noFriday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
@@ -175,7 +175,7 @@
                     </div></noscript>
                 </td>
                 <td headers="hSaturday" class="text-center">
-                    {% set itemid = product.createCompositeIdentifier() %}
+                    {% set itemid = product.getKey() %}
                     <a id="toggleSaturday{{ itemid }}" href="javascript:void(0);" class="muyourcity-ajax-toggle hidden" data-object-type="product" data-field-name="saturday" data-item-id="{{ itemid }}">
                         <i class="fa fa-check{% if not product.saturday %} hidden{% endif %}" id="yesSaturday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
                         <i class="fa fa-times{% if product.saturday %} hidden{% endif %}" id="noSaturday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
@@ -189,7 +189,7 @@
                     </div></noscript>
                 </td>
                 <td headers="hSunday" class="text-center">
-                    {% set itemid = product.createCompositeIdentifier() %}
+                    {% set itemid = product.getKey() %}
                     <a id="toggleSunday{{ itemid }}" href="javascript:void(0);" class="muyourcity-ajax-toggle hidden" data-object-type="product" data-field-name="sunday" data-item-id="{{ itemid }}">
                         <i class="fa fa-check{% if not product.sunday %} hidden{% endif %}" id="yesSunday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
                         <i class="fa fa-times{% if product.sunday %} hidden{% endif %}" id="noSunday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>

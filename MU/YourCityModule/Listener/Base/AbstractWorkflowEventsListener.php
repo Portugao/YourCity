@@ -81,13 +81,14 @@ abstract class AbstractWorkflowEventsListener implements EventSubscriberInterfac
             return;
         }
     
+        $objectType = $entity->get_objectType();
         $permissionLevel = ACCESS_READ;
         $transitionName = $event->getTransition()->getName();
         if (substr($transitionName, 0, 6) == 'update') {
             $transitionName = 'update';
         }
         $targetState = $event->getTransition()->getTos()[0];
-        $hasApproval = in_array($entity->get_objectType(), ['location']);
+        $hasApproval = in_array($objectType, ['location']);
     
         switch ($transitionName) {
             case 'defer':
@@ -113,11 +114,72 @@ abstract class AbstractWorkflowEventsListener implements EventSubscriberInterfac
                 break;
         }
     
-    
-        $instanceId = $entity->createCompositeIdentifier();
-        if (!$this->permissionApi->hasPermission('MUYourCityModule:' . ucfirst($entity->get_objectType()) . ':', $instanceId . '::', $permissionLevel)) {
+        if (!$this->permissionApi->hasPermission('MUYourCityModule:' . ucfirst($objectType) . ':', $entity->getKey() . '::', $permissionLevel)) {
             // no permission for this transition, so disallow it
             $event->setBlocked(true);
+    
+            return;
+        }
+    
+        if ($transitionName == 'delete') {
+            // check if deleting the entity would break related child entities
+            if ($objectType == 'location') {
+                $isBlocked = false;
+                if (count($entity->getImagesOfLocation()) > 0) {
+                    $isBlocked = true;
+                }
+                if (count($entity->getFilesOfLocation()) > 0) {
+                    $isBlocked = true;
+                }
+                if (count($entity->getBranches()) > 0) {
+                    $isBlocked = true;
+                }
+                if (count($entity->getParts()) > 0) {
+                    $isBlocked = true;
+                }
+                if (count($entity->getOffers()) > 0) {
+                    $isBlocked = true;
+                }
+                if (count($entity->getMenuOfLocation()) > 0) {
+                    $isBlocked = true;
+                }
+                if (count($entity->getEvents()) > 0) {
+                    $isBlocked = true;
+                }
+                if (count($entity->getProducts()) > 0) {
+                    $isBlocked = true;
+                }
+                if (count($entity->getDishes()) > 0) {
+                    $isBlocked = true;
+                }
+                if (count($entity->getSpecialsOfLocation()) > 0) {
+                    $isBlocked = true;
+                }
+                if (count($entity->getServicesOfLocation()) > 0) {
+                    $isBlocked = true;
+                }
+                if (count($entity->getAbonnements()) > 0) {
+                    $isBlocked = true;
+                }
+                $event->setBlocked($isBlocked);
+            }
+            if ($objectType == 'menuOfLocation') {
+                $isBlocked = false;
+                if (count($entity->getDishes()) > 0) {
+                    $isBlocked = true;
+                }
+                if (count($entity->getPartsOfMenu()) > 0) {
+                    $isBlocked = true;
+                }
+                $event->setBlocked($isBlocked);
+            }
+            if ($objectType == 'partOfMenu') {
+                $isBlocked = false;
+                if (count($entity->getDishes()) > 0) {
+                    $isBlocked = true;
+                }
+                $event->setBlocked($isBlocked);
+            }
         }
     }
     

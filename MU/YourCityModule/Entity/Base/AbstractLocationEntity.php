@@ -21,7 +21,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Zikula\Core\Doctrine\EntityAccess;
 use Zikula\UsersModule\Entity\UserEntity;
-use MU\YourCityModule\Traits\EntityWorkflowTrait;
 use MU\YourCityModule\Traits\GeographicalTrait;
 use MU\YourCityModule\Traits\StandardFieldsTrait;
 use MU\YourCityModule\Validator\Constraints as YourCityAssert;
@@ -39,11 +38,6 @@ use MU\YourCityModule\Validator\Constraints as YourCityAssert;
  */
 abstract class AbstractLocationEntity extends EntityAccess implements Translatable
 {
-    /**
-     * Hook entity workflow field and behaviour.
-     */
-    use EntityWorkflowTrait;
-
     /**
      * Hook geographical behaviour embedding latitude and longitude fields.
      */
@@ -658,6 +652,7 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
      *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
      *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
      * )
+     * @ORM\OrderBy({"effectivFrom" = "ASC"})
      * @Assert\NotNull(message="Choosing at least one of the offers is required.")
      * @var \MU\YourCityModule\Entity\OfferEntity[] $offers
      */
@@ -760,7 +755,6 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
      */
     public function __construct()
     {
-        $this->initWorkflow();
         $this->imagesOfLocation = new ArrayCollection();
         $this->filesOfLocation = new ArrayCollection();
         $this->offers = new ArrayCollection();
@@ -3362,11 +3356,11 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     
         // otherwise proceed
     
-        // unset identifiers
+        // unset identifier
         $this->setId(0);
     
         // reset workflow
-        $this->resetWorkflow();
+        $this->setWorkflowState('initial');
     
         // reset upload fields
         $this->setLogoOfYourLocation(null);

@@ -12,7 +12,7 @@
     {% if routeArea != 'admin' %}
         {% for abonnement in items %}
             {% if abonnement.location|default %}
-            {% if abonnement.location|length <= 4 %}
+            {% if items|length <= 4 %}
                 <div class="col-md-12 abo-location-list abo">
             {% else %}
                 <div class="col-md-6 abo-location-list abo">

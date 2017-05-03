@@ -26,11 +26,11 @@ use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\Core\Doctrine\EntityAccess;
 use Zikula\Core\RouteUrl;
-use Zikula\ExtensionsModule\Api\VariableApi;
+use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 use Zikula\GroupsModule\Entity\Repository\GroupApplicationRepository;
-use Zikula\PageLockModule\Api\LockingApi;
-use Zikula\PermissionsModule\Api\PermissionApi;
-use Zikula\UsersModule\Api\CurrentUserApi;
+use Zikula\PageLockModule\Api\ApiInterface\LockingApiInterface;
+use Zikula\PermissionsModule\Api\ApiInterface\PermissionApiInterface;
+use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
 use MU\YourCityModule\Entity\Factory\EntityFactory;
 use MU\YourCityModule\Helper\FeatureActivationHelper;
 use MU\YourCityModule\Helper\ControllerHelper;
@@ -182,17 +182,17 @@ abstract class AbstractEditHandler
     protected $logger;
 
     /**
-     * @var PermissionApi
+     * @var PermissionApiInterface
      */
     protected $permissionApi;
 
     /**
-     * @var VariableApi
+     * @var VariableApiInterface
      */
     protected $variableApi;
 
     /**
-     * @var CurrentUserApi
+     * @var CurrentUserApiInterface
      */
     protected $currentUserApi;
 
@@ -239,7 +239,7 @@ abstract class AbstractEditHandler
     /**
      * Reference to optional locking api.
      *
-     * @var LockingApi
+     * @var LockingApiInterface
      */
     protected $lockingApi = null;
 
@@ -266,9 +266,9 @@ abstract class AbstractEditHandler
      * @param RequestStack              $requestStack     RequestStack service instance
      * @param RouterInterface           $router           Router service instance
      * @param LoggerInterface           $logger           Logger service instance
-     * @param PermissionApi             $permissionApi    PermissionApi service instance
-     * @param VariableApi               $variableApi      VariableApi service instance
-     * @param CurrentUserApi            $currentUserApi   CurrentUserApi service instance
+     * @param PermissionApiInterface             $permissionApi    PermissionApi service instance
+     * @param VariableApiInterface      $variableApi      VariableApi service instance
+     * @param CurrentUserApiInterface   $currentUserApi   CurrentUserApi service instance
      * @param GroupApplicationRepository $groupApplicationRepository GroupApplicationRepository service instance.
      * @param EntityFactory             $entityFactory    EntityFactory service instance
      * @param ControllerHelper          $controllerHelper ControllerHelper service instance
@@ -285,9 +285,9 @@ abstract class AbstractEditHandler
         RequestStack $requestStack,
         RouterInterface $router,
         LoggerInterface $logger,
-        PermissionApi $permissionApi,
-        VariableApi $variableApi,
-        CurrentUserApi $currentUserApi,
+        PermissionApiInterface $permissionApi,
+        VariableApiInterface $variableApi,
+        CurrentUserApiInterface $currentUserApi,
         GroupApplicationRepository $groupApplicationRepository,
         EntityFactory $entityFactory,
         ControllerHelper $controllerHelper,
@@ -501,14 +501,7 @@ abstract class AbstractEditHandler
      */
     protected function initEntityForEditing()
     {
-        $entity = $this->entityFactory->getRepository($this->objectType)->selectById($this->idValue);
-        if (null === $entity) {
-            return null;
-        }
-    
-        $entity->initWorkflow();
-    
-        return $entity;
+        return $this->entityFactory->getRepository($this->objectType)->selectById($this->idValue);
     }
     
     /**
@@ -831,9 +824,9 @@ abstract class AbstractEditHandler
     /**
      * Sets optional locking api reference.
      *
-     * @param LockingApi $lockingApi
+     * @param LockingApiInterface $lockingApi
      */
-    public function setLockingApi(LockingApi $lockingApi)
+    public function setLockingApi(LockingApiInterface $lockingApi)
     {
         $this->lockingApi = $lockingApi;
     }

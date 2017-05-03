@@ -12,7 +12,12 @@
 
 namespace MU\YourCityModule\Form\Type\QuickNavigation\Base;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -89,9 +94,9 @@ abstract class AbstractPartOfMenuQuickNavType extends AbstractType
     {
         $builder
             ->setMethod('GET')
-            ->add('all', 'Symfony\Component\Form\Extension\Core\Type\HiddenType')
-            ->add('own', 'Symfony\Component\Form\Extension\Core\Type\HiddenType')
-            ->add('tpl', 'Symfony\Component\Form\Extension\Core\Type\HiddenType')
+            ->add('all', HiddenType::class)
+            ->add('own', HiddenType::class)
+            ->add('tpl', HiddenType::class)
         ;
 
         $this->addIncomingRelationshipFields($builder, $options);
@@ -99,7 +104,7 @@ abstract class AbstractPartOfMenuQuickNavType extends AbstractType
         $this->addSearchField($builder, $options);
         $this->addSortingFields($builder, $options);
         $this->addAmountField($builder, $options);
-        $builder->add('updateview', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
+        $builder->add('updateview', SubmitType::class, [
             'label' => $this->__('OK'),
             'attr' => [
                 'class' => 'btn btn-default btn-sm'
@@ -126,7 +131,7 @@ abstract class AbstractPartOfMenuQuickNavType extends AbstractType
         $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
             return $entityDisplayHelper->getFormattedTitle($entity);
         };
-        $builder->add('menuOfLocation', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
+        $builder->add('menuOfLocation', EntityType::class, [
             'class' => 'MUYourCityModule:MenuOfLocationEntity',
             'choice_label' => $choiceLabelClosure,
             'placeholder' => $this->__('All'),
@@ -158,7 +163,7 @@ abstract class AbstractPartOfMenuQuickNavType extends AbstractType
             $choices[$entry['text']] = $entry['value'];
             $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
-        $builder->add('workflowState', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('workflowState', ChoiceType::class, [
             'label' => $this->__('State'),
             'attr' => [
                 'class' => 'input-sm'
@@ -181,7 +186,7 @@ abstract class AbstractPartOfMenuQuickNavType extends AbstractType
      */
     public function addSearchField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('q', 'Symfony\Component\Form\Extension\Core\Type\SearchType', [
+        $builder->add('q', SearchType::class, [
             'label' => $this->__('Search'),
             'attr' => [
                 'maxlength' => 255,
@@ -201,7 +206,7 @@ abstract class AbstractPartOfMenuQuickNavType extends AbstractType
     public function addSortingFields(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('sort', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            ->add('sort', ChoiceType::class, [
                 'label' => $this->__('Sort by'),
                 'attr' => [
                     'class' => 'input-sm'
@@ -218,7 +223,7 @@ abstract class AbstractPartOfMenuQuickNavType extends AbstractType
                 'required' => true,
                 'expanded' => false
             ])
-            ->add('sortdir', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            ->add('sortdir', ChoiceType::class, [
                 'label' => $this->__('Sort direction'),
                 'empty_data' => 'asc',
                 'attr' => [
@@ -243,7 +248,7 @@ abstract class AbstractPartOfMenuQuickNavType extends AbstractType
      */
     public function addAmountField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('num', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('num', ChoiceType::class, [
             'label' => $this->__('Page size'),
             'empty_data' => 20,
             'attr' => [

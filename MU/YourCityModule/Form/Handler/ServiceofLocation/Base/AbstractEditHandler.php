@@ -13,6 +13,7 @@
 namespace MU\YourCityModule\Form\Handler\ServiceOfLocation\Base;
 
 use MU\YourCityModule\Form\Handler\Common\EditHandler;
+use MU\YourCityModule\Form\Type\ServiceOfLocationType;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -100,7 +101,7 @@ abstract class AbstractEditHandler extends EditHandler
             $options['translations'][$language] = isset($this->templateParameters[$this->objectTypeLower . $language]) ? $this->templateParameters[$this->objectTypeLower . $language] : [];
         }
     
-        return $this->formFactory->create('MU\YourCityModule\Form\Type\ServiceOfLocationType', $this->entityRef, $options);
+        return $this->formFactory->create(ServiceOfLocationType::class, $this->entityRef, $options);
     }
 
 

@@ -6,7 +6,6 @@ services:
             - "@service_container"
             - "@event_dispatcher"
             - "@logger"
-            - "@translator.default"
         tags:
             - { name: doctrine.event_subscriber }
     
@@ -74,6 +73,14 @@ services:
         class: MU\YourCityModule\Listener\ThirdPartyListener
         arguments:
             - "@mu_yourcity_module.workflow_helper"
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    mu_yourcity_module.workflow_events_listener:
+        class: MU\YourCityModule\Listener\WorkflowEventsListener
+        arguments:
+            - "@zikula_permissions_module.api.permission"
+            - "@mu_yourcity_module.notification_helper"
         tags:
             - { name: kernel.event_subscriber }
     

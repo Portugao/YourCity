@@ -86,7 +86,6 @@ services:
         arguments:
             - "@translator.default"
             - "@zikula_permissions_module.api.permission"
-            - "@templating.engine.twig"
             - "@session"
             - "@request_stack"
             - "@mu_yourcity_module.entity_factory"
@@ -130,7 +129,9 @@ services:
         class: MU\YourCityModule\Helper\WorkflowHelper
         arguments:
             - "@translator.default"
+            - "@workflow.registry"
             - "@logger"
             - "@zikula_permissions_module.api.permission"
+            - "@zikula_users_module.current_user"
             - "@mu_yourcity_module.entity_factory"
             - "@mu_yourcity_module.listentries_helper"

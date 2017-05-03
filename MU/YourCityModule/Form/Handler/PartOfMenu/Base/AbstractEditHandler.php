@@ -13,6 +13,7 @@
 namespace MU\YourCityModule\Form\Handler\PartOfMenu\Base;
 
 use MU\YourCityModule\Form\Handler\Common\EditHandler;
+use MU\YourCityModule\Form\Type\PartOfMenuType;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -106,7 +107,7 @@ abstract class AbstractEditHandler extends EditHandler
             $options['translations'][$language] = isset($this->templateParameters[$this->objectTypeLower . $language]) ? $this->templateParameters[$this->objectTypeLower . $language] : [];
         }
     
-        return $this->formFactory->create('MU\YourCityModule\Form\Type\PartOfMenuType', $this->entityRef, $options);
+        return $this->formFactory->create(PartOfMenuType::class, $this->entityRef, $options);
     }
 
 

@@ -17,8 +17,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Core\Doctrine\EntityAccess;
-use Zikula\ExtensionsModule\Api\VariableApi;
-use Zikula\SettingsModule\Api\LocaleApi;
+use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
+use Zikula\SettingsModule\Api\ApiInterface\LocaleApiInterface;
 use MU\YourCityModule\Entity\Factory\EntityFactory;
 
 /**
@@ -37,12 +37,12 @@ abstract class AbstractTranslatableHelper
     protected $request;
 
     /**
-     * @var VariableApi
+     * @var VariableApiInterface
      */
     protected $variableApi;
 
     /**
-     * @var LocaleApi
+     * @var LocaleApiInterface
      */
     protected $localeApi;
 
@@ -56,15 +56,15 @@ abstract class AbstractTranslatableHelper
      *
      * @param TranslatorInterface $translator    Translator service instance
      * @param RequestStack        $requestStack  RequestStack service instance
-     * @param VariableApi          $variableApi  VariableApi service instance
-     * @param LocaleApi            $localeApi    LocaleApi service instance
+     * @param VariableApiInterface  $variableApi  VariableApi service instance
+     * @param LocaleApiInterface   $localeApi    LocaleApi service instance
      * @param EntityFactory       $entityFactory EntityFactory service instance
      */
     public function __construct(
         TranslatorInterface $translator,
         RequestStack $requestStack,
-        VariableApi $variableApi,
-        LocaleApi $localeApi,
+        VariableApiInterface $variableApi,
+        LocaleApiInterface $localeApi,
         EntityFactory $entityFactory
     ) {
         $this->translator = $translator;

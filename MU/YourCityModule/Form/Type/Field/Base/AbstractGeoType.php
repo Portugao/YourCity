@@ -13,6 +13,7 @@
 namespace MU\YourCityModule\Form\Type\Field\Base;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -41,7 +42,7 @@ abstract class AbstractGeoType extends AbstractType
      */
     public function getParent()
     {
-        return 'Symfony\Component\Form\Extension\Core\Type\NumberType';
+        return NumberType::class;
     }
 
     /**

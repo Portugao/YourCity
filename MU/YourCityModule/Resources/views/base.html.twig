@@ -7,8 +7,8 @@
     {{ pageAddAsset('javascript', asset('bootstrap-jqueryui/bootstrap-jqueryui.min.js')) }}
     {{ pageAddAsset('javascript', zasset('@MUYourCityModule:js/MUYourCityModule.js')) }}
     {{ pageAddAsset('javascript', zasset('@MUYourCityModule:js/MUYourCityModule.Geo.js')) }}
-    {% if 'edit' in app.request.get('_route') or 'config' in app.request.get('_route') %}
-        {{ polyfill(['geolocation', 'forms', 'forms-ext']) }}
+    {% if 'edit' in app.request.get('_route') %}
+        {{ polyfill(['geolocation']) }}
     {% endif %}
 {% endblock %}
 

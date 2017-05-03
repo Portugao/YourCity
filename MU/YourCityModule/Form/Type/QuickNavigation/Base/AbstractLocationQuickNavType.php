@@ -12,7 +12,12 @@
 
 namespace MU\YourCityModule\Form\Type\QuickNavigation\Base;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
@@ -70,9 +75,9 @@ abstract class AbstractLocationQuickNavType extends AbstractType
     {
         $builder
             ->setMethod('GET')
-            ->add('all', 'Symfony\Component\Form\Extension\Core\Type\HiddenType')
-            ->add('own', 'Symfony\Component\Form\Extension\Core\Type\HiddenType')
-            ->add('tpl', 'Symfony\Component\Form\Extension\Core\Type\HiddenType')
+            ->add('all', HiddenType::class)
+            ->add('own', HiddenType::class)
+            ->add('tpl', HiddenType::class)
         ;
 
         $this->addListFields($builder, $options);
@@ -81,7 +86,7 @@ abstract class AbstractLocationQuickNavType extends AbstractType
         $this->addSortingFields($builder, $options);
         $this->addAmountField($builder, $options);
         $this->addBooleanFields($builder, $options);
-        $builder->add('updateview', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
+        $builder->add('updateview', SubmitType::class, [
             'label' => $this->__('OK'),
             'attr' => [
                 'class' => 'btn btn-default btn-sm'
@@ -104,7 +109,7 @@ abstract class AbstractLocationQuickNavType extends AbstractType
             $choices[$entry['text']] = $entry['value'];
             $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
-        $builder->add('workflowState', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('workflowState', ChoiceType::class, [
             'label' => $this->__('State'),
             'attr' => [
                 'class' => 'input-sm'
@@ -127,7 +132,7 @@ abstract class AbstractLocationQuickNavType extends AbstractType
      */
     public function addUserFields(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('owner', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
+        $builder->add('owner', EntityType::class, [
             'label' => $this->__('Owner'),
             'attr' => [
                 'class' => 'input-sm'
@@ -138,7 +143,7 @@ abstract class AbstractLocationQuickNavType extends AbstractType
             'class' => 'Zikula\UsersModule\Entity\UserEntity',
             'choice_label' => 'uname'
         ]);
-        $builder->add('admin1', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
+        $builder->add('admin1', EntityType::class, [
             'label' => $this->__('Admin 1'),
             'attr' => [
                 'class' => 'input-sm'
@@ -149,7 +154,7 @@ abstract class AbstractLocationQuickNavType extends AbstractType
             'class' => 'Zikula\UsersModule\Entity\UserEntity',
             'choice_label' => 'uname'
         ]);
-        $builder->add('admin2', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
+        $builder->add('admin2', EntityType::class, [
             'label' => $this->__('Admin 2'),
             'attr' => [
                 'class' => 'input-sm'
@@ -170,7 +175,7 @@ abstract class AbstractLocationQuickNavType extends AbstractType
      */
     public function addSearchField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('q', 'Symfony\Component\Form\Extension\Core\Type\SearchType', [
+        $builder->add('q', SearchType::class, [
             'label' => $this->__('Search'),
             'attr' => [
                 'maxlength' => 255,
@@ -190,7 +195,7 @@ abstract class AbstractLocationQuickNavType extends AbstractType
     public function addSortingFields(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('sort', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            ->add('sort', ChoiceType::class, [
                 'label' => $this->__('Sort by'),
                 'attr' => [
                     'class' => 'input-sm'
@@ -221,7 +226,7 @@ abstract class AbstractLocationQuickNavType extends AbstractType
                 'required' => true,
                 'expanded' => false
             ])
-            ->add('sortdir', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            ->add('sortdir', ChoiceType::class, [
                 'label' => $this->__('Sort direction'),
                 'empty_data' => 'asc',
                 'attr' => [
@@ -246,7 +251,7 @@ abstract class AbstractLocationQuickNavType extends AbstractType
      */
     public function addAmountField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('num', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('num', ChoiceType::class, [
             'label' => $this->__('Page size'),
             'empty_data' => 20,
             'attr' => [
@@ -275,7 +280,7 @@ abstract class AbstractLocationQuickNavType extends AbstractType
      */
     public function addBooleanFields(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('closedForEver', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('closedForEver', ChoiceType::class, [
             'label' => $this->__('Closed for ever'),
             'attr' => [
                 'class' => 'input-sm'
@@ -288,7 +293,7 @@ abstract class AbstractLocationQuickNavType extends AbstractType
             ],
             'choices_as_values' => true
         ]);
-        $builder->add('agreement', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('agreement', ChoiceType::class, [
             'label' => $this->__('Agreement'),
             'attr' => [
                 'class' => 'input-sm'
@@ -301,7 +306,7 @@ abstract class AbstractLocationQuickNavType extends AbstractType
             ],
             'choices_as_values' => true
         ]);
-        $builder->add('unclearTimes', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('unclearTimes', ChoiceType::class, [
             'label' => $this->__('Unclear times'),
             'attr' => [
                 'class' => 'input-sm'
@@ -314,7 +319,7 @@ abstract class AbstractLocationQuickNavType extends AbstractType
             ],
             'choices_as_values' => true
         ]);
-        $builder->add('closedOnMonday', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('closedOnMonday', ChoiceType::class, [
             'label' => $this->__('Closed on monday'),
             'attr' => [
                 'class' => 'input-sm'
@@ -327,7 +332,7 @@ abstract class AbstractLocationQuickNavType extends AbstractType
             ],
             'choices_as_values' => true
         ]);
-        $builder->add('closedOnTuesday', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('closedOnTuesday', ChoiceType::class, [
             'label' => $this->__('Closed on tuesday'),
             'attr' => [
                 'class' => 'input-sm'
@@ -340,7 +345,7 @@ abstract class AbstractLocationQuickNavType extends AbstractType
             ],
             'choices_as_values' => true
         ]);
-        $builder->add('closedOnWednesday', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('closedOnWednesday', ChoiceType::class, [
             'label' => $this->__('Closed on wednesday'),
             'attr' => [
                 'class' => 'input-sm'
@@ -353,7 +358,7 @@ abstract class AbstractLocationQuickNavType extends AbstractType
             ],
             'choices_as_values' => true
         ]);
-        $builder->add('closedOnThursday', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('closedOnThursday', ChoiceType::class, [
             'label' => $this->__('Closed on thursday'),
             'attr' => [
                 'class' => 'input-sm'
@@ -366,7 +371,7 @@ abstract class AbstractLocationQuickNavType extends AbstractType
             ],
             'choices_as_values' => true
         ]);
-        $builder->add('closedOnFriday', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('closedOnFriday', ChoiceType::class, [
             'label' => $this->__('Closed on friday'),
             'attr' => [
                 'class' => 'input-sm'
@@ -379,7 +384,7 @@ abstract class AbstractLocationQuickNavType extends AbstractType
             ],
             'choices_as_values' => true
         ]);
-        $builder->add('closedOnSaturday', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('closedOnSaturday', ChoiceType::class, [
             'label' => $this->__('Closed on saturday'),
             'attr' => [
                 'class' => 'input-sm'
@@ -392,7 +397,7 @@ abstract class AbstractLocationQuickNavType extends AbstractType
             ],
             'choices_as_values' => true
         ]);
-        $builder->add('closedOnSunday', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('closedOnSunday', ChoiceType::class, [
             'label' => $this->__('Closed on sunday'),
             'attr' => [
                 'class' => 'input-sm'

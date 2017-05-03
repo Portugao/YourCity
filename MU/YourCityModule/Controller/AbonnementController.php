@@ -284,10 +284,6 @@ class AbonnementController extends AbstractAbonnementController
     
     	$templateParameters = $controllerHelper->processViewActionParameters($objectType, $sortableColumns, $templateParameters, true);
     
-    	foreach ($templateParameters['items'] as $k => $entity) {
-    		$entity->initWorkflow();
-    	}
-    
     	// fetch and return the appropriate template
     	return $viewHelper->processTemplate($objectType, 'view', $templateParameters);
     }

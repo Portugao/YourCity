@@ -94,9 +94,6 @@
     <h3 class="muyourcitymodule-map">{{ __('Map') }}</h3>
     <div id="mapContainer" class="muyourcitymodule-mapcontainer">
     </div>
-    {% if featureActivationHelper.isEnabled(constant('MU\\YourCityModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'event') %}
-        {{ include('@MUYourCityModule/Helper/includeCategoriesDisplay.html.twig', { obj: event }) }}
-    {% endif %}
     {#{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: event }) }#}
 
     {{ block('display_hooks') }}

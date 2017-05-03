@@ -14,12 +14,20 @@ namespace MU\YourCityModule\Form\Type\Base;
 
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
 use MU\YourCityModule\Entity\Factory\EntityFactory;
+use MU\YourCityModule\Form\Type\Field\UserType;
 use MU\YourCityModule\Helper\CollectionFilterHelper;
 use MU\YourCityModule\Helper\EntityDisplayHelper;
 use MU\YourCityModule\Helper\FeatureActivationHelper;
@@ -114,7 +122,7 @@ abstract class AbstractAbonnementType extends AbstractType
     public function addEntityFields(FormBuilderInterface $builder, array $options)
     {
         
-        $builder->add('name', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+        $builder->add('name', TextType::class, [
             'label' => $this->__('Name') . ':',
             'empty_data' => 'abo',
             'attr' => [
@@ -125,7 +133,7 @@ abstract class AbstractAbonnementType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('showMenus', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+        $builder->add('showMenus', CheckboxType::class, [
             'label' => $this->__('Show menus') . ':',
             'attr' => [
                 'class' => '',
@@ -134,7 +142,7 @@ abstract class AbstractAbonnementType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('sendMessageForMenus', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+        $builder->add('sendMessageForMenus', CheckboxType::class, [
             'label' => $this->__('Send message for menus') . ':',
             'attr' => [
                 'class' => '',
@@ -143,7 +151,7 @@ abstract class AbstractAbonnementType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('showOffers', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+        $builder->add('showOffers', CheckboxType::class, [
             'label' => $this->__('Show offers') . ':',
             'attr' => [
                 'class' => '',
@@ -152,7 +160,7 @@ abstract class AbstractAbonnementType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('sendMessageForOffers', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+        $builder->add('sendMessageForOffers', CheckboxType::class, [
             'label' => $this->__('Send message for offers') . ':',
             'attr' => [
                 'class' => '',
@@ -161,7 +169,7 @@ abstract class AbstractAbonnementType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('showEvents', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+        $builder->add('showEvents', CheckboxType::class, [
             'label' => $this->__('Show events') . ':',
             'attr' => [
                 'class' => '',
@@ -170,7 +178,7 @@ abstract class AbstractAbonnementType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('sendMessageForEvents', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+        $builder->add('sendMessageForEvents', CheckboxType::class, [
             'label' => $this->__('Send message for events') . ':',
             'attr' => [
                 'class' => '',
@@ -179,7 +187,7 @@ abstract class AbstractAbonnementType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('showProducts', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+        $builder->add('showProducts', CheckboxType::class, [
             'label' => $this->__('Show products') . ':',
             'attr' => [
                 'class' => '',
@@ -188,7 +196,7 @@ abstract class AbstractAbonnementType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('sendMessageForProducts', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+        $builder->add('sendMessageForProducts', CheckboxType::class, [
             'label' => $this->__('Send message for products') . ':',
             'attr' => [
                 'class' => '',
@@ -197,7 +205,7 @@ abstract class AbstractAbonnementType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('showOptionOne', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+        $builder->add('showOptionOne', CheckboxType::class, [
             'label' => $this->__('Show option one') . ':',
             'attr' => [
                 'class' => '',
@@ -206,7 +214,7 @@ abstract class AbstractAbonnementType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('sendMessageToOptionOne', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+        $builder->add('sendMessageToOptionOne', CheckboxType::class, [
             'label' => $this->__('Send message to option one') . ':',
             'attr' => [
                 'class' => '',
@@ -215,7 +223,7 @@ abstract class AbstractAbonnementType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('showOptionTwo', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+        $builder->add('showOptionTwo', CheckboxType::class, [
             'label' => $this->__('Show option two') . ':',
             'attr' => [
                 'class' => '',
@@ -224,7 +232,7 @@ abstract class AbstractAbonnementType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('sendMessageToOptionTwo', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+        $builder->add('sendMessageToOptionTwo', CheckboxType::class, [
             'label' => $this->__('Send message to option two') . ':',
             'attr' => [
                 'class' => '',
@@ -233,7 +241,7 @@ abstract class AbstractAbonnementType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('showOptionThree', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+        $builder->add('showOptionThree', CheckboxType::class, [
             'label' => $this->__('Show option three') . ':',
             'attr' => [
                 'class' => '',
@@ -242,7 +250,7 @@ abstract class AbstractAbonnementType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('sendMessageToOptionThree', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+        $builder->add('sendMessageToOptionThree', CheckboxType::class, [
             'label' => $this->__('Send message to option three') . ':',
             'attr' => [
                 'class' => '',
@@ -251,7 +259,7 @@ abstract class AbstractAbonnementType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('positionOfAbo', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+        $builder->add('positionOfAbo', IntegerType::class, [
             'label' => $this->__('Position of abo') . ':',
             'empty_data' => '0',
             'attr' => [
@@ -305,7 +313,7 @@ abstract class AbstractAbonnementType extends AbstractType
             return;
         }
     
-        $builder->add('moderationSpecificCreator', 'MU\YourCityModule\Form\Type\Field\UserType', [
+        $builder->add('moderationSpecificCreator', UserType::class, [
             'mapped' => false,
             'label' => $this->__('Creator') . ':',
             'attr' => [
@@ -317,7 +325,7 @@ abstract class AbstractAbonnementType extends AbstractType
             'required' => false,
             'help' => $this->__('Here you can choose a user which will be set as creator')
         ]);
-        $builder->add('moderationSpecificCreationDate', 'Symfony\Component\Form\Extension\Core\Type\DateTimeType', [
+        $builder->add('moderationSpecificCreationDate', DateTimeType::class, [
             'mapped' => false,
             'label' => $this->__('Creation date') . ':',
             'attr' => [
@@ -344,7 +352,7 @@ abstract class AbstractAbonnementType extends AbstractType
         if ($options['mode'] != 'create') {
             return;
         }
-        $builder->add('repeatCreation', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+        $builder->add('repeatCreation', CheckboxType::class, [
             'mapped' => false,
             'label' => $this->__('Create another item after save'),
             'required' => false
@@ -360,16 +368,15 @@ abstract class AbstractAbonnementType extends AbstractType
     public function addSubmitButtons(FormBuilderInterface $builder, array $options)
     {
         foreach ($options['actions'] as $action) {
-            $builder->add($action['id'], 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
-                'label' => $this->__(/** @Ignore */$action['title']),
+            $builder->add($action['id'], SubmitType::class, [
+                'label' => $action['title'],
                 'icon' => ($action['id'] == 'delete' ? 'fa-trash-o' : ''),
                 'attr' => [
-                    'class' => $action['buttonClass'],
-                    'title' => $this->__(/** @Ignore */$action['description'])
+                    'class' => $action['buttonClass']
                 ]
             ]);
         }
-        $builder->add('reset', 'Symfony\Component\Form\Extension\Core\Type\ResetType', [
+        $builder->add('reset', ResetType::class, [
             'label' => $this->__('Reset'),
             'icon' => 'fa-refresh',
             'attr' => [
@@ -377,7 +384,7 @@ abstract class AbstractAbonnementType extends AbstractType
                 'formnovalidate' => 'formnovalidate'
             ]
         ]);
-        $builder->add('cancel', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
+        $builder->add('cancel', SubmitType::class, [
             'label' => $this->__('Cancel'),
             'icon' => 'fa-times',
             'attr' => [

@@ -148,9 +148,6 @@ abstract class AbstractPartController extends AbstractController
         
         $templateParameters = $controllerHelper->processViewActionParameters($objectType, $sortableColumns, $templateParameters, true);
         
-        foreach ($templateParameters['items'] as $k => $entity) {
-            $entity->initWorkflow();
-        }
         
         // fetch and return the appropriate template
         return $viewHelper->processTemplate($objectType, 'view', $templateParameters);
@@ -208,7 +205,6 @@ abstract class AbstractPartController extends AbstractController
             throw new AccessDeniedException();
         }
         
-        $part->initWorkflow();
         $templateParameters = [
             'routeArea' => $isAdmin ? 'admin' : '',
             $objectType => $part
@@ -338,8 +334,6 @@ abstract class AbstractPartController extends AbstractController
         $logger = $this->get('logger');
         $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => 'part', 'id' => $part->getKey()];
         
-        $part->initWorkflow();
-        
         // determine available workflow actions
         $workflowHelper = $this->get('mu_yourcity_module.workflow_helper');
         $actions = $workflowHelper->getActionsForObject($part);
@@ -369,7 +363,7 @@ abstract class AbstractPartController extends AbstractController
             return $this->redirectToRoute($redirectRoute);
         }
         
-        $form = $this->createForm('MU\YourCityModule\Form\DeleteEntityType', $part);
+        $form = $this->createForm('Zikula\Bundle\FormExtensionBundle\Form\Type\DeletionType', $part);
         
         if ($form->handleRequest($request)->isValid()) {
             if ($form->get('delete')->isClicked()) {
@@ -472,7 +466,6 @@ abstract class AbstractPartController extends AbstractController
             if (null === $entity) {
                 continue;
             }
-            $entity->initWorkflow();
         
             // check if $action can be applied to this entity (may depend on it's current workflow state)
             $allowedActions = $workflowHelper->getActionsForObject($entity);

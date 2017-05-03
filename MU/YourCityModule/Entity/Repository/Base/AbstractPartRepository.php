@@ -21,7 +21,7 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 use Zikula\Common\Translator\TranslatorInterface;
-use Zikula\UsersModule\Api\CurrentUserApi;
+use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
 use MU\YourCityModule\Entity\PartEntity;
 use MU\YourCityModule\Helper\CollectionFilterHelper;
 
@@ -160,13 +160,13 @@ abstract class AbstractPartRepository extends EntityRepository
      * @param integer             $newUserId      The new userid of the creator as replacement
      * @param TranslatorInterface $translator     Translator service instance
      * @param LoggerInterface     $logger         Logger service instance
-     * @param CurrentUserApi      $currentUserApi CurrentUserApi service instance
+     * @param CurrentUserApiInterface $currentUserApi CurrentUserApi service instance
      *
      * @return void
      *
      * @throws InvalidArgumentException Thrown if invalid parameters are received
      */
-    public function updateCreator($userId, $newUserId, TranslatorInterface $translator, LoggerInterface $logger, CurrentUserApi $currentUserApi)
+    public function updateCreator($userId, $newUserId, TranslatorInterface $translator, LoggerInterface $logger, CurrentUserApiInterface $currentUserApi)
     {
         // check id parameter
         if ($userId == 0 || !is_numeric($userId)
@@ -193,13 +193,13 @@ abstract class AbstractPartRepository extends EntityRepository
      * @param integer             $newUserId      The new userid of the last editor as replacement
      * @param TranslatorInterface $translator     Translator service instance
      * @param LoggerInterface     $logger         Logger service instance
-     * @param CurrentUserApi      $currentUserApi CurrentUserApi service instance
+     * @param CurrentUserApiInterface $currentUserApi CurrentUserApi service instance
      *
      * @return void
      *
      * @throws InvalidArgumentException Thrown if invalid parameters are received
      */
-    public function updateLastEditor($userId, $newUserId, TranslatorInterface $translator, LoggerInterface $logger, CurrentUserApi $currentUserApi)
+    public function updateLastEditor($userId, $newUserId, TranslatorInterface $translator, LoggerInterface $logger, CurrentUserApiInterface $currentUserApi)
     {
         // check id parameter
         if ($userId == 0 || !is_numeric($userId)
@@ -225,13 +225,13 @@ abstract class AbstractPartRepository extends EntityRepository
      * @param integer             $userId         The userid of the creator to be removed
      * @param TranslatorInterface $translator     Translator service instance
      * @param LoggerInterface     $logger         Logger service instance
-     * @param CurrentUserApi      $currentUserApi CurrentUserApi service instance
+     * @param CurrentUserApiInterface $currentUserApi CurrentUserApi service instance
      *
      * @return void
      *
      * @throws InvalidArgumentException Thrown if invalid parameters are received
      */
-    public function deleteByCreator($userId, TranslatorInterface $translator, LoggerInterface $logger, CurrentUserApi $currentUserApi)
+    public function deleteByCreator($userId, TranslatorInterface $translator, LoggerInterface $logger, CurrentUserApiInterface $currentUserApi)
     {
         // check id parameter
         if ($userId == 0 || !is_numeric($userId)) {
@@ -255,13 +255,13 @@ abstract class AbstractPartRepository extends EntityRepository
      * @param integer             $userId         The userid of the last editor to be removed
      * @param TranslatorInterface $translator     Translator service instance
      * @param LoggerInterface     $logger         Logger service instance
-     * @param CurrentUserApi      $currentUserApi CurrentUserApi service instance
+     * @param CurrentUserApiInterface $currentUserApi CurrentUserApi service instance
      *
      * @return void
      *
      * @throws InvalidArgumentException Thrown if invalid parameters are received
      */
-    public function deleteByLastEditor($userId, TranslatorInterface $translator, LoggerInterface $logger, CurrentUserApi $currentUserApi)
+    public function deleteByLastEditor($userId, TranslatorInterface $translator, LoggerInterface $logger, CurrentUserApiInterface $currentUserApi)
     {
         // check id parameter
         if ($userId == 0 || !is_numeric($userId)) {

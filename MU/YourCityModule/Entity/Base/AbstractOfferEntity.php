@@ -18,7 +18,6 @@ use Gedmo\Translatable\Translatable;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Zikula\Core\Doctrine\EntityAccess;
-use MU\YourCityModule\Traits\EntityWorkflowTrait;
 use MU\YourCityModule\Traits\StandardFieldsTrait;
 use MU\YourCityModule\Validator\Constraints as YourCityAssert;
 
@@ -35,11 +34,6 @@ use MU\YourCityModule\Validator\Constraints as YourCityAssert;
  */
 abstract class AbstractOfferEntity extends EntityAccess implements Translatable
 {
-    /**
-     * Hook entity workflow field and behaviour.
-     */
-    use EntityWorkflowTrait;
-
     /**
      * Hook standard fields behaviour embedding createdBy, updatedBy, createdDate, updatedDate fields.
      */
@@ -175,8 +169,7 @@ abstract class AbstractOfferEntity extends EntityAccess implements Translatable
     /**
      * On this date the offer will get put into the archive.
      if you wish, that the offer is still there after the end, enter none.
-     * @ORM\Column(type="datetime")
-     * @Assert\NotNull()
+     * @ORM\Column(type="datetime", nullable=true)
      * @Assert\DateTime()
      * @var DateTime $enddate
      */
@@ -217,7 +210,6 @@ abstract class AbstractOfferEntity extends EntityAccess implements Translatable
      */
     public function __construct()
     {
-        $this->initWorkflow();
     }
     
     /**
@@ -587,6 +579,8 @@ abstract class AbstractOfferEntity extends EntityAccess implements Translatable
         if ($this->enddate !== $enddate) {
             if (is_object($enddate) && $enddate instanceOf \DateTime) {
                 $this->enddate = $enddate;
+            } elseif (null === $enddate || empty($enddate)) {
+                $this->enddate = null;
             } else {
                 $this->enddate = new \DateTime($enddate);
             }
@@ -742,11 +736,11 @@ abstract class AbstractOfferEntity extends EntityAccess implements Translatable
     
         // otherwise proceed
     
-        // unset identifiers
+        // unset identifier
         $this->setId(0);
     
         // reset workflow
-        $this->resetWorkflow();
+        $this->setWorkflowState('initial');
     
         // reset upload fields
         $this->setImageOfOffer(null);

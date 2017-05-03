@@ -7,11 +7,11 @@ application "YourCity" {
     prefix "yourcity"
     generatorSettings {
         settingsContainer "Settings"
-        targetCoreVersion ZK14
+        targetCoreVersion ZK15
         versionAllGeneratedFiles false
         generatePoweredByBacklinksIntoFooterTemplates false
         generateTests false
-        markFiles "Container/LinkContainer.php,\r\nController/AbonnementController.php,\r\nResources/public/css/style.css,\r\nResources/views/Abonnement/view.html.twig,\r\nResources/views/Branch/display.html.twig,\r\nResources/views/Branch/view.html.twig,\r\nResources/views/Dish/display.html.twig,\r\nResources/views/Dish/view.html.twig,\r\nResources/views/Event/display.html.twig,\r\nResources/views/Event/view.html.twig,\r\nResources/views/FileOfLocatiojn/display.html.twig,\r\nResources/views/FileOfLocation/view.html.twig,\r\nResources/views/ImageOfLocation/display.html.twig,\r\nResources/views/ImageOfLocation/view.html.twig,\r\nResources/views/Location/display.html.twig,\r\nResources/views/Location/view.html.twig,\r\nResources/views/MenuOfLocation/display.html.twig,\r\nResources/views/MenuOfLocation/view.html.twig,\r\nResources/views/Offer/display.html.twig,\r\nResources/views/Offer/view.html.twig,\r\nResources/views/Part/display.html.twig,\r\nResources/views/Part/view.html.twig,\r\nResources/views/PartOfMenu/display.html.twig,\r\nResources/views/PartOfMenu/view.html.twig,\r\nResources/views/Product/view.html.twig,\r\nResources/views/Product/display.html.twig,\r\nResources/views/Part/view.html.twig,\r\nResources/views/SpecialOfLocation/display.html.twig,\r\nResources/views/SpecialOfLocation/view.html.twig,\r\nResources/views/ServiceOfLocation/view.html.twig,\r\nResources/views/ServiceOfLocation/display.html.twig"
+        markFiles "Container/LinkContainer.php,\r\nController/AbonnementController.php,\r\nEntity/Repository/LocationRespository.php,\r\nHepler/ControllerHelper.php,\r\nResources/public/css/style.css,\r\nResources/views/Abonnement/view.html.twig,\r\nResources/views/Branch/display.html.twig,\r\nResources/views/Branch/view.html.twig,\r\nResources/views/Dish/display.html.twig,\r\nResources/views/Dish/view.html.twig,\r\nResources/views/Event/display.html.twig,\r\nResources/views/Event/view.html.twig,\r\nResources/views/FileOfLocatiojn/display.html.twig,\r\nResources/views/FileOfLocation/view.html.twig,\r\nResources/views/ImageOfLocation/display.html.twig,\r\nResources/views/ImageOfLocation/view.html.twig,\r\nResources/views/Location/display.html.twig,\r\nResources/views/Location/view.html.twig,\r\nResources/views/MenuOfLocation/display.html.twig,\r\nResources/views/MenuOfLocation/view.html.twig,\r\nResources/views/Offer/display.html.twig,\r\nResources/views/Offer/view.html.twig,\r\nResources/views/Part/display.html.twig,\r\nResources/views/Part/view.html.twig,\r\nResources/views/PartOfMenu/display.html.twig,\r\nResources/views/PartOfMenu/view.html.twig,\r\nResources/views/Product/view.html.twig,\r\nResources/views/Product/display.html.twig,\r\nResources/views/Part/view.html.twig,\r\nResources/views/SpecialOfLocation/display.html.twig,\r\nResources/views/SpecialOfLocation/view.html.twig,\r\nResources/views/ServiceOfLocation/view.html.twig,\r\nResources/views/ServiceOfLocation/display.html.twig"
     }
     entities {
         entity "branch" {
@@ -52,7 +52,7 @@ application "YourCity" {
             hasTray true
             fields {
                 string "name" {
-                    documentation "Enter the name of your company. If your company is registered somewhere, enter the exact name-"
+                    documentation "Enter the name of your company. If your company is registered somewhere, enter the exact name."
                     sluggablePosition 1
                 },
                 string "letterForOrder" {
@@ -435,7 +435,7 @@ application "YourCity" {
             {
                     documentation "Enter here the date and time for the end of the offer."
                 },
-                datetime "enddate" endDate {
+                datetime "enddate" nullable endDate {
                     documentation "On this date the offer will get put into the archive.\r\nif you wish, that the offer is still there after the end, enter none."
                     mandatory false
                     displayType NONE
@@ -861,7 +861,7 @@ application "YourCity" {
             expandedTarget true
             refClass "LocationBranch"
             orderBy "name"
-            orderByReverse "name"
+            orderByReverse "letterForOrder"
         },
         many2many {
             source "location"
@@ -871,7 +871,7 @@ application "YourCity" {
             nullable true
             refClass "LocationPart"
             orderBy "name"
-            orderByReverse "name"
+            orderByReverse "letterForOrder"
         },
         one2many {
             source "location"
@@ -879,6 +879,7 @@ application "YourCity" {
             target "offer"
             targetAlias "offers"
         nullable false
+        orderBy "effectivFrom"
         },
         one2many {
             source "location"
@@ -945,7 +946,7 @@ application "YourCity" {
             expandedTarget true
             refClass "LocationSpecialOfLocation"
             orderBy "name"
-        orderByReverse "name"
+        orderByReverse "letterForOrder"
         },
         many2many {
             source "location"
@@ -955,7 +956,7 @@ application "YourCity" {
             expandedTarget true
             refClass "LocationServiceofLocation"
             orderBy "name"
-        orderByReverse "name"
+        orderByReverse "letterForOrder"
         }
     ,
         one2many {
@@ -964,6 +965,7 @@ application "YourCity" {
             target "abonnement"
             targetAlias "abonnements"
         nullable false
+        orderBy ""
         }
     }
     variables {

@@ -14,6 +14,7 @@ namespace MU\YourCityModule\Block\Base;
 
 use Zikula\BlocksModule\AbstractBlockHandler;
 use Zikula\Core\AbstractBundle;
+use MU\YourCityModule\Block\Form\Type\ItemListBlockType;
 
 /**
  * Generic item list block base class.
@@ -119,7 +120,7 @@ abstract class AbstractItemListBlock extends AbstractBlockHandler
      */
     public function getFormClassName()
     {
-        return 'MU\YourCityModule\Block\Form\Type\ItemListBlockType';
+        return ItemListBlockType::class;
     }
     
     /**

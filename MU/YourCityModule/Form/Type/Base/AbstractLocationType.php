@@ -14,6 +14,16 @@ namespace MU\YourCityModule\Form\Type\Base;
 
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -22,8 +32,12 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
-use Zikula\ExtensionsModule\Api\VariableApi;
+use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 use MU\YourCityModule\Entity\Factory\EntityFactory;
+use MU\YourCityModule\Form\Type\Field\GeoType;
+use MU\YourCityModule\Form\Type\Field\TranslationType;
+use MU\YourCityModule\Form\Type\Field\UploadType;
+use MU\YourCityModule\Form\Type\Field\UserType;
 use MU\YourCityModule\Helper\CollectionFilterHelper;
 use MU\YourCityModule\Helper\EntityDisplayHelper;
 use MU\YourCityModule\Helper\FeatureActivationHelper;
@@ -53,7 +67,7 @@ abstract class AbstractLocationType extends AbstractType
     protected $entityDisplayHelper;
 
     /**
-     * @var VariableApi
+     * @var VariableApiInterface
      */
     protected $variableApi;
 
@@ -79,7 +93,7 @@ abstract class AbstractLocationType extends AbstractType
      * @param EntityFactory       $entityFactory EntityFactory service instance
      * @param CollectionFilterHelper $collectionFilterHelper CollectionFilterHelper service instance
      * @param EntityDisplayHelper $entityDisplayHelper EntityDisplayHelper service instance
-     * @param VariableApi         $variableApi VariableApi service instance
+     * @param VariableApiInterface $variableApi VariableApi service instance
      * @param TranslatableHelper  $translatableHelper TranslatableHelper service instance
      * @param ListEntriesHelper   $listHelper     ListEntriesHelper service instance
      * @param FeatureActivationHelper $featureActivationHelper FeatureActivationHelper service instance
@@ -89,7 +103,7 @@ abstract class AbstractLocationType extends AbstractType
         EntityFactory $entityFactory,
         CollectionFilterHelper $collectionFilterHelper,
         EntityDisplayHelper $entityDisplayHelper,
-        VariableApi $variableApi,
+        VariableApiInterface $variableApi,
         TranslatableHelper $translatableHelper,
         ListEntriesHelper $listHelper,
         FeatureActivationHelper $featureActivationHelper
@@ -153,7 +167,7 @@ abstract class AbstractLocationType extends AbstractType
     public function addEntityFields(FormBuilderInterface $builder, array $options)
     {
         
-        $builder->add('slogan', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+        $builder->add('slogan', TextType::class, [
             'label' => $this->__('Slogan') . ':',
             'label_attr' => [
                 'class' => 'tooltips',
@@ -169,7 +183,7 @@ abstract class AbstractLocationType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('descriptionForGoogle', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+        $builder->add('descriptionForGoogle', TextType::class, [
             'label' => $this->__('Description for google') . ':',
             'label_attr' => [
                 'class' => 'tooltips',
@@ -187,7 +201,7 @@ abstract class AbstractLocationType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('description', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
+        $builder->add('description', TextareaType::class, [
             'label' => $this->__('Description') . ':',
             'label_attr' => [
                 'class' => 'tooltips',
@@ -205,7 +219,7 @@ abstract class AbstractLocationType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('description2', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
+        $builder->add('description2', TextareaType::class, [
             'label' => $this->__('Description 2') . ':',
             'label_attr' => [
                 'class' => 'tooltips',
@@ -233,7 +247,7 @@ abstract class AbstractLocationType extends AbstractType
                     if ($language == $currentLanguage) {
                         continue;
                     }
-                    $builder->add('translations' . $language, 'MU\YourCityModule\Form\Type\Field\TranslationType', [
+                    $builder->add('translations' . $language, TranslationType::class, [
                         'fields' => $translatableFields,
                         'mandatory_fields' => $mandatoryFields[$language],
                         'values' => isset($options['translations'][$language]) ? $options['translations'][$language] : []
@@ -242,13 +256,13 @@ abstract class AbstractLocationType extends AbstractType
             }
         }
         
-        $builder->add('name', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+        $builder->add('name', TextType::class, [
             'label' => $this->__('Name') . ':',
             'label_attr' => [
                 'class' => 'tooltips',
-                'title' => $this->__('Enter the name of your company. If your company is registered somewhere, enter the exact name-')
+                'title' => $this->__('Enter the name of your company. If your company is registered somewhere, enter the exact name.')
             ],
-            'help' => $this->__('Enter the name of your company. If your company is registered somewhere, enter the exact name-'),
+            'help' => $this->__('Enter the name of your company. If your company is registered somewhere, enter the exact name.'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 255,
@@ -258,7 +272,7 @@ abstract class AbstractLocationType extends AbstractType
             'required' => true,
         ]);
         
-        $builder->add('letterForOrder', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+        $builder->add('letterForOrder', TextType::class, [
             'label' => $this->__('Letter for order') . ':',
             'label_attr' => [
                 'class' => 'tooltips',
@@ -274,7 +288,7 @@ abstract class AbstractLocationType extends AbstractType
             'required' => true,
         ]);
         
-        $builder->add('logoOfYourLocation', 'MU\YourCityModule\Form\Type\Field\UploadType', [
+        $builder->add('logoOfYourLocation', UploadType::class, [
             'label' => $this->__('Logo of your location') . ':',
             'label_attr' => [
                 'class' => 'tooltips',
@@ -291,7 +305,7 @@ abstract class AbstractLocationType extends AbstractType
             'allowed_size' => '100k'
         ]);
         
-        $builder->add('imageOfLocation', 'MU\YourCityModule\Form\Type\Field\UploadType', [
+        $builder->add('imageOfLocation', UploadType::class, [
             'label' => $this->__('Image of location') . ':',
             'label_attr' => [
                 'class' => 'tooltips',
@@ -308,7 +322,7 @@ abstract class AbstractLocationType extends AbstractType
             'allowed_size' => ''
         ]);
         
-        $builder->add('street', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+        $builder->add('street', TextType::class, [
             'label' => $this->__('Street') . ':',
             'empty_data' => '',
             'attr' => [
@@ -319,7 +333,7 @@ abstract class AbstractLocationType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('numberOfStreet', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+        $builder->add('numberOfStreet', TextType::class, [
             'label' => $this->__('Number of street') . ':',
             'empty_data' => '',
             'attr' => [
@@ -330,7 +344,7 @@ abstract class AbstractLocationType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('zipCode', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+        $builder->add('zipCode', TextType::class, [
             'label' => $this->__('Zip code') . ':',
             'empty_data' => '',
             'attr' => [
@@ -341,7 +355,7 @@ abstract class AbstractLocationType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('city', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+        $builder->add('city', TextType::class, [
             'label' => $this->__('City') . ':',
             'empty_data' => '',
             'attr' => [
@@ -352,7 +366,7 @@ abstract class AbstractLocationType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('telefon', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+        $builder->add('telefon', TextType::class, [
             'label' => $this->__('Telefon') . ':',
             'empty_data' => '',
             'attr' => [
@@ -363,7 +377,7 @@ abstract class AbstractLocationType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('mobil', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+        $builder->add('mobil', TextType::class, [
             'label' => $this->__('Mobil') . ':',
             'empty_data' => '',
             'attr' => [
@@ -374,7 +388,7 @@ abstract class AbstractLocationType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('homepage', 'Symfony\Component\Form\Extension\Core\Type\UrlType', [
+        $builder->add('homepage', UrlType::class, [
             'label' => $this->__('Homepage') . ':',
             'empty_data' => '',
             'attr' => [
@@ -385,7 +399,7 @@ abstract class AbstractLocationType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('bsagStop', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+        $builder->add('bsagStop', TextType::class, [
             'label' => $this->__('Bsag stop') . ':',
             'empty_data' => '',
             'attr' => [
@@ -396,7 +410,7 @@ abstract class AbstractLocationType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('tram', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+        $builder->add('tram', TextType::class, [
             'label' => $this->__('Tram') . ':',
             'empty_data' => '',
             'attr' => [
@@ -407,7 +421,7 @@ abstract class AbstractLocationType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('bus', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+        $builder->add('bus', TextType::class, [
             'label' => $this->__('Bus') . ':',
             'empty_data' => '',
             'attr' => [
@@ -418,7 +432,7 @@ abstract class AbstractLocationType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('closedForEver', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+        $builder->add('closedForEver', CheckboxType::class, [
             'label' => $this->__('Closed for ever') . ':',
             'attr' => [
                 'class' => '',
@@ -427,7 +441,7 @@ abstract class AbstractLocationType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('agreement', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+        $builder->add('agreement', CheckboxType::class, [
             'label' => $this->__('Agreement') . ':',
             'attr' => [
                 'class' => '',
@@ -436,7 +450,7 @@ abstract class AbstractLocationType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('unclearTimes', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+        $builder->add('unclearTimes', CheckboxType::class, [
             'label' => $this->__('Unclear times') . ':',
             'attr' => [
                 'class' => '',
@@ -445,7 +459,7 @@ abstract class AbstractLocationType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('openingHours', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
+        $builder->add('openingHours', TextareaType::class, [
             'label' => $this->__('Opening hours') . ':',
             'label_attr' => [
                 'class' => 'tooltips',
@@ -461,7 +475,7 @@ abstract class AbstractLocationType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('closedOnMonday', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+        $builder->add('closedOnMonday', CheckboxType::class, [
             'label' => $this->__('Closed on monday') . ':',
             'attr' => [
                 'class' => '',
@@ -470,7 +484,7 @@ abstract class AbstractLocationType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('startOnMonday', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
+        $builder->add('startOnMonday', TimeType::class, [
             'label' => $this->__('Start on monday') . ':',
             'empty_data' => '',
             'attr' => [
@@ -483,7 +497,7 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
-        $builder->add('endOnMonday', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
+        $builder->add('endOnMonday', TimeType::class, [
             'label' => $this->__('End on monday') . ':',
             'empty_data' => '',
             'attr' => [
@@ -496,7 +510,7 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
-        $builder->add('start2OnMonday', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
+        $builder->add('start2OnMonday', TimeType::class, [
             'label' => $this->__('Start 2 on monday') . ':',
             'empty_data' => '',
             'attr' => [
@@ -509,7 +523,7 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
-        $builder->add('end2OnMonday', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
+        $builder->add('end2OnMonday', TimeType::class, [
             'label' => $this->__('End 2 on monday') . ':',
             'empty_data' => '',
             'attr' => [
@@ -522,7 +536,7 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
-        $builder->add('closedOnTuesday', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+        $builder->add('closedOnTuesday', CheckboxType::class, [
             'label' => $this->__('Closed on tuesday') . ':',
             'attr' => [
                 'class' => '',
@@ -531,7 +545,7 @@ abstract class AbstractLocationType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('startOnTuesday', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
+        $builder->add('startOnTuesday', TimeType::class, [
             'label' => $this->__('Start on tuesday') . ':',
             'empty_data' => '',
             'attr' => [
@@ -544,7 +558,7 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
-        $builder->add('endOnTuesday', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
+        $builder->add('endOnTuesday', TimeType::class, [
             'label' => $this->__('End on tuesday') . ':',
             'empty_data' => '',
             'attr' => [
@@ -557,7 +571,7 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
-        $builder->add('start2OnTuesday', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
+        $builder->add('start2OnTuesday', TimeType::class, [
             'label' => $this->__('Start 2 on tuesday') . ':',
             'empty_data' => '',
             'attr' => [
@@ -570,7 +584,7 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
-        $builder->add('end2OnTuesday', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
+        $builder->add('end2OnTuesday', TimeType::class, [
             'label' => $this->__('End 2 on tuesday') . ':',
             'empty_data' => '',
             'attr' => [
@@ -583,7 +597,7 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
-        $builder->add('closedOnWednesday', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+        $builder->add('closedOnWednesday', CheckboxType::class, [
             'label' => $this->__('Closed on wednesday') . ':',
             'attr' => [
                 'class' => '',
@@ -592,7 +606,7 @@ abstract class AbstractLocationType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('startOnWednesday', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
+        $builder->add('startOnWednesday', TimeType::class, [
             'label' => $this->__('Start on wednesday') . ':',
             'empty_data' => '',
             'attr' => [
@@ -605,7 +619,7 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
-        $builder->add('endOnWednesday', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
+        $builder->add('endOnWednesday', TimeType::class, [
             'label' => $this->__('End on wednesday') . ':',
             'empty_data' => '',
             'attr' => [
@@ -618,7 +632,7 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
-        $builder->add('start2OnWednesday', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
+        $builder->add('start2OnWednesday', TimeType::class, [
             'label' => $this->__('Start 2 on wednesday') . ':',
             'empty_data' => '',
             'attr' => [
@@ -631,7 +645,7 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
-        $builder->add('end2OnWednesday', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
+        $builder->add('end2OnWednesday', TimeType::class, [
             'label' => $this->__('End 2 on wednesday') . ':',
             'empty_data' => '',
             'attr' => [
@@ -644,7 +658,7 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
-        $builder->add('closedOnThursday', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+        $builder->add('closedOnThursday', CheckboxType::class, [
             'label' => $this->__('Closed on thursday') . ':',
             'attr' => [
                 'class' => '',
@@ -653,7 +667,7 @@ abstract class AbstractLocationType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('startOnThursday', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
+        $builder->add('startOnThursday', TimeType::class, [
             'label' => $this->__('Start on thursday') . ':',
             'empty_data' => '',
             'attr' => [
@@ -666,7 +680,7 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
-        $builder->add('endOnThursday', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
+        $builder->add('endOnThursday', TimeType::class, [
             'label' => $this->__('End on thursday') . ':',
             'empty_data' => '',
             'attr' => [
@@ -679,7 +693,7 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
-        $builder->add('start2OnThursday', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
+        $builder->add('start2OnThursday', TimeType::class, [
             'label' => $this->__('Start 2 on thursday') . ':',
             'empty_data' => '',
             'attr' => [
@@ -692,7 +706,7 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
-        $builder->add('end2OnThursday', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
+        $builder->add('end2OnThursday', TimeType::class, [
             'label' => $this->__('End 2 on thursday') . ':',
             'empty_data' => '',
             'attr' => [
@@ -705,7 +719,7 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
-        $builder->add('closedOnFriday', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+        $builder->add('closedOnFriday', CheckboxType::class, [
             'label' => $this->__('Closed on friday') . ':',
             'attr' => [
                 'class' => '',
@@ -714,7 +728,7 @@ abstract class AbstractLocationType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('startOnFriday', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
+        $builder->add('startOnFriday', TimeType::class, [
             'label' => $this->__('Start on friday') . ':',
             'empty_data' => '',
             'attr' => [
@@ -727,7 +741,7 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
-        $builder->add('endOnFriday', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
+        $builder->add('endOnFriday', TimeType::class, [
             'label' => $this->__('End on friday') . ':',
             'empty_data' => '',
             'attr' => [
@@ -740,7 +754,7 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
-        $builder->add('start2OnFriday', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
+        $builder->add('start2OnFriday', TimeType::class, [
             'label' => $this->__('Start 2 on friday') . ':',
             'empty_data' => '',
             'attr' => [
@@ -753,7 +767,7 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
-        $builder->add('end2OnFriday', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
+        $builder->add('end2OnFriday', TimeType::class, [
             'label' => $this->__('End 2 on friday') . ':',
             'empty_data' => '',
             'attr' => [
@@ -766,7 +780,7 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
-        $builder->add('closedOnSaturday', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+        $builder->add('closedOnSaturday', CheckboxType::class, [
             'label' => $this->__('Closed on saturday') . ':',
             'attr' => [
                 'class' => '',
@@ -775,7 +789,7 @@ abstract class AbstractLocationType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('startOnSaturday', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
+        $builder->add('startOnSaturday', TimeType::class, [
             'label' => $this->__('Start on saturday') . ':',
             'empty_data' => '',
             'attr' => [
@@ -788,7 +802,7 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
-        $builder->add('endOnSaturday', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
+        $builder->add('endOnSaturday', TimeType::class, [
             'label' => $this->__('End on saturday') . ':',
             'empty_data' => '',
             'attr' => [
@@ -801,7 +815,7 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
-        $builder->add('star2tOnSaturday', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
+        $builder->add('star2tOnSaturday', TimeType::class, [
             'label' => $this->__('Star 2t on saturday') . ':',
             'empty_data' => '',
             'attr' => [
@@ -814,7 +828,7 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
-        $builder->add('end2OnSaturday', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
+        $builder->add('end2OnSaturday', TimeType::class, [
             'label' => $this->__('End 2 on saturday') . ':',
             'empty_data' => '',
             'attr' => [
@@ -827,7 +841,7 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
-        $builder->add('closedOnSunday', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+        $builder->add('closedOnSunday', CheckboxType::class, [
             'label' => $this->__('Closed on sunday') . ':',
             'attr' => [
                 'class' => '',
@@ -836,7 +850,7 @@ abstract class AbstractLocationType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('startOnSunday', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
+        $builder->add('startOnSunday', TimeType::class, [
             'label' => $this->__('Start on sunday') . ':',
             'empty_data' => '',
             'attr' => [
@@ -849,7 +863,7 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
-        $builder->add('endOnSunday', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
+        $builder->add('endOnSunday', TimeType::class, [
             'label' => $this->__('End on sunday') . ':',
             'empty_data' => '',
             'attr' => [
@@ -862,7 +876,7 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
-        $builder->add('start2OnSunday', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
+        $builder->add('start2OnSunday', TimeType::class, [
             'label' => $this->__('Start 2 on sunday') . ':',
             'empty_data' => '',
             'attr' => [
@@ -875,7 +889,7 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
-        $builder->add('end2OnSunday', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
+        $builder->add('end2OnSunday', TimeType::class, [
             'label' => $this->__('End 2 on sunday') . ':',
             'empty_data' => '',
             'attr' => [
@@ -888,7 +902,7 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
-        $builder->add('owner', 'MU\YourCityModule\Form\Type\Field\UserType', [
+        $builder->add('owner', UserType::class, [
             'label' => $this->__('Owner') . ':',
             'empty_data' => '',
             'attr' => [
@@ -900,7 +914,7 @@ abstract class AbstractLocationType extends AbstractType
             'inline_usage' => $options['inline_usage']
         ]);
         
-        $builder->add('admin1', 'MU\YourCityModule\Form\Type\Field\UserType', [
+        $builder->add('admin1', UserType::class, [
             'label' => $this->__('Admin 1') . ':',
             'empty_data' => '',
             'attr' => [
@@ -912,7 +926,7 @@ abstract class AbstractLocationType extends AbstractType
             'inline_usage' => $options['inline_usage']
         ]);
         
-        $builder->add('admin2', 'MU\YourCityModule\Form\Type\Field\UserType', [
+        $builder->add('admin2', UserType::class, [
             'label' => $this->__('Admin 2') . ':',
             'empty_data' => '',
             'attr' => [
@@ -935,14 +949,14 @@ abstract class AbstractLocationType extends AbstractType
      */
     public function addGeographicalFields(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('latitude', 'MU\YourCityModule\Form\Type\Field\GeoType', [
+        $builder->add('latitude', GeoType::class, [
             'label' => $this->__('Latitude') . ':',
             'attr' => [
                 'class' => 'validate-number'
             ],
             'required' => false
         ]);
-        $builder->add('longitude', 'MU\YourCityModule\Form\Type\Field\GeoType', [
+        $builder->add('longitude', GeoType::class, [
             'label' => $this->__('Longitude') . ':',
             'attr' => [
                 'class' => 'validate-number'
@@ -1065,7 +1079,7 @@ abstract class AbstractLocationType extends AbstractType
             $helpText = $this->__('These remarks (like questions about conformance) are not stored, but added to any notification emails send to our moderators.');
         }
     
-        $builder->add('additionalNotificationRemarks', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
+        $builder->add('additionalNotificationRemarks', TextareaType::class, [
             'mapped' => false,
             'label' => $this->__('Additional remarks'),
             'label_attr' => [
@@ -1092,7 +1106,7 @@ abstract class AbstractLocationType extends AbstractType
             return;
         }
     
-        $builder->add('moderationSpecificCreator', 'MU\YourCityModule\Form\Type\Field\UserType', [
+        $builder->add('moderationSpecificCreator', UserType::class, [
             'mapped' => false,
             'label' => $this->__('Creator') . ':',
             'attr' => [
@@ -1104,7 +1118,7 @@ abstract class AbstractLocationType extends AbstractType
             'required' => false,
             'help' => $this->__('Here you can choose a user which will be set as creator')
         ]);
-        $builder->add('moderationSpecificCreationDate', 'Symfony\Component\Form\Extension\Core\Type\DateTimeType', [
+        $builder->add('moderationSpecificCreationDate', DateTimeType::class, [
             'mapped' => false,
             'label' => $this->__('Creation date') . ':',
             'attr' => [
@@ -1131,7 +1145,7 @@ abstract class AbstractLocationType extends AbstractType
         if ($options['mode'] != 'create') {
             return;
         }
-        $builder->add('repeatCreation', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+        $builder->add('repeatCreation', CheckboxType::class, [
             'mapped' => false,
             'label' => $this->__('Create another item after save'),
             'required' => false
@@ -1147,16 +1161,15 @@ abstract class AbstractLocationType extends AbstractType
     public function addSubmitButtons(FormBuilderInterface $builder, array $options)
     {
         foreach ($options['actions'] as $action) {
-            $builder->add($action['id'], 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
-                'label' => $this->__(/** @Ignore */$action['title']),
+            $builder->add($action['id'], SubmitType::class, [
+                'label' => $action['title'],
                 'icon' => ($action['id'] == 'delete' ? 'fa-trash-o' : ''),
                 'attr' => [
-                    'class' => $action['buttonClass'],
-                    'title' => $this->__(/** @Ignore */$action['description'])
+                    'class' => $action['buttonClass']
                 ]
             ]);
         }
-        $builder->add('reset', 'Symfony\Component\Form\Extension\Core\Type\ResetType', [
+        $builder->add('reset', ResetType::class, [
             'label' => $this->__('Reset'),
             'icon' => 'fa-refresh',
             'attr' => [
@@ -1164,7 +1177,7 @@ abstract class AbstractLocationType extends AbstractType
                 'formnovalidate' => 'formnovalidate'
             ]
         ]);
-        $builder->add('cancel', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
+        $builder->add('cancel', SubmitType::class, [
             'label' => $this->__('Cancel'),
             'icon' => 'fa-times',
             'attr' => [

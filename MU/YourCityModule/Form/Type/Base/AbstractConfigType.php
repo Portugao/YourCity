@@ -13,6 +13,12 @@
 namespace MU\YourCityModule\Form\Type\Base;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
@@ -77,14 +83,14 @@ abstract class AbstractConfigType extends AbstractType
         $this->addGeoFields($builder, $options);
 
         $builder
-            ->add('save', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
+            ->add('save', SubmitType::class, [
                 'label' => $this->__('Update configuration'),
                 'icon' => 'fa-check',
                 'attr' => [
                     'class' => 'btn btn-success'
                 ]
             ])
-            ->add('cancel', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
+            ->add('cancel', SubmitType::class, [
                 'label' => $this->__('Cancel'),
                 'icon' => 'fa-times',
                 'attr' => [
@@ -104,7 +110,7 @@ abstract class AbstractConfigType extends AbstractType
     public function addGeneralSettingsFields(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('city', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            ->add('city', TextType::class, [
                 'label' => $this->__('City') . ':',
                 'required' => false,
                 'data' => isset($this->moduleVars['city']) ? $this->moduleVars['city'] : '',
@@ -114,7 +120,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Enter the city.')
                 ],
             ])
-            ->add('areaCode', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            ->add('areaCode', TextType::class, [
                 'label' => $this->__('Area code') . ':',
                 'required' => false,
                 'data' => isset($this->moduleVars['areaCode']) ? $this->moduleVars['areaCode'] : '',
@@ -136,7 +142,7 @@ abstract class AbstractConfigType extends AbstractType
     public function addModerationFields(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('moderationGroupForLocations', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
+            ->add('moderationGroupForLocations', EntityType::class, [
                 'label' => $this->__('Moderation group for locations') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -164,7 +170,7 @@ abstract class AbstractConfigType extends AbstractType
     public function addListViewsFields(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('branchEntriesPerPage', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('branchEntriesPerPage', IntegerType::class, [
                 'label' => $this->__('Branch entries per page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -179,7 +185,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Enter the branch entries per page.') . ' ' . $this->__('Only digits are allowed.')
                 ],'scale' => 0
             ])
-            ->add('linkOwnBranchesOnAccountPage', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('linkOwnBranchesOnAccountPage', CheckboxType::class, [
                 'label' => $this->__('Link own branches on account page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -192,7 +198,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('The link own branches on account page option.')
                 ],
             ])
-            ->add('locationEntriesPerPage', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('locationEntriesPerPage', IntegerType::class, [
                 'label' => $this->__('Location entries per page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -207,7 +213,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Enter the location entries per page.') . ' ' . $this->__('Only digits are allowed.')
                 ],'scale' => 0
             ])
-            ->add('linkOwnLocationsOnAccountPage', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('linkOwnLocationsOnAccountPage', CheckboxType::class, [
                 'label' => $this->__('Link own locations on account page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -220,7 +226,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('The link own locations on account page option.')
                 ],
             ])
-            ->add('partEntriesPerPage', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('partEntriesPerPage', IntegerType::class, [
                 'label' => $this->__('Part entries per page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -235,7 +241,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Enter the part entries per page.') . ' ' . $this->__('Only digits are allowed.')
                 ],'scale' => 0
             ])
-            ->add('linkOwnPartsOnAccountPage', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('linkOwnPartsOnAccountPage', CheckboxType::class, [
                 'label' => $this->__('Link own parts on account page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -248,7 +254,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('The link own parts on account page option.')
                 ],
             ])
-            ->add('imageOfLocationEntriesPerPage', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('imageOfLocationEntriesPerPage', IntegerType::class, [
                 'label' => $this->__('Image of location entries per page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -263,7 +269,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Enter the image of location entries per page.') . ' ' . $this->__('Only digits are allowed.')
                 ],'scale' => 0
             ])
-            ->add('linkOwnImagesOfLocationOnAccountPage', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('linkOwnImagesOfLocationOnAccountPage', CheckboxType::class, [
                 'label' => $this->__('Link own images of location on account page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -276,7 +282,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('The link own images of location on account page option.')
                 ],
             ])
-            ->add('fileOfLocationEntriesPerPage', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('fileOfLocationEntriesPerPage', IntegerType::class, [
                 'label' => $this->__('File of location entries per page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -291,7 +297,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Enter the file of location entries per page.') . ' ' . $this->__('Only digits are allowed.')
                 ],'scale' => 0
             ])
-            ->add('linkOwnFilesOfLocationOnAccountPage', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('linkOwnFilesOfLocationOnAccountPage', CheckboxType::class, [
                 'label' => $this->__('Link own files of location on account page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -304,7 +310,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('The link own files of location on account page option.')
                 ],
             ])
-            ->add('offerEntriesPerPage', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('offerEntriesPerPage', IntegerType::class, [
                 'label' => $this->__('Offer entries per page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -319,7 +325,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Enter the offer entries per page.') . ' ' . $this->__('Only digits are allowed.')
                 ],'scale' => 0
             ])
-            ->add('linkOwnOffersOnAccountPage', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('linkOwnOffersOnAccountPage', CheckboxType::class, [
                 'label' => $this->__('Link own offers on account page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -332,7 +338,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('The link own offers on account page option.')
                 ],
             ])
-            ->add('menuOfLocationEntriesPerPage', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('menuOfLocationEntriesPerPage', IntegerType::class, [
                 'label' => $this->__('Menu of location entries per page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -347,7 +353,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Enter the menu of location entries per page.') . ' ' . $this->__('Only digits are allowed.')
                 ],'scale' => 0
             ])
-            ->add('linkOwnMenusOfLocationOnAccountPage', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('linkOwnMenusOfLocationOnAccountPage', CheckboxType::class, [
                 'label' => $this->__('Link own menus of location on account page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -360,7 +366,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('The link own menus of location on account page option.')
                 ],
             ])
-            ->add('partOfMenuEntriesPerPage', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('partOfMenuEntriesPerPage', IntegerType::class, [
                 'label' => $this->__('Part of menu entries per page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -375,7 +381,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Enter the part of menu entries per page.') . ' ' . $this->__('Only digits are allowed.')
                 ],'scale' => 0
             ])
-            ->add('linkOwnPartsOfMenuOnAccountPage', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('linkOwnPartsOfMenuOnAccountPage', CheckboxType::class, [
                 'label' => $this->__('Link own parts of menu on account page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -388,7 +394,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('The link own parts of menu on account page option.')
                 ],
             ])
-            ->add('dishEntriesPerPage', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('dishEntriesPerPage', IntegerType::class, [
                 'label' => $this->__('Dish entries per page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -403,7 +409,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Enter the dish entries per page.') . ' ' . $this->__('Only digits are allowed.')
                 ],'scale' => 0
             ])
-            ->add('linkOwnDishesOnAccountPage', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('linkOwnDishesOnAccountPage', CheckboxType::class, [
                 'label' => $this->__('Link own dishes on account page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -416,7 +422,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('The link own dishes on account page option.')
                 ],
             ])
-            ->add('eventEntriesPerPage', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('eventEntriesPerPage', IntegerType::class, [
                 'label' => $this->__('Event entries per page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -431,7 +437,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Enter the event entries per page.') . ' ' . $this->__('Only digits are allowed.')
                 ],'scale' => 0
             ])
-            ->add('linkOwnEventsOnAccountPage', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('linkOwnEventsOnAccountPage', CheckboxType::class, [
                 'label' => $this->__('Link own events on account page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -444,7 +450,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('The link own events on account page option.')
                 ],
             ])
-            ->add('productEntriesPerPage', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('productEntriesPerPage', IntegerType::class, [
                 'label' => $this->__('Product entries per page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -459,7 +465,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Enter the product entries per page.') . ' ' . $this->__('Only digits are allowed.')
                 ],'scale' => 0
             ])
-            ->add('linkOwnProductsOnAccountPage', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('linkOwnProductsOnAccountPage', CheckboxType::class, [
                 'label' => $this->__('Link own products on account page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -472,7 +478,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('The link own products on account page option.')
                 ],
             ])
-            ->add('specialOfLocationEntriesPerPage', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('specialOfLocationEntriesPerPage', IntegerType::class, [
                 'label' => $this->__('Special of location entries per page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -487,7 +493,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Enter the special of location entries per page.') . ' ' . $this->__('Only digits are allowed.')
                 ],'scale' => 0
             ])
-            ->add('linkOwnSpecialsOfLocationOnAccountPage', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('linkOwnSpecialsOfLocationOnAccountPage', CheckboxType::class, [
                 'label' => $this->__('Link own specials of location on account page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -500,7 +506,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('The link own specials of location on account page option.')
                 ],
             ])
-            ->add('serviceOfLocationEntriesPerPage', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('serviceOfLocationEntriesPerPage', IntegerType::class, [
                 'label' => $this->__('Service of location entries per page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -515,7 +521,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Enter the service of location entries per page.') . ' ' . $this->__('Only digits are allowed.')
                 ],'scale' => 0
             ])
-            ->add('linkOwnServicesOfLocationOnAccountPage', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('linkOwnServicesOfLocationOnAccountPage', CheckboxType::class, [
                 'label' => $this->__('Link own services of location on account page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -528,7 +534,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('The link own services of location on account page option.')
                 ],
             ])
-            ->add('abonnementEntriesPerPage', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('abonnementEntriesPerPage', IntegerType::class, [
                 'label' => $this->__('Abonnement entries per page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -543,7 +549,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Enter the abonnement entries per page.') . ' ' . $this->__('Only digits are allowed.')
                 ],'scale' => 0
             ])
-            ->add('linkOwnAbonnementsOnAccountPage', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('linkOwnAbonnementsOnAccountPage', CheckboxType::class, [
                 'label' => $this->__('Link own abonnements on account page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -568,7 +574,7 @@ abstract class AbstractConfigType extends AbstractType
     public function addImagesFields(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('enableShrinkingForBranchImageOfBranch', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('enableShrinkingForBranchImageOfBranch', CheckboxType::class, [
                 'label' => $this->__('Enable shrinking') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -582,7 +588,7 @@ abstract class AbstractConfigType extends AbstractType
                     'class' => 'shrink-enabler'
                 ],
             ])
-            ->add('shrinkWidthBranchImageOfBranch', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('shrinkWidthBranchImageOfBranch', IntegerType::class, [
                 'label' => $this->__('Shrink width') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -599,7 +605,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('shrinkHeightBranchImageOfBranch', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('shrinkHeightBranchImageOfBranch', IntegerType::class, [
                 'label' => $this->__('Shrink height') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -616,7 +622,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailModeBranchImageOfBranch', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            ->add('thumbnailModeBranchImageOfBranch', ChoiceType::class, [
                 'label' => $this->__('Thumbnail mode') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -635,7 +641,7 @@ abstract class AbstractConfigType extends AbstractType
                 'choices_as_values' => true,
                 'multiple' => false
             ])
-            ->add('thumbnailWidthBranchImageOfBranchView', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthBranchImageOfBranchView', IntegerType::class, [
                 'label' => $this->__('Thumbnail width view') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -651,7 +657,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightBranchImageOfBranchView', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightBranchImageOfBranchView', IntegerType::class, [
                 'label' => $this->__('Thumbnail height view') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -667,7 +673,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailWidthBranchImageOfBranchDisplay', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthBranchImageOfBranchDisplay', IntegerType::class, [
                 'label' => $this->__('Thumbnail width display') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -683,7 +689,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightBranchImageOfBranchDisplay', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightBranchImageOfBranchDisplay', IntegerType::class, [
                 'label' => $this->__('Thumbnail height display') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -699,7 +705,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailWidthBranchImageOfBranchEdit', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthBranchImageOfBranchEdit', IntegerType::class, [
                 'label' => $this->__('Thumbnail width edit') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -715,7 +721,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightBranchImageOfBranchEdit', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightBranchImageOfBranchEdit', IntegerType::class, [
                 'label' => $this->__('Thumbnail height edit') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -731,7 +737,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('enableShrinkingForLocationLogoOfYourLocation', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('enableShrinkingForLocationLogoOfYourLocation', CheckboxType::class, [
                 'label' => $this->__('Enable shrinking') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -745,7 +751,7 @@ abstract class AbstractConfigType extends AbstractType
                     'class' => 'shrink-enabler'
                 ],
             ])
-            ->add('shrinkWidthLocationLogoOfYourLocation', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('shrinkWidthLocationLogoOfYourLocation', IntegerType::class, [
                 'label' => $this->__('Shrink width') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -762,7 +768,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('shrinkHeightLocationLogoOfYourLocation', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('shrinkHeightLocationLogoOfYourLocation', IntegerType::class, [
                 'label' => $this->__('Shrink height') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -779,7 +785,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailModeLocationLogoOfYourLocation', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            ->add('thumbnailModeLocationLogoOfYourLocation', ChoiceType::class, [
                 'label' => $this->__('Thumbnail mode') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -798,7 +804,7 @@ abstract class AbstractConfigType extends AbstractType
                 'choices_as_values' => true,
                 'multiple' => false
             ])
-            ->add('thumbnailWidthLocationLogoOfYourLocationView', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthLocationLogoOfYourLocationView', IntegerType::class, [
                 'label' => $this->__('Thumbnail width view') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -814,7 +820,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightLocationLogoOfYourLocationView', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightLocationLogoOfYourLocationView', IntegerType::class, [
                 'label' => $this->__('Thumbnail height view') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -830,7 +836,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailWidthLocationLogoOfYourLocationDisplay', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthLocationLogoOfYourLocationDisplay', IntegerType::class, [
                 'label' => $this->__('Thumbnail width display') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -846,7 +852,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightLocationLogoOfYourLocationDisplay', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightLocationLogoOfYourLocationDisplay', IntegerType::class, [
                 'label' => $this->__('Thumbnail height display') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -862,7 +868,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailWidthLocationLogoOfYourLocationEdit', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthLocationLogoOfYourLocationEdit', IntegerType::class, [
                 'label' => $this->__('Thumbnail width edit') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -878,7 +884,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightLocationLogoOfYourLocationEdit', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightLocationLogoOfYourLocationEdit', IntegerType::class, [
                 'label' => $this->__('Thumbnail height edit') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -894,7 +900,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('enableShrinkingForLocationImageOfLocation', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('enableShrinkingForLocationImageOfLocation', CheckboxType::class, [
                 'label' => $this->__('Enable shrinking') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -908,7 +914,7 @@ abstract class AbstractConfigType extends AbstractType
                     'class' => 'shrink-enabler'
                 ],
             ])
-            ->add('shrinkWidthLocationImageOfLocation', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('shrinkWidthLocationImageOfLocation', IntegerType::class, [
                 'label' => $this->__('Shrink width') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -925,7 +931,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('shrinkHeightLocationImageOfLocation', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('shrinkHeightLocationImageOfLocation', IntegerType::class, [
                 'label' => $this->__('Shrink height') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -942,7 +948,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailModeLocationImageOfLocation', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            ->add('thumbnailModeLocationImageOfLocation', ChoiceType::class, [
                 'label' => $this->__('Thumbnail mode') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -961,7 +967,7 @@ abstract class AbstractConfigType extends AbstractType
                 'choices_as_values' => true,
                 'multiple' => false
             ])
-            ->add('thumbnailWidthLocationImageOfLocationView', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthLocationImageOfLocationView', IntegerType::class, [
                 'label' => $this->__('Thumbnail width view') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -977,7 +983,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightLocationImageOfLocationView', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightLocationImageOfLocationView', IntegerType::class, [
                 'label' => $this->__('Thumbnail height view') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -993,7 +999,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailWidthLocationImageOfLocationDisplay', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthLocationImageOfLocationDisplay', IntegerType::class, [
                 'label' => $this->__('Thumbnail width display') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1009,7 +1015,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightLocationImageOfLocationDisplay', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightLocationImageOfLocationDisplay', IntegerType::class, [
                 'label' => $this->__('Thumbnail height display') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1025,7 +1031,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailWidthLocationImageOfLocationEdit', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthLocationImageOfLocationEdit', IntegerType::class, [
                 'label' => $this->__('Thumbnail width edit') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1041,7 +1047,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightLocationImageOfLocationEdit', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightLocationImageOfLocationEdit', IntegerType::class, [
                 'label' => $this->__('Thumbnail height edit') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1057,7 +1063,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('enableShrinkingForPartImageOfPart', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('enableShrinkingForPartImageOfPart', CheckboxType::class, [
                 'label' => $this->__('Enable shrinking') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1071,7 +1077,7 @@ abstract class AbstractConfigType extends AbstractType
                     'class' => 'shrink-enabler'
                 ],
             ])
-            ->add('shrinkWidthPartImageOfPart', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('shrinkWidthPartImageOfPart', IntegerType::class, [
                 'label' => $this->__('Shrink width') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1088,7 +1094,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('shrinkHeightPartImageOfPart', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('shrinkHeightPartImageOfPart', IntegerType::class, [
                 'label' => $this->__('Shrink height') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1105,7 +1111,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailModePartImageOfPart', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            ->add('thumbnailModePartImageOfPart', ChoiceType::class, [
                 'label' => $this->__('Thumbnail mode') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1124,7 +1130,7 @@ abstract class AbstractConfigType extends AbstractType
                 'choices_as_values' => true,
                 'multiple' => false
             ])
-            ->add('thumbnailWidthPartImageOfPartView', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthPartImageOfPartView', IntegerType::class, [
                 'label' => $this->__('Thumbnail width view') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1140,7 +1146,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightPartImageOfPartView', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightPartImageOfPartView', IntegerType::class, [
                 'label' => $this->__('Thumbnail height view') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1156,7 +1162,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailWidthPartImageOfPartDisplay', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthPartImageOfPartDisplay', IntegerType::class, [
                 'label' => $this->__('Thumbnail width display') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1172,7 +1178,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightPartImageOfPartDisplay', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightPartImageOfPartDisplay', IntegerType::class, [
                 'label' => $this->__('Thumbnail height display') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1188,7 +1194,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailWidthPartImageOfPartEdit', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthPartImageOfPartEdit', IntegerType::class, [
                 'label' => $this->__('Thumbnail width edit') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1204,7 +1210,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightPartImageOfPartEdit', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightPartImageOfPartEdit', IntegerType::class, [
                 'label' => $this->__('Thumbnail height edit') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1220,7 +1226,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('enableShrinkingForImageOfLocationImage', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('enableShrinkingForImageOfLocationImage', CheckboxType::class, [
                 'label' => $this->__('Enable shrinking') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1234,7 +1240,7 @@ abstract class AbstractConfigType extends AbstractType
                     'class' => 'shrink-enabler'
                 ],
             ])
-            ->add('shrinkWidthImageOfLocationImage', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('shrinkWidthImageOfLocationImage', IntegerType::class, [
                 'label' => $this->__('Shrink width') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1251,7 +1257,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('shrinkHeightImageOfLocationImage', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('shrinkHeightImageOfLocationImage', IntegerType::class, [
                 'label' => $this->__('Shrink height') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1268,7 +1274,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailModeImageOfLocationImage', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            ->add('thumbnailModeImageOfLocationImage', ChoiceType::class, [
                 'label' => $this->__('Thumbnail mode') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1287,7 +1293,7 @@ abstract class AbstractConfigType extends AbstractType
                 'choices_as_values' => true,
                 'multiple' => false
             ])
-            ->add('thumbnailWidthImageOfLocationImageView', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthImageOfLocationImageView', IntegerType::class, [
                 'label' => $this->__('Thumbnail width view') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1303,7 +1309,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightImageOfLocationImageView', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightImageOfLocationImageView', IntegerType::class, [
                 'label' => $this->__('Thumbnail height view') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1319,7 +1325,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailWidthImageOfLocationImageDisplay', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthImageOfLocationImageDisplay', IntegerType::class, [
                 'label' => $this->__('Thumbnail width display') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1335,7 +1341,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightImageOfLocationImageDisplay', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightImageOfLocationImageDisplay', IntegerType::class, [
                 'label' => $this->__('Thumbnail height display') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1351,7 +1357,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailWidthImageOfLocationImageEdit', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthImageOfLocationImageEdit', IntegerType::class, [
                 'label' => $this->__('Thumbnail width edit') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1367,7 +1373,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightImageOfLocationImageEdit', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightImageOfLocationImageEdit', IntegerType::class, [
                 'label' => $this->__('Thumbnail height edit') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1383,7 +1389,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('enableShrinkingForOfferImageOfOffer', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('enableShrinkingForOfferImageOfOffer', CheckboxType::class, [
                 'label' => $this->__('Enable shrinking') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1397,7 +1403,7 @@ abstract class AbstractConfigType extends AbstractType
                     'class' => 'shrink-enabler'
                 ],
             ])
-            ->add('shrinkWidthOfferImageOfOffer', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('shrinkWidthOfferImageOfOffer', IntegerType::class, [
                 'label' => $this->__('Shrink width') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1414,7 +1420,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('shrinkHeightOfferImageOfOffer', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('shrinkHeightOfferImageOfOffer', IntegerType::class, [
                 'label' => $this->__('Shrink height') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1431,7 +1437,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailModeOfferImageOfOffer', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            ->add('thumbnailModeOfferImageOfOffer', ChoiceType::class, [
                 'label' => $this->__('Thumbnail mode') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1450,7 +1456,7 @@ abstract class AbstractConfigType extends AbstractType
                 'choices_as_values' => true,
                 'multiple' => false
             ])
-            ->add('thumbnailWidthOfferImageOfOfferView', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthOfferImageOfOfferView', IntegerType::class, [
                 'label' => $this->__('Thumbnail width view') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1466,7 +1472,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightOfferImageOfOfferView', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightOfferImageOfOfferView', IntegerType::class, [
                 'label' => $this->__('Thumbnail height view') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1482,7 +1488,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailWidthOfferImageOfOfferDisplay', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthOfferImageOfOfferDisplay', IntegerType::class, [
                 'label' => $this->__('Thumbnail width display') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1498,7 +1504,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightOfferImageOfOfferDisplay', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightOfferImageOfOfferDisplay', IntegerType::class, [
                 'label' => $this->__('Thumbnail height display') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1514,7 +1520,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailWidthOfferImageOfOfferEdit', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthOfferImageOfOfferEdit', IntegerType::class, [
                 'label' => $this->__('Thumbnail width edit') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1530,7 +1536,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightOfferImageOfOfferEdit', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightOfferImageOfOfferEdit', IntegerType::class, [
                 'label' => $this->__('Thumbnail height edit') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1546,7 +1552,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('enableShrinkingForMenuOfLocationImageOfMenu', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('enableShrinkingForMenuOfLocationImageOfMenu', CheckboxType::class, [
                 'label' => $this->__('Enable shrinking') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1560,7 +1566,7 @@ abstract class AbstractConfigType extends AbstractType
                     'class' => 'shrink-enabler'
                 ],
             ])
-            ->add('shrinkWidthMenuOfLocationImageOfMenu', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('shrinkWidthMenuOfLocationImageOfMenu', IntegerType::class, [
                 'label' => $this->__('Shrink width') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1577,7 +1583,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('shrinkHeightMenuOfLocationImageOfMenu', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('shrinkHeightMenuOfLocationImageOfMenu', IntegerType::class, [
                 'label' => $this->__('Shrink height') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1594,7 +1600,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailModeMenuOfLocationImageOfMenu', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            ->add('thumbnailModeMenuOfLocationImageOfMenu', ChoiceType::class, [
                 'label' => $this->__('Thumbnail mode') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1613,7 +1619,7 @@ abstract class AbstractConfigType extends AbstractType
                 'choices_as_values' => true,
                 'multiple' => false
             ])
-            ->add('thumbnailWidthMenuOfLocationImageOfMenuView', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthMenuOfLocationImageOfMenuView', IntegerType::class, [
                 'label' => $this->__('Thumbnail width view') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1629,7 +1635,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightMenuOfLocationImageOfMenuView', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightMenuOfLocationImageOfMenuView', IntegerType::class, [
                 'label' => $this->__('Thumbnail height view') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1645,7 +1651,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailWidthMenuOfLocationImageOfMenuDisplay', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthMenuOfLocationImageOfMenuDisplay', IntegerType::class, [
                 'label' => $this->__('Thumbnail width display') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1661,7 +1667,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightMenuOfLocationImageOfMenuDisplay', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightMenuOfLocationImageOfMenuDisplay', IntegerType::class, [
                 'label' => $this->__('Thumbnail height display') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1677,7 +1683,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailWidthMenuOfLocationImageOfMenuEdit', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthMenuOfLocationImageOfMenuEdit', IntegerType::class, [
                 'label' => $this->__('Thumbnail width edit') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1693,7 +1699,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightMenuOfLocationImageOfMenuEdit', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightMenuOfLocationImageOfMenuEdit', IntegerType::class, [
                 'label' => $this->__('Thumbnail height edit') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1709,7 +1715,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('enableShrinkingForDishImageOfDish', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('enableShrinkingForDishImageOfDish', CheckboxType::class, [
                 'label' => $this->__('Enable shrinking') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1723,7 +1729,7 @@ abstract class AbstractConfigType extends AbstractType
                     'class' => 'shrink-enabler'
                 ],
             ])
-            ->add('shrinkWidthDishImageOfDish', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('shrinkWidthDishImageOfDish', IntegerType::class, [
                 'label' => $this->__('Shrink width') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1740,7 +1746,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('shrinkHeightDishImageOfDish', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('shrinkHeightDishImageOfDish', IntegerType::class, [
                 'label' => $this->__('Shrink height') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1757,7 +1763,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailModeDishImageOfDish', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            ->add('thumbnailModeDishImageOfDish', ChoiceType::class, [
                 'label' => $this->__('Thumbnail mode') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1776,7 +1782,7 @@ abstract class AbstractConfigType extends AbstractType
                 'choices_as_values' => true,
                 'multiple' => false
             ])
-            ->add('thumbnailWidthDishImageOfDishView', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthDishImageOfDishView', IntegerType::class, [
                 'label' => $this->__('Thumbnail width view') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1792,7 +1798,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightDishImageOfDishView', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightDishImageOfDishView', IntegerType::class, [
                 'label' => $this->__('Thumbnail height view') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1808,7 +1814,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailWidthDishImageOfDishDisplay', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthDishImageOfDishDisplay', IntegerType::class, [
                 'label' => $this->__('Thumbnail width display') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1824,7 +1830,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightDishImageOfDishDisplay', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightDishImageOfDishDisplay', IntegerType::class, [
                 'label' => $this->__('Thumbnail height display') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1840,7 +1846,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailWidthDishImageOfDishEdit', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthDishImageOfDishEdit', IntegerType::class, [
                 'label' => $this->__('Thumbnail width edit') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1856,7 +1862,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightDishImageOfDishEdit', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightDishImageOfDishEdit', IntegerType::class, [
                 'label' => $this->__('Thumbnail height edit') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1872,7 +1878,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('enableShrinkingForEventImageOfEvent', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('enableShrinkingForEventImageOfEvent', CheckboxType::class, [
                 'label' => $this->__('Enable shrinking') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1886,7 +1892,7 @@ abstract class AbstractConfigType extends AbstractType
                     'class' => 'shrink-enabler'
                 ],
             ])
-            ->add('shrinkWidthEventImageOfEvent', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('shrinkWidthEventImageOfEvent', IntegerType::class, [
                 'label' => $this->__('Shrink width') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1903,7 +1909,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('shrinkHeightEventImageOfEvent', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('shrinkHeightEventImageOfEvent', IntegerType::class, [
                 'label' => $this->__('Shrink height') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1920,7 +1926,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailModeEventImageOfEvent', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            ->add('thumbnailModeEventImageOfEvent', ChoiceType::class, [
                 'label' => $this->__('Thumbnail mode') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1939,7 +1945,7 @@ abstract class AbstractConfigType extends AbstractType
                 'choices_as_values' => true,
                 'multiple' => false
             ])
-            ->add('thumbnailWidthEventImageOfEventView', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthEventImageOfEventView', IntegerType::class, [
                 'label' => $this->__('Thumbnail width view') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1955,7 +1961,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightEventImageOfEventView', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightEventImageOfEventView', IntegerType::class, [
                 'label' => $this->__('Thumbnail height view') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1971,7 +1977,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailWidthEventImageOfEventDisplay', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthEventImageOfEventDisplay', IntegerType::class, [
                 'label' => $this->__('Thumbnail width display') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -1987,7 +1993,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightEventImageOfEventDisplay', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightEventImageOfEventDisplay', IntegerType::class, [
                 'label' => $this->__('Thumbnail height display') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -2003,7 +2009,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailWidthEventImageOfEventEdit', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthEventImageOfEventEdit', IntegerType::class, [
                 'label' => $this->__('Thumbnail width edit') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -2019,7 +2025,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightEventImageOfEventEdit', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightEventImageOfEventEdit', IntegerType::class, [
                 'label' => $this->__('Thumbnail height edit') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -2035,7 +2041,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('enableShrinkingForProductImageOfProduct', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('enableShrinkingForProductImageOfProduct', CheckboxType::class, [
                 'label' => $this->__('Enable shrinking') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -2049,7 +2055,7 @@ abstract class AbstractConfigType extends AbstractType
                     'class' => 'shrink-enabler'
                 ],
             ])
-            ->add('shrinkWidthProductImageOfProduct', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('shrinkWidthProductImageOfProduct', IntegerType::class, [
                 'label' => $this->__('Shrink width') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -2066,7 +2072,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('shrinkHeightProductImageOfProduct', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('shrinkHeightProductImageOfProduct', IntegerType::class, [
                 'label' => $this->__('Shrink height') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -2083,7 +2089,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailModeProductImageOfProduct', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            ->add('thumbnailModeProductImageOfProduct', ChoiceType::class, [
                 'label' => $this->__('Thumbnail mode') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -2102,7 +2108,7 @@ abstract class AbstractConfigType extends AbstractType
                 'choices_as_values' => true,
                 'multiple' => false
             ])
-            ->add('thumbnailWidthProductImageOfProductView', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthProductImageOfProductView', IntegerType::class, [
                 'label' => $this->__('Thumbnail width view') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -2118,7 +2124,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightProductImageOfProductView', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightProductImageOfProductView', IntegerType::class, [
                 'label' => $this->__('Thumbnail height view') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -2134,7 +2140,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailWidthProductImageOfProductDisplay', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthProductImageOfProductDisplay', IntegerType::class, [
                 'label' => $this->__('Thumbnail width display') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -2150,7 +2156,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightProductImageOfProductDisplay', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightProductImageOfProductDisplay', IntegerType::class, [
                 'label' => $this->__('Thumbnail height display') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -2166,7 +2172,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailWidthProductImageOfProductEdit', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailWidthProductImageOfProductEdit', IntegerType::class, [
                 'label' => $this->__('Thumbnail width edit') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -2182,7 +2188,7 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
-            ->add('thumbnailHeightProductImageOfProductEdit', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('thumbnailHeightProductImageOfProductEdit', IntegerType::class, [
                 'label' => $this->__('Thumbnail height edit') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -2210,7 +2216,7 @@ abstract class AbstractConfigType extends AbstractType
     public function addIntegrationFields(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('enabledFinderTypes', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            ->add('enabledFinderTypes', ChoiceType::class, [
                 'label' => $this->__('Enabled finder types') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -2252,7 +2258,7 @@ abstract class AbstractConfigType extends AbstractType
     public function addGeoFields(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('googleMapsApiKey', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            ->add('googleMapsApiKey', TextType::class, [
                 'label' => $this->__('Google maps api key') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -2267,7 +2273,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Enter the google maps api key.')
                 ],
             ])
-            ->add('defaultLatitude', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            ->add('defaultLatitude', TextType::class, [
                 'label' => $this->__('Default latitude') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -2282,7 +2288,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Enter the default latitude.')
                 ],
             ])
-            ->add('defaultLongitude', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            ->add('defaultLongitude', TextType::class, [
                 'label' => $this->__('Default longitude') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -2297,7 +2303,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Enter the default longitude.')
                 ],
             ])
-            ->add('defaultMapType', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            ->add('defaultMapType', ChoiceType::class, [
                 'label' => $this->__('Default map type') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -2318,7 +2324,7 @@ abstract class AbstractConfigType extends AbstractType
                 'choices_as_values' => true,
                 'multiple' => false
             ])
-            ->add('defaultZoomLevel', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+            ->add('defaultZoomLevel', IntegerType::class, [
                 'label' => $this->__('Default zoom level') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -2333,7 +2339,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Enter the default zoom level.') . ' ' . $this->__('Only digits are allowed.')
                 ],'scale' => 0
             ])
-            ->add('enableLocationGeoLocation', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('enableLocationGeoLocation', CheckboxType::class, [
                 'label' => $this->__('Enable location geo location') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
@@ -2346,7 +2352,7 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('The enable location geo location option.')
                 ],
             ])
-            ->add('enableEventGeoLocation', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('enableEventGeoLocation', CheckboxType::class, [
                 'label' => $this->__('Enable event geo location') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',

@@ -56,8 +56,6 @@ abstract class AbstractExternalController extends AbstractController
             return new Response($this->__('No such item.'));
         }
         
-        $entity->initWorkflow();
-        
         $templateParameters = [
             'objectType' => $objectType,
             'source' => $source,
@@ -175,10 +173,6 @@ abstract class AbstractExternalController extends AbstractController
         $query = $repository->getQueryFromBuilder($qb);
         
         list($entities, $objectCount) = $repository->retrieveCollectionResult($query, true);
-        
-        foreach ($entities as $k => $entity) {
-            $entity->initWorkflow();
-        }
         
         $templateParameters['items'] = $entities;
         $templateParameters['finderForm'] = $form->createView();

@@ -14,6 +14,14 @@ namespace MU\YourCityModule\Form\Type\Base;
 
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -22,8 +30,11 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
-use Zikula\ExtensionsModule\Api\VariableApi;
+use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 use MU\YourCityModule\Entity\Factory\EntityFactory;
+use MU\YourCityModule\Form\Type\Field\TranslationType;
+use MU\YourCityModule\Form\Type\Field\UploadType;
+use MU\YourCityModule\Form\Type\Field\UserType;
 use MU\YourCityModule\Helper\CollectionFilterHelper;
 use MU\YourCityModule\Helper\EntityDisplayHelper;
 use MU\YourCityModule\Helper\FeatureActivationHelper;
@@ -53,7 +64,7 @@ abstract class AbstractImageOfLocationType extends AbstractType
     protected $entityDisplayHelper;
 
     /**
-     * @var VariableApi
+     * @var VariableApiInterface
      */
     protected $variableApi;
 
@@ -79,7 +90,7 @@ abstract class AbstractImageOfLocationType extends AbstractType
      * @param EntityFactory       $entityFactory EntityFactory service instance
      * @param CollectionFilterHelper $collectionFilterHelper CollectionFilterHelper service instance
      * @param EntityDisplayHelper $entityDisplayHelper EntityDisplayHelper service instance
-     * @param VariableApi         $variableApi VariableApi service instance
+     * @param VariableApiInterface $variableApi VariableApi service instance
      * @param TranslatableHelper  $translatableHelper TranslatableHelper service instance
      * @param ListEntriesHelper   $listHelper     ListEntriesHelper service instance
      * @param FeatureActivationHelper $featureActivationHelper FeatureActivationHelper service instance
@@ -89,7 +100,7 @@ abstract class AbstractImageOfLocationType extends AbstractType
         EntityFactory $entityFactory,
         CollectionFilterHelper $collectionFilterHelper,
         EntityDisplayHelper $entityDisplayHelper,
-        VariableApi $variableApi,
+        VariableApiInterface $variableApi,
         TranslatableHelper $translatableHelper,
         ListEntriesHelper $listHelper,
         FeatureActivationHelper $featureActivationHelper
@@ -152,7 +163,7 @@ abstract class AbstractImageOfLocationType extends AbstractType
     public function addEntityFields(FormBuilderInterface $builder, array $options)
     {
         
-        $builder->add('name', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+        $builder->add('name', TextType::class, [
             'label' => $this->__('Name') . ':',
             'empty_data' => '',
             'attr' => [
@@ -163,7 +174,7 @@ abstract class AbstractImageOfLocationType extends AbstractType
             'required' => true,
         ]);
         
-        $builder->add('description', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
+        $builder->add('description', TextareaType::class, [
             'label' => $this->__('Description') . ':',
             'label_attr' => [
                 'class' => 'tooltips',
@@ -189,7 +200,7 @@ abstract class AbstractImageOfLocationType extends AbstractType
                     if ($language == $currentLanguage) {
                         continue;
                     }
-                    $builder->add('translations' . $language, 'MU\YourCityModule\Form\Type\Field\TranslationType', [
+                    $builder->add('translations' . $language, TranslationType::class, [
                         'fields' => $translatableFields,
                         'mandatory_fields' => $mandatoryFields[$language],
                         'values' => isset($options['translations'][$language]) ? $options['translations'][$language] : []
@@ -198,7 +209,7 @@ abstract class AbstractImageOfLocationType extends AbstractType
             }
         }
         
-        $builder->add('image', 'MU\YourCityModule\Form\Type\Field\UploadType', [
+        $builder->add('image', UploadType::class, [
             'label' => $this->__('Image') . ':',
             'attr' => [
                 'class' => ' validate-upload',
@@ -210,7 +221,7 @@ abstract class AbstractImageOfLocationType extends AbstractType
             'allowed_size' => ''
         ]);
         
-        $builder->add('positionOfImage', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+        $builder->add('positionOfImage', IntegerType::class, [
             'label' => $this->__('Position of image') . ':',
             'empty_data' => '0',
             'attr' => [
@@ -264,7 +275,7 @@ abstract class AbstractImageOfLocationType extends AbstractType
             return;
         }
     
-        $builder->add('moderationSpecificCreator', 'MU\YourCityModule\Form\Type\Field\UserType', [
+        $builder->add('moderationSpecificCreator', UserType::class, [
             'mapped' => false,
             'label' => $this->__('Creator') . ':',
             'attr' => [
@@ -276,7 +287,7 @@ abstract class AbstractImageOfLocationType extends AbstractType
             'required' => false,
             'help' => $this->__('Here you can choose a user which will be set as creator')
         ]);
-        $builder->add('moderationSpecificCreationDate', 'Symfony\Component\Form\Extension\Core\Type\DateTimeType', [
+        $builder->add('moderationSpecificCreationDate', DateTimeType::class, [
             'mapped' => false,
             'label' => $this->__('Creation date') . ':',
             'attr' => [
@@ -303,7 +314,7 @@ abstract class AbstractImageOfLocationType extends AbstractType
         if ($options['mode'] != 'create') {
             return;
         }
-        $builder->add('repeatCreation', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+        $builder->add('repeatCreation', CheckboxType::class, [
             'mapped' => false,
             'label' => $this->__('Create another item after save'),
             'required' => false
@@ -319,16 +330,15 @@ abstract class AbstractImageOfLocationType extends AbstractType
     public function addSubmitButtons(FormBuilderInterface $builder, array $options)
     {
         foreach ($options['actions'] as $action) {
-            $builder->add($action['id'], 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
-                'label' => $this->__(/** @Ignore */$action['title']),
+            $builder->add($action['id'], SubmitType::class, [
+                'label' => $action['title'],
                 'icon' => ($action['id'] == 'delete' ? 'fa-trash-o' : ''),
                 'attr' => [
-                    'class' => $action['buttonClass'],
-                    'title' => $this->__(/** @Ignore */$action['description'])
+                    'class' => $action['buttonClass']
                 ]
             ]);
         }
-        $builder->add('reset', 'Symfony\Component\Form\Extension\Core\Type\ResetType', [
+        $builder->add('reset', ResetType::class, [
             'label' => $this->__('Reset'),
             'icon' => 'fa-refresh',
             'attr' => [
@@ -336,7 +346,7 @@ abstract class AbstractImageOfLocationType extends AbstractType
                 'formnovalidate' => 'formnovalidate'
             ]
         ]);
-        $builder->add('cancel', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
+        $builder->add('cancel', SubmitType::class, [
             'label' => $this->__('Cancel'),
             'icon' => 'fa-times',
             'attr' => [

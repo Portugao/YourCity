@@ -14,6 +14,14 @@ namespace MU\YourCityModule\Form\Type\Base;
 
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -22,8 +30,13 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
-use Zikula\ExtensionsModule\Api\VariableApi;
+use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 use MU\YourCityModule\Entity\Factory\EntityFactory;
+use MU\YourCityModule\Form\Type\Field\GeoType;
+use MU\YourCityModule\Form\Type\Field\MultiListType;
+use MU\YourCityModule\Form\Type\Field\TranslationType;
+use MU\YourCityModule\Form\Type\Field\UploadType;
+use MU\YourCityModule\Form\Type\Field\UserType;
 use MU\YourCityModule\Helper\CollectionFilterHelper;
 use MU\YourCityModule\Helper\EntityDisplayHelper;
 use MU\YourCityModule\Helper\FeatureActivationHelper;
@@ -53,7 +66,7 @@ abstract class AbstractEventType extends AbstractType
     protected $entityDisplayHelper;
 
     /**
-     * @var VariableApi
+     * @var VariableApiInterface
      */
     protected $variableApi;
 
@@ -79,7 +92,7 @@ abstract class AbstractEventType extends AbstractType
      * @param EntityFactory       $entityFactory EntityFactory service instance
      * @param CollectionFilterHelper $collectionFilterHelper CollectionFilterHelper service instance
      * @param EntityDisplayHelper $entityDisplayHelper EntityDisplayHelper service instance
-     * @param VariableApi         $variableApi VariableApi service instance
+     * @param VariableApiInterface $variableApi VariableApi service instance
      * @param TranslatableHelper  $translatableHelper TranslatableHelper service instance
      * @param ListEntriesHelper   $listHelper     ListEntriesHelper service instance
      * @param FeatureActivationHelper $featureActivationHelper FeatureActivationHelper service instance
@@ -89,7 +102,7 @@ abstract class AbstractEventType extends AbstractType
         EntityFactory $entityFactory,
         CollectionFilterHelper $collectionFilterHelper,
         EntityDisplayHelper $entityDisplayHelper,
-        VariableApi $variableApi,
+        VariableApiInterface $variableApi,
         TranslatableHelper $translatableHelper,
         ListEntriesHelper $listHelper,
         FeatureActivationHelper $featureActivationHelper
@@ -152,7 +165,7 @@ abstract class AbstractEventType extends AbstractType
     public function addEntityFields(FormBuilderInterface $builder, array $options)
     {
         
-        $builder->add('name', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+        $builder->add('name', TextType::class, [
             'label' => $this->__('Name') . ':',
             'label_attr' => [
                 'class' => 'tooltips',
@@ -168,7 +181,7 @@ abstract class AbstractEventType extends AbstractType
             'required' => true,
         ]);
         
-        $builder->add('description', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
+        $builder->add('description', TextareaType::class, [
             'label' => $this->__('Description') . ':',
             'label_attr' => [
                 'class' => 'tooltips',
@@ -194,7 +207,7 @@ abstract class AbstractEventType extends AbstractType
                     if ($language == $currentLanguage) {
                         continue;
                     }
-                    $builder->add('translations' . $language, 'MU\YourCityModule\Form\Type\Field\TranslationType', [
+                    $builder->add('translations' . $language, TranslationType::class, [
                         'fields' => $translatableFields,
                         'mandatory_fields' => $mandatoryFields[$language],
                         'values' => isset($options['translations'][$language]) ? $options['translations'][$language] : []
@@ -203,7 +216,7 @@ abstract class AbstractEventType extends AbstractType
             }
         }
         
-        $builder->add('imageOfEvent', 'MU\YourCityModule\Form\Type\Field\UploadType', [
+        $builder->add('imageOfEvent', UploadType::class, [
             'label' => $this->__('Image of event') . ':',
             'attr' => [
                 'class' => ' validate-upload',
@@ -222,7 +235,7 @@ abstract class AbstractEventType extends AbstractType
             $choices[$entry['text']] = $entry['value'];
             $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
-        $builder->add('kindOfEvent', 'MU\YourCityModule\Form\Type\Field\MultiListType', [
+        $builder->add('kindOfEvent', MultiListType::class, [
             'label' => $this->__('Kind of event') . ':',
             'empty_data' => 'other',
             'attr' => [
@@ -237,7 +250,7 @@ abstract class AbstractEventType extends AbstractType
             'expanded' => false
         ]);
         
-        $builder->add('street', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+        $builder->add('street', TextType::class, [
             'label' => $this->__('Street') . ':',
             'empty_data' => '',
             'attr' => [
@@ -248,7 +261,7 @@ abstract class AbstractEventType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('numberOfStreet', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+        $builder->add('numberOfStreet', TextType::class, [
             'label' => $this->__('Number of street') . ':',
             'empty_data' => '',
             'attr' => [
@@ -259,7 +272,7 @@ abstract class AbstractEventType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('zipCode', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+        $builder->add('zipCode', TextType::class, [
             'label' => $this->__('Zip code') . ':',
             'empty_data' => '',
             'attr' => [
@@ -270,7 +283,7 @@ abstract class AbstractEventType extends AbstractType
             'required' => true,
         ]);
         
-        $builder->add('city', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+        $builder->add('city', TextType::class, [
             'label' => $this->__('City') . ':',
             'empty_data' => '',
             'attr' => [
@@ -281,7 +294,7 @@ abstract class AbstractEventType extends AbstractType
             'required' => true,
         ]);
         
-        $builder->add('startDate', 'Symfony\Component\Form\Extension\Core\Type\DateTimeType', [
+        $builder->add('startDate', DateTimeType::class, [
             'label' => $this->__('Start date') . ':',
             'empty_data' => '',
             'attr' => [
@@ -295,7 +308,7 @@ abstract class AbstractEventType extends AbstractType
             'time_widget' => 'single_text'
         ]);
         
-        $builder->add('endDate', 'Symfony\Component\Form\Extension\Core\Type\DateTimeType', [
+        $builder->add('endDate', DateTimeType::class, [
             'label' => $this->__('End date') . ':',
             'empty_data' => '',
             'attr' => [
@@ -309,7 +322,7 @@ abstract class AbstractEventType extends AbstractType
             'time_widget' => 'single_text'
         ]);
         
-        $builder->add('start2Date', 'Symfony\Component\Form\Extension\Core\Type\DateTimeType', [
+        $builder->add('start2Date', DateTimeType::class, [
             'label' => $this->__('Start 2 date') . ':',
             'empty_data' => '',
             'attr' => [
@@ -323,7 +336,7 @@ abstract class AbstractEventType extends AbstractType
             'time_widget' => 'single_text'
         ]);
         
-        $builder->add('end2Date', 'Symfony\Component\Form\Extension\Core\Type\DateTimeType', [
+        $builder->add('end2Date', DateTimeType::class, [
             'label' => $this->__('End 2 date') . ':',
             'empty_data' => '',
             'attr' => [
@@ -337,7 +350,7 @@ abstract class AbstractEventType extends AbstractType
             'time_widget' => 'single_text'
         ]);
         
-        $builder->add('inViewUntil', 'Symfony\Component\Form\Extension\Core\Type\DateTimeType', [
+        $builder->add('inViewUntil', DateTimeType::class, [
             'label' => $this->__('In view until') . ':',
             'label_attr' => [
                 'class' => 'tooltips',
@@ -370,14 +383,14 @@ abstract class AbstractEventType extends AbstractType
      */
     public function addGeographicalFields(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('latitude', 'MU\YourCityModule\Form\Type\Field\GeoType', [
+        $builder->add('latitude', GeoType::class, [
             'label' => $this->__('Latitude') . ':',
             'attr' => [
                 'class' => 'validate-number'
             ],
             'required' => false
         ]);
-        $builder->add('longitude', 'MU\YourCityModule\Form\Type\Field\GeoType', [
+        $builder->add('longitude', GeoType::class, [
             'label' => $this->__('Longitude') . ':',
             'attr' => [
                 'class' => 'validate-number'
@@ -427,7 +440,7 @@ abstract class AbstractEventType extends AbstractType
             return;
         }
     
-        $builder->add('moderationSpecificCreator', 'MU\YourCityModule\Form\Type\Field\UserType', [
+        $builder->add('moderationSpecificCreator', UserType::class, [
             'mapped' => false,
             'label' => $this->__('Creator') . ':',
             'attr' => [
@@ -439,7 +452,7 @@ abstract class AbstractEventType extends AbstractType
             'required' => false,
             'help' => $this->__('Here you can choose a user which will be set as creator')
         ]);
-        $builder->add('moderationSpecificCreationDate', 'Symfony\Component\Form\Extension\Core\Type\DateTimeType', [
+        $builder->add('moderationSpecificCreationDate', DateTimeType::class, [
             'mapped' => false,
             'label' => $this->__('Creation date') . ':',
             'attr' => [
@@ -466,7 +479,7 @@ abstract class AbstractEventType extends AbstractType
         if ($options['mode'] != 'create') {
             return;
         }
-        $builder->add('repeatCreation', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+        $builder->add('repeatCreation', CheckboxType::class, [
             'mapped' => false,
             'label' => $this->__('Create another item after save'),
             'required' => false
@@ -482,16 +495,15 @@ abstract class AbstractEventType extends AbstractType
     public function addSubmitButtons(FormBuilderInterface $builder, array $options)
     {
         foreach ($options['actions'] as $action) {
-            $builder->add($action['id'], 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
-                'label' => $this->__(/** @Ignore */$action['title']),
+            $builder->add($action['id'], SubmitType::class, [
+                'label' => $action['title'],
                 'icon' => ($action['id'] == 'delete' ? 'fa-trash-o' : ''),
                 'attr' => [
-                    'class' => $action['buttonClass'],
-                    'title' => $this->__(/** @Ignore */$action['description'])
+                    'class' => $action['buttonClass']
                 ]
             ]);
         }
-        $builder->add('reset', 'Symfony\Component\Form\Extension\Core\Type\ResetType', [
+        $builder->add('reset', ResetType::class, [
             'label' => $this->__('Reset'),
             'icon' => 'fa-refresh',
             'attr' => [
@@ -499,7 +511,7 @@ abstract class AbstractEventType extends AbstractType
                 'formnovalidate' => 'formnovalidate'
             ]
         ]);
-        $builder->add('cancel', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
+        $builder->add('cancel', SubmitType::class, [
             'label' => $this->__('Cancel'),
             'icon' => 'fa-times',
             'attr' => [

@@ -124,7 +124,7 @@ class ControllerHelper extends AbstractControllerHelper
         	$locationEntities = array();
         foreach ($entities as $entity) {
         	
-        	if ($actualDay == 'Dienstag') {
+        	if ($actualDay == 'Mittwoch') {
         		if ($entity['agreement'] == 1) {
         			$entity['state'] = 'agreement';
         			$locationEntities[] = $entity;        			
@@ -162,6 +162,65 @@ class ControllerHelper extends AbstractControllerHelper
         $templateParameters['canBeCreated'] = $this->modelHelper->canBeCreated($objectType);
     
         return $templateParameters;
+    }
+    
+    /**
+     * Processes the parameters for a display action.
+     *
+     * @param string  $objectType         Name of treated entity type
+     * @param array   $templateParameters Template data
+     * @param boolean $supportsHooks      Whether hooks are supported or not
+     *
+     * @return array Enriched template parameters used for creating the response
+     */
+    public function processDisplayActionParameters($objectType, array $templateParameters = [], $supportsHooks = false)
+    {
+    	$contextArgs = ['controller' => $objectType, 'action' => 'display'];
+    	if (!in_array($objectType, $this->getObjectTypes('controllerAction', $contextArgs))) {
+    		throw new Exception($this->__('Error! Invalid object type received.'));
+    	}
+    
+    	if (true === $supportsHooks) {
+    		// build RouteUrl instance for display hooks
+    		$entity = $templateParameters[$objectType];
+    		$urlParameters = $entity->createUrlArgs();
+    		$urlParameters['_locale'] = $this->request->getLocale();
+    		$templateParameters['currentUrlObject'] = new RouteUrl('muyourcitymodule_' . $objectType . '_' . /*$templateParameters['routeArea'] . */'display', $urlParameters);
+    	}
+    	
+    	$entity = $templateParameters[$objectType];
+    	
+    	if ($objectType == 'part' || $objectType == 'branch') {
+    		$actualDay = $this->getActualDay();
+    		$locations = array();
+    		foreach ($entity['locations'] as $location) {
+    			 
+    			if ($actualDay == 'Mittwoch') {
+    				if ($location['agreement'] == 1) {
+    					$location['state'] = 'agreement';
+    					$locations[] = $location;
+    				} else {
+    					if ($location['closedOnWednesday'] == 1) {
+    						$location['state'] = 'closed';
+    						$locations[] = $location;
+    					} else {
+    						$location['state'] = 'open';
+    						$locations[] = $location;
+    					}
+    				}
+    			}
+    		}
+    		foreach ($templateParameters[$objectType]['locations'] as $i => $value) {
+    			unset($templateParameters[$objectType]['locations'][$i]);
+    		}
+    		//unset($templateParameters[$objectType]['locations']);
+    		//$templateParameters[$objectType]['locations'] = array();
+    		$templateParameters[$objectType]['locations'] = $locations;
+    	} else {
+    		//$templateParameters['items'] = $entities;
+    	}
+    
+    	return $this->addTemplateParameters($objectType, $templateParameters, 'controllerAction', $contextArgs);
     }
     
     private function getActualDay()

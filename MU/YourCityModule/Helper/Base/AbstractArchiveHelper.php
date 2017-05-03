@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Core\RouteUrl;
-use Zikula\PermissionsModule\Api\PermissionApi;
+use Zikula\PermissionsModule\Api\ApiInterface\PermissionApiInterface;
 use MU\YourCityModule\Entity\Factory\EntityFactory;
 use MU\YourCityModule\Helper\HookHelper;
 use MU\YourCityModule\Helper\WorkflowHelper;
@@ -44,7 +44,7 @@ abstract class AbstractArchiveHelper
     protected $logger;
 
     /**
-     * @var PermissionApi
+     * @var PermissionApiInterface
      */
     protected $permissionApi;
 
@@ -69,7 +69,7 @@ abstract class AbstractArchiveHelper
      * @param TranslatorInterface $translator     Translator service instance
      * @param RequestStack        $requestStack   RequestStack service instance
      * @param LoggerInterface     $logger         Logger service instance
-     * @param PermissionApi       $permissionApi  PermissionApi service instance
+     * @param PermissionApiInterface       $permissionApi  PermissionApi service instance
      * @param EntityFactory       $entityFactory  EntityFactory service instance
      * @param WorkflowHelper      $workflowHelper WorkflowHelper service instance
      * @param HookHelper          $hookHelper     HookHelper service instance
@@ -78,7 +78,7 @@ abstract class AbstractArchiveHelper
         TranslatorInterface $translator,
         RequestStack $requestStack,
         LoggerInterface $logger,
-        PermissionApi $permissionApi,
+        PermissionApiInterface $permissionApi,
         EntityFactory $entityFactory,
         WorkflowHelper $workflowHelper,
         HookHelper $hookHelper)
@@ -186,8 +186,6 @@ abstract class AbstractArchiveHelper
      */
     protected function archiveSingleObject($entity)
     {
-        $entity->initWorkflow();
-    
         if ($entity->supportsHookSubscribers()) {
             // Let any hooks perform additional validation actions
             $validationHooksPassed = $this->hookHelper->callValidationHooks($entity, 'validate_edit');

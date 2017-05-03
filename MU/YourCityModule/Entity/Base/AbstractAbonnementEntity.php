@@ -16,7 +16,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Zikula\Core\Doctrine\EntityAccess;
-use MU\YourCityModule\Traits\EntityWorkflowTrait;
 use MU\YourCityModule\Traits\StandardFieldsTrait;
 use MU\YourCityModule\Validator\Constraints as YourCityAssert;
 
@@ -33,11 +32,6 @@ use MU\YourCityModule\Validator\Constraints as YourCityAssert;
  */
 abstract class AbstractAbonnementEntity extends EntityAccess
 {
-    /**
-     * Hook entity workflow field and behaviour.
-     */
-    use EntityWorkflowTrait;
-
     /**
      * Hook standard fields behaviour embedding createdBy, updatedBy, createdDate, updatedDate fields.
      */
@@ -220,7 +214,6 @@ abstract class AbstractAbonnementEntity extends EntityAccess
      */
     public function __construct()
     {
-        $this->initWorkflow();
     }
     
     /**
@@ -805,11 +798,11 @@ abstract class AbstractAbonnementEntity extends EntityAccess
     
         // otherwise proceed
     
-        // unset identifiers
+        // unset identifier
         $this->setId(0);
     
         // reset workflow
-        $this->resetWorkflow();
+        $this->setWorkflowState('initial');
     
         $this->setCreatedBy(null);
         $this->setCreatedDate(null);

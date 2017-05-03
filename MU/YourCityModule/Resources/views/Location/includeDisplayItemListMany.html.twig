@@ -1,5 +1,6 @@
 {# purpose of this template: inclusion template for display of related locations #}
 {% set hasAdminPermission = hasPermission('MUYourCityModule:Location:', '::', 'ACCESS_COMMENT') %}
+{% if routeArea == 'admin' %}
 {% if noLink is not defined %}
     {% set noLink = false %}
 {% endif %}
@@ -30,3 +31,37 @@
 {% endfor %}
 </ul>
 {% endif %}
+{% endif %}
+    {% set isPartDisplay = app.request.query.getBoolean('part', false) %}
+    {% if routeArea != 'admin' %}
+        {% if items %}
+            <ul>
+            {% for location in items %}
+                <li class="col-md-3 item-list">
+                {% if location.state == 'closed' %}
+                    {% set state = 'locationClosed' %}
+                {% endif %}
+                {% if location.state == 'open' %}
+                    {% set state = 'locationOpen' %}
+                {% endif %}
+                {% if location.state == 'agreement' %}
+                    {% set state = 'locationAgreement' %}
+                {% endif %}
+                {% if location.state is not defined %}
+                    {% set state = '' %}
+                {% endif %}
+                    <span class="status-icon {{ state }}">{% if state == 'locationClosed' or state == 'locationAgreement' %}<i class="fa fa-circle-o" aria-hidden="true"></i>{% endif %}{% if state == 'locationOpen' %}<i class="fa fa-circle" aria-hidden="true"></i>{% endif %} <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': location.id, 'slug': location.slug }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ location.name|notifyFilters('muyourcitymodule.filterhook.locations') }}
+                    </a></span><br />
+                    {% if isPartDisplay == false %}
+                    {% for locationPart in location.parts %}
+                        <a href="{{ path('muyourcitymodule_part_' ~ routeArea ~ 'display', { 'id': locationPart.id }) }}">{{ locationPart.name }}</a> 
+                    {% endfor %}<br />
+                    {% endif %}
+                    {% for branch in location.branches %}
+                        <a href="{{ path('muyourcitymodule_branch_' ~ routeArea ~ 'display', { 'id': branch.id }) }}">{{ branch.name }}</a>
+                    {% endfor %}
+                    
+                </li>
+            {% endfor %}
+        {% endif %}
+    {% endif %}

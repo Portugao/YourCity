@@ -18,7 +18,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Translatable\Translatable;
 use Symfony\Component\Validator\Constraints as Assert;
 use Zikula\Core\Doctrine\EntityAccess;
-use MU\YourCityModule\Traits\EntityWorkflowTrait;
 use MU\YourCityModule\Traits\StandardFieldsTrait;
 use MU\YourCityModule\Validator\Constraints as YourCityAssert;
 
@@ -35,11 +34,6 @@ use MU\YourCityModule\Validator\Constraints as YourCityAssert;
  */
 abstract class AbstractSpecialOfLocationEntity extends EntityAccess implements Translatable
 {
-    /**
-     * Hook entity workflow field and behaviour.
-     */
-    use EntityWorkflowTrait;
-
     /**
      * Hook standard fields behaviour embedding createdBy, updatedBy, createdDate, updatedDate fields.
      */
@@ -118,7 +112,7 @@ abstract class AbstractSpecialOfLocationEntity extends EntityAccess implements T
      * Bidirectional - Many specialsOfLocation [specials of location] are linked by many locations [locations] (INVERSE SIDE).
      *
      * @ORM\ManyToMany(targetEntity="MU\YourCityModule\Entity\LocationEntity", mappedBy="specialsOfLocation")
-     * @ORM\OrderBy({"name" = "ASC"})
+     * @ORM\OrderBy({"letterForOrder" = "ASC"})
      * @var \MU\YourCityModule\Entity\LocationEntity[] $locations
      */
     protected $locations = null;
@@ -132,7 +126,6 @@ abstract class AbstractSpecialOfLocationEntity extends EntityAccess implements T
      */
     public function __construct()
     {
-        $this->initWorkflow();
         $this->locations = new ArrayCollection();
     }
     
@@ -482,11 +475,11 @@ abstract class AbstractSpecialOfLocationEntity extends EntityAccess implements T
     
         // otherwise proceed
     
-        // unset identifiers
+        // unset identifier
         $this->setId(0);
     
         // reset workflow
-        $this->resetWorkflow();
+        $this->setWorkflowState('initial');
     
         $this->setCreatedBy(null);
         $this->setCreatedDate(null);

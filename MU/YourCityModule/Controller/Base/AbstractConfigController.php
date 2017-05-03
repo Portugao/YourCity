@@ -15,6 +15,7 @@ namespace MU\YourCityModule\Controller\Base;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Zikula\Core\Controller\AbstractController;
+use MU\YourCityModule\Form\Type\ConfigType;
 
 /**
  * Config controller base class.
@@ -36,7 +37,7 @@ abstract class AbstractConfigController extends AbstractController
             throw new AccessDeniedException();
         }
         
-        $form = $this->createForm('MU\YourCityModule\Form\Type\ConfigType');
+        $form = $this->createForm(ConfigType::class);
         
         if ($form->handleRequest($request)->isValid()) {
             if ($form->get('save')->isClicked()) {

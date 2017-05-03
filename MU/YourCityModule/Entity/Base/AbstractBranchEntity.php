@@ -19,7 +19,6 @@ use Gedmo\Translatable\Translatable;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Zikula\Core\Doctrine\EntityAccess;
-use MU\YourCityModule\Traits\EntityWorkflowTrait;
 use MU\YourCityModule\Traits\StandardFieldsTrait;
 use MU\YourCityModule\Validator\Constraints as YourCityAssert;
 
@@ -36,11 +35,6 @@ use MU\YourCityModule\Validator\Constraints as YourCityAssert;
  */
 abstract class AbstractBranchEntity extends EntityAccess implements Translatable
 {
-    /**
-     * Hook entity workflow field and behaviour.
-     */
-    use EntityWorkflowTrait;
-
     /**
      * Hook standard fields behaviour embedding createdBy, updatedBy, createdDate, updatedDate fields.
      */
@@ -139,7 +133,7 @@ abstract class AbstractBranchEntity extends EntityAccess implements Translatable
      * Bidirectional - Many branches [branches] are linked by many locations [locations] (INVERSE SIDE).
      *
      * @ORM\ManyToMany(targetEntity="MU\YourCityModule\Entity\LocationEntity", mappedBy="branches")
-     * @ORM\OrderBy({"name" = "ASC"})
+     * @ORM\OrderBy({"letterForOrder" = "ASC"})
      * @var \MU\YourCityModule\Entity\LocationEntity[] $locations
      */
     protected $locations = null;
@@ -153,7 +147,6 @@ abstract class AbstractBranchEntity extends EntityAccess implements Translatable
      */
     public function __construct()
     {
-        $this->initWorkflow();
         $this->locations = new ArrayCollection();
     }
     
@@ -551,11 +544,11 @@ abstract class AbstractBranchEntity extends EntityAccess implements Translatable
     
         // otherwise proceed
     
-        // unset identifiers
+        // unset identifier
         $this->setId(0);
     
         // reset workflow
-        $this->resetWorkflow();
+        $this->setWorkflowState('initial');
     
         // reset upload fields
         $this->setImageOfBranch(null);

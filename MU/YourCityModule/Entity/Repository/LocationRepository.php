@@ -21,8 +21,5 @@ use MU\YourCityModule\Entity\Repository\Base\AbstractLocationRepository;
  */
 class LocationRepository extends AbstractLocationRepository
 {
-    /**
-     * @var string The default sorting field/expression
-     */
-    protected $defaultSortingField = 'letterForOrder';
+    // feel free to add your own methods here, like for example reusable DQL queries
 }

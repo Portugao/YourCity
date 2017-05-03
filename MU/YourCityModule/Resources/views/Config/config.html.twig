@@ -67,6 +67,10 @@
             <li role="presentation">
                 <a id="vars6Tab" href="#tab6" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
             </li>
+            {% set tabTitle = __('Workflows') %}
+            <li role="presentation">
+                <a id="workflowsTab" href="#tabWorkflows" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
+            </li>
             </ul>
 
             {{ form_errors(form) }}
@@ -343,6 +347,43 @@
                         {{ form_row(form.defaultZoomLevel) }}
                         {{ form_row(form.enableLocationGeoLocation) }}
                         {{ form_row(form.enableEventGeoLocation) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tabWorkflows" aria-labelledby="workflowsTab">
+                    {% set tabTitle = __('Workflows') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                
+                        <p class="alert alert-info">{{ __('Here you can inspect and amend the existing workflows.') }}</p>
+                
+                        <h4>{{ __('Branches') }}</h4>
+                        <p><a href="{{ path('zikula_workflow_editor_index', { 'workflow': 'muyourcitymodule_none' }) }}" title="{{ __('Edit workflow for branches') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit branches workflow') }}</a>
+                        <h4>{{ __('Locations') }}</h4>
+                        <p><a href="{{ path('zikula_workflow_editor_index', { 'workflow': 'muyourcitymodule_standard' }) }}" title="{{ __('Edit workflow for locations') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit locations workflow') }}</a>
+                        <h4>{{ __('Parts') }}</h4>
+                        <p><a href="{{ path('zikula_workflow_editor_index', { 'workflow': 'muyourcitymodule_none' }) }}" title="{{ __('Edit workflow for parts') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit parts workflow') }}</a>
+                        <h4>{{ __('Images of location') }}</h4>
+                        <p><a href="{{ path('zikula_workflow_editor_index', { 'workflow': 'muyourcitymodule_none' }) }}" title="{{ __('Edit workflow for images of location') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit images of location workflow') }}</a>
+                        <h4>{{ __('Files of location') }}</h4>
+                        <p><a href="{{ path('zikula_workflow_editor_index', { 'workflow': 'muyourcitymodule_none' }) }}" title="{{ __('Edit workflow for files of location') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit files of location workflow') }}</a>
+                        <h4>{{ __('Offers') }}</h4>
+                        <p><a href="{{ path('zikula_workflow_editor_index', { 'workflow': 'muyourcitymodule_none' }) }}" title="{{ __('Edit workflow for offers') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit offers workflow') }}</a>
+                        <h4>{{ __('Menus of location') }}</h4>
+                        <p><a href="{{ path('zikula_workflow_editor_index', { 'workflow': 'muyourcitymodule_none' }) }}" title="{{ __('Edit workflow for menus of location') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit menus of location workflow') }}</a>
+                        <h4>{{ __('Parts of menu') }}</h4>
+                        <p><a href="{{ path('zikula_workflow_editor_index', { 'workflow': 'muyourcitymodule_none' }) }}" title="{{ __('Edit workflow for parts of menu') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit parts of menu workflow') }}</a>
+                        <h4>{{ __('Dishes') }}</h4>
+                        <p><a href="{{ path('zikula_workflow_editor_index', { 'workflow': 'muyourcitymodule_none' }) }}" title="{{ __('Edit workflow for dishes') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit dishes workflow') }}</a>
+                        <h4>{{ __('Events') }}</h4>
+                        <p><a href="{{ path('zikula_workflow_editor_index', { 'workflow': 'muyourcitymodule_none' }) }}" title="{{ __('Edit workflow for events') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit events workflow') }}</a>
+                        <h4>{{ __('Products') }}</h4>
+                        <p><a href="{{ path('zikula_workflow_editor_index', { 'workflow': 'muyourcitymodule_none' }) }}" title="{{ __('Edit workflow for products') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit products workflow') }}</a>
+                        <h4>{{ __('Specials of location') }}</h4>
+                        <p><a href="{{ path('zikula_workflow_editor_index', { 'workflow': 'muyourcitymodule_none' }) }}" title="{{ __('Edit workflow for specials of location') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit specials of location workflow') }}</a>
+                        <h4>{{ __('Services of location') }}</h4>
+                        <p><a href="{{ path('zikula_workflow_editor_index', { 'workflow': 'muyourcitymodule_none' }) }}" title="{{ __('Edit workflow for services of location') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit services of location workflow') }}</a>
+                        <h4>{{ __('Abonnements') }}</h4>
+                        <p><a href="{{ path('zikula_workflow_editor_index', { 'workflow': 'muyourcitymodule_none' }) }}" title="{{ __('Edit workflow for abonnements') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit abonnements workflow') }}</a>
                     </fieldset>
                 </div>
             </div>

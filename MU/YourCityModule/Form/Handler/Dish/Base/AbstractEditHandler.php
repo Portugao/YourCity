@@ -13,6 +13,7 @@
 namespace MU\YourCityModule\Form\Handler\Dish\Base;
 
 use MU\YourCityModule\Form\Handler\Common\EditHandler;
+use MU\YourCityModule\Form\Type\DishType;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -123,7 +124,7 @@ abstract class AbstractEditHandler extends EditHandler
             $options['translations'][$language] = isset($this->templateParameters[$this->objectTypeLower . $language]) ? $this->templateParameters[$this->objectTypeLower . $language] : [];
         }
     
-        return $this->formFactory->create('MU\YourCityModule\Form\Type\DishType', $this->entityRef, $options);
+        return $this->formFactory->create(DishType::class, $this->entityRef, $options);
     }
 
 

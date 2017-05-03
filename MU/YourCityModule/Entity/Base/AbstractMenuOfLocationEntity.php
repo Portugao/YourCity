@@ -19,7 +19,6 @@ use Gedmo\Translatable\Translatable;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Zikula\Core\Doctrine\EntityAccess;
-use MU\YourCityModule\Traits\EntityWorkflowTrait;
 use MU\YourCityModule\Traits\StandardFieldsTrait;
 use MU\YourCityModule\Validator\Constraints as YourCityAssert;
 
@@ -36,11 +35,6 @@ use MU\YourCityModule\Validator\Constraints as YourCityAssert;
  */
 abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Translatable
 {
-    /**
-     * Hook entity workflow field and behaviour.
-     */
-    use EntityWorkflowTrait;
-
     /**
      * Hook standard fields behaviour embedding createdBy, updatedBy, createdDate, updatedDate fields.
      */
@@ -210,7 +204,6 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
      */
     public function __construct()
     {
-        $this->initWorkflow();
         $this->dishes = new ArrayCollection();
         $this->partsOfMenu = new ArrayCollection();
     }
@@ -765,11 +758,11 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
     
         // otherwise proceed
     
-        // unset identifiers
+        // unset identifier
         $this->setId(0);
     
         // reset workflow
-        $this->resetWorkflow();
+        $this->setWorkflowState('initial');
     
         // reset upload fields
         $this->setImageOfMenu(null);

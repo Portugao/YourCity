@@ -13,6 +13,7 @@
 namespace MU\YourCityModule\Form\Handler\Product\Base;
 
 use MU\YourCityModule\Form\Handler\Common\EditHandler;
+use MU\YourCityModule\Form\Type\ProductType;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -107,7 +108,7 @@ abstract class AbstractEditHandler extends EditHandler
             $options['translations'][$language] = isset($this->templateParameters[$this->objectTypeLower . $language]) ? $this->templateParameters[$this->objectTypeLower . $language] : [];
         }
     
-        return $this->formFactory->create('MU\YourCityModule\Form\Type\ProductType', $this->entityRef, $options);
+        return $this->formFactory->create(ProductType::class, $this->entityRef, $options);
     }
 
 

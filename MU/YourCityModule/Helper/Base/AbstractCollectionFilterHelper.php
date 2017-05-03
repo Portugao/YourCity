@@ -15,7 +15,8 @@ namespace MU\YourCityModule\Helper\Base;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Zikula\UsersModule\Api\CurrentUserApi;
+use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
+use Zikula\UsersModule\Constant as UsersConstant;
 use MU\YourCityModule\Entity\BranchEntity;
 use MU\YourCityModule\Entity\LocationEntity;
 use MU\YourCityModule\Entity\PartEntity;
@@ -43,7 +44,7 @@ abstract class AbstractCollectionFilterHelper
     protected $request;
 
     /**
-     * @var CurrentUserApi
+     * @var CurrentUserApiInterface
      */
     protected $currentUserApi;
 
@@ -56,12 +57,12 @@ abstract class AbstractCollectionFilterHelper
      * CollectionFilterHelper constructor.
      *
      * @param RequestStack $requestStack RequestStack service instance
-     * @param CurrentUserApi        $currentUserApi        CurrentUserApi service instance
+     * @param CurrentUserApiInterface $currentUserApi        CurrentUserApi service instance
      * @param bool           $showOnlyOwnEntries  Fallback value to determine whether only own entries should be selected or not
      */
     public function __construct(
         RequestStack $requestStack,
-        CurrentUserApi $currentUserApi,
+        CurrentUserApiInterface $currentUserApi,
         $showOnlyOwnEntries)
     {
         $this->request = $requestStack->getCurrentRequest();
@@ -273,7 +274,7 @@ abstract class AbstractCollectionFilterHelper
     {
         $parameters = [];
     
-        $parameters['workflowState'] = $this->request->query->get('workflowState', '');
+        //$parameters['workflowState'] = $this->request->query->get('workflowState', '');
         $parameters['owner'] = (int) $this->request->query->get('owner', 0);
         $parameters['admin1'] = (int) $this->request->query->get('admin1', 0);
         $parameters['admin2'] = (int) $this->request->query->get('admin2', 0);
@@ -1898,7 +1899,7 @@ abstract class AbstractCollectionFilterHelper
     public function addCreatorFilter(QueryBuilder $qb, $userId = null)
     {
         if (null === $userId) {
-            $userId = $this->currentUserApi->isLoggedIn() ? $this->currentUserApi->get('uid') : 1;
+            $userId = $this->currentUserApi->isLoggedIn() ? $this->currentUserApi->get('uid') : UsersConstant::USER_ID_ANONYMOUS;
         }
     
         if (is_array($userId)) {

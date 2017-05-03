@@ -22,9 +22,10 @@ use Zikula\Bundle\CoreBundle\HttpKernel\ZikulaHttpKernelInterface;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\Core\Doctrine\EntityAccess;
-use Zikula\ExtensionsModule\Api\VariableApi;
+use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 use Zikula\GroupsModule\Entity\RepositoryInterface\GroupRepositoryInterface;
-use Zikula\MailerModule\Api\MailerApi;
+use Zikula\MailerModule\Api\ApiInterface\MailerApiInterface;
+use Zikula\UsersModule\Constant as UsersConstant;
 use Zikula\UsersModule\Entity\UserEntity;
 use MU\YourCityModule\Helper\EntityDisplayHelper;
 use MU\YourCityModule\Helper\WorkflowHelper;
@@ -57,7 +58,7 @@ abstract class AbstractNotificationHelper
     protected $request;
     
     /**
-     * @var VariableApi
+     * @var VariableApiInterface
      */
     protected $variableApi;
     
@@ -67,7 +68,7 @@ abstract class AbstractNotificationHelper
     protected $templating;
     
     /**
-     * @var MailerApi
+     * @var MailerApiInterface
      */
     protected $mailer;
     
@@ -129,9 +130,9 @@ abstract class AbstractNotificationHelper
      * @param SessionInterface          $session             Session service instance
      * @param Routerinterface           $router              Router service instance
      * @param RequestStack              $requestStack        RequestStack service instance
-     * @param VariableApi                   $variableApi     VariableApi service instance
+     * @param VariableApiInterface          $variableApi     VariableApi service instance
      * @param Twig_Environment          $twig                Twig service instance
-     * @param MailerApi                     $mailerApi       MailerApi service instance
+     * @param MailerApiInterface            $mailerApi       MailerApi service instance
      * @param GroupRepositoryInterface  $groupRepository     GroupRepository service instance
      * @param EntityDisplayHelper       $entityDisplayHelper EntityDisplayHelper service instance
      * @param WorkflowHelper            $workflowHelper      WorkflowHelper service instance
@@ -142,9 +143,9 @@ abstract class AbstractNotificationHelper
         SessionInterface $session,
         RouterInterface $router,
         RequestStack $requestStack,
-        VariableApi $variableApi,
+        VariableApiInterface $variableApi,
         Twig_Environment $twig,
-        MailerApi $mailerApi,
+        MailerApiInterface $mailerApi,
         GroupRepositoryInterface $groupRepository,
         EntityDisplayHelper $entityDisplayHelper,
         WorkflowHelper $workflowHelper
@@ -247,7 +248,7 @@ abstract class AbstractNotificationHelper
     
         if (isset($args['debug']) && $args['debug']) {
             // add the admin, too
-            $this->addRecipient(2);
+            $this->addRecipient(UsersConstant::USER_ID_ADMIN);
         }
     }
     

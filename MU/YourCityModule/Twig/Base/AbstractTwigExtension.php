@@ -15,7 +15,7 @@ namespace MU\YourCityModule\Twig\Base;
 use Twig_Extension;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
-use Zikula\ExtensionsModule\Api\VariableApi;
+use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 use Zikula\UsersModule\Entity\RepositoryInterface\UserRepositoryInterface;
 use MU\YourCityModule\Helper\ListEntriesHelper;
 use MU\YourCityModule\Helper\EntityDisplayHelper;
@@ -29,7 +29,7 @@ abstract class AbstractTwigExtension extends Twig_Extension
     use TranslatorTrait;
     
     /**
-     * @var VariableApi
+     * @var VariableApiInterface
      */
     protected $variableApi;
     
@@ -57,7 +57,7 @@ abstract class AbstractTwigExtension extends Twig_Extension
      * TwigExtension constructor.
      *
      * @param TranslatorInterface $translator     Translator service instance
-     * @param VariableApi         $variableApi    VariableApi service instance
+     * @param VariableApiInterface $variableApi    VariableApi service instance
      * @param UserRepositoryInterface $userRepository UserRepository service instance
      * @param EntityDisplayHelper $entityDisplayHelper EntityDisplayHelper service instance
      * @param WorkflowHelper      $workflowHelper WorkflowHelper service instance
@@ -65,7 +65,7 @@ abstract class AbstractTwigExtension extends Twig_Extension
      */
     public function __construct(
         TranslatorInterface $translator,
-        VariableApi $variableApi,
+        VariableApiInterface $variableApi,
         UserRepositoryInterface $userRepository,
         EntityDisplayHelper $entityDisplayHelper,
         WorkflowHelper $workflowHelper,

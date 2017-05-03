@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
-use Zikula\UsersModule\Api\CurrentUserApi;
+use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
 
 /**
  * Helper base class for upload handling.
@@ -46,7 +46,7 @@ abstract class AbstractUploadHelper
     protected $logger;
 
     /**
-     * @var CurrentUserApi
+     * @var CurrentUserApiInterface
      */
     protected $currentUserApi;
 
@@ -82,7 +82,7 @@ abstract class AbstractUploadHelper
      * @param SessionInterface    $session           Session service instance
      * @param CacheManager        $thumbCacheManager Imagine thumb cache manager
      * @param LoggerInterface     $logger            Logger service instance
-     * @param CurrentUserApi      $currentUserApi    CurrentUserApi service instance
+     * @param CurrentUserApiInterface $currentUserApi    CurrentUserApi service instance
      * @param object              $moduleVars        Existing module vars
      * @param String              $dataDirectory     The data directory name
      */
@@ -91,7 +91,7 @@ abstract class AbstractUploadHelper
         SessionInterface $session,
         CacheManager $thumbCacheManager,
         LoggerInterface $logger,
-        CurrentUserApi $currentUserApi,
+        CurrentUserApiInterface $currentUserApi,
         $moduleVars,
         $dataDirectory
     ) {
