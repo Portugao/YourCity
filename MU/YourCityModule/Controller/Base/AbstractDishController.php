@@ -80,7 +80,7 @@ abstract class AbstractDishController extends AbstractController
     }
     /**
      * This action provides a item detail view in the admin area.
-     * @ParamConverter("dish", class="MUYourCityModule:DishEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @ParamConverter("dish", class="MUYourCityModule:DishEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Cache(lastModified="dish.getUpdatedDate()", ETag="'Dish' ~ dish.getid() ~ dish.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
@@ -98,7 +98,7 @@ abstract class AbstractDishController extends AbstractController
     
     /**
      * This action provides a item detail view.
-     * @ParamConverter("dish", class="MUYourCityModule:DishEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @ParamConverter("dish", class="MUYourCityModule:DishEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Cache(lastModified="dish.getUpdatedDate()", ETag="'Dish' ~ dish.getid() ~ dish.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
@@ -210,7 +210,7 @@ abstract class AbstractDishController extends AbstractController
     }
     /**
      * This action provides a handling of simple delete requests in the admin area.
-     * @ParamConverter("dish", class="MUYourCityModule:DishEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @ParamConverter("dish", class="MUYourCityModule:DishEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Cache(lastModified="dish.getUpdatedDate()", ETag="'Dish' ~ dish.getid() ~ dish.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
@@ -229,7 +229,7 @@ abstract class AbstractDishController extends AbstractController
     
     /**
      * This action provides a handling of simple delete requests.
-     * @ParamConverter("dish", class="MUYourCityModule:DishEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @ParamConverter("dish", class="MUYourCityModule:DishEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Cache(lastModified="dish.getUpdatedDate()", ETag="'Dish' ~ dish.getid() ~ dish.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance

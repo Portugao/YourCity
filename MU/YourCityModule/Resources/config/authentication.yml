@@ -1,0 +1,11 @@
+services:
+    mu_yourcity_module.authentication_method.yourcity_authentication
+    class: MU\YourCityModule\AuthenticationMethod\YourCityAuthenticationMethod
+    arguments:
+        - "@translator.default"
+        - "@session"
+        - "@mu_yourcity_module.entity_factory"
+        - "@zikula_extensions_module.api.variable"
+        - "@zikula_zauth_module.api.password"
+    tags:
+        - { name: zikula.authentication_method, alias: 'yourcity_authentication' }

@@ -156,7 +156,7 @@ abstract class AbstractSpecialOfLocationController extends AbstractController
     }
     /**
      * This action provides a item detail view in the admin area.
-     * @ParamConverter("specialOfLocation", class="MUYourCityModule:SpecialOfLocationEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @ParamConverter("specialOfLocation", class="MUYourCityModule:SpecialOfLocationEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Cache(lastModified="specialOfLocation.getUpdatedDate()", ETag="'SpecialOfLocation' ~ specialOfLocation.getid() ~ specialOfLocation.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
@@ -174,7 +174,7 @@ abstract class AbstractSpecialOfLocationController extends AbstractController
     
     /**
      * This action provides a item detail view.
-     * @ParamConverter("specialOfLocation", class="MUYourCityModule:SpecialOfLocationEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @ParamConverter("specialOfLocation", class="MUYourCityModule:SpecialOfLocationEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Cache(lastModified="specialOfLocation.getUpdatedDate()", ETag="'SpecialOfLocation' ~ specialOfLocation.getid() ~ specialOfLocation.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
@@ -286,7 +286,7 @@ abstract class AbstractSpecialOfLocationController extends AbstractController
     }
     /**
      * This action provides a handling of simple delete requests in the admin area.
-     * @ParamConverter("specialOfLocation", class="MUYourCityModule:SpecialOfLocationEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @ParamConverter("specialOfLocation", class="MUYourCityModule:SpecialOfLocationEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Cache(lastModified="specialOfLocation.getUpdatedDate()", ETag="'SpecialOfLocation' ~ specialOfLocation.getid() ~ specialOfLocation.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
@@ -305,7 +305,7 @@ abstract class AbstractSpecialOfLocationController extends AbstractController
     
     /**
      * This action provides a handling of simple delete requests.
-     * @ParamConverter("specialOfLocation", class="MUYourCityModule:SpecialOfLocationEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @ParamConverter("specialOfLocation", class="MUYourCityModule:SpecialOfLocationEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Cache(lastModified="specialOfLocation.getUpdatedDate()", ETag="'SpecialOfLocation' ~ specialOfLocation.getid() ~ specialOfLocation.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance

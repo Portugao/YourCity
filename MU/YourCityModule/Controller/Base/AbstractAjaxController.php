@@ -236,7 +236,7 @@ abstract class AbstractAjaxController extends AbstractController
             return new BadDataResponse($this->__('Error: invalid input.'));
         }
         
-        $exclude = $postData->get('ex', '');
+        $exclude = $postData->getInt('ex', '');
         /* can probably be removed
          * $createMethod = 'create' . ucfirst($objectType);
          * $object = $repository = $this->get('mu_yourcity_module.entity_factory')->$createMethod();

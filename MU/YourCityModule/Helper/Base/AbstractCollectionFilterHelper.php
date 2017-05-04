@@ -255,6 +255,9 @@ abstract class AbstractCollectionFilterHelper
     protected function getViewQuickNavParametersForBranch($context = '', $args = [])
     {
         $parameters = [];
+        if (!is_object($this->request)) {
+            return $parameters;
+        }
     
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
         $parameters['q'] = $this->request->query->get('q', '');
@@ -273,8 +276,11 @@ abstract class AbstractCollectionFilterHelper
     protected function getViewQuickNavParametersForLocation($context = '', $args = [])
     {
         $parameters = [];
+        if (!is_object($this->request)) {
+            return $parameters;
+        }
     
-        //$parameters['workflowState'] = $this->request->query->get('workflowState', '');
+        $parameters['workflowState'] = $this->request->query->get('workflowState', '');
         $parameters['owner'] = (int) $this->request->query->get('owner', 0);
         $parameters['admin1'] = (int) $this->request->query->get('admin1', 0);
         $parameters['admin2'] = (int) $this->request->query->get('admin2', 0);
@@ -304,6 +310,9 @@ abstract class AbstractCollectionFilterHelper
     protected function getViewQuickNavParametersForPart($context = '', $args = [])
     {
         $parameters = [];
+        if (!is_object($this->request)) {
+            return $parameters;
+        }
     
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
         $parameters['q'] = $this->request->query->get('q', '');
@@ -322,6 +331,9 @@ abstract class AbstractCollectionFilterHelper
     protected function getViewQuickNavParametersForImageOfLocation($context = '', $args = [])
     {
         $parameters = [];
+        if (!is_object($this->request)) {
+            return $parameters;
+        }
     
         $parameters['location'] = $this->request->query->get('location', 0);
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
@@ -341,6 +353,9 @@ abstract class AbstractCollectionFilterHelper
     protected function getViewQuickNavParametersForFileOfLocation($context = '', $args = [])
     {
         $parameters = [];
+        if (!is_object($this->request)) {
+            return $parameters;
+        }
     
         $parameters['location'] = $this->request->query->get('location', 0);
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
@@ -360,6 +375,9 @@ abstract class AbstractCollectionFilterHelper
     protected function getViewQuickNavParametersForOffer($context = '', $args = [])
     {
         $parameters = [];
+        if (!is_object($this->request)) {
+            return $parameters;
+        }
     
         $parameters['location'] = $this->request->query->get('location', 0);
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
@@ -379,6 +397,9 @@ abstract class AbstractCollectionFilterHelper
     protected function getViewQuickNavParametersForMenuOfLocation($context = '', $args = [])
     {
         $parameters = [];
+        if (!is_object($this->request)) {
+            return $parameters;
+        }
     
         $parameters['location'] = $this->request->query->get('location', 0);
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
@@ -399,6 +420,9 @@ abstract class AbstractCollectionFilterHelper
     protected function getViewQuickNavParametersForPartOfMenu($context = '', $args = [])
     {
         $parameters = [];
+        if (!is_object($this->request)) {
+            return $parameters;
+        }
     
         $parameters['menuOfLocation'] = $this->request->query->get('menuOfLocation', 0);
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
@@ -418,6 +442,9 @@ abstract class AbstractCollectionFilterHelper
     protected function getViewQuickNavParametersForDish($context = '', $args = [])
     {
         $parameters = [];
+        if (!is_object($this->request)) {
+            return $parameters;
+        }
     
         $parameters['menuOfLocation'] = $this->request->query->get('menuOfLocation', 0);
         $parameters['partOfMenu'] = $this->request->query->get('partOfMenu', 0);
@@ -440,6 +467,9 @@ abstract class AbstractCollectionFilterHelper
     protected function getViewQuickNavParametersForEvent($context = '', $args = [])
     {
         $parameters = [];
+        if (!is_object($this->request)) {
+            return $parameters;
+        }
     
         $parameters['location'] = $this->request->query->get('location', 0);
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
@@ -460,6 +490,9 @@ abstract class AbstractCollectionFilterHelper
     protected function getViewQuickNavParametersForProduct($context = '', $args = [])
     {
         $parameters = [];
+        if (!is_object($this->request)) {
+            return $parameters;
+        }
     
         $parameters['location'] = $this->request->query->get('location', 0);
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
@@ -488,6 +521,9 @@ abstract class AbstractCollectionFilterHelper
     protected function getViewQuickNavParametersForSpecialOfLocation($context = '', $args = [])
     {
         $parameters = [];
+        if (!is_object($this->request)) {
+            return $parameters;
+        }
     
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
         $parameters['q'] = $this->request->query->get('q', '');
@@ -506,6 +542,9 @@ abstract class AbstractCollectionFilterHelper
     protected function getViewQuickNavParametersForServiceOfLocation($context = '', $args = [])
     {
         $parameters = [];
+        if (!is_object($this->request)) {
+            return $parameters;
+        }
     
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
         $parameters['q'] = $this->request->query->get('q', '');
@@ -524,6 +563,9 @@ abstract class AbstractCollectionFilterHelper
     protected function getViewQuickNavParametersForAbonnement($context = '', $args = [])
     {
         $parameters = [];
+        if (!is_object($this->request)) {
+            return $parameters;
+        }
     
         $parameters['location'] = $this->request->query->get('location', 0);
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
@@ -566,7 +608,7 @@ abstract class AbstractCollectionFilterHelper
                 // quick search
                 if (!empty($v)) {
                     $repository = $this->entityFactory->getRepository('branch');
-                    $qb = $repository->addSearchFilter($qb, $v);
+                    $qb = $repository->addSearchFilter('branch', $qb, $v);
                 }
             } else if (!is_array($v)) {
                 // field filter
@@ -610,7 +652,7 @@ abstract class AbstractCollectionFilterHelper
                 // quick search
                 if (!empty($v)) {
                     $repository = $this->entityFactory->getRepository('location');
-                    $qb = $repository->addSearchFilter($qb, $v);
+                    $qb = $repository->addSearchFilter('location', $qb, $v);
                 }
             } elseif (in_array($k, ['closedForEver', 'agreement', 'unclearTimes', 'closedOnMonday', 'closedOnTuesday', 'closedOnWednesday', 'closedOnThursday', 'closedOnFriday', 'closedOnSaturday', 'closedOnSunday'])) {
                 // boolean filter
@@ -667,7 +709,7 @@ abstract class AbstractCollectionFilterHelper
                 // quick search
                 if (!empty($v)) {
                     $repository = $this->entityFactory->getRepository('part');
-                    $qb = $repository->addSearchFilter($qb, $v);
+                    $qb = $repository->addSearchFilter('part', $qb, $v);
                 }
             } else if (!is_array($v)) {
                 // field filter
@@ -711,7 +753,7 @@ abstract class AbstractCollectionFilterHelper
                 // quick search
                 if (!empty($v)) {
                     $repository = $this->entityFactory->getRepository('imageOfLocation');
-                    $qb = $repository->addSearchFilter($qb, $v);
+                    $qb = $repository->addSearchFilter('imageOfLocation', $qb, $v);
                 }
             } else if (!is_array($v)) {
                 // field filter
@@ -755,7 +797,7 @@ abstract class AbstractCollectionFilterHelper
                 // quick search
                 if (!empty($v)) {
                     $repository = $this->entityFactory->getRepository('fileOfLocation');
-                    $qb = $repository->addSearchFilter($qb, $v);
+                    $qb = $repository->addSearchFilter('fileOfLocation', $qb, $v);
                 }
             } else if (!is_array($v)) {
                 // field filter
@@ -799,7 +841,7 @@ abstract class AbstractCollectionFilterHelper
                 // quick search
                 if (!empty($v)) {
                     $repository = $this->entityFactory->getRepository('offer');
-                    $qb = $repository->addSearchFilter($qb, $v);
+                    $qb = $repository->addSearchFilter('offer', $qb, $v);
                 }
             } else if (!is_array($v)) {
                 // field filter
@@ -843,7 +885,7 @@ abstract class AbstractCollectionFilterHelper
                 // quick search
                 if (!empty($v)) {
                     $repository = $this->entityFactory->getRepository('menuOfLocation');
-                    $qb = $repository->addSearchFilter($qb, $v);
+                    $qb = $repository->addSearchFilter('menuOfLocation', $qb, $v);
                 }
             } else if (!is_array($v)) {
                 // field filter
@@ -887,7 +929,7 @@ abstract class AbstractCollectionFilterHelper
                 // quick search
                 if (!empty($v)) {
                     $repository = $this->entityFactory->getRepository('partOfMenu');
-                    $qb = $repository->addSearchFilter($qb, $v);
+                    $qb = $repository->addSearchFilter('partOfMenu', $qb, $v);
                 }
             } else if (!is_array($v)) {
                 // field filter
@@ -931,7 +973,7 @@ abstract class AbstractCollectionFilterHelper
                 // quick search
                 if (!empty($v)) {
                     $repository = $this->entityFactory->getRepository('dish');
-                    $qb = $repository->addSearchFilter($qb, $v);
+                    $qb = $repository->addSearchFilter('dish', $qb, $v);
                 }
             } else if (!is_array($v)) {
                 // field filter
@@ -975,7 +1017,7 @@ abstract class AbstractCollectionFilterHelper
                 // quick search
                 if (!empty($v)) {
                     $repository = $this->entityFactory->getRepository('event');
-                    $qb = $repository->addSearchFilter($qb, $v);
+                    $qb = $repository->addSearchFilter('event', $qb, $v);
                 }
             } else if (!is_array($v)) {
                 // field filter
@@ -1019,7 +1061,7 @@ abstract class AbstractCollectionFilterHelper
                 // quick search
                 if (!empty($v)) {
                     $repository = $this->entityFactory->getRepository('product');
-                    $qb = $repository->addSearchFilter($qb, $v);
+                    $qb = $repository->addSearchFilter('product', $qb, $v);
                 }
             } elseif (in_array($k, ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'])) {
                 // boolean filter
@@ -1070,7 +1112,7 @@ abstract class AbstractCollectionFilterHelper
                 // quick search
                 if (!empty($v)) {
                     $repository = $this->entityFactory->getRepository('specialOfLocation');
-                    $qb = $repository->addSearchFilter($qb, $v);
+                    $qb = $repository->addSearchFilter('specialOfLocation', $qb, $v);
                 }
             } else if (!is_array($v)) {
                 // field filter
@@ -1114,7 +1156,7 @@ abstract class AbstractCollectionFilterHelper
                 // quick search
                 if (!empty($v)) {
                     $repository = $this->entityFactory->getRepository('serviceOfLocation');
-                    $qb = $repository->addSearchFilter($qb, $v);
+                    $qb = $repository->addSearchFilter('serviceOfLocation', $qb, $v);
                 }
             } else if (!is_array($v)) {
                 // field filter
@@ -1158,7 +1200,7 @@ abstract class AbstractCollectionFilterHelper
                 // quick search
                 if (!empty($v)) {
                     $repository = $this->entityFactory->getRepository('abonnement');
-                    $qb = $repository->addSearchFilter($qb, $v);
+                    $qb = $repository->addSearchFilter('abonnement', $qb, $v);
                 }
             } elseif (in_array($k, ['showMenus', 'sendMessageForMenus', 'showOffers', 'sendMessageForOffers', 'showEvents', 'sendMessageForEvents', 'showProducts', 'sendMessageForProducts', 'showOptionOne', 'sendMessageToOptionOne', 'showOptionTwo', 'sendMessageToOptionTwo', 'showOptionThree', 'sendMessageToOptionThree'])) {
                 // boolean filter

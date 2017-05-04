@@ -228,7 +228,7 @@ abstract class AbstractAbonnementController extends AbstractController
     }
     /**
      * This action provides a handling of simple delete requests in the admin area.
-     * @ParamConverter("abonnement", class="MUYourCityModule:AbonnementEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @ParamConverter("abonnement", class="MUYourCityModule:AbonnementEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Cache(lastModified="abonnement.getUpdatedDate()", ETag="'Abonnement' ~ abonnement.getid() ~ abonnement.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
@@ -247,7 +247,7 @@ abstract class AbstractAbonnementController extends AbstractController
     
     /**
      * This action provides a handling of simple delete requests.
-     * @ParamConverter("abonnement", class="MUYourCityModule:AbonnementEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @ParamConverter("abonnement", class="MUYourCityModule:AbonnementEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Cache(lastModified="abonnement.getUpdatedDate()", ETag="'Abonnement' ~ abonnement.getid() ~ abonnement.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance

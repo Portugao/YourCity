@@ -154,7 +154,7 @@ abstract class AbstractBranchController extends AbstractController
     }
     /**
      * This action provides a item detail view in the admin area.
-     * @ParamConverter("branch", class="MUYourCityModule:BranchEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @ParamConverter("branch", class="MUYourCityModule:BranchEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Cache(lastModified="branch.getUpdatedDate()", ETag="'Branch' ~ branch.getid() ~ branch.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
@@ -172,7 +172,7 @@ abstract class AbstractBranchController extends AbstractController
     
     /**
      * This action provides a item detail view.
-     * @ParamConverter("branch", class="MUYourCityModule:BranchEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @ParamConverter("branch", class="MUYourCityModule:BranchEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Cache(lastModified="branch.getUpdatedDate()", ETag="'Branch' ~ branch.getid() ~ branch.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
@@ -284,7 +284,7 @@ abstract class AbstractBranchController extends AbstractController
     }
     /**
      * This action provides a handling of simple delete requests in the admin area.
-     * @ParamConverter("branch", class="MUYourCityModule:BranchEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @ParamConverter("branch", class="MUYourCityModule:BranchEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Cache(lastModified="branch.getUpdatedDate()", ETag="'Branch' ~ branch.getid() ~ branch.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
@@ -303,7 +303,7 @@ abstract class AbstractBranchController extends AbstractController
     
     /**
      * This action provides a handling of simple delete requests.
-     * @ParamConverter("branch", class="MUYourCityModule:BranchEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @ParamConverter("branch", class="MUYourCityModule:BranchEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Cache(lastModified="branch.getUpdatedDate()", ETag="'Branch' ~ branch.getid() ~ branch.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance

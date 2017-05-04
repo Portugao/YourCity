@@ -161,7 +161,7 @@ abstract class AbstractMenuOfLocationController extends AbstractController
     }
     /**
      * This action provides a item detail view in the admin area.
-     * @ParamConverter("menuOfLocation", class="MUYourCityModule:MenuOfLocationEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @ParamConverter("menuOfLocation", class="MUYourCityModule:MenuOfLocationEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Cache(lastModified="menuOfLocation.getUpdatedDate()", ETag="'MenuOfLocation' ~ menuOfLocation.getid() ~ menuOfLocation.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
@@ -179,7 +179,7 @@ abstract class AbstractMenuOfLocationController extends AbstractController
     
     /**
      * This action provides a item detail view.
-     * @ParamConverter("menuOfLocation", class="MUYourCityModule:MenuOfLocationEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @ParamConverter("menuOfLocation", class="MUYourCityModule:MenuOfLocationEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Cache(lastModified="menuOfLocation.getUpdatedDate()", ETag="'MenuOfLocation' ~ menuOfLocation.getid() ~ menuOfLocation.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
@@ -291,7 +291,7 @@ abstract class AbstractMenuOfLocationController extends AbstractController
     }
     /**
      * This action provides a handling of simple delete requests in the admin area.
-     * @ParamConverter("menuOfLocation", class="MUYourCityModule:MenuOfLocationEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @ParamConverter("menuOfLocation", class="MUYourCityModule:MenuOfLocationEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Cache(lastModified="menuOfLocation.getUpdatedDate()", ETag="'MenuOfLocation' ~ menuOfLocation.getid() ~ menuOfLocation.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
@@ -310,7 +310,7 @@ abstract class AbstractMenuOfLocationController extends AbstractController
     
     /**
      * This action provides a handling of simple delete requests.
-     * @ParamConverter("menuOfLocation", class="MUYourCityModule:MenuOfLocationEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @ParamConverter("menuOfLocation", class="MUYourCityModule:MenuOfLocationEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Cache(lastModified="menuOfLocation.getUpdatedDate()", ETag="'MenuOfLocation' ~ menuOfLocation.getid() ~ menuOfLocation.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance

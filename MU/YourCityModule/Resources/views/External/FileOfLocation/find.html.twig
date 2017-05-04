@@ -69,8 +69,8 @@
                                     <a href="#" data-itemid="{{ itemId }}">
                                         {{ fileOfLocation|muyourcitymodule_formattedTitle }}
                                     </a>
-                                    <input type="hidden" id="path{{ itemId }}" value="{{ path('muyourcitymodule_fileoflocation_display', { 'id': fileOfLocation.getId() }) }}" />
-                                    <input type="hidden" id="url{{ itemId }}" value="{{ url('muyourcitymodule_fileoflocation_display', { 'id': fileOfLocation.getId() }) }}" />
+                                    <input type="hidden" id="path{{ itemId }}" value="{{ path('muyourcitymodule_fileoflocation_display', {  }) }}" />
+                                    <input type="hidden" id="url{{ itemId }}" value="{{ url('muyourcitymodule_fileoflocation_display', {  }) }}" />
                                     <input type="hidden" id="title{{ itemId }}" value="{{ fileOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}" />
                                     <input type="hidden" id="desc{{ itemId }}" value="{% set description %}{% if fileOfLocation.description is not empty %}{{ fileOfLocation.description }}{% endif %}
                                     {% endset %}{{ description|striptags|e('html_attr') }}" />

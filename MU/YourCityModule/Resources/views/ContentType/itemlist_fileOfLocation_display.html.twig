@@ -1,6 +1,6 @@
 {# Purpose of this template: Display files of location within an external context #}
 {% for fileOfLocation in items %}
     <h3>{{ fileOfLocation|muyourcitymodule_formattedTitle }}</h3>
-    <p><a href="{{ path('muyourcitymodule_fileoflocation_display', { 'id': fileOfLocation.getId() }) }}">{{ __('Read more') }}</a>
+    <p><a href="{{ path('muyourcitymodule_fileoflocation_display', {  }) }}">{{ __('Read more') }}</a>
     </p>
 {% endfor %}

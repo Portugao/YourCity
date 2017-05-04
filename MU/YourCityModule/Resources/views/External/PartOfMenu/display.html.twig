@@ -2,7 +2,7 @@
 <div id="partOfMenu{$partOfMenu->getKey()}" class="muyourcitymodule-external-partofmenu">
 {% if displayMode == 'link' %}
     <p class="muyourcitymodule-external-link">
-    <a href="{{ path('muyourcitymodule_partofmenu_display', { 'id': partOfMenu.getId() }) }}" title="{{ partOfMenu|muyourcitymodule_formattedTitle|e('html_attr') }}">
+    <a href="{{ path('muyourcitymodule_partofmenu_display', {  }) }}" title="{{ partOfMenu|muyourcitymodule_formattedTitle|e('html_attr') }}">
     {{ partOfMenu|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.partsofmenu.filter')|safeHtml }}
     </a>
     </p>

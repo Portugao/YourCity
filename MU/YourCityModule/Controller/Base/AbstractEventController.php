@@ -166,7 +166,7 @@ abstract class AbstractEventController extends AbstractController
     }
     /**
      * This action provides a item detail view in the admin area.
-     * @ParamConverter("event", class="MUYourCityModule:EventEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @ParamConverter("event", class="MUYourCityModule:EventEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Cache(lastModified="event.getUpdatedDate()", ETag="'Event' ~ event.getid() ~ event.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
@@ -184,7 +184,7 @@ abstract class AbstractEventController extends AbstractController
     
     /**
      * This action provides a item detail view.
-     * @ParamConverter("event", class="MUYourCityModule:EventEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @ParamConverter("event", class="MUYourCityModule:EventEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Cache(lastModified="event.getUpdatedDate()", ETag="'Event' ~ event.getid() ~ event.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
@@ -296,7 +296,7 @@ abstract class AbstractEventController extends AbstractController
     }
     /**
      * This action provides a handling of simple delete requests in the admin area.
-     * @ParamConverter("event", class="MUYourCityModule:EventEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @ParamConverter("event", class="MUYourCityModule:EventEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Cache(lastModified="event.getUpdatedDate()", ETag="'Event' ~ event.getid() ~ event.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
@@ -315,7 +315,7 @@ abstract class AbstractEventController extends AbstractController
     
     /**
      * This action provides a handling of simple delete requests.
-     * @ParamConverter("event", class="MUYourCityModule:EventEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @ParamConverter("event", class="MUYourCityModule:EventEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Cache(lastModified="event.getUpdatedDate()", ETag="'Event' ~ event.getid() ~ event.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance

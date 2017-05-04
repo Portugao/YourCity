@@ -164,7 +164,7 @@ abstract class AbstractOfferController extends AbstractController
     }
     /**
      * This action provides a item detail view in the admin area.
-     * @ParamConverter("offer", class="MUYourCityModule:OfferEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @ParamConverter("offer", class="MUYourCityModule:OfferEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Cache(lastModified="offer.getUpdatedDate()", ETag="'Offer' ~ offer.getid() ~ offer.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
@@ -182,7 +182,7 @@ abstract class AbstractOfferController extends AbstractController
     
     /**
      * This action provides a item detail view.
-     * @ParamConverter("offer", class="MUYourCityModule:OfferEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @ParamConverter("offer", class="MUYourCityModule:OfferEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Cache(lastModified="offer.getUpdatedDate()", ETag="'Offer' ~ offer.getid() ~ offer.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
@@ -294,7 +294,7 @@ abstract class AbstractOfferController extends AbstractController
     }
     /**
      * This action provides a handling of simple delete requests in the admin area.
-     * @ParamConverter("offer", class="MUYourCityModule:OfferEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @ParamConverter("offer", class="MUYourCityModule:OfferEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Cache(lastModified="offer.getUpdatedDate()", ETag="'Offer' ~ offer.getid() ~ offer.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
@@ -313,7 +313,7 @@ abstract class AbstractOfferController extends AbstractController
     
     /**
      * This action provides a handling of simple delete requests.
-     * @ParamConverter("offer", class="MUYourCityModule:OfferEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @ParamConverter("offer", class="MUYourCityModule:OfferEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Cache(lastModified="offer.getUpdatedDate()", ETag="'Offer' ~ offer.getid() ~ offer.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance

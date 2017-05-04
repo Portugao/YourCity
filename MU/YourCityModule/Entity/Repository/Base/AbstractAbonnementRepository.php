@@ -441,7 +441,7 @@ abstract class AbstractAbonnementRepository extends EntityRepository
         }
     
         if (null !== $this->collectionFilterHelper) {
-            $qb = $this->collectionFilterHelper->addSearchFilter($qb, $fragment);
+            $qb = $this->collectionFilterHelper->addSearchFilter('abonnement', $qb, $fragment);
         }
     
         $query = $this->getSelectWherePaginatedQuery($qb, $currentPage, $resultsPerPage);
@@ -544,7 +544,9 @@ abstract class AbstractAbonnementRepository extends EntityRepository
         $qb->andWhere('tbl.' . $fieldName . ' = :' . $fieldName)
            ->setParameter($fieldName, $fieldValue);
     
-        $qb = $this->addExclusion($qb, [$excludeId]);
+        if ($excludeId > 0) {
+            $qb = $this->addExclusion($qb, [$excludeId]);
+        }
     
         $query = $qb->getQuery();
     

@@ -157,7 +157,7 @@ abstract class AbstractImageOfLocationController extends AbstractController
     }
     /**
      * This action provides a item detail view in the admin area.
-     * @ParamConverter("imageOfLocation", class="MUYourCityModule:ImageOfLocationEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @ParamConverter("imageOfLocation", class="MUYourCityModule:ImageOfLocationEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Cache(lastModified="imageOfLocation.getUpdatedDate()", ETag="'ImageOfLocation' ~ imageOfLocation.getid() ~ imageOfLocation.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
@@ -175,7 +175,7 @@ abstract class AbstractImageOfLocationController extends AbstractController
     
     /**
      * This action provides a item detail view.
-     * @ParamConverter("imageOfLocation", class="MUYourCityModule:ImageOfLocationEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @ParamConverter("imageOfLocation", class="MUYourCityModule:ImageOfLocationEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Cache(lastModified="imageOfLocation.getUpdatedDate()", ETag="'ImageOfLocation' ~ imageOfLocation.getid() ~ imageOfLocation.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
@@ -287,7 +287,7 @@ abstract class AbstractImageOfLocationController extends AbstractController
     }
     /**
      * This action provides a handling of simple delete requests in the admin area.
-     * @ParamConverter("imageOfLocation", class="MUYourCityModule:ImageOfLocationEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @ParamConverter("imageOfLocation", class="MUYourCityModule:ImageOfLocationEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Cache(lastModified="imageOfLocation.getUpdatedDate()", ETag="'ImageOfLocation' ~ imageOfLocation.getid() ~ imageOfLocation.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
@@ -306,7 +306,7 @@ abstract class AbstractImageOfLocationController extends AbstractController
     
     /**
      * This action provides a handling of simple delete requests.
-     * @ParamConverter("imageOfLocation", class="MUYourCityModule:ImageOfLocationEntity", options = {"id" = "id", "repository_method" = "selectById"})
+     * @ParamConverter("imageOfLocation", class="MUYourCityModule:ImageOfLocationEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Cache(lastModified="imageOfLocation.getUpdatedDate()", ETag="'ImageOfLocation' ~ imageOfLocation.getid() ~ imageOfLocation.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance

@@ -5,7 +5,7 @@
 <div id="location{$location->getKey()}" class="muyourcitymodule-external-location">
 {% if displayMode == 'link' %}
     <p class="muyourcitymodule-external-link">
-    <a href="{{ path('muyourcitymodule_location_display', { 'id': location.getId(), 'slug': location.slug }) }}" title="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}">
+    <a href="{{ path('muyourcitymodule_location_display', { 'slug': location.slug }) }}" title="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}">
     {{ location|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.locations.filter')|safeHtml }}
     </a>
     </p>
