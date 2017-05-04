@@ -70,13 +70,13 @@
             {{ location.city }}<br />
         {% endif %}
         {% if location.telefon is not empty %}
-            {{ __('Telefon') }}: {{ location.telefon }}<br />
+            {{ location.telefon }}<br />
         {% endif %}
         {% if location.mobil is not empty %}
-            {{ __('Mobil') }}: {{ location.mobil }}<br />
+            {{ location.mobil }}<br />
         {% endif %}
         {% if location.homepage is not empty %}
-            {{ __('Homepage') }} 
+            {#{ __('Homepage') }#} 
             {% if location.homepage is not empty %}
             {% if not isQuickView %}
             <a href="{{ location.homepage }}" title="{{ __('Visit this page') }}" class="fa fa-external-link-square"></a>
