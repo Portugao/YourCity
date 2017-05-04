@@ -77,10 +77,19 @@
             {{ form_row(form.bsagStop) }}
             {{ form_row(form.tram) }}
             {{ form_row(form.bus) }}
+            {% if mode == 'create' %}
+            <div class="hidden">
+            {% endif %}
             {{ form_row(form.closedForEver) }}
+            {% if mode == 'create' %}
+            </div>
+            {% endif %}
             {{ form_row(form.agreement) }}
             {{ form_row(form.unclearTimes) }}
             {{ form_row(form.openingHours) }}
+            {% if mode == 'create' %}
+            <div class="hidden">
+            {% endif %}
             {{ form_row(form.closedOnMonday) }}
             {{ form_row(form.startOnMonday) }}
             {{ form_row(form.endOnMonday) }}
@@ -116,9 +125,13 @@
             {{ form_row(form.endOnSunday) }}
             {{ form_row(form.start2OnSunday) }}
             {{ form_row(form.end2OnSunday) }}
+
             {{ form_row(form.owner) }}
             {{ form_row(form.admin1) }}
             {{ form_row(form.admin2) }}
+            {% if mode == 'create' %}
+            </div>
+            {% endif %}
             {{ form_row(form.latitude) }}
             {{ form_row(form.longitude) }}
         </fieldset>
