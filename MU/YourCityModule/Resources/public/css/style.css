@@ -211,6 +211,10 @@ div.muyourcitymodule-view .avatar img {
 	background: #ddd;
 }
 
+.product {
+	background: #f8f8f8;
+}
+
 #branch-user-list {
 	list-style-type: none;
 }
