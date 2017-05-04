@@ -16,12 +16,24 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Zikula\Core\Controller\AbstractController;
 use MU\YourCityModule\Form\Type\ImportType;
+use ServiceUtil;
+use PDO;
+use Doctrine_Manager;
+use MU\YourCityModule\Entity\Factory;
+use MU\YourCityModule\Entity\Factory\EntityFactory;
+use MU\YourCityModule\Entity\Factory\YourCityFactory;
 
 /**
  * Config controller base class.
  */
 abstract class AbstractImportController extends AbstractController
 {
+	/**
+	 * @var EntityFactory
+	 */
+	private $entityFactory;
+	
+	
     /**
      * This method takes care of the import.
      *
@@ -41,9 +53,14 @@ abstract class AbstractImportController extends AbstractController
         
         if ($form->handleRequest($request)->isValid()) {
             if ($form->get('import')->isClicked()) {
-                $formData = $form->getData();
+            	
+            	$entries = $this->getDatas();
+            	
+            	$this->insertDatas($entries);
+            	
+                //$formData = $form->getData();
 
-                $this->setVars($formData);
+                //$this->setVars($formData);
         
                 $this->addFlash('status', $this->__('Done! Module configuration updated.'));
                 $userName = $this->get('zikula_users_module.current_user')->get('uname');
@@ -52,7 +69,7 @@ abstract class AbstractImportController extends AbstractController
                 $this->addFlash('status', $this->__('Operation cancelled.'));
             }
         
-            // redirect to config page again (to show with GET request)
+            // redirect to import page again (to show with GET request)
             return $this->redirectToRoute('muyourcitymodule_import_import');
         }
         
@@ -66,29 +83,219 @@ abstract class AbstractImportController extends AbstractController
     
     /**
      *
-     * Build data array for creating collection
-     * @param array $result
-     * @return array of values
+     * @param array $args
+     * return string $status
      */
-    private function buildArrayForDatas($module , $result)
+    public function insertDatas($results)
     {
-    	if ($module == 'Downloads') {
-    		$result['title'] = utf8_encode($result['title']);
-    		$result['title'] = html_entity_decode($result['title'], ENT_COMPAT);
-    		$result['description'] = utf8_encode($result['description']);
-    		$data[] = array('id' => $result['cid'],
-    				'parent_id' => $result['pid'],
-    				'inFrontend' => 1,
-    				'name' => $result['title'],
-    				'description' => $result['description']);
+    	
+    	
+    	$results = $this->getDatas();
+    	if ($results) {
+    		foreach ($results as $result) {
+    			$locations[] = $result;
+    		}
     	}
-    	return $data;
+    	// we get an object manager
+    	//$objectManager = $this->entityFactory->getObjectManager();
+    	$entityManager = $this->container->get('doctrine.entitymanager');
+    	
+
+    	if (is_array($locations)) {
+    		foreach ($locations as $location) {
+    			$data = $this->buildArrayForDatas($location);
+    			//$data[0]['name'] = $data[0]['id'] . '-' . $data[0]['name'];
+    			// we build new location
+    			$modelHelper = $this->container->get('mu_yourcity_module.model_helper');
+    			$newLocation = new \MU\YourCityModule\Entity\LocationEntity();
+    			
+    			$newLocation->setWorkflowState('approved');    			
+    			$newLocation->setName($data[0]['name']);
+    			$newLocation->setLetterForOrder($data[0]['letterForOrder']);   			
+    			$newLocation->setDescription($data[0]['description']);
+    			
+    			$newLocation->setStreet($result['street']);
+    			$newLocation->setNumberOfStreet($result['numberOfStreet']);
+    			$newLocation->setZipCode($result['zipCode']);
+    			$newLocation->setCity($result['city']);
+    			$newLocation->setTelefon($result['telefon']);
+    			$newLocation->setMobil($result['mobil']);
+    			
+    			$newLocation->setClosedOnMonday($data[0]['closedOnMonday']);
+    			$newLocation->setStartOnMonday($data[0]['startOnMonday']);
+    			$newLocation->setEndOnMonday($data[0]['endOnMonday']);
+    			$newLocation->setStart2OnMonday($data[0]['start2OnMonday']);
+    			$newLocation->setEnd2OnMonday($data[0]['end2OnMonday']);
+    			
+    			$newLocation->setCreatedDate($data[0]['createdDate']);
+    			$newLocation->setUpdatedDate($data[0]['updatedDate']);
+    			
+    			$newLocation->setCreatedBy($data[0]['createdBy_id']);
+    			$newLocation->setUpdatedBy($data[0]['updatedBy_id']);
+
+
+    			$entityManager->persist($newLocation);
+    			$entityManager->flush();
+
+    		}
+
+    	}
+    	else {
+    		$status = __('There is no location to import!', $dom);
+    		return $status;
+    	}
+    
+    	return $status;
     }
     
     /**
      *
-     * Get files of module
-     * @param string $module    the module to work with
+     * Build data array for creating new entries
+     * @param array $result
+     * @return array of values
+     */
+    private function buildArrayForDatas($result)
+    {
+
+    		$result['field9'] = utf8_encode($result['field9']);
+    		$result['field9'] = html_entity_decode($result['field9'], ENT_COMPAT);
+    		$result['field10'] = utf8_encode($result['field10']);
+    		if ($result['field32'] == '' && $result['field33'] == '' && $result['field34'] == '' && $result['field35'] == '') {
+    			$closedMonday = true;
+    		} else {
+    			$closedMonday = false;
+    		}
+    		if ($result['field36'] == '' && $result['field37'] == '' && $result['field38'] == '' && $result['field39'] == '') {
+    			$closedTuesday = true;
+    		} else {
+    			$closedTuesday = false;
+    		}
+    		if ($result['field43'] == '' && $result['field44'] == '' && $result['field44'] == '' && $result['field46'] == '') {
+    			$closedWednesday = true;
+    		} else {
+    			$closedWednesday = false;
+    		}
+    		if ($result['field47'] == '' && $result['field48'] == '' && $result['field49'] == '' && $result['field50'] == '') {
+    			$closedThursday = true;
+    		} else {
+    			$closedThursday = false;
+    		}
+    		if ($result['field51'] == '' && $result['field52'] == '' && $result['field53'] == '' && $result['field54'] == '') {
+    			$closedFriday = true;
+    		} else {
+    			$closedFriday = false;
+    		}
+    		if ($result['field55'] == '' && $result['field56'] == '' && $result['field57'] == '' && $result['field58'] == '') {
+    			$closedSaturday = true;
+    		} else {
+    			$closedSaturday = false;
+    		}
+    		if ($result['field59'] == '' && $result['field60'] == '' && $result['field61'] == '' && $result['field62'] == '') {
+    			$closedSunday = true;
+    		} else {
+    			$closedSunday = false;
+    		}
+    		
+    		$result['field91'] = str_replace('(', '', $result['field91']);
+    		$result['field91'] = str_replace(')', '', $result['field91']);
+    		$geo = explode(',', $result['field91']);
+    		if (is_array($geo)) {
+    		if ($geo[0]) {
+    		$latitude = $geo[0];
+    		} else {
+    			$latitude = '';
+    		}
+    		if ($geo[1]) {
+    		$longitude = $geo[1];
+    		} else {
+    			$longitude = '';
+    		}
+    		}
+
+    		
+    		$data[] = array(
+    				'id' => $result['id'],
+    				'workflowState' => 'approved',
+    				'name' => $result['field9'],
+    				'letterForOrder' => $result['field107'],
+    				'slogan' => '',
+    				'logoOfYourLocationMeta' => 'a:0:{}',
+    				'logoOfYourLocation' => NULL,
+    				'descriptionForGoogle' => '',
+    				'description' => $result['field10'],
+    		        'description2' => '',
+    		        'imageOfLocationMeta' => 'a:0:{}',
+    		        'imageOfLocation' => NULL,
+    		        'street' => $result['field11'],
+    		        'numberOfStreet' => $result['field12'],
+    		        'zipCode' => $result,
+    		        'city' => $result['field14'],
+    		        'telefon' => $result,
+    		        'mobil' => $result,
+    		        'homepage' => $result,
+    		        'bsagStop' => $result,
+    		        'tram' => $result,
+    		        'bus' => $result,
+    		        'closedForEver' => $result,
+    		        'agreement' => $result,
+    		        'unclearTimes' => $result,
+    		        'openingHours' => $result,
+    		        'closedOnMonday' => $closedMonday,
+    		        'startOnMonday' => $result['field32'],
+    		        'endOnMonday' => $result['field33'],
+    				'start2OnMonday' => $result['field34'],
+    				'end2OnMonday' => $result['field35'],
+    				'closedOnTuesday' => $closedTuesday,
+    				'startOnTuesday' => $result['field36'],
+    				'endOnTuesday' => $result['field37'],
+    				'start2OnTuesday' => $result['field38'],
+    				'end2OnTuesday' => $result['field39'],
+    				'closedOnWednesday' => $closedWednesday,
+    				'startOnWednesday' => $result['field43'],
+    				'endOnWednesday' => $result['field44'],
+    				'start2OnWednesday' => $result['field45'],
+    				'end2OnWednesday' => $result['field46'],
+    				'closedOnThursday' => $closedThursday,
+    				'startOnThursday' => $result['field47'],
+    				'endOnThursday' => $result['field48'],
+    				'start2OnThursday' => $result['field49'],
+    				'end2OnThursday' => $result['field50'],
+    				'closedOnFriday' => $closedFriday,
+    				'startOnFriday' => $result['field51'],
+    				'endOnFriday' => $result['field52'],
+    				'start2OnFriday' => $result['field53'],
+    				'end2OnFriday' => $result['field54'],
+    				'closedOnSaturday' => $closedSaturday,
+    				'startOnSaturday' => $result['field55'],
+    				'endOnSaturday' => $result['field56'],
+    				'start2OnSaturday' => $result['field57'],
+    				'end2OnSaturday' => $result['field58'], 
+    				'closedOnSunday' => $closedSunday,
+    				'startOnSunday' => $result['field59'],
+    				'endOnSunday' => $result['field60'],
+    				'start2OnSunday' => $result['field61'],
+    				'end2OnSunday' => $result['field62'], 
+    				'slug' => $result['urltitle'],
+    				'latitude' => $latitude,
+    				'longitude' => $longitude,
+    				'createdDate' => $result['cr_date'],
+    				'updatedDate' => $result['lu_date'],
+    				'owner_id' => NULL,
+    				'admin1_id' => NULL,
+    				'admin2_id' => NULL,
+    				'createdBy_id' => $result['cr_uid'],
+    				'updatedBy_id' => $result['lu_uid']
+    				)
+    		        		;
+    	
+    	return $data;
+    }   
+    
+    
+    /**
+     *
+     * Get entries of table
+     * 
      *
      * @return an array of files
      */
@@ -100,9 +307,12 @@ abstract class AbstractImportController extends AbstractController
     	// ask the DB for entries in the module table
     	// handle the access to the module file table
     	// build sql
+
     	$query = "SELECT * FROM " . $table . " ORDER by id";
+
     	// prepare the sql query
     	$sql = $connect->query($query);
+    	
     	$connect = null;
     	return $sql;
     }
@@ -122,6 +332,7 @@ abstract class AbstractImportController extends AbstractController
     	$dbname = $databases[$connName]['dbname'];
     	$dbuser = $databases[$connName]['user'];
     	$dbpassword = $databases[$connName]['password'];
+
     	try {
     		$connect = new PDO("mysql:host=$host;dbname=$dbname", $dbuser, $dbpassword);
     	}
@@ -134,5 +345,10 @@ abstract class AbstractImportController extends AbstractController
     		return false;
     	}
     
+    }
+    
+    public function setEntityFactory(YourCityFactory $entityFactory)
+    {
+    	$this->entityFactory = $entityFactory;
     }
 }
