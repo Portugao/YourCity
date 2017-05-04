@@ -19,9 +19,9 @@ use MU\YourCityModule\Form\Type\ImportType;
 use ServiceUtil;
 use PDO;
 use Doctrine_Manager;
-use MU\YourCityModule\Entity\Factory;
 use MU\YourCityModule\Entity\Factory\EntityFactory;
 use MU\YourCityModule\Entity\Factory\YourCityFactory;
+use Zikula\UsersModule\Entity\Repository;
 
 /**
  * Config controller base class.
@@ -114,12 +114,12 @@ abstract class AbstractImportController extends AbstractController
     			$newLocation->setLetterForOrder($data[0]['letterForOrder']);   			
     			$newLocation->setDescription($data[0]['description']);
     			
-    			$newLocation->setStreet($result['street']);
-    			$newLocation->setNumberOfStreet($result['numberOfStreet']);
-    			$newLocation->setZipCode($result['zipCode']);
-    			$newLocation->setCity($result['city']);
-    			$newLocation->setTelefon($result['telefon']);
-    			$newLocation->setMobil($result['mobil']);
+    			$newLocation->setStreet($data[0]['street']);
+    			$newLocation->setNumberOfStreet($data[0]['numberOfStreet']);
+    			$newLocation->setZipCode($data[0]['zipCode']);
+    			$newLocation->setCity($data[0]['city']);
+    			$newLocation->setTelefon($data[0]['telefon']);
+    			$newLocation->setMobil($data[0]['mobil']);
     			
     			$newLocation->setClosedOnMonday($data[0]['closedOnMonday']);
     			$newLocation->setStartOnMonday($data[0]['startOnMonday']);
@@ -211,6 +211,10 @@ abstract class AbstractImportController extends AbstractController
     			$longitude = '';
     		}
     		}
+    		
+    		//$this->
+    		//$result['cr_uid'],
+    		//$result['lu_uid']
 
     		
     		$data[] = array(
@@ -228,18 +232,18 @@ abstract class AbstractImportController extends AbstractController
     		        'imageOfLocation' => NULL,
     		        'street' => $result['field11'],
     		        'numberOfStreet' => $result['field12'],
-    		        'zipCode' => $result,
+    		        'zipCode' => $result['42'],
     		        'city' => $result['field14'],
-    		        'telefon' => $result,
-    		        'mobil' => $result,
-    		        'homepage' => $result,
-    		        'bsagStop' => $result,
-    		        'tram' => $result,
-    		        'bus' => $result,
-    		        'closedForEver' => $result,
-    		        'agreement' => $result,
+    		        'telefon' => $result['field21'],
+    		        'mobil' => $result['field22'],
+    		        'homepage' => $result['field24'],
+    		        'bsagStop' => $result['102'],
+    		        'tram' => $result['103'],
+    		        'bus' => $result['104'],
+    		        'closedForEver' => $result['187'],
+    		        'agreement' => $result['69'],
     		        'unclearTimes' => $result,
-    		        'openingHours' => $result,
+    		        'openingHours' => $result['199'],
     		        'closedOnMonday' => $closedMonday,
     		        'startOnMonday' => $result['field32'],
     		        'endOnMonday' => $result['field33'],
