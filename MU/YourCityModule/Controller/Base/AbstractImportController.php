@@ -15,6 +15,7 @@ namespace MU\YourCityModule\Controller\Base;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Zikula\Core\Controller\AbstractController;
+use MU\YourCityModule\Form\Type\ImportType;
 
 /**
  * Config controller base class.
@@ -36,14 +37,12 @@ abstract class AbstractImportController extends AbstractController
             throw new AccessDeniedException();
         }
         
-        $form = $this->createForm('MU\YourCityModule\Form\ImportType');
+        $form = $this->createForm(ImportType::class);
         
         if ($form->handleRequest($request)->isValid()) {
-            if ($form->get('save')->isClicked()) {
+            if ($form->get('import')->isClicked()) {
                 $formData = $form->getData();
-                foreach (['moderationGroupForLocations'] as $groupFieldName) {
-                    $formData[$groupFieldName] = is_object($formData[$groupFieldName]) ? $formData[$groupFieldName]->getGid() : $formData[$groupFieldName];
-                }
+
                 $this->setVars($formData);
         
                 $this->addFlash('status', $this->__('Done! Module configuration updated.'));
