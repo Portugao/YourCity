@@ -88,7 +88,7 @@
                
         <h3>{{ __('Opening hours') }}</h3>
         
-        {% if location.agreement == false %}
+        {% if location.agreement == false and location.unclearTimes == false and location.closedForEver == false %}
 
         <div class="row">
             <div class="col-md-4 col-sm-5 col-xs-6">
@@ -96,9 +96,13 @@
             </div>
             <div class="col-md-8 col-sm-7 col-xs-6">
             {% if location.closedOnMonday == false %}
-                {{ location.startOnMonday|localizeddate('none', 'short') }} -   
-                {% if location.endOnMonday is not empty %}
-                    {{ location.endOnMonday|localizeddate('none', 'short') }}
+                {% if location.startOnMonday is not empty %}
+                    {{ location.startOnMonday|localizeddate('none', 'short') }}   
+                    {% if location.endOnMonday is not empty %}
+                        - {{ location.endOnMonday|localizeddate('none', 'short') }}
+                    {% else %}
+                        - {{ __('Open end') }}
+                    {% endif %}
                 {% endif %}
                 {% if location.start2OnMonday is not empty %}
                     <br />{{ location.start2OnMonday|localizeddate('none', 'short') }} -
@@ -243,8 +247,10 @@
             {% endif %}
             </div>
         </div>
-        {% else %}
+        {% elseif location.agreement == true %}
             {{ __('Termine nach Vereinbarung') }}
+        {% elseif location.unclearTimes == true %}
+            {{ __('Unclear Opening Hours') }}
         {% endif %}
 
         {#% if location.latitude is not empty %}
