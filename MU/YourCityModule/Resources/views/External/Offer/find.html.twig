@@ -83,8 +83,8 @@
                                             {{ offer|muyourcitymodule_formattedTitle }}
                                         {% endif %}
                                     </a>
-                                    <input type="hidden" id="path{{ itemId }}" value="{{ path('muyourcitymodule_offer_display', {  }) }}" />
-                                    <input type="hidden" id="url{{ itemId }}" value="{{ url('muyourcitymodule_offer_display', {  }) }}" />
+                                    <input type="hidden" id="path{{ itemId }}" value="{{ path('muyourcitymodule_offer_display', { 'id': offer.getId() }) }}" />
+                                    <input type="hidden" id="url{{ itemId }}" value="{{ url('muyourcitymodule_offer_display', { 'id': offer.getId() }) }}" />
                                     <input type="hidden" id="title{{ itemId }}" value="{{ offer|muyourcitymodule_formattedTitle|e('html_attr') }}" />
                                     <input type="hidden" id="desc{{ itemId }}" value="{% set description %}{% if offer.text is not empty %}{{ offer.text }}{% endif %}
                                     {% endset %}{{ description|striptags|e('html_attr') }}" />

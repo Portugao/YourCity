@@ -37,29 +37,27 @@ function mUYourCityInitQuickNavigation()
 function mUYourCityToggleFlag(objectType, fieldName, itemId)
 {
     jQuery.ajax({
-        type: 'POST',
+        method: 'POST',
         url: Routing.generate('muyourcitymodule_ajax_toggleflag'),
         data: {
             ot: objectType,
             field: fieldName,
             id: itemId
+        },
+        success: function(data) {
+            var idSuffix;
+            var toggleLink;
+
+            idSuffix = mUYourCityCapitaliseFirstLetter(fieldName) + itemId;
+            toggleLink = jQuery('#toggle' + idSuffix);
+
+            if (data.message) {
+                mUYourCitySimpleAlert(toggleLink, Translator.__('Success'), data.message, 'toggle' + idSuffix + 'DoneAlert', 'success');
+            }
+
+            toggleLink.find('.fa-check').toggleClass('hidden', true !== data.state);
+            toggleLink.find('.fa-times').toggleClass('hidden', true === data.state);
         }
-    }).done(function(res) {
-        // get data returned by the ajax response
-        var idSuffix;
-        var toggleLink;
-        var data;
-
-        idSuffix = mUYourCityCapitaliseFirstLetter(fieldName) + itemId;
-        toggleLink = jQuery('#toggle' + idSuffix);
-        data = res.data;
-
-        if (data.message) {
-            mUYourCitySimpleAlert(toggleLink, Translator.__('Success'), data.message, 'toggle' + idSuffix + 'DoneAlert', 'success');
-        }
-
-        toggleLink.find('.fa-check').toggleClass('hidden', true !== data.state);
-        toggleLink.find('.fa-times').toggleClass('hidden', true === data.state);
     });
 }
 

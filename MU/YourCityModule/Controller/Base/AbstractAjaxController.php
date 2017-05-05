@@ -17,9 +17,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Zikula\Core\Controller\AbstractController;
-use Zikula\Core\Response\Ajax\AjaxResponse;
-use Zikula\Core\Response\Ajax\BadDataResponse;
-use Zikula\Core\Response\Ajax\NotFoundResponse;
 
 /**
  * Ajax controller base class.
@@ -99,6 +96,7 @@ abstract class AbstractAjaxController extends AbstractController
             }
         }
         
+        // return response
         return new JsonResponse($resultItems);
     }
     
@@ -109,7 +107,7 @@ abstract class AbstractAjaxController extends AbstractController
      * @param string $sort    Sorting field
      * @param string $sortdir Sorting direction
      *
-     * @return AjaxResponse
+     * @return JsonResponse
      */
     public function getItemListFinderAction(Request $request)
     {
@@ -117,7 +115,7 @@ abstract class AbstractAjaxController extends AbstractController
             return true;
         }
         
-        $objectType = $request->request->getAlnum('ot', 'location');
+        $objectType = $request->query->getAlnum('ot', 'location');
         $controllerHelper = $this->get('mu_yourcity_module.controller_helper');
         $contextArgs = ['controller' => 'ajax', 'action' => 'getItemListFinder'];
         if (!in_array($objectType, $controllerHelper->getObjectTypes('controllerAction', $contextArgs))) {
@@ -128,18 +126,18 @@ abstract class AbstractAjaxController extends AbstractController
         $entityDisplayHelper = $this->get('mu_yourcity_module.entity_display_helper');
         $descriptionFieldName = $entityDisplayHelper->getDescriptionFieldName($objectType);
         
-        $sort = $request->request->getAlnum('sort', '');
+        $sort = $request->query->getAlnum('sort', '');
         if (empty($sort) || !in_array($sort, $repository->getAllowedSortingFields())) {
             $sort = $repository->getDefaultSortingField();
         }
         
-        $sdir = strtolower($request->request->getAlpha('sortdir', ''));
+        $sdir = strtolower($request->query->getAlpha('sortdir', ''));
         if ($sdir != 'asc' && $sdir != 'desc') {
             $sdir = 'asc';
         }
         
         $where = ''; // filters are processed inside the repository class
-        $searchTerm = $request->request->get('q', '');
+        $searchTerm = $request->query->get('q', '');
         $sortParam = $sort . ' ' . $sdir;
         
         $entities = [];
@@ -159,7 +157,8 @@ abstract class AbstractAjaxController extends AbstractController
             $slimItems[] = $this->prepareSlimItem($repository, $objectType, $item, $itemId, $descriptionFieldName);
         }
         
-        return new AjaxResponse($slimItems);
+        // return response
+        return new JsonResponse($slimItems);
     }
     
     /**
@@ -199,7 +198,7 @@ abstract class AbstractAjaxController extends AbstractController
      *
      * @param Request $request Current request instance
      *
-     * @return AjaxResponse
+     * @return JsonResponse
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
@@ -209,20 +208,18 @@ abstract class AbstractAjaxController extends AbstractController
             throw new AccessDeniedException();
         }
         
-        $postData = $request->request;
-        
-        $objectType = $postData->getAlnum('ot', 'location');
+        $objectType = $request->query->getAlnum('ot', 'location');
         $controllerHelper = $this->get('mu_yourcity_module.controller_helper');
         $contextArgs = ['controller' => 'ajax', 'action' => 'checkForDuplicate'];
         if (!in_array($objectType, $controllerHelper->getObjectTypes('controllerAction', $contextArgs))) {
             $objectType = $controllerHelper->getDefaultObjectType('controllerAction', $contextArgs);
         }
         
-        $fieldName = $postData->getAlnum('fn', '');
-        $value = $postData->get('v', '');
+        $fieldName = $request->query->getAlnum('fn', '');
+        $value = $request->query->get('v', '');
         
         if (empty($fieldName) || empty($value)) {
-            return new BadDataResponse($this->__('Error: invalid input.'));
+            return new JsonResponse($this->__('Error: invalid input.'), JsonResponse::HTTP_BAD_REQUEST);
         }
         
         // check if the given field is existing and unique
@@ -233,14 +230,10 @@ abstract class AbstractAjaxController extends AbstractController
                     break;
         }
         if (!count($uniqueFields) || !in_array($fieldName, $uniqueFields)) {
-            return new BadDataResponse($this->__('Error: invalid input.'));
+            return new JsonResponse($this->__('Error: invalid input.'), JsonResponse::HTTP_BAD_REQUEST);
         }
         
-        $exclude = $postData->getInt('ex', '');
-        /* can probably be removed
-         * $createMethod = 'create' . ucfirst($objectType);
-         * $object = $repository = $this->get('mu_yourcity_module.entity_factory')->$createMethod();
-         */
+        $exclude = $request->query->getInt('ex', '');
         
         $result = false;
         switch ($objectType) {
@@ -256,9 +249,7 @@ abstract class AbstractAjaxController extends AbstractController
         }
         
         // return response
-        $result = ['isDuplicate' => $result];
-        
-        return new AjaxResponse($result);
+        return new JsonResponse(['isDuplicate' => $result]);
     }
     
     /**
@@ -266,7 +257,7 @@ abstract class AbstractAjaxController extends AbstractController
      *
      * @param Request $request Current request instance
      *
-     * @return AjaxResponse
+     * @return JsonResponse
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
@@ -276,11 +267,9 @@ abstract class AbstractAjaxController extends AbstractController
             throw new AccessDeniedException();
         }
         
-        $postData = $request->request;
-        
-        $objectType = $postData->getAlnum('ot', 'location');
-        $field = $postData->getAlnum('field', '');
-        $id = $postData->getInt('id', 0);
+        $objectType = $request->request->getAlnum('ot', 'location');
+        $field = $request->request->getAlnum('field', '');
+        $id = $request->request->getInt('id', 0);
         
         if ($id == 0
             || ($objectType != 'location' && $objectType != 'product' && $objectType != 'abonnement')
@@ -288,7 +277,7 @@ abstract class AbstractAjaxController extends AbstractController
         || ($objectType == 'product' && !in_array($field, ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']))
         || ($objectType == 'abonnement' && !in_array($field, ['showMenus', 'sendMessageForMenus', 'showOffers', 'sendMessageForOffers', 'showEvents', 'sendMessageForEvents', 'showProducts', 'sendMessageForProducts', 'showOptionOne', 'sendMessageToOptionOne', 'showOptionTwo', 'sendMessageToOptionTwo', 'showOptionThree', 'sendMessageToOptionThree']))
         ) {
-            return new BadDataResponse($this->__('Error: invalid input.'));
+            return new JsonResponse($this->__('Error: invalid input.'), JsonResponse::HTTP_BAD_REQUEST);
         }
         
         // select data from data source
@@ -296,7 +285,7 @@ abstract class AbstractAjaxController extends AbstractController
         $repository = $entityFactory->getRepository($objectType);
         $entity = $repository->selectById($id, false);
         if (null === $entity) {
-            return new NotFoundResponse($this->__('No such item.'));
+            return new JsonResponse($this->__('No such item.'), JsonResponse::HTTP_NOT_FOUND);
         }
         
         // toggle the flag
@@ -310,7 +299,7 @@ abstract class AbstractAjaxController extends AbstractController
         $logger->notice('{app}: User {user} toggled the {field} flag the {entity} with id {id}.', $logArgs);
         
         // return response
-        return new AjaxResponse([
+        return new JsonResponse([
             'id' => $id,
             'state' => $entity[$field],
             'message' => $this->__('The setting has been successfully changed.')

@@ -107,7 +107,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this branch'));
                 $menu->addChild($this->__('Reuse'), [
                     'route' => $routePrefix . $routeArea . 'edit',
-                    'routeParameters' => []
+                    'routeParameters' => ['astemplate' => $entity->getId()]
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new branch'));
             }
@@ -350,7 +350,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this part'));
                 $menu->addChild($this->__('Reuse'), [
                     'route' => $routePrefix . $routeArea . 'edit',
-                    'routeParameters' => []
+                    'routeParameters' => ['astemplate' => $entity->getId()]
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new part'));
             }
@@ -411,7 +411,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this image of location'));
                 $menu->addChild($this->__('Reuse'), [
                     'route' => $routePrefix . $routeArea . 'edit',
-                    'routeParameters' => []
+                    'routeParameters' => ['astemplate' => $entity->getId()]
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new image of location'));
             }
@@ -459,7 +459,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this file of location'));
                 $menu->addChild($this->__('Reuse'), [
                     'route' => $routePrefix . $routeArea . 'edit',
-                    'routeParameters' => []
+                    'routeParameters' => ['astemplate' => $entity->getId()]
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new file of location'));
             }
@@ -507,7 +507,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this offer'));
                 $menu->addChild($this->__('Reuse'), [
                     'route' => $routePrefix . $routeArea . 'edit',
-                    'routeParameters' => []
+                    'routeParameters' => ['astemplate' => $entity->getId()]
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new offer'));
             }
@@ -555,7 +555,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this menu of location'));
                 $menu->addChild($this->__('Reuse'), [
                     'route' => $routePrefix . $routeArea . 'edit',
-                    'routeParameters' => []
+                    'routeParameters' => ['astemplate' => $entity->getId()]
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new menu of location'));
             }
@@ -627,7 +627,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this part of menu'));
                 $menu->addChild($this->__('Reuse'), [
                     'route' => $routePrefix . $routeArea . 'edit',
-                    'routeParameters' => []
+                    'routeParameters' => ['astemplate' => $entity->getId()]
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new part of menu'));
             }
@@ -688,7 +688,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this dish'));
                 $menu->addChild($this->__('Reuse'), [
                     'route' => $routePrefix . $routeArea . 'edit',
-                    'routeParameters' => []
+                    'routeParameters' => ['astemplate' => $entity->getId()]
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new dish'));
             }
@@ -736,7 +736,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this event'));
                 $menu->addChild($this->__('Reuse'), [
                     'route' => $routePrefix . $routeArea . 'edit',
-                    'routeParameters' => []
+                    'routeParameters' => ['astemplate' => $entity->getId()]
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new event'));
             }
@@ -784,7 +784,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this product'));
                 $menu->addChild($this->__('Reuse'), [
                     'route' => $routePrefix . $routeArea . 'edit',
-                    'routeParameters' => []
+                    'routeParameters' => ['astemplate' => $entity->getId()]
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new product'));
             }
@@ -832,7 +832,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this special of location'));
                 $menu->addChild($this->__('Reuse'), [
                     'route' => $routePrefix . $routeArea . 'edit',
-                    'routeParameters' => []
+                    'routeParameters' => ['astemplate' => $entity->getId()]
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new special of location'));
             }
@@ -893,7 +893,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this service of location'));
                 $menu->addChild($this->__('Reuse'), [
                     'route' => $routePrefix . $routeArea . 'edit',
-                    'routeParameters' => []
+                    'routeParameters' => ['astemplate' => $entity->getId()]
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new service of location'));
             }
@@ -939,7 +939,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this abonnement'));
                 $menu->addChild($this->__('Reuse'), [
                     'route' => $routePrefix . $routeArea . 'edit',
-                    'routeParameters' => []
+                    'routeParameters' => ['astemplate' => $entity->getId()]
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new abonnement'));
             }

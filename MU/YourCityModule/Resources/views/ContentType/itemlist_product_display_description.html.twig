@@ -5,7 +5,7 @@
         {% if product.description %}
             <dd>{{ product.description|striptags|truncate(200, true, '&hellip;') }}</dd>
         {% endif %}
-        <dd><a href="{{ path('muyourcitymodule_product_display', {  }) }}">{{ __('Read more') }}</a>
+        <dd><a href="{{ path('muyourcitymodule_product_display', { 'id': product.getId() }) }}">{{ __('Read more') }}</a>
         </dd>
     {% else %}
         <dt>{{ __('No entries found.') }}</dt>

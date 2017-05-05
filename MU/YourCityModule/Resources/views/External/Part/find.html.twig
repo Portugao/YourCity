@@ -83,8 +83,8 @@
                                             {{ part|muyourcitymodule_formattedTitle }}
                                         {% endif %}
                                     </a>
-                                    <input type="hidden" id="path{{ itemId }}" value="{{ path('muyourcitymodule_part_display', {  }) }}" />
-                                    <input type="hidden" id="url{{ itemId }}" value="{{ url('muyourcitymodule_part_display', {  }) }}" />
+                                    <input type="hidden" id="path{{ itemId }}" value="{{ path('muyourcitymodule_part_display', { 'id': part.getId() }) }}" />
+                                    <input type="hidden" id="url{{ itemId }}" value="{{ url('muyourcitymodule_part_display', { 'id': part.getId() }) }}" />
                                     <input type="hidden" id="title{{ itemId }}" value="{{ part|muyourcitymodule_formattedTitle|e('html_attr') }}" />
                                     <input type="hidden" id="desc{{ itemId }}" value="{% set description %}{% if part.description is not empty %}{{ part.description }}{% endif %}
                                     {% endset %}{{ description|striptags|e('html_attr') }}" />

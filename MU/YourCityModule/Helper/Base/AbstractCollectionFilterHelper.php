@@ -1741,8 +1741,8 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchStartOnSaturday'] = $fragment;
             $filters[] = 'tbl.endOnSaturday = :searchEndOnSaturday';
             $parameters['searchEndOnSaturday'] = $fragment;
-            $filters[] = 'tbl.star2tOnSaturday = :searchStar2tOnSaturday';
-            $parameters['searchStar2tOnSaturday'] = $fragment;
+            $filters[] = 'tbl.start2OnSaturday = :searchStart2OnSaturday';
+            $parameters['searchStart2OnSaturday'] = $fragment;
             $filters[] = 'tbl.end2OnSaturday = :searchEnd2OnSaturday';
             $parameters['searchEnd2OnSaturday'] = $fragment;
             $filters[] = 'tbl.startOnSunday = :searchStartOnSunday';

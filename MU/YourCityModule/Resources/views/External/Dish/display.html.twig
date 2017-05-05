@@ -5,7 +5,7 @@
 <div id="dish{$dish->getKey()}" class="muyourcitymodule-external-dish">
 {% if displayMode == 'link' %}
     <p class="muyourcitymodule-external-link">
-    <a href="{{ path('muyourcitymodule_dish_display', {  }) }}" title="{{ dish|muyourcitymodule_formattedTitle|e('html_attr') }}">
+    <a href="{{ path('muyourcitymodule_dish_display', { 'id': dish.getId() }) }}" title="{{ dish|muyourcitymodule_formattedTitle|e('html_attr') }}">
     {{ dish|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.dishes.filter')|safeHtml }}
     </a>
     </p>

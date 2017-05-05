@@ -8,7 +8,7 @@
     </author>
 {% set amountOfItems = items|length %}
 {% if amountOfItems > 0 %}
-{% set uniqueID %}tag:{{ app.request.getSchemeAndHttpHost()|replace({ 'http://': '', '/': '' }) }},{{ items.first.createdDate|date('Y-m-d') }}:{{ path('muyourcitymodule_dish_' ~ routeArea ~ 'display', {  }) }}{% endset %}
+{% set uniqueID %}tag:{{ app.request.getSchemeAndHttpHost()|replace({ 'http://': '', '/': '' }) }},{{ items.first.createdDate|date('Y-m-d') }}:{{ path('muyourcitymodule_dish_' ~ routeArea ~ 'display', { 'id': items.first.getId() }) }}{% endset %}
     <id>{{ uniqueID }}</id>
     <updated>{{ items[0].updatedDate|date('Y-m-dTH:M:SZ') }}</updated>
 {% endif %}
@@ -26,8 +26,8 @@
 {% endblock %}
 {% block entry_content %}
     <title type="html">{{ dish|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.dishes')|safeHtml }}</title>
-    <link rel="alternate" type="text/html" href="{{ url('muyourcitymodule_dish_' ~ routeArea ~ 'display', {  }) }}" />
-    {% set uniqueID %}tag:{{ app.request.getSchemeAndHttpHost()|replace({ 'http://': '', '/': '' }) }},{{ dish.createdDate|date('Y-m-d') }}:{{ path('muyourcitymodule_dish_' ~ routeArea ~ 'display', {  }) }}{% endset %}
+    <link rel="alternate" type="text/html" href="{{ url('muyourcitymodule_dish_' ~ routeArea ~ 'display', { 'id': dish.getId() }) }}" />
+    {% set uniqueID %}tag:{{ app.request.getSchemeAndHttpHost()|replace({ 'http://': '', '/': '' }) }},{{ dish.createdDate|date('Y-m-d') }}:{{ path('muyourcitymodule_dish_' ~ routeArea ~ 'display', { 'id': dish.getId() }) }}{% endset %}
     <id>{{ uniqueID }}</id>
     {% if dish.updatedDate|default %}
         <updated>{{ dish.updatedDate|date('Y-m-dTH:M:SZ') }}</updated>

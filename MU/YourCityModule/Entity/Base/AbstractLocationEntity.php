@@ -511,9 +511,9 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     /**
      * @ORM\Column(type="time", nullable=true)
      * @Assert\Time()
-     * @var time $star2tOnSaturday
+     * @var time $start2OnSaturday
      */
-    protected $star2tOnSaturday;
+    protected $start2OnSaturday;
     
     /**
      * @ORM\Column(type="time", nullable=true)
@@ -2271,31 +2271,31 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     }
     
     /**
-     * Returns the star 2t on saturday.
+     * Returns the start 2 on saturday.
      *
      * @return time
      */
-    public function getStar2tOnSaturday()
+    public function getStart2OnSaturday()
     {
-        return $this->star2tOnSaturday;
+        return $this->start2OnSaturday;
     }
     
     /**
-     * Sets the star 2t on saturday.
+     * Sets the start 2 on saturday.
      *
-     * @param time $star2tOnSaturday
+     * @param time $start2OnSaturday
      *
      * @return void
      */
-    public function setStar2tOnSaturday($star2tOnSaturday)
+    public function setStart2OnSaturday($start2OnSaturday)
     {
-        if ($this->star2tOnSaturday !== $star2tOnSaturday) {
-            if (is_object($star2tOnSaturday) && $star2tOnSaturday instanceOf \DateTime) {
-                $this->star2tOnSaturday = $star2tOnSaturday;
-            } elseif (null === $star2tOnSaturday || empty($star2tOnSaturday)) {
-                $this->star2tOnSaturday = null;
+        if ($this->start2OnSaturday !== $start2OnSaturday) {
+            if (is_object($start2OnSaturday) && $start2OnSaturday instanceOf \DateTime) {
+                $this->start2OnSaturday = $start2OnSaturday;
+            } elseif (null === $start2OnSaturday || empty($start2OnSaturday)) {
+                $this->start2OnSaturday = null;
             } else {
-                $this->star2tOnSaturday = new \DateTime($star2tOnSaturday);
+                $this->start2OnSaturday = new \DateTime($start2OnSaturday);
             }
         }
     }

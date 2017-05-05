@@ -5,7 +5,7 @@
 <div id="product{$product->getKey()}" class="muyourcitymodule-external-product">
 {% if displayMode == 'link' %}
     <p class="muyourcitymodule-external-link">
-    <a href="{{ path('muyourcitymodule_product_display', {  }) }}" title="{{ product|muyourcitymodule_formattedTitle|e('html_attr') }}">
+    <a href="{{ path('muyourcitymodule_product_display', { 'id': product.getId() }) }}" title="{{ product|muyourcitymodule_formattedTitle|e('html_attr') }}">
     {{ product|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.products.filter')|safeHtml }}
     </a>
     </p>

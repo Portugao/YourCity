@@ -36,8 +36,8 @@
 {% endblock %}
 {% block entry_content %}
     <title><![CDATA[{% if menuOfLocation.updatedDate|default %}{{ menuOfLocation.updatedDate|localizeddate('medium', 'short') }} - {% endif %}{{ menuOfLocation|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.menusoflocation')|safeHtml }}]]></title>
-    <link>{{ url('muyourcitymodule_menuoflocation_' ~ routeArea ~ 'display', {  }) }}</link>
-    <guid>{{ url('muyourcitymodule_menuoflocation_' ~ routeArea ~ 'display', {  }) }}</guid>
+    <link>{{ url('muyourcitymodule_menuoflocation_' ~ routeArea ~ 'display', { 'id': menuOfLocation.getId() }) }}</link>
+    <guid>{{ url('muyourcitymodule_menuoflocation_' ~ routeArea ~ 'display', { 'id': menuOfLocation.getId() }) }}</guid>
     {% if menuOfLocation.createdBy|default and menuOfLocation.createdBy.getUid() > 0 %}
         {% set creatorAttributes = menuOfLocation.createdBy.getAttributes() %}
         <author>{{ menuOfLocation.createdBy.getEmail() }} ({{ creatorAttributes.get('realname')|default(creatorAttributes.get('name'))|default(menuOfLocation.createdBy.getUname()) }})</author>

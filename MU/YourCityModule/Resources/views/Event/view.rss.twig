@@ -36,8 +36,8 @@
 {% endblock %}
 {% block entry_content %}
     <title><![CDATA[{% if event.updatedDate|default %}{{ event.updatedDate|localizeddate('medium', 'short') }} - {% endif %}{{ event|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.events')|safeHtml }}]]></title>
-    <link>{{ url('muyourcitymodule_event_' ~ routeArea ~ 'display', {  }) }}</link>
-    <guid>{{ url('muyourcitymodule_event_' ~ routeArea ~ 'display', {  }) }}</guid>
+    <link>{{ url('muyourcitymodule_event_' ~ routeArea ~ 'display', { 'id': event.getId() }) }}</link>
+    <guid>{{ url('muyourcitymodule_event_' ~ routeArea ~ 'display', { 'id': event.getId() }) }}</guid>
     {% if event.createdBy|default and event.createdBy.getUid() > 0 %}
         {% set creatorAttributes = event.createdBy.getAttributes() %}
         <author>{{ event.createdBy.getEmail() }} ({{ creatorAttributes.get('realname')|default(creatorAttributes.get('name'))|default(event.createdBy.getUname()) }})</author>

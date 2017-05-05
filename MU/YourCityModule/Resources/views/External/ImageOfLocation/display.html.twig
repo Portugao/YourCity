@@ -5,7 +5,7 @@
 <div id="imageOfLocation{$imageOfLocation->getKey()}" class="muyourcitymodule-external-imageoflocation">
 {% if displayMode == 'link' %}
     <p class="muyourcitymodule-external-link">
-    <a href="{{ path('muyourcitymodule_imageoflocation_display', {  }) }}" title="{{ imageOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}">
+    <a href="{{ path('muyourcitymodule_imageoflocation_display', { 'id': imageOfLocation.getId() }) }}" title="{{ imageOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}">
     {{ imageOfLocation|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.imagesoflocation.filter')|safeHtml }}
     </a>
     </p>

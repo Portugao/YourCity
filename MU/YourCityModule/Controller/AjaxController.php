@@ -18,9 +18,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Zikula\Core\Response\Ajax\AjaxResponse;
-use Zikula\Core\Response\Ajax\BadDataResponse;
-use Zikula\Core\Response\Ajax\NotFoundResponse;
 
 /**
  * Ajax controller implementation class.
@@ -82,13 +79,13 @@ class AjaxController extends AbstractAjaxController
      * Retrieve item list for finder selections in Forms, Content type plugin and Scribite.
      *
      * @Route("/getItemListFinder", options={"expose"=true})
-     * @Method("POST")
+     * @Method("GET")
      *
      * @param string $ot      Name of currently used object type
      * @param string $sort    Sorting field
      * @param string $sortdir Sorting direction
      *
-     * @return AjaxResponse
+     * @return JsonResponse
      */
     public function getItemListFinderAction(Request $request)
     {
@@ -99,11 +96,11 @@ class AjaxController extends AbstractAjaxController
      * Checks whether a field value is a duplicate or not.
      *
      * @Route("/checkForDuplicate", options={"expose"=true})
-     * @Method("POST")
+     * @Method("GET")
      *
      * @param Request $request Current request instance
      *
-     * @return AjaxResponse
+     * @return JsonResponse
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
@@ -120,7 +117,7 @@ class AjaxController extends AbstractAjaxController
      *
      * @param Request $request Current request instance
      *
-     * @return AjaxResponse
+     * @return JsonResponse
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */

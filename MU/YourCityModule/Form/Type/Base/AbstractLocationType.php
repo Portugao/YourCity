@@ -815,13 +815,13 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
-        $builder->add('star2tOnSaturday', TimeType::class, [
-            'label' => $this->__('Star 2t on saturday') . ':',
+        $builder->add('start2OnSaturday', TimeType::class, [
+            'label' => $this->__('Start 2 on saturday') . ':',
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 8,
                 'class' => '',
-                'title' => $this->__('Enter the star 2t on saturday of the location')
+                'title' => $this->__('Enter the start 2 on saturday of the location')
             ],
             'required' => false,
             'empty_data' => '',

@@ -5,7 +5,7 @@
         {% if fileOfLocation.description %}
             <dd>{{ fileOfLocation.description|striptags|truncate(200, true, '&hellip;') }}</dd>
         {% endif %}
-        <dd><a href="{{ path('muyourcitymodule_fileoflocation_display', {  }) }}">{{ __('Read more') }}</a>
+        <dd><a href="{{ path('muyourcitymodule_fileoflocation_display', { 'id': fileOfLocation.getId() }) }}">{{ __('Read more') }}</a>
         </dd>
     {% else %}
         <dt>{{ __('No entries found.') }}</dt>
