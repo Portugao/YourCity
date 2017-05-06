@@ -21,7 +21,6 @@ use PDO;
 use Doctrine_Manager;
 use MU\YourCityModule\Entity\Factory\EntityFactory;
 use MU\YourCityModule\Entity\Factory\YourCityFactory;
-use Zikula\UsersModule\Entity\Repository;
 
 /**
  * Config controller base class.
@@ -104,7 +103,6 @@ abstract class AbstractImportController extends AbstractController
     	if (is_array($locations)) {
     		foreach ($locations as $location) {
     			$data = $this->buildArrayForDatas($location);
-    			//$data[0]['name'] = $data[0]['id'] . '-' . $data[0]['name'];
     			// we build new location
     			$modelHelper = $this->container->get('mu_yourcity_module.model_helper');
     			$newLocation = new \MU\YourCityModule\Entity\LocationEntity();
@@ -113,6 +111,9 @@ abstract class AbstractImportController extends AbstractController
     			$newLocation->setName($data[0]['name']);
     			$newLocation->setLetterForOrder($data[0]['letterForOrder']);   			
     			$newLocation->setDescription($data[0]['description']);
+    			$newLocation->setDescription2(NULL);
+    			$newLocation->setDescriptionForGoogle(NULL);
+    			$newLocation->setSlogan($data[0]['slogan']);
     			
     			$newLocation->setStreet($data[0]['street']);
     			$newLocation->setNumberOfStreet($data[0]['numberOfStreet']);
@@ -120,6 +121,18 @@ abstract class AbstractImportController extends AbstractController
     			$newLocation->setCity($data[0]['city']);
     			$newLocation->setTelefon($data[0]['telefon']);
     			$newLocation->setMobil($data[0]['mobil']);
+    			$newLocation->setHomepage($data[0]['homepage']);
+    			
+    			$newLocation->setLatitude($data[0]['latitude']);
+    			$newLocation->setLongitude($data[0]['longitude']);
+    			
+    			$newLocation->setBsagStop($data[0]['bsagStop']);
+    			$newLocation->setBus($data[0]['bus']);
+    			$newLocation->setTram($data[0]['tram']);
+    			
+    			$newLocation->setClosedForEver($data[0]['closedForEver']);
+    			$newLocation->setAgreement($data[0]['agreement']);
+    			$newLocation->setUnclearTimes($data[0]['unclearTimes']);
     			
     			$newLocation->setClosedOnMonday($data[0]['closedOnMonday']);
     			$newLocation->setStartOnMonday($data[0]['startOnMonday']);
@@ -127,25 +140,81 @@ abstract class AbstractImportController extends AbstractController
     			$newLocation->setStart2OnMonday($data[0]['start2OnMonday']);
     			$newLocation->setEnd2OnMonday($data[0]['end2OnMonday']);
     			
-    			$newLocation->setCreatedDate($data[0]['createdDate']);
-    			$newLocation->setUpdatedDate($data[0]['updatedDate']);
+    			$newLocation->setClosedOnTuesday($data[0]['closedOnTuesday']);
+    			$newLocation->setStartOnTuesday($data[0]['startOnTuesday']);
+    			$newLocation->setEndOnTuesday($data[0]['endOnTuesday']);
+    			$newLocation->setStart2OnTuesday($data[0]['start2OnTuesday']);
+    			$newLocation->setEnd2OnTuesday($data[0]['end2OnTuesday']);
     			
-    			$newLocation->setCreatedBy($data[0]['createdBy_id']);
-    			$newLocation->setUpdatedBy($data[0]['updatedBy_id']);
-
+    			$newLocation->setClosedOnWednesday($data[0]['closedOnWednesday']);
+    			$newLocation->setStartOnWednesday($data[0]['startOnWednesday']);
+    			$newLocation->setEndOnWednesday($data[0]['endOnWednesday']);
+    			$newLocation->setStart2OnWednesday($data[0]['start2OnWednesday']);
+    			$newLocation->setEnd2OnWednesday($data[0]['end2OnWednesday']);
+    			
+    			$newLocation->setClosedOnThursday($data[0]['closedOnThursday']);
+    			$newLocation->setStartOnThursday($data[0]['startOnThursday']);
+    			$newLocation->setEndOnThursday($data[0]['endOnThursday']);
+    			$newLocation->setStart2OnThursday($data[0]['start2OnThursday']);
+    			$newLocation->setEnd2OnThursday($data[0]['end2OnThursday']);
+    			
+    			$newLocation->setClosedOnFriday($data[0]['closedOnFriday']);
+    			$newLocation->setStartOnFriday($data[0]['startOnFriday']);
+    			$newLocation->setEndOnFriday($data[0]['endOnFriday']);
+    			$newLocation->setStart2OnFriday($data[0]['start2OnFriday']);
+    			$newLocation->setEnd2OnFriday($data[0]['end2OnFriday']);
+    			
+    			$newLocation->setClosedOnSaturday($data[0]['closedOnSaturday']);
+    			$newLocation->setStartOnSaturday($data[0]['startOnSaturday']);
+    			$newLocation->setEndOnSaturday($data[0]['endOnSaturday']);
+    			$newLocation->setStart2OnSaturday($data[0]['start2OnSaturday']);
+    			$newLocation->setEnd2OnSaturday($data[0]['end2OnSaturday']);
+    			
+    			$newLocation->setClosedOnSunday($data[0]['closedOnSunday']);
+    			$newLocation->setStartOnSunday($data[0]['startOnSunday']);
+    			$newLocation->setEndOnSunday($data[0]['endOnSunday']);
+    			$newLocation->setStart2OnSunday($data[0]['start2OnSunday']);
+    			$newLocation->setEnd2OnSunday($data[0]['end2OnSunday']);
 
     			$entityManager->persist($newLocation);
     			$entityManager->flush();
+    			
+    		}
+    		
+    		foreach ($locations as $location) {
+    			$data = $this->buildArrayForDatas($location);
+    			//die($data[0]['name']);
 
+    			$actualImport = $this->getFreshImport($data[0]['name']);
+    			//die(count($actualImport['name']));
+    			if ($actualImport) {
+    			foreach ($actualImport as $import) {
+    				$imports[] = $import;
+    			}
+ 			 
+    			$values = "('" . $imports[0]['id'] . "', '" . $branchId . "')";
+    			
+    			$sql = 'INSERT INTO mu_yourcity_location_branch' . ' (locationentity_id, branchentity_id) VALUES ' . $values;
+    			 
+    			$connect = $this->getDBConnection();
+    			 
+    			$stmt = $connect->prepare($sql);
+    			try {
+    				$stmt->execute();
+    			} catch (Exception $e) {
+    				LogUtil::registerError($e);
+    			}
+    			}
     		}
 
+    		//$status = __('Import complete!', $dom);
     	}
     	else {
-    		$status = __('There is no location to import!', $dom);
-    		return $status;
+    		//$status = __('There is no location to import!', $dom);
+    		return;
     	}
     
-    	return $status;
+    	return;
     }
     
     /**
@@ -160,6 +229,72 @@ abstract class AbstractImportController extends AbstractController
     		$result['field9'] = utf8_encode($result['field9']);
     		$result['field9'] = html_entity_decode($result['field9'], ENT_COMPAT);
     		$result['field10'] = utf8_encode($result['field10']);
+    		
+    		// branch handling
+    		if ($result['field16'] == 'Autohaus & Co') {
+    			$branchId = 1;
+    		}
+    		if ($result['field16'] == 'Bäckerei') {
+    			$branchId = 2;
+    		}
+    		if ($result['field16'] == 'Banken') {
+    			$branchId = 3;
+    		}
+    		if ($result['field16'] == 'Baumarkt') {
+    			$branchId = 4;
+    		}
+    		if ($result['field16'] == 'Behörden') {
+    			$branchId = 5;
+    		}
+    		if ($result['field16'] == 'Dienstleistung') {
+    			$branchId = 6;
+    		}
+    		if ($result['field16'] == 'Discounter') {
+    			$branchId = 7;
+    		}
+    		if ($result['field16'] == 'Einkaufszentren') {
+    			$branchId = 8;
+    		}
+    		if ($result['field16'] == 'Einzelhandel') {
+    			$branchId = 9;
+    		}
+    		if ($result['field16'] == 'Freizeit') {
+    			$branchId = 10;
+    		}
+    		if ($result['field16'] == 'Gastronomie') {
+    			$branchId = 11;
+    		}
+    		if ($result['field16'] == 'Gesundheit') {
+    			$branchId = 12;
+    		}
+    		if ($result['field16'] == 'Handelskette') {
+    			$branchId = 13;
+    		}
+    		if ($result['field16'] == 'Handwerk') {
+    			$branchId = 14;
+    		}
+    		if ($result['field16'] == 'Hotel & Co') {
+    			$branchId = 15;
+    		}
+    		if ($result['field16'] == 'Kaufhaus') {
+    			$branchId = 16;
+    		}
+    		if ($result['field16'] == 'Kultur') {
+    			$branchId = 17;
+    		}
+    		if ($result['field16'] == 'Post') {
+    			$branchId = 18;
+    		}
+    		if ($result['field16'] == 'Supermark') {
+    			$branchId = 19;
+    		}
+    		if ($result['field16'] == 'Verein') {
+    			$branchId = 20;
+    		}
+    		if ($result['field16'] == 'Wochenmarkt') {
+    			$branchId = 21;
+    		}
+    		
     		if ($result['field32'] == '' && $result['field33'] == '' && $result['field34'] == '' && $result['field35'] == '') {
     			$closedMonday = true;
     		} else {
@@ -196,25 +331,61 @@ abstract class AbstractImportController extends AbstractController
     			$closedSunday = false;
     		}
     		
+    		$result['field11'] = str_replace('ä', 'ae', $result['field11']);
+    		$result['field102'] = str_replace('ä', 'ae', $result['field102']);
+    		
+    		$result['field11'] = str_replace('ö', 'oe', $result['field11']);
+    		$result['field102'] = str_replace('ö', 'oe', $result['field102']);
+    		
+    		$result['field11'] = str_replace('ü', 'ue', $result['field11']);
+    		$result['field102'] = str_replace('ü', 'ue', $result['field102']);
+    		
+    		$result['field11'] = str_replace('Ä', 'Ae', $result['field11']);
+    		$result['field102'] = str_replace('Ä', 'Ae', $result['field102']);
+    		
+    		$result['field11'] = str_replace('Ö', 'Oe', $result['field11']);
+    		$result['field102'] = str_replace('Ö', 'Oe', $result['field102']);
+    		
+    		$result['field11'] = str_replace('Ü', 'Ue', $result['field11']);
+    		$result['field102'] = str_replace('Ü', 'Ue', $result['field102']);
+    		
+    		$result['field11'] = str_replace('ß', 'ss', $result['field11']);
+    		$result['field102'] = str_replace('ß', 'ss', $result['field102']);
+    		
+    		
+    		if ($result['field91'] != '') {
+    			
     		$result['field91'] = str_replace('(', '', $result['field91']);
     		$result['field91'] = str_replace(')', '', $result['field91']);
-    		$geo = explode(',', $result['field91']);
+
+    		$geo = explode(",", $result['field91']);
     		if (is_array($geo)) {
-    		if ($geo[0]) {
+    		if ($geo[0] != '') {
     		$latitude = $geo[0];
     		} else {
     			$latitude = '';
     		}
-    		if ($geo[1]) {
+    		if ($geo[1] != '') {
     		$longitude = $geo[1];
     		} else {
     			$longitude = '';
     		}
     		}
+    		} else {
+    			$latitude = '';
+    			$longitude = '';
+    		}
     		
-    		//$this->
-    		//$result['cr_uid'],
-    		//$result['lu_uid']
+    		if (isset($result['187'])) {
+    			$closedForEver = $result['187'];
+    		} else {
+    			$closedForEver = 0;
+    		}
+    		if (isset($result['199'])) {
+    			$openingHours = $result['199'];
+    		} else {
+    			$openingHours = '';
+    		}
 
     		
     		$data[] = array(
@@ -222,7 +393,7 @@ abstract class AbstractImportController extends AbstractController
     				'workflowState' => 'approved',
     				'name' => $result['field9'],
     				'letterForOrder' => $result['field107'],
-    				'slogan' => '',
+    				'slogan' => $result['field106'],
     				'logoOfYourLocationMeta' => 'a:0:{}',
     				'logoOfYourLocation' => NULL,
     				'descriptionForGoogle' => '',
@@ -232,18 +403,20 @@ abstract class AbstractImportController extends AbstractController
     		        'imageOfLocation' => NULL,
     		        'street' => $result['field11'],
     		        'numberOfStreet' => $result['field12'],
-    		        'zipCode' => $result['42'],
+    		        'zipCode' => $result['field42'],
     		        'city' => $result['field14'],
     		        'telefon' => $result['field21'],
     		        'mobil' => $result['field22'],
     		        'homepage' => $result['field24'],
-    		        'bsagStop' => $result['102'],
-    		        'tram' => $result['103'],
-    		        'bus' => $result['104'],
-    		        'closedForEver' => $result['187'],
-    		        'agreement' => $result['69'],
-    		        'unclearTimes' => $result,
-    		        'openingHours' => $result['199'],
+    		        'bsagStop' => $result['field102'],
+    		        'tram' => $result['field103'],
+    		        'bus' => $result['field104'],
+    				'branchId' => $branchId,
+    				//'partid' => $partId,
+    		        'closedForEver' => $closedForEver,
+    		        'agreement' => $result['field69'],
+    		        'unclearTimes' => $result['field67'],
+    		        'openingHours' => $openingHours,
     		        'closedOnMonday' => $closedMonday,
     		        'startOnMonday' => $result['field32'],
     		        'endOnMonday' => $result['field33'],
@@ -295,6 +468,8 @@ abstract class AbstractImportController extends AbstractController
     	return $data;
     }   
     
+
+    
     
     /**
      *
@@ -318,6 +493,31 @@ abstract class AbstractImportController extends AbstractController
     	$sql = $connect->query($query);
     	
     	$connect = null;
+    	return $sql;
+    }
+    
+    /**
+     *
+     * Get entries of table
+     *
+     *
+     * @return an array of files
+     */
+    private function getFreshImport($name)
+    {
+    	$table2 = 'mu_yourcity_location';
+    	//$moduletable = $this->getPraefix(). $table;
+    	$connec2t = $this->getDBConnection();
+    	// ask the DB for entries in the module table
+    	// handle the access to the module file table
+    	// build sql    
+    	//$query = 'SELECT * FROM mu_yourcity_location WHERE name LIKE %"' . $name . '"%';
+    	$query2 = "SELECT * FROM " . $table2 . " WHERE name = LIKE %" . $name . "%";
+    
+    	// prepare the sql query
+    	$sql = $connect->query($query2);
+    	 
+    	$connect2 = null;
     	return $sql;
     }
     
