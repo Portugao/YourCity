@@ -1,15 +1,20 @@
 {# purpose of this template: inclusion template for display of related locations #}
 {% set hasAdminPermission = hasPermission('MUYourCityModule:Location:', '::', 'ACCESS_COMMENT') %}
 
-
+{% if item.logoOfYourLocation is not empty %}
     <div class="col-md-2">
-        {% if item.logoOfYourLocation is not empty and item.logoOfYourLocationMeta.isImage %}
             <img src="{{ item.logoOfYourLocation.getPathname()|imagine_filter('zkroot', relationThumbRuntimeOptions) }}" alt="{{ item|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ relationThumbRuntimeOptions.thumbnail.size[0] }}" height="{{ relationThumbRuntimeOptions.thumbnail.size[1] }}" class="img-rounded" />
-        {% endif %}
     </div>
     <div class="col-md-10 location-h2">
         <h2><a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': item.id, 'slug': item.slug }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ item|muyourcitymodule_formattedTitle }}</a></h2>
-    </div><br style="clear: both;" />
+    </div>
+{% else %}
+    <div class="col-md-12 location-h2">
+        <h2><a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': item.id, 'slug': item.slug }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ item|muyourcitymodule_formattedTitle }}</a></h2>
+    </div>
+
+{% endif %}
+<br style="clear: both;" />
 
 {% if item.menuOfLocation|default and showMenus == true %}
     <h2>{{ __('Menus') }}</h2>

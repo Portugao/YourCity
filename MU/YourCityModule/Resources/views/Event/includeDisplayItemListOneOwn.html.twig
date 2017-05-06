@@ -15,3 +15,4 @@
 {% endif %}
 {% endspaceless %}
 </h4>
+{% if item.startDate %}{{ __('Start date') }}: {{ item.startDate|localizeddate('medium', 'short') }}{% endif %}
