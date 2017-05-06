@@ -17,10 +17,10 @@
     <div class="muyourcitymodule-imageoflocation muyourcitymodule-display">
 
     <dl>
-        {% if imageOfLocation.name is not empty %}
+        {#% if imageOfLocation.name is not empty %}
             <dt>{{ __('Name') }}</dt>
             <dd>{{ imageOfLocation.name }}</dd>
-        {% endif %}
+        {% endif %#}
         {% if imageOfLocation.description is not empty %}
             <dt>{{ __('Description') }}</dt>
             <dd>{{ imageOfLocation.description|safeHtml }}</dd>
@@ -55,7 +55,7 @@
         
     </dl>
 
-    {{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: imageOfLocation }) }}
+    {#{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: imageOfLocation }) }#}
 
     {{ block('display_hooks') }}
 </div>
