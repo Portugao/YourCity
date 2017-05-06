@@ -89,10 +89,10 @@
         
     </dl>
 
-    {% if featureActivationHelper.isEnabled(constant('MU\\YourCityModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'dish') %}
+    {#% if featureActivationHelper.isEnabled(constant('MU\\YourCityModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'dish') %}
         {{ include('@MUYourCityModule/Helper/includeCategoriesDisplay.html.twig', { obj: dish }) }}
     {% endif %}
-    {#{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: dish }) }#}
+    {{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: dish }) }#}
 
     {{ block('display_hooks') }}
 </div>
