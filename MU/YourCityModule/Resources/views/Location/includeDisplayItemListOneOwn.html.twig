@@ -14,11 +14,11 @@
 {% if item.menuOfLocation|default and showMenus == true %}
     <h2>{{ __('Menus') }}</h2>
     {% for menu in item.menuOfLocation %}
-    {% if menu|length <= 4 %}
+    {#% if menu|length <= 4 %#}
         <div class="col-md-12 abo-location-list menu">
-    {% else %}
+    {#% else %}
         <div class="col-md-6 abo-location-list menu">
-    {% endif %}
+    {% endif %#}
         {{ include(
         '@MUYourCityModule/MenuOfLocation/includeDisplayItemListOneOwn.html.twig',
             { item: menu }
