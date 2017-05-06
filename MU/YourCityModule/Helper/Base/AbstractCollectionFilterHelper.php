@@ -1847,6 +1847,8 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchImageOfDish'] = $fragment;
             $filters[] = 'tbl.priceOfDish = :searchPriceOfDish';
             $parameters['searchPriceOfDish'] = $fragment;
+            $filters[] = 'tbl.ingredients LIKE :searchIngredients';
+            $parameters['searchIngredients'] = '%' . $fragment . '%';
             $filters[] = 'tbl.positionOfDish = :searchPositionOfDish';
             $parameters['searchPositionOfDish'] = $fragment;
         }

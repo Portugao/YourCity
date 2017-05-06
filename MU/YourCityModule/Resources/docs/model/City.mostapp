@@ -57,7 +57,7 @@ application "YourCity" {
                 },
                 string "letterForOrder" {
                     documentation "Enter the letter for ordering of the location."
-                    displayType NONE
+                    displayType DISPLAY_SORTING
                 },
                 string "slogan" nullable translatable {
                     documentation "Slogan or additional name of your company."
@@ -92,6 +92,7 @@ application "YourCity" {
                 upload "imageOfLocation" {
                     documentation "Here you can upload an image, that represents your company."
                     mandatory false
+                displayType DISPLAY
                 },
                 string "street" {
                     mandatory false
@@ -553,6 +554,10 @@ application "YourCity" {
                 },
                 decimal "priceOfDish" currency {
                     defaultValue "0.00"
+                },
+                string "ingredients" nullable {
+                    documentation "Enter the numbers of ingredients, that you entered in the addtional remarks of your menu!"
+                    mandatory false
                 },
                 integer "positionOfDish" {
                     defaultValue "0"

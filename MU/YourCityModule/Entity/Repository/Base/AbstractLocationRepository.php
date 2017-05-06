@@ -57,9 +57,9 @@ abstract class AbstractLocationRepository extends EntityRepository
         return [
             'workflowState',
             'name',
+            'letterForOrder',
             'logoOfYourLocation',
             'description',
-            'imageOfLocation',
             'street',
             'numberOfStreet',
             'zipCode',

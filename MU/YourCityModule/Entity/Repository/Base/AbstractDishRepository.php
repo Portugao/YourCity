@@ -60,6 +60,7 @@ abstract class AbstractDishRepository extends EntityRepository
             'kindOfDish',
             'imageOfDish',
             'priceOfDish',
+            'ingredients',
             'positionOfDish',
             'createdBy',
             'createdDate',

@@ -393,6 +393,7 @@ abstract class AbstractDishController extends AbstractController
             new Column('kindOfDish'),
             new Column('imageOfDish'),
             new Column('priceOfDish'),
+            new Column('ingredients'),
             new Column('positionOfDish'),
             new Column('menuOfLocation'),
             new Column('partOfMenu'),

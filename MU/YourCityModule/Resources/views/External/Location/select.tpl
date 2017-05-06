@@ -20,9 +20,9 @@
                 <select id="{$baseID}Sort" name="sort" class="form-control">
                     <option value="workflowState"{if $sort eq 'workflowState'} selected="selected"{/if}>{gt text='Workflow state'}</option>
                     <option value="name"{if $sort eq 'name'} selected="selected"{/if}>{gt text='Name'}</option>
+                    <option value="letterForOrder"{if $sort eq 'letterForOrder'} selected="selected"{/if}>{gt text='Letter for order'}</option>
                     <option value="logoOfYourLocation"{if $sort eq 'logoOfYourLocation'} selected="selected"{/if}>{gt text='Logo of your location'}</option>
                     <option value="description"{if $sort eq 'description'} selected="selected"{/if}>{gt text='Description'}</option>
-                    <option value="imageOfLocation"{if $sort eq 'imageOfLocation'} selected="selected"{/if}>{gt text='Image of location'}</option>
                     <option value="street"{if $sort eq 'street'} selected="selected"{/if}>{gt text='Street'}</option>
                     <option value="numberOfStreet"{if $sort eq 'numberOfStreet'} selected="selected"{/if}>{gt text='Number of street'}</option>
                     <option value="zipCode"{if $sort eq 'zipCode'} selected="selected"{/if}>{gt text='Zip code'}</option>

@@ -203,9 +203,9 @@ abstract class AbstractLocationQuickNavType extends AbstractType
                 'choices' =>             [
                     $this->__('Workflow state') => 'workflowState',
                     $this->__('Name') => 'name',
+                    $this->__('Letter for order') => 'letterForOrder',
                     $this->__('Logo of your location') => 'logoOfYourLocation',
                     $this->__('Description') => 'description',
-                    $this->__('Image of location') => 'imageOfLocation',
                     $this->__('Street') => 'street',
                     $this->__('Number of street') => 'numberOfStreet',
                     $this->__('Zip code') => 'zipCode',

@@ -23,6 +23,7 @@
                     <option value="kindOfDish"{if $sort eq 'kindOfDish'} selected="selected"{/if}>{gt text='Kind of dish'}</option>
                     <option value="imageOfDish"{if $sort eq 'imageOfDish'} selected="selected"{/if}>{gt text='Image of dish'}</option>
                     <option value="priceOfDish"{if $sort eq 'priceOfDish'} selected="selected"{/if}>{gt text='Price of dish'}</option>
+                    <option value="ingredients"{if $sort eq 'ingredients'} selected="selected"{/if}>{gt text='Ingredients'}</option>
                     <option value="positionOfDish"{if $sort eq 'positionOfDish'} selected="selected"{/if}>{gt text='Position of dish'}</option>
                     <option value="createdDate"{if $sort eq 'createdDate'} selected="selected"{/if}>{gt text='Creation date'}</option>
                     <option value="createdBy"{if $sort eq 'createdBy'} selected="selected"{/if}>{gt text='Creator'}</option>

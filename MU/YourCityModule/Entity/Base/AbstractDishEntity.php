@@ -127,6 +127,14 @@ abstract class AbstractDishEntity extends EntityAccess implements Translatable
     protected $priceOfDish = 0.00;
     
     /**
+     * Enter the numbers of ingredients, that you entered in the addtional remarks of your menu!
+     * @ORM\Column(length=255, nullable=true)
+     * @Assert\Length(min="0", max="255")
+     * @var string $ingredients
+     */
+    protected $ingredients = '';
+    
+    /**
      * @ORM\Column(type="integer")
      * @Assert\Type(type="integer")
      * @Assert\NotBlank()
@@ -431,6 +439,30 @@ abstract class AbstractDishEntity extends EntityAccess implements Translatable
     {
         if (floatval($this->priceOfDish) !== floatval($priceOfDish)) {
             $this->priceOfDish = floatval($priceOfDish);
+        }
+    }
+    
+    /**
+     * Returns the ingredients.
+     *
+     * @return string
+     */
+    public function getIngredients()
+    {
+        return $this->ingredients;
+    }
+    
+    /**
+     * Sets the ingredients.
+     *
+     * @param string $ingredients
+     *
+     * @return void
+     */
+    public function setIngredients($ingredients)
+    {
+        if ($this->ingredients !== $ingredients) {
+            $this->ingredients = $ingredients;
         }
     }
     

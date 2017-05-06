@@ -266,6 +266,7 @@ abstract class AbstractDishQuickNavType extends AbstractType
                     $this->__('Kind of dish') => 'kindOfDish',
                     $this->__('Image of dish') => 'imageOfDish',
                     $this->__('Price of dish') => 'priceOfDish',
+                    $this->__('Ingredients') => 'ingredients',
                     $this->__('Position of dish') => 'positionOfDish',
                     $this->__('Creation date') => 'createdDate',
                     $this->__('Creator') => 'createdBy',

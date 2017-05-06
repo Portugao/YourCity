@@ -6,6 +6,7 @@
     <kindOfDish>{{ dish.kindOfDish|muyourcitymodule_listEntry('dish', 'kindOfDish') }}</kindOfDish>
     <imageOfDish{% if dish.imageOfDish is not empty and dish.imageOfDishMeta|default %} extension="{{ dish.imageOfDishMeta.extension }}" size="{{ dish.imageOfDishMeta.size }}" isImage="{% if dish.imageOfDishMeta.isImage %}true{% else %}false{% endif %}"{% if dish.imageOfDishMeta.isImage %} width="{{ dish.imageOfDishMeta.width }}" height="{{ dish.imageOfDishMeta.height }}" format="{{ dish.imageOfDishMeta.format }}"{% endif %}{% endif %}>{{ dish.imageOfDish }}</imageOfDish>
     <priceOfDish>{{ dish.priceOfDish|localizedcurrency('EUR') }}</priceOfDish>
+    <ingredients><![CDATA[{{ dish.ingredients }}]]></ingredients>
     <positionOfDish>{{ dish.positionOfDish }}</positionOfDish>
     <workflowState>{{ dish.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
     <menuOfLocation>{% if dish.menuOfLocation|default %}{{ dish.menuOfLocation|muyourcitymodule_formattedTitle }}{% endif %}</menuOfLocation>

@@ -1,10 +1,10 @@
 {# purpose of this template: dishes view csv view #}
-{% spaceless %}"{{ __('Name') }}";"{{ __('Description') }}";"{{ __('Kind of dish') }}";"{{ __('Image of dish') }}";"{{ __('Price of dish') }}";"{{ __('Position of dish') }}";"{{ __('Workflow state') }}"
+{% spaceless %}"{{ __('Name') }}";"{{ __('Description') }}";"{{ __('Kind of dish') }}";"{{ __('Image of dish') }}";"{{ __('Price of dish') }}";"{{ __('Ingredients') }}";"{{ __('Position of dish') }}";"{{ __('Workflow state') }}"
 ;"{{ __('Menu of location') }}";"{{ __('Part of menu') }}";"{{ __('Location') }}"
 {% endspaceless %}
 {% for dish in items %}
 {% spaceless %}
-    "{{ dish.name }}";"{{ dish.description|safeHtml }}";"{{ dish.kindOfDish|muyourcitymodule_listEntry('dish', 'kindOfDish') }}";"{{ dish.imageOfDish }}";"{{ dish.priceOfDish|localizedcurrency('EUR') }}";"{{ dish.positionOfDish }}";"{{ dish.workflowState|muyourcitymodule_objectState(false)|lower }}"
+    "{{ dish.name }}";"{{ dish.description|safeHtml }}";"{{ dish.kindOfDish|muyourcitymodule_listEntry('dish', 'kindOfDish') }}";"{{ dish.imageOfDish }}";"{{ dish.priceOfDish|localizedcurrency('EUR') }}";"{{ dish.ingredients }}";"{{ dish.positionOfDish }}";"{{ dish.workflowState|muyourcitymodule_objectState(false)|lower }}"
     ;"{% if dish.menuOfLocation|default %}{{ dish.menuOfLocation|muyourcitymodule_formattedTitle }}{% endif %}";"{% if dish.partOfMenu|default %}{{ dish.partOfMenu|muyourcitymodule_formattedTitle }}{% endif %}";"{% if dish.location|default %}{{ dish.location|muyourcitymodule_formattedTitle }}{% endif %}"
 {% endspaceless %}
 {% endfor %}

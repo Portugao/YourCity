@@ -140,9 +140,9 @@ abstract class AbstractLocationController extends AbstractController
         $sortableColumns->addColumns([
             new Column('workflowState'),
             new Column('name'),
+            new Column('letterForOrder'),
             new Column('logoOfYourLocation'),
             new Column('description'),
-            new Column('imageOfLocation'),
             new Column('street'),
             new Column('numberOfStreet'),
             new Column('zipCode'),

@@ -233,6 +233,7 @@ abstract class AbstractSearchHelper implements SearchableInterface
                     $whereArray[] = 'tbl.description';
                     $whereArray[] = 'tbl.kindOfDish';
                     $whereArray[] = 'tbl.imageOfDish';
+                    $whereArray[] = 'tbl.ingredients';
                     break;
                 case 'event':
                     $whereArray[] = 'tbl.workflowState';
