@@ -507,7 +507,7 @@ abstract class AbstractImportController extends AbstractController
     {
     	$table2 = 'mu_yourcity_location';
     	//$moduletable = $this->getPraefix(). $table;
-    	$connec2t = $this->getDBConnection();
+    	$connect2 = $this->getDBConnection();
     	// ask the DB for entries in the module table
     	// handle the access to the module file table
     	// build sql    
@@ -515,7 +515,7 @@ abstract class AbstractImportController extends AbstractController
     	$query2 = "SELECT * FROM " . $table2 . " WHERE name = LIKE %" . $name . "%";
     
     	// prepare the sql query
-    	$sql = $connect->query($query2);
+    	$sql = $connect2->query($query2);
     	 
     	$connect2 = null;
     	return $sql;
