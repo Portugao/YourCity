@@ -992,7 +992,6 @@ abstract class AbstractLocationType extends AbstractType
             'label_attr' => [
                 'class' => 'checkbox-inline'
             ],
-            []
             'attr' => [
                 'title' => $this->__('Choose the branches')
             ]
@@ -1013,7 +1012,6 @@ abstract class AbstractLocationType extends AbstractType
             'query_builder' => $queryBuilder,
             'required' => false,
             'label' => $this->__('Parts'),
-            []
             'attr' => [
                 'title' => $this->__('Choose the parts')
             ]
@@ -1037,7 +1035,6 @@ abstract class AbstractLocationType extends AbstractType
             'label_attr' => [
                 'class' => 'checkbox-inline'
             ],
-            []
             'attr' => [
                 'title' => $this->__('Choose the specials of location')
             ]
@@ -1061,7 +1058,6 @@ abstract class AbstractLocationType extends AbstractType
             'label_attr' => [
                 'class' => 'checkbox-inline'
             ],
-            []
             'attr' => [
                 'title' => $this->__('Choose the services of location')
             ]

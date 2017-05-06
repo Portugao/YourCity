@@ -229,7 +229,6 @@ abstract class AbstractPartOfMenuType extends AbstractType
             'expanded' => false,
             'query_builder' => $queryBuilder,
             'label' => $this->__('Menu of location'),
-            []
             'attr' => [
                 'title' => $this->__('Choose the menu of location')
             ]
