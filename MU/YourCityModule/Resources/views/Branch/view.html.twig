@@ -7,14 +7,14 @@
 
     {{ block('page_nav_links') }}
 
-    {{ include('@MUYourCityModule/Branch/viewQuickNav.html.twig', { workflowStateFilter: false }) }}{# see template file for available options #}
+    {#{ include('@MUYourCityModule/Branch/viewQuickNav.html.twig', { workflowStateFilter: false }) }#}{# see template file for available options #}
 
     {% if routeArea != 'admin' and items %}
-        <ul id="branch-user-list">
         {% for branch in items %}
-            <li><a href="{{ path('muyourcitymodule_branch_' ~ routeArea ~ 'display', { 'id': branch.id }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ branch.name|notifyFilters('muyourcitymodule.filterhook.branches') }}</a></li>
+            <div class="col-xs-6 col-sm-4 col-md-3 branch-list">
+                <a href="{{ path('muyourcitymodule_branch_' ~ routeArea ~ 'display', { 'id': branch.id }) }}">{{ branch.name }}</a>
+            </div>   
         {% endfor %}
-        </ul>
     {% else %}
     {% endif %}
 

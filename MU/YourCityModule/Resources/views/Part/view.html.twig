@@ -7,8 +7,17 @@
 
     {{ block('page_nav_links') }}
 
-    {{ include('@MUYourCityModule/Part/viewQuickNav.html.twig', { workflowStateFilter: false }) }}{# see template file for available options #}
+    {#{ include('@MUYourCityModule/Part/viewQuickNav.html.twig', { workflowStateFilter: false }) }#}{# see template file for available options #}
 
+    {% if routeArea != 'admin' %}
+        {% for part in items %}
+            <div class="col-xs-6 col-sm-4 col-md-3 part-list">
+                <a href="{{ path('muyourcitymodule_part_' ~ routeArea ~ 'display', { 'id': part.id }) }}">{{ part.name }}</a>
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+    {% if routeArea == 'admin' %}
     {% if routeArea == 'admin' %}
     <form action="{{ path('muyourcitymodule_part_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="partsViewForm" class="form-horizontal" role="form">
         <div>
@@ -68,6 +77,7 @@
             </tbody>
         </table>
         </div>
+        {% endif %}
         
         {% if all != 1 and pager|default %}
             {{ pager({ rowcount: pager.amountOfItems, limit: pager.itemsPerPage, display: 'page', route: 'muyourcitymodule_part_' ~ routeArea ~ 'view'}) }}

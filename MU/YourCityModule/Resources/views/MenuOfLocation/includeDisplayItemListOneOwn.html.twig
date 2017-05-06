@@ -1,7 +1,7 @@
 {# purpose of this template: inclusion template for display of related menus of location #}
 {% set hasAdminPermission = hasPermission('MUYourCityModule:MenuOfLocation:', '::', 'ACCESS_EDIT') %}
 
-<h3>{{ item|muyourcitymodule_formattedTitle }}</h3>
+<h3><a href="{{ path('muyourcitymodule_menuoflocation_' ~ routeArea ~ 'display', { 'id': item.id }) }}" title="{{ item|muyourcitymodule_formattedTitle|e('html_attr') }}">{{ item|muyourcitymodule_formattedTitle }}</h3></a>
 
 {% if item.partsOfMenu %}
     {% for part in item.partsOfMenu %}
