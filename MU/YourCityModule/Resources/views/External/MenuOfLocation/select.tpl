@@ -25,6 +25,7 @@
                     <option value="effectivFrom"{if $sort eq 'effectivFrom'} selected="selected"{/if}>{gt text='Effectiv from'}</option>
                     <option value="effectivUntil"{if $sort eq 'effectivUntil'} selected="selected"{/if}>{gt text='Effectiv until'}</option>
                     <option value="kindOfMenu"{if $sort eq 'kindOfMenu'} selected="selected"{/if}>{gt text='Kind of menu'}</option>
+                    <option value="additionalRemarks"{if $sort eq 'additionalRemarks'} selected="selected"{/if}>{gt text='Additional remarks'}</option>
                     <option value="createdDate"{if $sort eq 'createdDate'} selected="selected"{/if}>{gt text='Creation date'}</option>
                     <option value="createdBy"{if $sort eq 'createdBy'} selected="selected"{/if}>{gt text='Creator'}</option>
                     <option value="updatedDate"{if $sort eq 'updatedDate'} selected="selected"{/if}>{gt text='Update date'}</option>

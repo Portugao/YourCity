@@ -1825,6 +1825,8 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchEffectivUntil'] = $fragment;
             $filters[] = 'tbl.kindOfMenu = :searchKindOfMenu';
             $parameters['searchKindOfMenu'] = $fragment;
+            $filters[] = 'tbl.additionalRemarks LIKE :searchAdditionalRemarks';
+            $parameters['searchAdditionalRemarks'] = '%' . $fragment . '%';
         }
         if ($objectType == 'partOfMenu') {
             $filters[] = 'tbl.name LIKE :searchName';

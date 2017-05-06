@@ -257,6 +257,7 @@ abstract class AbstractFileOfLocationType extends AbstractType
             'expanded' => false,
             'query_builder' => $queryBuilder,
             'label' => $this->__('Location'),
+            []
             'attr' => [
                 'title' => $this->__('Choose the location')
             ]

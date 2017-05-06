@@ -238,6 +238,7 @@ abstract class AbstractMenuOfLocationQuickNavType extends AbstractType
                     $this->__('Effectiv from') => 'effectivFrom',
                     $this->__('Effectiv until') => 'effectivUntil',
                     $this->__('Kind of menu') => 'kindOfMenu',
+                    $this->__('Additional remarks') => 'additionalRemarks',
                     $this->__('Creation date') => 'createdDate',
                     $this->__('Creator') => 'createdBy',
                     $this->__('Update date') => 'updatedDate',

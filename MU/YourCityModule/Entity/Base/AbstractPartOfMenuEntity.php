@@ -399,15 +399,9 @@ abstract class AbstractPartOfMenuEntity extends EntityAccess implements Translat
      */
     public function createUrlArgs()
     {
-        $args = [
+        return [
             'id' => $this->getId()
         ];
-    
-        if (property_exists($this, 'slug')) {
-            $args['slug'] = $this->getSlug();
-        }
-    
-        return $args;
     }
     
     /**

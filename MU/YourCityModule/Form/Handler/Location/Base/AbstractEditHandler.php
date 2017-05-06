@@ -182,7 +182,14 @@ abstract class AbstractEditHandler extends EditHandler
         $objectIsPersisted = $args['commandName'] != 'delete' && !($this->templateParameters['mode'] == 'create' && $args['commandName'] == 'cancel');
     
         if (null !== $this->returnTo) {
-            $isDisplayOrEditPage = substr($this->returnTo, -7) == 'display' || substr($this->returnTo, -4) == 'edit';
+            $refererParts = explode('/', $this->returnTo);
+            $isDisplayPage = $refererParts[count($refererParts)-2] == 'location';
+            if ($isDisplayPage) {
+                // update slug for proper redirect to display page
+                $refererParts[count($refererParts)-1] = $this->entityRef->getSlug();
+                $this->returnTo = implode('/', $refererParts);
+            }
+            $isDisplayOrEditPage = $isDisplayPage || substr($this->returnTo, -4) == 'edit';
             if (!$isDisplayOrEditPage || $objectIsPersisted) {
                 // return to referer
                 return $this->returnTo;
@@ -338,9 +345,7 @@ abstract class AbstractEditHandler extends EditHandler
             case 'userDisplay':
             case 'adminDisplay':
                 if ($args['commandName'] != 'delete' && !($this->templateParameters['mode'] == 'create' && $args['commandName'] == 'cancel')) {
-                    $urlArgs[$this->idField] = $this->idValue;
-    
-                    return $this->router->generate($routePrefix . 'display', $urlArgs);
+                    return $this->router->generate($routePrefix . 'display', $this->entityRef->createUrlArgs());
                 }
     
                 return $this->getDefaultReturnUrl($args);

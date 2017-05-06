@@ -145,6 +145,15 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
      */
     protected $kindOfMenu = '1';
     
+    /**
+     * here you can enter additional informations.
+     * @Gedmo\Translatable
+     * @ORM\Column(type="text", length=2000, nullable=true)
+     * @Assert\Length(min="0", max="2000")
+     * @var text $additionalRemarks
+     */
+    protected $additionalRemarks = '';
+    
     
     /**
      * Used locale to override Translation listener's locale.
@@ -510,6 +519,30 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
     }
     
     /**
+     * Returns the additional remarks.
+     *
+     * @return text
+     */
+    public function getAdditionalRemarks()
+    {
+        return $this->additionalRemarks;
+    }
+    
+    /**
+     * Sets the additional remarks.
+     *
+     * @param text $additionalRemarks
+     *
+     * @return void
+     */
+    public function setAdditionalRemarks($additionalRemarks)
+    {
+        if ($this->additionalRemarks !== $additionalRemarks) {
+            $this->additionalRemarks = $additionalRemarks;
+        }
+    }
+    
+    /**
      * Returns the locale.
      *
      * @return string
@@ -675,15 +708,9 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
      */
     public function createUrlArgs()
     {
-        $args = [
+        return [
             'id' => $this->getId()
         ];
-    
-        if (property_exists($this, 'slug')) {
-            $args['slug'] = $this->getSlug();
-        }
-    
-        return $args;
     }
     
     /**

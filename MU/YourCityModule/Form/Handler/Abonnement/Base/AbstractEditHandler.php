@@ -315,7 +315,7 @@ abstract class AbstractEditHandler extends EditHandler
                 return $this->router->generate('muyourcitymodule_location_' . $routeArea . 'view');
             case 'userOwnViewLocations':
             case 'adminOwnViewLocations':
-                return $this->router->generate('muyourcitymodule_location_' . $routeArea . 'view', [ 'own' => 1 ]);
+                return $this->router->generate('muyourcitymodule_location_' . $routeArea . 'view', ['own' => 1]);
             case 'userDisplayLocation':
             case 'adminDisplayLocation':
                 if (!empty($this->relationPresets['location'])) {

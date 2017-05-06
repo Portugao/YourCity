@@ -220,6 +220,7 @@ abstract class AbstractSearchHelper implements SearchableInterface
                     $whereArray[] = 'tbl.description';
                     $whereArray[] = 'tbl.imageOfMenu';
                     $whereArray[] = 'tbl.kindOfMenu';
+                    $whereArray[] = 'tbl.additionalRemarks';
                     break;
                 case 'partOfMenu':
                     $whereArray[] = 'tbl.workflowState';

@@ -3273,15 +3273,9 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
      */
     public function createUrlArgs()
     {
-        $args = [
-            'id' => $this->getId()
+        return [
+            'slug' => $this->getSlug()
         ];
-    
-        if (property_exists($this, 'slug')) {
-            $args['slug'] = $this->getSlug();
-        }
-    
-        return $args;
     }
     
     /**

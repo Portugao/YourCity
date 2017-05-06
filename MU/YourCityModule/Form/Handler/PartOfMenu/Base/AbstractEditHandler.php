@@ -322,9 +322,7 @@ abstract class AbstractEditHandler extends EditHandler
             case 'userDisplay':
             case 'adminDisplay':
                 if ($args['commandName'] != 'delete' && !($this->templateParameters['mode'] == 'create' && $args['commandName'] == 'cancel')) {
-                    $urlArgs[$this->idField] = $this->idValue;
-    
-                    return $this->router->generate($routePrefix . 'display', $urlArgs);
+                    return $this->router->generate($routePrefix . 'display', $this->entityRef->createUrlArgs());
                 }
     
                 return $this->getDefaultReturnUrl($args);
@@ -333,7 +331,7 @@ abstract class AbstractEditHandler extends EditHandler
                 return $this->router->generate('muyourcitymodule_menuoflocation_' . $routeArea . 'view');
             case 'userOwnViewMenusOfLocation':
             case 'adminOwnViewMenusOfLocation':
-                return $this->router->generate('muyourcitymodule_menuoflocation_' . $routeArea . 'view', [ 'own' => 1 ]);
+                return $this->router->generate('muyourcitymodule_menuoflocation_' . $routeArea . 'view', ['own' => 1]);
             case 'userDisplayMenuOfLocation':
             case 'adminDisplayMenuOfLocation':
                 if (!empty($this->relationPresets['menuOfLocation'])) {

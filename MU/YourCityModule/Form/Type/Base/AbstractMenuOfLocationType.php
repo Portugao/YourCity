@@ -199,6 +199,22 @@ abstract class AbstractMenuOfLocationType extends AbstractType
             'required' => false,
         ]);
         
+        $builder->add('additionalRemarks', TextareaType::class, [
+            'label' => $this->__('Additional remarks') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('here you can enter additional informations.')
+            ],
+            'help' => $this->__('here you can enter additional informations.'),
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 2000,
+                'class' => '',
+                'title' => $this->__('Enter the additional remarks of the menu of location')
+            ],
+            'required' => false,
+        ]);
+        
         if ($this->variableApi->getSystemVar('multilingual') && $this->featureActivationHelper->isEnabled(FeatureActivationHelper::TRANSLATIONS, 'menuOfLocation')) {
             $supportedLanguages = $this->translatableHelper->getSupportedLanguages('menuOfLocation');
             if (is_array($supportedLanguages) && count($supportedLanguages) > 1) {
@@ -321,6 +337,7 @@ abstract class AbstractMenuOfLocationType extends AbstractType
             'expanded' => false,
             'query_builder' => $queryBuilder,
             'label' => $this->__('Location'),
+            []
             'attr' => [
                 'title' => $this->__('Choose the location')
             ]

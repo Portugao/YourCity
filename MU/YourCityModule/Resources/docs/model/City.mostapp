@@ -492,6 +492,11 @@ application "YourCity" {
                         listItem "other" ( "9" )
                     }
                 }
+            ,
+                text "additionalRemarks" nullable translatable {
+                    documentation "here you can enter additional informations."
+                    mandatory false
+                }
             }
             actions {
                 mainAction "Index",

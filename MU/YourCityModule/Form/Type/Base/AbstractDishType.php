@@ -297,6 +297,7 @@ abstract class AbstractDishType extends AbstractType
             'placeholder' => $this->__('Please choose an option'),
             'required' => false,
             'label' => $this->__('Menu of location'),
+            []
             'attr' => [
                 'title' => $this->__('Choose the menu of location')
             ]
@@ -318,6 +319,7 @@ abstract class AbstractDishType extends AbstractType
             'placeholder' => $this->__('Please choose an option'),
             'required' => false,
             'label' => $this->__('Part of menu'),
+            []
             'attr' => [
                 'title' => $this->__('Choose the part of menu')
             ]
@@ -337,6 +339,7 @@ abstract class AbstractDishType extends AbstractType
             'expanded' => false,
             'query_builder' => $queryBuilder,
             'label' => $this->__('Location'),
+            []
             'attr' => [
                 'title' => $this->__('Choose the location')
             ]

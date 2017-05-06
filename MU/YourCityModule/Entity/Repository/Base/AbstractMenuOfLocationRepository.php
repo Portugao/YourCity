@@ -62,6 +62,7 @@ abstract class AbstractMenuOfLocationRepository extends EntityRepository
             'effectivFrom',
             'effectivUntil',
             'kindOfMenu',
+            'additionalRemarks',
             'createdBy',
             'createdDate',
             'updatedBy',

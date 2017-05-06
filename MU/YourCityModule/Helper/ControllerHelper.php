@@ -119,12 +119,12 @@ class ControllerHelper extends AbstractControllerHelper
                 'itemsPerPage' => $resultsPerPage
             ];
         }
-        if ($objectType == 'location') {
+        if ($objectType == 'location')  {
         	$actualDay = $this->getActualDay();
         	$locationEntities = array();
         foreach ($entities as $entity) {
         	
-        	if ($actualDay == 'Mittwoch') {
+        	if ($actualDay == 'Freitag') {
         		if ($entity['agreement'] == 1) {
         			$entity['state'] = 'agreement';
         			$locationEntities[] = $entity;        			
@@ -195,7 +195,7 @@ class ControllerHelper extends AbstractControllerHelper
     		$locations = array();
     		foreach ($entity['locations'] as $location) {
     			 
-    			if ($actualDay == 'Mittwoch') {
+    			if ($actualDay == 'Donnerstag') {
     				if ($location['agreement'] == 1) {
     					$location['state'] = 'agreement';
     					$locations[] = $location;

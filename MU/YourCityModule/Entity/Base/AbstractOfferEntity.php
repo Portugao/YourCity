@@ -653,15 +653,9 @@ abstract class AbstractOfferEntity extends EntityAccess implements Translatable
      */
     public function createUrlArgs()
     {
-        $args = [
+        return [
             'id' => $this->getId()
         ];
-    
-        if (property_exists($this, 'slug')) {
-            $args['slug'] = $this->getSlug();
-        }
-    
-        return $args;
     }
     
     /**

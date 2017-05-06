@@ -8,6 +8,7 @@
     <effectivFrom>{{ menuOfLocation.effectivFrom|localizeddate('medium', 'short') }}</effectivFrom>
     <effectivUntil>{{ menuOfLocation.effectivUntil|localizeddate('medium', 'short') }}</effectivUntil>
     <kindOfMenu>{{ menuOfLocation.kindOfMenu|muyourcitymodule_listEntry('menuOfLocation', 'kindOfMenu') }}</kindOfMenu>
+    <additionalRemarks><![CDATA[{{ menuOfLocation.additionalRemarks|safeHtml }}]]></additionalRemarks>
     <workflowState>{{ menuOfLocation.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
     <location>{% if menuOfLocation.location|default %}{{ menuOfLocation.location|muyourcitymodule_formattedTitle }}{% endif %}</location>
     <dishes>
