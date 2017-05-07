@@ -52,7 +52,7 @@
                     </div>
                 </td>
                 <td headers="hName" class="text-left">
-                    <a href="{{ path('muyourcitymodule_serviceOflocation_' ~ routeArea ~ 'display', { 'id': serviceOfLocation.id }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ serviceOfLocation.name|notifyFilters('muyourcitymodule.filterhook.servicesoflocation') }}</a>
+                    <a href="{{ path('muyourcitymodule_serviceoflocation_' ~ routeArea ~ 'display', { 'id': serviceOfLocation.id }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ serviceOfLocation.name|notifyFilters('muyourcitymodule.filterhook.servicesoflocation') }}</a>
                 </td>
             </tr>
         {% else %}
