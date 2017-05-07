@@ -3,6 +3,8 @@
 {% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
 {% block pageTitle %}{{ location|muyourcitymodule_formattedTitle|default(__('Location')) }}{% endblock %}
 {% block title %}
+    <div class="row">
+    <div class="col-md-2">
     <div id="location-logo">
             {% if location.logoOfYourLocation is not empty and location.logoOfYourLocationMeta|default %}
                         <a href="{{ location.logoOfYourLocationUrl }}" title="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if location.logoOfYourLocationMeta.isImage %} class="image-link"{% endif %}>
@@ -15,8 +17,38 @@
             </a>
             {% else %}&nbsp;{% endif %}    
     </div>
+    {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: location, area: routeArea, context: 'display' }) %}
+    <div class="dropdown">
+        <a id="itemActions{{ location.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
+        {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
+    </div>
+    </div>
     
-            {% if location.imageOfLocation is not empty %}
+    <div class="col-md-7">
+        {% if location.state == 'closed' %}
+        {% set state = 'locationClosed' %}
+    {% endif %}
+    {% if location.state == 'open' %}
+        {% set state = 'locationOpen' %}
+    {% endif %}
+    {% if location.state == 'agreement' %}
+        {% set state = 'locationAgreement' %}
+    {% endif %}
+    {% if location.state == 'unclear' %}
+        {% set state = 'locationUnclear' %}
+    {% endif %}
+    {% if location.state == 'closedThisDay' %}
+        {% set state = 'locationClosed' %}
+    {% endif %}
+    <span class="status-icon {{ state }}">{% if state == 'locationUnclear' %}<i class="fa fa-circle-o-notch" aria-hidden="true"></i>{% endif %}{% if state == 'locationAgreement' %}<i class="fa fa-clock-o" aria-hidden="true"></i>{% endif %}{% if state == 'locationClosed' %}<i class="fa fa-circle-o" aria-hidden="true"></i>{% endif %}{% if state == 'locationOpen' %}<i class="fa fa-circle" aria-hidden="true"></i>{% endif %}</span>
+    
+        {% set templateTitle = location|muyourcitymodule_formattedTitle|default(__('Location')) %}
+        {{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.locations.filter') }}{% if routeArea == 'admin' %} <small>({{ location.workflowState|muyourcitymodule_objectState(false)|lower }})</small>{% endif %}
+    </div>
+    
+    <div class="col-md-3">
+    
+    {% if location.imageOfLocation is not empty %}
         <div id="locationImage">{% if location.imageOfLocation is not empty and location.imageOfLocationMeta|default %}
                         <a href="{{ location.imageOfLocationUrl }}" title="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if location.imageOfLocationMeta.isImage %} class="image-link"{% endif %}>
             {% if location.imageOfLocationMeta.isImage %}
@@ -27,15 +59,9 @@
             {% endif %}
             </a>
             {% else %}&nbsp;{% endif %}
-            </div>
-        {% endif %}
-    
-    {% set templateTitle = location|muyourcitymodule_formattedTitle|default(__('Location')) %}
-    {{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.locations.filter') }}{% if routeArea == 'admin' %} <small>({{ location.workflowState|muyourcitymodule_objectState(false)|lower }})</small>{% endif %}
-    {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: location, area: routeArea, context: 'display' }) %}
-    <div class="dropdown">
-        <a id="itemActions{{ location.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
-        {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
+        </div>
+    {% endif %}
+    </div>  
     </div>
 {% endblock %}
 {% block admin_page_icon 'eye' %}
@@ -79,7 +105,7 @@
             {#{ __('Homepage') }#} 
             {% if location.homepage is not empty %}
             {% if not isQuickView %}
-            <a href="{{ location.homepage }}" title="{{ __('Visit this page') }}" class="fa fa-external-link-square"></a>
+            <a href="{{ location.homepage }}" title="{{ __('Visit this page') }}" class="fa fa-external-link-square fa-2x"></a>
             {% else %}
                 {{ location.homepage }}
             {% endif %}
@@ -279,7 +305,7 @@
             {% if location.servicesOfLocation|default %}
             <h3>{{ __('Services of location') }}</h3>
             {{ include(
-                '@MUYourCityModule/SpecialOfLocation/includeDisplayItemListMany.html.twig',
+                '@MUYourCityModule/ServiceOfLocation/includeDisplayItemListMany.html.twig',
                 { items: location.servicesOfLocation }
             ) }}
             {% endif %}
@@ -299,8 +325,10 @@
         </div>
         <br style="clear: both;" />
 
+        {% if not isQuickView %}
         <h3 class="muyourcitymodule-map">{{ __('Map') }}</h3>
         <div id="mapContainer" class="muyourcitymodule-mapcontainer"></div>
+        {% endif %}
         
         <div class="col-md-12">    
             {% if location.filesOfLocation|default %}
@@ -356,38 +384,7 @@
             <a href="{{ path('muyourcitymodule_fileoflocation_' ~ routeArea ~ 'edit', { location: location.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
         </p>
     {% endif %}
-    {% if routeArea == 'admin' %}
-        <h4>{{ __('Branch') }}</h4>
-    {% else %}
-        <h3>{{ __('Branch') }}</h3>
-    {% endif %}
-    
-    {% if location.branches|default %}
-        {{ include(
-            '@MUYourCityModule/Branch/includeDisplayItemListMany.html.twig',
-            { items: location.branches }
-        ) }}
-    {% endif %}
-    
-    {% set mayManage = hasPermission('MUYourCityModule:Branch:', '::', 'ACCESS_EDIT') %}
-    {% if mayManage %}
-        <p class="managelink">
-            {% set createTitle = __('Create branch') %}
-            <a href="{{ path('muyourcitymodule_branch_' ~ routeArea ~ 'edit', { locations: location.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
-        </p>
-    {% endif %}
-    {% if routeArea == 'admin' %}
-        <h4>{{ __('Part') }}</h4>
-    {% else %}
-        <h3>{{ __('Part') }}</h3>
-    {% endif %}
-    
-    {% if location.parts|default %}
-        {{ include(
-            '@MUYourCityModule/Part/includeDisplayItemListMany.html.twig',
-            { items: location.parts }
-        ) }}
-    {% endif %}
+
     
     {% set mayManage = hasPermission('MUYourCityModule:Part:', '::', 'ACCESS_EDIT') %}
     {% if mayManage %}
@@ -494,6 +491,39 @@
             {% set createTitle = __('Create dish') %}
             <a href="{{ path('muyourcitymodule_dish_' ~ routeArea ~ 'edit', { location: location.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
         </p>
+    {% endif %}
+    
+        {% if routeArea == 'admin' %}
+        <h4>{{ __('Branch') }}</h4>
+    {% else %}
+        <h3>{{ __('Branch') }}</h3>
+    {% endif %}
+    
+    {% if location.branches|default %}
+        {{ include(
+            '@MUYourCityModule/Branch/includeDisplayItemListMany.html.twig',
+            { items: location.branches }
+        ) }}
+    {% endif %}
+    
+    {% set mayManage = hasPermission('MUYourCityModule:Branch:', '::', 'ACCESS_EDIT') %}
+    {% if mayManage %}
+        <p class="managelink">
+            {% set createTitle = __('Create branch') %}
+            <a href="{{ path('muyourcitymodule_branch_' ~ routeArea ~ 'edit', { locations: location.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
+        </p>
+    {% endif %}
+    {% if routeArea == 'admin' %}
+        <h4>{{ __('Part') }}</h4>
+    {% else %}
+        <h3>{{ __('Part') }}</h3>
+    {% endif %}
+    
+    {% if location.parts|default %}
+        {{ include(
+            '@MUYourCityModule/Part/includeDisplayItemListMany.html.twig',
+            { items: location.parts }
+        ) }}
     {% endif %}
     
 {% endblock %}
