@@ -248,6 +248,7 @@ class LinkContainer extends AbstractLinkContainer
                 'title' => $this->__('Branch list', 'muyourcitymodule')
             ];
         }
+        if ($routeArea == 'admin') {
         if (in_array('location', $allowedObjectTypes)
             && $this->permissionApi->hasPermission($this->getBundleName() . ':Location:', '::', $permLevel)) {
             $links[] = [
@@ -255,6 +256,7 @@ class LinkContainer extends AbstractLinkContainer
                 'text' => $this->__('Locations', 'muyourcitymodule'),
                 'title' => $this->__('Location list', 'muyourcitymodule')
             ];
+        }
         }
         if (in_array('part', $allowedObjectTypes)
             && $this->permissionApi->hasPermission($this->getBundleName() . ':Part:', '::', $permLevel)) {
