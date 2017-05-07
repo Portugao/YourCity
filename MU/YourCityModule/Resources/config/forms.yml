@@ -808,3 +808,10 @@ services:
             - "@zikula_groups_module.group_repository"
         tags:
             - { name: form.type }
+            
+    mu_yourcity_module.form.type.import:
+        class: MU\YourCityModule\Form\Type\ImportType
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: form.type }
