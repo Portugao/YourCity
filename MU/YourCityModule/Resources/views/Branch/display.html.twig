@@ -43,7 +43,7 @@
     
     {% if branch.locations|default %}
         {{ include(
-            '@MUYourCityModule/Location/includeDisplayItemListMany.html.twig',
+            '@MUYourCityModule/Location/includeDisplayItemListManyOwn.html.twig',
             { items: branch.locations }
         ) }}
     {% endif %}

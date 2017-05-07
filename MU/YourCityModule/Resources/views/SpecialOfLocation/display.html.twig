@@ -39,12 +39,14 @@
     
         {% if specialOfLocation.locations|default %}
             {{ include(
-               '@MUYourCityModule/Location/includeDisplayItemListMany.html.twig',
+               '@MUYourCityModule/Location/includeDisplayItemListManyOwn.html.twig',
                 { items: specialOfLocation.locations }
             ) }}
         {% endif %}
-
-    {#{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: specialOfLocation }) }#}
+        
+    {% if routeArea == 'admin' %}
+        {{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: specialOfLocation }) }}
+    {% endif %}
 
     {{ block('display_hooks') }}
         </div>
