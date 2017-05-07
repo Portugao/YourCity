@@ -161,12 +161,16 @@ div.muyourcitymodule-view .avatar img {
 	color: #ff8040;
 }
 
+.locationClosed {
+	color: #ff0000;
+}
+
 .locationOpen {
 	color: #008a00;
 }
 
-.locationClosed {
-	color: #ff0000;
+.locationUnclear {
+	color: #ee2299;
 }
 
 #location-logo {
@@ -189,14 +193,23 @@ div.muyourcitymodule-view .avatar img {
 
 .item-list {
 	list-style-type: none;
-	font-size: 1.4em;
+	/*font-size: 1.4em;*/
 	min-height: 120px;
 	margin: 0 0 10px 0;
+}
+
+.item-list .status-icon {
+	font-size: 1.4em;
 }
 
 .abo-location-list > h2 {
 	font-size: 1.5em;
 	margin: 20px 0 0 0;
+}
+
+.status-icon {
+	float: left;
+	margin: 0 15px 0 0;
 }
 
 .abo {
@@ -244,6 +257,7 @@ div.muyourcitymodule-view .avatar img {
 
 .offerPrice {
 	color: #ff0000;
+	font-size: 2em;
 }
 
 .normalPrice {
@@ -251,13 +265,18 @@ div.muyourcitymodule-view .avatar img {
 }
 
 .percentOffer {
-	font-size: 2em;
+	font-size: 3em;
 	color: #ff0000;
 }
 
 .percentOfferDisplay {
 	font-size: 3em;
 	color: #ff0000;
+}
+
+#imageOfOffer {
+	float: right;
+	margin: 0 0 0 25px;
 }
 
 #imageOfPart {
@@ -279,6 +298,12 @@ div.muyourcitymodule-view .avatar img {
 	font-size: 1.6em;
 }
 
+/***********PART********************/
+
 .part-list {
 	font-size: 1.6em;
+}
+
+.part-location-title {
+	font-size: 1.5em;
 }
