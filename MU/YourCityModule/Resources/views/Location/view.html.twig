@@ -34,8 +34,10 @@
                     
                 </li>
             {% endfor %}
+            </ul>
         {% endif %}
     {% endif %}
+    <br style="clear: both;" />
 
     {% if routeArea == 'admin' %}
     {% if routeArea == 'admin' %}
@@ -55,7 +57,6 @@
                 <col id="cName" />
                 <col id="cLogoOfYourLocation" />
                 <col id="cDescription" />
-                <col id="cImageOfLocation" />
                 <col id="cStreet" />
                 <col id="cNumberOfStreet" />
                 <col id="cZipCode" />
@@ -86,9 +87,6 @@
                 </th>
                 <th id="hDescription" scope="col" class="text-left">
                     <a href="{{ sort.description.url }}" title="{{ __f('Sort by %s', {'%s': 'description'}) }}" class="{{ sort.description.class }}">{{ __('Description') }}</a>
-                </th>
-                <th id="hImageOfLocation" scope="col" class="text-left">
-                    <a href="{{ sort.imageOfLocation.url }}" title="{{ __f('Sort by %s', {'%s': 'image of location'}) }}" class="{{ sort.imageOfLocation.class }}">{{ __('Image of location') }}</a>
                 </th>
                 <th id="hStreet" scope="col" class="text-left">
                     <a href="{{ sort.street.url }}" title="{{ __f('Sort by %s', {'%s': 'street'}) }}" class="{{ sort.street.class }}">{{ __('Street') }}</a>
@@ -153,18 +151,6 @@
                 <td headers="hDescription" class="text-left">
                     {{ location.description|safeHtml|truncate(50) }}
                 </td>
-                <td headers="hImageOfLocation" class="text-left">
-                    {% if location.imageOfLocation is not empty and location.imageOfLocationMeta|default %}
-                                <a href="{{ location.imageOfLocationUrl }}" title="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if location.imageOfLocationMeta.isImage %} class="image-link"{% endif %}>
-                    {% if location.imageOfLocationMeta.isImage %}
-                        {% set thumbOptions = attribute(thumbRuntimeOptions, 'locationImageOfLocation') %}
-                        <img src="{{ location.imageOfLocation.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
-                    {% else %}
-                        {{ __('Download') }} ({{ location.imageOfLocationMeta.size|muyourcitymodule_fileSize(location.imageOfLocation.getPathname(), false, false) }})
-                    {% endif %}
-                    </a>
-                    {% else %}&nbsp;{% endif %}
-                </td>
                 <td headers="hStreet" class="text-left">
                     {{ location.street }}
                 </td>
@@ -194,7 +180,7 @@
             </tr>
         {% else %}
             <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
-                <td class="text-left" colspan="{% if routeArea == 'admin' %}19{% else %}18{% endif %}">
+                <td class="text-left" colspan="{% if routeArea == 'admin' %}17{% else %}16{% endif %}">
             {{ __('No locations found.') }}
               </td>
             </tr>
