@@ -1,13 +1,13 @@
 {# purpose of this template: services of location display view #}
 {% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
 {% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
-{% block pageTitle %}{{ serviceofLocation|muyourcitymodule_formattedTitle|default(__('Serviceof location')) }}{% endblock %}
+{% block pageTitle %}{{ serviceOfLocation|muyourcitymodule_formattedTitle|default(__('Service of location')) }}{% endblock %}
 {% block title %}
-    {% set templateTitle = serviceofLocation|muyourcitymodule_formattedTitle|default(__('Serviceof location')) %}
-    {{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.servicesoflocation.filter') }}
-    {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: serviceofLocation, area: routeArea, context: 'display' }) %}
+    {% set templateTitle = serviceOfLocation|muyourcitymodule_formattedTitle|default(__('Service of location')) %}
+    {{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.servicesOflocation.filter') }}
+    {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: serviceOfLocation, area: routeArea, context: 'display' }) %}
     <div class="dropdown">
-        <a id="itemActions{{ serviceofLocation.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
+        <a id="itemActions{{ serviceOfLocation.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
         {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
     </div>
 {% endblock %}
@@ -19,23 +19,32 @@
     <div class="row">
         <div class="col-sm-9">
     <dl>
-        {% if serviceofLocation.name is not empty %}
+        {% if serviceOfLocation.name is not empty %}
             <dt>{{ __('Name') }}</dt>
-            <dd>{{ serviceofLocation.name }}</dd>
+            <dd>{{ serviceOfLocation.name }}</dd>
         {% endif %}
-        {% if serviceofLocation.description is not empty %}
+        {% if serviceOfLocation.description is not empty %}
             <dt>{{ __('Description') }}</dt>
-            <dd>{{ serviceofLocation.description|safeHtml }}</dd>
+            <dd>{{ serviceOfLocation.description|safeHtml }}</dd>
         {% endif %}
-        {% if serviceofLocation.iconForService is not empty %}
+        {% if serviceOfLocation.iconForService is not empty %}
             <dt>{{ __('Icon for service') }}</dt>
-            <dd>{{ serviceofLocation.iconForService }}</dd>
+            <dd>{{ serviceOfLocation.iconForService }}</dd>
         {% endif %}
         
     </dl>
+    
+    {% if serviceOfLocation.locations|default %}
+        {{ include(
+            '@MUYourCityModule/Location/includeDisplayItemListManyOwn.html.twig',
+            { items: serviceOfLocation.locations }
+        ) }}
+    {% endif %}
 
-    {{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: serviceofLocation }) }}
-
+    {% if routeArea == 'admin' %}
+        {{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: serviceOfLocation }) }}
+    {% endif %}
+    
     {{ block('display_hooks') }}
         </div>
         <div class="col-sm-3">
@@ -51,23 +60,23 @@
         <h3>{{ __('Locations') }}</h3>
     {% endif %}
     
-    {% if serviceofLocation.locations|default %}
+    {#% if serviceOfLocation.locations|default %}
         {{ include(
-            '@MUYourCityModule/Location/includeDisplayItemListMany.html.twig',
-            { items: serviceofLocation.locations }
+            '@MUYourCityModule/Location/includeDisplayItemListManyOwn.html.twig',
+            { items: serviceOfLocation.locations }
         ) }}
-    {% endif %}
+    {% endif %#}
     
     {% set mayManage = hasPermission('MUYourCityModule:Location:', '::', 'ACCESS_COMMENT') %}
     {% if mayManage %}
         <p class="managelink">
             {% set createTitle = __('Create location') %}
-            <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'edit', { servicesOfLocation: serviceofLocation.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
+            <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'edit', { servicesofLocation: serviceOfLocation.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
         </p>
     {% endif %}
 {% endblock %}
 {% block display_hooks %}
-    {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.servicesoflocation.display_view', id=serviceofLocation.id, urlObject=currentUrlObject) %}
+    {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.servicesOflocation.display_view', id=serviceOfLocation.id, urlObject=currentUrlObject) %}
     {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
         <h4>{{ providerArea }}</h4>
         {{ hook }}
