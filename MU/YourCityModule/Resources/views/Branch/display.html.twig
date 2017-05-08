@@ -46,6 +46,8 @@
             '@MUYourCityModule/Location/includeDisplayItemListManyOwn.html.twig',
             { items: branch.locations }
         ) }}
+    {% else %}
+        {{ __('No locations in this branch') }}
     {% endif %}
         
     {#{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: branch }) }#}
