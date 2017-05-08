@@ -25,7 +25,7 @@
     </div>
     
     <div class="col-md-7">
-        {% if location.state == 'closed' %}
+    {% if location.state == 'closed' %}
         {% set state = 'locationClosed' %}
     {% endif %}
     {% if location.state == 'open' %}
@@ -40,9 +40,12 @@
     {% if location.state == 'closedThisDay' %}
         {% set state = 'locationClosed' %}
     {% endif %}
-    <span class="status-icon {{ state }}">{% if state == 'locationUnclear' %}<i class="fa fa-circle-o-notch" aria-hidden="true"></i>{% endif %}{% if state == 'locationAgreement' %}<i class="fa fa-clock-o" aria-hidden="true"></i>{% endif %}{% if state == 'locationClosed' %}<i class="fa fa-circle-o" aria-hidden="true"></i>{% endif %}{% if state == 'locationOpen' %}<i class="fa fa-circle" aria-hidden="true"></i>{% endif %}</span>
+    {% if location.state == 'openEnd' %}
+        {% set state = 'locationOpenEnd' %}
+    {% endif %}
+    <span class="status-icon {{ state }}">{% if state == 'locationUnclear' %}<i class="fa fa-circle-o-notch" aria-hidden="true"></i>{% endif %}{% if state == 'locationAgreement' or state == 'locationOpenEnd' %}<i class="fa fa-clock-o" aria-hidden="true"></i>{% endif %}{% if state == 'locationClosed' %}<i class="fa fa-circle-o" aria-hidden="true"></i>{% endif %}{% if state == 'locationOpen' %}<i class="fa fa-circle" aria-hidden="true"></i>{% endif %}</span>
     
-        {% set templateTitle = location|muyourcitymodule_formattedTitle|default(__('Location')) %}
+        {% set templateTitle = location.name %}
         {{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.locations.filter') }}{% if routeArea == 'admin' %} <small>({{ location.workflowState|muyourcitymodule_objectState(false)|lower }})</small>{% endif %}
     </div>
     
@@ -148,9 +151,13 @@
             </div>
             <div class="col-md-8 col-sm-7 col-xs-6">
             {% if location.closedOnTuesday == false %}
-                {{ location.startOnTuesday|localizeddate('none', 'short') }} -   
+                {% if location.startOnTuesday is not empty %}
+                {{ location.startOnTuesday|localizeddate('none', 'short') }}  
                 {% if location.endOnTuesday is not empty %}
-                    {{ location.endOnTuesday|localizeddate('none', 'short') }}
+                    - {{ location.endOnTuesday|localizeddate('none', 'short') }}
+                {% else %}
+                    - {{ __('Open end') }}
+                {% endif %}
                 {% endif %}
                 {% if location.start2OnTuesday is not empty %}
                     <br />{{ location.start2OnTuesday|localizeddate('none', 'short') }} -
