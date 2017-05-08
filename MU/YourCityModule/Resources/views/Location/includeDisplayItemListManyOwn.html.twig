@@ -30,8 +30,11 @@
 {% endfor %}
 </ul>
 {% endif %#}
+{% set isBranch = app.request.query.getBoolean('branch', false) %}
 {% set isPart = app.request.query.getBoolean('part', false) %}
+{{ isPart }}
 {% if items|default and items|length > 0 %}
+    <h3>{{ __('Locations') }}</h3>
             {% for location in items %}
                 <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3 item-list">
                 {% if location.state == 'closed' %}
@@ -49,21 +52,37 @@
                 {% if location.state == 'closedThisDay' %}
                     {% set state = 'locationClosed' %}
                 {% endif %}
-                    <span class="status-icon {{ state }}">{% if state == 'locationUnclear' %}<i class="fa fa-circle-o-notch" aria-hidden="true"></i>{% endif %}{% if state == 'locationAgreement' %}<i class="fa fa-clock-o" aria-hidden="true"></i>{% endif %}{% if state == 'locationClosed' %}<i class="fa fa-circle-o" aria-hidden="true"></i>{% endif %}{% if state == 'locationOpen' %}<i class="fa fa-circle" aria-hidden="true"></i>{% endif %} <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': location.id, 'slug': location.slug }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ location.name|notifyFilters('muyourcitymodule.filterhook.locations') }}
+                {% if location.state == 'openEnd' %}
+                    {% set state = 'locationOpenEnd' %}
+                {% endif %}
+                    <span class="status-icon {{ state }}">{% if state == 'locationUnclear' %}<i class="fa fa-circle-o-notch" aria-hidden="true"></i>{% endif %}{% if state == 'locationAgreement' or state == 'locationOpenEnd' %}<i class="fa fa-clock-o" aria-hidden="true"></i>{% endif %}{% if state == 'locationClosed' %}<i class="fa fa-circle-o" aria-hidden="true"></i>{% endif %}{% if state == 'locationOpen' %}<i class="fa fa-circle" aria-hidden="true"></i>{% endif %} <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': location.id, 'slug': location.slug }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ location.name|notifyFilters('muyourcitymodule.filterhook.locations') }}
                     </a></span><br style="clear: both;" />
-                    {% if not isPart %}
+                    {% if location.slogan is not empty %}
+                        <span class="location-slogan-list">{{ location.slogan }}</span><br style="clear: both;" />
+                    {% endif %}
+                    {% if location.street is not empty %}
+                        {{ location.street }}
+                    {% endif %}
+                    {% if location.numberOfStreet is not empty %}
+                         {{ location.numberOfStreet }}<br style="clear: both;" />
+                    {% endif %}
+                    {% if location.showHours != 'none' %}
+                        {{ location.showHours }}
+                    {% endif %}
+                    {% if isPart == false %}
                     {% for part in location.parts %}
                         {% if loop.index == 1 %}
-                        <a href="{{ path('muyourcitymodule_part_' ~ routeArea ~ 'display', { 'id': part.id }) }}">{{ part.name }}</a> 
+                        {{ __('Part') }}: <a href="{{ path('muyourcitymodule_part_' ~ routeArea ~ 'display', { 'id': part.id }) }}">{{ part.name }}</a> 
                         {% endif %}
                     {% endfor %}<br />
                     {% endif %}
+                    {% if isBranch == false %}
                     {% for branch in location.branches %}
                         {% if loop.index == 1 %}
-                        <a href="{{ path('muyourcitymodule_branch_' ~ routeArea ~ 'display', { 'id': branch.id }) }}">{{ branch.name }}</a>
+                        {{ __('Branches') }}: <a href="{{ path('muyourcitymodule_branch_' ~ routeArea ~ 'display', { 'id': branch.id }) }}">{{ branch.name }}</a>
                         {% endif %}
                     {% endfor %}
-                    
+                    {% endif %}
                 </li>
             {% endfor %}
 {% endif %}
