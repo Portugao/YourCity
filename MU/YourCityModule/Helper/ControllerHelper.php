@@ -172,17 +172,19 @@ class ControllerHelper extends AbstractControllerHelper
     	
     	// we get actual time
     	$actualTime = date('H:i:s');
+    	// we set state
+    	$state = '';
     	// we check the first times
     	if ($startTime != '') {
     	    if ($startTime < $actualTime) {
-    	    	//die($startTime);
+
     	    	if ($endTime != '') {
-    	    		//die('end nicht null');
-    		    if ($endTime >= $actualTime || (($nextStartTime > $endTime || $nextStartTime != '') && $endTime < $actualTime)) {
-    		    	//die('end groesser aktual');
+ 
+    		    if ($endTime >= $actualTime || ($endTime < $actualTime && $nextStartTime != '' && $nextStartTime > $actualTime)) {
+
     			    $state = 'open';
     		    } else {
-    		    	//die('end kleiner aktual');
+
     		    	$state = 'closed';
     		    }
     	    } else {
@@ -203,22 +205,34 @@ class ControllerHelper extends AbstractControllerHelper
     			//die('start kleiner actual');
     			if ($end2Time != '') {
     				//die('end nicht null');
-    				if ($end2Time >= $actualTime || (($nextStartTime > $end2Time || $nextStartTime != '') && $end2Time < $actualTime)) {
+    				if ($end2Time >= $actualTime || ($end2Time < $actualTime && $nextStartTime != '' && $nextStartTime > $actualTime)) {
     					//die('end groesser aktual');
-    					$state = 'open';
+    					if ($state = '') {
+    					    $state = 'open';
+    					}
     				} else {
     					//die('end kleiner aktual');
-    					$state = 'closed';
+    					if ($state = '') {
+    					    $state = 'closed';
+    					}
     				}
     			} else {
-    				$state = 'openEnd';
+    				if ($state = '') {
+    				    $state = 'openEnd';
+    				}
     			}
     		} else {
-    			$state = 'closed';
+    		    if ($end2Time == '' && $state == '') {
+    			$state = 'openEnd';
+    		} else {
+    			if ($state == '') {
+    		$state = 'closed';
+    			}
+    		}
     		}
     	}
     	
-    	if ($state == 'open' or $state == 'openEnd') {
+    	if ($state == 'open' || $state == 'openEnd' || $state == 'closed') {
     		$hours = $startTime;
     		if ($endTime != '') {
     			$hours .= ' - ' . $endTime;
