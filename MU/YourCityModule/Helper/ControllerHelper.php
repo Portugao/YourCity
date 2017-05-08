@@ -14,156 +14,16 @@ namespace MU\YourCityModule\Helper;
 
 use MU\YourCityModule\Helper\Base\AbstractControllerHelper;
 
-use Zikula\Component\SortableColumns\SortableColumns;
+
 use Zikula\Core\RouteUrl;
-use Zikula\UsersModule\Entity\UserEntity;
+use DateUtil;
 
 
 /**
  * Helper implementation class for controller layer methods.
  */
 class ControllerHelper extends AbstractControllerHelper
-{
-    /**
-     * Processes the parameters for a view action.
-     * This includes handling pagination, quick navigation forms and other aspects.
-     *
-     * @param string          $objectType         Name of treated entity type
-     * @param SortableColumns $sortableColumns    Used SortableColumns instance
-     * @param array           $templateParameters Template data
-     * @param boolean         $supportsHooks      Whether hooks are supported or not
-     *
-     * @return array Enriched template parameters used for creating the response
-     */
-    public function processViewActionParameters($objectType, SortableColumns $sortableColumns, array $templateParameters = [], $supportsHooks = false)
-    {
-        $contextArgs = ['controller' => $objectType, 'action' => 'view'];
-        if (!in_array($objectType, $this->getObjectTypes('controllerAction', $contextArgs))) {
-            throw new Exception($this->__('Error! Invalid object type received.'));
-        }
-    
-        $request = $this->request;
-        $repository = $this->entityFactory->getRepository($objectType);
-    
-        // parameter for used sorting field
-        $sort = $request->query->get('sort', '');
-        if (empty($sort) || !in_array($sort, $repository->getAllowedSortingFields())) {
-            $sort = $repository->getDefaultSortingField();
-            $request->query->set('sort', $sort);
-            // set default sorting in route parameters (e.g. for the pager)
-            $routeParams = $request->attributes->get('_route_params');
-            $routeParams['sort'] = $sort;
-            $request->attributes->set('_route_params', $routeParams);
-        }
-    
-        $templateParameters['all'] = 'csv' == $request->getRequestFormat() ? 1 : $request->query->getInt('all', 0);
-        $templateParameters['own'] = $request->query->getInt('own', $this->variableApi->get('MUYourCityModule', 'showOnlyOwnEntries', 0));
-    
-        $resultsPerPage = 0;
-        if ($templateParameters['all'] != 1) {
-            // the number of items displayed on a page for pagination
-            $resultsPerPage = $request->query->getInt('num', 0);
-            if (in_array($resultsPerPage, [0, 10])) {
-                $resultsPerPage = $this->variableApi->get('MUYourCityModule', $objectType . 'EntriesPerPage', 10);
-            }
-        }
-        $templateParameters['num'] = $resultsPerPage;
-        $templateParameters['tpl'] = $request->query->getAlnum('tpl', '');
-    
-        $templateParameters = $this->addTemplateParameters($objectType, $templateParameters, 'controllerAction', $contextArgs);
-    
-        $quickNavForm = $this->formFactory->create('MU\YourCityModule\Form\Type\QuickNavigation\\' . ucfirst($objectType) . 'QuickNavType', $templateParameters);
-        if ($quickNavForm->handleRequest($request) && $quickNavForm->isSubmitted()) {
-            $quickNavData = $quickNavForm->getData();
-            foreach ($quickNavData as $fieldName => $fieldValue) {
-                if ($fieldName == 'routeArea') {
-                    continue;
-                }
-                if (in_array($fieldName, ['all', 'own', 'num'])) {
-                    $templateParameters[$fieldName] = $fieldValue;
-                } else {
-                    // set filter as query argument, fetched inside repository
-                    if ($fieldValue instanceof UserEntity) {
-                        $fieldValue = $fieldValue->getUid();
-                    }
-                    $request->query->set($fieldName, $fieldValue);
-                }
-            }
-        }
-    
-        $urlParameters = $templateParameters;
-        foreach ($urlParameters as $parameterName => $parameterValue) {
-            if (false !== stripos($parameterName, 'thumbRuntimeOptions')) {
-                unset($urlParameters[$parameterName]);
-            }
-        }
-    
-        $sort = $sortableColumns->getSortColumn()->getName();
-        $sortdir = $sortableColumns->getSortDirection();
-        $sortableColumns->setAdditionalUrlParameters($urlParameters);
-    
-        $where = '';
-        if ($templateParameters['all'] == 1) {
-            // retrieve item list without pagination
-            $entities = $repository->selectWhere($where, $sort . ' ' . $sortdir);
-        } else {
-            // the current offset which is used to calculate the pagination
-            $currentPage = $request->query->getInt('pos', 1);
-    
-            // retrieve item list with pagination
-            list($entities, $objectCount) = $repository->selectWherePaginated($where, $sort . ' ' . $sortdir, $currentPage, $resultsPerPage);
-    
-            $templateParameters['currentPage'] = $currentPage;
-            $templateParameters['pager'] = [
-                'amountOfItems' => $objectCount,
-                'itemsPerPage' => $resultsPerPage
-            ];
-        }
-        if ($objectType == 'location')  {
-        	$actualDay = $this->getActualDay();
-        	$locationEntities = array();
-        foreach ($entities as $entity) {
-        	
-        	if ($actualDay == 'Freitag') {
-        		if ($entity['agreement'] == 1) {
-        			$entity['state'] = 'agreement';
-        			$locationEntities[] = $entity;        			
-        		} else {
-        		if ($entity['closedOnTuesday'] == 1) {
-        			$entity['state'] = 'closed';
-        			$locationEntities[] = $entity;
-        		} else {
-        			$entity['state'] = 'open';
-        			$locationEntities[] = $entity;
-        		}
-        	}
-        	}
-        }
-        $templateParameters['items'] = $locationEntities;
-        } else {
-        	$templateParameters['items'] = $entities;
-        }
-        
-    
-        $templateParameters['sort'] = $sort;
-        $templateParameters['sortdir'] = $sortdir;
-        //$templateParameters['items'] = $entities;
-    
-    
-        if (true === $supportsHooks) {
-            // build RouteUrl instance for display hooks
-            $urlParameters['_locale'] = $request->getLocale();
-            $templateParameters['currentUrlObject'] = new RouteUrl('muyourcitymodule_' . $objectType . '_' . /*$templateParameters['routeArea'] . */'view', $urlParameters);
-        }
-    
-        $templateParameters['sort'] = $sortableColumns->generateSortableColumns();
-        $templateParameters['quickNavForm'] = $quickNavForm->createView();
-    
-        $templateParameters['canBeCreated'] = $this->modelHelper->canBeCreated($objectType);
-    
-        return $templateParameters;
-    }
-    
+{    
     /**
      * Processes the parameters for a display action.
      *
@@ -190,22 +50,63 @@ class ControllerHelper extends AbstractControllerHelper
     	
     	$entity = $templateParameters[$objectType];
     	
-    	if ($objectType == 'part' || $objectType == 'branch') {
-    		$actualDay = $this->getActualDay();
+    	$actualDay = $this->getActualDay();
+    	
+    	if ($objectType == 'location') {
+    		$location = $entity;
+    		$location['showHours'] = 'none';
+    		if ($location['closedForEver'] == 1) {
+    			$location['state'] = 'closedForEver';
+    			$location['showHours'] = $this->__('Closed today');
+    			//$locations[] = $location;
+    		} else {
+    			if ($location['agreement'] == 1) {
+    				$location['state'] = 'agreement';
+    				//$locations[] = $location;
+    			} else {
+    				if ($location['unclearTimes'] == 1) {
+    					$location['state'] = 'unclear';
+    					//$locations[] = $location;
+    				} else {
+    					if ($location['closedOn' . $actualDay] == 1) {
+    						$location['state'] = 'closedThisDay';
+    						//$locations[] = $location;
+    					} else {
+    						$location['state'] = $this->checkActualDay($actualDay, $location);
+    						$location['showHours'] = $this->checkActualDay($actualDay, $location, 2);
+    						//$locations[] = $location;
+    					}
+    				}
+    			}
+    		}    		
+    	}
+    	
+    	if ($objectType == 'part' || $objectType == 'branch' || $objectType == 'serviceOfLocation' || $objectType == 'specialOfLocation') {
+
     		$locations = array();
     		foreach ($entity['locations'] as $location) {
-    			 
-    			if ($actualDay == 'Donnerstag') {
+    			$location['showHours'] = 'none';
+    			if ($location['closedForEver'] == 1) {
+    				$location['state'] = 'closedForEver';
+    				$location['showHours'] = $this->__('Closed today');
+    				$locations[] = $location;    				
+    			} else {
     				if ($location['agreement'] == 1) {
     					$location['state'] = 'agreement';
     					$locations[] = $location;
     				} else {
-    					if ($location['closedOnWednesday'] == 1) {
-    						$location['state'] = 'closed';
+    					if ($location['unclearTimes'] == 1) {
+    						$location['state'] = 'unclear';
     						$locations[] = $location;
     					} else {
-    						$location['state'] = 'open';
-    						$locations[] = $location;
+    						if ($location['closedOn' . $actualDay] == 1) {
+    							$location['state'] = 'closedThisDay';
+    							$locations[] = $location;
+    						} else {
+    							$location['state'] = $this->checkActualDay($actualDay, $location);
+    							$location['showHours'] = $this->checkActualDay($actualDay, $location, 2);
+    							$locations[] = $location;
+    						}
     					}
     				}
     			}
@@ -217,15 +118,141 @@ class ControllerHelper extends AbstractControllerHelper
     		//$templateParameters[$objectType]['locations'] = array();
     		$templateParameters[$objectType]['locations'] = $locations;
     	} else {
-    		//$templateParameters['items'] = $entities;
+    		if ($objectType == 'location') {
+    			$templateParameters[$objectType] = $location;
+    		} else {
+    		//$templateParameters[$objectType] = $entities;
+    		}
     	}
     
     	return $this->addTemplateParameters($objectType, $templateParameters, 'controllerAction', $contextArgs);
     }
+    /**
+     * 
+     * @param string $actualDay
+     * @param array $location
+     * @param int $kind
+     * @return string
+     */
+    private function checkActualDay($actualDay, $location, $kind = 1) {
+    	$startTime = \DateUtil::formatDatetime($location['startOn' . $actualDay], 'timelong');
+    	$endTime = \DateUtil::formatDatetime($location['endOn' . $actualDay], 'timelong');
+    	$start2Time = \DateUtil::formatDatetime($location['start2On' . $actualDay], 'timelong');
+    	$end2Time = \DateUtil::formatDatetime($location['end2On' . $actualDay], 'timelong');
+    	
+    	
+		switch ($actualDay) {
+			case 'Sunday' :
+				$nextDay = 'Monday';
+				break;
+			case 'Monday' :
+				$nextDay = 'Tuesday';
+				break;
+			case 'Tuesday' :
+				$nextDay = 'Wednesday';
+				break;
+			case 'Wednesday' :
+				$nextDay = 'Thursday';
+				break;
+			case 'Thursday' :
+				$nextDay = 'Friday';
+				break;
+			case 'Friday' :
+				$nextDay = 'Saturday';
+				break;
+			case 'Saturday' :
+				$nextDay = 'Sunday';
+				break;				
+		}
+		
+		$nextStartTime = \DateUtil::formatDatetime($location['startOn' . $nextDay], 'timelong');
+		$nextEndTime = \DateUtil::formatDatetime($location['endOn' . $nextDay], 'timelong');
+		$nextStart2Time = \DateUtil::formatDatetime($location['start2On' . $nextDay], 'timelong');
+		$nextEnd2Time = \DateUtil::formatDatetime($location['end2On' . $nextDay], 'timelong');
+    	
+    	// we get actual time
+    	$actualTime = date('H:i:s');
+    	// we check the first times
+    	if ($startTime != '') {
+    	    if ($startTime < $actualTime) {
+    	    	//die($startTime);
+    	    	if ($endTime != '') {
+    	    		//die('end nicht null');
+    		    if ($endTime >= $actualTime || (($nextStartTime > $endTime || $nextStartTime != '') && $endTime < $actualTime)) {
+    		    	//die('end groesser aktual');
+    			    $state = 'open';
+    		    } else {
+    		    	//die('end kleiner aktual');
+    		    	$state = 'closed';
+    		    }
+    	    } else {
+    		    $state = 'openEnd';
+    	    }
+    	} else {
+    		if ($endTime == '') {
+    			$state = 'openEnd';
+    		} else {
+    		$state = 'closed';
+    		}
+    	}
+    	}
+
+    	// we check the second times
+    	if ($start2Time != '') {
+    		if ($start2Time < $actualTime) {
+    			//die('start kleiner actual');
+    			if ($end2Time != '') {
+    				//die('end nicht null');
+    				if ($end2Time >= $actualTime || (($nextStartTime > $end2Time || $nextStartTime != '') && $end2Time < $actualTime)) {
+    					//die('end groesser aktual');
+    					$state = 'open';
+    				} else {
+    					//die('end kleiner aktual');
+    					$state = 'closed';
+    				}
+    			} else {
+    				$state = 'openEnd';
+    			}
+    		} else {
+    			$state = 'closed';
+    		}
+    	}
+    	
+    	if ($state == 'open' or $state == 'openEnd') {
+    		$hours = $startTime;
+    		if ($endTime != '') {
+    			$hours .= ' - ' . $endTime;
+    		} else {
+    			if ($start2Time != '') {
+    			$hours .= ' - ' . $this->__('Open end');
+    			}
+    		}
+    		if ($start2Time != '') {
+    			$this->__(' and ') . $start2Time;
+    			
+    		    if ($end2Time != '') {
+    			    $hours .= ' - ' . $end2Time;
+    		    } else {
+    			    $hours .= ' - ' . $this->__('Open End');
+    		    }    			
+    		}
+
+    	} else {
+    		$hours = 'none';
+    	}
+    	if ($kind == 1) {
+    	    return $state;
+    	} else {
+    		return $hours;
+    	}
+    }
     
+    /**
+     * 
+     */
     private function getActualDay()
     {
-    	$wochentage = array('Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag');
+    	$wochentage = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Tuesday', 'Friday', 'Saturday');
     	
     	$tag = date ( "w" );
     	$year = date ( "Y" );
