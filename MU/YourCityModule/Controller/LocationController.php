@@ -205,7 +205,7 @@ class LocationController extends AbstractLocationController
      * @inheritDoc
      *
      * @Route("/admin/location/{slug}.{_format}",
-     *        requirements = {"slug" = "[^/.]+", "_format" = "html|xml|json|kml"},
+     *        requirements = {"slug" = "[^/.]+", "_format" = "html|xml|json|kml|ics"},
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )
@@ -228,7 +228,7 @@ class LocationController extends AbstractLocationController
      * @inheritDoc
      *
      * @Route("/location/{slug}.{_format}",
-     *        requirements = {"slug" = "[^/.]+", "_format" = "html|xml|json|kml"},
+     *        requirements = {"slug" = "[^/.]+", "_format" = "html|xml|json|kml|ics"},
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )

@@ -203,9 +203,9 @@ abstract class AbstractMenuOfLocationType extends AbstractType
             'label' => $this->__('Additional remarks') . ':',
             'label_attr' => [
                 'class' => 'tooltips',
-                'title' => $this->__('here you can enter additional informations.')
+                'title' => $this->__('Here you can enter additional informations.')
             ],
-            'help' => $this->__('here you can enter additional informations.'),
+            'help' => $this->__('Here you can enter additional informations.'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 2000,
@@ -258,39 +258,6 @@ abstract class AbstractMenuOfLocationType extends AbstractType
             'scale' => 0
         ]);
         
-        $builder->add('effectivFrom', DateTimeType::class, [
-            'label' => $this->__('Effectiv from') . ':',
-            'label_attr' => [
-                'class' => 'tooltips',
-                'title' => $this->__('Here you can create complete menus for your location and special mnus like the menu of the day and more.')
-            ],
-            'help' => $this->__('Here you can create complete menus for your location and special mnus like the menu of the day and more.'),
-            'empty_data' => '',
-            'attr' => [
-                'class' => '',
-                'title' => $this->__('Enter the effectiv from of the menu of location')
-            ],
-            'required' => false,
-            'empty_data' => null,
-            'with_seconds' => true,
-            'date_widget' => 'single_text',
-            'time_widget' => 'single_text'
-        ]);
-        
-        $builder->add('effectivUntil', DateTimeType::class, [
-            'label' => $this->__('Effectiv until') . ':',
-            'empty_data' => '',
-            'attr' => [
-                'class' => '',
-                'title' => $this->__('Enter the effectiv until of the menu of location')
-            ],
-            'required' => false,
-            'empty_data' => null,
-            'with_seconds' => true,
-            'date_widget' => 'single_text',
-            'time_widget' => 'single_text'
-        ]);
-        
         $listEntries = $this->listHelper->getEntries('menuOfLocation', 'kindOfMenu');
         $choices = [];
         $choiceAttributes = [];
@@ -311,6 +278,67 @@ abstract class AbstractMenuOfLocationType extends AbstractType
             'choice_attr' => $choiceAttributes,
             'multiple' => false,
             'expanded' => false
+        ]);
+        
+        $builder->add('effectivFrom', DateTimeType::class, [
+            'label' => $this->__('Effectiv from') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Here you can create complete menus for your location and special mnus like the menu of the day and more.')
+            ],
+            'help' => $this->__('Here you can create complete menus for your location and special mnus like the menu of the day and more.'),
+            'empty_data' => '',
+            'attr' => [
+                'class' => ' validate-daterange-menuoflocation',
+                'title' => $this->__('Enter the effectiv from of the menu of location')
+            ],
+            'required' => false,
+            'empty_data' => null,
+            'with_seconds' => true,
+            'date_widget' => 'single_text',
+            'time_widget' => 'single_text'
+        ]);
+        
+        $builder->add('effectivUntil', DateTimeType::class, [
+            'label' => $this->__('Effectiv until') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'class' => ' validate-daterange-menuoflocation',
+                'title' => $this->__('Enter the effectiv until of the menu of location')
+            ],
+            'required' => false,
+            'empty_data' => null,
+            'with_seconds' => true,
+            'date_widget' => 'single_text',
+            'time_widget' => 'single_text'
+        ]);
+        
+        $builder->add('inViewFrom', DateTimeType::class, [
+            'label' => $this->__('In view from') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'class' => ' validate-daterange-menuoflocation',
+                'title' => $this->__('Enter the in view from of the menu of location')
+            ],
+            'required' => false,
+            'empty_data' => null,
+            'with_seconds' => true,
+            'date_widget' => 'single_text',
+            'time_widget' => 'single_text'
+        ]);
+        
+        $builder->add('inViewUntil', DateTimeType::class, [
+            'label' => $this->__('In view until') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'class' => ' validate-daterange-menuoflocation',
+                'title' => $this->__('Enter the in view until of the menu of location')
+            ],
+            'required' => false,
+            'empty_data' => null,
+            'with_seconds' => true,
+            'date_widget' => 'single_text',
+            'time_widget' => 'single_text'
         ]);
     }
 
@@ -458,6 +486,7 @@ abstract class AbstractMenuOfLocationType extends AbstractType
                 },
                 'error_mapping' => [
                     'imageOfMenu' => 'imageOfMenu.imageOfMenu',
+                    'isInViewFromBeforeInViewUntil' => 'inViewFrom',
                 ],
                 'mode' => 'create',
                 'actions' => [],

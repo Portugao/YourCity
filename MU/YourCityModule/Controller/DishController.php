@@ -67,7 +67,7 @@ class DishController extends AbstractDishController
      * @inheritDoc
      *
      * @Route("/admin/dish/{id}.{_format}",
-     *        requirements = {"id" = "\d+", "_format" = "html|xml|json|kml"},
+     *        requirements = {"id" = "\d+", "_format" = "html|xml|json|kml|ics"},
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )
@@ -90,7 +90,7 @@ class DishController extends AbstractDishController
      * @inheritDoc
      *
      * @Route("/dish/{id}.{_format}",
-     *        requirements = {"id" = "\d+", "_format" = "html|xml|json|kml"},
+     *        requirements = {"id" = "\d+", "_format" = "html|xml|json|kml|ics"},
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )

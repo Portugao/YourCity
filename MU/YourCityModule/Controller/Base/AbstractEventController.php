@@ -147,6 +147,7 @@ abstract class AbstractEventController extends AbstractController
             new Column('numberOfStreet'),
             new Column('zipCode'),
             new Column('city'),
+            new Column('inViewFrom'),
             new Column('inViewUntil'),
             new Column('location'),
             new Column('latitude'),
@@ -227,6 +228,16 @@ abstract class AbstractEventController extends AbstractController
         
         // fetch and return the appropriate template
         $response = $this->get('mu_yourcity_module.view_helper')->processTemplate($objectType, 'display', $templateParameters);
+        
+        if ('ics' == $request->getRequestFormat()) {
+            $fileName = $objectType . '_' .
+                (property_exists($event, 'slug')
+                    ? $event['slug']
+                    : $this->get('mu_yourcity_module.entity_display_helper')->getFormattedTitle($event)
+                ) . '.ics'
+            ;
+            $response->headers->set('Content-Disposition', 'attachment; filename=' . $fileName);
+        }
         
         return $response;
     }

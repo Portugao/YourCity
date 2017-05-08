@@ -186,11 +186,22 @@ abstract class AbstractEventEntity extends EntityAccess implements Translatable
     protected $end2Date;
     
     /**
-     * Here you can enter the date and time until this event will appear in the overview of events.
-     Then it will get put into the archive. You only are able to reuse it as model.
+     * Here you can enter the date and time from this event will appear in the overview of events.
+     Then it will get put into the archive. Then you only are able to reuse it as model.
      If you do not enter a value, this event will be shown further after the end.
      * @ORM\Column(type="datetime", nullable=true)
      * @Assert\DateTime()
+     * @var DateTime $inViewFrom
+     */
+    protected $inViewFrom;
+    
+    /**
+     * Here you can enter the date and time until this event will appear in the overview of events.
+     Then it will get put into the archive. Then you only are able to reuse it as model.
+     If you do not enter a value, this event will be shown further after the end.
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\DateTime()
+     * @Assert\Expression("!value or value > this.getInViewFrom()")
      * @var DateTime $inViewUntil
      */
     protected $inViewUntil;
@@ -657,6 +668,36 @@ abstract class AbstractEventEntity extends EntityAccess implements Translatable
                 $this->end2Date = null;
             } else {
                 $this->end2Date = new \DateTime($end2Date);
+            }
+        }
+    }
+    
+    /**
+     * Returns the in view from.
+     *
+     * @return DateTime
+     */
+    public function getInViewFrom()
+    {
+        return $this->inViewFrom;
+    }
+    
+    /**
+     * Sets the in view from.
+     *
+     * @param DateTime $inViewFrom
+     *
+     * @return void
+     */
+    public function setInViewFrom($inViewFrom)
+    {
+        if ($this->inViewFrom !== $inViewFrom) {
+            if (is_object($inViewFrom) && $inViewFrom instanceOf \DateTime) {
+                $this->inViewFrom = $inViewFrom;
+            } elseif (null === $inViewFrom || empty($inViewFrom)) {
+                $this->inViewFrom = null;
+            } else {
+                $this->inViewFrom = new \DateTime($inViewFrom);
             }
         }
     }

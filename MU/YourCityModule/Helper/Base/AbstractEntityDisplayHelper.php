@@ -516,7 +516,7 @@ abstract class AbstractEntityDisplayHelper
             return 'createdDate';
         }
         if ($objectType == 'menuOfLocation') {
-            return 'createdDate';
+            return 'inViewFrom';
         }
         if ($objectType == 'partOfMenu') {
             return 'createdDate';
@@ -525,7 +525,7 @@ abstract class AbstractEntityDisplayHelper
             return 'createdDate';
         }
         if ($objectType == 'event') {
-            return 'createdDate';
+            return 'inViewFrom';
         }
         if ($objectType == 'product') {
             return 'createdDate';

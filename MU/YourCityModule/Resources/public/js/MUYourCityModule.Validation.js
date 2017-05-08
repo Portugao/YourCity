@@ -81,6 +81,36 @@ function mUYourCityValidateUploadExtension(val, elem)
     return allowedExtensions.test(val);
 }
 
+function mUYourCityValidateDateRangeMenuOfLocation(val)
+{
+    var cmpVal, cmpVal2, result;
+    cmpVal = mUYourCityReadDate(jQuery("[id$='inViewFrom']").val(), true);
+    cmpVal2 = mUYourCityReadDate(jQuery("[id$='inViewUntil']").val(), true);
+
+    if (typeof cmpVal == 'undefined' && typeof cmpVal2 == 'undefined') {
+        result = true;
+    } else {
+        result = (cmpVal <= cmpVal2);
+    }
+
+    return result;
+}
+
+function mUYourCityValidateDateRangeEvent(val)
+{
+    var cmpVal, cmpVal2, result;
+    cmpVal = mUYourCityReadDate(jQuery("[id$='inViewFrom']").val(), true);
+    cmpVal2 = mUYourCityReadDate(jQuery("[id$='inViewUntil']").val(), true);
+
+    if (typeof cmpVal == 'undefined' && typeof cmpVal2 == 'undefined') {
+        result = true;
+    } else {
+        result = (cmpVal <= cmpVal2);
+    }
+
+    return result;
+}
+
 /**
  * Runs special validation rules.
  */
@@ -98,6 +128,44 @@ function mUYourCityExecuteCustomValidationConstraints(objectType, currentEntityI
             document.getElementById(jQuery(this).attr('id')).setCustomValidity(Translator.__('Please select a valid file extension.'));
         } else {
             document.getElementById(jQuery(this).attr('id')).setCustomValidity('');
+        }
+    });
+    jQuery('.validate-daterange-menuoflocation').each( function() {
+        if (typeof jQuery(this).attr('id') != 'undefined') {
+            if (jQuery(this).prop('tagName') == 'DIV') {
+                if (!mUYourCityValidateDateRangeMenuOfLocation()) {
+                    document.getElementById(jQuery(this).attr('id') + '_date').setCustomValidity(Translator.__('The start must be before the end.'));
+                    document.getElementById(jQuery(this).attr('id') + '_time').setCustomValidity(Translator.__('The start must be before the end.'));
+                } else {
+                    document.getElementById(jQuery(this).attr('id') + '_date').setCustomValidity('');
+                    document.getElementById(jQuery(this).attr('id') + '_time').setCustomValidity('');
+                }
+        	} else {
+                if (!mUYourCityValidateDateRangeMenuOfLocation()) {
+                    document.getElementById(jQuery(this).attr('id')).setCustomValidity(Translator.__('The start must be before the end.'));
+                } else {
+                    document.getElementById(jQuery(this).attr('id')).setCustomValidity('');
+                }
+    		}
+        }
+    });
+    jQuery('.validate-daterange-event').each( function() {
+        if (typeof jQuery(this).attr('id') != 'undefined') {
+            if (jQuery(this).prop('tagName') == 'DIV') {
+                if (!mUYourCityValidateDateRangeEvent()) {
+                    document.getElementById(jQuery(this).attr('id') + '_date').setCustomValidity(Translator.__('The start must be before the end.'));
+                    document.getElementById(jQuery(this).attr('id') + '_time').setCustomValidity(Translator.__('The start must be before the end.'));
+                } else {
+                    document.getElementById(jQuery(this).attr('id') + '_date').setCustomValidity('');
+                    document.getElementById(jQuery(this).attr('id') + '_time').setCustomValidity('');
+                }
+        	} else {
+                if (!mUYourCityValidateDateRangeEvent()) {
+                    document.getElementById(jQuery(this).attr('id')).setCustomValidity(Translator.__('The start must be before the end.'));
+                } else {
+                    document.getElementById(jQuery(this).attr('id')).setCustomValidity('');
+                }
+    		}
         }
     });
 }

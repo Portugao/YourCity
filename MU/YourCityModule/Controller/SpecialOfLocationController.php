@@ -115,7 +115,7 @@ class SpecialOfLocationController extends AbstractSpecialOfLocationController
      * @inheritDoc
      *
      * @Route("/admin/specialOfLocation/{id}.{_format}",
-     *        requirements = {"id" = "\d+", "_format" = "html|xml|json|kml"},
+     *        requirements = {"id" = "\d+", "_format" = "html|xml|json|kml|ics"},
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )
@@ -138,7 +138,7 @@ class SpecialOfLocationController extends AbstractSpecialOfLocationController
      * @inheritDoc
      *
      * @Route("/specialOfLocation/{id}.{_format}",
-     *        requirements = {"id" = "\d+", "_format" = "html|xml|json|kml"},
+     *        requirements = {"id" = "\d+", "_format" = "html|xml|json|kml|ics"},
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )

@@ -115,7 +115,7 @@ class OfferController extends AbstractOfferController
      * @inheritDoc
      *
      * @Route("/admin/offer/{id}.{_format}",
-     *        requirements = {"id" = "\d+", "_format" = "html|xml|json|kml"},
+     *        requirements = {"id" = "\d+", "_format" = "html|xml|json|kml|ics"},
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )
@@ -138,7 +138,7 @@ class OfferController extends AbstractOfferController
      * @inheritDoc
      *
      * @Route("/offer/{id}.{_format}",
-     *        requirements = {"id" = "\d+", "_format" = "html|xml|json|kml"},
+     *        requirements = {"id" = "\d+", "_format" = "html|xml|json|kml|ics"},
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )

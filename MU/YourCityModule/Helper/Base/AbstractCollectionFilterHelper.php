@@ -1428,8 +1428,12 @@ abstract class AbstractCollectionFilterHelper
             $qb = $this->addCreatorFilter($qb);
         }
         
-        $endDate = $this->request->query->get('effectivUntil', date('Y-m-d H:i:s'));
-        $qb->andWhere('(tbl.effectivUntil >= :endDate OR tbl.effectivUntil IS NULL)')
+        $startDate = $this->request->query->get('inViewFrom', date('Y-m-d H:i:s'));
+        $qb->andWhere('(tbl.inViewFrom <= :startDate OR tbl.inViewFrom IS NULL)')
+           ->setParameter('startDate', $startDate);
+        
+        $endDate = $this->request->query->get('inViewUntil', date('Y-m-d H:i:s'));
+        $qb->andWhere('(tbl.inViewUntil >= :endDate OR tbl.inViewUntil IS NULL)')
            ->setParameter('endDate', $endDate);
     
         return $qb;
@@ -1513,6 +1517,10 @@ abstract class AbstractCollectionFilterHelper
         if ($showOnlyOwnEntries) {
             $qb = $this->addCreatorFilter($qb);
         }
+        
+        $startDate = $this->request->query->get('inViewFrom', date('Y-m-d H:i:s'));
+        $qb->andWhere('(tbl.inViewFrom <= :startDate OR tbl.inViewFrom IS NULL)')
+           ->setParameter('startDate', $startDate);
         
         $endDate = $this->request->query->get('inViewUntil', date('Y-m-d H:i:s'));
         $qb->andWhere('(tbl.inViewUntil >= :endDate OR tbl.inViewUntil IS NULL)')
@@ -1819,14 +1827,18 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchImageOfMenu'] = $fragment;
             $filters[] = 'tbl.positionOfMenu = :searchPositionOfMenu';
             $parameters['searchPositionOfMenu'] = $fragment;
-            $filters[] = 'tbl.effectivFrom = :searchEffectivFrom';
-            $parameters['searchEffectivFrom'] = $fragment;
-            $filters[] = 'tbl.effectivUntil = :searchEffectivUntil';
-            $parameters['searchEffectivUntil'] = $fragment;
             $filters[] = 'tbl.kindOfMenu = :searchKindOfMenu';
             $parameters['searchKindOfMenu'] = $fragment;
             $filters[] = 'tbl.additionalRemarks LIKE :searchAdditionalRemarks';
             $parameters['searchAdditionalRemarks'] = '%' . $fragment . '%';
+            $filters[] = 'tbl.effectivFrom = :searchEffectivFrom';
+            $parameters['searchEffectivFrom'] = $fragment;
+            $filters[] = 'tbl.effectivUntil = :searchEffectivUntil';
+            $parameters['searchEffectivUntil'] = $fragment;
+            $filters[] = 'tbl.inViewFrom = :searchInViewFrom';
+            $parameters['searchInViewFrom'] = $fragment;
+            $filters[] = 'tbl.inViewUntil = :searchInViewUntil';
+            $parameters['searchInViewUntil'] = $fragment;
         }
         if ($objectType == 'partOfMenu') {
             $filters[] = 'tbl.name LIKE :searchName';
@@ -1879,6 +1891,8 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchStart2Date'] = $fragment;
             $filters[] = 'tbl.end2Date = :searchEnd2Date';
             $parameters['searchEnd2Date'] = $fragment;
+            $filters[] = 'tbl.inViewFrom = :searchInViewFrom';
+            $parameters['searchInViewFrom'] = $fragment;
             $filters[] = 'tbl.inViewUntil = :searchInViewUntil';
             $parameters['searchInViewUntil'] = $fragment;
         }

@@ -115,7 +115,7 @@ class MenuOfLocationController extends AbstractMenuOfLocationController
      * @inheritDoc
      *
      * @Route("/admin/menuOfLocation/{id}.{_format}",
-     *        requirements = {"id" = "\d+", "_format" = "html|xml|json|kml"},
+     *        requirements = {"id" = "\d+", "_format" = "html|xml|json|kml|ics"},
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )
@@ -138,7 +138,7 @@ class MenuOfLocationController extends AbstractMenuOfLocationController
      * @inheritDoc
      *
      * @Route("/menuOfLocation/{id}.{_format}",
-     *        requirements = {"id" = "\d+", "_format" = "html|xml|json|kml"},
+     *        requirements = {"id" = "\d+", "_format" = "html|xml|json|kml|ics"},
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )

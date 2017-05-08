@@ -23,6 +23,7 @@ use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\Core\Doctrine\EntityAccess;
 use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
+use Zikula\GroupsModule\Constant as GroupsConstant;
 use Zikula\GroupsModule\Entity\RepositoryInterface\GroupRepositoryInterface;
 use Zikula\MailerModule\Api\ApiInterface\MailerApiInterface;
 use Zikula\UsersModule\Constant as UsersConstant;
@@ -229,9 +230,9 @@ abstract class AbstractNotificationHelper
             ];
             $modVarSuffix = $modVarSuffixes[$this->entity['_objectType']];
     
-            $moderatorGroupId = $this->variableApi->get('MUYourCityModule', 'moderationGroupFor' . $modVarSuffix, 2);
+            $moderatorGroupId = $this->variableApi->get('MUYourCityModule', 'moderationGroupFor' . $modVarSuffix, GroupsConstant::GROUP_ID_ADMIN);
             if ($this->recipientType == 'superModerator') {
-                $moderatorGroupId = $this->variableApi->get('MUYourCityModule', 'superModerationGroupFor' . $modVarSuffix, 2);
+                $moderatorGroupId = $this->variableApi->get('MUYourCityModule', 'superModerationGroupFor' . $modVarSuffix, GroupsConstant::GROUP_ID_ADMIN);
             }
     
             $moderatorGroup = $this->groupRepository->find($moderatorGroupId);
@@ -319,12 +320,10 @@ abstract class AbstractNotificationHelper
                 continue;
             }
     
-            $templateParameters = [
+            $body = $this->templating->render('@MUYourCityModule/' . $template, [
                 'recipient' => $recipient,
                 'mailData' => $mailData
-            ];
-    
-            $body = $this->templating->render('@MUYourCityModule/' . $template, $templateParameters);
+            ]);
             $altBody = '';
             $html = true;
     

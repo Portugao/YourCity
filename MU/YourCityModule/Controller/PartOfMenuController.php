@@ -67,7 +67,7 @@ class PartOfMenuController extends AbstractPartOfMenuController
      * @inheritDoc
      *
      * @Route("/admin/partOfMenu/{id}.{_format}",
-     *        requirements = {"id" = "\d+", "_format" = "html|xml|json|kml"},
+     *        requirements = {"id" = "\d+", "_format" = "html|xml|json|kml|ics"},
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )
@@ -90,7 +90,7 @@ class PartOfMenuController extends AbstractPartOfMenuController
      * @inheritDoc
      *
      * @Route("/partOfMenu/{id}.{_format}",
-     *        requirements = {"id" = "\d+", "_format" = "html|xml|json|kml"},
+     *        requirements = {"id" = "\d+", "_format" = "html|xml|json|kml|ics"},
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )

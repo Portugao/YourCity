@@ -182,10 +182,10 @@ abstract class AbstractOfferType extends AbstractType
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Enter a description of this offer.
-                You can also give informations about the price if you do not wint to use the special field for it.')
+                You can also give informations about the price if you do not want to use the special field for it.')
             ],
             'help' => $this->__('Enter a description of this offer.
-            You can also give informations about the price if you do not wint to use the special field for it.'),
+            You can also give informations about the price if you do not want to use the special field for it.'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 4000,

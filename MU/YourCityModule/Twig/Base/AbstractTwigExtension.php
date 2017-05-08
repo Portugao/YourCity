@@ -12,6 +12,8 @@
 
 namespace MU\YourCityModule\Twig\Base;
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Twig_Extension;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
@@ -27,6 +29,11 @@ use MU\YourCityModule\Helper\WorkflowHelper;
 abstract class AbstractTwigExtension extends Twig_Extension
 {
     use TranslatorTrait;
+    
+    /**
+     * @var Request
+     */
+    protected $request;
     
     /**
      * @var VariableApiInterface
@@ -57,6 +64,7 @@ abstract class AbstractTwigExtension extends Twig_Extension
      * TwigExtension constructor.
      *
      * @param TranslatorInterface $translator     Translator service instance
+     * @param RequestStack        $requestStack   RequestStack service instance
      * @param VariableApiInterface $variableApi    VariableApi service instance
      * @param UserRepositoryInterface $userRepository UserRepository service instance
      * @param EntityDisplayHelper $entityDisplayHelper EntityDisplayHelper service instance
@@ -65,6 +73,7 @@ abstract class AbstractTwigExtension extends Twig_Extension
      */
     public function __construct(
         TranslatorInterface $translator,
+        RequestStack $requestStack,
         VariableApiInterface $variableApi,
         UserRepositoryInterface $userRepository,
         EntityDisplayHelper $entityDisplayHelper,
@@ -72,6 +81,7 @@ abstract class AbstractTwigExtension extends Twig_Extension
         ListEntriesHelper $listHelper)
     {
         $this->setTranslator($translator);
+        $this->request = $requestStack->getCurrentRequest();
         $this->variableApi = $variableApi;
         $this->userRepository = $userRepository;
         $this->entityDisplayHelper = $entityDisplayHelper;
@@ -115,6 +125,7 @@ abstract class AbstractTwigExtension extends Twig_Extension
             new \Twig_SimpleFilter('muyourcitymodule_fileSize', [$this, 'getFileSize'], ['is_safe' => ['html']]),
             new \Twig_SimpleFilter('muyourcitymodule_listEntry', [$this, 'getListEntry']),
             new \Twig_SimpleFilter('muyourcitymodule_geoData', [$this, 'formatGeoData']),
+            new \Twig_SimpleFilter('muyourcitymodule_icalText', [$this, 'formatIcalText']),
             new \Twig_SimpleFilter('muyourcitymodule_formattedTitle', [$this, 'getFormattedEntityTitle']),
             new \Twig_SimpleFilter('muyourcitymodule_objectState', [$this, 'getObjectState'], ['is_safe' => ['html']])
         ];
@@ -266,6 +277,25 @@ abstract class AbstractTwigExtension extends Twig_Extension
     public function getModerationObjects()
     {
         return $this->workflowHelper->collectAmountOfModerationItems();
+    }
+    
+    
+    /**
+     * The muyourcitymodule_icalText filter outputs a given text for the ics output format.
+     * Example:
+     *     {{ 'someString'|muyourcitymodule_icalText }}
+     *
+     * @param string $string The given output string
+     *
+     * @return string Processed string for ics output
+     */
+    public function formatIcalText($string)
+    {
+        $result = preg_replace('/<a href="(.*)">.*<\/a>/i', "$1", $string);
+        $result = str_replace('€', 'Euro', $result);
+        $result = ereg_replace("(\r\n|\n|\r)", '=0D=0A', $result);
+    
+        return ';LANGUAGE=' . $this->request->getLocale() . ';ENCODING=QUOTED-PRINTABLE:' . $result . "\r\n";
     }
     
     

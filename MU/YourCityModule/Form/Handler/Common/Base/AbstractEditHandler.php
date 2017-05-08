@@ -27,10 +27,12 @@ use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\Core\Doctrine\EntityAccess;
 use Zikula\Core\RouteUrl;
 use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
+use Zikula\GroupsModule\Constant as GroupsConstant;
 use Zikula\GroupsModule\Entity\Repository\GroupApplicationRepository;
 use Zikula\PageLockModule\Api\ApiInterface\LockingApiInterface;
 use Zikula\PermissionsModule\Api\ApiInterface\PermissionApiInterface;
 use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
+use Zikula\UsersModule\Constant as UsersConstant;
 use MU\YourCityModule\Entity\Factory\EntityFactory;
 use MU\YourCityModule\Helper\FeatureActivationHelper;
 use MU\YourCityModule\Helper\ControllerHelper;
@@ -90,11 +92,16 @@ abstract class AbstractEditHandler
     protected $idField = null;
 
     /**
-     * Identifier of treated entity.
+     * Identifier or slug of treated entity.
      *
-     * @var integer
+     * @var integer|string
      */
     protected $idValue = 0;
+
+    /**
+     * List of object types with unique slugs.
+     */
+    protected $entitiesWithUniqueSlugs = ['location'];
 
     /**
      * Code defining the redirect goal after command handling.
@@ -362,22 +369,31 @@ abstract class AbstractEditHandler
     
         $this->permissionComponent = 'MUYourCityModule:' . $this->objectTypeCapital . ':';
     
-        $this->idField = $this->entityFactory->getIdField($this->objectType);
+        $this->idField = in_array($this->objectType, $this->entitiesWithUniqueSlugs) ? 'slug' : $this->entityFactory->getIdField($this->objectType);
     
         // retrieve identifier of the object we wish to edit
         $routeParams = $this->request->get('_route_params', []);
-        if (array_key_exists($this->idField, $routeParams)) {
-            $this->idValue = (int) !empty($routeParams[$this->idField]) ? $routeParams[$this->idField] : 0;
-        }
-        if (0 === $this->idValue) {
-            $this->idValue = $this->request->query->getInt($this->idField, 0);
-        }
-        if (0 === $this->idValue && $this->idField != 'id') {
-            $this->idValue = $this->request->query->getInt('id', 0);
+        if ($this->idField == 'slug') {
+            if (array_key_exists($this->idField, $routeParams)) {
+                $this->idValue = !empty($routeParams[$this->idField]) ? $routeParams[$this->idField] : '';
+            }
+            if (empty($this->idValue)) {
+                $this->idValue = $this->request->query->get($this->idField, '');
+            }
+        } else {
+            if (array_key_exists($this->idField, $routeParams)) {
+                $this->idValue = (int) !empty($routeParams[$this->idField]) ? $routeParams[$this->idField] : 0;
+            }
+            if (empty($this->idValue)) {
+                $this->idValue = $this->request->query->getInt($this->idField, 0);
+            }
+            if (0 === $this->idValue && $this->idField != 'id') {
+                $this->idValue = $this->request->query->getInt('id', 0);
+            }
         }
     
         $entity = null;
-        $this->templateParameters['mode'] = $this->idValue > 0 ? 'edit' : 'create';
+        $this->templateParameters['mode'] = !empty($this->idValue) ? 'edit' : 'create';
     
         if ($this->templateParameters['mode'] == 'edit') {
             if (!$this->permissionApi->hasPermission($this->permissionComponent, $this->idValue . '::', ACCESS_EDIT)) {
@@ -503,6 +519,10 @@ abstract class AbstractEditHandler
      */
     protected function initEntityForEditing()
     {
+        if (in_array($this->objectType, $this->entitiesWithUniqueSlugs)) {
+            return $this->entityFactory->getRepository($this->objectType)->selectBySlug($this->idValue);
+        }
+    
         return $this->entityFactory->getRepository($this->objectType)->selectById($this->idValue);
     }
     
@@ -513,7 +533,7 @@ abstract class AbstractEditHandler
      */
     protected function initEntityForCreation()
     {
-        $templateId = $this->request->query->get('astemplate', '');
+        $templateId = $this->request->query->getInt('astemplate', '');
         $entity = null;
     
         if (!empty($templateId)) {
@@ -801,21 +821,20 @@ abstract class AbstractEditHandler
     protected function prepareWorkflowAdditions($enterprise = false)
     {
         $roles = [];
-        $isLoggedIn = $this->currentUserApi->isLoggedIn();
-        $currentUserId = $isLoggedIn ? $this->currentUserApi->get('uid') : 1;
+        $currentUserId = $this->currentUserApi->isLoggedIn() ? $this->currentUserApi->get('uid') : UsersConstant::USER_ID_ANONYMOUS;
         $roles['is_creator'] = $this->templateParameters['mode'] == 'create'
             || (method_exists($this->entityRef, 'getCreatedBy') && $this->entityRef->getCreatedBy()->getUid() == $currentUserId);
     
         $groupApplicationArgs = [
             'user' => $currentUserId,
-            'group' => $this->variableApi->get('MUYourCityModule', 'moderationGroupFor' . $this->objectTypeCapital, 2)
+            'group' => $this->variableApi->get('MUYourCityModule', 'moderationGroupFor' . $this->objectTypeCapital, GroupsConstant::GROUP_ID_ADMIN)
         ];
         $roles['is_moderator'] = count($this->groupApplicationRepository->findBy($groupApplicationArgs)) > 0;
     
         if (true === $enterprise) {
             $groupApplicationArgs = [
                 'user' => $currentUserId,
-                'group' => $this->variableApi->get('MUYourCityModule', 'superModerationGroupFor' . $this->objectTypeCapital, 2)
+                'group' => $this->variableApi->get('MUYourCityModule', 'superModerationGroupFor' . $this->objectTypeCapital, GroupsConstant::GROUP_ID_ADMIN)
             ];
             $roles['is_super_moderator'] = count($this->groupApplicationRepository->findBy($groupApplicationArgs)) > 0;
         }

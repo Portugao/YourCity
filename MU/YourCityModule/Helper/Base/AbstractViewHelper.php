@@ -177,6 +177,9 @@ abstract class AbstractViewHelper
                 $response->headers->set('Content-Type', 'text/csv; charset=UTF-8');
                 $response->headers->set('Content-Disposition', 'attachment; filename=' . $type . '-list.csv');
                 break;
+            case 'ics.twig':
+                $response->headers->set('Content-Type', 'text/calendar; charset=utf-8');
+                break;
             case 'json.twig':
                 $response->headers->set('Content-Type', 'application/json');
                 break;
@@ -241,9 +244,9 @@ abstract class AbstractViewHelper
             }
         } elseif ($func == 'display') {
             if ($hasAdminAccess) {
-                $extensions = ['xml', 'json', 'kml'];
+                $extensions = ['xml', 'json', 'kml', 'ics'];
             } else {
-                $extensions = [];
+                $extensions = ['ics'];
             }
         }
     

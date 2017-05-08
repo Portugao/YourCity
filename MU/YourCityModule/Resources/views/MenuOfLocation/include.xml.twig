@@ -5,10 +5,12 @@
     <description><![CDATA[{{ menuOfLocation.description|safeHtml }}]]></description>
     <imageOfMenu{% if menuOfLocation.imageOfMenu is not empty and menuOfLocation.imageOfMenuMeta|default %} extension="{{ menuOfLocation.imageOfMenuMeta.extension }}" size="{{ menuOfLocation.imageOfMenuMeta.size }}" isImage="{% if menuOfLocation.imageOfMenuMeta.isImage %}true{% else %}false{% endif %}"{% if menuOfLocation.imageOfMenuMeta.isImage %} width="{{ menuOfLocation.imageOfMenuMeta.width }}" height="{{ menuOfLocation.imageOfMenuMeta.height }}" format="{{ menuOfLocation.imageOfMenuMeta.format }}"{% endif %}{% endif %}>{{ menuOfLocation.imageOfMenu }}</imageOfMenu>
     <positionOfMenu>{{ menuOfLocation.positionOfMenu }}</positionOfMenu>
-    <effectivFrom>{{ menuOfLocation.effectivFrom|localizeddate('medium', 'short') }}</effectivFrom>
-    <effectivUntil>{{ menuOfLocation.effectivUntil|localizeddate('medium', 'short') }}</effectivUntil>
     <kindOfMenu>{{ menuOfLocation.kindOfMenu|muyourcitymodule_listEntry('menuOfLocation', 'kindOfMenu') }}</kindOfMenu>
     <additionalRemarks><![CDATA[{{ menuOfLocation.additionalRemarks|safeHtml }}]]></additionalRemarks>
+    <effectivFrom>{{ menuOfLocation.effectivFrom|localizeddate('medium', 'short') }}</effectivFrom>
+    <effectivUntil>{{ menuOfLocation.effectivUntil|localizeddate('medium', 'short') }}</effectivUntil>
+    <inViewFrom>{{ menuOfLocation.inViewFrom|localizeddate('medium', 'short') }}</inViewFrom>
+    <inViewUntil>{{ menuOfLocation.inViewUntil|localizeddate('medium', 'short') }}</inViewUntil>
     <workflowState>{{ menuOfLocation.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
     <location>{% if menuOfLocation.location|default %}{{ menuOfLocation.location|muyourcitymodule_formattedTitle }}{% endif %}</location>
     <dishes>

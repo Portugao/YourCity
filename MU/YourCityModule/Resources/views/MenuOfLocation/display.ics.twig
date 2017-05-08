@@ -1,0 +1,23 @@
+{# purpose of this template: menus of location display ics view #}
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:{{ app.request.getSchemeAndHttpHost() }}
+METHOD:PUBLISH
+BEGIN:VEVENT
+DTSTART:{{ menuOfLocation|date('Ymd\THi00\Z') }}
+DTEND:{{ menuOfLocation|date('Ymd\THi00\Z') }}
+{% if menuOfLocation.zipcode != '' and menuOfLocation.city is not empty %}{% set location = menuOfLocation.zipcode ~ ' ' ~ menuOfLocation.city %}LOCATION{{ location|muyourcitymodule_icalText }}{% endif %}
+TRANSP:OPAQUE
+SEQUENCE:0
+UID:{{ 'ICAL' ~ menuOfLocation.inViewFrom ~ random(5000) ~ menuOfLocation.inViewUntil }}
+DTSTAMP:{{ 'now'|date('Ymd\THi00\Z') }}
+ORGANIZER;CN="{{ menuOfLocation.createdBy.getUname() }}":MAILTO:{{ menuOfLocation.createdBy.getEmail() }}
+SUMMARY{{ menuOfLocation|muyourcitymodule_formattedTitle|muyourcitymodule_icalText }}
+{% if menuOfLocation.description is not empty %}DESCRIPTION{{ menuOfLocation.description|muyourcitymodule_icalText }}{% endif %}
+PRIORITY:5
+{% if menuOfLocation.imageOfMenu %}ATTACH;VALUE=URL:{{ menuOfLocation.imageOfMenuUrl }}
+{% endif %}
+CLASS:PUBLIC
+STATUS:CONFIRMED
+END:VEVENT
+END:VCALENDAR

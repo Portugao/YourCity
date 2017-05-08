@@ -115,7 +115,7 @@ class FileOfLocationController extends AbstractFileOfLocationController
      * @inheritDoc
      *
      * @Route("/admin/fileOfLocation/{id}.{_format}",
-     *        requirements = {"id" = "\d+", "_format" = "html|xml|json|kml"},
+     *        requirements = {"id" = "\d+", "_format" = "html|xml|json|kml|ics"},
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )
@@ -138,7 +138,7 @@ class FileOfLocationController extends AbstractFileOfLocationController
      * @inheritDoc
      *
      * @Route("/fileOfLocation/{id}.{_format}",
-     *        requirements = {"id" = "\d+", "_format" = "html|xml|json|kml"},
+     *        requirements = {"id" = "\d+", "_format" = "html|xml|json|kml|ics"},
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )

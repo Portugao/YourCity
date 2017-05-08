@@ -41,6 +41,7 @@
                                 {% if language == app.request.locale %}
                                     {{ form_row(form.name) }}
                                     {{ form_row(form.description) }}
+                                    {{ form_row(form.kindOfProduct) }}
                                 {% else %}
                                     {{ form_row(attribute(form, 'translations' ~ language)) }}
                                 {% endif %}
@@ -55,11 +56,11 @@
                 <legend>{{ language|languageName|safeHtml }}</legend>
                 {{ form_row(form.name) }}
                 {{ form_row(form.description) }}
+                {{ form_row(form.kindOfProduct) }}
             </fieldset>
         {% endif %}
         <fieldset>
             <legend>{{ __('Further properties') }}</legend>
-            {{ form_row(form.kindOfProduct) }}
             {{ form_row(form.imageOfProduct) }}
             {{ form_row(form.today) }}
             {{ form_row(form.monday) }}

@@ -164,6 +164,7 @@ abstract class AbstractEventFinderType extends AbstractType
                     $this->__('Number of street') => 'numberOfStreet',
                     $this->__('Zip code') => 'zipCode',
                     $this->__('City') => 'city',
+                    $this->__('In view from') => 'inViewFrom',
                     $this->__('In view until') => 'inViewUntil',
                     $this->__('Creation date') => 'createdDate',
                     $this->__('Creator') => 'createdBy',

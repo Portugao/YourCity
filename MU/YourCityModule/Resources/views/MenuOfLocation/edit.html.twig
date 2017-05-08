@@ -63,9 +63,11 @@
             <legend>{{ __('Further properties') }}</legend>
             {{ form_row(form.imageOfMenu) }}
             {{ form_row(form.positionOfMenu) }}
+            {{ form_row(form.kindOfMenu) }}
             {{ form_row(form.effectivFrom) }}
             {{ form_row(form.effectivUntil) }}
-            {{ form_row(form.kindOfMenu) }}
+            {{ form_row(form.inViewFrom) }}
+            {{ form_row(form.inViewUntil) }}
         </fieldset>
         
         {{ include(
@@ -136,6 +138,8 @@
                 mUYourCityInitUploadField('muyourcitymodule_menuoflocation_imageOfMenu_imageOfMenu');
                 mUYourCityInitDateField('muyourcitymodule_menuoflocation_effectivFrom');
                 mUYourCityInitDateField('muyourcitymodule_menuoflocation_effectivUntil');
+                mUYourCityInitDateField('muyourcitymodule_menuoflocation_inViewFrom');
+                mUYourCityInitDateField('muyourcitymodule_menuoflocation_inViewUntil');
             });
         })(jQuery);
     /* ]]> */

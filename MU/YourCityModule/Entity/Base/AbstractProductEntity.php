@@ -80,6 +80,7 @@ abstract class AbstractProductEntity extends EntityAccess implements Translatabl
     protected $description = '';
     
     /**
+     * @Gedmo\Translatable
      * @ORM\Column(length=255)
      * @Assert\NotBlank()
      * @YourCityAssert\ListEntry(entityName="product", propertyName="kindOfProduct", multiple=true)

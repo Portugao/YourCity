@@ -263,9 +263,9 @@ abstract class AbstractDishType extends AbstractType
             'label' => $this->__('Ingredients') . ':',
             'label_attr' => [
                 'class' => 'tooltips',
-                'title' => $this->__('Enter the numbers of ingredients, that you entered in the addtional remarks of your menu!')
+                'title' => $this->__('Enter the numbers of ingredients, that you entered in the additional remarks of your menu!')
             ],
-            'help' => $this->__('Enter the numbers of ingredients, that you entered in the addtional remarks of your menu!'),
+            'help' => $this->__('Enter the numbers of ingredients, that you entered in the additional remarks of your menu!'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 255,

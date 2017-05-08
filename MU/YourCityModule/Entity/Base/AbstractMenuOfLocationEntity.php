@@ -123,6 +123,23 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
     protected $positionOfMenu = 0;
     
     /**
+     * @ORM\Column(length=255)
+     * @Assert\NotBlank()
+     * @YourCityAssert\ListEntry(entityName="menuOfLocation", propertyName="kindOfMenu", multiple=false)
+     * @var string $kindOfMenu
+     */
+    protected $kindOfMenu = '1';
+    
+    /**
+     * Here you can enter additional informations.
+     * @Gedmo\Translatable
+     * @ORM\Column(type="text", length=2000, nullable=true)
+     * @Assert\Length(min="0", max="2000")
+     * @var text $additionalRemarks
+     */
+    protected $additionalRemarks = '';
+    
+    /**
      * Here you can create complete menus for your location and special mnus like the menu of the day and more.
      * @ORM\Column(type="datetime", nullable=true)
      * @Assert\DateTime()
@@ -138,21 +155,19 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
     protected $effectivUntil;
     
     /**
-     * @ORM\Column(length=255)
-     * @Assert\NotBlank()
-     * @YourCityAssert\ListEntry(entityName="menuOfLocation", propertyName="kindOfMenu", multiple=false)
-     * @var string $kindOfMenu
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\DateTime()
+     * @var DateTime $inViewFrom
      */
-    protected $kindOfMenu = '1';
+    protected $inViewFrom;
     
     /**
-     * here you can enter additional informations.
-     * @Gedmo\Translatable
-     * @ORM\Column(type="text", length=2000, nullable=true)
-     * @Assert\Length(min="0", max="2000")
-     * @var text $additionalRemarks
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\DateTime()
+     * @Assert\Expression("!value or value > this.getInViewFrom()")
+     * @var DateTime $inViewUntil
      */
-    protected $additionalRemarks = '';
+    protected $inViewUntil;
     
     
     /**
@@ -435,6 +450,54 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
     }
     
     /**
+     * Returns the kind of menu.
+     *
+     * @return string
+     */
+    public function getKindOfMenu()
+    {
+        return $this->kindOfMenu;
+    }
+    
+    /**
+     * Sets the kind of menu.
+     *
+     * @param string $kindOfMenu
+     *
+     * @return void
+     */
+    public function setKindOfMenu($kindOfMenu)
+    {
+        if ($this->kindOfMenu !== $kindOfMenu) {
+            $this->kindOfMenu = isset($kindOfMenu) ? $kindOfMenu : '';
+        }
+    }
+    
+    /**
+     * Returns the additional remarks.
+     *
+     * @return text
+     */
+    public function getAdditionalRemarks()
+    {
+        return $this->additionalRemarks;
+    }
+    
+    /**
+     * Sets the additional remarks.
+     *
+     * @param text $additionalRemarks
+     *
+     * @return void
+     */
+    public function setAdditionalRemarks($additionalRemarks)
+    {
+        if ($this->additionalRemarks !== $additionalRemarks) {
+            $this->additionalRemarks = $additionalRemarks;
+        }
+    }
+    
+    /**
      * Returns the effectiv from.
      *
      * @return DateTime
@@ -495,50 +558,62 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
     }
     
     /**
-     * Returns the kind of menu.
+     * Returns the in view from.
      *
-     * @return string
+     * @return DateTime
      */
-    public function getKindOfMenu()
+    public function getInViewFrom()
     {
-        return $this->kindOfMenu;
+        return $this->inViewFrom;
     }
     
     /**
-     * Sets the kind of menu.
+     * Sets the in view from.
      *
-     * @param string $kindOfMenu
+     * @param DateTime $inViewFrom
      *
      * @return void
      */
-    public function setKindOfMenu($kindOfMenu)
+    public function setInViewFrom($inViewFrom)
     {
-        if ($this->kindOfMenu !== $kindOfMenu) {
-            $this->kindOfMenu = isset($kindOfMenu) ? $kindOfMenu : '';
+        if ($this->inViewFrom !== $inViewFrom) {
+            if (is_object($inViewFrom) && $inViewFrom instanceOf \DateTime) {
+                $this->inViewFrom = $inViewFrom;
+            } elseif (null === $inViewFrom || empty($inViewFrom)) {
+                $this->inViewFrom = null;
+            } else {
+                $this->inViewFrom = new \DateTime($inViewFrom);
+            }
         }
     }
     
     /**
-     * Returns the additional remarks.
+     * Returns the in view until.
      *
-     * @return text
+     * @return DateTime
      */
-    public function getAdditionalRemarks()
+    public function getInViewUntil()
     {
-        return $this->additionalRemarks;
+        return $this->inViewUntil;
     }
     
     /**
-     * Sets the additional remarks.
+     * Sets the in view until.
      *
-     * @param text $additionalRemarks
+     * @param DateTime $inViewUntil
      *
      * @return void
      */
-    public function setAdditionalRemarks($additionalRemarks)
+    public function setInViewUntil($inViewUntil)
     {
-        if ($this->additionalRemarks !== $additionalRemarks) {
-            $this->additionalRemarks = $additionalRemarks;
+        if ($this->inViewUntil !== $inViewUntil) {
+            if (is_object($inViewUntil) && $inViewUntil instanceOf \DateTime) {
+                $this->inViewUntil = $inViewUntil;
+            } elseif (null === $inViewUntil || empty($inViewUntil)) {
+                $this->inViewUntil = null;
+            } else {
+                $this->inViewUntil = new \DateTime($inViewUntil);
+            }
         }
     }
     

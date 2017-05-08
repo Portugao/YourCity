@@ -127,7 +127,7 @@ abstract class AbstractDishEntity extends EntityAccess implements Translatable
     protected $priceOfDish = 0.00;
     
     /**
-     * Enter the numbers of ingredients, that you entered in the addtional remarks of your menu!
+     * Enter the numbers of ingredients, that you entered in the additional remarks of your menu!
      * @ORM\Column(length=255, nullable=true)
      * @Assert\Length(min="0", max="255")
      * @var string $ingredients

@@ -401,7 +401,7 @@ application "YourCity" {
                     length 255
                 },
                 text "text" nullable translatable {
-                    documentation "Enter a description of this offer.\r\nYou can also give informations about the price if you do not wint to use the special field for it."
+                    documentation "Enter a description of this offer.\r\nYou can also give informations about the price if you do not want to use the special field for it."
                     mandatory false
                     length 4000
                 },
@@ -471,31 +471,37 @@ application "YourCity" {
                     defaultValue "0"
                 displayType NONE
                 },
-                datetime "effectivFrom" nullable {
-                    documentation "Here you can create complete menus for your location and special mnus like the menu of the day and more."
-                    mandatory false
-                },
-                datetime "effectivUntil" nullable endDate
-            {
-                    mandatory false
-                },
                 list "kindOfMenu" {
                     defaultValue "1"
                     items {
-                        listItem "menu" ( "1" ),
-                        listItem "menuOfTheDay" ( "2" ),
-                        listItem "menuOfTheWeek" ( "3" ),
-                        listItem "eveningMenu" ( "4" ),
-                        listItem "starters" ( "5" ),
-                        listItem "dessert" ( "6" ),
-                        listItem "salads" ( "7" ),
-                        listItem "drinkMenu" ( "8" ),
-                        listItem "other" ( "9" )
+                        listItem  "menu" ( "1" ),
+                        listItem  "menuOfTheDay" ( "2" ),
+                        listItem  "menuOfTheWeek" ( "3" ),
+                        listItem  "eveningMenu" ( "4" ),
+                        listItem  "starters" ( "5" ),
+                        listItem  "dessert" ( "6" ),
+                        listItem  "salads" ( "7" ),
+                        listItem  "drinkMenu" ( "8" ),
+                        listItem  "other" ( "9" )
                     }
                 }
             ,
                 text "additionalRemarks" nullable translatable {
-                    documentation "here you can enter additional informations."
+                    documentation "Here you can enter additional informations."
+                    mandatory false
+                }
+            ,
+                datetime "effectivFrom" nullable {
+                    documentation "Here you can create complete menus for your location and special mnus like the menu of the day and more."
+                    mandatory false
+                },
+                datetime "effectivUntil" nullable {
+                    mandatory false
+                },
+                datetime "inViewFrom" nullable startDate {
+                    mandatory false
+                },
+                datetime "inViewUntil" nullable endDate {
                     mandatory false
                 }
             }
@@ -556,7 +562,7 @@ application "YourCity" {
                     defaultValue "0.00"
                 },
                 string "ingredients" nullable {
-                    documentation "Enter the numbers of ingredients, that you entered in the addtional remarks of your menu!"
+                    documentation "Enter the numbers of ingredients, that you entered in the additional remarks of your menu!"
                     mandatory false
                 },
                 integer "positionOfDish" {
@@ -621,8 +627,12 @@ application "YourCity" {
                     mandatory false
                 displayType DISPLAY
                 },
+                datetime "inViewFrom" nullable startDate {
+                    documentation "Here you can enter the date and time from this event will appear in the overview of events.\r\nThen it will get put into the archive. Then you only are able to reuse it as model.\r\nIf you do not enter a value, this event will be shown further after the end."
+                    mandatory false
+                },
                 datetime "inViewUntil" nullable endDate {
-                    documentation "Here you can enter the date and time until this event will appear in the overview of events.\r\nThen it will get put into the archive. You only are able to reuse it as model.\r\nIf you do not enter a value, this event will be shown further after the end."
+                    documentation "Here you can enter the date and time until this event will appear in the overview of events.\r\nThen it will get put into the archive. Then you only are able to reuse it as model.\r\nIf you do not enter a value, this event will be shown further after the end."
                     mandatory false
                 }
             }
@@ -647,7 +657,7 @@ application "YourCity" {
                 text "description" nullable translatable {
                     mandatory false
                 },
-                list "kindOfProduct" multiple {
+                list "kindOfProduct" translatable multiple {
                     defaultValue "other"
                     items {
                         listItem "apparel" ( "apparel" ),
@@ -773,29 +783,33 @@ application "YourCity" {
             hasTray true
             fields {
                 string "name" {
-                    defaultValue "abo"
+                    defaultValue "Abonnement"
                     mandatory false
                 }
             ,
                 boolean "showMenus" ajaxTogglability {
+                    defaultValue "1"
                     mandatory false
                 },
                 boolean "sendMessageForMenus" ajaxTogglability {
                     mandatory false
                 },
                 boolean "showOffers" ajaxTogglability {
+                    defaultValue "1"
                     mandatory false
                 },
                 boolean "sendMessageForOffers" ajaxTogglability {
                     mandatory false
                 },
                 boolean "showEvents" ajaxTogglability {
+                    defaultValue "1"
                     mandatory false
                 },
                 boolean "sendMessageForEvents" ajaxTogglability {
                     mandatory false
                 },
                 boolean "showProducts" ajaxTogglability {
+                    defaultValue "1"
                     mandatory false
                 },
                 boolean "sendMessageForProducts" ajaxTogglability {

@@ -72,7 +72,7 @@ abstract class AbstractOfferEntity extends EntityAccess implements Translatable
     
     /**
      * Enter a description of this offer.
-     You can also give informations about the price if you do not wint to use the special field for it.
+     You can also give informations about the price if you do not want to use the special field for it.
      * @Gedmo\Translatable
      * @ORM\Column(type="text", length=4000, nullable=true)
      * @Assert\Length(min="0", max="4000")

@@ -22,6 +22,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
+use Zikula\GroupsModule\Constant as GroupsConstant;
 use Zikula\GroupsModule\Entity\RepositoryInterface\GroupRepositoryInterface;
 
 /**
@@ -51,10 +52,12 @@ abstract class AbstractConfigType extends AbstractType
         $this->setTranslator($translator);
         $this->moduleVars = $moduleVars;
 
+        // prepare group selector values
         foreach (['moderationGroupForLocations'] as $groupFieldName) {
             $groupId = intval($this->moduleVars[$groupFieldName]);
             if ($groupId < 1) {
-                $groupId = 2; // fallback to admin group
+                // fallback to admin group
+                $groupId = GroupsConstant::GROUP_ID_ADMIN;
             }
             $this->moduleVars[$groupFieldName] = $groupRepository->find($groupId);
         }

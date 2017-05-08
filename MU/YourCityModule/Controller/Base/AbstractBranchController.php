@@ -216,6 +216,16 @@ abstract class AbstractBranchController extends AbstractController
         // fetch and return the appropriate template
         $response = $this->get('mu_yourcity_module.view_helper')->processTemplate($objectType, 'display', $templateParameters);
         
+        if ('ics' == $request->getRequestFormat()) {
+            $fileName = $objectType . '_' .
+                (property_exists($branch, 'slug')
+                    ? $branch['slug']
+                    : $this->get('mu_yourcity_module.entity_display_helper')->getFormattedTitle($branch)
+                ) . '.ics'
+            ;
+            $response->headers->set('Content-Disposition', 'attachment; filename=' . $fileName);
+        }
+        
         return $response;
     }
     /**

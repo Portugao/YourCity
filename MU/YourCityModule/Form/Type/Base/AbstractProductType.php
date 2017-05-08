@@ -192,25 +192,6 @@ abstract class AbstractProductType extends AbstractType
             'required' => false,
         ]);
         
-        if ($this->variableApi->getSystemVar('multilingual') && $this->featureActivationHelper->isEnabled(FeatureActivationHelper::TRANSLATIONS, 'product')) {
-            $supportedLanguages = $this->translatableHelper->getSupportedLanguages('product');
-            if (is_array($supportedLanguages) && count($supportedLanguages) > 1) {
-                $currentLanguage = $this->translatableHelper->getCurrentLanguage();
-                $translatableFields = $this->translatableHelper->getTranslatableFields('product');
-                $mandatoryFields = $this->translatableHelper->getMandatoryFields('product');
-                foreach ($supportedLanguages as $language) {
-                    if ($language == $currentLanguage) {
-                        continue;
-                    }
-                    $builder->add('translations' . $language, TranslationType::class, [
-                        'fields' => $translatableFields,
-                        'mandatory_fields' => $mandatoryFields[$language],
-                        'values' => isset($options['translations'][$language]) ? $options['translations'][$language] : []
-                    ]);
-                }
-            }
-        }
-        
         $listEntries = $this->listHelper->getEntries('product', 'kindOfProduct');
         $choices = [];
         $choiceAttributes = [];
@@ -232,6 +213,25 @@ abstract class AbstractProductType extends AbstractType
             'multiple' => true,
             'expanded' => false
         ]);
+        
+        if ($this->variableApi->getSystemVar('multilingual') && $this->featureActivationHelper->isEnabled(FeatureActivationHelper::TRANSLATIONS, 'product')) {
+            $supportedLanguages = $this->translatableHelper->getSupportedLanguages('product');
+            if (is_array($supportedLanguages) && count($supportedLanguages) > 1) {
+                $currentLanguage = $this->translatableHelper->getCurrentLanguage();
+                $translatableFields = $this->translatableHelper->getTranslatableFields('product');
+                $mandatoryFields = $this->translatableHelper->getMandatoryFields('product');
+                foreach ($supportedLanguages as $language) {
+                    if ($language == $currentLanguage) {
+                        continue;
+                    }
+                    $builder->add('translations' . $language, TranslationType::class, [
+                        'fields' => $translatableFields,
+                        'mandatory_fields' => $mandatoryFields[$language],
+                        'values' => isset($options['translations'][$language]) ? $options['translations'][$language] : []
+                    ]);
+                }
+            }
+        }
         
         $builder->add('imageOfProduct', UploadType::class, [
             'label' => $this->__('Image of product') . ':',

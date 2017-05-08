@@ -64,6 +64,7 @@ abstract class AbstractEventRepository extends EntityRepository
             'numberOfStreet',
             'zipCode',
             'city',
+            'inViewFrom',
             'inViewUntil',
             'latitude',
             'longitude',

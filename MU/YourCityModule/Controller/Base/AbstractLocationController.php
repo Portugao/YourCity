@@ -233,6 +233,16 @@ abstract class AbstractLocationController extends AbstractController
         // fetch and return the appropriate template
         $response = $this->get('mu_yourcity_module.view_helper')->processTemplate($objectType, 'display', $templateParameters);
         
+        if ('ics' == $request->getRequestFormat()) {
+            $fileName = $objectType . '_' .
+                (property_exists($location, 'slug')
+                    ? $location['slug']
+                    : $this->get('mu_yourcity_module.entity_display_helper')->getFormattedTitle($location)
+                ) . '.ics'
+            ;
+            $response->headers->set('Content-Disposition', 'attachment; filename=' . $fileName);
+        }
+        
         return $response;
     }
     /**

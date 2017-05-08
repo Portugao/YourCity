@@ -1,0 +1,25 @@
+{# purpose of this template: events display ics view #}
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:{{ app.request.getSchemeAndHttpHost() }}
+METHOD:PUBLISH
+BEGIN:VEVENT
+DTSTART:{{ event|date('Ymd\THi00\Z') }}
+DTEND:{{ event|date('Ymd\THi00\Z') }}
+{% if event.zipcode != '' and event.city is not empty %}{% set location = event.zipcode ~ ' ' ~ event.city %}LOCATION{{ location|muyourcitymodule_icalText }}{% endif %}
+{% if event.latitude and event.longitude %}GEO:{{ event.longitude }};{{ event.latitude }}
+{% endif %}
+TRANSP:OPAQUE
+SEQUENCE:0
+UID:{{ 'ICAL' ~ event.inViewFrom ~ random(5000) ~ event.inViewUntil }}
+DTSTAMP:{{ 'now'|date('Ymd\THi00\Z') }}
+ORGANIZER;CN="{{ event.createdBy.getUname() }}":MAILTO:{{ event.createdBy.getEmail() }}
+SUMMARY{{ event|muyourcitymodule_formattedTitle|muyourcitymodule_icalText }}
+{% if event.description is not empty %}DESCRIPTION{{ event.description|muyourcitymodule_icalText }}{% endif %}
+PRIORITY:5
+{% if event.imageOfEvent %}ATTACH;VALUE=URL:{{ event.imageOfEventUrl }}
+{% endif %}
+CLASS:PUBLIC
+STATUS:CONFIRMED
+END:VEVENT
+END:VCALENDAR

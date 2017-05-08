@@ -124,7 +124,7 @@ abstract class AbstractAbonnementType extends AbstractType
         
         $builder->add('name', TextType::class, [
             'label' => $this->__('Name') . ':',
-            'empty_data' => 'abo',
+            'empty_data' => 'Abonnement',
             'attr' => [
                 'maxlength' => 255,
                 'class' => '',
