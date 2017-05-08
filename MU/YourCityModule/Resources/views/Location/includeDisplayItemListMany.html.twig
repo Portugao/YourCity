@@ -16,7 +16,7 @@
     {{ item|muyourcitymodule_formattedTitle }}
 {% if not noLink %}
     </a>
-    <a id="locationItem{{ item.getKey() }}Display" href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': item.getId()'slug': item.slug, 'raw': 1 }) }}" title="{{ __('Open quick view window') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ item|muyourcitymodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
+    <a id="locationItem{{ item.getKey() }}Display" href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': item.getId(), 'slug': item.slug, 'raw': 1 }) }}" title="{{ __('Open quick view window') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ item|muyourcitymodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
 {% endif %}
 {% endspaceless %}
 </h4>
