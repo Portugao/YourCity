@@ -94,8 +94,11 @@
     <h3 class="muyourcitymodule-map">{{ __('Map') }}</h3>
     <div id="mapContainer" class="muyourcitymodule-mapcontainer">
     </div>
-    {#{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: event }) }#}
-
+    
+    {% if routeArea == 'admin' %}
+    {{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: event }) }}
+    {% endif %}
+    
     {{ block('display_hooks') }}
 </div>
 {% endblock %}
