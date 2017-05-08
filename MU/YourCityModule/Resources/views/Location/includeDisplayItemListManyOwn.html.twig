@@ -67,7 +67,7 @@
                          {{ location.numberOfStreet }}<br style="clear: both;" />
                     {% endif %}
                     {% if location.showHours != 'none' %}
-                        {{ location.showHours }}
+                        {{ location.showHours }}<br style="clear: both;" />
                     {% endif %}
                     {% if isPart == false %}
                     {% for part in location.parts %}
@@ -86,3 +86,5 @@
                 </li>
             {% endfor %}
 {% endif %}
+<br style="clear: both;" />
+{{ include('@MUYourCityModule/Helper/includeLegend.html.twig') }}
