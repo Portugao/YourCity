@@ -1,4 +1,7 @@
 {# purpose of this template: offers list view #}
+{% block header %}
+    {{ pageAddAsset('stylesheet', asset('css/bootstrap.css')) }}>
+{% endblock %}
 {% extends routeArea == 'admin' ? 'MUYourCityModule::adminBase.html.twig' : 'MUYourCityModule::base.html.twig' %}
 {% block title own ? __('My offers') : __('Offer list') %}
 {% block admin_page_icon 'list-alt' %}
@@ -16,12 +19,7 @@
     {% if routeArea != 'admin' %}
         {% for offer in items %}
             <div class="col-md-4">
-                {% set thumbOptions = attribute(thumbRuntimeOptions, 'offerImageOfOffer') %}
-                {% if offer.imageOfOffer is not empty %}
-                    <div style="backround: url({{ offer.imageOfOffer.getPathname()|imagine_filter('zkroot', thumbOptions) }})" class="offer-view-box">
-                {% else %}
-                    <div class="offer-view-box">
-                {% endif %}
+                <div class="offer-view-box">
                 <p class="offer-list-title"><a href="{{ path('muyourcitymodule_offer_' ~ routeArea ~ 'display', { 'id': offer.id }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ offer.name|notifyFilters('muyourcitymodule.filterhook.offers') }}</a></p>
                 {{ offer.text|safeHtml|truncate(100) }}<br />
                 {% if offer.percentOfOffer != 0 %}
@@ -36,8 +34,8 @@
                 {% endif %}
                 {% endif %}                
                 {% if offer.location|default %}
-                    <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': offer.location.id, 'slug': offer.location.slug }) }}">{% spaceless %}
-                          {{ offer.location|muyourcitymodule_formattedTitle|default(__('Location')) }}
+                    <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': offer.location.id, 'slug': offer.location.slug }) }}" data-placement="bottom" data-toggle="tooltip" title="{{ offer.location.name }} - {{ offer.location.street }} {{ offer.location.numberOfStreet }}">{% spaceless %}
+                          {{ offer.location.name }}
                     {% endspaceless %}</a>
                         <a id="locationItem{{ offer.id }}_rel_{{ offer.location.id }}Display" href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', {'id': offer.location.id, 'slug': offer.location.slug, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ offer.location|muyourcitymodule_formattedTitle|default(__('Location'))|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
                 {% else %}
@@ -225,4 +223,11 @@
             {{ hook }}
         {% endfor %}
     {% endif % #}
+    <script src="js/bootstrap.js"></script>  
+    <script>
+    $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+    })
+    </script>
 {% endblock %}
+
