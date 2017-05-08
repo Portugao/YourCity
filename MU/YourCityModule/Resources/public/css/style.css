@@ -142,6 +142,12 @@ div.muyourcitymodule-view .avatar img {
 
 /*****************OWN**********************/
 
+/****************TABS*********************/
+
+.tab-pane {
+	position: relative;
+}
+
 .z-module-muyourcitymodule h2 {
 	font-size: 2em;
 }
@@ -175,6 +181,26 @@ div.muyourcitymodule-view .avatar img {
 	font-size: 0.65em;
 }
 
+/*************EVENT***************/
+
+
+.event-view-box {
+	border-radius: 5px;
+	border: 1px solid #ddd;
+	padding: 5px;
+	min-height: 160px;
+}
+
+.event-view-box-name {
+	font-size: 2em;
+}
+
+.event-view-box-from {
+	font-size: 1.5em;
+	color: #ee0000;
+}
+
+
 /**********LOCATION***************/
 
 .locationAgreement {
@@ -205,6 +231,19 @@ div.muyourcitymodule-view .avatar img {
 .location-slogan-list {
 	font-style: italic;
 	font-weight: bolder;
+}
+
+#locationImage {
+	float: right;
+	margin: 0 25px 0 15px;
+}
+
+.location-tram:before {
+	content: '\f238';
+}
+
+.location-bus:before {
+	content: '\f207';
 }
 
 /**************MENU****************/
@@ -269,23 +308,14 @@ div.muyourcitymodule-view .avatar img {
 	list-style-type: none;
 }
 
-#locationImage {
-	float: right;
-	margin: 0 25px 0 15px;
-}
-
-.location-tram:before {
-	content: '\f238';
-}
-
-.location-bus:before {
-	content: '\f207';
-}
+/**************OFFER***************/
 
 .offer-view-box {
 	border-radius: 5px;
 	border: 1px solid #ddd;
 	padding: 5px;
+	margin: 0 0 15px 0;
+	min-height: 220px;
 }
 
 .offer-list-title {
