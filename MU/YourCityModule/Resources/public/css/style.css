@@ -150,12 +150,32 @@ div.muyourcitymodule-view .avatar img {
 	margin: 10px 0;
 }
 
+/**********ABO**************/
 .abonnement-edit {
 	position: absolute;
 	top: 0;
 	right: 10px;
 	z-index: 250;
 }
+
+/*********DISH*****************/
+
+.dish-name {
+	position: relative;
+	float: left;
+	clear: left;
+	font-size: 1.4em;
+	margin: 0 0 25px 0;
+}
+
+.dish-ingredients {
+	position: absolute;
+	top: -10px;
+	right: -30px;
+	font-size: 0.65em;
+}
+
+/**********LOCATION***************/
 
 .locationAgreement {
 	color: #ff8040;
@@ -182,6 +202,23 @@ div.muyourcitymodule-view .avatar img {
 	font-size: 1.6em;
 }
 
+.location-slogan-list {
+	font-style: italic;
+	font-weight: bolder;
+}
+
+/**************MENU****************/
+
+.menu-view-box {
+	border-radius: 5px;
+	border: 1px solid #ddd;
+	padding: 5px;
+}
+
+.menu-view-box-name {
+	font-size: 2em;
+}
+
 .item-list,
 .abo-location-list {
 	position: relative;
@@ -194,7 +231,7 @@ div.muyourcitymodule-view .avatar img {
 .item-list {
 	list-style-type: none;
 	/*font-size: 1.4em;*/
-	min-height: 120px;
+	min-height: 140px;
 	margin: 0 0 10px 0;
 }
 
