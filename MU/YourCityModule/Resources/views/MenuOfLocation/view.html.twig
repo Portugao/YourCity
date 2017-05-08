@@ -13,6 +13,20 @@
     <form action="{{ path('muyourcitymodule_menuoflocation_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="menusOfLocationViewForm" class="form-horizontal" role="form">
         <div>
     {% endif %}
+    
+    {% if routeArea != 'admin' %}
+        {% for menu in items %}
+        <div class="col-md-4">
+            <div class="menu-view-box">
+                <span class="menu-view-box-name"><a href="{{ path('muyourcitymodule_menuoflocation_' ~ routeArea ~ 'display', { 'id': menu.id }) }}">{{ menu.name }}</a></span><br style="clear: both;" />
+                {{ menu.description }}<br style="clear: both;" />
+                {{ __('Location') }}: <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': menu.location.id, 'slug': menu.location.slug }) }}">{{ menu.location.name }}</a>
+            </div>
+        </div>
+        {% endfor %}        
+    {% endif %}
+    
+    {% if routeArea == 'admin' %}
         <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover table-condensed">
             <colgroup>
@@ -128,6 +142,7 @@
             </tbody>
         </table>
         </div>
+        {% endif %}
         
         {% if all != 1 and pager|default %}
             {{ pager({ rowcount: pager.amountOfItems, limit: pager.itemsPerPage, display: 'page', route: 'muyourcitymodule_menuoflocation_' ~ routeArea ~ 'view'}) }}
