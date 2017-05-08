@@ -14,6 +14,9 @@ namespace MU\YourCityModule\Entity\Repository;
 
 use MU\YourCityModule\Entity\Repository\Base\AbstractLocationRepository;
 
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
+
 /**
  * Repository class used to implement own convenience methods for performing certain DQL queries.
  *
@@ -21,5 +24,33 @@ use MU\YourCityModule\Entity\Repository\Base\AbstractLocationRepository;
  */
 class LocationRepository extends AbstractLocationRepository
 {
-    // feel free to add your own methods here, like for example reusable DQL queries
+    /**
+     * @var string The default sorting field/expression
+     */
+    protected $defaultSortingField = 'letterForOrder';
+    
+    /**
+     * Returns query builder for selecting a list of objects with a given where clause.
+     *
+     * @param string  $where    The where clause to use when retrieving the collection (optional) (default='')
+     * @param string  $orderBy  The order-by clause to use when retrieving the collection (optional) (default='')
+     * @param boolean $useJoins Whether to include joining related objects (optional) (default=true)
+     * @param boolean $slimMode If activated only some basic fields are selected without using any joins (optional) (default=false)
+     *
+     * @return QueryBuilder Query builder for the given arguments
+     */
+    public function getListQueryBuilder($where = '', $orderBy = '', $useJoins = true, $slimMode = false)
+    {
+    	$uid = \UserUtil::getVar('uid');
+    	if (\UserUtil::isLoggedIn() && $uid != 2) {
+    		$uid = \UserUtil::getVar('uid');
+    		$where = 'tbl.owner = ' . \DataUtil::formatForDisplay($uid);
+    	}
+    	$qb = $this->genericBaseQuery($where, $orderBy, $useJoins, $slimMode);
+    	if ((!$useJoins || !$slimMode) && null !== $this->collectionFilterHelper) {
+    		$qb = $this->collectionFilterHelper->addCommonViewFilters('location', $qb);
+    	}
+    
+    	return $qb;
+    }
 }
