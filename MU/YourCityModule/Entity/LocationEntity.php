@@ -37,6 +37,11 @@ class LocationEntity extends BaseEntity
 	 */
 	protected $state;
 	
+	/**
+	 * var string $showHours
+	 */
+	protected  $showHours;
+	
     /**
      * Returns the mobil.
      *
@@ -59,5 +64,29 @@ class LocationEntity extends BaseEntity
         if ($this->state !== $state) {
             $this->state = isset($state) ? $state : '';
         }
+    }
+    
+    /**
+     * Returns the showHours.
+     *
+     * @return string
+     */
+    public function getShowHours()
+    {
+    	return $this->showHours;
+    }
+    
+    /**
+     * Sets the showHours.
+     *
+     * @param string $showHours
+     *
+     * @return void
+     */
+    public function setShowHours($showHours)
+    {
+    	if ($this->showHours !== $showHours) {
+    		$this->showHours = isset($showHours) ? $showHours : '';
+    	}
     }
 }
