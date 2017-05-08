@@ -142,10 +142,12 @@ abstract class AbstractMenuOfLocationController extends AbstractController
             new Column('name'),
             new Column('description'),
             new Column('imageOfMenu'),
-            new Column('effectivFrom'),
-            new Column('effectivUntil'),
             new Column('kindOfMenu'),
             new Column('additionalRemarks'),
+            new Column('effectivFrom'),
+            new Column('effectivUntil'),
+            new Column('inViewFrom'),
+            new Column('inViewUntil'),
             new Column('location'),
             new Column('createdBy'),
             new Column('createdDate'),
@@ -223,6 +225,16 @@ abstract class AbstractMenuOfLocationController extends AbstractController
         
         // fetch and return the appropriate template
         $response = $this->get('mu_yourcity_module.view_helper')->processTemplate($objectType, 'display', $templateParameters);
+        
+        if ('ics' == $request->getRequestFormat()) {
+            $fileName = $objectType . '_' .
+                (property_exists($menuOfLocation, 'slug')
+                    ? $menuOfLocation['slug']
+                    : $this->get('mu_yourcity_module.entity_display_helper')->getFormattedTitle($menuOfLocation)
+                ) . '.ics'
+            ;
+            $response->headers->set('Content-Disposition', 'attachment; filename=' . $fileName);
+        }
         
         return $response;
     }

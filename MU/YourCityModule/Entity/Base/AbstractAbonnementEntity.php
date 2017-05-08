@@ -65,7 +65,7 @@ abstract class AbstractAbonnementEntity extends EntityAccess
      * @Assert\Length(min="0", max="255")
      * @var string $name
      */
-    protected $name = 'abo';
+    protected $name = 'Abonnement';
     
     /**
      * @ORM\Column(type="boolean")

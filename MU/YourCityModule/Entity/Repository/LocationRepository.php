@@ -13,7 +13,6 @@
 namespace MU\YourCityModule\Entity\Repository;
 
 use MU\YourCityModule\Entity\Repository\Base\AbstractLocationRepository;
-
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
