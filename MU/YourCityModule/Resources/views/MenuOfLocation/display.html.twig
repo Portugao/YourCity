@@ -1,7 +1,7 @@
 {# purpose of this template: menus of location display view #}
 {% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
 {% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
-{% block pageTitle %}{{ menuOfLocation|muyourcitymodule_formattedTitle|default(__('Menu of location')) }}{% endblock %}
+{% block pageTitle %}{{ menuOfLocation|muyourcitymodule_formattedTitle|default(__('Menu of location')) }} - {{ menuOfLocation.location.name }}{% endblock %}
 {% block title %}
 
     <div id="imageOfMenu">
@@ -32,7 +32,6 @@
     {% set isQuickView = app.request.query.getBoolean('raw', false) %}
     <div class="muyourcitymodule-menuoflocation muyourcitymodule-display">
 
-
     <div class="row">
         <div class="col-sm-12">
 
@@ -44,10 +43,6 @@
             <dt>{{ __('Name') }}</dt>
             <dd>{{ menuOfLocation.name }}</dd>
         {% endif %#}
-        {% if menuOfLocation.description is not empty %}
-            <h4>{{ __('Description') }}</h4>
-            {{ menuOfLocation.description|safeHtml }}
-        {% endif %}
 
         {% if menuOfLocation.effectivFrom is not empty %}
             <h3>{{ __('Effectiv from') }}
@@ -59,14 +54,20 @@
         {% endif %}
         {% if menuOfLocation.location|default %}
               {% if not isQuickView %}
-                  <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': menuOfLocation.location.id, 'slug': menuOfLocation.location.slug }) }}">{% spaceless %}
+                  <h3>{{ __('Location') }}: <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': menuOfLocation.location.id, 'slug': menuOfLocation.location.slug }) }}">{% spaceless %}
                     {{ menuOfLocation.location|muyourcitymodule_formattedTitle }}
-                  {% endspaceless %}</a>
+                  {% endspaceless %}</a></h3>
                   <a id="locationItem{{ menuOfLocation.location.id }}Display" href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': menuOfLocation.location.id, 'slug': menuOfLocation.location.slug, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ menuOfLocation.location|muyourcitymodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
               {% else %}
                   {{ menuOfLocation.location|muyourcitymodule_formattedTitle }}
               {% endif %}
         {% endif %}<br style="clear: both;" />
+        
+        {% if menuOfLocation.description is not empty %}
+            <h4>{{ __('Description') }}</h4>
+            {{ menuOfLocation.description|safeHtml }}
+        {% endif %}
+        <br /><br /><br style="clear: both;" />
 
         {% if menuOfLocation.partsOfMenu|default %}
             {{ include(
@@ -77,13 +78,20 @@
                 
         {% if menuOfLocation.dishes|default %}
             {{ include(
-                '@MUYourCityModule/Dish/includeDisplayItemListMany.html.twig',
+                '@MUYourCityModule/Dish/includeDisplayItemListManyOwn.html.twig',
                 { items: menuOfLocation.dishes }
             ) }}
         {% endif %}
+        <br /><br />
+        {% if menuOfLocation.additionalRemarks is not empty %}
+            <h4>{{ __('Additional Remarks') }}</h4>
+            {{ menuOfLocation.additionalRemarks|safeHtml }}
+        {% endif %}
         
-    {#{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: menuOfLocation }) }#}
-
+    {% if routeArea == 'admin' %}
+    {{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: menuOfLocation }) }}
+    {% endif %}
+    
     {{ block('display_hooks') }}
         </div>
         {#<div class="col-sm-3">
