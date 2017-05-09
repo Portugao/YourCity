@@ -17,6 +17,7 @@
     {{ include('@MUYourCityModule/Abonnement/viewQuickNav.html.twig') }}{# see template file for available options #}
     
     {% if routeArea != 'admin' %}
+    {% if items %}
         <div role="tabpanel">
           <ul class="nav nav-tabs" role="tablist">
           {% for abonnement in items %}
@@ -49,34 +50,10 @@
           {% endfor %}
           </div>
         </div>
-{% endif %}
-    
-    
-    
-    
-    {#% if routeArea != 'admin' %}
-        {% for abonnement in items %}
-            {% if abonnement.location|default %}
-            {% if items|length <= 4 %}
-<div class="col-md-12 abo-location-list abo">
-            {% else %}
-                {% if loop.index is not divisible by(2) %}
-                    <div class="row">
-                {% endif %}
-                <div class="col-md-6 abo-location-list abo">
-            {% endif %}
-                <span class="abonnement-edit"><a href="{{ path('muyourcitymodule_abonnement_' ~ routeArea ~ 'edit', { 'id': abonnement.id }) }}" title="{{ __('Edit Abonnement')|e('html_attr') }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></span>
-                    {{ include(
-                        '@MUYourCityModule/Location/includeDisplayItemListOneOwn.html.twig',
-                        { item: abonnement.location, showMenus: abonnement.showMenus, showOffers: abonnement.showOffers, showProducts: abonnement.showProducts, showEvents: abonnement.showEvents }
-                    ) }}
-                </div>
-                {% if loop.index == 0 or loop.index is divisible by(2) %}
-                    </div>
-                {% endif %}
-            {% endif %}
-        {% endfor %}
-    {% endif %#}
+    {% else %}
+        {{ __('No abonnements') }}
+    {% endif %}
+    {% endif %}
 
     {% if routeArea == 'admin' %}
     {% if routeArea == 'admin' %}

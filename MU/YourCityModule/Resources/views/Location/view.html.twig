@@ -9,7 +9,7 @@
 
     {{ include('@MUYourCityModule/Location/viewQuickNav.html.twig') }}{# see template file for available options #}
     
-    {% if routeArea != 'admin' %}
+    {#% if routeArea != 'admin' %}
         {% if items %}
             <ul>
             {% for location in items %}
@@ -36,7 +36,7 @@
             {% endfor %}
             </ul>
         {% endif %}
-    {% endif %}
+    {% endif %#}
     <br style="clear: both;" />
 
     {% if routeArea == 'admin' %}

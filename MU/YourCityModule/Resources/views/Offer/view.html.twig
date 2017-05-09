@@ -224,10 +224,16 @@
         {% endfor %}
     {% endif % #}
     <script src="js/bootstrap.js"></script>  
-    <script>
+    
+    {% set toolTipps %}
+        <script type="text/javascript">
+        /* <![CDATA[ */
     $(function () {
     $('[data-toggle="tooltip"]').tooltip()
     })
-    </script>
+        /* ]]> */
+        </script>
+    {% endset %}
+    {{ pageAddAsset('footer', toolTipps) }}
 {% endblock %}
 

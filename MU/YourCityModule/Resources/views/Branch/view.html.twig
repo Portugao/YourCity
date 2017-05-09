@@ -11,12 +11,13 @@
 
     {% if routeArea != 'admin' and items %}
         {% for branch in items %}
-            <div class="col-xs-6 col-sm-4 col-md-3 branch-list">
+            <div class="col-xs-12 col-sm-6 col-md-4 branch-list">
                 <a href="{{ path('muyourcitymodule_branch_' ~ routeArea ~ 'display', { 'id': branch.id }) }}">{{ branch.name }}</a>
             </div>   
         {% endfor %}
     {% else %}
     {% endif %}
+     <br style="clear: both;" />
 
     {% if routeArea == 'admin' %}
     {% if routeArea == 'admin' %}
