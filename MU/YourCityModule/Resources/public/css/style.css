@@ -164,6 +164,12 @@ div.muyourcitymodule-view .avatar img {
 	z-index: 250;
 }
 
+/***********BRANCH*************/
+
+.branch-list {
+	font-size: 1.4em;
+}
+
 /*********DISH*****************/
 
 .dish-name {
@@ -361,16 +367,50 @@ div.muyourcitymodule-view .avatar img {
 	margin: 0 0 15px 15px;
 }
 
-.branch-list {
-	font-size: 1.6em;
+.offer-block-offer {
+	border-radius: 80px;
+	padding: 40px auto;
+    height: 100px;
+    width: 100px;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 2em;
+	color: #fff;
+	position: absolute;
+	top: -10px;
+	right: 15px;
+	background: #ee0000;
+	z-index: 100;
+}
+
+.offerItem {
+	position: relative;
 }
 
 /***********PART********************/
 
 .part-list {
-	font-size: 1.6em;
+	font-size: 1.4em;
 }
 
 .part-location-title {
 	font-size: 1.5em;
+}
+
+/***********PRODUCT*****************/
+
+.product-view-box {
+	border-radius: 5px;
+	border: 1px solid #ddd;
+	padding: 5px;
+	margin: 0 0 15px 0;
+	min-height: 180px;
+}
+
+.product-list-title {
+	font-size: 2em;
+}
+
+.slider {
+
 }
