@@ -9,6 +9,83 @@
 
     {{ include('@MUYourCityModule/Product/viewQuickNav.html.twig', { workflowStateFilter: false }) }}{# see template file for available options #}
 
+    {% if routeArea != 'admin' %} 
+        {% for product in items %}
+            <div class="col-md-4">
+                <div class="product-view-box">
+                <p class="product-list-title"><a href="{{ path('muyourcitymodule_product_' ~ routeArea ~ 'display', { 'id': product.id }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ product.name|notifyFilters('muyourcitymodule.filterhook.products') }}</a></p>
+                {% if product.description is not empty %}
+                {{ product.description|safeHtml|truncate(100) }}<br />
+                {% endif %}
+                
+                <p>{{ __('Today') }}</p>
+                {{ product.today }}<br style="clear: both;" /><br />
+                
+                {{ __('Monday') }} 
+                {% if product.monday %}
+                    <i class="fa fa-check" title="{{ __('Yes') }}"></i>
+                {% else %}
+                    <i class="fa fa-times" title="{{ __('No') }}"></i>
+                {% endif %}
+                
+                {{ __('Tuesday') }} 
+                {% if product.tuesday %}
+                    <i class="fa fa-check" title="{{ __('Yes') }}"></i>
+                {% else %}
+                    <i class="fa fa-times" title="{{ __('No') }}"></i>
+                {% endif %}
+                
+                {{ __('Wednesday') }} 
+                {% if product.wednesday %}
+                    <i class="fa fa-check" title="{{ __('Yes') }}"></i>
+                {% else %}
+                    <i class="fa fa-times" title="{{ __('No') }}"></i>
+                {% endif %}
+                
+                {{ __('Thursday') }} 
+                {% if product.thursday %}
+                    <i class="fa fa-check" title="{{ __('Yes') }}"></i>
+                {% else %}
+                    <i class="fa fa-times" title="{{ __('No') }}"></i>
+                {% endif %}
+                
+                {{ __('Friday') }} 
+                {% if product.friday %}
+                    <i class="fa fa-check" title="{{ __('Yes') }}"></i>
+                {% else %}
+                    <i class="fa fa-times" title="{{ __('No') }}"></i>
+                {% endif %}
+                
+                {{ __('Saturday') }} 
+                {% if product.saturday %}
+                    <i class="fa fa-check" title="{{ __('Yes') }}"></i>
+                {% else %}
+                    <i class="fa fa-times" title="{{ __('No') }}"></i>
+                {% endif %}
+                
+                {{ __('Sunday') }} 
+                {% if product.sunday %}
+                    <i class="fa fa-check" title="{{ __('Yes') }}"></i>
+                {% else %}
+                    <i class="fa fa-times" title="{{ __('No') }}"></i>
+                {% endif %}
+              
+                <br style="clear: both;" /><br />
+                
+                {% if product.location|default %}
+                    <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': product.location.id, 'slug': product.location.slug }) }}" data-placement="bottom" data-toggle="tooltip" title="{{ product.location.name }}{% if product.location.street is not empty %} - {{ product.location.street }}{% endif %} {{ product.location.numberOfStreet }}">{% spaceless %}
+                          {{ product.location.name }}
+                    {% endspaceless %}</a>
+                        <a id="locationItem{{ product.id }}_rel_{{ product.location.id }}Display" href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', {'id': product.location.id, 'slug': product.location.slug, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ product.location|muyourcitymodule_formattedTitle|default(__('Location'))|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
+                {% else %}
+                    {{ __('Not set.') }}
+                {% endif %} 
+                </div>          
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+    {% if routeArea == 'admin' %}   
     {% if routeArea == 'admin' %}
     <form action="{{ path('muyourcitymodule_product_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="productsViewForm" class="form-horizontal" role="form">
         <div>
@@ -227,6 +304,7 @@
             </tbody>
         </table>
         </div>
+        {% endif %}
         
         {% if all != 1 and pager|default %}
             {{ pager({ rowcount: pager.amountOfItems, limit: pager.itemsPerPage, display: 'page', route: 'muyourcitymodule_product_' ~ routeArea ~ 'view'}) }}
