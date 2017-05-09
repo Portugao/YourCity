@@ -7,14 +7,18 @@
         <div class="tab">
             <h2>{{ location.name }}</h2>
             {{ location.description|truncate(100) }}<br />
-    {% if location.branches|default %}{{ __('Branches') }}: 
-        {% for branch in location.branches %}
-            {{ branch.name }} 
-        {% endfor %}<br /><br />
-    {% endif %}
+            {% if location.branches|default %}{{ __('Branches') }}: 
+                {% for branch in location.branches %}
+                    {{ branch.name }} 
+                {% endfor %}<br />
+            {% endif %}
+            {% if location.parts|default %}{{ __('Part') }}: 
+                {% for part in location.parts %}
+                    {{ part.name }} 
+                {% endfor %}<br /><br />
+            {% endif %}
     
             <a href="" class="btn btn-primary btn-sm" href="#" role="button">{{ __('More') }}</a>
-
         </div>
     {% endfor %}
     </div>
