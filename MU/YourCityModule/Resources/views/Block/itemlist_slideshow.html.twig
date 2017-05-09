@@ -1,0 +1,56 @@
+{# Purpose of this template: Display items within a block (fallback template) #}
+
+{% if objectType == 'location' %}
+<div class="slider">
+    <div class="tabs">
+    {% for location in items %}
+        <div class="tab">
+            <h2>{{ location.name }}</h2>
+            {{ location.description|truncate(100) }}<br />
+    {% if location.branches|default %}{{ __('Branches') }}: 
+        {% for branch in location.branches %}
+            {{ branch.name }} 
+        {% endfor %}<br /><br />
+    {% endif %}
+    
+            <a href="" class="btn btn-primary btn-sm" href="#" role="button">{{ __('More') }}</a>
+
+        </div>
+    {% endfor %}
+    </div>
+</div>
+{% endif %}
+{% if objectType == 'offer' %}
+<div class="slider">
+    <div class="tabs">
+    {% for offer in items %}
+        <div class="tab">
+        <div class="offerItem">
+        {% if offer.percentOfOffer is not empty and offer.percentOfOffer != 0 %}
+        <span class="offer-block-offer">{{ offer.percentOfOffer }}%</span>
+        {% endif %}
+            <h2>{{ offer.name }}</h2>
+            {{ offer.description|truncate(100) }}<br />
+            <a href="" class="btn btn-primary btn-sm" href="#" role="button">{{ __('More') }}</a>
+        </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+{% endif %}
+<br style="clear: both;" />
+
+<script type="text/javascript">
+/* <![CDATA[ */
+var MU = jQuery.noConflict();
+MU(".slider").flexslider({
+  selector: ".tabs > .tab",
+  animation: "slide"
+});
+        /* ]]> */
+        </script>
+
+
+
+{{ pageAddAsset('javascript', app.request.basePath ~ '/modules/MU/YourCityModule/Resources/public/js/Flex/jquery.flexslider.js') }}
+{{ pageAddAsset('stylesheet', app.request.basePath ~ '/modules/MU/YourCityModule/Resources/public/css/Flex/flexslider.css') }}

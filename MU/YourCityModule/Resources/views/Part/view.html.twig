@@ -11,11 +11,12 @@
 
     {% if routeArea != 'admin' %}
         {% for part in items %}
-            <div class="col-xs-6 col-sm-4 col-md-3 part-list">
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 part-list">
                 <a href="{{ path('muyourcitymodule_part_' ~ routeArea ~ 'display', { 'id': part.id }) }}">{{ part.name }}</a>
             </div>
         {% endfor %}
     {% endif %}
+    <br style="clear: both;" />
     
     {% if routeArea == 'admin' %}
     {% if routeArea == 'admin' %}
