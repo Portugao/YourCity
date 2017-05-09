@@ -140,6 +140,11 @@ class ControllerHelper extends AbstractControllerHelper
     	$start2Time = \DateUtil::formatDatetime($location['start2On' . $actualDay], 'timelong');
     	$end2Time = \DateUtil::formatDatetime($location['end2On' . $actualDay], 'timelong');
     	
+    	$startTimeFine = \DateUtil::formatDatetime($location['startOn' . $actualDay], 'timebrief');
+    	$endTimeFine = \DateUtil::formatDatetime($location['endOn' . $actualDay], 'timebrief');
+    	$start2TimeFine = \DateUtil::formatDatetime($location['start2On' . $actualDay], 'timebrief');
+    	$end2TimeFine = \DateUtil::formatDatetime($location['end2On' . $actualDay], 'timebrief');
+    	
     	
 		switch ($actualDay) {
 			case 'Sunday' :
@@ -207,25 +212,25 @@ class ControllerHelper extends AbstractControllerHelper
     				//die('end nicht null');
     				if ($end2Time >= $actualTime || ($end2Time < $actualTime && $nextStartTime != '' && $nextStartTime > $actualTime)) {
     					//die('end groesser aktual');
-    					if ($state = '') {
+    					if ($state != 'open') {
     					    $state = 'open';
     					}
     				} else {
     					//die('end kleiner aktual');
-    					if ($state = '') {
+    					if ($state != 'closed') {
     					    $state = 'closed';
     					}
     				}
     			} else {
-    				if ($state = '') {
+    				if ($state != 'openEnd') {
     				    $state = 'openEnd';
     				}
     			}
     		} else {
-    		    if ($end2Time == '' && $state == '') {
+    		    if ($end2Time == '' && $state != 'openEnd') {
     			$state = 'openEnd';
     		} else {
-    			if ($state == '') {
+    			if ($state != 'closed') {
     		$state = 'closed';
     			}
     		}
@@ -233,19 +238,19 @@ class ControllerHelper extends AbstractControllerHelper
     	}
     	
     	if ($state == 'open' || $state == 'openEnd' || $state == 'closed') {
-    		$hours = $startTime;
+    		$hours = $startTimeFine;
     		if ($endTime != '') {
-    			$hours .= ' - ' . $endTime;
+    			$hours .= ' - ' . $endTimeFine;
     		} else {
-    			if ($start2Time != '') {
+    			if ($start2Time == '') {
     			$hours .= ' - ' . $this->__('Open end');
     			}
     		}
     		if ($start2Time != '') {
-    			$this->__(' and ') . $start2Time;
+    			$hours .= "\n" . $start2TimeFine;
     			
     		    if ($end2Time != '') {
-    			    $hours .= ' - ' . $end2Time;
+    			    $hours .= ' - ' . $end2TimeFine;
     		    } else {
     			    $hours .= ' - ' . $this->__('Open End');
     		    }    			
