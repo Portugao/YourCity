@@ -14,10 +14,77 @@ namespace MU\YourCityModule\Block\Form\Type;
 
 use MU\YourCityModule\Block\Form\Type\Base\AbstractItemListBlockType;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\FormBuilderInterface;
+
 /**
  * List block form type implementation class.
  */
 class ItemListBlockType extends AbstractItemListBlockType
 {
-    // feel free to extend the list block form type class here
+    /**
+     * @inheritDoc
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $this->addObjectTypeField($builder, $options);
+        $this->addSortingField($builder, $options);
+        $this->addAmountField($builder, $options);
+        $this->addTemplateFields($builder, $options);
+        $this->addFilterField($builder, $options);
+        $this->addOptionFields($builder, $options);
+    }
+    
+    /**
+     * Adds a sorting field.
+     *
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
+     */
+    public function addOptionFields(FormBuilderInterface $builder, array $options)
+    {
+    	$builder->add('animation', ChoiceType::class, [
+    			'label' => $this->__('Animation') . ':',
+    			'empty_data' => 'default',
+    			'choices' => [
+    					$this->__('Slide') => 'slide',
+    					$this->__('Fade') => 'fade'
+    			],
+    			'choices_as_values' => true,
+    			'multiple' => false,
+    			'expanded' => false,
+    			'required' => true
+    	]);
+    	$builder->add('initdelay', IntegerType::class, [
+    			'label' => $this->__('Init Delay') . ':',
+    			'attr' => [
+    					'maxlength' => 20,
+    					'title' => $this->__('The time passed until the animation starts.') . ' ' . $this->__('Only digits are allowed.')
+    			],
+    			'help' => $this->__('The time passed until the animation starts.') . ' ' . $this->__('Only digits are allowed.'),
+    			'empty_data' => 0,
+    			'required' => false,
+    			'scale' => 0
+    	]);
+    	$builder->add('slideshowspeed', IntegerType::class, [
+    			'label' => $this->__('Speed of the slideshow') . ':',
+    			'help' => $this->__('The time from item to item.') . ' ' . $this->__('Only digits are allowed.'),
+    			'empty_data' => 0,
+    			'required' => false,
+    			'scale' => 0
+    	]);
+    	$builder->add('animationspeed', IntegerType::class, [
+    			'label' => $this->__('Speed of the animation') . ':',
+    			'help' => $this->__('The time an item will appear.') . ' ' . $this->__('Only digits are allowed.'),
+    			'empty_data' => 0,
+    			'required' => false,
+    			'scale' => 0
+    	]);
+    	$builder->add('pauseonhover', CheckboxType::class, [
+    			'label' => $this->__('Pause on hover?') . ':',
+    			'required' => false
+    	]);
+    }
 }

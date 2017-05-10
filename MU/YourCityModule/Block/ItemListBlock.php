@@ -13,11 +13,35 @@
 namespace MU\YourCityModule\Block;
 
 use MU\YourCityModule\Block\Base\AbstractItemListBlock;
+use Doctrine\ORM\Query\AST\ParenthesisExpression;
 
 /**
  * Generic item list block implementation class.
  */
 class ItemListBlock extends AbstractItemListBlock
 {
-    // feel free to extend the item list block here
+    /**
+     * Returns the template used for rendering the editing form.
+     *
+     * @return string Template path
+     */
+    public function getFormTemplate()
+    {
+        return '@MUYourCityModule/Block/itemlist_modify.html.twig';
+    }
+    
+    /**
+     * Returns default settings for this block.
+     *
+     * @return array The default settings
+     */
+    protected function getDefaults()
+    {
+    	$defaults = parent::getDefaults();
+        $defaults[] = [
+            'pauseonhover' => false
+        ];
+    
+        return $defaults;
+    }
 }
