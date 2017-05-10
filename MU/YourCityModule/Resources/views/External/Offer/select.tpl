@@ -20,7 +20,7 @@
                 <select id="{$baseID}Sort" name="sort" class="form-control">
                     <option value="workflowState"{if $sort eq 'workflowState'} selected="selected"{/if}>{gt text='Workflow state'}</option>
                     <option value="name"{if $sort eq 'name'} selected="selected"{/if}>{gt text='Name'}</option>
-                    <option value="text"{if $sort eq 'text'} selected="selected"{/if}>{gt text='Text'}</option>
+                    <option value="description"{if $sort eq 'description'} selected="selected"{/if}>{gt text='Description'}</option>
                     <option value="urlToOfferOnHomepage"{if $sort eq 'urlToOfferOnHomepage'} selected="selected"{/if}>{gt text='Url to offer on homepage'}</option>
                     <option value="imageOfOffer"{if $sort eq 'imageOfOffer'} selected="selected"{/if}>{gt text='Image of offer'}</option>
                     <option value="priceOfOffer"{if $sort eq 'priceOfOffer'} selected="selected"{/if}>{gt text='Price of offer'}</option>
@@ -28,6 +28,7 @@
                     <option value="percentOfOffer"{if $sort eq 'percentOfOffer'} selected="selected"{/if}>{gt text='Percent of offer'}</option>
                     <option value="effectivFrom"{if $sort eq 'effectivFrom'} selected="selected"{/if}>{gt text='Effectiv from'}</option>
                     <option value="effectivUntil"{if $sort eq 'effectivUntil'} selected="selected"{/if}>{gt text='Effectiv until'}</option>
+                    <option value="inViewUntil"{if $sort eq 'inViewUntil'} selected="selected"{/if}>{gt text='In view until'}</option>
                     <option value="createdDate"{if $sort eq 'createdDate'} selected="selected"{/if}>{gt text='Creation date'}</option>
                     <option value="createdBy"{if $sort eq 'createdBy'} selected="selected"{/if}>{gt text='Creator'}</option>
                     <option value="updatedDate"{if $sort eq 'updatedDate'} selected="selected"{/if}>{gt text='Update date'}</option>

@@ -103,7 +103,7 @@ abstract class AbstractTranslatableHelper
                 $fields = ['name', 'description'];
                 break;
             case 'offer':
-                $fields = ['name', 'text'];
+                $fields = ['name', 'description'];
                 break;
             case 'menuOfLocation':
                 $fields = ['name', 'description', 'additionalRemarks'];

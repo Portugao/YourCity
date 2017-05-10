@@ -131,7 +131,7 @@ function mUYourCityInitFixedColumns()
         originalTable = jQuery(this);
         fixedTableWidth = 0;
         if (originalTable.find('.fixed-column').length > 0) {
-            fixedColumnsTable = originalTable.clone().insertBefore(originalTable).addClass('fixed-columns');
+            fixedColumnsTable = originalTable.clone().insertBefore(originalTable).addClass('fixed-columns').removeAttr('id');
             originalTable.find('.dropdown').addClass('hidden');
             fixedColumnsTable.find('.dropdown').removeClass('hidden');
             fixedColumnsTable.css('left', originalTable.parent().position().left);

@@ -177,8 +177,8 @@ abstract class AbstractOfferType extends AbstractType
             'required' => true,
         ]);
         
-        $builder->add('text', TextareaType::class, [
-            'label' => $this->__('Text') . ':',
+        $builder->add('description', TextareaType::class, [
+            'label' => $this->__('Description') . ':',
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Enter a description of this offer.
@@ -190,7 +190,7 @@ abstract class AbstractOfferType extends AbstractType
             'attr' => [
                 'maxlength' => 4000,
                 'class' => '',
-                'title' => $this->__('Enter the text of the offer')
+                'title' => $this->__('Enter the description of the offer')
             ],
             'required' => false,
         ]);
@@ -307,7 +307,7 @@ abstract class AbstractOfferType extends AbstractType
             'help' => $this->__('Enter here the date and time for the start of the offer.'),
             'empty_data' => '',
             'attr' => [
-                'class' => '',
+                'class' => ' validate-daterange-offer',
                 'title' => $this->__('Enter the effectiv from of the offer')
             ],
             'required' => true,
@@ -326,7 +326,7 @@ abstract class AbstractOfferType extends AbstractType
             'help' => $this->__('Enter here the date and time for the end of the offer.'),
             'empty_data' => '',
             'attr' => [
-                'class' => '',
+                'class' => ' validate-daterange-offer',
                 'title' => $this->__('Enter the effectiv until of the offer')
             ],
             'required' => true,
@@ -336,8 +336,8 @@ abstract class AbstractOfferType extends AbstractType
             'time_widget' => 'single_text'
         ]);
         
-        $builder->add('enddate', DateTimeType::class, [
-            'label' => $this->__('Enddate') . ':',
+        $builder->add('inViewFrom', DateTimeType::class, [
+            'label' => $this->__('In view from') . ':',
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('On this date the offer will get put into the archive.
@@ -347,8 +347,22 @@ abstract class AbstractOfferType extends AbstractType
             if you wish, that the offer is still there after the end, enter none.'),
             'empty_data' => '',
             'attr' => [
-                'class' => '',
-                'title' => $this->__('Enter the enddate of the offer')
+                'class' => ' validate-daterange-offer',
+                'title' => $this->__('Enter the in view from of the offer')
+            ],
+            'required' => false,
+            'empty_data' => null,
+            'with_seconds' => true,
+            'date_widget' => 'single_text',
+            'time_widget' => 'single_text'
+        ]);
+        
+        $builder->add('inViewUntil', DateTimeType::class, [
+            'label' => $this->__('In view until') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'class' => ' validate-daterange-offer',
+                'title' => $this->__('Enter the in view until of the offer')
             ],
             'required' => false,
             'empty_data' => null,
@@ -502,6 +516,7 @@ abstract class AbstractOfferType extends AbstractType
                 },
                 'error_mapping' => [
                     'imageOfOffer' => 'imageOfOffer.imageOfOffer',
+                    'isInViewFromBeforeInViewUntil' => 'inViewFrom',
                 ],
                 'mode' => 'create',
                 'actions' => [],

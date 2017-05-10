@@ -85,7 +85,8 @@ abstract class AbstractSearchHelper implements SearchableInterface
         RequestStack $requestStack,
         EntityFactory $entityFactory,
         ControllerHelper $controllerHelper,
-        EntityDisplayHelper $entityDisplayHelper) {
+        EntityDisplayHelper $entityDisplayHelper
+    ) {
         $this->setTranslator($translator);
         $this->permissionApi = $permissionApi;
         $this->session = $session;
@@ -210,7 +211,7 @@ abstract class AbstractSearchHelper implements SearchableInterface
                 case 'offer':
                     $whereArray[] = 'tbl.workflowState';
                     $whereArray[] = 'tbl.name';
-                    $whereArray[] = 'tbl.text';
+                    $whereArray[] = 'tbl.description';
                     $whereArray[] = 'tbl.urlToOfferOnHomepage';
                     $whereArray[] = 'tbl.imageOfOffer';
                     break;

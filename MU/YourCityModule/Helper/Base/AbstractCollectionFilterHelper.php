@@ -63,8 +63,8 @@ abstract class AbstractCollectionFilterHelper
     public function __construct(
         RequestStack $requestStack,
         CurrentUserApiInterface $currentUserApi,
-        $showOnlyOwnEntries)
-    {
+        $showOnlyOwnEntries
+    ) {
         $this->request = $requestStack->getCurrentRequest();
         $this->currentUserApi = $currentUserApi;
         $this->showOnlyOwnEntries = $showOnlyOwnEntries;
@@ -1392,8 +1392,12 @@ abstract class AbstractCollectionFilterHelper
             $qb = $this->addCreatorFilter($qb);
         }
         
-        $endDate = $this->request->query->get('enddate', date('Y-m-d H:i:s'));
-        $qb->andWhere('(tbl.enddate >= :endDate OR tbl.enddate IS NULL)')
+        $startDate = $this->request->query->get('inViewFrom', date('Y-m-d H:i:s'));
+        $qb->andWhere('(tbl.inViewFrom <= :startDate OR tbl.inViewFrom IS NULL)')
+           ->setParameter('startDate', $startDate);
+        
+        $endDate = $this->request->query->get('inViewUntil', date('Y-m-d H:i:s'));
+        $qb->andWhere('(tbl.inViewUntil >= :endDate OR tbl.inViewUntil IS NULL)')
            ->setParameter('endDate', $endDate);
     
         return $qb;
@@ -1546,6 +1550,13 @@ abstract class AbstractCollectionFilterHelper
         }
     
         $showOnlyOwnEntries = (bool)$this->request->query->getInt('own', $this->showOnlyOwnEntries);
+    
+        if (!in_array('workflowState', array_keys($parameters)) || empty($parameters['workflowState'])) {
+            // per default we show approved products only
+            $onlineStates = ['approved'];
+            $qb->andWhere('tbl.workflowState IN (:onlineStates)')
+               ->setParameter('onlineStates', $onlineStates);
+        }
     
         if ($showOnlyOwnEntries) {
             $qb = $this->addCreatorFilter($qb);
@@ -1797,8 +1808,8 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchWorkflowState'] = $fragment;
             $filters[] = 'tbl.name LIKE :searchName';
             $parameters['searchName'] = '%' . $fragment . '%';
-            $filters[] = 'tbl.text LIKE :searchText';
-            $parameters['searchText'] = '%' . $fragment . '%';
+            $filters[] = 'tbl.description LIKE :searchDescription';
+            $parameters['searchDescription'] = '%' . $fragment . '%';
             $filters[] = 'tbl.urlToOfferOnHomepage = :searchUrlToOfferOnHomepage';
             $parameters['searchUrlToOfferOnHomepage'] = $fragment;
             $filters[] = 'tbl.imageOfOffer = :searchImageOfOffer';
@@ -1813,8 +1824,10 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchEffectivFrom'] = $fragment;
             $filters[] = 'tbl.effectivUntil = :searchEffectivUntil';
             $parameters['searchEffectivUntil'] = $fragment;
-            $filters[] = 'tbl.enddate = :searchEnddate';
-            $parameters['searchEnddate'] = $fragment;
+            $filters[] = 'tbl.inViewFrom = :searchInViewFrom';
+            $parameters['searchInViewFrom'] = $fragment;
+            $filters[] = 'tbl.inViewUntil = :searchInViewUntil';
+            $parameters['searchInViewUntil'] = $fragment;
         }
         if ($objectType == 'menuOfLocation') {
             $filters[] = 'tbl.workflowState = :searchWorkflowState';
@@ -1897,6 +1910,8 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchInViewUntil'] = $fragment;
         }
         if ($objectType == 'product') {
+            $filters[] = 'tbl.workflowState = :searchWorkflowState';
+            $parameters['searchWorkflowState'] = $fragment;
             $filters[] = 'tbl.name LIKE :searchName';
             $parameters['searchName'] = '%' . $fragment . '%';
             $filters[] = 'tbl.description LIKE :searchDescription';

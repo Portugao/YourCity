@@ -1,10 +1,10 @@
 {# purpose of this template: offers view csv view #}
-{% spaceless %}"{{ __('Name') }}";"{{ __('Text') }}";"{{ __('Url to offer on homepage') }}";"{{ __('Image of offer') }}";"{{ __('Price of offer') }}";"{{ __('Normal price') }}";"{{ __('Percent of offer') }}";"{{ __('Effectiv from') }}";"{{ __('Effectiv until') }}";"{{ __('Enddate') }}";"{{ __('Workflow state') }}"
+{% spaceless %}"{{ __('Name') }}";"{{ __('Description') }}";"{{ __('Url to offer on homepage') }}";"{{ __('Image of offer') }}";"{{ __('Price of offer') }}";"{{ __('Normal price') }}";"{{ __('Percent of offer') }}";"{{ __('Effectiv from') }}";"{{ __('Effectiv until') }}";"{{ __('In view from') }}";"{{ __('In view until') }}";"{{ __('Workflow state') }}"
 ;"{{ __('Location') }}"
 {% endspaceless %}
 {% for offer in items %}
 {% spaceless %}
-    "{{ offer.name }}";"{{ offer.text|safeHtml }}";"{{ offer.urlToOfferOnHomepage }}";"{{ offer.imageOfOffer }}";"{{ offer.priceOfOffer|localizedcurrency('EUR') }}";"{{ offer.normalPrice|localizedcurrency('EUR') }}";"{{ offer.percentOfOffer }}%";"{{ offer.effectivFrom|localizeddate('medium', 'short') }}";"{{ offer.effectivUntil|localizeddate('medium', 'short') }}";"{{ offer.enddate|localizeddate('medium', 'short') }}";"{{ offer.workflowState|muyourcitymodule_objectState(false)|lower }}"
+    "{{ offer.name }}";"{{ offer.description|safeHtml }}";"{{ offer.urlToOfferOnHomepage }}";"{{ offer.imageOfOffer }}";"{{ offer.priceOfOffer|localizedcurrency('EUR') }}";"{{ offer.normalPrice|localizedcurrency('EUR') }}";"{{ offer.percentOfOffer }}%";"{{ offer.effectivFrom|localizeddate('medium', 'short') }}";"{{ offer.effectivUntil|localizeddate('medium', 'short') }}";"{{ offer.inViewFrom|localizeddate('medium', 'short') }}";"{{ offer.inViewUntil|localizeddate('medium', 'short') }}";"{{ offer.workflowState|muyourcitymodule_objectState(false)|lower }}"
     ;"{% if offer.location|default %}{{ offer.location|muyourcitymodule_formattedTitle }}{% endif %}"
 {% endspaceless %}
 {% endfor %}

@@ -44,7 +44,7 @@
     {% endif %}
     <description>
         <![CDATA[
-        {{ offer.text|replace({ '<br>': '<br />' }) }}
+        {{ offer.description|replace({ '<br>': '<br />' }) }}
         ]]>
     </description>
     {% if offer.createdDate|default %}

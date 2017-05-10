@@ -899,9 +899,23 @@ abstract class AbstractListEntriesHelper
             'default' => false
         ];
         $states[] = [
+            'value'   => 'suspended',
+            'text'    => $this->__('Suspended'),
+            'title'   => $this->__('Content has been approved, but is temporarily offline.'),
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
             'value'   => '!approved',
             'text'    => $this->__('All except approved'),
             'title'   => $this->__('Shows all items except these which are approved'),
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => '!suspended',
+            'text'    => $this->__('All except suspended'),
+            'title'   => $this->__('Shows all items except these which are suspended'),
             'image'   => '',
             'default' => false
         ];

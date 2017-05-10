@@ -57,7 +57,7 @@ abstract class AbstractOfferRepository extends EntityRepository
         return [
             'workflowState',
             'name',
-            'text',
+            'description',
             'urlToOfferOnHomepage',
             'imageOfOffer',
             'priceOfOffer',
@@ -65,6 +65,7 @@ abstract class AbstractOfferRepository extends EntityRepository
             'percentOfOffer',
             'effectivFrom',
             'effectivUntil',
+            'inViewUntil',
             'createdBy',
             'createdDate',
             'updatedBy',

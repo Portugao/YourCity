@@ -55,6 +55,7 @@ abstract class AbstractProductRepository extends EntityRepository
     public function getAllowedSortingFields()
     {
         return [
+            'workflowState',
             'name',
             'description',
             'kindOfProduct',

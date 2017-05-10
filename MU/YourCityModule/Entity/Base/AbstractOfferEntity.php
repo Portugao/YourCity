@@ -76,9 +76,9 @@ abstract class AbstractOfferEntity extends EntityAccess implements Translatable
      * @Gedmo\Translatable
      * @ORM\Column(type="text", length=4000, nullable=true)
      * @Assert\Length(min="0", max="4000")
-     * @var text $text
+     * @var text $description
      */
-    protected $text = '';
+    protected $description = '';
     
     /**
      * If there is a special page on your homepage, enter the url here.
@@ -171,9 +171,17 @@ abstract class AbstractOfferEntity extends EntityAccess implements Translatable
      if you wish, that the offer is still there after the end, enter none.
      * @ORM\Column(type="datetime", nullable=true)
      * @Assert\DateTime()
-     * @var DateTime $enddate
+     * @var DateTime $inViewFrom
      */
-    protected $enddate;
+    protected $inViewFrom;
+    
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\DateTime()
+     * @Assert\Expression("!value or value > this.getInViewFrom()")
+     * @var DateTime $inViewUntil
+     */
+    protected $inViewUntil;
     
     
     /**
@@ -310,26 +318,26 @@ abstract class AbstractOfferEntity extends EntityAccess implements Translatable
     }
     
     /**
-     * Returns the text.
+     * Returns the description.
      *
      * @return text
      */
-    public function getText()
+    public function getDescription()
     {
-        return $this->text;
+        return $this->description;
     }
     
     /**
-     * Sets the text.
+     * Sets the description.
      *
-     * @param text $text
+     * @param text $description
      *
      * @return void
      */
-    public function setText($text)
+    public function setDescription($description)
     {
-        if ($this->text !== $text) {
-            $this->text = $text;
+        if ($this->description !== $description) {
+            $this->description = $description;
         }
     }
     
@@ -558,31 +566,61 @@ abstract class AbstractOfferEntity extends EntityAccess implements Translatable
     }
     
     /**
-     * Returns the enddate.
+     * Returns the in view from.
      *
      * @return DateTime
      */
-    public function getEnddate()
+    public function getInViewFrom()
     {
-        return $this->enddate;
+        return $this->inViewFrom;
     }
     
     /**
-     * Sets the enddate.
+     * Sets the in view from.
      *
-     * @param DateTime $enddate
+     * @param DateTime $inViewFrom
      *
      * @return void
      */
-    public function setEnddate($enddate)
+    public function setInViewFrom($inViewFrom)
     {
-        if ($this->enddate !== $enddate) {
-            if (is_object($enddate) && $enddate instanceOf \DateTime) {
-                $this->enddate = $enddate;
-            } elseif (null === $enddate || empty($enddate)) {
-                $this->enddate = null;
+        if ($this->inViewFrom !== $inViewFrom) {
+            if (is_object($inViewFrom) && $inViewFrom instanceOf \DateTime) {
+                $this->inViewFrom = $inViewFrom;
+            } elseif (null === $inViewFrom || empty($inViewFrom)) {
+                $this->inViewFrom = null;
             } else {
-                $this->enddate = new \DateTime($enddate);
+                $this->inViewFrom = new \DateTime($inViewFrom);
+            }
+        }
+    }
+    
+    /**
+     * Returns the in view until.
+     *
+     * @return DateTime
+     */
+    public function getInViewUntil()
+    {
+        return $this->inViewUntil;
+    }
+    
+    /**
+     * Sets the in view until.
+     *
+     * @param DateTime $inViewUntil
+     *
+     * @return void
+     */
+    public function setInViewUntil($inViewUntil)
+    {
+        if ($this->inViewUntil !== $inViewUntil) {
+            if (is_object($inViewUntil) && $inViewUntil instanceOf \DateTime) {
+                $this->inViewUntil = $inViewUntil;
+            } elseif (null === $inViewUntil || empty($inViewUntil)) {
+                $this->inViewUntil = null;
+            } else {
+                $this->inViewUntil = new \DateTime($inViewUntil);
             }
         }
     }

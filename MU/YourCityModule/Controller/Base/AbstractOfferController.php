@@ -140,7 +140,7 @@ abstract class AbstractOfferController extends AbstractController
         $sortableColumns->addColumns([
             new Column('workflowState'),
             new Column('name'),
-            new Column('text'),
+            new Column('description'),
             new Column('urlToOfferOnHomepage'),
             new Column('imageOfOffer'),
             new Column('priceOfOffer'),
@@ -148,13 +148,13 @@ abstract class AbstractOfferController extends AbstractController
             new Column('percentOfOffer'),
             new Column('effectivFrom'),
             new Column('effectivUntil'),
+            new Column('inViewUntil'),
             new Column('location'),
             new Column('createdBy'),
             new Column('createdDate'),
             new Column('updatedBy'),
             new Column('updatedDate'),
         ]);
-        $sortableColumns->setOrderBy($sortableColumns->getColumn($sort), strtoupper($sortdir));
         
         $templateParameters = $controllerHelper->processViewActionParameters($objectType, $sortableColumns, $templateParameters, true);
         

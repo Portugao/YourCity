@@ -72,8 +72,8 @@ abstract class AbstractEntityDisplayHelper
     public function __construct(
         TranslatorInterface $translator,
         RequestStack $requestStack,
-        ListEntriesHelper $listEntriesHelper)
-    {
+        ListEntriesHelper $listEntriesHelper
+    ) {
         $this->translator = $translator;
         $this->listEntriesHelper = $listEntriesHelper;
         $locale = null !== $requestStack->getCurrentRequest() ? $requestStack->getCurrentRequest()->getLocale() : null;
@@ -417,7 +417,7 @@ abstract class AbstractEntityDisplayHelper
             return 'description';
         }
         if ($objectType == 'offer') {
-            return 'text';
+            return 'description';
         }
         if ($objectType == 'menuOfLocation') {
             return 'description';
@@ -513,7 +513,7 @@ abstract class AbstractEntityDisplayHelper
             return 'createdDate';
         }
         if ($objectType == 'offer') {
-            return 'createdDate';
+            return 'inViewFrom';
         }
         if ($objectType == 'menuOfLocation') {
             return 'inViewFrom';

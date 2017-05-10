@@ -1008,10 +1008,13 @@ abstract class AbstractLocationType extends AbstractType
             'class' => 'MUYourCityModule:PartEntity',
             'choice_label' => $choiceLabelClosure,
             'multiple' => true,
-            'expanded' => false,
+            'expanded' => true,
             'query_builder' => $queryBuilder,
             'required' => false,
             'label' => $this->__('Parts'),
+            'label_attr' => [
+                'class' => 'checkbox-inline'
+            ],
             'attr' => [
                 'title' => $this->__('Choose the parts')
             ]

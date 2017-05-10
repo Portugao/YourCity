@@ -138,6 +138,7 @@ abstract class AbstractProductController extends AbstractController
         $sortableColumns = new SortableColumns($this->get('router'), 'muyourcitymodule_product_' . ($isAdmin ? 'admin' : '') . 'view', 'sort', 'sortdir');
         
         $sortableColumns->addColumns([
+            new Column('workflowState'),
             new Column('name'),
             new Column('description'),
             new Column('kindOfProduct'),
@@ -156,7 +157,6 @@ abstract class AbstractProductController extends AbstractController
             new Column('updatedBy'),
             new Column('updatedDate'),
         ]);
-        $sortableColumns->setOrderBy($sortableColumns->getColumn($sort), strtoupper($sortdir));
         
         $templateParameters = $controllerHelper->processViewActionParameters($objectType, $sortableColumns, $templateParameters, true);
         

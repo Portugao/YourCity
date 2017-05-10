@@ -1,10 +1,11 @@
 {# purpose of this template: general base layout #}
 {% block header %}
     {{ pageAddAsset('stylesheet', asset('jquery-ui/themes/base/jquery-ui.min.css')) }}
+    {{ pageAddAsset('stylesheet', asset('bootstrap-jqueryui/bootstrap-jqueryui.min.css')) }}
+    {{ pageAddAsset('javascript', asset('jquery-ui/jquery-ui.min.js')) }}
+    {{ pageAddAsset('javascript', asset('bootstrap-jqueryui/bootstrap-jqueryui.min.js')) }}
     {{ pageAddAsset('javascript', asset('magnific-popup/jquery.magnific-popup.min.js')) }}
     {{ pageAddAsset('stylesheet', asset('magnific-popup/magnific-popup.css')) }}
-    {{ pageAddAsset('stylesheet', asset('bootstrap-jqueryui/bootstrap-jqueryui.min.css')) }}
-    {{ pageAddAsset('javascript', asset('bootstrap-jqueryui/bootstrap-jqueryui.min.js')) }}
     {{ pageAddAsset('javascript', zasset('@MUYourCityModule:js/MUYourCityModule.js')) }}
     {{ pageAddAsset('javascript', zasset('@MUYourCityModule:js/MUYourCityModule.Geo.js')) }}
     {% if 'edit' in app.request.get('_route') %}

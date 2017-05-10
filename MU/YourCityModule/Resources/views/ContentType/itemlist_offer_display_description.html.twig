@@ -2,8 +2,8 @@
 <dl>
     {% for offer in items %}
         <dt>{{ offer|muyourcitymodule_formattedTitle }}</dt>
-        {% if offer.text %}
-            <dd>{{ offer.text|striptags|truncate(200, true, '&hellip;') }}</dd>
+        {% if offer.description %}
+            <dd>{{ offer.description|striptags|truncate(200, true, '&hellip;') }}</dd>
         {% endif %}
         <dd><a href="{{ path('muyourcitymodule_offer_display', { 'id': offer.getId() }) }}">{{ __('Read more') }}</a>
         </dd>

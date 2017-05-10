@@ -213,7 +213,7 @@ abstract class AbstractOfferQuickNavType extends AbstractType
                 ],
                 'choices' =>             [
                     $this->__('Name') => 'name',
-                    $this->__('Text') => 'text',
+                    $this->__('Description') => 'description',
                     $this->__('Url to offer on homepage') => 'urlToOfferOnHomepage',
                     $this->__('Image of offer') => 'imageOfOffer',
                     $this->__('Price of offer') => 'priceOfOffer',
@@ -221,6 +221,7 @@ abstract class AbstractOfferQuickNavType extends AbstractType
                     $this->__('Percent of offer') => 'percentOfOffer',
                     $this->__('Effectiv from') => 'effectivFrom',
                     $this->__('Effectiv until') => 'effectivUntil',
+                    $this->__('In view until') => 'inViewUntil',
                     $this->__('Creation date') => 'createdDate',
                     $this->__('Creator') => 'createdBy',
                     $this->__('Update date') => 'updatedDate',

@@ -6,7 +6,6 @@
     {{ parent() }}
     {{ pageAddAsset('javascript', zasset('@MUYourCityModule:js/MUYourCityModule.Validation.js'), 98) }}
     {{ pageAddAsset('javascript', zasset('@MUYourCityModule:js/MUYourCityModule.EditFunctions.js'), 99) }}
-    {{ pageAddAsset('javascript', asset('typeahead/typeahead.bundle.min.js')) }}
 {% endblock %}
 {% block title mode == 'create' ? __('Create offer') : __('Edit offer') %}
 {% block admin_page_icon mode == 'create' ? 'plus' : 'pencil-square-o' %}
@@ -40,7 +39,7 @@
                                 <legend>{{ language|languageName|safeHtml }}</legend>
                                 {% if language == app.request.locale %}
                                     {{ form_row(form.name) }}
-                                    {{ form_row(form.text) }}
+                                    {{ form_row(form.description) }}
                                 {% else %}
                                     {{ form_row(attribute(form, 'translations' ~ language)) }}
                                 {% endif %}
@@ -54,7 +53,7 @@
             <fieldset>
                 <legend>{{ language|languageName|safeHtml }}</legend>
                 {{ form_row(form.name) }}
-                {{ form_row(form.text) }}
+                {{ form_row(form.description) }}
             </fieldset>
         {% endif %}
         <fieldset>
@@ -66,7 +65,8 @@
             {{ form_row(form.percentOfOffer) }}
             {{ form_row(form.effectivFrom) }}
             {{ form_row(form.effectivUntil) }}
-            {{ form_row(form.enddate) }}
+            {{ form_row(form.inViewFrom) }}
+            {{ form_row(form.inViewUntil) }}
         </fieldset>
         
         {{ include(
@@ -135,7 +135,8 @@
                 {% endif %}
                 mUYourCityInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ offer.id }}{% endif %}');
                 mUYourCityInitUploadField('muyourcitymodule_offer_imageOfOffer_imageOfOffer');
-                mUYourCityInitDateField('muyourcitymodule_offer_enddate');
+                mUYourCityInitDateField('muyourcitymodule_offer_inViewFrom');
+                mUYourCityInitDateField('muyourcitymodule_offer_inViewUntil');
             });
         })(jQuery);
     /* ]]> */

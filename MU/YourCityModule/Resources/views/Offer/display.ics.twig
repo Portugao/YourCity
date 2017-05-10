@@ -1,0 +1,25 @@
+{# purpose of this template: offers display ics view #}
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:{{ app.request.getSchemeAndHttpHost() }}
+METHOD:PUBLISH
+BEGIN:VEVENT
+DTSTART:{{ offer|date('Ymd\THi00\Z') }}
+DTEND:{{ offer|date('Ymd\THi00\Z') }}
+{% if offer.zipcode != '' and offer.city is not empty %}{% set location = offer.zipcode ~ ' ' ~ offer.city %}LOCATION{{ location|muyourcitymodule_icalText }}{% endif %}
+TRANSP:OPAQUE
+SEQUENCE:0
+UID:{{ 'ICAL' ~ offer.inViewFrom ~ random(5000) ~ offer.inViewUntil }}
+DTSTAMP:{{ 'now'|date('Ymd\THi00\Z') }}
+ORGANIZER;CN="{{ offer.createdBy.getUname() }}":MAILTO:{{ offer.createdBy.getEmail() }}
+SUMMARY{{ offer|muyourcitymodule_formattedTitle|muyourcitymodule_icalText }}
+{% if offer.description is not empty %}DESCRIPTION{{ offer.description|muyourcitymodule_icalText }}{% endif %}
+PRIORITY:5
+{% if offer.imageOfOffer %}ATTACH;VALUE=URL:{{ offer.imageOfOfferUrl }}
+{% endif %}
+{% if offer.urlToOfferOnHomepage %}ATTACH;VALUE=URL:{{ offer.urlToOfferOnHomepage }}
+{% endif %}
+CLASS:PUBLIC
+STATUS:CONFIRMED
+END:VEVENT
+END:VCALENDAR

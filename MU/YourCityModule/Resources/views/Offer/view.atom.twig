@@ -45,7 +45,7 @@
     {% endif %}
     <summary type="html">
         <![CDATA[
-        {{ offer.text|truncate(150, true, '&hellip;')|default('-') }}
+        {{ offer.description|truncate(150, true, '&hellip;')|default('-') }}
         ]]>
     </summary>
     <content type="html">

@@ -2,7 +2,7 @@
 <offer id="{{ offer.getId() }}" createdon="{{ offer.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ offer.updatedDate|localizeddate('medium', 'short') }}">
     <id>{{ offer.id }}</id>
     <name><![CDATA[{{ offer.name }}]]></name>
-    <text><![CDATA[{{ offer.text|safeHtml }}]]></text>
+    <description><![CDATA[{{ offer.description|safeHtml }}]]></description>
     <urlToOfferOnHomepage>{{ offer.urlToOfferOnHomepage }}</urlToOfferOnHomepage>
     <imageOfOffer{% if offer.imageOfOffer is not empty and offer.imageOfOfferMeta|default %} extension="{{ offer.imageOfOfferMeta.extension }}" size="{{ offer.imageOfOfferMeta.size }}" isImage="{% if offer.imageOfOfferMeta.isImage %}true{% else %}false{% endif %}"{% if offer.imageOfOfferMeta.isImage %} width="{{ offer.imageOfOfferMeta.width }}" height="{{ offer.imageOfOfferMeta.height }}" format="{{ offer.imageOfOfferMeta.format }}"{% endif %}{% endif %}>{{ offer.imageOfOffer }}</imageOfOffer>
     <priceOfOffer>{{ offer.priceOfOffer|localizedcurrency('EUR') }}</priceOfOffer>
@@ -10,7 +10,8 @@
     <percentOfOffer>{{ offer.percentOfOffer }}%</percentOfOffer>
     <effectivFrom>{{ offer.effectivFrom|localizeddate('medium', 'short') }}</effectivFrom>
     <effectivUntil>{{ offer.effectivUntil|localizeddate('medium', 'short') }}</effectivUntil>
-    <enddate>{{ offer.enddate|localizeddate('medium', 'short') }}</enddate>
+    <inViewFrom>{{ offer.inViewFrom|localizeddate('medium', 'short') }}</inViewFrom>
+    <inViewUntil>{{ offer.inViewUntil|localizeddate('medium', 'short') }}</inViewUntil>
     <workflowState>{{ offer.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
     <location>{% if offer.location|default %}{{ offer.location|muyourcitymodule_formattedTitle }}{% endif %}</location>
 </offer>

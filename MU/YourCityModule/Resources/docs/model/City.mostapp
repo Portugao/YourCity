@@ -400,7 +400,7 @@ application "YourCity" {
                     documentation ""
                     length 255
                 },
-                text "text" nullable translatable {
+                text "description" nullable translatable {
                     documentation "Enter a description of this offer.\r\nYou can also give informations about the price if you do not want to use the special field for it."
                     mandatory false
                     length 4000
@@ -436,10 +436,14 @@ application "YourCity" {
             {
                     documentation "Enter here the date and time for the end of the offer."
                 },
-                datetime "enddate" nullable endDate {
+                datetime "inViewFrom" nullable startDate {
                     documentation "On this date the offer will get put into the archive.\r\nif you wish, that the offer is still there after the end, enter none."
                     mandatory false
                     displayType NONE
+                }
+            ,
+                datetime "inViewUntil" nullable endDate {
+                    mandatory false
                 }
             }
             actions {
@@ -649,6 +653,7 @@ application "YourCity" {
             documentation "There are products, that are only available on special day with a limitted number of pieces.\r\nHere you can mange them for your customers."
             nameMultiple "products"
             displayPattern "#name#"
+            hasTray true
             fields {
                 string "name" translatable {
                     documentation "Maximum 100 characters, better only 57."
@@ -893,6 +898,7 @@ application "YourCity" {
             target "part"
             targetAlias "parts"
             nullable true
+            expandedTarget true
             refClass "LocationPart"
             orderBy "name"
             orderByReverse "letterForOrder"

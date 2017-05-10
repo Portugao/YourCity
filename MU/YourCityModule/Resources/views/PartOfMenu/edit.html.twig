@@ -6,7 +6,6 @@
     {{ parent() }}
     {{ pageAddAsset('javascript', zasset('@MUYourCityModule:js/MUYourCityModule.Validation.js'), 98) }}
     {{ pageAddAsset('javascript', zasset('@MUYourCityModule:js/MUYourCityModule.EditFunctions.js'), 99) }}
-    {{ pageAddAsset('javascript', asset('typeahead/typeahead.bundle.min.js')) }}
 {% endblock %}
 {% block title mode == 'create' ? __('Create part of menu') : __('Edit part of menu') %}
 {% block admin_page_icon mode == 'create' ? 'plus' : 'pencil-square-o' %}

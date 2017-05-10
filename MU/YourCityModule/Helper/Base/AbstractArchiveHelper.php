@@ -81,8 +81,8 @@ abstract class AbstractArchiveHelper
         PermissionApiInterface $permissionApi,
         EntityFactory $entityFactory,
         WorkflowHelper $workflowHelper,
-        HookHelper $hookHelper)
-    {
+        HookHelper $hookHelper
+    ) {
         $this->translator = $translator;
         $this->request = $requestStack->getCurrentRequest();
         $this->logger = $logger;
@@ -129,7 +129,7 @@ abstract class AbstractArchiveHelper
     {
         $today = date('Y-m-d H:i:s');
     
-        $affectedEntities = $this->getObjectsToBeArchived('offer', 'enddate', $today);
+        $affectedEntities = $this->getObjectsToBeArchived('offer', 'inViewUntil', $today);
         foreach ($affectedEntities as $entity) {
             $this->archiveSingleObject($entity);
         }
