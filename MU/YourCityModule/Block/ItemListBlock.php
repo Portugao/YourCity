@@ -13,7 +13,6 @@
 namespace MU\YourCityModule\Block;
 
 use MU\YourCityModule\Block\Base\AbstractItemListBlock;
-use Doctrine\ORM\Query\AST\ParenthesisExpression;
 
 /**
  * Generic item list block implementation class.
