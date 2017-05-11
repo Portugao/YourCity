@@ -16,8 +16,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Zikula\Core\Controller\AbstractController;
 use MU\YourCityModule\Form\Type\ImportType;
+use DataUtil;
 use ServiceUtil;
 use PDO;
+use PDOException;
 use Doctrine_Manager;
 use MU\YourCityModule\Entity\Factory\EntityFactory;
 use MU\YourCityModule\Entity\Factory\YourCityFactory;
@@ -90,21 +92,23 @@ abstract class AbstractImportController extends AbstractController
     	
     	
     	$results = $this->getDatas();
+
     	if ($results) {
     		foreach ($results as $result) {
     			$locations[] = $result;
     		}
     	}
-    	// we get an object manager
-    	//$objectManager = $this->entityFactory->getObjectManager();
+
+    	// we get an entity manager
     	$entityManager = $this->container->get('doctrine.entitymanager');
+    	
     	
 
     	if (is_array($locations)) {
     		foreach ($locations as $location) {
+
     			$data = $this->buildArrayForDatas($location);
     			// we build new location
-    			$modelHelper = $this->container->get('mu_yourcity_module.model_helper');
     			$newLocation = new \MU\YourCityModule\Entity\LocationEntity();
     			
     			$newLocation->setWorkflowState('approved');    			
@@ -175,36 +179,51 @@ abstract class AbstractImportController extends AbstractController
     			$newLocation->setEndOnSunday($data[0]['endOnSunday']);
     			$newLocation->setStart2OnSunday($data[0]['start2OnSunday']);
     			$newLocation->setEnd2OnSunday($data[0]['end2OnSunday']);
+    			
+    			$newLocation->setSlug($data[0]['slug']);
+    			
+    			$controllerHelper = $this->get('mu_yourcity_module.controller_helper');
+    			$controllerHelper->
+    			
+    			$branchRespository = $this->entityFactory->getRepository('branch');
+    			$branch = $branchRespository->find($data[0]['branchId']);
+    			$newLocation->setBranches($branch);
 
     			$entityManager->persist($newLocation);
     			$entityManager->flush();
     			
-    		}
-    		
-    		foreach ($locations as $location) {
-    			$data = $this->buildArrayForDatas($location);
-    			//die($data[0]['name']);
-
-    			$actualImport = $this->getFreshImport($data[0]['name']);
-    			//die(count($actualImport['name']));
-    			if ($actualImport) {
-    			foreach ($actualImport as $import) {
-    				$imports[] = $import;
-    			}
- 			 
-    			$values = "('" . $imports[0]['id'] . "', '" . $branchId . "')";
-    			
-    			$sql = 'INSERT INTO mu_yourcity_location_branch' . ' (locationentity_id, branchentity_id) VALUES ' . $values;
-    			 
     			$connect = $this->getDBConnection();
-    			 
-    			$stmt = $connect->prepare($sql);
+
+    			$actualImport = $this->getFreshImport($data[0]['slug']);
+                foreach ($actualImport as $thisImport) {
+                	$dieserImport[] = $thisImport;
+                }
+                
+                /*$con = $this->mysqliCon();
+               
+                $check = mysqli_query($con,"INSERT INTO mu_yourcity_location_branch(mu_yourcity_location_branch) VALUES ('1','9')");
+			 
+                if ($check) {
+                	die('Yes');
+                } else {
+                	die('no');
+                }*/
+
+    			
+    			//$sql2 = 'INSERT INTO mu_yourcity_location_branch' . ' (e-locationentity_id, e-branchentity_id) VALUES ' . $values2;  			
+    			/*$stmt2 = $connect->prepare('INSERT INTO mu_yourcity_location_branch(mu_yourcity_location_branch) VALUES (:location, :branch)');
+    			//$stmt2 = $connect->prepare($sql2);
+    			$stmt2->bindParam(':location', $dieserImport[0]['id'], PDO::PARAM_INT);
+    			$stmt2->bindParam(':branch', $data[0]['branchId'], PDO::PARAM_INT);
+    			
     			try {
-    				$stmt->execute();
-    			} catch (Exception $e) {
-    				LogUtil::registerError($e);
+    				 $stmt2->execute();
     			}
+    			catch (PDOException $e) {
+    				$this->__('DB Import failed');
     			}
+    			//$check = $stmt2->execute();*/
+
     		}
 
     		//$status = __('Import complete!', $dom);
@@ -386,9 +405,8 @@ abstract class AbstractImportController extends AbstractController
     		} else {
     			$openingHours = '';
     		}
-
     		
-    		$data[] = array(
+    		$data[0] = array(
     				'id' => $result['id'],
     				'workflowState' => 'approved',
     				'name' => $result['field9'],
@@ -498,12 +516,12 @@ abstract class AbstractImportController extends AbstractController
     
     /**
      *
-     * Get entries of table
+     * Get the item just imported by name
      *
      *
      * @return an array of files
      */
-    private function getFreshImport($name)
+    private function getFreshImport($slug)
     {
     	$table2 = 'mu_yourcity_location';
     	//$moduletable = $this->getPraefix(). $table;
@@ -512,13 +530,13 @@ abstract class AbstractImportController extends AbstractController
     	// handle the access to the module file table
     	// build sql    
     	//$query = 'SELECT * FROM mu_yourcity_location WHERE name LIKE %"' . $name . '"%';
-    	$query2 = "SELECT * FROM " . $table2 . " WHERE name = LIKE %" . $name . "%";
-    
+    	$query2 = "SELECT * FROM " . $table2 . " WHERE slug LIKE '%" . \DataUtil::formatForStore($slug) . "%'"; 
+    	//die($query2);
     	// prepare the sql query
-    	$sql = $connect2->query($query2);
+    	$sql2 = $connect2->query($query2);
     	 
     	$connect2 = null;
-    	return $sql;
+    	return $sql2;
     }
     
 
@@ -538,7 +556,7 @@ abstract class AbstractImportController extends AbstractController
     	$dbpassword = $databases[$connName]['password'];
 
     	try {
-    		$connect = new PDO("mysql:host=$host;dbname=$dbname", $dbuser, $dbpassword);
+    		$connect = new \PDO("mysql:host=$host;dbname=$dbname", $dbuser, $dbpassword);
     	}
     	catch (PDOException $e) {
     		$this->__('Connection to database failed');
@@ -554,5 +572,19 @@ abstract class AbstractImportController extends AbstractController
     public function setEntityFactory(YourCityFactory $entityFactory)
     {
     	$this->entityFactory = $entityFactory;
+    }
+    
+    private function mysqliCon()
+    {
+    	//get host, db, user and pw
+    	$databases = ServiceUtil::getManager()->getArgument('databases');
+    	$connName = Doctrine_Manager::getInstance()->getCurrentConnection()->getName();
+    	$host = $databases[$connName]['host'];
+    	$dbname = $databases[$connName]['dbname'];
+    	$dbuser = $databases[$connName]['user'];
+    	$dbpassword = $databases[$connName]['password'];
+    	
+    	$con=mysqli_connect($host,$dbuser,$dbpassword,$dbname);
+    	return $con;
     }
 }
