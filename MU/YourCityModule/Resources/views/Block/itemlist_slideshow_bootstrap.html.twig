@@ -1,0 +1,84 @@
+{# Purpose of this template: Display items within a block (fallback template) #}
+
+
+
+<div id="myCarousel" class="carousel slide">
+    <div class="carousel-inner">
+    {% if objectType == 'location' %}
+        {% for location in items %}
+            {% if loop.index == 1 %}
+                <div class="item active">
+            {% else %}
+                <div class="item">
+            {% endif %}
+            <div class="item-container"> 
+            <h2>{{ location.name }}</h2>
+            {{ location.description|truncate(100) }}<br />
+            {% if location.branches|default %}{{ __('Branches') }}: 
+                {% for branch in location.branches %}
+                    {{ branch.name }} 
+                {% endfor %}<br />
+            {% endif %}
+            {% if location.parts|default %}{{ __('Part') }}: 
+                {% for part in location.parts %}
+                    {{ part.name }} 
+                {% endfor %}<br /><br />
+            {% endif %}
+    
+            <a href="{{ path('muyourcitymodule_location_display', { 'id': location.id, 'slug': location.slug }) }}" class="btn btn-primary btn-sm" href="#" role="button">{{ __('More') }}</a>
+            </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+    </div>
+    
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev"><i class="fa fa-chevron-left"></i></a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next"><i class="fa fa-chevron-right"></i></a>
+                
+    <ol class="carousel-indicators">
+    {% for location in items %}
+        {% set counter = loop.index - 1 %}
+        {% if loop.index == 1 %}
+            <li data-target="#myCarousel" data-slide-to="{{ counter }}" class="active"></li>
+        {% else %}
+            <li data-target="#myCarousel" data-slide-to="{{ counter }}"></li>
+        {% endif %}
+    {% endfor %}
+                </ol>                
+</div>
+
+
+
+{% if objectType == 'offer' %}
+<div class="slider">
+    <div class="tabs">
+    {% for offer in items %}
+        <div class="tab">
+        <div class="offerItem">
+        {% if offer.percentOfOffer is not empty and offer.percentOfOffer != 0 %}
+        <span class="offer-block-offer">{{ offer.percentOfOffer }}%</span>
+        {% endif %}
+            <h2>{{ offer.name }}</h2>
+            {{ offer.description|truncate(100) }}<br />
+            <a href="{{ path('muyourcitymodule_offer_display', { 'id': offer.id }) }}" class="btn btn-primary btn-sm" href="#" role="button">{{ __('More') }}</a>
+        </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+{% endif %}
+<br style="clear: both;" />
+
+<script type="text/javascript">
+/* <![CDATA[ */
+var MU = jQuery.noConflict();
+	MU('#myCarousel').carousel({
+		interval:   4000
+	});
+        /* ]]> */
+        </script>
+
+
+
+{{ pageAddAsset('javascript', app.request.basePath ~ '/modules/MU/YourCityModule/Resources/public/js/Flex/jquery.flexslider.js') }}
+{{ pageAddAsset('stylesheet', app.request.basePath ~ '/modules/MU/YourCityModule/Resources/public/css/Flex/flexslider.css') }}
