@@ -325,7 +325,7 @@ div.muyourcitymodule-view .avatar img {
 }
 
 .offer-list-title {
-	font-size: 2em;
+	font-size: 1.6em;
 }
 
 .offerPrice {
@@ -369,18 +369,22 @@ div.muyourcitymodule-view .avatar img {
 
 .offer-block-offer {
 	border-radius: 80px;
-	padding: 60px auto;
-    height: 100px;
-    width: 100px;
+	padding: 12px 5px;
+	height: 100px;
+	width: 100px;
 	text-align: center;
 	vertical-align: middle;
 	font-size: 3em;
 	color: #fff;
 	position: absolute;
-	top: -10px;
+	bottom: 20px;
 	right: 15px;
-	background: #ee0000;
 	z-index: 100;
+	background-image: -webkit-linear-gradient(270deg,rgba(134,10,15,0.85) 0%,rgba(139,11,15,0.80) 100%);
+	background-image: -moz-linear-gradient(270deg,rgba(134,10,15,0.85) 0%,rgba(139,11,15,0.80) 100%);
+	background-image: -o-linear-gradient(270deg,rgba(134,10,15,0.85) 0%,rgba(139,11,15,0.80) 100%);
+	background-image: linear-gradient(180deg,rgba(134,10,15,0.85) 0%,rgba(139,11,15,0.80) 100%);
+	border: 5px solid #DADAD9;
 }
 
 .offerItem {
@@ -413,4 +417,60 @@ div.muyourcitymodule-view .avatar img {
 
 .slider {
 
+}
+
+/*****************BOOTSTRAP CAROUSEL******************/
+
+#myCarousel .thumbnail {
+	margin-bottom: 0;
+}
+.carousel-control.left, .carousel-control.right {
+	background-image:none !important;
+}
+.carousel-control {
+	color:#fff;
+	top:40%;
+	color:#428BCA;
+	bottom:auto;
+	padding-top:4px;
+	width:30px;
+	height:30px;
+	text-shadow:none;
+	opacity:1;
+}
+.carousel-control:hover {
+	color: #d9534f;
+}
+.carousel-control.left, .carousel-control.right {
+	background-image:none !important;
+}
+.carousel-control.right {
+	left:auto;
+	right:-32px;
+}
+.carousel-control.left {
+	right:auto;
+	left:-32px;
+}
+.carousel-indicators {
+	bottom:-30px;
+}
+.carousel-indicators li {
+	border-radius:0;
+	width:10px;
+	height:10px;
+	background:#ccc;
+	border:1px solid #ccc;
+}
+.carousel-indicators .active {
+	width:12px;
+	height:12px;
+	background:#3276b1;
+	border-color:#3276b1;
+}
+
+.item-container {
+	padding: 5px;
+	min-height: 240px;
+	float: left;
 }
