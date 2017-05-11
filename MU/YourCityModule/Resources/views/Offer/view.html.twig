@@ -1,7 +1,4 @@
 {# purpose of this template: offers list view #}
-{% block header %}
-    {{ pageAddAsset('stylesheet', asset('css/bootstrap.css')) }}>
-{% endblock %}
 {% extends routeArea == 'admin' ? 'MUYourCityModule::adminBase.html.twig' : 'MUYourCityModule::base.html.twig' %}
 {% block title own ? __('My offers') : __('Offer list') %}
 {% block admin_page_icon 'list-alt' %}
@@ -21,7 +18,7 @@
             <div class="col-md-4">
                 <div class="offer-view-box">
                 <p class="offer-list-title"><a href="{{ path('muyourcitymodule_offer_' ~ routeArea ~ 'display', { 'id': offer.id }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ offer.name|notifyFilters('muyourcitymodule.filterhook.offers') }}</a></p>
-                {{ offer.text|safeHtml|truncate(100) }}<br />
+                {{ offer.description|safeHtml|truncate(100) }}<br />
                 {% if offer.percentOfOffer != 0 %}
                     <span class="percentOffer">{{ offer.percentOfOffer }}%</span><br />
                 {% endif %}
@@ -81,7 +78,7 @@
                     <a href="{{ sort.name.url }}" title="{{ __f('Sort by %s', {'%s': 'name'}) }}" class="{{ sort.name.class }}">{{ __('Name') }}</a>
                 </th>
                 <th id="hText" scope="col" class="text-left">
-                    <a href="{{ sort.text.url }}" title="{{ __f('Sort by %s', {'%s': 'text'}) }}" class="{{ sort.text.class }}">{{ __('Text') }}</a>
+                    <a href="{{ sort.description.url }}" title="{{ __f('Sort by %s', {'%s': 'description'}) }}" class="{{ sort.description.class }}">{{ __('Description') }}</a>
                 </th>
                 <th id="hUrlToOfferOnHomepage" scope="col" class="text-center">
                     <a href="{{ sort.urlToOfferOnHomepage.url }}" title="{{ __f('Sort by %s', {'%s': 'url to offer on homepage'}) }}" class="{{ sort.urlToOfferOnHomepage.class }}">{{ __('Url to offer on homepage') }}</a>
@@ -122,8 +119,8 @@
                 {% endif %}<td headers="hName" class="text-left">
                     <a href="{{ path('muyourcitymodule_offer_' ~ routeArea ~ 'display', { 'id': offer.id }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ offer.name|notifyFilters('muyourcitymodule.filterhook.offers') }}</a>
                 </td>
-                <td headers="hText" class="text-left">
-                    {{ offer.text|safeHtml|truncate(50) }}
+                <td headers="hDescription" class="text-left">
+                    {{ offer.description|safeHtml|truncate(50) }}
                 </td>
                 <td headers="hUrlToOfferOnHomepage" class="text-center">
                     {% if offer.urlToOfferOnHomepage is not empty %}
