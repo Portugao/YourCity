@@ -1,16 +1,12 @@
 {# purpose of this template: abonnements list view #}
-{% block header %}
-    {{ pageAddAsset('stylesheet', asset('css/bootstrap.css')) }}
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-{% endblock %}
 {% extends routeArea == 'admin' ? 'MUYourCityModule::adminBase.html.twig' : 'MUYourCityModule::base.html.twig' %}
 {% block title own ? __('My abonnements') : __('Abonnement list') %}
 {% block admin_page_icon 'list-alt' %}
 {% block content %}
 <div class="muyourcitymodule-abonnement muyourcitymodule-view">
+
+    <p class="alert alert-info">{{ __('You are able to subscribe for a location.
+    You can set if you wish to see parts of a location and if you like to get a message.') }}</p>
 
     {{ block('page_nav_links') }}
 
@@ -189,6 +185,9 @@
             {{ hook }}
         {% endfor %}
     {% endif % #}
+{% if routeArea != 'admin' %}
 <script src="js/jquery-1.11.3.min.js"></script>
-<script src="js/bootstrap.js"></script>    
+<script src="js/bootstrap.js"></script>
+    {{ pageAddAsset('stylesheet', asset('css/bootstrap.css')) }}    
+{% endif %}
 {% endblock %}
