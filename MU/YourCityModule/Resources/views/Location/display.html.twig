@@ -392,14 +392,6 @@
         </p>
     {% endif %}
 
-    
-    {% set mayManage = hasPermission('MUYourCityModule:Part:', '::', 'ACCESS_EDIT') %}
-    {% if mayManage %}
-        <p class="managelink">
-            {% set createTitle = __('Create part') %}
-            <a href="{{ path('muyourcitymodule_part_' ~ routeArea ~ 'edit', { locations: location.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
-        </p>
-    {% endif %}
     {% if routeArea == 'admin' %}
         <h4>{{ __('Offers') }}</h4>
     {% else %}
@@ -531,6 +523,14 @@
             '@MUYourCityModule/Part/includeDisplayItemListMany.html.twig',
             { items: location.parts }
         ) }}
+    {% endif %}
+    
+    {% set mayManage = hasPermission('MUYourCityModule:Part:', '::', 'ACCESS_EDIT') %}
+    {% if mayManage %}
+        <p class="managelink">
+            {% set createTitle = __('Create part') %}
+            <a href="{{ path('muyourcitymodule_part_' ~ routeArea ~ 'edit', { locations: location.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
+        </p>
     {% endif %}
     
 {% endblock %}
