@@ -21,6 +21,9 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Zikula\ThemeModule\Engine\Annotation\Theme;
 use MU\YourCityModule\Entity\LocationEntity;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Zikula\Component\SortableColumns\Column;
+use Zikula\Component\SortableColumns\SortableColumns;
 
 /**
  * Location controller class providing navigation and interaction functionality.
@@ -294,6 +297,55 @@ class LocationController extends AbstractLocationController
      */
     protected function viewInternal(Request $request, $sort, $sortdir, $pos, $num, $isAdmin = false)
     {
-        return $this->redirectToRoute('muyourcitymodule_abonnement_view');
+    	if ($isAdmin) {
+        // parameter specifying which type of objects we are treating
+        $objectType = 'location';
+        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_READ;
+        if (!$this->hasPermission('MUYourCityModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
+            throw new AccessDeniedException();
+        }
+        $templateParameters = [
+            'routeArea' => $isAdmin ? 'admin' : ''
+        ];
+        $controllerHelper = $this->get('mu_yourcity_module.controller_helper');
+        $viewHelper = $this->get('mu_yourcity_module.view_helper');
+        
+        $request->query->set('pos', $pos);
+        
+        $sortableColumns = new SortableColumns($this->get('router'), 'muyourcitymodule_location_' . ($isAdmin ? 'admin' : '') . 'view', 'sort', 'sortdir');
+        
+        $sortableColumns->addColumns([
+            new Column('workflowState'),
+            new Column('name'),
+            new Column('letterForOrder'),
+            new Column('logoOfYourLocation'),
+            new Column('description'),
+            new Column('street'),
+            new Column('numberOfStreet'),
+            new Column('zipCode'),
+            new Column('city'),
+            new Column('telefon'),
+            new Column('mobil'),
+            new Column('homepage'),
+            new Column('bsagStop'),
+            new Column('tram'),
+            new Column('bus'),
+            new Column('openingHours'),
+            new Column('latitude'),
+            new Column('longitude'),
+            new Column('createdBy'),
+            new Column('createdDate'),
+            new Column('updatedBy'),
+            new Column('updatedDate'),
+        ]);
+        
+        $templateParameters = $controllerHelper->processViewActionParameters($objectType, $sortableColumns, $templateParameters, true);
+        
+        
+        // fetch and return the appropriate template
+        return $viewHelper->processTemplate($objectType, 'view', $templateParameters);
+    	} else {
+    		return $this->redirectToRoute('muyourcitymodule_abonnement_view');
+    	}
     }
 }
