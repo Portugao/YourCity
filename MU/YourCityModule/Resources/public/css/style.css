@@ -357,6 +357,11 @@ div.muyourcitymodule-view .avatar img {
 	margin: 0 0 15px 15px;
 }
 
+#imageOfProduct {
+	float: right;
+	margin: 0 0 15px 15px;
+}
+
 #imageOfBranch {
 	float: right;
 	margin: 0 0 15px 15px;
