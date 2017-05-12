@@ -17,7 +17,17 @@ use MU\YourCityModule\Helper\Base\AbstractModelHelper;
 /**
  * Helper implementation class for model layer methods.
  */
+
+/**
+ * 
+ * This method gives a repository back
+ *
+ */
 class ModelHelper extends AbstractModelHelper
 {
-    // feel free to add your own convenience methods here
+    public function getRepository($objectType)
+    {
+    	$objectRepository = $this->entityFactory->getRepository($objectType);
+    	return $objectRepository;
+    }
 }
