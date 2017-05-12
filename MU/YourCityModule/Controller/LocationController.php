@@ -289,5 +289,11 @@ class LocationController extends AbstractLocationController
         return parent::handleSelectedEntriesAction($request);
     }
 
-    // feel free to add your own controller methods here
+    /**
+     * This method includes the common implementation code for adminView() and view().
+     */
+    protected function viewInternal(Request $request, $sort, $sortdir, $pos, $num, $isAdmin = false)
+    {
+        return $this->redirectToRoute('muyourcitymodule_abonnement_view');
+    }
 }
