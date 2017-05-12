@@ -21,20 +21,12 @@ use ServiceUtil;
 use PDO;
 use PDOException;
 use Doctrine_Manager;
-use MU\YourCityModule\Entity\Factory\EntityFactory;
-use MU\YourCityModule\Entity\Factory\YourCityFactory;
 
 /**
  * Config controller base class.
  */
 abstract class AbstractImportController extends AbstractController
 {
-	/**
-	 * @var EntityFactory
-	 */
-	private $entityFactory;
-	
-	
     /**
      * This method takes care of the import.
      *
@@ -182,54 +174,24 @@ abstract class AbstractImportController extends AbstractController
     			
     			$newLocation->setSlug($data[0]['slug']);
     			
-    			$controllerHelper = $this->get('mu_yourcity_module.controller_helper');
-    			$controllerHelper->
+    			$modelHelper = $this->get('mu_yourcity_module.model_helper');
+    			$branchRespository = $modelHelper->getRepository('Branch');
+    			$partRepository = $modelHelper->getRepository('Part');
     			
-    			$branchRespository = $this->entityFactory->getRepository('branch');
-    			$branch = $branchRespository->find($data[0]['branchId']);
-    			$newLocation->setBranches($branch);
-
+    			$branches[] = $branchRespository->find($data[0]['branchId']);
+    			$newLocation->setBranches($branches);
+    			
+    			$parts[] = $partRepository->find($data[0]['partId']);
+    			$newLocation->setParts($parts);
+    			
+    			unset($branches);
+    			unset($parts);
+    			
     			$entityManager->persist($newLocation);
     			$entityManager->flush();
-    			
-    			$connect = $this->getDBConnection();
-
-    			$actualImport = $this->getFreshImport($data[0]['slug']);
-                foreach ($actualImport as $thisImport) {
-                	$dieserImport[] = $thisImport;
-                }
-                
-                /*$con = $this->mysqliCon();
-               
-                $check = mysqli_query($con,"INSERT INTO mu_yourcity_location_branch(mu_yourcity_location_branch) VALUES ('1','9')");
-			 
-                if ($check) {
-                	die('Yes');
-                } else {
-                	die('no');
-                }*/
-
-    			
-    			//$sql2 = 'INSERT INTO mu_yourcity_location_branch' . ' (e-locationentity_id, e-branchentity_id) VALUES ' . $values2;  			
-    			/*$stmt2 = $connect->prepare('INSERT INTO mu_yourcity_location_branch(mu_yourcity_location_branch) VALUES (:location, :branch)');
-    			//$stmt2 = $connect->prepare($sql2);
-    			$stmt2->bindParam(':location', $dieserImport[0]['id'], PDO::PARAM_INT);
-    			$stmt2->bindParam(':branch', $data[0]['branchId'], PDO::PARAM_INT);
-    			
-    			try {
-    				 $stmt2->execute();
-    			}
-    			catch (PDOException $e) {
-    				$this->__('DB Import failed');
-    			}
-    			//$check = $stmt2->execute();*/
-
     		}
-
-    		//$status = __('Import complete!', $dom);
     	}
     	else {
-    		//$status = __('There is no location to import!', $dom);
     		return;
     	}
     
@@ -249,6 +211,272 @@ abstract class AbstractImportController extends AbstractController
     		$result['field9'] = html_entity_decode($result['field9'], ENT_COMPAT);
     		$result['field10'] = utf8_encode($result['field10']);
     		
+    		// part handling
+    		if ($result['field15'] == 'Alte Neustadt') {
+    			$partId = 1;
+    		}
+    		if ($result['field15'] == 'Altstadt') {
+    			$partId = 2;
+    		}
+    		if ($result['field15'] == 'Arbergen') {
+    			$partId = 3;
+    		}
+    		if ($result['field15'] == 'Arsten') {
+    			$partId = 4;
+    		}
+    		if ($result['field15'] == 'Aumund-Hammersbeck') {
+    			$partId = 5;
+    		}
+    		if ($result['field15'] == 'Bahnhofsvorstadt') {
+    			$partId = 6;
+    		}
+    		if ($result['field15'] == 'Barkhof') {
+    			$partId = 7;
+    		}
+    		if ($result['field15'] == 'Blockdiek') {
+    			$partId = 8;
+    		}
+    		if ($result['field15'] == 'Blockland') {
+    			$partId = 9;
+    		}
+    		if ($result['field15'] == 'Blumenthal') {
+    			$partId = 10;
+    		}
+    		if ($result['field15'] == 'Borgfeld') {
+    			$partId = 11;
+    		}
+    		if ($result['field15'] == 'Buntentor') {
+    			$partId = 12;
+    		}
+    		if ($result['field15'] == 'Burgdamm') {
+    			$partId = 13;
+    		}
+    		if ($result['field15'] == 'Burg-Grambke') {
+    			$partId = 14;
+    		}
+    		if ($result['field15'] == 'Bürgerpark') {
+    			$partId = 15;
+    		}    		
+    		if ($result['field15'] == 'Ellener Feld') {
+    			$partId = 16;
+    		}
+    		if ($result['field15'] == 'Ellenerbrok-Schevemoor') {
+    			$partId = 17;
+    		}
+    		if ($result['field15'] == 'Fähr-Lobbendorf') {
+    			$partId = 18;
+    		}
+    		if ($result['field15'] == 'Farge') {
+    			$partId = 19;
+    		}
+    		if ($result['field15'] == 'Fesenfeld') {
+    			$partId = 20;
+    		}
+    		if ($result['field15'] == 'Findorff-Bürgerweide') {
+    			$partId = 21;
+    		}
+    		if ($result['field15'] == 'Gatrenstadt Süd') {
+    			$partId = 22;
+    		}
+    		if ($result['field15'] == 'Gartenstadt Vahr') {
+    			$partId = 23;
+    		}
+    		if ($result['field15'] == 'Gete') {
+    			$partId = 24;
+    		}
+    		if ($result['field15'] == 'Grohn') {
+    			$partId = 25;
+    		}
+    		if ($result['field15'] == 'Grolland') {
+    			$partId = 26;
+    		}
+    		if ($result['field15'] == 'Gröpelingen') {
+    			$partId = 27;
+    		}
+    		if ($result['field15'] == 'Habenhausen') {
+    			$partId = 28;
+    		}
+    		if ($result['field15'] == 'Handelshäfen') {
+    			$partId = 29;
+    		}
+    		if ($result['field15'] == 'Hastedt') {
+    			$partId = 30;
+    		}
+    		if ($result['field15'] == 'Hemelingen') {
+    			$partId = 31;
+    		}
+    		if ($result['field15'] == 'Hohentor') {
+    			$partId = 32;
+    		}
+    		if ($result['field15'] == 'Hohentorshafen') {
+    			$partId = 33;
+    		}
+    		if ($result['field15'] == 'Hohweg') {
+    			$partId = 34;
+    		}
+    		if ($result['field15'] == 'Horn') {
+    			$partId = 35;
+    		}
+    		if ($result['field15'] == 'Huckelriede') {
+    			$partId = 36;
+    		}
+    		if ($result['field15'] == 'Hulsberg') {
+    			$partId = 37;
+    		}
+    		if ($result['field15'] == 'In den Hufen') {
+    			$partId = 38;
+    		}
+    		if ($result['field15'] == 'In den Wischen') {
+    			$partId = 39;
+    		}
+    		if ($result['field15'] == 'Indutriehäfen') {
+    			$partId = 40;
+    		}
+    		if ($result['field15'] == 'Kattenesch') {
+    			$partId = 41;
+    		}
+    		if ($result['field15'] == 'Kattenturm') {
+    			$partId = 42;
+    		}
+    		if ($result['field15'] == 'Kirchhuchting') {
+    			$partId = 43;
+    		}
+    		if ($result['field15'] == 'Lehe') {
+    			$partId = 44;
+    		}
+    		if ($result['field15'] == 'Lehester Deich') {
+    			$partId = 45;
+    		}
+    		if ($result['field15'] == 'Lesum') {
+    			$partId = 46;
+    		}
+    		if ($result['field15'] == 'Lindenhof') {
+    			$partId = 47;
+    		}
+    		if ($result['field15'] == 'Lüssum-Bockhorn') {
+    			$partId = 48;
+    		}
+    		if ($result['field15'] == 'Mahndorf') {
+    			$partId = 49;
+    		}
+    		if ($result['field15'] == 'Mitte') {
+    			$partId = 50;
+    		}
+    		if ($result['field15'] == 'Mittelshuchting') {
+    			$partId = 51;
+    		}
+    		if ($result['field15'] == 'Neu-Schwachhausen') {
+    			$partId = 52;
+    		}
+    		if ($result['field15'] == 'Neue Vahr Nord') {
+    			$partId = 53;
+    		}
+    		if ($result['field15'] == 'Neue Vahr Südost') {
+    			$partId = 54;
+    		}
+    		if ($result['field15'] == 'Neue Vahr Südwest') {
+    			$partId = 55;
+    		}
+    		if ($result['field15'] == 'Neuenland') {
+    			$partId = 56;
+    		}
+    		if ($result['field15'] == 'Neustädter Hafen') {
+    			$partId = 57;
+    		}
+    		if ($result['field15'] == 'Oberneuland') {
+    			$partId = 58;
+    		}
+    		if ($result['field15'] == 'Ohlenhof') {
+    			$partId = 59;
+    		}
+    		if ($result['field15'] == 'Oslebshausen') {
+    			$partId = 60;
+    		}
+    		if ($result['field15'] == 'Osterfeuerberg') {
+    			$partId = 61;
+    		}
+    		if ($result['field15'] == 'Osterholz') {
+    			$partId = 62;
+    		}
+    		if ($result['field15'] == 'Ostertor') {
+    			$partId = 63;
+    		}
+    		if ($result['field15'] == 'Peterswerder') {
+    			$partId = 64;
+    		}
+    		if ($result['field15'] == 'Rablinghausen') {
+    			$partId = 65;
+    		}
+    		if ($result['field15'] == 'Radio Bremen') {
+    			$partId = 66;
+    		}
+    		if ($result['field15'] == 'Regensburger Straße') {
+    			$partId = 67;
+    		}
+    		if ($result['field15'] == 'Rekum') {
+    			$partId = 68;
+    		}
+    		if ($result['field15'] == 'Riensberg') {
+    			$partId = 69;
+    		}
+    		if ($result['field15'] == 'Rönnebeck') {
+    			$partId = 70;
+    		}
+    		if ($result['field15'] == 'Schönebeck') {
+    			$partId = 71;
+    		}
+    		if ($result['field15'] == 'Schwachhausen') {
+    			$partId = 72;
+    		}
+    		if ($result['field15'] == 'Sebaldsbrück') {
+    			$partId = 73;
+    		}
+    		if ($result['field15'] == 'Seehausen') {
+    			$partId = 74;
+    		}
+    		if ($result['field15'] == 'Sodenmatt') {
+    			$partId = 75;
+    		}
+    		if ($result['field15'] == 'St. Magnus') {
+    			$partId = 76;
+    		}
+    		if ($result['field15'] == 'Steffensweg') {
+    			$partId = 77;
+    		}
+    		if ($result['field15'] == 'Steintor') {
+    			$partId = 78;
+    		}
+    		if ($result['field15'] == 'Strom') {
+    			$partId = 79;
+    		}
+    		if ($result['field15'] == 'Südervorstadt') {
+    			$partId = 80;
+    		}
+    		if ($result['field15'] == 'Tenever') {
+    			$partId = 81;
+    		}
+    		if ($result['field15'] == 'Utbremen') {
+    			$partId = 82;
+    		}
+    		if ($result['field15'] == 'Vegesack') {
+    			$partId = 83;
+    		}
+    		if ($result['field15'] == 'Walle') {
+    			$partId = 84;
+    		}
+    		if ($result['field15'] == 'Weidedamm') {
+    			$partId = 85;
+    		}
+    		if ($result['field15'] == 'Werderland') {
+    			$partId = 86;
+    		}
+    		if ($result['field15'] == 'Westend') {
+    			$partId = 87;
+    		}
+    		if ($result['field15'] == 'Woltmershausen') {
+    			$partId = 88;
+    		}
+    				
     		// branch handling
     		if ($result['field16'] == 'Autohaus & Co') {
     			$branchId = 1;
@@ -430,7 +658,7 @@ abstract class AbstractImportController extends AbstractController
     		        'tram' => $result['field103'],
     		        'bus' => $result['field104'],
     				'branchId' => $branchId,
-    				//'partid' => $partId,
+    				'partId' => $partId,
     		        'closedForEver' => $closedForEver,
     		        'agreement' => $result['field69'],
     		        'unclearTimes' => $result['field67'],
@@ -567,11 +795,6 @@ abstract class AbstractImportController extends AbstractController
     		return false;
     	}
     
-    }
-    
-    public function setEntityFactory(YourCityFactory $entityFactory)
-    {
-    	$this->entityFactory = $entityFactory;
     }
     
     private function mysqliCon()
