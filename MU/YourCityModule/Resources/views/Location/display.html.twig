@@ -321,11 +321,11 @@
                 <h3>{{ __('Public transport') }}</h3>
                 <h4>{{ location.bsagStop }}</h4>
                 {% if location.tram is not empty %}
-                    <span class="location-tram">{{ location.tram }}</span><br />
+                    <span class="location-tram"><i class="fa fa-train" aria-hidden="true"></i> {{ location.tram }}</span><br />
                 {% endif %}
         
                 {% if location.bus is not empty %}
-                    <span class="location-tram">{{ location.bus }}</span><br />
+                    <span class="location-bus"><i class="fa fa-bus" aria-hidden="true"></i> {{ location.bus }}</span><br />
                 {% endif %}
             {% endif %}
             

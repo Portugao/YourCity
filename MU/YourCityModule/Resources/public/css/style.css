@@ -244,12 +244,12 @@ div.muyourcitymodule-view .avatar img {
 	margin: 0 25px 0 15px;
 }
 
-.location-tram:before {
-	content: '\f238';
+.location-tram {
+    font-size: 1.5em;
 }
 
-.location-bus:before {
-	content: '\f207';
+.location-bus {
+	font-size: 1.5em;
 }
 
 /**************MENU****************/
