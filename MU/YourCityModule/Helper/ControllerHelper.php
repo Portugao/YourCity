@@ -145,7 +145,6 @@ class ControllerHelper extends AbstractControllerHelper
     	$start2TimeFine = \DateUtil::formatDatetime($location['start2On' . $actualDay], 'timebrief');
     	$end2TimeFine = \DateUtil::formatDatetime($location['end2On' . $actualDay], 'timebrief');
     	
-    	
 		switch ($actualDay) {
 			case 'Sunday' :
 				$nextDay = 'Monday';
@@ -207,16 +206,13 @@ class ControllerHelper extends AbstractControllerHelper
     	// we check the second times
     	if ($start2Time != '') {
     		if ($start2Time < $actualTime) {
-    			//die('start kleiner actual');
     			if ($end2Time != '') {
-    				//die('end nicht null');
     				if ($end2Time >= $actualTime || ($end2Time < $actualTime && $nextStartTime != '' && $nextStartTime > $actualTime)) {
     					//die('end groesser aktual');
     					if ($state != 'open') {
     					    $state = 'open';
     					}
     				} else {
-    					//die('end kleiner aktual');
     					if ($state != 'closed') {
     					    $state = 'closed';
     					}
