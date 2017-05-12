@@ -376,7 +376,30 @@ class ItemActionsMenu extends AbstractItemActionsMenu
             $instance = $entity->getKey() . '::';
             $routePrefix = 'muyourcitymodule_imageoflocation_';
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
-        
+
+            $hasLocation = $entity->getLocation();
+            if ($hasLocation) {
+            
+            	$ownerThere = $this->hasOwner($entity);
+            	if ($ownerThere) {
+            		$realOwner = $this->realOwner($entity, $currentUserId);
+            	} else {
+            		$realOwner = false;
+            	}
+            	$adminThere = $this->hasAdmin($entity);
+            	if ($adminThere) {
+            		$realAdmin = $this->realAdmin($entity, $currentUserId);
+            	} else {
+            		$realAdmin = false;
+            	}
+            	$admin2There = $this->hasAdmin2($entity);
+            	if ($admin2There) {
+            		$realAdmin2 = $this->realAdmin2($entity, $currentUserId);
+            	} else {
+            		$realAdmin2 = false;
+            	}
+            }
+            
             if ($routeArea == 'admin') {
                 $menu->addChild($this->__('Preview'), [
                     'route' => $routePrefix . 'display',
@@ -392,7 +415,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
                 ])->setAttribute('icon', 'fa fa-eye');
                 $menu[$this->__('Details')]->setLinkAttribute('title', str_replace('"', '', $entityDisplayHelper->getFormattedTitle($entity)));
             }
-            if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
+            if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT) && ($realOwner|| $realAdmin || $realAdmin2 || $isOwner)) {
                 $menu->addChild($this->__('Edit'), [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
@@ -404,7 +427,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new image of location'));
             }
-            if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
+            if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE) && ($realOwner|| $realAdmin || $realAdmin2 || $isOwner)) {
                 $menu->addChild($this->__('Delete'), [
                     'route' => $routePrefix . $routeArea . 'delete',
                     'routeParameters' => $entity->createUrlArgs()
@@ -424,7 +447,30 @@ class ItemActionsMenu extends AbstractItemActionsMenu
             $instance = $entity->getKey() . '::';
             $routePrefix = 'muyourcitymodule_fileoflocation_';
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
-        
+
+            $hasLocation = $entity->getLocation();
+            if ($hasLocation) {
+            
+            	$ownerThere = $this->hasOwner($entity);
+            	if ($ownerThere) {
+            		$realOwner = $this->realOwner($entity, $currentUserId);
+            	} else {
+            		$realOwner = false;
+            	}
+            	$adminThere = $this->hasAdmin($entity);
+            	if ($adminThere) {
+            		$realAdmin = $this->realAdmin($entity, $currentUserId);
+            	} else {
+            		$realAdmin = false;
+            	}
+            	$admin2There = $this->hasAdmin2($entity);
+            	if ($admin2There) {
+            		$realAdmin2 = $this->realAdmin2($entity, $currentUserId);
+            	} else {
+            		$realAdmin2 = false;
+            	}
+            }
+            
             if ($routeArea == 'admin') {
                 $menu->addChild($this->__('Preview'), [
                     'route' => $routePrefix . 'display',
@@ -440,7 +486,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
                 ])->setAttribute('icon', 'fa fa-eye');
                 $menu[$this->__('Details')]->setLinkAttribute('title', str_replace('"', '', $entityDisplayHelper->getFormattedTitle($entity)));
             }
-            if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
+            if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT) && ($realOwner|| $realAdmin || $realAdmin2 || $isOwner)) {
                 $menu->addChild($this->__('Edit'), [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
@@ -452,7 +498,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new file of location'));
             }
-            if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
+            if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE) && ($realOwner|| $realAdmin || $realAdmin2 || $isOwner)) {
                 $menu->addChild($this->__('Delete'), [
                     'route' => $routePrefix . $routeArea . 'delete',
                     'routeParameters' => $entity->createUrlArgs()
@@ -522,7 +568,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new offer'));
             }
-            if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE)&& ($realOwner|| $realAdmin || $realAdmin2)) {
+            if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE) && ($realOwner|| $realAdmin || $realAdmin2)) {
                 $menu->addChild($this->__('Delete'), [
                     'route' => $routePrefix . $routeArea . 'delete',
                     'routeParameters' => $entity->createUrlArgs()
@@ -542,7 +588,30 @@ class ItemActionsMenu extends AbstractItemActionsMenu
             $instance = $entity->getKey() . '::';
             $routePrefix = 'muyourcitymodule_menuoflocation_';
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
-        
+
+            $hasLocation = $entity->getLocation();
+            if ($hasLocation) {
+            
+            	$ownerThere = $this->hasOwner($entity);
+            	if ($ownerThere) {
+            		$realOwner = $this->realOwner($entity, $currentUserId);
+            	} else {
+            		$realOwner = false;
+            	}
+            	$adminThere = $this->hasAdmin($entity);
+            	if ($adminThere) {
+            		$realAdmin = $this->realAdmin($entity, $currentUserId);
+            	} else {
+            		$realAdmin = false;
+            	}
+            	$admin2There = $this->hasAdmin2($entity);
+            	if ($admin2There) {
+            		$realAdmin2 = $this->realAdmin2($entity, $currentUserId);
+            	} else {
+            		$realAdmin2 = false;
+            	}
+            }
+            
             if ($routeArea == 'admin') {
                 $menu->addChild($this->__('Preview'), [
                     'route' => $routePrefix . 'display',
@@ -558,7 +627,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
                 ])->setAttribute('icon', 'fa fa-eye');
                 $menu[$this->__('Details')]->setLinkAttribute('title', str_replace('"', '', $entityDisplayHelper->getFormattedTitle($entity)));
             }
-            if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
+            if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT) && ($realOwner|| $realAdmin || $realAdmin2 || $isOwner)) {
                 $menu->addChild($this->__('Edit'), [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
@@ -570,7 +639,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new menu of location'));
             }
-            if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
+            if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE) && ($realOwner|| $realAdmin || $realAdmin2 || $isOwner)) {
                 $menu->addChild($this->__('Delete'), [
                     'route' => $routePrefix . $routeArea . 'delete',
                     'routeParameters' => $entity->createUrlArgs()
@@ -614,7 +683,30 @@ class ItemActionsMenu extends AbstractItemActionsMenu
             $instance = $entity->getKey() . '::';
             $routePrefix = 'muyourcitymodule_partofmenu_';
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
-        
+
+            $hasLocation = $entity->getLocation();
+            if ($hasLocation) {
+            
+            	$ownerThere = $this->hasOwner($entity);
+            	if ($ownerThere) {
+            		$realOwner = $this->realOwner($entity, $currentUserId);
+            	} else {
+            		$realOwner = false;
+            	}
+            	$adminThere = $this->hasAdmin($entity);
+            	if ($adminThere) {
+            		$realAdmin = $this->realAdmin($entity, $currentUserId);
+            	} else {
+            		$realAdmin = false;
+            	}
+            	$admin2There = $this->hasAdmin2($entity);
+            	if ($admin2There) {
+            		$realAdmin2 = $this->realAdmin2($entity, $currentUserId);
+            	} else {
+            		$realAdmin2 = false;
+            	}
+            }
+            
             if ($routeArea == 'admin') {
                 $menu->addChild($this->__('Preview'), [
                     'route' => $routePrefix . 'display',
@@ -630,7 +722,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
                 ])->setAttribute('icon', 'fa fa-eye');
                 $menu[$this->__('Details')]->setLinkAttribute('title', str_replace('"', '', $entityDisplayHelper->getFormattedTitle($entity)));
             }
-            if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
+            if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT) && ($realOwner|| $realAdmin || $realAdmin2 || $isOwner)) {
                 $menu->addChild($this->__('Edit'), [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
@@ -642,7 +734,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new part of menu'));
             }
-            if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
+            if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE) && ($realOwner|| $realAdmin || $realAdmin2 || $isOwner)) {
                 $menu->addChild($this->__('Delete'), [
                     'route' => $routePrefix . $routeArea . 'delete',
                     'routeParameters' => $entity->createUrlArgs()
@@ -675,7 +767,30 @@ class ItemActionsMenu extends AbstractItemActionsMenu
             $instance = $entity->getKey() . '::';
             $routePrefix = 'muyourcitymodule_dish_';
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
-        
+
+            $hasLocation = $entity->getLocation();
+            if ($hasLocation) {
+            
+            	$ownerThere = $this->hasOwner($entity);
+            	if ($ownerThere) {
+            		$realOwner = $this->realOwner($entity, $currentUserId);
+            	} else {
+            		$realOwner = false;
+            	}
+            	$adminThere = $this->hasAdmin($entity);
+            	if ($adminThere) {
+            		$realAdmin = $this->realAdmin($entity, $currentUserId);
+            	} else {
+            		$realAdmin = false;
+            	}
+            	$admin2There = $this->hasAdmin2($entity);
+            	if ($admin2There) {
+            		$realAdmin2 = $this->realAdmin2($entity, $currentUserId);
+            	} else {
+            		$realAdmin2 = false;
+            	}
+            }
+            
             if ($routeArea == 'admin') {
                 $menu->addChild($this->__('Preview'), [
                     'route' => $routePrefix . 'display',
@@ -691,7 +806,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
                 ])->setAttribute('icon', 'fa fa-eye');
                 $menu[$this->__('Details')]->setLinkAttribute('title', str_replace('"', '', $entityDisplayHelper->getFormattedTitle($entity)));
             }
-            if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
+            if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT) && ($realOwner|| $realAdmin || $realAdmin2 || $isOwner)) {
                 $menu->addChild($this->__('Edit'), [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
@@ -703,7 +818,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new dish'));
             }
-            if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
+            if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE) && ($realOwner|| $realAdmin || $realAdmin2 || $isOwner)) {
                 $menu->addChild($this->__('Delete'), [
                     'route' => $routePrefix . $routeArea . 'delete',
                     'routeParameters' => $entity->createUrlArgs()
@@ -723,7 +838,30 @@ class ItemActionsMenu extends AbstractItemActionsMenu
             $instance = $entity->getKey() . '::';
             $routePrefix = 'muyourcitymodule_event_';
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
-        
+
+            $hasLocation = $entity->getLocation();
+            if ($hasLocation) {
+            
+            	$ownerThere = $this->hasOwner($entity);
+            	if ($ownerThere) {
+            		$realOwner = $this->realOwner($entity, $currentUserId);
+            	} else {
+            		$realOwner = false;
+            	}
+            	$adminThere = $this->hasAdmin($entity);
+            	if ($adminThere) {
+            		$realAdmin = $this->realAdmin($entity, $currentUserId);
+            	} else {
+            		$realAdmin = false;
+            	}
+            	$admin2There = $this->hasAdmin2($entity);
+            	if ($admin2There) {
+            		$realAdmin2 = $this->realAdmin2($entity, $currentUserId);
+            	} else {
+            		$realAdmin2 = false;
+            	}
+            }
+            
             if ($routeArea == 'admin') {
                 $menu->addChild($this->__('Preview'), [
                     'route' => $routePrefix . 'display',
@@ -739,7 +877,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
                 ])->setAttribute('icon', 'fa fa-eye');
                 $menu[$this->__('Details')]->setLinkAttribute('title', str_replace('"', '', $entityDisplayHelper->getFormattedTitle($entity)));
             }
-            if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
+            if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT) && ($realOwner|| $realAdmin || $realAdmin2 || $isOwner)) {
                 $menu->addChild($this->__('Edit'), [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
@@ -751,7 +889,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new event'));
             }
-            if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
+            if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE) && ($realOwner|| $realAdmin || $realAdmin2 || $isOwner)) {
                 $menu->addChild($this->__('Delete'), [
                     'route' => $routePrefix . $routeArea . 'delete',
                     'routeParameters' => $entity->createUrlArgs()
@@ -771,7 +909,30 @@ class ItemActionsMenu extends AbstractItemActionsMenu
             $instance = $entity->getKey() . '::';
             $routePrefix = 'muyourcitymodule_product_';
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
-        
+
+            $hasLocation = $entity->getLocation();
+            if ($hasLocation) {
+            
+            	$ownerThere = $this->hasOwner($entity);
+            	if ($ownerThere) {
+            		$realOwner = $this->realOwner($entity, $currentUserId);
+            	} else {
+            		$realOwner = false;
+            	}
+            	$adminThere = $this->hasAdmin($entity);
+            	if ($adminThere) {
+            		$realAdmin = $this->realAdmin($entity, $currentUserId);
+            	} else {
+            		$realAdmin = false;
+            	}
+            	$admin2There = $this->hasAdmin2($entity);
+            	if ($admin2There) {
+            		$realAdmin2 = $this->realAdmin2($entity, $currentUserId);
+            	} else {
+            		$realAdmin2 = false;
+            	}
+            }
+            
             if ($routeArea == 'admin') {
                 $menu->addChild($this->__('Preview'), [
                     'route' => $routePrefix . 'display',
@@ -787,7 +948,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
                 ])->setAttribute('icon', 'fa fa-eye');
                 $menu[$this->__('Details')]->setLinkAttribute('title', str_replace('"', '', $entityDisplayHelper->getFormattedTitle($entity)));
             }
-            if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
+            if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT) && ($realOwner|| $realAdmin || $realAdmin2 || $isOwner)) {
                 $menu->addChild($this->__('Edit'), [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
@@ -799,7 +960,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new product'));
             }
-            if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
+            if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE) && ($realOwner|| $realAdmin || $realAdmin2 || $isOwner)) {
                 $menu->addChild($this->__('Delete'), [
                     'route' => $routePrefix . $routeArea . 'delete',
                     'routeParameters' => $entity->createUrlArgs()
@@ -942,7 +1103,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
             $routePrefix = 'muyourcitymodule_abonnement_';
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
         
-            if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
+            if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT) && $isOwner) {
                 $menu->addChild($this->__('Edit'), [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
@@ -954,7 +1115,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new abonnement'));
             }
-            if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
+            if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE) && $isOwner) {
                 $menu->addChild($this->__('Delete'), [
                     'route' => $routePrefix . $routeArea . 'delete',
                     'routeParameters' => $entity->createUrlArgs()
@@ -979,14 +1140,14 @@ class ItemActionsMenu extends AbstractItemActionsMenu
     }
     
     public function realOwner($entity, $currentUserId) {
-    	$realOwner = $currentUserId > 0 && $entity->getLocation()->getOwner()-getUid();
+    	$realOwner = $currentUserId > 1 && $entity->getLocation()->getOwner()-getUid();
     }
     
     public function realAdmin($entity, $currentUserId) {
-    	$realAdmin = $currentUserId > 0 && $entity->getLocation()->getAdmin1()-getUid();
+    	$realAdmin = $currentUserId > 1 && $entity->getLocation()->getAdmin1()-getUid();
     }
     
     public function realAdmin2($entity, $currentUserId) {
-    	$realAdmin2 = $currentUserId > 0 && $entity->getLocation()->getAdmin2()-getUid();
+    	$realAdmin2 = $currentUserId > 1 && $entity->getLocation()->getAdmin2()-getUid();
     }
 }
