@@ -3,6 +3,7 @@
 {% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
 {% block pageTitle %}{{ location|muyourcitymodule_formattedTitle|default(__('Location')) }}{% endblock %}
 {% block title %}
+    {{ pageAddVar('description', 'Hallo') }}
     <div class="row">
     <div class="col-md-2">
     <div id="location-logo">
@@ -172,14 +173,18 @@
         </div>
         
         <div class="row">
-            <div class="col-md-4 col-xs-6">
+            <div class="col-md-4 col-sm-5 col-xs-6">
                 {{ __('Wednesday') }}
             </div>
-            <div class="col-md-8 col-xs-6">
+            <div class="col-md-8 col-sm-7 col-xs-6">
             {% if location.closedOnWednesday == false %}
-                {{ location.startOnWednesday|localizeddate('none', 'short') }} -   
+                {% if location.startOnWednesday is not empty %}
+                {{ location.startOnWednesday|localizeddate('none', 'short') }}  
                 {% if location.endOnWednesday is not empty %}
-                    {{ location.endOnWednesday|localizeddate('none', 'short') }}
+                    - {{ location.endOnWednesday|localizeddate('none', 'short') }}
+                {% else %}
+                    - {{ __('Open end') }}
+                {% endif %}
                 {% endif %}
                 {% if location.start2OnWednesday is not empty %}
                     <br />{{ location.start2OnWednesday|localizeddate('none', 'short') }} -
@@ -194,14 +199,18 @@
         </div>
         
         <div class="row">
-            <div class="col-md-4 col-xs-6">
+            <div class="col-md-4 col-sm-5 col-xs-6">
                 {{ __('Thursday') }}
             </div>
-            <div class="col-md-8 col-xs-6">
+            <div class="col-md-8 col-sm-7 col-xs-6">
             {% if location.closedOnThursday == false %}
-                {{ location.startOnThursday|localizeddate('none', 'short') }} -   
+                {% if location.startOnThursday is not empty %}
+                {{ location.startOnThursday|localizeddate('none', 'short') }}  
                 {% if location.endOnThursday is not empty %}
-                    {{ location.endOnThursday|localizeddate('none', 'short') }}
+                    - {{ location.endOnThursday|localizeddate('none', 'short') }}
+                {% else %}
+                    - {{ __('Open end') }}
+                {% endif %}
                 {% endif %}
                 {% if location.start2OnThursday is not empty %}
                     <br />{{ location.start2OnThursday|localizeddate('none', 'short') }} -
@@ -216,14 +225,18 @@
         </div>
         
         <div class="row">
-            <div class="col-md-4 col-xs-6">
+            <div class="col-md-4 col-sm-5 col-xs-6">
                 {{ __('Friday') }}
             </div>
-            <div class="col-md-8 col-xs-6">
+            <div class="col-md-8 col-sm-7 col-xs-6">
             {% if location.closedOnFriday == false %}
-                {{ location.startOnFriday|localizeddate('none', 'short') }} -   
+                {% if location.startOnFriday is not empty %}
+                {{ location.startOnFriday|localizeddate('none', 'short') }}  
                 {% if location.endOnFriday is not empty %}
-                    {{ location.endOnFriday|localizeddate('none', 'short') }}
+                    - {{ location.endOnFriday|localizeddate('none', 'short') }}
+                {% else %}
+                    - {{ __('Open end') }}
+                {% endif %}
                 {% endif %}
                 {% if location.start2OnFriday is not empty %}
                     <br />{{ location.start2OnFriday|localizeddate('none', 'short') }} -
@@ -238,14 +251,18 @@
         </div>
         
         <div class="row">
-            <div class="col-md-4 col-xs-6">
+            <div class="col-md-4 col-sm-5 col-xs-6">
                 {{ __('Saturday') }}
             </div>
-            <div class="col-md-8 col-xs-6">
+            <div class="col-md-8 col-sm-7 col-xs-6">
             {% if location.closedOnSaturday == false %}
-                {{ location.startOnSaturday|localizeddate('none', 'short') }} -   
+                {% if location.startOnSaturday is not empty %}
+                {{ location.startOnSaturday|localizeddate('none', 'short') }}  
                 {% if location.endOnSaturday is not empty %}
-                    {{ location.endOnSaturday|localizeddate('none', 'short') }}
+                    - {{ location.endOnSaturday|localizeddate('none', 'short') }}
+                {% else %}
+                    - {{ __('Open end') }}
+                {% endif %}
                 {% endif %}
                 {% if location.start2OnSaturday is not empty %}
                     <br />{{ location.start2OnSaturday|localizeddate('none', 'short') }} -
@@ -260,14 +277,18 @@
         </div>
         
         <div class="row">
-            <div class="col-md-4 col-xs-6">
+            <div class="col-md-4 col-sm-5 col-xs-6">
                 {{ __('Sunday') }}
             </div>
-            <div class="col-md-8 col-xs-6">
+            <div class="col-md-8 col-sm-7 col-xs-6">
             {% if location.closedOnSunday == false %}
-                {{ location.startOnSunday|localizeddate('none', 'short') }} -   
+                {% if location.startOnSunday is not empty %}
+                {{ location.startOnSunday|localizeddate('none', 'short') }}  
                 {% if location.endOnSunday is not empty %}
-                    {{ location.endOnSunday|localizeddate('none', 'short') }}
+                    - {{ location.endOnSunday|localizeddate('none', 'short') }}
+                {% else %}
+                    - {{ __('Open end') }}
+                {% endif %}
                 {% endif %}
                 {% if location.start2OnSunday is not empty %}
                     <br />{{ location.start2OnSunday|localizeddate('none', 'short') }} -
@@ -304,7 +325,7 @@
             {% if location.specialsOfLocation|default %}
             <h3>{{ __('Specials of location') }}</h3>
             {{ include(
-                '@MUYourCityModule/SpecialOfLocation/includeDisplayItemListMany.html.twig',
+                '@MUYourCityModule/SpecialOfLocation/includeDisplayItemListManyOwn.html.twig',
                 { items: location.specialsOfLocation }
             ) }}
             {% endif %}
@@ -349,7 +370,15 @@
                     { items: location.filesOfLocation }
                 ) }}
             {% endif %}        
-        </div>
+        </div><br />
+        
+        {% set mayManage = hasPermission('MUYourCityModule:FileOfLocation:', '::', 'ACCESS_EDIT') %}
+        {% if mayManage %}
+        <p class="managelink">
+            {% set createTitle = __('Create file of location') %}
+            <a href="{{ path('muyourcitymodule_fileoflocation_' ~ routeArea ~ 'edit', { location: location.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
+        </p>
+        {% endif %}
               
         </div>
         <div class="col-sm-4">
@@ -381,14 +410,6 @@
         <p class="managelink">
             {% set createTitle = __('Create image of location') %}
             <a href="{{ path('muyourcitymodule_imageoflocation_' ~ routeArea ~ 'edit', { location: location.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
-        </p>
-    {% endif %}
-    
-    {% set mayManage = hasPermission('MUYourCityModule:FileOfLocation:', '::', 'ACCESS_EDIT') %}
-    {% if mayManage %}
-        <p class="managelink">
-            {% set createTitle = __('Create file of location') %}
-            <a href="{{ path('muyourcitymodule_fileoflocation_' ~ routeArea ~ 'edit', { location: location.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
         </p>
     {% endif %}
 
