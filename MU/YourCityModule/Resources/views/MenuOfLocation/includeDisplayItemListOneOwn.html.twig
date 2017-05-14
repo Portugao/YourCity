@@ -1,11 +1,16 @@
 {# purpose of this template: inclusion template for display of related menus of location #}
 {% set hasAdminPermission = hasPermission('MUYourCityModule:MenuOfLocation:', '::', 'ACCESS_EDIT') %}
 
-<h3><a href="{{ path('muyourcitymodule_menuoflocation_' ~ routeArea ~ 'display', { 'id': item.id }) }}" title="{{ item|muyourcitymodule_formattedTitle|e('html_attr') }}">{{ item|muyourcitymodule_formattedTitle }}</h3></a>
+<h2>{{ item|muyourcitymodule_formattedTitle }}</h2>
 
 {% if item.partsOfMenu %}
     {% for part in item.partsOfMenu %}
-        {{ part|muyourcitymodule_formattedTitle }}
+        <div class="col-md-12 abo-location-list Part">
+        {{ include(
+        '@MUYourCityModule/PartOfMenu/includeDisplayItemListOneOwn.html.twig',
+            { item: part }
+        ) }}
+        </div>
     {% endfor %}
 {% endif %}
 
