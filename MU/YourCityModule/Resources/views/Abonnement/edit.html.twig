@@ -21,13 +21,21 @@
             <legend>{{ __('Content') }}</legend>
             {{ form_row(form.name) }}
             {{ form_row(form.showMenus) }}
+            <div class="hidden">
             {{ form_row(form.sendMessageForMenus) }}
+            </div>
             {{ form_row(form.showOffers) }}
+            <div class="hidden">
             {{ form_row(form.sendMessageForOffers) }}
+            </div>
             {{ form_row(form.showEvents) }}
+            <div class="hidden">
             {{ form_row(form.sendMessageForEvents) }}
+            </div>
             {{ form_row(form.showProducts) }}
+            <div class="hidden">
             {{ form_row(form.sendMessageForProducts) }}
+            </div>
             <div class="hidden">
                 {{ form_row(form.showOptionOne) }}
             </div>
