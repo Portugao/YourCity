@@ -1,9 +1,9 @@
 {# purpose of this template: events display view #}
 {% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
 {% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
-{% block pageTitle %}{{ event.getTitleFromDisplayPattern()|default(__('Event')) }}{% endblock %}
+{% block pageTitle %}{{ event|muyourcitymodule_formattedTitle|default(__('Event')) }}{% endblock %}
 {% block title %}
-    {% set templateTitle = event.getTitleFromDisplayPattern()|default(__('Event')) %}
+    {% set templateTitle = event|muyourcitymodule_formattedTitle|default(__('Event')) %}
     {{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.events.filter') }}{% if routeArea == 'admin' %} <small>({{ event.workflowState|muyourcitymodule_objectState(false)|lower }})</small>{% endif %}
     {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: event, area: routeArea, context: 'display' }) %}
     <div class="dropdown">
@@ -16,56 +16,51 @@
     {% set isQuickView = app.request.query.getBoolean('raw', false) %}
     <div class="muyourcitymodule-event muyourcitymodule-display">
 
-    <dl>
+
         {% if event.workflowState is not empty and routeArea == 'admin' %}
             <dt>{{ __('State') }}</dt>
             <dd>{{ event.workflowState|muyourcitymodule_listEntry('event', 'workflowState') }}</dd>
         {% endif %}
-        {#% if event.name is not empty %}
-            <dt>{{ __('Name') }}</dt>
-            <dd>{{ event.name }}</dd>
-        {% endif %#}
+        {% if event.startDate is not empty %}
+            <h2>{{ __('Start date') }} {{ event.startDate|localizeddate('medium', 'short') }}</h2>
+        {% endif %}
         {% if event.description is not empty %}
-            <dt>{{ __('Description') }}</dt>
-            <dd>{{ event.description|safeHtml }}</dd>
+            {{ __('Description') }}
+            {{ event.description|safeHtml }}
         {% endif %}
         {% if event.imageOfEvent is not empty %}
-            <dt>{{ __('Image of event') }}</dt>
-            <dd>{% if event.imageOfEvent is not empty and event.imageOfEventMeta|default %}
-                        <a href="{{ event.imageOfEventUrl }}" title="{{ event.getTitleFromDisplayPattern()|e('html_attr') }}"{% if event.imageOfEventMeta.isImage %} class="image-link"{% endif %}>
+        <div id="imageOfEvent">
+            {% if event.imageOfEvent is not empty and event.imageOfEventMeta|default %}
+                        <a href="{{ event.imageOfEventUrl }}" title="{{ event|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if event.imageOfEventMeta.isImage %} class="image-link"{% endif %}>
             {% if event.imageOfEventMeta.isImage %}
                 {% set thumbOptions = attribute(thumbRuntimeOptions, 'eventImageOfEvent') %}
-                <img src="{{ event.imageOfEvent.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ event.getTitleFromDisplayPattern()|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+                <img src="{{ event.imageOfEvent.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ event|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
             {% else %}
                 {{ __('Download') }} ({{ event.imageOfEventMeta.size|muyourcitymodule_fileSize(event.imageOfEvent.getPathname(), false, false) }})
             {% endif %}
             </a>
             {% else %}&nbsp;{% endif %}
-            </dd>
+        </div>
         {% endif %}
-        {% if event.street is not empty %}
-            <dt>{{ __('Street') }}</dt>
-            <dd>{{ event.street }}</dd>
-        {% endif %}
+        {% if event.street is not empty or (event.zipCode and event.city is not empty) %}
+            <h3>{{ __('Adress of event') }}: {{ event.street }} 
         {% if event.numberOfStreet is not empty %}
-            <dt>{{ __('Number of street') }}</dt>
-            <dd>{{ event.numberOfStreet }}</dd>
+            {{ event.numberOfStreet }}
+        {% endif %}<br />
+        </h3>
         {% endif %}
         {% if event.zipCode is not empty %}
-            <dt>{{ __('Zip code') }}</dt>
-            <dd>{{ event.zipCode }}</dd>
+            {{ event.zipCode }} 
         {% endif %}
         {% if event.city is not empty %}
-            <dt>{{ __('City') }}</dt>
-            <dd>{{ event.city }}</dd>
+            {{ event.city }}
         {% endif %}
-        {% if event.startDate is not empty %}
+        {#% if event.startDate is not empty %}
             <dt>{{ __('Start date') }}</dt>
             <dd>{{ event.startDate|localizeddate('medium', 'short') }}</dd>
-        {% endif %}
+        {% endif %#}
         {% if event.endDate is not empty %}
-            <dt>{{ __('End date') }}</dt>
-            <dd>{{ event.endDate|localizeddate('medium', 'short') }}</dd>
+            <h3>{{ __('End date') }}: {{ event.endDate|localizeddate('medium', 'short') }}</h3>
         {% endif %}
         {#% if event.latitude is not empty %}
             <dt>{{ __('Latitude') }}</dt>
@@ -88,8 +83,7 @@
               {% endif %}
             </dd>
         {% endif %}
-        
-    </dl>
+        <br style="clear: both;" />
 
     <h3 class="muyourcitymodule-map">{{ __('Map') }}</h3>
     <div id="mapContainer" class="muyourcitymodule-mapcontainer">
