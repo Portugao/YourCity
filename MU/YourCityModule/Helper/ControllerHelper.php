@@ -127,6 +127,25 @@ class ControllerHelper extends AbstractControllerHelper
     
     	return $this->addTemplateParameters($objectType, $templateParameters, 'controllerAction', $contextArgs);
     }
+    
+    /**
+     * Processes the parameters for an edit action.
+     *
+     * @param string  $objectType         Name of treated entity type
+     * @param array   $templateParameters Template data
+     *
+     * @return array Enriched template parameters used for creating the response
+     */
+    public function processEditActionParameters($objectType, array $templateParameters = [])
+    {
+    	$contextArgs = ['controller' => $objectType, 'action' => 'edit'];
+    	if (!in_array($objectType, $this->getObjectTypes('controllerAction', $contextArgs))) {
+    		throw new Exception($this->__('Error! Invalid object type received.'));
+    	}
+    
+    	return $this->addTemplateParameters($objectType, $templateParameters, 'controllerAction', $contextArgs);
+    }
+    
     /**
      * 
      * @param string $actualDay
@@ -208,7 +227,6 @@ class ControllerHelper extends AbstractControllerHelper
     		if ($start2Time < $actualTime) {
     			if ($end2Time != '') {
     				if ($end2Time >= $actualTime || ($end2Time < $actualTime && $nextStartTime != '' && $nextStartTime > $actualTime)) {
-    					//die('end groesser aktual');
     					if ($state != 'open') {
     					    $state = 'open';
     					}
@@ -227,7 +245,7 @@ class ControllerHelper extends AbstractControllerHelper
     			$state = 'openEnd';
     		} else {
     			if ($state != 'closed') {
-    		$state = 'closed';
+    		        $state = 'closed';
     			}
     		}
     		}
@@ -255,6 +273,8 @@ class ControllerHelper extends AbstractControllerHelper
     	} else {
     		$hours = 'none';
     	}
+    	//die($hours);
+    	
     	if ($kind == 1) {
     	    return $state;
     	} else {
