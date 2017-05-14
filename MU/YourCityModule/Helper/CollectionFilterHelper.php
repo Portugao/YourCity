@@ -50,7 +50,6 @@ class CollectionFilterHelper extends AbstractCollectionFilterHelper
      */
     protected function applyDefaultFiltersForOffer(QueryBuilder $qb, $parameters = [])
     {
-        $routeName = $this->request->get('_route');
         $isAdminArea = false !== strpos($routeName, 'muyourcitymodule_offer_admin');
         if ($isAdminArea) {
             return $qb;
