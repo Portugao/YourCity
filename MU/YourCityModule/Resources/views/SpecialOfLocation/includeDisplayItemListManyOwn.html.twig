@@ -1,0 +1,28 @@
+{# purpose of this template: inclusion template for display of related specials of location #}
+{% set hasAdminPermission = hasPermission('MUYourCityModule:SpecialOfLocation:', '::', 'ACCESS_EDIT') %}
+{% if noLink is not defined %}
+    {% set noLink = false %}
+{% endif %}
+{% if items|default and items|length > 0 %}
+<ul class="list-group muyourcitymodule-related-item-list specialoflocation">
+{% for item in items %}
+    {% if hasAdminPermission or item.workflowState == 'approved' %}
+    <li class="list-group-item">
+<h4 class="list-group-item-heading">
+{% spaceless %}
+<span style="color: {{ item.colorOfIcon }};">{{ item.iconForSpecial|raw }}</span>
+{% if not noLink %}
+    <a href="{{ path('muyourcitymodule_specialoflocation_' ~ routeArea ~ 'display', { 'id': item.getId() }) }}" title="{{ item|muyourcitymodule_formattedTitle|e('html_attr') }}">
+{% endif %}
+     {{ item|muyourcitymodule_formattedTitle }}
+{% if not noLink %}
+    </a>
+    {#<a id="specialOfLocationItem{{ item.getKey() }}Display" href="{{ path('muyourcitymodule_specialoflocation_' ~ routeArea ~ 'display', { 'id': item.getId(), 'raw': 1 }) }}" title="{{ __('Open quick view window') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ item|muyourcitymodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>#}
+{% endif %}
+{% endspaceless %}
+</h4>
+    </li>
+    {% endif %}
+{% endfor %}
+</ul>
+{% endif %}

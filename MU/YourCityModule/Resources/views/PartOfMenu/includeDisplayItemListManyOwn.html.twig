@@ -1,0 +1,19 @@
+{# purpose of this template: inclusion template for display of related parts of menu #}
+{% set hasAdminPermission = hasPermission('MUYourCityModule:PartOfMenu:', '::', 'ACCESS_EDIT') %}
+{% if noLink is not defined %}
+    {% set noLink = false %}
+{% endif %}
+{% if items|default and items|length > 0 %}
+<ul class="list-group muyourcitymodule-related-item-list partofmenu">
+{% for item in items %}
+    {% if hasAdminPermission or item.workflowState == 'approved' %}
+    <li class="list-group-item">
+    <span class="partofmenu-edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+<h4 class="list-group-item-heading">
+    {{ item|muyourcitymodule_formattedTitle }}
+</h4>
+    </li>
+    {% endif %}
+{% endfor %}
+</ul>
+{% endif %}
