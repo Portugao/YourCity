@@ -15,7 +15,20 @@
 {% block content %}
     {% set isQuickView = app.request.query.getBoolean('raw', false) %}
     <div class="muyourcitymodule-product muyourcitymodule-display">
-
+    <div id="imageOfProduct">
+        {% if product.imageOfProduct is not empty %}
+            {% if product.imageOfProduct is not empty and product.imageOfProductMeta|default %}
+                        <a href="{{ product.imageOfProductUrl }}" title="{{ product|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if product.imageOfProductMeta.isImage %} class="image-link"{% endif %}>
+            {% if product.imageOfProductMeta.isImage %}
+                {% set thumbOptions = attribute(thumbRuntimeOptions, 'productImageOfProduct') %}
+                <img src="{{ product.imageOfProduct.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ product|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail img-responsive" />
+            {% else %}
+                {{ __('Download') }} ({{ product.imageOfProductMeta.size|muyourcitymodule_fileSize(product.imageOfProduct.getPathname(), false, false) }})
+            {% endif %}
+            </a>
+            {% else %}&nbsp;{% endif %}
+        {% endif %}
+    </div>
     <dl>
         {#% if product.name is not empty %}
             <dt>{{ __('Name') }}</dt>
@@ -56,7 +69,7 @@
         {% endif %}
         {% if product.tuesday is not empty %}
             <dt>{{ __('Tuesday') }}</dt>
-            <dd>{% set itemid = product.createCompositeIdentifier() %}
+            <dd>{% set itemid = product|muyourcitymodule_formattedTitle|default(__('Product')) %}
             <a id="toggleTuesday{{ itemid }}" href="javascript:void(0);" class="muyourcity-ajax-toggle hidden" data-object-type="product" data-field-name="tuesday" data-item-id="{{ itemid }}">
                 <i class="fa fa-check{% if not product.tuesday %} hidden{% endif %}" id="yesTuesday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
                 <i class="fa fa-times{% if product.tuesday %} hidden{% endif %}" id="noTuesday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
@@ -120,7 +133,7 @@
         {% endif %}
         {% if product.saturday is not empty %}
             <dt>{{ __('Saturday') }}</dt>
-            <dd>{% set itemid = product.createCompositeIdentifier() %}
+            <dd>{% set itemid = product|muyourcitymodule_formattedTitle|default(__('Product')) %}
             <a id="toggleSaturday{{ itemid }}" href="javascript:void(0);" class="muyourcity-ajax-toggle hidden" data-object-type="product" data-field-name="saturday" data-item-id="{{ itemid }}">
                 <i class="fa fa-check{% if not product.saturday %} hidden{% endif %}" id="yesSaturday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
                 <i class="fa fa-times{% if product.saturday %} hidden{% endif %}" id="noSaturday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
@@ -136,7 +149,7 @@
         {% endif %}
         {% if product.sunday is not empty %}
             <dt>{{ __('Sunday') }}</dt>
-            <dd>{% set itemid = product.createCompositeIdentifier() %}
+            <dd>{% set itemid = product|muyourcitymodule_formattedTitle|default(__('Product')) %}
             <a id="toggleSunday{{ itemid }}" href="javascript:void(0);" class="muyourcity-ajax-toggle hidden" data-object-type="product" data-field-name="sunday" data-item-id="{{ itemid }}">
                 <i class="fa fa-check{% if not product.sunday %} hidden{% endif %}" id="yesSunday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
                 <i class="fa fa-times{% if product.sunday %} hidden{% endif %}" id="noSunday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
