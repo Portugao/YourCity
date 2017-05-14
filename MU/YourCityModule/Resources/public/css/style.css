@@ -142,6 +142,10 @@ div.muyourcitymodule-view .avatar img {
 
 /*****************OWN**********************/
 
+.dropdown {
+	font-size: 0.6em;
+}
+
 /****************TABS*********************/
 
 .tab-pane {
@@ -154,6 +158,10 @@ div.muyourcitymodule-view .avatar img {
 
 .list-group {
 	margin: 10px 0;
+}
+
+.list-group-item-heading {
+	font-size: 1.2em;
 }
 
 /**********ABO**************/
@@ -353,6 +361,11 @@ div.muyourcitymodule-view .avatar img {
 	color: #ff0000;
 }
 
+#imageOfEvent {
+	float: right;
+	margin: 0 0 0 25px;
+}
+
 #imageOfOffer {
 	float: right;
 	margin: 0 0 0 25px;
@@ -476,12 +489,11 @@ div.muyourcitymodule-view .avatar img {
 .carousel-indicators .active {
 	width:12px;
 	height:12px;
-	background:#3276b1;
-	border-color:#3276b1;
+	background:#d80c0c;
+	border-color:#c0c0c0;
 }
 
 .item-container {
 	padding: 5px;
 	min-height: 240px;
-	float: left;
 }
