@@ -47,8 +47,6 @@
                 </ol>                
 </div>
 
-
-
 {% if objectType == 'offer' %}
 <div class="slider">
     <div class="tabs">
@@ -73,12 +71,7 @@
 /* <![CDATA[ */
 var MU = jQuery.noConflict();
 	MU('#myCarousel').carousel({
-		interval:   4000
+		interval:   {{ vars.slideshowspeed }}
 	});
         /* ]]> */
         </script>
-
-
-
-{{ pageAddAsset('javascript', app.request.basePath ~ '/modules/MU/YourCityModule/Resources/public/js/Flex/jquery.flexslider.js') }}
-{{ pageAddAsset('stylesheet', app.request.basePath ~ '/modules/MU/YourCityModule/Resources/public/css/Flex/flexslider.css') }}
