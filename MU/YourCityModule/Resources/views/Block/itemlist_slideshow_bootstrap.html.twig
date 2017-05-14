@@ -1,8 +1,6 @@
 {# Purpose of this template: Display items within a block (fallback template) #}
 
-
-
-<div id="myCarousel" class="carousel slide">
+<div id="myCarousel{{ vars.bid }}" class="carousel slide">
     <div class="carousel-inner">
     {% if objectType == 'location' %}
         {% for location in items %}
@@ -12,7 +10,7 @@
                 <div class="item">
             {% endif %}
             <div class="item-container"> 
-            <h2>{{ location.name }}</h2>
+            <h3>{{ location.name }}</h3>
             {{ location.description|truncate(100) }}<br />
             {% if location.branches|default %}{{ __('Branches') }}: 
                 {% for branch in location.branches %}
@@ -30,21 +28,55 @@
             </div>
         {% endfor %}
     {% endif %}
+    
+    {% if objectType == 'offer' %}
+        {% for location in items %}
+            {% if loop.index == 1 %}
+                <div class="item active">
+            {% else %}
+                <div class="item">
+            {% endif %}
+            <div class="item-container"> 
+            <div class="offerItem">
+            {% if offer.percentOfOffer is not empty and offer.percentOfOffer != 0 %}
+                <span class="offer-block-offer">{{ offer.percentOfOffer }}%</span>
+            {% endif %}
+            <h2>{{ offer.name }}</h2>
+            {{ offer.description|truncate(100) }}<br />
+            <a href="{{ path('muyourcitymodule_offer_display', { 'id': offer.id }) }}" class="btn btn-primary btn-sm" href="#" role="button">{{ __('More') }}</a>
+        </div>
+    
+    </div>
+            </div>
+        {% endfor %}
+    {% endif %}
     </div>
     
     <a class="left carousel-control" href="#myCarousel" data-slide="prev"><i class="fa fa-chevron-left"></i></a>
     <a class="right carousel-control" href="#myCarousel" data-slide="next"><i class="fa fa-chevron-right"></i></a>
                 
     <ol class="carousel-indicators">
-    {% for location in items %}
-        {% set counter = loop.index - 1 %}
-        {% if loop.index == 1 %}
-            <li data-target="#myCarousel" data-slide-to="{{ counter }}" class="active"></li>
-        {% else %}
-            <li data-target="#myCarousel" data-slide-to="{{ counter }}"></li>
+        {% if objectType == 'location' %}
+            {% for location in items %}
+                {% set counter = loop.index - 1 %}
+                {% if loop.index == 1 %}
+                    <li data-target="#myCarousel{{ vars.bid }}" data-slide-to="{{ counter }}" class="active"></li>
+                {% else %}
+                    <li data-target="#myCarousel{{ vars.bid }}" data-slide-to="{{ counter }}"></li>
+                {% endif %}
+            {% endfor %}
         {% endif %}
-    {% endfor %}
-                </ol>                
+        {% if objectType == 'offer' %}
+            {% for offer in items %}
+                {% set counter = loop.index - 1 %}
+                {% if loop.index == 1 %}
+                    <li data-target="#myCarousel{{ vars.bid }}" data-slide-to="{{ counter }}" class="active"></li>
+                {% else %}
+                    <li data-target="#myCarousel{{ vars.bid }}" data-slide-to="{{ counter }}"></li>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </ol>                
 </div>
 
 {% if objectType == 'offer' %}
@@ -70,7 +102,7 @@
 <script type="text/javascript">
 /* <![CDATA[ */
 var MU = jQuery.noConflict();
-	MU('#myCarousel').carousel({
+	MU('#myCarousel{{ vars.bid }}').carousel({
 		interval:   {{ vars.slideshowspeed }}
 	});
         /* ]]> */
