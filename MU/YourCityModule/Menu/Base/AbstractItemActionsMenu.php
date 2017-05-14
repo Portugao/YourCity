@@ -320,6 +320,17 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 ])->setAttribute('icon', 'fa fa-plus');
                 $menu[$title]->setLinkAttribute('title', $title);
             }
+            
+            $relatedComponent = 'MUYourCityModule:PartOfMenu:';
+            $relatedInstance = $entity->getKey() . '::';
+            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
+                $title = $this->__('Create part of menu');
+                $menu->addChild($title, [
+                    'route' => 'muyourcitymodule_partofmenu_' . $routeArea . 'edit',
+                    'routeParameters' => ['location' => $entity->getKey()]
+                ])->setAttribute('icon', 'fa fa-plus');
+                $menu[$title]->setLinkAttribute('title', $title);
+            }
         }
         if ($entity instanceof PartEntity) {
             $component = 'MUYourCityModule:Part:';
