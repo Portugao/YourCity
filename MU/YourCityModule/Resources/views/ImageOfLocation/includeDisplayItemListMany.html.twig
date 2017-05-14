@@ -7,7 +7,7 @@
 <ul class="list-group muyourcitymodule-related-item-list imageoflocation">
 {% for item in items %}
     {% if hasAdminPermission or item.workflowState == 'approved' %}
-    <li class="list-group-item">
+    <li class="list-group-item col-sm -12 col-md-6">
 <h4 class="list-group-item-heading">
 {% spaceless %}
 {% if not noLink %}
@@ -16,7 +16,7 @@
     {{ item|muyourcitymodule_formattedTitle }}
 {% if not noLink %}
     </a>
-    <a id="imageOfLocationItem{{ item.getKey() }}Display" href="{{ path('muyourcitymodule_imageoflocation_' ~ routeArea ~ 'display', { 'id': item.getId(), 'raw': 1 }) }}" title="{{ __('Open quick view window') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ item|muyourcitymodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
+    {#<a id="imageOfLocationItem{{ item.getKey() }}Display" href="{{ path('muyourcitymodule_imageoflocation_' ~ routeArea ~ 'display', { 'id': item.getId(), 'raw': 1 }) }}" title="{{ __('Open quick view window') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ item|muyourcitymodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>#}
 {% endif %}
 {% endspaceless %}
 </h4>
