@@ -60,6 +60,7 @@ abstract class AbstractAbonnementEntity extends EntityAccess
     protected $workflowState = 'initial';
     
     /**
+     * Enter the name of the location, you subscribe to.
      * @ORM\Column(length=255)
      * @Assert\NotNull()
      * @Assert\Length(min="0", max="255")
@@ -73,7 +74,7 @@ abstract class AbstractAbonnementEntity extends EntityAccess
      * @Assert\Type(type="bool")
      * @var boolean $showMenus
      */
-    protected $showMenus = false;
+    protected $showMenus = true;
     
     /**
      * @ORM\Column(type="boolean")
@@ -89,7 +90,7 @@ abstract class AbstractAbonnementEntity extends EntityAccess
      * @Assert\Type(type="bool")
      * @var boolean $showOffers
      */
-    protected $showOffers = false;
+    protected $showOffers = true;
     
     /**
      * @ORM\Column(type="boolean")
@@ -105,7 +106,7 @@ abstract class AbstractAbonnementEntity extends EntityAccess
      * @Assert\Type(type="bool")
      * @var boolean $showEvents
      */
-    protected $showEvents = false;
+    protected $showEvents = true;
     
     /**
      * @ORM\Column(type="boolean")
@@ -121,7 +122,7 @@ abstract class AbstractAbonnementEntity extends EntityAccess
      * @Assert\Type(type="bool")
      * @var boolean $showProducts
      */
-    protected $showProducts = false;
+    protected $showProducts = true;
     
     /**
      * @ORM\Column(type="boolean")
