@@ -133,7 +133,26 @@ class ItemActionsMenu extends AbstractItemActionsMenu
             $instance = $entity->getKey() . '::';
             $routePrefix = 'muyourcitymodule_location_';
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
-        
+            
+            	$ownerThere = $this->hasOwnerLocation($entity);
+            	if ($ownerThere) {
+            		$realOwner = $this->realOwnerLocation($entity, $currentUserId);
+            	} else {
+            		$realOwner = false;
+            	}
+            	$adminThere = $this->hasAdminLocation($entity);
+            	if ($adminThere) {
+            		$realAdmin = $this->realAdminLocation($entity, $currentUserId);
+            	} else {
+            		$realAdmin = false;
+            	}
+            	$admin2There = $this->hasAdmin2Location($entity);
+            	if ($admin2There) {
+            		$realAdmin2 = $this->realAdmin2Location($entity, $currentUserId);
+            	} else {
+            		$realAdmin2 = false;
+            	}
+
             if ($routeArea == 'admin') {
                 $menu->addChild($this->__('Preview'), [
                     'route' => $routePrefix . 'display',
@@ -149,7 +168,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
                 ])->setAttribute('icon', 'fa fa-eye');
                 $menu[$this->__('Details')]->setLinkAttribute('title', str_replace('"', '', $entityDisplayHelper->getFormattedTitle($entity)));
             }
-            if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
+            if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT) && ($realOwner|| $realAdmin || $realAdmin2 || $isOwner)) {
                 $menu->addChild($this->__('Edit'), [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
@@ -161,7 +180,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new location'));
             }
-            if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
+            if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE) && ($realOwner|| $realAdmin || $realAdmin2 || $isOwner)) {
                 $menu->addChild($this->__('Delete'), [
                     'route' => $routePrefix . $routeArea . 'delete',
                     'routeParameters' => $entity->createUrlArgs()
@@ -180,7 +199,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
             
             $relatedComponent = 'MUYourCityModule:ImageOfLocation:';
             $relatedInstance = $entity->getKey() . '::';
-            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
+            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT) && ($realOwner|| $realAdmin || $realAdmin2 || $isOwner)) {
                 $title = $this->__('Create image of location');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_imageoflocation_' . $routeArea . 'edit',
@@ -191,7 +210,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
             
             $relatedComponent = 'MUYourCityModule:FileOfLocation:';
             $relatedInstance = $entity->getKey() . '::';
-            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
+            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT) && ($realOwner|| $realAdmin || $realAdmin2 || $isOwner)) {
                 $title = $this->__('Create file of location');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_fileoflocation_' . $routeArea . 'edit',
@@ -224,7 +243,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
             
             $relatedComponent = 'MUYourCityModule:Offer:';
             $relatedInstance = $entity->getKey() . '::';
-            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
+            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT) && ($realOwner|| $realAdmin || $realAdmin2 || $isOwner)) {
                 $title = $this->__('Create offer');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_offer_' . $routeArea . 'edit',
@@ -235,7 +254,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
             
             $relatedComponent = 'MUYourCityModule:MenuOfLocation:';
             $relatedInstance = $entity->getKey() . '::';
-            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
+            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT) && ($realOwner|| $realAdmin || $realAdmin2 || $isOwner)) {
                 $title = $this->__('Create menu of location');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_menuoflocation_' . $routeArea . 'edit',
@@ -244,9 +263,20 @@ class ItemActionsMenu extends AbstractItemActionsMenu
                 $menu[$title]->setLinkAttribute('title', $title);
             }
             
+            $relatedComponent = 'MUYourCityModule:PartOfMenu:';
+            $relatedInstance = $entity->getKey() . '::';
+            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT) && ($realOwner|| $realAdmin || $realAdmin2 || $isOwner)) {
+            	$title = $this->__('Create part of menu');
+            	$menu->addChild($title, [
+            			'route' => 'muyourcitymodule_partofmenu_' . $routeArea . 'edit',
+            			'routeParameters' => ['location' => $entity->getKey()]
+            	])->setAttribute('icon', 'fa fa-plus');
+            	$menu[$title]->setLinkAttribute('title', $title);
+            }
+            
             $relatedComponent = 'MUYourCityModule:Event:';
             $relatedInstance = $entity->getKey() . '::';
-            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
+            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT) && ($realOwner|| $realAdmin || $realAdmin2 || $isOwner)) {
                 $title = $this->__('Create event');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_event_' . $routeArea . 'edit',
@@ -257,7 +287,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
             
             $relatedComponent = 'MUYourCityModule:Product:';
             $relatedInstance = $entity->getKey() . '::';
-            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
+            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT) && ($realOwner|| $realAdmin || $realAdmin2 || $isOwner)) {
                 $title = $this->__('Create product');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_product_' . $routeArea . 'edit',
@@ -268,7 +298,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
             
             $relatedComponent = 'MUYourCityModule:Dish:';
             $relatedInstance = $entity->getKey() . '::';
-            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
+            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT) && ($realOwner|| $realAdmin || $realAdmin2 || $isOwner)) {
                 $title = $this->__('Create dish');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_dish_' . $routeArea . 'edit',
@@ -658,7 +688,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
             
             $relatedComponent = 'MUYourCityModule:Dish:';
             $relatedInstance = $entity->getKey() . '::';
-            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
+            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT) && ($realOwner|| $realAdmin || $realAdmin2 || $isOwner)) {
                 $title = $this->__('Create dish');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_dish_' . $routeArea . 'edit',
@@ -669,7 +699,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
             
             $relatedComponent = 'MUYourCityModule:PartOfMenu:';
             $relatedInstance = $entity->getKey() . '::';
-            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
+            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT) && ($realOwner|| $realAdmin || $realAdmin2 || $isOwner)) {
                 $title = $this->__('Create part of menu');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_partofmenu_' . $routeArea . 'edit',
@@ -1149,5 +1179,29 @@ class ItemActionsMenu extends AbstractItemActionsMenu
     
     public function realAdmin2($entity, $currentUserId) {
     	$realAdmin2 = $currentUserId > 1 && $entity->getLocation()->getAdmin2()-getUid();
+    }
+    
+    public function hasOwnerLocation($entity) {
+    	$hasOwner = $entity->getOwner();
+    }
+    
+    public function hasAdminLocation($entity) {
+    	$hasAdmin = $entity->getAdmin1();
+    }
+    
+    public function hasAdmin2Location($entity) {
+    	$hasAdmin2 = $entity->getAdmin2();
+    }
+    
+    public function realOwnerLocation($entity, $currentUserId) {
+    	$realOwner = $currentUserId > 1 && $entity->getOwner()-getUid();
+    }
+    
+    public function realAdminLocation($entity, $currentUserId) {
+    	$realAdmin = $currentUserId > 1 && $entity->getAdmin1()-getUid();
+    }
+    
+    public function realAdmin2Location($entity, $currentUserId) {
+    	$realAdmin2 = $currentUserId > 1 && $entity->getAdmin2()-getUid();
     }
 }
