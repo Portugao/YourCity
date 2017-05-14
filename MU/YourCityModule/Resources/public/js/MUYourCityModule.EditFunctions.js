@@ -5,6 +5,12 @@
  */
 function mUYourCityInitUserField(fieldName, getterName)
 {
+    jQuery('#' + fieldName + 'ResetVal').click( function (event) {
+        event.preventDefault();
+        jQuery('#' + fieldName).val('');
+        jQuery('#' + fieldName + 'Selector').val('');
+    }).removeClass('hidden');
+
     if (jQuery('#' + fieldName + 'LiveSearch').length < 1) {
         return;
     }
@@ -65,22 +71,13 @@ function mUYourCityInitUploadField(fieldName)
 }
 
 /**
- * Resets the value of a date or datetime input field.
- */
-function mUYourCityResetDateField(fieldName)
-{
-    jQuery('#' + fieldName).val('');
-    jQuery('#' + fieldName + 'cal').html(Translator.__('No date set.'));
-}
-
-/**
  * Initialises the reset button for a certain date input.
  */
 function mUYourCityInitDateField(fieldName)
 {
     jQuery('#' + fieldName + 'ResetVal').click( function (event) {
         event.preventDefault();
-        mUYourCityResetDateField(fieldName);
+        jQuery('#' + fieldName).val('');
     }).removeClass('hidden');
 }
 

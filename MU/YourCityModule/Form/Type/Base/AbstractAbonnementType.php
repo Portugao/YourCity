@@ -124,6 +124,11 @@ abstract class AbstractAbonnementType extends AbstractType
         
         $builder->add('name', TextType::class, [
             'label' => $this->__('Name') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Enter the name of the location, you subscribe to.')
+            ],
+            'help' => $this->__('Enter the name of the location, you subscribe to.'),
             'empty_data' => 'Abonnement',
             'attr' => [
                 'maxlength' => 255,

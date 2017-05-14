@@ -116,6 +116,20 @@ abstract class AbstractPartOfMenuEntity extends EntityAccess implements Translat
     protected $menuOfLocation;
     
     /**
+     * Bidirectional - Many partsOfMenu [parts of menu] are linked by one location [location] (OWNING SIDE).
+     *
+     * @ORM\ManyToOne(targetEntity="MU\YourCityModule\Entity\LocationEntity", inversedBy="partsOfMenu")
+     * @ORM\JoinTable(name="mu_yourcity_location",
+     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
+     * )
+     * @Assert\NotNull(message="Choosing a location is required.")
+     * @Assert\Type(type="MU\YourCityModule\Entity\LocationEntity")
+     * @var \MU\YourCityModule\Entity\LocationEntity $location
+     */
+    protected $location;
+    
+    /**
      * Bidirectional - One partOfMenu [part of menu] has many dishes [dishes] (INVERSE SIDE).
      *
      * @ORM\OneToMany(targetEntity="MU\YourCityModule\Entity\DishEntity", mappedBy="partOfMenu")
@@ -328,6 +342,28 @@ abstract class AbstractPartOfMenuEntity extends EntityAccess implements Translat
     public function setMenuOfLocation($menuOfLocation = null)
     {
         $this->menuOfLocation = $menuOfLocation;
+    }
+    
+    /**
+     * Returns the location.
+     *
+     * @return \MU\YourCityModule\Entity\LocationEntity
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+    
+    /**
+     * Sets the location.
+     *
+     * @param \MU\YourCityModule\Entity\LocationEntity $location
+     *
+     * @return void
+     */
+    public function setLocation($location = null)
+    {
+        $this->location = $location;
     }
     
     /**

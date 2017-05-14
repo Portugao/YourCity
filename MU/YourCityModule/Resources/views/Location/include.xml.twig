@@ -120,6 +120,13 @@
         {% endfor %}
     {% endif %}
     </abonnements>
+    <partsOfMenu>
+    {% if location.partsOfMenu|default %}
+        {% for relatedItem in location.partsOfMenu %}
+        <partOfMenu>{{ relatedItem|muyourcitymodule_formattedTitle }}</partOfMenu>
+        {% endfor %}
+    {% endif %}
+    </partsOfMenu>
     <branches>
     {% if location.branches|default %}
         {% for relatedItem in location.branches %}

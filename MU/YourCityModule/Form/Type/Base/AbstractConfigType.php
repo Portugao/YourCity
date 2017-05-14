@@ -632,14 +632,13 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Thumbnail mode (inset or outbound).')
                 ],
                 'help' => $this->__('Thumbnail mode (inset or outbound).'),
-                'required' => false,
                 'data' => isset($this->moduleVars['thumbnailModeBranchImageOfBranch']) ? $this->moduleVars['thumbnailModeBranchImageOfBranch'] : '',
                 'empty_data' => 'inset',
                 'attr' => [
                     'title' => $this->__('Choose the thumbnail mode.')
                 ],'choices' => [
-                    $this->__('Inset') => 'inset'
-                    ,$this->__('Outbound') => 'outbound'
+                    $this->__('Inset') => 'inset',
+                    $this->__('Outbound') => 'outbound'
                 ],
                 'choices_as_values' => true,
                 'multiple' => false
@@ -795,14 +794,13 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Thumbnail mode (inset or outbound).')
                 ],
                 'help' => $this->__('Thumbnail mode (inset or outbound).'),
-                'required' => false,
                 'data' => isset($this->moduleVars['thumbnailModeLocationLogoOfYourLocation']) ? $this->moduleVars['thumbnailModeLocationLogoOfYourLocation'] : '',
                 'empty_data' => 'inset',
                 'attr' => [
                     'title' => $this->__('Choose the thumbnail mode.')
                 ],'choices' => [
-                    $this->__('Inset') => 'inset'
-                    ,$this->__('Outbound') => 'outbound'
+                    $this->__('Inset') => 'inset',
+                    $this->__('Outbound') => 'outbound'
                 ],
                 'choices_as_values' => true,
                 'multiple' => false
@@ -958,14 +956,13 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Thumbnail mode (inset or outbound).')
                 ],
                 'help' => $this->__('Thumbnail mode (inset or outbound).'),
-                'required' => false,
                 'data' => isset($this->moduleVars['thumbnailModeLocationImageOfLocation']) ? $this->moduleVars['thumbnailModeLocationImageOfLocation'] : '',
                 'empty_data' => 'inset',
                 'attr' => [
                     'title' => $this->__('Choose the thumbnail mode.')
                 ],'choices' => [
-                    $this->__('Inset') => 'inset'
-                    ,$this->__('Outbound') => 'outbound'
+                    $this->__('Inset') => 'inset',
+                    $this->__('Outbound') => 'outbound'
                 ],
                 'choices_as_values' => true,
                 'multiple' => false
@@ -1121,14 +1118,13 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Thumbnail mode (inset or outbound).')
                 ],
                 'help' => $this->__('Thumbnail mode (inset or outbound).'),
-                'required' => false,
                 'data' => isset($this->moduleVars['thumbnailModePartImageOfPart']) ? $this->moduleVars['thumbnailModePartImageOfPart'] : '',
                 'empty_data' => 'inset',
                 'attr' => [
                     'title' => $this->__('Choose the thumbnail mode.')
                 ],'choices' => [
-                    $this->__('Inset') => 'inset'
-                    ,$this->__('Outbound') => 'outbound'
+                    $this->__('Inset') => 'inset',
+                    $this->__('Outbound') => 'outbound'
                 ],
                 'choices_as_values' => true,
                 'multiple' => false
@@ -1284,14 +1280,13 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Thumbnail mode (inset or outbound).')
                 ],
                 'help' => $this->__('Thumbnail mode (inset or outbound).'),
-                'required' => false,
                 'data' => isset($this->moduleVars['thumbnailModeImageOfLocationImage']) ? $this->moduleVars['thumbnailModeImageOfLocationImage'] : '',
                 'empty_data' => 'inset',
                 'attr' => [
                     'title' => $this->__('Choose the thumbnail mode.')
                 ],'choices' => [
-                    $this->__('Inset') => 'inset'
-                    ,$this->__('Outbound') => 'outbound'
+                    $this->__('Inset') => 'inset',
+                    $this->__('Outbound') => 'outbound'
                 ],
                 'choices_as_values' => true,
                 'multiple' => false
@@ -1447,14 +1442,13 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Thumbnail mode (inset or outbound).')
                 ],
                 'help' => $this->__('Thumbnail mode (inset or outbound).'),
-                'required' => false,
                 'data' => isset($this->moduleVars['thumbnailModeOfferImageOfOffer']) ? $this->moduleVars['thumbnailModeOfferImageOfOffer'] : '',
                 'empty_data' => 'inset',
                 'attr' => [
                     'title' => $this->__('Choose the thumbnail mode.')
                 ],'choices' => [
-                    $this->__('Inset') => 'inset'
-                    ,$this->__('Outbound') => 'outbound'
+                    $this->__('Inset') => 'inset',
+                    $this->__('Outbound') => 'outbound'
                 ],
                 'choices_as_values' => true,
                 'multiple' => false
@@ -1610,14 +1604,13 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Thumbnail mode (inset or outbound).')
                 ],
                 'help' => $this->__('Thumbnail mode (inset or outbound).'),
-                'required' => false,
                 'data' => isset($this->moduleVars['thumbnailModeMenuOfLocationImageOfMenu']) ? $this->moduleVars['thumbnailModeMenuOfLocationImageOfMenu'] : '',
                 'empty_data' => 'inset',
                 'attr' => [
                     'title' => $this->__('Choose the thumbnail mode.')
                 ],'choices' => [
-                    $this->__('Inset') => 'inset'
-                    ,$this->__('Outbound') => 'outbound'
+                    $this->__('Inset') => 'inset',
+                    $this->__('Outbound') => 'outbound'
                 ],
                 'choices_as_values' => true,
                 'multiple' => false
@@ -1773,14 +1766,13 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Thumbnail mode (inset or outbound).')
                 ],
                 'help' => $this->__('Thumbnail mode (inset or outbound).'),
-                'required' => false,
                 'data' => isset($this->moduleVars['thumbnailModeDishImageOfDish']) ? $this->moduleVars['thumbnailModeDishImageOfDish'] : '',
                 'empty_data' => 'inset',
                 'attr' => [
                     'title' => $this->__('Choose the thumbnail mode.')
                 ],'choices' => [
-                    $this->__('Inset') => 'inset'
-                    ,$this->__('Outbound') => 'outbound'
+                    $this->__('Inset') => 'inset',
+                    $this->__('Outbound') => 'outbound'
                 ],
                 'choices_as_values' => true,
                 'multiple' => false
@@ -1936,14 +1928,13 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Thumbnail mode (inset or outbound).')
                 ],
                 'help' => $this->__('Thumbnail mode (inset or outbound).'),
-                'required' => false,
                 'data' => isset($this->moduleVars['thumbnailModeEventImageOfEvent']) ? $this->moduleVars['thumbnailModeEventImageOfEvent'] : '',
                 'empty_data' => 'inset',
                 'attr' => [
                     'title' => $this->__('Choose the thumbnail mode.')
                 ],'choices' => [
-                    $this->__('Inset') => 'inset'
-                    ,$this->__('Outbound') => 'outbound'
+                    $this->__('Inset') => 'inset',
+                    $this->__('Outbound') => 'outbound'
                 ],
                 'choices_as_values' => true,
                 'multiple' => false
@@ -2099,14 +2090,13 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Thumbnail mode (inset or outbound).')
                 ],
                 'help' => $this->__('Thumbnail mode (inset or outbound).'),
-                'required' => false,
                 'data' => isset($this->moduleVars['thumbnailModeProductImageOfProduct']) ? $this->moduleVars['thumbnailModeProductImageOfProduct'] : '',
                 'empty_data' => 'inset',
                 'attr' => [
                     'title' => $this->__('Choose the thumbnail mode.')
                 ],'choices' => [
-                    $this->__('Inset') => 'inset'
-                    ,$this->__('Outbound') => 'outbound'
+                    $this->__('Inset') => 'inset',
+                    $this->__('Outbound') => 'outbound'
                 ],
                 'choices_as_values' => true,
                 'multiple' => false
@@ -2226,25 +2216,24 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Which sections are supported in the Finder component (used by Scribite plug-ins).')
                 ],
                 'help' => $this->__('Which sections are supported in the Finder component (used by Scribite plug-ins).'),
-                'required' => false,
                 'data' => isset($this->moduleVars['enabledFinderTypes']) ? $this->moduleVars['enabledFinderTypes'] : '',
                 'empty_data' => '',
                 'attr' => [
                     'title' => $this->__('Choose the enabled finder types.')
                 ],'choices' => [
-                    $this->__('Branch') => 'branch'
-                    ,$this->__('Location') => 'location'
-                    ,$this->__('Part') => 'part'
-                    ,$this->__('Image of location') => 'imageOfLocation'
-                    ,$this->__('File of location') => 'fileOfLocation'
-                    ,$this->__('Offer') => 'offer'
-                    ,$this->__('Menu of location') => 'menuOfLocation'
-                    ,$this->__('Part of menu') => 'partOfMenu'
-                    ,$this->__('Dish') => 'dish'
-                    ,$this->__('Event') => 'event'
-                    ,$this->__('Product') => 'product'
-                    ,$this->__('Special of location') => 'specialOfLocation'
-                    ,$this->__('Service of location') => 'serviceOfLocation'
+                    $this->__('Branch') => 'branch',
+                    $this->__('Location') => 'location',
+                    $this->__('Part') => 'part',
+                    $this->__('Image of location') => 'imageOfLocation',
+                    $this->__('File of location') => 'fileOfLocation',
+                    $this->__('Offer') => 'offer',
+                    $this->__('Menu of location') => 'menuOfLocation',
+                    $this->__('Part of menu') => 'partOfMenu',
+                    $this->__('Dish') => 'dish',
+                    $this->__('Event') => 'event',
+                    $this->__('Product') => 'product',
+                    $this->__('Special of location') => 'specialOfLocation',
+                    $this->__('Service of location') => 'serviceOfLocation'
                 ],
                 'choices_as_values' => true,
                 'multiple' => true
@@ -2313,16 +2302,15 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('The default map type.')
                 ],
                 'help' => $this->__('The default map type.'),
-                'required' => false,
                 'data' => isset($this->moduleVars['defaultMapType']) ? $this->moduleVars['defaultMapType'] : '',
                 'empty_data' => 'roadmap',
                 'attr' => [
                     'title' => $this->__('Choose the default map type.')
                 ],'choices' => [
-                    $this->__('Roadmap') => 'roadmap'
-                    ,$this->__('Satellite') => 'satellite'
-                    ,$this->__('Hybrid') => 'hybrid'
-                    ,$this->__('Physical') => 'physical'
+                    $this->__('Roadmap') => 'roadmap',
+                    $this->__('Satellite') => 'satellite',
+                    $this->__('Hybrid') => 'hybrid',
+                    $this->__('Physical') => 'physical'
                 ],
                 'choices_as_values' => true,
                 'multiple' => false

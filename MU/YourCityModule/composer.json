@@ -50,6 +50,7 @@
                 "MUYourCityModule:Location:MenuOfLocation": "Location ID:MenuOfLocation ID:",
                 "MUYourCityModule:PartOfMenu:": "PartOfMenu ID::",
                 "MUYourCityModule:MenuOfLocation:PartOfMenu": "MenuOfLocation ID:PartOfMenu ID:",
+                "MUYourCityModule:Location:PartOfMenu": "Location ID:PartOfMenu ID:",
                 "MUYourCityModule:Dish:": "Dish ID::",
                 "MUYourCityModule:MenuOfLocation:Dish": "MenuOfLocation ID:Dish ID:",
                 "MUYourCityModule:PartOfMenu:Dish": "PartOfMenu ID:Dish ID:",

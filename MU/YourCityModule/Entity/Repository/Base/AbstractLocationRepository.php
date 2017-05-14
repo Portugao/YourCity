@@ -833,7 +833,7 @@ abstract class AbstractLocationRepository extends EntityRepository
      */
     protected function addJoinsToSelection()
     {
-        $selection = ', tblImagesOfLocation, tblFilesOfLocation, tblBranches, tblParts, tblOffers, tblMenuOfLocation, tblEvents, tblProducts, tblDishes, tblSpecialsOfLocation, tblServicesOfLocation, tblAbonnements';
+        $selection = ', tblImagesOfLocation, tblFilesOfLocation, tblBranches, tblParts, tblOffers, tblMenuOfLocation, tblEvents, tblProducts, tblDishes, tblSpecialsOfLocation, tblServicesOfLocation, tblAbonnements, tblPartsOfMenu';
     
         return $selection;
     }
@@ -859,6 +859,7 @@ abstract class AbstractLocationRepository extends EntityRepository
         $qb->leftJoin('tbl.specialsOfLocation', 'tblSpecialsOfLocation');
         $qb->leftJoin('tbl.servicesOfLocation', 'tblServicesOfLocation');
         $qb->leftJoin('tbl.abonnements', 'tblAbonnements');
+        $qb->leftJoin('tbl.partsOfMenu', 'tblPartsOfMenu');
     
         return $qb;
     }

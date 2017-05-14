@@ -233,6 +233,25 @@ abstract class AbstractPartOfMenuType extends AbstractType
                 'title' => $this->__('Choose the menu of location')
             ]
         ]);
+        $queryBuilder = function(EntityRepository $er) {
+            // select without joins
+            return $er->getListQueryBuilder('', '', false);
+        };
+        $entityDisplayHelper = $this->entityDisplayHelper;
+        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
+            return $entityDisplayHelper->getFormattedTitle($entity);
+        };
+        $builder->add('location', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
+            'class' => 'MUYourCityModule:LocationEntity',
+            'choice_label' => $choiceLabelClosure,
+            'multiple' => false,
+            'expanded' => false,
+            'query_builder' => $queryBuilder,
+            'label' => $this->__('Location'),
+            'attr' => [
+                'title' => $this->__('Choose the location')
+            ]
+        ]);
     }
 
     /**

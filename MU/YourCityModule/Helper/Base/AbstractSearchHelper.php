@@ -261,6 +261,7 @@ abstract class AbstractSearchHelper implements SearchableInterface
                     $whereArray[] = 'tbl.description';
                     $whereArray[] = 'tbl.descriptionForGoogle';
                     $whereArray[] = 'tbl.iconForSpecial';
+                    $whereArray[] = 'tbl.colorOfIcon';
                     break;
                 case 'serviceOfLocation':
                     $whereArray[] = 'tbl.workflowState';

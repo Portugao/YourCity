@@ -401,6 +401,7 @@ abstract class AbstractPartOfMenuController extends AbstractController
             new Column('name'),
             new Column('description'),
             new Column('menuOfLocation'),
+            new Column('location'),
             new Column('createdBy'),
             new Column('createdDate'),
             new Column('updatedBy'),

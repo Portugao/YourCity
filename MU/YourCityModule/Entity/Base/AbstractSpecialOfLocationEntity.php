@@ -97,6 +97,16 @@ abstract class AbstractSpecialOfLocationEntity extends EntityAccess implements T
      */
     protected $iconForSpecial = '';
     
+    /**
+     * @ORM\Column(length=255)
+     * @Assert\NotNull()
+     * @Assert\Regex(pattern="/\s/", match=false, message="This value must not contain space chars.")
+     * @Assert\Length(min="0", max="255")
+     * @Assert\Regex(pattern="/^#?(([a-fA-F0-9]{3}){1,2})$/", message="This value must be a valid html colour code [#123 or #123456].")
+     * @var string $colorOfIcon
+     */
+    protected $colorOfIcon = '#ff0000';
+    
     
     /**
      * Used locale to override Translation listener's locale.
@@ -295,6 +305,30 @@ abstract class AbstractSpecialOfLocationEntity extends EntityAccess implements T
     {
         if ($this->iconForSpecial !== $iconForSpecial) {
             $this->iconForSpecial = isset($iconForSpecial) ? $iconForSpecial : '';
+        }
+    }
+    
+    /**
+     * Returns the color of icon.
+     *
+     * @return string
+     */
+    public function getColorOfIcon()
+    {
+        return $this->colorOfIcon;
+    }
+    
+    /**
+     * Sets the color of icon.
+     *
+     * @param string $colorOfIcon
+     *
+     * @return void
+     */
+    public function setColorOfIcon($colorOfIcon)
+    {
+        if ($this->colorOfIcon !== $colorOfIcon) {
+            $this->colorOfIcon = isset($colorOfIcon) ? $colorOfIcon : '';
         }
     }
     

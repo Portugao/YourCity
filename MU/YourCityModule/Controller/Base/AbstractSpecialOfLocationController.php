@@ -141,6 +141,7 @@ abstract class AbstractSpecialOfLocationController extends AbstractController
             new Column('name'),
             new Column('description'),
             new Column('descriptionForGoogle'),
+            new Column('colorOfIcon'),
             new Column('createdBy'),
             new Column('createdDate'),
             new Column('updatedBy'),

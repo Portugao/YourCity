@@ -11,7 +11,7 @@ application "YourCity" {
         versionAllGeneratedFiles false
         generatePoweredByBacklinksIntoFooterTemplates false
         generateTests false
-        markFiles "Container/LinkContainer.php,\r\nController/AbonnementController.php,\r\nEntity/LocationEntity.php,\r\nEntity/Repository/LocationRespository.php,\r\nHelper/ControllerHelper.php,\r\nResources/public/css/style.css,\r\nResources/config/forms.yml,\r\nResources/views/Abonnement/view.html.twig,\r\nResources/views/Branch/display.html.twig,\r\nResources/views/Branch/view.html.twig,\r\nResources/views/Dish/display.html.twig,\r\nResources/views/Dish/view.html.twig,\r\nResources/views/Event/display.html.twig,\r\nResources/views/Event/view.html.twig,\r\nResources/views/FileOfLocatiojn/display.html.twig,\r\nResources/views/FileOfLocation/view.html.twig,\r\nResources/views/ImageOfLocation/display.html.twig,\r\nResources/views/ImageOfLocation/view.html.twig,\r\nResources/views/Location/display.html.twig,\r\nResources/views/Location/edit.html.twig,\r\nResources/views/Location/view.html.twig,\r\nResources/views/MenuOfLocation/display.html.twig,\r\nResources/views/MenuOfLocation/view.html.twig,\r\nResources/views/Offer/display.html.twig,\r\nResources/views/Offer/view.html.twig,\r\nResources/views/Part/display.html.twig,\r\nResources/views/Part/view.html.twig,\r\nResources/views/PartOfMenu/display.html.twig,\r\nResources/views/PartOfMenu/view.html.twig,\r\nResources/views/Product/view.html.twig,\r\nResources/views/Product/display.html.twig,\r\nResources/views/Part/view.html.twig,\r\nResources/views/SpecialOfLocation/display.html.twig,\r\nResources/views/SpecialOfLocation/view.html.twig,\r\nResources/views/ServiceOfLocation/view.html.twig,\r\nResources/views/ServiceOfLocation/display.html.twig"
+        markFiles "Container/LinkContainer.php,\r\nController/AbonnementController.php,\r\nController/LocationController.php,\r\nEntity/LocationEntity.php,\r\nEntity/Repository/LocationRepository.php,\r\nHelper/CollectionFilterHelper.php,\r\nHelper/ControllerHelper.php,\r\nHelper/ModelHelper.php,\r\nMenu/ItemActionsmenu.php,\r\nResources/public/css/style.css,\r\nResources/config/forms.yml,\r\nResources/views/base.html.twig,\r\nResources/views/Abonnement/view.html.twig,\r\nResources/views/Branch/display.html.twig,\r\nResources/views/Branch/view.html.twig,\r\nResources/views/Dish/display.html.twig,\r\nResources/views/Dish/view.html.twig,\r\nResources/views/Event/display.html.twig,\r\nResources/views/Event/view.html.twig,\r\nResources/views/FileOfLocatiojn/display.html.twig,\r\nResources/views/FileOfLocation/view.html.twig,\r\nResources/views/ImageOfLocation/display.html.twig,\r\nResources/views/ImageOfLocation/view.html.twig,\r\nResources/views/Location/display.html.twig,\r\nResources/views/Location/edit.html.twig,\r\nResources/views/Location/view.html.twig,\r\nResources/views/MenuOfLocation/display.html.twig,\r\nResources/views/MenuOfLocation/view.html.twig,\r\nResources/views/Offer/display.html.twig,\r\nResources/views/Offer/view.html.twig,\r\nResources/views/Part/display.html.twig,\r\nResources/views/Part/view.html.twig,\r\nResources/views/PartOfMenu/display.html.twig,\r\nResources/views/PartOfMenu/view.html.twig,\r\nResources/views/Product/view.html.twig,\r\nResources/views/Product/display.html.twig,\r\nResources/views/Part/view.html.twig,\r\nResources/views/SpecialOfLocation/display.html.twig,\r\nResources/views/SpecialOfLocation/view.html.twig,\r\nResources/views/ServiceOfLocation/view.html.twig,\r\nResources/views/ServiceOfLocation/display.html.twig"
     }
     entities {
         entity "branch" {
@@ -650,7 +650,7 @@ application "YourCity" {
         }
     ,
         entity "product" {
-            documentation "There are products, that are only available on special day with a limitted number of pieces.\r\nHere you can mange them for your customers."
+            documentation "There are products, that are only available on special days with a limitted number of pieces.\r\nHere you can manage them for your customers.\r\nYou can products put in the archive. Then they are available for you in the detail page of your location, but not for other users.\r\n"
             nameMultiple "products"
             displayPattern "#name#"
             hasTray true
@@ -740,6 +740,11 @@ application "YourCity" {
                     mandatory false
                 displayType DISPLAY
                 }
+            ,
+                string "colorOfIcon" htmlcolour {
+                    defaultValue "#ff0000"
+                    mandatory false
+                }
             }
             actions {
                 mainAction "Index",
@@ -782,39 +787,40 @@ application "YourCity" {
         }
     ,
         entity "abonnement" {
-            documentation "You are able to subscribe for a location.\r\nYou can set if you wish to see parts of a location and if you like to get a message."
+            documentation "You are able to subscribe for a location.\r\nYou can choose events, menus, offers and products to in your overview."
             nameMultiple "abonnements"
             displayPattern "#name#"
             hasTray true
             fields {
                 string "name" {
+                    documentation "Enter the name of the location, you subscribe to."
                     defaultValue "Abonnement"
                     mandatory false
                 }
             ,
                 boolean "showMenus" ajaxTogglability {
-                    defaultValue "1"
+                    defaultValue "true"
                     mandatory false
                 },
                 boolean "sendMessageForMenus" ajaxTogglability {
                     mandatory false
                 },
                 boolean "showOffers" ajaxTogglability {
-                    defaultValue "1"
+                    defaultValue "true"
                     mandatory false
                 },
                 boolean "sendMessageForOffers" ajaxTogglability {
                     mandatory false
                 },
                 boolean "showEvents" ajaxTogglability {
-                    defaultValue "1"
+                    defaultValue "true"
                     mandatory false
                 },
                 boolean "sendMessageForEvents" ajaxTogglability {
                     mandatory false
                 },
                 boolean "showProducts" ajaxTogglability {
-                    defaultValue "1"
+                    defaultValue "true"
                     mandatory false
                 },
                 boolean "sendMessageForProducts" ajaxTogglability {
@@ -996,6 +1002,15 @@ application "YourCity" {
             targetAlias "abonnements"
         nullable false
         orderBy ""
+        }
+    ,
+        one2many {
+            source "location"
+            sourceAlias "location"
+            target "partOfMenu"
+            targetAlias "partsOfMenu"
+            nullable false
+            orderBy "name"
         }
     }
     variables {

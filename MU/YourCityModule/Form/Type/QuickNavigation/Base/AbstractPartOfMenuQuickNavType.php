@@ -141,6 +141,20 @@ abstract class AbstractPartOfMenuQuickNavType extends AbstractType
                 'class' => 'input-sm'
             ]
         ]);
+        $entityDisplayHelper = $this->entityDisplayHelper;
+        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
+            return $entityDisplayHelper->getFormattedTitle($entity);
+        };
+        $builder->add('location', EntityType::class, [
+            'class' => 'MUYourCityModule:LocationEntity',
+            'choice_label' => $choiceLabelClosure,
+            'placeholder' => $this->__('All'),
+            'required' => false,
+            'label' => $this->__('Location'),
+            'attr' => [
+                'class' => 'input-sm'
+            ]
+        ]);
     
         if ($mainSearchTerm != '') {
             // readd current search argument

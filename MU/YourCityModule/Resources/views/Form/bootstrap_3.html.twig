@@ -8,6 +8,11 @@
     {%- endif -%}
 {%- endblock -%}
 
+{%- block muyourcitymodule_field_colour_widget -%}
+    {%- set type = type|default('color') -%}
+    {{ block('form_widget_simple') }}
+{%- endblock -%}
+
 {%- block muyourcitymodule_field_translation_row -%}
     {{ block('form_widget_compound') }}
 {%- endblock -%}
@@ -55,6 +60,9 @@
             {{ muyourcitymodule_userAvatar(uid=value, rating='g') }}
         {% endif %}
     </span>
+    {% if not required %}
+        <span class="help-block"><a id="{{ id }}ResetVal" href="javascript:void(0);" class="hidden">{{ __('Reset to empty value') }}</a></span>
+    {% endif %}
     {% if value and not inline_usage %}
         {% if hasPermission('ZikulaUsersModule::', '::', 'ACCESS_ADMIN') %}
             <span class="help-block"><a href="{{ path('zikulausersmodule_useradministration_modify', { 'user': value }) }}" title="{{ __('Switch to users administration') }}">{{ __('Manage user') }}</a></span>

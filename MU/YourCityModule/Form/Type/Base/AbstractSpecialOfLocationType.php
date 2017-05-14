@@ -28,6 +28,7 @@ use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 use MU\YourCityModule\Entity\Factory\EntityFactory;
+use MU\YourCityModule\Form\Type\Field\ColourType;
 use MU\YourCityModule\Form\Type\Field\TranslationType;
 use MU\YourCityModule\Form\Type\Field\UserType;
 use MU\YourCityModule\Helper\CollectionFilterHelper;
@@ -214,6 +215,17 @@ abstract class AbstractSpecialOfLocationType extends AbstractType
                 'maxlength' => 255,
                 'class' => '',
                 'title' => $this->__('Enter the icon for special of the special of location')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('colorOfIcon', ColourType::class, [
+            'label' => $this->__('Color of icon') . ':',
+            'empty_data' => '#ff0000',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => ' validate-nospace validate-htmlcolour muyourcitymoduleColourPicker',
+                'title' => $this->__('Choose the color of icon of the special of location')
             ],
             'required' => false,
         ]);

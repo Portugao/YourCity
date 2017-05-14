@@ -18,6 +18,13 @@
             {% if menuOfLocationFilter is defined and menuOfLocationFilter != true %}
                 </div>
             {% endif %}
+            {% if locationFilter is defined and locationFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.location) }}
+            {% if locationFilter is defined and locationFilter != true %}
+                </div>
+            {% endif %}
             {% if workflowStateFilter is defined and workflowStateFilter != true %}
                 <div class="hidden">
             {% endif %}

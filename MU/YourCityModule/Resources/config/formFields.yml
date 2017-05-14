@@ -1,6 +1,11 @@
 services:
     # Form field types
     
+    mu_yourcity_module.form.type.field.colour:
+        class: MU\YourCityModule\Form\Type\Field\ColourType
+        tags:
+            - { name: form.type }
+    
     mu_yourcity_module.form.type.field.geo:
         class: MU\YourCityModule\Form\Type\Field\GeoType
         tags:

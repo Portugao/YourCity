@@ -1,6 +1,6 @@
 {# purpose of this template: locations view csv view #}
 {% spaceless %}"{{ __('Name') }}";"{{ __('Letter for order') }}";"{{ __('Slogan') }}";"{{ __('Logo of your location') }}";"{{ __('Description for google') }}";"{{ __('Description') }}";"{{ __('Description 2') }}";"{{ __('Image of location') }}";"{{ __('Street') }}";"{{ __('Number of street') }}";"{{ __('Zip code') }}";"{{ __('City') }}";"{{ __('Telefon') }}";"{{ __('Mobil') }}";"{{ __('Homepage') }}";"{{ __('Bsag stop') }}";"{{ __('Tram') }}";"{{ __('Bus') }}";"{{ __('Closed for ever') }}";"{{ __('Agreement') }}";"{{ __('Unclear times') }}";"{{ __('Opening hours') }}";"{{ __('Closed on monday') }}";"{{ __('Start on monday') }}";"{{ __('End on monday') }}";"{{ __('Start 2 on monday') }}";"{{ __('End 2 on monday') }}";"{{ __('Closed on tuesday') }}";"{{ __('Start on tuesday') }}";"{{ __('End on tuesday') }}";"{{ __('Start 2 on tuesday') }}";"{{ __('End 2 on tuesday') }}";"{{ __('Closed on wednesday') }}";"{{ __('Start on wednesday') }}";"{{ __('End on wednesday') }}";"{{ __('Start 2 on wednesday') }}";"{{ __('End 2 on wednesday') }}";"{{ __('Closed on thursday') }}";"{{ __('Start on thursday') }}";"{{ __('End on thursday') }}";"{{ __('Start 2 on thursday') }}";"{{ __('End 2 on thursday') }}";"{{ __('Closed on friday') }}";"{{ __('Start on friday') }}";"{{ __('End on friday') }}";"{{ __('Start 2 on friday') }}";"{{ __('End 2 on friday') }}";"{{ __('Closed on saturday') }}";"{{ __('Start on saturday') }}";"{{ __('End on saturday') }}";"{{ __('Start 2 on saturday') }}";"{{ __('End 2 on saturday') }}";"{{ __('Closed on sunday') }}";"{{ __('Start on sunday') }}";"{{ __('End on sunday') }}";"{{ __('Start 2 on sunday') }}";"{{ __('End 2 on sunday') }}";"{{ __('Owner') }}";"{{ __('Admin 1') }}";"{{ __('Admin 2') }}";"{{ __('Latitude') }}";"{{ __('Longitude') }}";"{{ __('Workflow state') }}"
-;"{{ __('Images of location') }}";"{{ __('Files of location') }}";"{{ __('Offers') }}";"{{ __('Menu of location') }}";"{{ __('Events') }}";"{{ __('Products') }}";"{{ __('Dishes') }}";"{{ __('Abonnements') }}"
+;"{{ __('Images of location') }}";"{{ __('Files of location') }}";"{{ __('Offers') }}";"{{ __('Menu of location') }}";"{{ __('Events') }}";"{{ __('Products') }}";"{{ __('Dishes') }}";"{{ __('Abonnements') }}";"{{ __('Parts of menu') }}"
 ;"{{ __('Branches') }}";"{{ __('Parts') }}";"{{ __('Specials of location') }}";"{{ __('Services of location') }}"{% endspaceless %}
 {% for location in items %}
 {% spaceless %}
@@ -50,6 +50,12 @@
     ";"
     {% if location.abonnements|default %}
         {% for relatedItem in location.abonnements %}
+        {{ relatedItem|muyourcitymodule_formattedTitle }}{% if not loop.last %}, {% endif %}
+        {% endfor %}
+    {% endif %}
+    ";"
+    {% if location.partsOfMenu|default %}
+        {% for relatedItem in location.partsOfMenu %}
         {{ relatedItem|muyourcitymodule_formattedTitle }}{% if not loop.last %}, {% endif %}
         {% endfor %}
     {% endif %}

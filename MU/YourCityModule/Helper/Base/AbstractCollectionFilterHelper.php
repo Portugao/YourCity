@@ -425,6 +425,7 @@ abstract class AbstractCollectionFilterHelper
         }
     
         $parameters['menuOfLocation'] = $this->request->query->get('menuOfLocation', 0);
+        $parameters['location'] = $this->request->query->get('location', 0);
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
         $parameters['q'] = $this->request->query->get('q', '');
     
@@ -1934,6 +1935,8 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchDescriptionForGoogle'] = '%' . $fragment . '%';
             $filters[] = 'tbl.iconForSpecial LIKE :searchIconForSpecial';
             $parameters['searchIconForSpecial'] = '%' . $fragment . '%';
+            $filters[] = 'tbl.colorOfIcon LIKE :searchColorOfIcon';
+            $parameters['searchColorOfIcon'] = '%' . $fragment . '%';
         }
         if ($objectType == 'serviceOfLocation') {
             $filters[] = 'tbl.name LIKE :searchName';

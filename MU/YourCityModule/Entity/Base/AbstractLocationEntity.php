@@ -745,6 +745,20 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
      */
     protected $abonnements = null;
     
+    /**
+     * Bidirectional - One location [location] has many partsOfMenu [parts of menu] (INVERSE SIDE).
+     *
+     * @ORM\OneToMany(targetEntity="MU\YourCityModule\Entity\PartOfMenuEntity", mappedBy="location")
+     * @ORM\JoinTable(name="mu_yourcity_locationpartsofmenu",
+     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
+     * )
+     * @ORM\OrderBy({"name" = "ASC"})
+     * @Assert\NotNull(message="Choosing at least one of the parts of menu is required.")
+     * @var \MU\YourCityModule\Entity\PartOfMenuEntity[] $partsOfMenu
+     */
+    protected $partsOfMenu = null;
+    
     
     /**
      * LocationEntity constructor.
@@ -763,6 +777,7 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
         $this->products = new ArrayCollection();
         $this->dishes = new ArrayCollection();
         $this->abonnements = new ArrayCollection();
+        $this->partsOfMenu = new ArrayCollection();
         $this->branches = new ArrayCollection();
         $this->parts = new ArrayCollection();
         $this->specialsOfLocation = new ArrayCollection();
@@ -3185,6 +3200,56 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     {
         $this->abonnements->removeElement($abonnement);
         $abonnement->setLocation(null);
+    }
+    
+    /**
+     * Returns the parts of menu.
+     *
+     * @return \MU\YourCityModule\Entity\PartOfMenuEntity[]
+     */
+    public function getPartsOfMenu()
+    {
+        return $this->partsOfMenu;
+    }
+    
+    /**
+     * Sets the parts of menu.
+     *
+     * @param \MU\YourCityModule\Entity\PartOfMenuEntity[] $partsOfMenu
+     *
+     * @return void
+     */
+    public function setPartsOfMenu($partsOfMenu)
+    {
+        foreach ($partsOfMenu as $partOfMenuSingle) {
+            $this->addPartsOfMenu($partOfMenuSingle);
+        }
+    }
+    
+    /**
+     * Adds an instance of \MU\YourCityModule\Entity\PartOfMenuEntity to the list of parts of menu.
+     *
+     * @param \MU\YourCityModule\Entity\PartOfMenuEntity $partOfMenu The instance to be added to the collection
+     *
+     * @return void
+     */
+    public function addPartsOfMenu(\MU\YourCityModule\Entity\PartOfMenuEntity $partOfMenu)
+    {
+        $this->partsOfMenu->add($partOfMenu);
+        $partOfMenu->setLocation($this);
+    }
+    
+    /**
+     * Removes an instance of \MU\YourCityModule\Entity\PartOfMenuEntity from the list of parts of menu.
+     *
+     * @param \MU\YourCityModule\Entity\PartOfMenuEntity $partOfMenu The instance to be removed from the collection
+     *
+     * @return void
+     */
+    public function removePartsOfMenu(\MU\YourCityModule\Entity\PartOfMenuEntity $partOfMenu)
+    {
+        $this->partsOfMenu->removeElement($partOfMenu);
+        $partOfMenu->setLocation(null);
     }
     
     

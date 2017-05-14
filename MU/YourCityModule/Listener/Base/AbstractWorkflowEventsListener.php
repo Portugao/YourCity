@@ -161,6 +161,9 @@ abstract class AbstractWorkflowEventsListener implements EventSubscriberInterfac
                 if (count($entity->getAbonnements()) > 0) {
                     $isBlocked = true;
                 }
+                if (count($entity->getPartsOfMenu()) > 0) {
+                    $isBlocked = true;
+                }
                 $event->setBlocked($isBlocked);
             }
             if ($objectType == 'menuOfLocation') {

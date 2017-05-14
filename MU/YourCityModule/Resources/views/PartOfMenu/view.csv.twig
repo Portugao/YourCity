@@ -1,12 +1,12 @@
 {# purpose of this template: parts of menu view csv view #}
 {% spaceless %}"{{ __('Name') }}";"{{ __('Description') }}";"{{ __('Position of part') }}";"{{ __('Workflow state') }}"
-;"{{ __('Menu of location') }}"
+;"{{ __('Menu of location') }}";"{{ __('Location') }}"
 ;"{{ __('Dishes') }}"
 {% endspaceless %}
 {% for partOfMenu in items %}
 {% spaceless %}
     "{{ partOfMenu.name }}";"{{ partOfMenu.description|safeHtml }}";"{{ partOfMenu.positionOfPart }}";"{{ partOfMenu.workflowState|muyourcitymodule_objectState(false)|lower }}"
-    ;"{% if partOfMenu.menuOfLocation|default %}{{ partOfMenu.menuOfLocation|muyourcitymodule_formattedTitle }}{% endif %}"
+    ;"{% if partOfMenu.menuOfLocation|default %}{{ partOfMenu.menuOfLocation|muyourcitymodule_formattedTitle }}{% endif %}";"{% if partOfMenu.location|default %}{{ partOfMenu.location|muyourcitymodule_formattedTitle }}{% endif %}"
     ;"
     {% if partOfMenu.dishes|default %}
         {% for relatedItem in partOfMenu.dishes %}

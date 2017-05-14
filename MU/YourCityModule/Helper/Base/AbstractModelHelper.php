@@ -83,6 +83,7 @@ abstract class AbstractModelHelper
             case 'partOfMenu':
                 $result = true;
                 $result &= $this->hasExistingInstances('menuOfLocation');
+                $result &= $this->hasExistingInstances('location');
                 break;
             case 'dish':
                 $result = true;
