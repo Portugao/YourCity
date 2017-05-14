@@ -178,11 +178,14 @@ abstract class AbstractImportController extends AbstractController
     			$branchRespository = $modelHelper->getRepository('Branch');
     			$partRepository = $modelHelper->getRepository('Part');
     			
+    			if ($data[0]['branchId'] && $data[0]['branchId'] > 0) {
     			$branches[] = $branchRespository->find($data[0]['branchId']);
     			$newLocation->setBranches($branches);
-    			
+    			}
+    			if ($data[0]['partId'] && $data[0]['partId'] > 0) {    			
     			$parts[] = $partRepository->find($data[0]['partId']);
     			$newLocation->setParts($parts);
+    			}
     			
     			unset($branches);
     			unset($parts);
@@ -210,6 +213,8 @@ abstract class AbstractImportController extends AbstractController
     		$result['field9'] = utf8_encode($result['field9']);
     		$result['field9'] = html_entity_decode($result['field9'], ENT_COMPAT);
     		$result['field10'] = utf8_encode($result['field10']);
+    		
+    		$partId = 0;
     		
     		// part handling
     		if ($result['field15'] == 'Alte Neustadt') {
@@ -476,7 +481,9 @@ abstract class AbstractImportController extends AbstractController
     		if ($result['field15'] == 'Woltmershausen') {
     			$partId = 88;
     		}
-    				
+    		
+    		$branchId = 0;
+    		
     		// branch handling
     		if ($result['field16'] == 'Autohaus & Co') {
     			$branchId = 1;
@@ -532,13 +539,13 @@ abstract class AbstractImportController extends AbstractController
     		if ($result['field16'] == 'Post') {
     			$branchId = 18;
     		}
-    		if ($result['field16'] == 'Supermark') {
+    		if ($result['field16'] == 'Supermarkt') {
     			$branchId = 19;
     		}
     		if ($result['field16'] == 'Verein') {
     			$branchId = 20;
     		}
-    		if ($result['field16'] == 'Wochenmarkt') {
+    		if ($result['field16'] == 'Wochenmärkte') {
     			$branchId = 21;
     		}
     		
@@ -733,7 +740,7 @@ abstract class AbstractImportController extends AbstractController
     	// handle the access to the module file table
     	// build sql
 
-    	$query = "SELECT * FROM " . $table . " ORDER by id";
+    	$query = "SELECT * FROM " . $table . " WHERE id >= 600 and id < 700 ORDER by id";
 
     	// prepare the sql query
     	$sql = $connect->query($query);
