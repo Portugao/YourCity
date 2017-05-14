@@ -9,6 +9,17 @@
 
     {{ include('@MUYourCityModule/SpecialOfLocation/viewQuickNav.html.twig', { workflowStateFilter: false }) }}{# see template file for available options #}
 
+    {% if routeArea != 'admin' and items %}
+        {% for special in items %}
+            <div class="col-xs-12 col-sm-6 col-md-4 branch-list">
+                <a href="{{ path('muyourcitymodule_specialoflocation_' ~ routeArea ~ 'display', { 'id': special.id }) }}">{{ special.name }}</a>
+            </div>   
+        {% endfor %}
+    {% else %}
+    {% endif %}
+     <br style="clear: both;" />
+     
+    {% if routeArea == 'admin' %}
     {% if routeArea == 'admin' %}
     <form action="{{ path('muyourcitymodule_specialoflocation_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="specialsOfLocationViewForm" class="form-horizontal" role="form">
         <div>
@@ -73,6 +84,7 @@
             </tbody>
         </table>
         </div>
+        {% endif %}
         
         {% if all != 1 and pager|default %}
             {{ pager({ rowcount: pager.amountOfItems, limit: pager.itemsPerPage, display: 'page', route: 'muyourcitymodule_specialoflocation_' ~ routeArea ~ 'view'}) }}
