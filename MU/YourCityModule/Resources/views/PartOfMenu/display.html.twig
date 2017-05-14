@@ -40,7 +40,7 @@
         
         {% if partOfMenu.dishes|default %}
             {{ include(
-                '@MUYourCityModule/Dish/includeDisplayItemListMany.html.twig',
+                '@MUYourCityModule/Dish/includeDisplayItemListManyOwn.html.twig',
                 { items: partOfMenu.dishes }
             ) }}
         {% endif %}
