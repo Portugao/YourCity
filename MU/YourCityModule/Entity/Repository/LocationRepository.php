@@ -42,7 +42,6 @@ class LocationRepository extends AbstractLocationRepository
     {
     	$uid = \UserUtil::getVar('uid');
     	if (\UserUtil::isLoggedIn() && $uid != 2) {
-    		$uid = \UserUtil::getVar('uid');
     		$where = 'tbl.owner = ' . \DataUtil::formatForDisplay($uid) . ' or tbl.admin1 = ' . \DataUtil::formatForDisplay($uid)  .  ' or tbl.admin2 = ' . \DataUtil::formatForDisplay($uid);
     	}
     	$qb = $this->genericBaseQuery($where, $orderBy, $useJoins, $slimMode);
