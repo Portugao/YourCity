@@ -30,12 +30,6 @@
             <h4>{{ __('Description') }}</h4>
             {{ specialOfLocation.description|safeHtml }}
         {% endif %}
-        
-        {% if routeArea == 'admin' %}
-            <h4>{{ __('Locations') }}</h4>
-        {% else %}
-            <h3>{{ __('Locations') }}</h3>
-        {% endif %}
     
         {% if specialOfLocation.locations|default %}
             {{ include(
