@@ -231,7 +231,9 @@ div.muyourcitymodule-view .avatar img {
 }
 
 .location-h2 h2 {
-	font-size: 1.6em;
+	font-size: 2.2em;
+	margin: 25px 0 0 0;
+	border-bottom: #eee solid 1px;
 }
 
 .location-slogan-list {
@@ -264,8 +266,7 @@ div.muyourcitymodule-view .avatar img {
 	font-size: 2em;
 }
 
-.item-list,
-.abo-location-list {
+.item-list {
 	position: relative;
 	border-radius: 5px;
 	border: 1px solid #ddd;
@@ -273,10 +274,16 @@ div.muyourcitymodule-view .avatar img {
 	margin: 10px 0 0 0;
 }
 
+
+.abo-location-list {
+	position: relative;
+	margin: 10px 0 0 0;
+}
+
 .item-list {
 	list-style-type: none;
 	/*font-size: 1.4em;*/
-	min-height: 140px;
+	min-height: 160px;
 	margin: 0 0 10px 0;
 }
 
@@ -286,7 +293,7 @@ div.muyourcitymodule-view .avatar img {
 
 .abo-location-list > h2 {
 	font-size: 1.5em;
-	margin: 20px 0 0 0;
+	margin: 0 0 10px 0;
 }
 
 .status-icon {
@@ -299,11 +306,10 @@ div.muyourcitymodule-view .avatar img {
 }
 
 .dish {
-	background: #eee;
 }
 
 .menu {
-	background: #ddd;
+
 }
 
 .product {
