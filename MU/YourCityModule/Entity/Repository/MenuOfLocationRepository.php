@@ -21,5 +21,28 @@ use MU\YourCityModule\Entity\Repository\Base\AbstractMenuOfLocationRepository;
  */
 class MenuOfLocationRepository extends AbstractMenuOfLocationRepository
 {
-    // feel free to add your own methods here, like for example reusable DQL queries
+    /**
+     * Returns query builder for selecting a list of objects with a given where clause.
+     *
+     * @param string  $where    The where clause to use when retrieving the collection (optional) (default='')
+     * @param string  $orderBy  The order-by clause to use when retrieving the collection (optional) (default='')
+     * @param boolean $useJoins Whether to include joining related objects (optional) (default=true)
+     * @param boolean $slimMode If activated only some basic fields are selected without using any joins (optional) (default=false)
+     *
+     * @return QueryBuilder Query builder for the given arguments
+     */
+    public function getListQueryBuilder($where = '', $orderBy = '', $useJoins = true, $slimMode = false)
+    {
+    	$uid = \UserUtil::getVar('uid');
+    	if (\UserUtil::isLoggedIn() && $uid != 2) {
+    		$where = 'tbl.owner = ' . \DataUtil::formatForDisplay($uid) . ' or tbl.admin1 = ' . \DataUtil::formatForDisplay($uid)  .  ' or tbl.admin2 = ' . \DataUtil::formatForDisplay($uid);
+    	}
+    	
+        $qb = $this->genericBaseQuery($where, $orderBy, $useJoins, $slimMode);
+        if ((!$useJoins || !$slimMode) && null !== $this->collectionFilterHelper) {
+            $qb = $this->collectionFilterHelper->addCommonViewFilters('menuOfLocation', $qb);
+        }
+    
+        return $qb;
+    }
 }
