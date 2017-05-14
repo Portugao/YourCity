@@ -5,7 +5,7 @@
 {% block title %}
     {{ pageAddVar('description', 'Hallo') }}
     <div class="row">
-    <div class="col-md-2">
+    <div class="col-md-3">
     <div id="location-logo">
             {% if location.logoOfYourLocation is not empty and location.logoOfYourLocationMeta|default %}
                         <a href="{{ location.logoOfYourLocationUrl }}" title="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if location.logoOfYourLocationMeta.isImage %} class="image-link"{% endif %}>
@@ -18,14 +18,9 @@
             </a>
             {% else %}&nbsp;{% endif %}    
     </div>
-    {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: location, area: routeArea, context: 'display' }) %}
-    <div class="dropdown">
-        <a id="itemActions{{ location.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
-        {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
-    </div>
     </div>
     
-    <div class="col-md-7">
+    <div class="col-md-6">
     {% if location.state == 'closed' %}
         {% set state = 'locationClosed' %}
     {% endif %}
@@ -65,6 +60,12 @@
             {% else %}&nbsp;{% endif %}
         </div>
     {% endif %}
+    
+         {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: location, area: routeArea, context: 'display' }) %}
+    <div class="dropdown">
+        <a id="itemActions{{ location.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
+        {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
+    </div>  
     </div>  
     </div>
 {% endblock %}
@@ -75,8 +76,7 @@
     
     <div class="muyourcitymodule-location muyourcitymodule-display">
     <div class="row">
-        <div class="col-sm-8">
-        
+        <div class="col-sm-8">    
         <div class="col-sm-7">
         {% if location.workflowState is not empty and routeArea == 'admin' %}
             <dt>{{ __('State') }}</dt>
@@ -115,6 +115,21 @@
             {% endif %}
             {% else %}&nbsp;{% endif %}<br />
         {% endif %}
+        
+        {% if location.imagesOfLocation|default %}
+        {{ include(
+            '@MUYourCityModule/ImageOfLocation/includeDisplayItemListMany.html.twig',
+            { items: location.imagesOfLocation }
+        ) }}
+    {% endif %}
+    
+    {% set mayManage = hasPermission('MUYourCityModule:ImageOfLocation:', '::', 'ACCESS_EDIT') %}
+    {% if mayManage %}
+        <p class="managelink">
+            {% set createTitle = __('Create image of location') %}
+            <a href="{{ path('muyourcitymodule_imageoflocation_' ~ routeArea ~ 'edit', { location: location.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
+        </p>
+    {% endif %}
                
         <h3>{{ __('Opening hours') }}</h3>
         
@@ -392,7 +407,7 @@
         
 {% endblock %}
 {% block related_items %}
-    {% if routeArea == 'admin' %}
+    {#% if routeArea == 'admin' %}
         <h4>{{ __('Images of location') }}</h4>
     {% else %}
         <h3>{{ __('Images of location') }}</h3>
@@ -403,7 +418,7 @@
             '@MUYourCityModule/ImageOfLocation/includeDisplayItemListMany.html.twig',
             { items: location.imagesOfLocation }
         ) }}
-    {% endif %}
+    {% endif %#}
     
     {% set mayManage = hasPermission('MUYourCityModule:ImageOfLocation:', '::', 'ACCESS_EDIT') %}
     {% if mayManage %}
