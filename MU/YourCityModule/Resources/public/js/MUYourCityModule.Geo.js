@@ -37,7 +37,6 @@ function mUYourCityInitGeographicalDisplay(latitude, longitude, mapType, zoomLev
 
     // add a marker
     marker = new mxn.Marker(location);
-    //marker.setIcon('../public/images/Logo-Marker.png',[40,40]);
     mapstraction.addMarker(marker, true);
 
     jQuery('#collapseMap').on('hidden.bs.collapse', function () {
