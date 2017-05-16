@@ -60,7 +60,7 @@ class LocationRepository extends AbstractLocationRepository
      */
     protected function addJoinsToSelection()
     {
-    	$selection = ', tblImagesOfLocation, tblFilesOfLocation, tblBranches, tblOffers, tblMenuOfLocation, tblEvents, tblProducts, tblSpecialsOfLocation, tblServicesOfLocation';
+    	$selection = ', tblImagesOfLocation, tblFilesOfLocation, tblOffers, tblMenuOfLocation, tblEvents, tblProducts, tblSpecialsOfLocation, tblServicesOfLocation';
     
     	return $selection;
     }
@@ -76,7 +76,6 @@ class LocationRepository extends AbstractLocationRepository
     {
     	$qb->leftJoin('tbl.imagesOfLocation', 'tblImagesOfLocation');
     	$qb->leftJoin('tbl.filesOfLocation', 'tblFilesOfLocation');
-    	$qb->leftJoin('tbl.branches', 'tblBranches');
     	$qb->leftJoin('tbl.offers', 'tblOffers');
     	$qb->leftJoin('tbl.menuOfLocation', 'tblMenuOfLocation');
     	$qb->leftJoin('tbl.events', 'tblEvents');
