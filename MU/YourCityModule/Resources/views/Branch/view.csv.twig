@@ -1,16 +1,8 @@
 {# purpose of this template: branches view csv view #}
 {% spaceless %}"{{ __('Name') }}";"{{ __('Description for google') }}";"{{ __('Description') }}";"{{ __('Image of branch') }}";"{{ __('Workflow state') }}"
-;"{{ __('Locations') }}"
 {% endspaceless %}
 {% for branch in items %}
 {% spaceless %}
     "{{ branch.name }}";"{{ branch.descriptionForGoogle }}";"{{ branch.description|safeHtml }}";"{{ branch.imageOfBranch }}";"{{ branch.workflowState|muyourcitymodule_objectState(false)|lower }}"
-    ;"
-    {% if branch.locations|default %}
-        {% for relatedItem in branch.locations %}
-        {{ relatedItem|muyourcitymodule_formattedTitle }}{% if not loop.last %}, {% endif %}
-        {% endfor %}
-    {% endif %}
-    "
 {% endspaceless %}
 {% endfor %}

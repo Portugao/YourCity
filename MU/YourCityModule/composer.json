@@ -8,7 +8,7 @@
         {
             "name": "Michael Ueberschaer",
             "email": "info@homepages-mit-zikula.de",
-            "homepage": "http://homepages-mit-zikula.de",
+            "homepage": "https://homepages-mit-zikula.de",
             "role": "owner"
         }
     ],
@@ -36,7 +36,6 @@
                 "MUYourCityModule:ItemListBlock:": "Block title::",
                 "MUYourCityModule:ModerationBlock:": "Block title::",
                 "MUYourCityModule:Branch:": "Branch ID::",
-                "MUYourCityModule:Location:Branch": "Location ID:Branch ID:",
                 "MUYourCityModule:Location:": "Location ID::",
                 "MUYourCityModule:Part:": "Part ID::",
                 "MUYourCityModule:ImageOfLocation:": "ImageOfLocation ID::",

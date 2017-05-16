@@ -3,7 +3,7 @@ application "YourCity" {
     vendor "MU"
     author "Michael Ueberschaer"
     email "info@homepages-mit-zikula.de"
-    url "http://homepages-mit-zikula.de"
+    url "https://homepages-mit-zikula.de"
     version "0.1.0"
     prefix "yourcity"
     generatorSettings {
@@ -303,7 +303,15 @@ application "YourCity" {
                 }
             ,
                 list "partOfCity" {
+                    displayType DISPLAY
                     items {
+                        listItem "None" ( "none" )
+                    }
+                },
+                list "branchOfLocation" translatable multiple {
+                    displayType DISPLAY
+                    items {
+                        listItem "All" ( "all" ),
                         listItem "None" ( "none" )
                     }
                 }
@@ -893,17 +901,6 @@ application "YourCity" {
             targetAlias "filesOfLocation"
             nullable false
             orderBy "positionOfFile"
-        },
-        many2many {
-            source "location"
-            sourceAlias "locations"
-            target "branch"
-            targetAlias "branches"
-            nullable true
-            expandedTarget true
-            refClass "LocationBranch"
-            orderBy "name"
-            orderByReverse "letterForOrder"
         },
         one2many {
             source "location"

@@ -16,7 +16,7 @@ Note you can even include custom views in `app/Resources/MUYourCityModule/views/
 
 `php app/console translation:extract en --bundle=MUYourCityModule --enable-extractor=jms_i18n_routing --output-format=po --dir=./modules/MU/YourCityModule --dir=./app/Resources/MUYourCityModule`
 
-For questions and other remarks visit our homepage http://homepages-mit-zikula.de.
+For questions and other remarks visit our homepage https://homepages-mit-zikula.de.
 
 Michael Ueberschaer (info@homepages-mit-zikula.de)
-http://homepages-mit-zikula.de
+https://homepages-mit-zikula.de

@@ -6,11 +6,4 @@
     <description><![CDATA[{{ branch.description|safeHtml }}]]></description>
     <imageOfBranch{% if branch.imageOfBranch is not empty and branch.imageOfBranchMeta|default %} extension="{{ branch.imageOfBranchMeta.extension }}" size="{{ branch.imageOfBranchMeta.size }}" isImage="{% if branch.imageOfBranchMeta.isImage %}true{% else %}false{% endif %}"{% if branch.imageOfBranchMeta.isImage %} width="{{ branch.imageOfBranchMeta.width }}" height="{{ branch.imageOfBranchMeta.height }}" format="{{ branch.imageOfBranchMeta.format }}"{% endif %}{% endif %}>{{ branch.imageOfBranch }}</imageOfBranch>
     <workflowState>{{ branch.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
-    <locations>
-    {% if branch.locations|default %}
-        {% for relatedItem in branch.locations %}
-        <location>{{ relatedItem|muyourcitymodule_formattedTitle }}</location>
-        {% endfor %}
-    {% endif %}
-    </locations>
 </branch>
