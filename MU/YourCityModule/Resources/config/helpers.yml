@@ -60,6 +60,8 @@ services:
         class: MU\YourCityModule\Helper\ListEntriesHelper
         arguments:
             - "@translator.default"
+        calls:
+            - [setEntityFactory, ["@?mu_yourcity_module.entity_factory"]]
     
     mu_yourcity_module.model_helper:
         class: MU\YourCityModule\Helper\ModelHelper
