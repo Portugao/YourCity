@@ -41,10 +41,10 @@
         <br style="clear: both;" />
 
     
-    {% if part.locations|default %}
+    {% if locations|default %}
         {{ include(
             '@MUYourCityModule/Location/includeDisplayItemListManyOwn.html.twig',
-            { items: part.locations }
+            { items: locations }
         ) }}
     {% endif %}
 
