@@ -183,6 +183,7 @@ abstract class AbstractProductType extends AbstractType
         
         $builder->add('description', TextareaType::class, [
             'label' => $this->__('Description') . ':',
+            'help' => $this->__f('Note: this value must not exceed %amount% characters.', ['%amount%' => 2000]),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 2000,

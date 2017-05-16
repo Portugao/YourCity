@@ -13,7 +13,6 @@
 namespace MU\YourCityModule\Entity\Base;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Translatable\Translatable;
 use Symfony\Component\HttpFoundation\File\File;
@@ -49,6 +48,9 @@ abstract class AbstractPartEntity extends EntityAccess implements Translatable
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer", unique=true)
+     * @Assert\Type(type="integer")
+     * @Assert\NotNull()
+     * @Assert\LessThan(value=1000000000)
      * @var integer $id
      */
     protected $id = 0;
@@ -128,14 +130,6 @@ abstract class AbstractPartEntity extends EntityAccess implements Translatable
      */
     protected $locale;
     
-    /**
-     * Bidirectional - Many parts [parts] are linked by many locations [locations] (INVERSE SIDE).
-     *
-     * @ORM\ManyToMany(targetEntity="MU\YourCityModule\Entity\LocationEntity", mappedBy="parts")
-     * @ORM\OrderBy({"letterForOrder" = "ASC"})
-     * @var \MU\YourCityModule\Entity\LocationEntity[] $locations
-     */
-    protected $locations = null;
     
     /**
      * PartEntity constructor.
@@ -146,7 +140,6 @@ abstract class AbstractPartEntity extends EntityAccess implements Translatable
      */
     public function __construct()
     {
-        $this->locations = new ArrayCollection();
     }
     
     /**
@@ -390,56 +383,6 @@ abstract class AbstractPartEntity extends EntityAccess implements Translatable
         }
     }
     
-    
-    /**
-     * Returns the locations.
-     *
-     * @return \MU\YourCityModule\Entity\LocationEntity[]
-     */
-    public function getLocations()
-    {
-        return $this->locations;
-    }
-    
-    /**
-     * Sets the locations.
-     *
-     * @param \MU\YourCityModule\Entity\LocationEntity[] $locations
-     *
-     * @return void
-     */
-    public function setLocations($locations)
-    {
-        foreach ($locations as $locationSingle) {
-            $this->addLocations($locationSingle);
-        }
-    }
-    
-    /**
-     * Adds an instance of \MU\YourCityModule\Entity\LocationEntity to the list of locations.
-     *
-     * @param \MU\YourCityModule\Entity\LocationEntity $location The instance to be added to the collection
-     *
-     * @return void
-     */
-    public function addLocations(\MU\YourCityModule\Entity\LocationEntity $location)
-    {
-        $this->locations->add($location);
-        $location->addParts($this);
-    }
-    
-    /**
-     * Removes an instance of \MU\YourCityModule\Entity\LocationEntity from the list of locations.
-     *
-     * @param \MU\YourCityModule\Entity\LocationEntity $location The instance to be removed from the collection
-     *
-     * @return void
-     */
-    public function removeLocations(\MU\YourCityModule\Entity\LocationEntity $location)
-    {
-        $this->locations->removeElement($location);
-        $location->removeParts($this);
-    }
     
     
     

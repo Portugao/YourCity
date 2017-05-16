@@ -18,6 +18,13 @@
             {% if workflowStateFilter is defined and workflowStateFilter != true %}
                 </div>
             {% endif %}
+            {% if partOfCityFilter is defined and partOfCityFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.partOfCity) }}
+            {% if partOfCityFilter is defined and partOfCityFilter != true %}
+                </div>
+            {% endif %}
             {% if ownerFilter is defined and ownerFilter != true %}
                 <div class="hidden">
             {% endif %}

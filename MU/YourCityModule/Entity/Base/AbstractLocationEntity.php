@@ -579,6 +579,14 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
      */
     protected $admin2 = null;
     
+    /**
+     * @ORM\Column(length=255)
+     * @Assert\NotBlank()
+     * @YourCityAssert\ListEntry(entityName="location", propertyName="partOfCity", multiple=false)
+     * @var string $partOfCity
+     */
+    protected $partOfCity = '';
+    
     
     /**
      * @Gedmo\Slug(fields={"name"}, updatable=true, unique=true, separator="-", style="lower")
@@ -635,15 +643,6 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
      * @var \MU\YourCityModule\Entity\BranchEntity[] $branches
      */
     protected $branches = null;
-    /**
-     * Bidirectional - Many locations [locations] have many parts [parts] (OWNING SIDE).
-     *
-     * @ORM\ManyToMany(targetEntity="MU\YourCityModule\Entity\PartEntity", inversedBy="locations")
-     * @ORM\JoinTable(name="mu_yourcity_location_part")
-     * @ORM\OrderBy({"name" = "ASC"})
-     * @var \MU\YourCityModule\Entity\PartEntity[] $parts
-     */
-    protected $parts = null;
     /**
      * Bidirectional - One location [location] has many offers [offers] (INVERSE SIDE).
      *
@@ -779,7 +778,6 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
         $this->abonnements = new ArrayCollection();
         $this->partsOfMenu = new ArrayCollection();
         $this->branches = new ArrayCollection();
-        $this->parts = new ArrayCollection();
         $this->specialsOfLocation = new ArrayCollection();
         $this->servicesOfLocation = new ArrayCollection();
     }
@@ -2562,6 +2560,30 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     }
     
     /**
+     * Returns the part of city.
+     *
+     * @return string
+     */
+    public function getPartOfCity()
+    {
+        return $this->partOfCity;
+    }
+    
+    /**
+     * Sets the part of city.
+     *
+     * @param string $partOfCity
+     *
+     * @return void
+     */
+    public function setPartOfCity($partOfCity)
+    {
+        if ($this->partOfCity !== $partOfCity) {
+            $this->partOfCity = isset($partOfCity) ? $partOfCity : '';
+        }
+    }
+    
+    /**
      * Returns the slug.
      *
      * @return string
@@ -2756,54 +2778,6 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     public function removeBranches(\MU\YourCityModule\Entity\BranchEntity $branch)
     {
         $this->branches->removeElement($branch);
-    }
-    
-    /**
-     * Returns the parts.
-     *
-     * @return \MU\YourCityModule\Entity\PartEntity[]
-     */
-    public function getParts()
-    {
-        return $this->parts;
-    }
-    
-    /**
-     * Sets the parts.
-     *
-     * @param \MU\YourCityModule\Entity\PartEntity[] $parts
-     *
-     * @return void
-     */
-    public function setParts($parts)
-    {
-        foreach ($parts as $partSingle) {
-            $this->addParts($partSingle);
-        }
-    }
-    
-    /**
-     * Adds an instance of \MU\YourCityModule\Entity\PartEntity to the list of parts.
-     *
-     * @param \MU\YourCityModule\Entity\PartEntity $part The instance to be added to the collection
-     *
-     * @return void
-     */
-    public function addParts(\MU\YourCityModule\Entity\PartEntity $part)
-    {
-        $this->parts->add($part);
-    }
-    
-    /**
-     * Removes an instance of \MU\YourCityModule\Entity\PartEntity from the list of parts.
-     *
-     * @param \MU\YourCityModule\Entity\PartEntity $part The instance to be removed from the collection
-     *
-     * @return void
-     */
-    public function removeParts(\MU\YourCityModule\Entity\PartEntity $part)
-    {
-        $this->parts->removeElement($part);
     }
     
     /**

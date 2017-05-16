@@ -69,22 +69,6 @@ abstract class AbstractEditHandler extends EditHandler
     }
     
     /**
-     * Initialises relationship presets.
-     */
-    protected function initRelationPresets()
-    {
-        $entity = $this->entityRef;
-    
-        
-        // assign identifiers of predefined incoming relationships
-        // non-editable relation, we store the id and assign it in handleCommand
-        $this->relationPresets['locations'] = $this->request->get('locations', '');
-    
-        // save entity reference for later reuse
-        $this->entityRef = $entity;
-    }
-    
-    /**
      * Creates the form type.
      */
     protected function createForm()
@@ -94,7 +78,6 @@ abstract class AbstractEditHandler extends EditHandler
             'mode' => $this->templateParameters['mode'],
             'actions' => $this->templateParameters['actions'],
             'has_moderate_permission' => $this->permissionApi->hasPermission($this->permissionComponent, $this->idValue . '::', ACCESS_MODERATE),
-            'filter_by_ownership' => !$this->permissionApi->hasPermission($this->permissionComponent, $this->idValue . '::', ACCESS_ADD)
         ];
     
         $options['translations'] = [];
@@ -260,17 +243,6 @@ abstract class AbstractEditHandler extends EditHandler
         if ($success && $this->templateParameters['mode'] == 'create') {
             // store new identifier
             $this->idValue = $entity->getKey();
-        }
-        
-        if ($args['commandName'] == 'create') {
-            // save predefined incoming relationship from parent entity
-            if (!empty($this->relationPresets['locations'])) {
-                $relObj = $this->entityFactory->getRepository('location')->selectById($this->relationPresets['locations']);
-                if (null !== $relObj) {
-                    $entity->addLocations($relObj);
-                }
-            }
-            $this->entityFactory->getObjectManager()->flush();
         }
     
         return $success;

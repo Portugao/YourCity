@@ -281,6 +281,7 @@ abstract class AbstractCollectionFilterHelper
         }
     
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
+        $parameters['partOfCity'] = $this->request->query->get('partOfCity', '');
         $parameters['owner'] = (int) $this->request->query->get('owner', 0);
         $parameters['admin1'] = (int) $this->request->query->get('admin1', 0);
         $parameters['admin2'] = (int) $this->request->query->get('admin2', 0);
@@ -1773,6 +1774,8 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchStart2OnSunday'] = $fragment;
             $filters[] = 'tbl.end2OnSunday = :searchEnd2OnSunday';
             $parameters['searchEnd2OnSunday'] = $fragment;
+            $filters[] = 'tbl.partOfCity = :searchPartOfCity';
+            $parameters['searchPartOfCity'] = $fragment;
         }
         if ($objectType == 'part') {
             $filters[] = 'tbl.name LIKE :searchName';

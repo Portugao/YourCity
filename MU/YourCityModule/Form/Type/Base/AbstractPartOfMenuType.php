@@ -164,7 +164,7 @@ abstract class AbstractPartOfMenuType extends AbstractType
                 'class' => 'tooltips',
                 'title' => $this->__('Maximum 2000 characters.')
             ],
-            'help' => $this->__('Maximum 2000 characters.'),
+            'help' => [$this->__('Maximum 2000 characters.'), $this->__f('Note: this value must not exceed %amount% characters.', ['%amount%' => 2000])],
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 2000,

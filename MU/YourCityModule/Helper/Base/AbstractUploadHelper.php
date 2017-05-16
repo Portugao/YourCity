@@ -342,7 +342,7 @@ abstract class AbstractUploadHelper
                 $allowedExtensions = ['gif', 'jpeg', 'jpg', 'png'];
                     break;
             case 'fileOfLocation':
-                $allowedExtensions = ['pdf,doc,docx,xls'];
+                $allowedExtensions = ['pdf'];
                     break;
             case 'offer':
                 $allowedExtensions = ['gif', 'jpeg', 'jpg', 'png'];
@@ -625,7 +625,7 @@ abstract class AbstractUploadHelper
     
         $result &= $this->checkAndCreateUploadFolder('imageOfLocation', 'image', 'gif, jpeg, jpg, png');
     
-        $result &= $this->checkAndCreateUploadFolder('fileOfLocation', 'fileOfFile', 'pdf,doc,docx,xls');
+        $result &= $this->checkAndCreateUploadFolder('fileOfLocation', 'fileOfFile', 'pdf');
     
         $result &= $this->checkAndCreateUploadFolder('offer', 'imageOfOffer', 'gif, jpeg, jpg, png');
     

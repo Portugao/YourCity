@@ -44,10 +44,45 @@ class LocationRepository extends AbstractLocationRepository
     	if (\UserUtil::isLoggedIn() && $uid != 2) {
     		$where = 'tbl.owner = ' . \DataUtil::formatForDisplay($uid) . ' or tbl.admin1 = ' . \DataUtil::formatForDisplay($uid)  .  ' or tbl.admin2 = ' . \DataUtil::formatForDisplay($uid);
     	}
+    	//$useJoins = false;
     	$qb = $this->genericBaseQuery($where, $orderBy, $useJoins, $slimMode);
     	if ((!$useJoins || !$slimMode) && null !== $this->collectionFilterHelper) {
     		$qb = $this->collectionFilterHelper->addCommonViewFilters('location', $qb);
     	}
+    
+    	return $qb;
+    }
+    
+    /**
+     * Helper method to add join selections.
+     *
+     * @return String Enhancement for select clause
+     */
+    protected function addJoinsToSelection()
+    {
+    	$selection = ', tblImagesOfLocation, tblFilesOfLocation, tblBranches, tblOffers, tblMenuOfLocation, tblEvents, tblProducts, tblSpecialsOfLocation, tblServicesOfLocation';
+    
+    	return $selection;
+    }
+    
+    /**
+     * Helper method to add joins to from clause.
+     *
+     * @param QueryBuilder $qb Query builder instance used to create the query
+     *
+     * @return QueryBuilder The query builder enriched by additional joins
+     */
+    protected function addJoinsToFrom(QueryBuilder $qb)
+    {
+    	$qb->leftJoin('tbl.imagesOfLocation', 'tblImagesOfLocation');
+    	$qb->leftJoin('tbl.filesOfLocation', 'tblFilesOfLocation');
+    	$qb->leftJoin('tbl.branches', 'tblBranches');
+    	$qb->leftJoin('tbl.offers', 'tblOffers');
+    	$qb->leftJoin('tbl.menuOfLocation', 'tblMenuOfLocation');
+    	$qb->leftJoin('tbl.events', 'tblEvents');
+    	$qb->leftJoin('tbl.products', 'tblProducts');
+    	$qb->leftJoin('tbl.specialsOfLocation', 'tblSpecialsOfLocation');
+    	$qb->leftJoin('tbl.servicesOfLocation', 'tblServicesOfLocation');
     
     	return $qb;
     }

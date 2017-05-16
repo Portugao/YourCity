@@ -142,6 +142,9 @@ abstract class AbstractListEntriesHelper
                     case 'workflowState':
                         $result = false;
                         break;
+                    case 'partOfCity':
+                        $result = false;
+                        break;
                 }
                 break;
             case 'part':
@@ -276,6 +279,9 @@ abstract class AbstractListEntriesHelper
                 switch ($fieldName) {
                     case 'workflowState':
                         $entries = $this->getWorkflowStateEntriesForLocation();
+                        break;
+                    case 'partOfCity':
+                        $entries = $this->getPartOfCityEntriesForLocation();
                         break;
                 }
                 break;
@@ -457,6 +463,25 @@ abstract class AbstractListEntriesHelper
             'value'   => '!suspended',
             'text'    => $this->__('All except suspended'),
             'title'   => $this->__('Shows all items except these which are suspended'),
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
+     * Get 'part of city' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getPartOfCityEntriesForLocation()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => 'none',
+            'text'    => $this->__('None'),
+            'title'   => '',
             'image'   => '',
             'default' => false
         ];

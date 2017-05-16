@@ -222,17 +222,6 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$title]->setLinkAttribute('title', $title);
             }
             
-            $relatedComponent = 'MUYourCityModule:Part:';
-            $relatedInstance = $entity->getKey() . '::';
-            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
-                $title = $this->__('Create part');
-                $menu->addChild($title, [
-                    'route' => 'muyourcitymodule_part_' . $routeArea . 'edit',
-                    'routeParameters' => ['locations' => $entity->getKey()]
-                ])->setAttribute('icon', 'fa fa-plus');
-                $menu[$title]->setLinkAttribute('title', $title);
-            }
-            
             $relatedComponent = 'MUYourCityModule:Offer:';
             $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
@@ -377,19 +366,6 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'view'
                 ])->setAttribute('icon', 'fa fa-reply');
-                $menu[$title]->setLinkAttribute('title', $title);
-            }
-            
-            // more actions for adding new related items
-            
-            $relatedComponent = 'MUYourCityModule:Location:';
-            $relatedInstance = $entity->getKey() . '::';
-            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_COMMENT)) {
-                $title = $this->__('Create location');
-                $menu->addChild($title, [
-                    'route' => 'muyourcitymodule_location_' . $routeArea . 'edit',
-                    'routeParameters' => ['parts' => $entity->getKey()]
-                ])->setAttribute('icon', 'fa fa-plus');
                 $menu[$title]->setLinkAttribute('title', $title);
             }
         }

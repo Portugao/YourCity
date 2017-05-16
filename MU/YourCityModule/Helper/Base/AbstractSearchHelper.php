@@ -188,6 +188,7 @@ abstract class AbstractSearchHelper implements SearchableInterface
                     $whereArray[] = 'tbl.tram';
                     $whereArray[] = 'tbl.bus';
                     $whereArray[] = 'tbl.openingHours';
+                    $whereArray[] = 'tbl.partOfCity';
                     break;
                 case 'part':
                     $whereArray[] = 'tbl.workflowState';

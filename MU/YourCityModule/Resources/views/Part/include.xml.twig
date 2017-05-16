@@ -6,11 +6,4 @@
     <description><![CDATA[{{ part.description|safeHtml }}]]></description>
     <imageOfPart{% if part.imageOfPart is not empty and part.imageOfPartMeta|default %} extension="{{ part.imageOfPartMeta.extension }}" size="{{ part.imageOfPartMeta.size }}" isImage="{% if part.imageOfPartMeta.isImage %}true{% else %}false{% endif %}"{% if part.imageOfPartMeta.isImage %} width="{{ part.imageOfPartMeta.width }}" height="{{ part.imageOfPartMeta.height }}" format="{{ part.imageOfPartMeta.format }}"{% endif %}{% endif %}>{{ part.imageOfPart }}</imageOfPart>
     <workflowState>{{ part.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
-    <locations>
-    {% if part.locations|default %}
-        {% for relatedItem in part.locations %}
-        <location>{{ relatedItem|muyourcitymodule_formattedTitle }}</location>
-        {% endfor %}
-    {% endif %}
-    </locations>
 </part>

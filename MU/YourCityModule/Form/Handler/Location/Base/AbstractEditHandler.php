@@ -86,14 +86,6 @@ abstract class AbstractEditHandler extends EditHandler
             }
         }
         // editable relation, we store the id and assign it now to show it in UI
-        $this->relationPresets['parts'] = $this->request->get('parts', '');
-        if (!empty($this->relationPresets['parts'])) {
-            $relObj = $this->entityFactory->getRepository('part')->selectById($this->relationPresets['parts']);
-            if (null !== $relObj) {
-                $relObj->addLocations($entity);
-            }
-        }
-        // editable relation, we store the id and assign it now to show it in UI
         $this->relationPresets['specialsOfLocation'] = $this->request->get('specialsOfLocation', '');
         if (!empty($this->relationPresets['specialsOfLocation'])) {
             $relObj = $this->entityFactory->getRepository('specialOfLocation')->selectById($this->relationPresets['specialsOfLocation']);

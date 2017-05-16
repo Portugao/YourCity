@@ -189,7 +189,7 @@ abstract class AbstractMenuOfLocationType extends AbstractType
                 'class' => 'tooltips',
                 'title' => $this->__('Maximum 2000 characters.')
             ],
-            'help' => $this->__('Maximum 2000 characters.'),
+            'help' => [$this->__('Maximum 2000 characters.'), $this->__f('Note: this value must not exceed %amount% characters.', ['%amount%' => 2000])],
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 2000,
@@ -205,7 +205,7 @@ abstract class AbstractMenuOfLocationType extends AbstractType
                 'class' => 'tooltips',
                 'title' => $this->__('Here you can enter additional informations.')
             ],
-            'help' => $this->__('Here you can enter additional informations.'),
+            'help' => [$this->__('Here you can enter additional informations.'), $this->__f('Note: this value must not exceed %amount% characters.', ['%amount%' => 2000])],
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 2000,

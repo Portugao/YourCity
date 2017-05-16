@@ -71,6 +71,7 @@
             {{ form_row(form.numberOfStreet) }}
             {{ form_row(form.zipCode) }}
             {{ form_row(form.city) }}
+            {{ form_row(form.partOfCity) }}
             {{ form_row(form.telefon) }}
             {{ form_row(form.mobil) }}
             {{ form_row(form.homepage) }}
@@ -145,10 +146,6 @@
         {{ include(
             '@MUYourCityModule/Branch/includeSelectMany.html.twig',
             { group: 'location', alias: 'branches', aliasReverse: 'locations', mandatory: false, idPrefix: 'yourcityLocation_Branches', linkingItem: location, displayMode: 'choices' }
-        ) }}
-        {{ include(
-            '@MUYourCityModule/Part/includeSelectOne.html.twig',
-            { group: 'location', alias: 'parts', aliasReverse: 'locations', mandatory: false, idPrefix: 'yourcityLocation_Parts', linkingItem: location, displayMode: 'choices' }
         ) }}
         {{ include(
             '@MUYourCityModule/SpecialOfLocation/includeSelectMany.html.twig',

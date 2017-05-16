@@ -134,9 +134,6 @@ abstract class AbstractWorkflowEventsListener implements EventSubscriberInterfac
                 if (count($entity->getBranches()) > 0) {
                     $isBlocked = true;
                 }
-                if (count($entity->getParts()) > 0) {
-                    $isBlocked = true;
-                }
                 if (count($entity->getOffers()) > 0) {
                     $isBlocked = true;
                 }

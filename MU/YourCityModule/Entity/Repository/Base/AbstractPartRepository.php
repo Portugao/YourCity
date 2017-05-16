@@ -483,7 +483,7 @@ abstract class AbstractPartRepository extends EntityRepository
         if (!$isPaginated) {
             $result = $query->getResult();
         } else {
-            $paginator = new Paginator($query, true);
+            $paginator = new Paginator($query, false);
     
             $count = count($paginator);
             $result = $paginator;
@@ -695,7 +695,7 @@ abstract class AbstractPartRepository extends EntityRepository
      */
     protected function addJoinsToSelection()
     {
-        $selection = ', tblLocations';
+        $selection = '';
     
         return $selection;
     }
@@ -709,7 +709,6 @@ abstract class AbstractPartRepository extends EntityRepository
      */
     protected function addJoinsToFrom(QueryBuilder $qb)
     {
-        $qb->leftJoin('tbl.locations', 'tblLocations');
     
         return $qb;
     }

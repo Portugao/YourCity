@@ -19,19 +19,5 @@ use MU\YourCityModule\Helper\Base\AbstractSearchHelper;
  */
 class SearchHelper extends AbstractSearchHelper
 {
-    /**
-     * @inheritDoc
-     */
-    protected function getSearchTypes()
-    {
-        $searchTypes = parent::getSearchTypes();
-
-        foreach ($searchTypes as $key => $searchType) {
-            if ($searchType['value'] == 'part' || $searchType['value'] == 'branch' || $searchType['value'] == 'abonnement') {
-                unset($searchTypes[$key]);
-            }
-        }
-
-        return $searchTypes;
-    }
+    // feel free to extend the search helper here
 }

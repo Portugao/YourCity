@@ -1,3 +1,3 @@
 # CHANGELOG
 
-Changes in MUYourCityModule 1.0.0
+Changes in MUYourCityModule 0.1.0

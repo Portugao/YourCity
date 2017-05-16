@@ -180,7 +180,7 @@ abstract class AbstractFileOfLocationType extends AbstractType
                 'class' => 'tooltips',
                 'title' => $this->__('Maximum 2000 characters.')
             ],
-            'help' => $this->__('Maximum 2000 characters.'),
+            'help' => [$this->__('Maximum 2000 characters.'), $this->__f('Note: this value must not exceed %amount% characters.', ['%amount%' => 2000])],
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 2000,
@@ -217,7 +217,7 @@ abstract class AbstractFileOfLocationType extends AbstractType
             ],
             'required' => true && $options['mode'] == 'create',
             'entity' => $options['entity'],
-            'allowed_extensions' => 'pdf,doc,docx,xls',
+            'allowed_extensions' => 'pdf',
             'allowed_size' => ''
         ]);
         

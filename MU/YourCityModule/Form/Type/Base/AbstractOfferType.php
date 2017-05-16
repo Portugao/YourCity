@@ -184,8 +184,8 @@ abstract class AbstractOfferType extends AbstractType
                 'title' => $this->__('Enter a description of this offer.
                 You can also give informations about the price if you do not want to use the special field for it.')
             ],
-            'help' => $this->__('Enter a description of this offer.
-            You can also give informations about the price if you do not want to use the special field for it.'),
+            'help' => [$this->__('Enter a description of this offer.
+            You can also give informations about the price if you do not want to use the special field for it.'), $this->__f('Note: this value must not exceed %amount% characters.', ['%amount%' => 4000])],
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 4000,

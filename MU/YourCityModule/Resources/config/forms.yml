@@ -253,8 +253,6 @@ services:
         arguments:
             - "@translator.default"
             - "@mu_yourcity_module.entity_factory"
-            - "@mu_yourcity_module.collection_filter_helper"
-            - "@mu_yourcity_module.entity_display_helper"
             - "@zikula_extensions_module.api.variable"
             - "@mu_yourcity_module.translatable_helper"
             - "@mu_yourcity_module.listentries_helper"
@@ -806,12 +804,5 @@ services:
             - "@translator.default"
             - "@=service('zikula_extensions_module.api.variable').getAll('MUYourCityModule')"
             - "@zikula_groups_module.group_repository"
-        tags:
-            - { name: form.type }
-            
-    mu_yourcity_module.form.type.import:
-        class: MU\YourCityModule\Form\Type\ImportType
-        arguments:
-            - "@translator.default"
         tags:
             - { name: form.type }

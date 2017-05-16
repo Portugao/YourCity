@@ -61,6 +61,7 @@
     <owner>{% if location.owner|default and location.owner.getUid() > 0 %}{{ location.owner.getUname() }}{% endif %}</owner>
     <admin1>{% if location.admin1|default and location.admin1.getUid() > 0 %}{{ location.admin1.getUname() }}{% endif %}</admin1>
     <admin2>{% if location.admin2|default and location.admin2.getUid() > 0 %}{{ location.admin2.getUname() }}{% endif %}</admin2>
+    <partOfCity>{{ location.partOfCity|muyourcitymodule_listEntry('location', 'partOfCity') }}</partOfCity>
     <latitude>{{ location.latitude|muyourcitymodule_geoData }}</latitude>
     <longitude>{{ location.longitude|muyourcitymodule_geoData }}</longitude>
     <workflowState>{{ location.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
@@ -134,13 +135,6 @@
         {% endfor %}
     {% endif %}
     </branches>
-    <parts>
-    {% if location.parts|default %}
-        {% for relatedItem in location.parts %}
-        <part>{{ relatedItem|muyourcitymodule_formattedTitle }}</part>
-        {% endfor %}
-    {% endif %}
-    </parts>
     <specialsOfLocation>
     {% if location.specialsOfLocation|default %}
         {% for relatedItem in location.specialsOfLocation %}

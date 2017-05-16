@@ -181,6 +181,7 @@ abstract class AbstractLocationFinderType extends AbstractType
                     $this->__('Tram') => 'tram',
                     $this->__('Bus') => 'bus',
                     $this->__('Opening hours') => 'openingHours',
+                    $this->__('Part of city') => 'partOfCity',
                     $this->__('Creation date') => 'createdDate',
                     $this->__('Creator') => 'createdBy',
                     $this->__('Update date') => 'updatedDate',

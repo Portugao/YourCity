@@ -208,8 +208,8 @@ abstract class AbstractLocationType extends AbstractType
                 'title' => $this->__('Enter a description of your location (company) and your products.
                 Maximum 2000 characters.')
             ],
-            'help' => $this->__('Enter a description of your location (company) and your products.
-            Maximum 2000 characters.'),
+            'help' => [$this->__('Enter a description of your location (company) and your products.
+            Maximum 2000 characters.'), $this->__f('Note: this value must not exceed %amount% characters.', ['%amount%' => 2000])],
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 2000,
@@ -226,8 +226,8 @@ abstract class AbstractLocationType extends AbstractType
                 'title' => $this->__('Maximum 2000 characters.
                 Premium option.')
             ],
-            'help' => $this->__('Maximum 2000 characters.
-            Premium option.'),
+            'help' => [$this->__('Maximum 2000 characters.
+            Premium option.'), $this->__f('Note: this value must not exceed %amount% characters.', ['%amount%' => 2000])],
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 2000,
@@ -465,7 +465,7 @@ abstract class AbstractLocationType extends AbstractType
                 'class' => 'tooltips',
                 'title' => $this->__('Make extended informations about the opening hours!')
             ],
-            'help' => $this->__('Make extended informations about the opening hours!'),
+            'help' => [$this->__('Make extended informations about the opening hours!'), $this->__f('Note: this value must not exceed %amount% characters.', ['%amount%' => 2000])],
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 2000,
@@ -938,6 +938,28 @@ abstract class AbstractLocationType extends AbstractType
             'inline_usage' => $options['inline_usage']
         ]);
         
+        $listEntries = $this->listHelper->getEntries('location', 'partOfCity');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('partOfCity', ChoiceType::class, [
+            'label' => $this->__('Part of city') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('Choose the part of city')
+            ],
+            'required' => true,
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => false,
+            'expanded' => false
+        ]);
+        
         $this->addGeographicalFields($builder, $options);
     }
 
@@ -994,29 +1016,6 @@ abstract class AbstractLocationType extends AbstractType
             ],
             'attr' => [
                 'title' => $this->__('Choose the branches')
-            ]
-        ]);
-        $queryBuilder = function(EntityRepository $er) {
-            // select without joins
-            return $er->getListQueryBuilder('', '', false);
-        };
-        $entityDisplayHelper = $this->entityDisplayHelper;
-        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
-            return $entityDisplayHelper->getFormattedTitle($entity);
-        };
-        $builder->add('parts', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
-            'class' => 'MUYourCityModule:PartEntity',
-            'choice_label' => $choiceLabelClosure,
-            'multiple' => true,
-            'expanded' => true,
-            'query_builder' => $queryBuilder,
-            'required' => false,
-            'label' => $this->__('Parts'),
-            'label_attr' => [
-                'class' => 'checkbox-inline'
-            ],
-            'attr' => [
-                'title' => $this->__('Choose the parts')
             ]
         ]);
         $queryBuilder = function(EntityRepository $er) {

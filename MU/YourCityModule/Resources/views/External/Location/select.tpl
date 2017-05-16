@@ -34,6 +34,7 @@
                     <option value="tram"{if $sort eq 'tram'} selected="selected"{/if}>{gt text='Tram'}</option>
                     <option value="bus"{if $sort eq 'bus'} selected="selected"{/if}>{gt text='Bus'}</option>
                     <option value="openingHours"{if $sort eq 'openingHours'} selected="selected"{/if}>{gt text='Opening hours'}</option>
+                    <option value="partOfCity"{if $sort eq 'partOfCity'} selected="selected"{/if}>{gt text='Part of city'}</option>
                     <option value="createdDate"{if $sort eq 'createdDate'} selected="selected"{/if}>{gt text='Creation date'}</option>
                     <option value="createdBy"{if $sort eq 'createdBy'} selected="selected"{/if}>{gt text='Creator'}</option>
                     <option value="updatedDate"{if $sort eq 'updatedDate'} selected="selected"{/if}>{gt text='Update date'}</option>

@@ -93,7 +93,7 @@ abstract class AbstractFileOfLocationEntity extends EntityAccess implements Tran
      * @Assert\NotBlank()
      * @Assert\Length(min="0", max="255")
      * @Assert\File(
-     *    mimeTypes = {"application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.ms-excel"}
+     *    mimeTypes = {"application/pdf"}
      * )
      * @var string $fileOfFile
      */

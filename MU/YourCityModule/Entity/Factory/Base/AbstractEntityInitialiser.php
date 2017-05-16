@@ -84,6 +84,15 @@ abstract class AbstractEntityInitialiser
      */
     public function initLocation(LocationEntity $entity)
     {
+        $listEntries = $this->listEntriesHelper->getPartOfCityEntriesForLocation();
+        $items = [];
+        foreach ($listEntries as $listEntry) {
+            if (true === $listEntry['default']) {
+                $items[] = $listEntry['value'];
+            }
+        }
+        $entity->setPartOfCity(implode('###', $items));
+
 
         $entity->setLatitude($this->defaultLatitude);
         $entity->setLongitude($this->defaultLongitude);
