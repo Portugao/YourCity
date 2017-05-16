@@ -146,6 +146,10 @@ div.muyourcitymodule-view .avatar img {
 	font-size: 0.6em;
 }
 
+.placeholder img {
+	width: 100%;
+	height: auto;
+}
 /****************TABS*********************/
 
 .tab-pane {
@@ -296,7 +300,7 @@ div.muyourcitymodule-view .avatar img {
 }
 
 .item-list .status-icon {
-	font-size: 1.4em;
+	font-size: 1.1em;
 }
 
 .abo-location-list > h2 {
