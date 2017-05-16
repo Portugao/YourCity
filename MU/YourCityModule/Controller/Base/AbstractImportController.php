@@ -174,7 +174,7 @@ abstract class AbstractImportController extends AbstractController
     			
     			$newLocation->setSlug($data[0]['slug']);
     			
-    			$modelHelper = $this->get('mu_yourcity_module.model_helper');
+    			/*$modelHelper = $this->get('mu_yourcity_module.model_helper');
     			$branchRespository = $modelHelper->getRepository('Branch');
     			$partRepository = $modelHelper->getRepository('Part');
     			
@@ -185,7 +185,11 @@ abstract class AbstractImportController extends AbstractController
     			if ($data[0]['partId'] && $data[0]['partId'] > 0) {    			
     			$parts[] = $partRepository->find($data[0]['partId']);
     			$newLocation->setParts($parts);
-    			}
+    			}*/
+    			$newLocation->setPartOfCity($data[0]['partOfCity']);
+    			$newLocation->setPartOfCity($data[0]['branchOfLocation']);
+    			
+    			
     			
     			unset($branches);
     			unset($parts);
@@ -714,7 +718,9 @@ abstract class AbstractImportController extends AbstractController
     				'admin1_id' => NULL,
     				'admin2_id' => NULL,
     				'createdBy_id' => $result['cr_uid'],
-    				'updatedBy_id' => $result['lu_uid']
+    				'updatedBy_id' => $result['lu_uid'],
+    				'partOfCity' => $result['field15'],
+    				'branchOfLocation' => $result['field16']
     				)
     		        		;
     	
@@ -740,7 +746,7 @@ abstract class AbstractImportController extends AbstractController
     	// handle the access to the module file table
     	// build sql
 
-    	$query = "SELECT * FROM " . $table . " WHERE id >= 600 and id < 700 ORDER by id";
+    	$query = "SELECT * FROM " . $table . " ORDER by id";
 
     	// prepare the sql query
     	$sql = $connect->query($query);
