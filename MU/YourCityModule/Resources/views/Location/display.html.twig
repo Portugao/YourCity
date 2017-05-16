@@ -3,7 +3,9 @@
 {% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
 {% block pageTitle %}{{ location|muyourcitymodule_formattedTitle|default(__('Location')) }}{% endblock %}
 {% block title %}
-    {{ pageAddVar('description', 'Hallo') }}
+    {% if location.descriptionForGoogle is not empty %}
+    {{ setMetaTag('description', location.descriptionForGoogle) }}
+    {% endif %}
     <div class="row">
     <div class="col-md-3">
     <div id="location-logo">
@@ -427,14 +429,14 @@
             <a href="{{ path('muyourcitymodule_imageoflocation_' ~ routeArea ~ 'edit', { location: location.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
         </p>
     {% endif %}
-
+    
+    {% if location.offers|default %}
     {% if routeArea == 'admin' %}
         <h4>{{ __('Offers') }}</h4>
     {% else %}
         <h3>{{ __('Offers') }}</h3>
     {% endif %}
-    
-    {% if location.offers|default %}
+
         {{ include(
             '@MUYourCityModule/Offer/includeDisplayItemListMany.html.twig',
             { items: location.offers }
@@ -449,13 +451,13 @@
         </p>
     {% endif %}
     
-        {% if routeArea == 'admin' %}
+    {% if location.menuOfLocation|default %}    
+    {% if routeArea == 'admin' %}
         <h4>{{ __('Menus of location') }}</h4>
     {% else %}
         <h3>{{ __('Menus of location') }}</h3>
-    {% endif %}
-    
-    {% if location.menuOfLocation|default %}
+    {% endif %} 
+
         {{ include(
             '@MUYourCityModule/MenuOfLocation/includeDisplayItemListMany.html.twig',
             { items: location.menuOfLocation }
@@ -469,13 +471,14 @@
             <a href="{{ path('muyourcitymodule_menuoflocation_' ~ routeArea ~ 'edit', { location: location.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
         </p>
     {% endif %}
+    
+    {% if location.events|default %}    
     {% if routeArea == 'admin' %}
         <h4>{{ __('Events') }}</h4>
     {% else %}
         <h3>{{ __('Events') }}</h3>
-    {% endif %}
-    
-    {% if location.events|default %}
+    {% endif %} 
+
         {{ include(
             '@MUYourCityModule/Event/includeDisplayItemListMany.html.twig',
             { items: location.events }
@@ -489,13 +492,14 @@
             <a href="{{ path('muyourcitymodule_event_' ~ routeArea ~ 'edit', { location: location.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
         </p>
     {% endif %}
+    
+    {% if location.products|default %}   
     {% if routeArea == 'admin' %}
         <h4>{{ __('Products') }}</h4>
     {% else %}
         <h3>{{ __('Products') }}</h3>
-    {% endif %}
-    
-    {% if location.products|default %}
+    {% endif %} 
+
         {{ include(
             '@MUYourCityModule/Product/includeDisplayItemListMany.html.twig',
             { items: location.products }
@@ -509,6 +513,7 @@
             <a href="{{ path('muyourcitymodule_product_' ~ routeArea ~ 'edit', { location: location.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
         </p>
     {% endif %}
+    
     {% if routeArea == 'admin' %}
         <h4>{{ __('Dishes') }}</h4>
     {% endif %}
@@ -528,13 +533,13 @@
         </p>
     {% endif %}
     
-        {% if routeArea == 'admin' %}
+    {% if location.branches|default %}    
+    {% if routeArea == 'admin' %}
         <h4>{{ __('Branches') }}</h4>
     {% else %}
         <h3>{{ __('Branches') }}</h3>
     {% endif %}
-    
-    {% if location.branches|default %}
+
         {{ include(
             '@MUYourCityModule/Branch/includeDisplayItemListMany.html.twig',
             { items: location.branches }
@@ -548,13 +553,14 @@
             <a href="{{ path('muyourcitymodule_branch_' ~ routeArea ~ 'edit', { locations: location.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
         </p>
     {% endif %}
+    
+    {% if location.parts|default %}    
     {% if routeArea == 'admin' %}
         <h4>{{ __('Part') }}</h4>
     {% else %}
         <h3>{{ __('Part') }}</h3>
     {% endif %}
     
-    {% if location.parts|default %}
         {{ include(
             '@MUYourCityModule/Part/includeDisplayItemListMany.html.twig',
             { items: location.parts }
