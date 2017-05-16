@@ -43,6 +43,7 @@
                                     {{ form_row(form.descriptionForGoogle) }}
                                     {{ form_row(form.description) }}
                                     {{ form_row(form.description2) }}
+                                    {{ form_row(form.branchOfLocation) }}
                                 {% else %}
                                     {{ form_row(attribute(form, 'translations' ~ language)) }}
                                 {% endif %}
@@ -59,6 +60,7 @@
                 {{ form_row(form.descriptionForGoogle) }}
                 {{ form_row(form.description) }}
                 {{ form_row(form.description2) }}
+                {{ form_row(form.branchOfLocation) }}
             </fieldset>
         {% endif %}
         <fieldset>
@@ -143,10 +145,6 @@
             </div>
         </fieldset>
         
-        {{ include(
-            '@MUYourCityModule/Branch/includeSelectMany.html.twig',
-            { group: 'location', alias: 'branches', aliasReverse: 'locations', mandatory: false, idPrefix: 'yourcityLocation_Branches', linkingItem: location, displayMode: 'choices' }
-        ) }}
         {{ include(
             '@MUYourCityModule/SpecialOfLocation/includeSelectMany.html.twig',
             { group: 'location', alias: 'specialsOfLocation', aliasReverse: 'locations', mandatory: false, idPrefix: 'yourcityLocation_SpecialsOfLocation', linkingItem: location, displayMode: 'choices' }
