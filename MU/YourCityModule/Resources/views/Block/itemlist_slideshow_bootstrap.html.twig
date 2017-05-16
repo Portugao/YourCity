@@ -1,6 +1,6 @@
 {# Purpose of this template: Display items within a block (fallback template) #}
 
-<div id="myCarousel{{ vars.bid }}" class="carousel slide">
+<div id="Carousel{{ vars.bid }}" class="carousel slide">
     <div class="carousel-inner">
     {% if objectType == 'location' %}
         {% for location in items %}
@@ -11,7 +11,16 @@
             {% endif %}
             <div class="item-container"> 
             <h3>{{ location.name }}</h3>
+            <div class="placeholder">
+            <img src="/themes/Bootstrap2Theme/Resources/public/images/placeholder.png" /></div>
             {{ location.description|truncate(100) }}<br />
+            {{ location.street }} {{ location.numberOfStreet }}<br />
+            {{ location.zipCode }} {{ location.city }}<br /><br />
+            {{ location.telefon }}<br />
+            {% if location.homepage is not empty %}
+            <a href="{{ location.homepage }}" title="{{ __('Visit this page') }}" class="fa fa-external-link-square"></a>
+            {% else %}&nbsp;{% endif %}<br />
+            {% if vars.sorting != 'random' %}
             {% if location.branches|default %}{{ __('Branches') }}: 
                 {% for branch in location.branches %}
                     {{ branch.name }} 
@@ -22,8 +31,9 @@
                     {{ part.name }} 
                 {% endfor %}<br /><br />
             {% endif %}
+            {% endif %}
     
-            <a href="{{ path('muyourcitymodule_location_display', { 'id': location.id, 'slug': location.slug }) }}" class="btn btn-primary btn-sm" href="#" role="button">{{ __('More') }}</a>
+            <a href="{{ path('muyourcitymodule_location_display', { 'id': location.id, 'slug': location.slug }) }}" class="btn btn-danger btn-sm" href="#" role="button">{{ __('Read more about') }} {{ location.name }}</a>
             </div>
             </div>
         {% endfor %}
@@ -52,17 +62,17 @@
     {% endif %}
     </div>
     
-    <a class="left carousel-control" href="#myCarousel" data-slide="prev"><i class="fa fa-chevron-left"></i></a>
-    <a class="right carousel-control" href="#myCarousel" data-slide="next"><i class="fa fa-chevron-right"></i></a>
+    <a class="left carousel-control" href="#Carousel{{ vars.bid }}" data-slide="prev"><i class="fa fa-chevron-left"></i></a>
+    <a class="right carousel-control" href="#Carousel{{ vars.bid }}" data-slide="next"><i class="fa fa-chevron-right"></i></a>
                 
     <ol class="carousel-indicators">
         {% if objectType == 'location' %}
             {% for location in items %}
                 {% set counter = loop.index - 1 %}
                 {% if loop.index == 1 %}
-                    <li data-target="#myCarousel{{ vars.bid }}" data-slide-to="{{ counter }}" class="active"></li>
+                    <li data-target="#Carousel{{ vars.bid }}" data-slide-to="{{ counter }}" class="active"></li>
                 {% else %}
-                    <li data-target="#myCarousel{{ vars.bid }}" data-slide-to="{{ counter }}"></li>
+                    <li data-target="#Carousel{{ vars.bid }}" data-slide-to="{{ counter }}"></li>
                 {% endif %}
             {% endfor %}
         {% endif %}
@@ -70,9 +80,9 @@
             {% for offer in items %}
                 {% set counter = loop.index - 1 %}
                 {% if loop.index == 1 %}
-                    <li data-target="#myCarousel{{ vars.bid }}" data-slide-to="{{ counter }}" class="active"></li>
+                    <li data-target="#Carousel{{ vars.bid }}" data-slide-to="{{ counter }}" class="active"></li>
                 {% else %}
-                    <li data-target="#myCarousel{{ vars.bid }}" data-slide-to="{{ counter }}"></li>
+                    <li data-target="#Carousel{{ vars.bid }}" data-slide-to="{{ counter }}"></li>
                 {% endif %}
             {% endfor %}
         {% endif %}
@@ -102,7 +112,7 @@
 <script type="text/javascript">
 /* <![CDATA[ */
 var MU = jQuery.noConflict();
-	MU('#myCarousel{{ vars.bid }}').carousel({
+	MU('#Carousel{{ vars.bid }}').carousel({
 		interval:   {{ vars.slideshowspeed }}
 	});
         /* ]]> */
