@@ -20,6 +20,7 @@
                 <select id="{$baseID}Sort" name="sort" class="form-control">
                     <option value="workflowState"{if $sort eq 'workflowState'} selected="selected"{/if}>{gt text='Workflow state'}</option>
                     <option value="name"{if $sort eq 'name'} selected="selected"{/if}>{gt text='Name'}</option>
+                    <option value="keywordsForProduct"{if $sort eq 'keywordsForProduct'} selected="selected"{/if}>{gt text='Keywords for product'}</option>
                     <option value="description"{if $sort eq 'description'} selected="selected"{/if}>{gt text='Description'}</option>
                     <option value="kindOfProduct"{if $sort eq 'kindOfProduct'} selected="selected"{/if}>{gt text='Kind of product'}</option>
                     <option value="today"{if $sort eq 'today'} selected="selected"{/if}>{gt text='Today'}</option>
@@ -31,6 +32,7 @@
                     <option value="saturday"{if $sort eq 'saturday'} selected="selected"{/if}>{gt text='Saturday'}</option>
                     <option value="sunday"{if $sort eq 'sunday'} selected="selected"{/if}>{gt text='Sunday'}</option>
                     <option value="priceOfProduct"{if $sort eq 'priceOfProduct'} selected="selected"{/if}>{gt text='Price of product'}</option>
+                    <option value="myLocation"{if $sort eq 'myLocation'} selected="selected"{/if}>{gt text='My location'}</option>
                     <option value="createdDate"{if $sort eq 'createdDate'} selected="selected"{/if}>{gt text='Creation date'}</option>
                     <option value="createdBy"{if $sort eq 'createdBy'} selected="selected"{/if}>{gt text='Creator'}</option>
                     <option value="updatedDate"{if $sort eq 'updatedDate'} selected="selected"{/if}>{gt text='Update date'}</option>

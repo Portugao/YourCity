@@ -12,7 +12,6 @@
 
 namespace MU\YourCityModule\Form\Type\Base;
 
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -135,7 +134,6 @@ abstract class AbstractLocationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addEntityFields($builder, $options);
-        $this->addOutgoingRelationshipFields($builder, $options);
         $this->addAdditionalNotificationRemarksField($builder, $options);
         $this->addModerationFields($builder, $options);
         $this->addReturnControlField($builder, $options);
@@ -143,7 +141,7 @@ abstract class AbstractLocationType extends AbstractType
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             $entity = $event->getData();
-            foreach (['logoOfYourLocation', 'imageOfLocation'] as $uploadFieldName) {
+            foreach (['logoOfYourLocation', 'imageOfLocation', 'firstImage', 'secondImage', 'thirdImage', 'fourthImage', 'fifthImage', 'sixthImage', 'firstFile', 'secondFile'] as $uploadFieldName) {
                 $entity[$uploadFieldName] = [
                     $uploadFieldName => $entity[$uploadFieldName] instanceof File ? $entity[$uploadFieldName]->getPathname() : null
                 ];
@@ -151,7 +149,7 @@ abstract class AbstractLocationType extends AbstractType
         });
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
             $entity = $event->getData();
-            foreach (['logoOfYourLocation', 'imageOfLocation'] as $uploadFieldName) {
+            foreach (['logoOfYourLocation', 'imageOfLocation', 'firstImage', 'secondImage', 'thirdImage', 'fourthImage', 'fifthImage', 'sixthImage', 'firstFile', 'secondFile'] as $uploadFieldName) {
                 if (is_array($entity[$uploadFieldName])) {
                     $entity[$uploadFieldName] = $entity[$uploadFieldName][$uploadFieldName];
                 }
@@ -168,18 +166,18 @@ abstract class AbstractLocationType extends AbstractType
     public function addEntityFields(FormBuilderInterface $builder, array $options)
     {
         
-        $builder->add('slogan', TextType::class, [
-            'label' => $this->__('Slogan') . ':',
+        $builder->add('keywordsForLocation', TextType::class, [
+            'label' => $this->__('Keywords for location') . ':',
             'label_attr' => [
                 'class' => 'tooltips',
-                'title' => $this->__('Slogan or additional name of your company.')
+                'title' => $this->__('here you can enter keywords for search optimization.')
             ],
-            'help' => $this->__('Slogan or additional name of your company.'),
+            'help' => $this->__('here you can enter keywords for search optimization.'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 255,
                 'class' => '',
-                'title' => $this->__('Enter the slogan of the location')
+                'title' => $this->__('Enter the keywords for location of the location')
             ],
             'required' => false,
         ]);
@@ -198,6 +196,22 @@ abstract class AbstractLocationType extends AbstractType
                 'maxlength' => 170,
                 'class' => '',
                 'title' => $this->__('Enter the description for google of the location')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('slogan', TextType::class, [
+            'label' => $this->__('Slogan') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Slogan or additional name of your company.')
+            ],
+            'help' => $this->__('Slogan or additional name of your company.'),
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => '',
+                'title' => $this->__('Enter the slogan of the location')
             ],
             'required' => false,
         ]);
@@ -236,28 +250,6 @@ abstract class AbstractLocationType extends AbstractType
                 'title' => $this->__('Enter the description 2 of the location')
             ],
             'required' => false,
-        ]);
-        
-        $listEntries = $this->listHelper->getEntries('location', 'branchOfLocation');
-        $choices = [];
-        $choiceAttributes = [];
-        foreach ($listEntries as $entry) {
-            $choices[$entry['text']] = $entry['value'];
-            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
-        }
-        $builder->add('branchOfLocation', MultiListType::class, [
-            'label' => $this->__('Branch of location') . ':',
-            'empty_data' => '',
-            'attr' => [
-                'class' => '',
-                'title' => $this->__('Choose the branch of location')
-            ],
-            'required' => true,
-            'choices' => $choices,
-            'choices_as_values' => true,
-            'choice_attr' => $choiceAttributes,
-            'multiple' => true,
-            'expanded' => false
         ]);
         
         if ($this->variableApi->getSystemVar('multilingual') && $this->featureActivationHelper->isEnabled(FeatureActivationHelper::TRANSLATIONS, 'location')) {
@@ -925,6 +917,201 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
+        $listEntries = $this->listHelper->getEntries('location', 'partOfCity');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('partOfCity', ChoiceType::class, [
+            'label' => $this->__('Part of city') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('Choose the part of city')
+            ],
+            'required' => true,
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => false,
+            'expanded' => false
+        ]);
+        
+        $listEntries = $this->listHelper->getEntries('location', 'branchOfLocation');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('branchOfLocation', MultiListType::class, [
+            'label' => $this->__('Branch of location') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('Choose the branch of location')
+            ],
+            'required' => true,
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => true,
+            'expanded' => false
+        ]);
+        
+        $listEntries = $this->listHelper->getEntries('location', 'servicesOfLocation');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('servicesOfLocation', MultiListType::class, [
+            'label' => $this->__('Services of location') . ':',
+            'label_attr' => [
+                'class' => 'checkbox-inline'
+            ],
+            'empty_data' => '',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('Choose the services of location')
+            ],
+            'required' => true,
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => true,
+            'expanded' => true
+        ]);
+        
+        $listEntries = $this->listHelper->getEntries('location', 'specialsOfLocation');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('specialsOfLocation', MultiListType::class, [
+            'label' => $this->__('Specials of location') . ':',
+            'label_attr' => [
+                'class' => 'checkbox-inline'
+            ],
+            'empty_data' => '',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('Choose the specials of location')
+            ],
+            'required' => true,
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => true,
+            'expanded' => true
+        ]);
+        
+        $builder->add('firstImage', UploadType::class, [
+            'label' => $this->__('First image') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('This and the following images are optional for premium customers.')
+            ],
+            'help' => $this->__('This and the following images are optional for premium customers.'),
+            'attr' => [
+                'class' => ' validate-upload',
+                'title' => $this->__('Enter the first image of the location')
+            ],
+            'required' => false && $options['mode'] == 'create',
+            'entity' => $options['entity'],
+            'allowed_extensions' => 'gif, jpeg, jpg, png',
+            'allowed_size' => '200k'
+        ]);
+        
+        $builder->add('secondImage', UploadType::class, [
+            'label' => $this->__('Second image') . ':',
+            'attr' => [
+                'class' => ' validate-upload',
+                'title' => $this->__('Enter the second image of the location')
+            ],
+            'required' => false && $options['mode'] == 'create',
+            'entity' => $options['entity'],
+            'allowed_extensions' => 'gif, jpeg, jpg, png',
+            'allowed_size' => '200k'
+        ]);
+        
+        $builder->add('thirdImage', UploadType::class, [
+            'label' => $this->__('Third image') . ':',
+            'attr' => [
+                'class' => ' validate-upload',
+                'title' => $this->__('Enter the third image of the location')
+            ],
+            'required' => false && $options['mode'] == 'create',
+            'entity' => $options['entity'],
+            'allowed_extensions' => 'gif, jpeg, jpg, png',
+            'allowed_size' => '200k'
+        ]);
+        
+        $builder->add('fourthImage', UploadType::class, [
+            'label' => $this->__('Fourth image') . ':',
+            'attr' => [
+                'class' => ' validate-upload',
+                'title' => $this->__('Enter the fourth image of the location')
+            ],
+            'required' => false && $options['mode'] == 'create',
+            'entity' => $options['entity'],
+            'allowed_extensions' => 'gif, jpeg, jpg, png',
+            'allowed_size' => '200k'
+        ]);
+        
+        $builder->add('fifthImage', UploadType::class, [
+            'label' => $this->__('Fifth image') . ':',
+            'attr' => [
+                'class' => ' validate-upload',
+                'title' => $this->__('Enter the fifth image of the location')
+            ],
+            'required' => false && $options['mode'] == 'create',
+            'entity' => $options['entity'],
+            'allowed_extensions' => 'gif, jpeg, jpg, png',
+            'allowed_size' => '200k'
+        ]);
+        
+        $builder->add('sixthImage', UploadType::class, [
+            'label' => $this->__('Sixth image') . ':',
+            'attr' => [
+                'class' => ' validate-upload',
+                'title' => $this->__('Enter the sixth image of the location')
+            ],
+            'required' => false && $options['mode'] == 'create',
+            'entity' => $options['entity'],
+            'allowed_extensions' => 'gif, jpeg, jpg, png',
+            'allowed_size' => '200k'
+        ]);
+        
+        $builder->add('firstFile', UploadType::class, [
+            'label' => $this->__('First file') . ':',
+            'attr' => [
+                'class' => ' validate-upload',
+                'title' => $this->__('Enter the first file of the location')
+            ],
+            'required' => false && $options['mode'] == 'create',
+            'entity' => $options['entity'],
+            'allowed_extensions' => 'pdf',
+            'allowed_size' => '200k'
+        ]);
+        
+        $builder->add('secondFile', UploadType::class, [
+            'label' => $this->__('Second file') . ':',
+            'attr' => [
+                'class' => ' validate-upload',
+                'title' => $this->__('Enter the second file of the location')
+            ],
+            'required' => false && $options['mode'] == 'create',
+            'entity' => $options['entity'],
+            'allowed_extensions' => 'pdf',
+            'allowed_size' => '200k'
+        ]);
+        
         $builder->add('owner', UserType::class, [
             'label' => $this->__('Owner') . ':',
             'empty_data' => '',
@@ -961,28 +1148,6 @@ abstract class AbstractLocationType extends AbstractType
             'inline_usage' => $options['inline_usage']
         ]);
         
-        $listEntries = $this->listHelper->getEntries('location', 'partOfCity');
-        $choices = [];
-        $choiceAttributes = [];
-        foreach ($listEntries as $entry) {
-            $choices[$entry['text']] = $entry['value'];
-            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
-        }
-        $builder->add('partOfCity', ChoiceType::class, [
-            'label' => $this->__('Part of city') . ':',
-            'empty_data' => '',
-            'attr' => [
-                'class' => '',
-                'title' => $this->__('Choose the part of city')
-            ],
-            'required' => true,
-            'choices' => $choices,
-            'choices_as_values' => true,
-            'choice_attr' => $choiceAttributes,
-            'multiple' => false,
-            'expanded' => false
-        ]);
-        
         $this->addGeographicalFields($builder, $options);
     }
 
@@ -1007,62 +1172,6 @@ abstract class AbstractLocationType extends AbstractType
                 'class' => 'validate-number'
             ],
             'required' => false
-        ]);
-    }
-
-    /**
-     * Adds fields for outgoing relationships.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
-    public function addOutgoingRelationshipFields(FormBuilderInterface $builder, array $options)
-    {
-        $queryBuilder = function(EntityRepository $er) {
-            // select without joins
-            return $er->getListQueryBuilder('', '', false);
-        };
-        $entityDisplayHelper = $this->entityDisplayHelper;
-        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
-            return $entityDisplayHelper->getFormattedTitle($entity);
-        };
-        $builder->add('specialsOfLocation', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
-            'class' => 'MUYourCityModule:SpecialOfLocationEntity',
-            'choice_label' => $choiceLabelClosure,
-            'multiple' => true,
-            'expanded' => true,
-            'query_builder' => $queryBuilder,
-            'required' => false,
-            'label' => $this->__('Specials of location'),
-            'label_attr' => [
-                'class' => 'checkbox-inline'
-            ],
-            'attr' => [
-                'title' => $this->__('Choose the specials of location')
-            ]
-        ]);
-        $queryBuilder = function(EntityRepository $er) {
-            // select without joins
-            return $er->getListQueryBuilder('', '', false);
-        };
-        $entityDisplayHelper = $this->entityDisplayHelper;
-        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
-            return $entityDisplayHelper->getFormattedTitle($entity);
-        };
-        $builder->add('servicesOfLocation', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
-            'class' => 'MUYourCityModule:ServiceOfLocationEntity',
-            'choice_label' => $choiceLabelClosure,
-            'multiple' => true,
-            'expanded' => true,
-            'query_builder' => $queryBuilder,
-            'required' => false,
-            'label' => $this->__('Services of location'),
-            'label_attr' => [
-                'class' => 'checkbox-inline'
-            ],
-            'attr' => [
-                'title' => $this->__('Choose the services of location')
-            ]
         ]);
     }
 
@@ -1211,11 +1320,21 @@ abstract class AbstractLocationType extends AbstractType
                 },
                 'error_mapping' => [
                     'isBranchOfLocationValueAllowed' => 'branchOfLocation',
+                    'isServicesOfLocationValueAllowed' => 'servicesOfLocation',
+                    'isSpecialsOfLocationValueAllowed' => 'specialsOfLocation',
                     'isOwnerUserValid' => 'owner',
                     'isAdmin1UserValid' => 'admin1',
                     'isAdmin2UserValid' => 'admin2',
                     'logoOfYourLocation' => 'logoOfYourLocation.logoOfYourLocation',
                     'imageOfLocation' => 'imageOfLocation.imageOfLocation',
+                    'firstImage' => 'firstImage.firstImage',
+                    'secondImage' => 'secondImage.secondImage',
+                    'thirdImage' => 'thirdImage.thirdImage',
+                    'fourthImage' => 'fourthImage.fourthImage',
+                    'fifthImage' => 'fifthImage.fifthImage',
+                    'sixthImage' => 'sixthImage.sixthImage',
+                    'firstFile' => 'firstFile.firstFile',
+                    'secondFile' => 'secondFile.secondFile',
                 ],
                 'mode' => 'create',
                 'is_moderator' => false,

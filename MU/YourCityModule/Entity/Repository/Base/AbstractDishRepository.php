@@ -62,6 +62,7 @@ abstract class AbstractDishRepository extends EntityRepository
             'priceOfDish',
             'ingredients',
             'positionOfDish',
+            'myLocation',
             'createdBy',
             'createdDate',
             'updatedBy',
@@ -701,7 +702,7 @@ abstract class AbstractDishRepository extends EntityRepository
      */
     protected function addJoinsToSelection()
     {
-        $selection = ', tblMenuOfLocation, tblPartOfMenu, tblLocation';
+        $selection = '';
     
         return $selection;
     }
@@ -715,9 +716,6 @@ abstract class AbstractDishRepository extends EntityRepository
      */
     protected function addJoinsToFrom(QueryBuilder $qb)
     {
-        $qb->leftJoin('tbl.menuOfLocation', 'tblMenuOfLocation');
-        $qb->leftJoin('tbl.partOfMenu', 'tblPartOfMenu');
-        $qb->leftJoin('tbl.location', 'tblLocation');
     
         return $qb;
     }

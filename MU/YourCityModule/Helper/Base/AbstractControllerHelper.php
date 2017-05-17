@@ -162,8 +162,6 @@ abstract class AbstractControllerHelper
         $allowedObjectTypes[] = 'branch';
         $allowedObjectTypes[] = 'location';
         $allowedObjectTypes[] = 'part';
-        $allowedObjectTypes[] = 'imageOfLocation';
-        $allowedObjectTypes[] = 'fileOfLocation';
         $allowedObjectTypes[] = 'offer';
         $allowedObjectTypes[] = 'menuOfLocation';
         $allowedObjectTypes[] = 'partOfMenu';
@@ -431,21 +429,19 @@ abstract class AbstractControllerHelper
                 $thumbRuntimeOptions = [];
                 $thumbRuntimeOptions[$objectType . 'LogoOfYourLocation'] = $this->imageHelper->getRuntimeOptions($objectType, 'logoOfYourLocation', $context, $args);
                 $thumbRuntimeOptions[$objectType . 'ImageOfLocation'] = $this->imageHelper->getRuntimeOptions($objectType, 'imageOfLocation', $context, $args);
+                $thumbRuntimeOptions[$objectType . 'FirstImage'] = $this->imageHelper->getRuntimeOptions($objectType, 'firstImage', $context, $args);
+                $thumbRuntimeOptions[$objectType . 'SecondImage'] = $this->imageHelper->getRuntimeOptions($objectType, 'secondImage', $context, $args);
+                $thumbRuntimeOptions[$objectType . 'ThirdImage'] = $this->imageHelper->getRuntimeOptions($objectType, 'thirdImage', $context, $args);
+                $thumbRuntimeOptions[$objectType . 'FourthImage'] = $this->imageHelper->getRuntimeOptions($objectType, 'fourthImage', $context, $args);
+                $thumbRuntimeOptions[$objectType . 'FifthImage'] = $this->imageHelper->getRuntimeOptions($objectType, 'fifthImage', $context, $args);
+                $thumbRuntimeOptions[$objectType . 'SixthImage'] = $this->imageHelper->getRuntimeOptions($objectType, 'sixthImage', $context, $args);
+                $thumbRuntimeOptions[$objectType . 'FirstFile'] = $this->imageHelper->getRuntimeOptions($objectType, 'firstFile', $context, $args);
+                $thumbRuntimeOptions[$objectType . 'SecondFile'] = $this->imageHelper->getRuntimeOptions($objectType, 'secondFile', $context, $args);
                 $parameters['thumbRuntimeOptions'] = $thumbRuntimeOptions;
             }
             if ($objectType == 'part') {
                 $thumbRuntimeOptions = [];
                 $thumbRuntimeOptions[$objectType . 'ImageOfPart'] = $this->imageHelper->getRuntimeOptions($objectType, 'imageOfPart', $context, $args);
-                $parameters['thumbRuntimeOptions'] = $thumbRuntimeOptions;
-            }
-            if ($objectType == 'imageOfLocation') {
-                $thumbRuntimeOptions = [];
-                $thumbRuntimeOptions[$objectType . 'Image'] = $this->imageHelper->getRuntimeOptions($objectType, 'image', $context, $args);
-                $parameters['thumbRuntimeOptions'] = $thumbRuntimeOptions;
-            }
-            if ($objectType == 'fileOfLocation') {
-                $thumbRuntimeOptions = [];
-                $thumbRuntimeOptions[$objectType . 'FileOfFile'] = $this->imageHelper->getRuntimeOptions($objectType, 'fileOfFile', $context, $args);
                 $parameters['thumbRuntimeOptions'] = $thumbRuntimeOptions;
             }
             if ($objectType == 'offer') {

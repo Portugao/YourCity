@@ -29,6 +29,7 @@
                     <option value="city"{if $sort eq 'city'} selected="selected"{/if}>{gt text='City'}</option>
                     <option value="inViewFrom"{if $sort eq 'inViewFrom'} selected="selected"{/if}>{gt text='In view from'}</option>
                     <option value="inViewUntil"{if $sort eq 'inViewUntil'} selected="selected"{/if}>{gt text='In view until'}</option>
+                    <option value="myLocation"{if $sort eq 'myLocation'} selected="selected"{/if}>{gt text='My location'}</option>
                     <option value="createdDate"{if $sort eq 'createdDate'} selected="selected"{/if}>{gt text='Creation date'}</option>
                     <option value="createdBy"{if $sort eq 'createdBy'} selected="selected"{/if}>{gt text='Creator'}</option>
                     <option value="updatedDate"{if $sort eq 'updatedDate'} selected="selected"{/if}>{gt text='Update date'}</option>

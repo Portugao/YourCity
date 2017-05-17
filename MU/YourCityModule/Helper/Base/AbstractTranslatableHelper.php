@@ -91,16 +91,10 @@ abstract class AbstractTranslatableHelper
                 $fields = ['name', 'descriptionForGoogle', 'description'];
                 break;
             case 'location':
-                $fields = ['slogan', 'descriptionForGoogle', 'description', 'description2', 'branchOfLocation'];
+                $fields = ['keywordsForLocation', 'descriptionForGoogle', 'slogan', 'description', 'description2'];
                 break;
             case 'part':
                 $fields = ['descriptionForGoogle', 'description'];
-                break;
-            case 'imageOfLocation':
-                $fields = ['name', 'description'];
-                break;
-            case 'fileOfLocation':
-                $fields = ['name', 'description'];
                 break;
             case 'offer':
                 $fields = ['name', 'description'];
@@ -118,13 +112,13 @@ abstract class AbstractTranslatableHelper
                 $fields = ['name', 'description'];
                 break;
             case 'product':
-                $fields = ['name', 'description', 'kindOfProduct'];
+                $fields = ['name', 'keywordsForProduct', 'description'];
                 break;
             case 'specialOfLocation':
-                $fields = ['name', 'description', 'descriptionForGoogle'];
+                $fields = ['name', 'descriptionForGoogle', 'description'];
                 break;
             case 'serviceOfLocation':
-                $fields = ['name', 'description', 'descriptionForGoogle'];
+                $fields = ['name', 'descriptionForGoogle', 'description'];
                 break;
         }
     

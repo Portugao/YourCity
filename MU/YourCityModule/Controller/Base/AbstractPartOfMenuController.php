@@ -400,8 +400,7 @@ abstract class AbstractPartOfMenuController extends AbstractController
         $sortableColumns->addColumns([
             new Column('name'),
             new Column('description'),
-            new Column('menuOfLocation'),
-            new Column('location'),
+            new Column('myLocation'),
             new Column('createdBy'),
             new Column('createdDate'),
             new Column('updatedBy'),

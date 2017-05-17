@@ -144,6 +144,15 @@ abstract class AbstractDishEntity extends EntityAccess implements Translatable
      */
     protected $positionOfDish = 0;
     
+    /**
+     * If you have more than one location, select the correct one!
+     * @ORM\Column(length=255)
+     * @Assert\NotBlank()
+     * @YourCityAssert\ListEntry(entityName="dish", propertyName="myLocation", multiple=false)
+     * @var string $myLocation
+     */
+    protected $myLocation = '';
+    
     
     /**
      * Used locale to override Translation listener's locale.
@@ -154,40 +163,6 @@ abstract class AbstractDishEntity extends EntityAccess implements Translatable
      * @var string $locale
      */
     protected $locale;
-    
-    /**
-     * Bidirectional - Many dishes [dishes] are linked by one menuOfLocation [menu of location] (OWNING SIDE).
-     *
-     * @ORM\ManyToOne(targetEntity="MU\YourCityModule\Entity\MenuOfLocationEntity", inversedBy="dishes")
-     * @ORM\JoinTable(name="mu_yourcity_menuoflocation")
-     * @Assert\Type(type="MU\YourCityModule\Entity\MenuOfLocationEntity")
-     * @var \MU\YourCityModule\Entity\MenuOfLocationEntity $menuOfLocation
-     */
-    protected $menuOfLocation;
-    
-    /**
-     * Bidirectional - Many dishes [dishes] are linked by one partOfMenu [part of menu] (OWNING SIDE).
-     *
-     * @ORM\ManyToOne(targetEntity="MU\YourCityModule\Entity\PartOfMenuEntity", inversedBy="dishes")
-     * @ORM\JoinTable(name="mu_yourcity_partofmenu")
-     * @Assert\Type(type="MU\YourCityModule\Entity\PartOfMenuEntity")
-     * @var \MU\YourCityModule\Entity\PartOfMenuEntity $partOfMenu
-     */
-    protected $partOfMenu;
-    
-    /**
-     * Bidirectional - Many dishes [dishes] are linked by one location [location] (OWNING SIDE).
-     *
-     * @ORM\ManyToOne(targetEntity="MU\YourCityModule\Entity\LocationEntity", inversedBy="dishes")
-     * @ORM\JoinTable(name="mu_yourcity_location",
-     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
-     * )
-     * @Assert\NotNull(message="Choosing a location is required.")
-     * @Assert\Type(type="MU\YourCityModule\Entity\LocationEntity")
-     * @var \MU\YourCityModule\Entity\LocationEntity $location
-     */
-    protected $location;
     
     
     /**
@@ -491,6 +466,30 @@ abstract class AbstractDishEntity extends EntityAccess implements Translatable
     }
     
     /**
+     * Returns the my location.
+     *
+     * @return string
+     */
+    public function getMyLocation()
+    {
+        return $this->myLocation;
+    }
+    
+    /**
+     * Sets the my location.
+     *
+     * @param string $myLocation
+     *
+     * @return void
+     */
+    public function setMyLocation($myLocation)
+    {
+        if ($this->myLocation !== $myLocation) {
+            $this->myLocation = isset($myLocation) ? $myLocation : '';
+        }
+    }
+    
+    /**
      * Returns the locale.
      *
      * @return string
@@ -514,72 +513,6 @@ abstract class AbstractDishEntity extends EntityAccess implements Translatable
         }
     }
     
-    
-    /**
-     * Returns the menu of location.
-     *
-     * @return \MU\YourCityModule\Entity\MenuOfLocationEntity
-     */
-    public function getMenuOfLocation()
-    {
-        return $this->menuOfLocation;
-    }
-    
-    /**
-     * Sets the menu of location.
-     *
-     * @param \MU\YourCityModule\Entity\MenuOfLocationEntity $menuOfLocation
-     *
-     * @return void
-     */
-    public function setMenuOfLocation($menuOfLocation = null)
-    {
-        $this->menuOfLocation = $menuOfLocation;
-    }
-    
-    /**
-     * Returns the part of menu.
-     *
-     * @return \MU\YourCityModule\Entity\PartOfMenuEntity
-     */
-    public function getPartOfMenu()
-    {
-        return $this->partOfMenu;
-    }
-    
-    /**
-     * Sets the part of menu.
-     *
-     * @param \MU\YourCityModule\Entity\PartOfMenuEntity $partOfMenu
-     *
-     * @return void
-     */
-    public function setPartOfMenu($partOfMenu = null)
-    {
-        $this->partOfMenu = $partOfMenu;
-    }
-    
-    /**
-     * Returns the location.
-     *
-     * @return \MU\YourCityModule\Entity\LocationEntity
-     */
-    public function getLocation()
-    {
-        return $this->location;
-    }
-    
-    /**
-     * Sets the location.
-     *
-     * @param \MU\YourCityModule\Entity\LocationEntity $location
-     *
-     * @return void
-     */
-    public function setLocation($location = null)
-    {
-        $this->location = $location;
-    }
     
     
     

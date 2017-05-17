@@ -15,8 +15,8 @@
     <end2Date>{{ event.end2Date|localizeddate('medium', 'short') }}</end2Date>
     <inViewFrom>{{ event.inViewFrom|localizeddate('medium', 'short') }}</inViewFrom>
     <inViewUntil>{{ event.inViewUntil|localizeddate('medium', 'short') }}</inViewUntil>
+    <myLocation>{{ event.myLocation|muyourcitymodule_listEntry('event', 'myLocation') }}</myLocation>
     <latitude>{{ event.latitude|muyourcitymodule_geoData }}</latitude>
     <longitude>{{ event.longitude|muyourcitymodule_geoData }}</longitude>
     <workflowState>{{ event.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
-    <location>{% if event.location|default %}{{ event.location|muyourcitymodule_formattedTitle }}{% endif %}</location>
 </event>

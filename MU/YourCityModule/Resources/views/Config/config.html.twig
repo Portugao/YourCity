@@ -37,10 +37,25 @@
                     <a id="imagesLocationImageOfLocationTab" href="#tabImagesLocationImageOfLocation" role="tab" data-toggle="tab" aria-controls="tabImagesLocationImageOfLocation">{{ __('Locations image of location') }}</a>
                 </li>
                 <li>
-                    <a id="imagesPartImageOfPartTab" href="#tabImagesPartImageOfPart" role="tab" data-toggle="tab" aria-controls="tabImagesPartImageOfPart">{{ __('Parts image of part') }}</a>
+                    <a id="imagesLocationFirstImageTab" href="#tabImagesLocationFirstImage" role="tab" data-toggle="tab" aria-controls="tabImagesLocationFirstImage">{{ __('Locations first image') }}</a>
                 </li>
                 <li>
-                    <a id="imagesImageOfLocationImageTab" href="#tabImagesImageOfLocationImage" role="tab" data-toggle="tab" aria-controls="tabImagesImageOfLocationImage">{{ __('Images of location image') }}</a>
+                    <a id="imagesLocationSecondImageTab" href="#tabImagesLocationSecondImage" role="tab" data-toggle="tab" aria-controls="tabImagesLocationSecondImage">{{ __('Locations second image') }}</a>
+                </li>
+                <li>
+                    <a id="imagesLocationThirdImageTab" href="#tabImagesLocationThirdImage" role="tab" data-toggle="tab" aria-controls="tabImagesLocationThirdImage">{{ __('Locations third image') }}</a>
+                </li>
+                <li>
+                    <a id="imagesLocationFourthImageTab" href="#tabImagesLocationFourthImage" role="tab" data-toggle="tab" aria-controls="tabImagesLocationFourthImage">{{ __('Locations fourth image') }}</a>
+                </li>
+                <li>
+                    <a id="imagesLocationFifthImageTab" href="#tabImagesLocationFifthImage" role="tab" data-toggle="tab" aria-controls="tabImagesLocationFifthImage">{{ __('Locations fifth image') }}</a>
+                </li>
+                <li>
+                    <a id="imagesLocationSixthImageTab" href="#tabImagesLocationSixthImage" role="tab" data-toggle="tab" aria-controls="tabImagesLocationSixthImage">{{ __('Locations sixth image') }}</a>
+                </li>
+                <li>
+                    <a id="imagesPartImageOfPartTab" href="#tabImagesPartImageOfPart" role="tab" data-toggle="tab" aria-controls="tabImagesPartImageOfPart">{{ __('Parts image of part') }}</a>
                 </li>
                 <li>
                     <a id="imagesOfferImageOfOfferTab" href="#tabImagesOfferImageOfOffer" role="tab" data-toggle="tab" aria-controls="tabImagesOfferImageOfOffer">{{ __('Offers image of offer') }}</a>
@@ -83,6 +98,7 @@
                         <p class="alert alert-info">{{ __('Here you can manage all basic settings for this application.') }}</p>
                     
                         {{ form_row(form.city) }}
+                        {{ form_row(form.standardZipCode) }}
                         {{ form_row(form.areaCode) }}
                     </fieldset>
                 </div>
@@ -109,10 +125,6 @@
                         {{ form_row(form.linkOwnLocationsOnAccountPage) }}
                         {{ form_row(form.partEntriesPerPage) }}
                         {{ form_row(form.linkOwnPartsOnAccountPage) }}
-                        {{ form_row(form.imageOfLocationEntriesPerPage) }}
-                        {{ form_row(form.linkOwnImagesOfLocationOnAccountPage) }}
-                        {{ form_row(form.fileOfLocationEntriesPerPage) }}
-                        {{ form_row(form.linkOwnFilesOfLocationOnAccountPage) }}
                         {{ form_row(form.offerEntriesPerPage) }}
                         {{ form_row(form.linkOwnOffersOnAccountPage) }}
                         {{ form_row(form.menuOfLocationEntriesPerPage) }}
@@ -190,6 +202,120 @@
                         {{ form_row(form.thumbnailHeightLocationImageOfLocationEdit) }}
                     </fieldset>
                 </div>
+                <div role="tabpanel" class="tab-pane fade" id="tabImagesLocationFirstImage" aria-labelledby="imagesLocationFirstImageTab">
+                    {% set tabTitle = __('Image settings for locations first image') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                
+                        {{ form_row(form.enableShrinkingForLocationFirstImage) }}
+                        <div id="shrinkDetailsLocationFirstImage">
+                        {{ form_row(form.shrinkWidthLocationFirstImage) }}
+                        {{ form_row(form.shrinkHeightLocationFirstImage) }}
+                        </div>
+                        {{ form_row(form.thumbnailModeLocationFirstImage) }}
+                        {{ form_row(form.thumbnailWidthLocationFirstImageView) }}
+                        {{ form_row(form.thumbnailHeightLocationFirstImageView) }}
+                        {{ form_row(form.thumbnailWidthLocationFirstImageDisplay) }}
+                        {{ form_row(form.thumbnailHeightLocationFirstImageDisplay) }}
+                        {{ form_row(form.thumbnailWidthLocationFirstImageEdit) }}
+                        {{ form_row(form.thumbnailHeightLocationFirstImageEdit) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tabImagesLocationSecondImage" aria-labelledby="imagesLocationSecondImageTab">
+                    {% set tabTitle = __('Image settings for locations second image') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                
+                        {{ form_row(form.enableShrinkingForLocationSecondImage) }}
+                        <div id="shrinkDetailsLocationSecondImage">
+                        {{ form_row(form.shrinkWidthLocationSecondImage) }}
+                        {{ form_row(form.shrinkHeightLocationSecondImage) }}
+                        </div>
+                        {{ form_row(form.thumbnailModeLocationSecondImage) }}
+                        {{ form_row(form.thumbnailWidthLocationSecondImageView) }}
+                        {{ form_row(form.thumbnailHeightLocationSecondImageView) }}
+                        {{ form_row(form.thumbnailWidthLocationSecondImageDisplay) }}
+                        {{ form_row(form.thumbnailHeightLocationSecondImageDisplay) }}
+                        {{ form_row(form.thumbnailWidthLocationSecondImageEdit) }}
+                        {{ form_row(form.thumbnailHeightLocationSecondImageEdit) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tabImagesLocationThirdImage" aria-labelledby="imagesLocationThirdImageTab">
+                    {% set tabTitle = __('Image settings for locations third image') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                
+                        {{ form_row(form.enableShrinkingForLocationThirdImage) }}
+                        <div id="shrinkDetailsLocationThirdImage">
+                        {{ form_row(form.shrinkWidthLocationThirdImage) }}
+                        {{ form_row(form.shrinkHeightLocationThirdImage) }}
+                        </div>
+                        {{ form_row(form.thumbnailModeLocationThirdImage) }}
+                        {{ form_row(form.thumbnailWidthLocationThirdImageView) }}
+                        {{ form_row(form.thumbnailHeightLocationThirdImageView) }}
+                        {{ form_row(form.thumbnailWidthLocationThirdImageDisplay) }}
+                        {{ form_row(form.thumbnailHeightLocationThirdImageDisplay) }}
+                        {{ form_row(form.thumbnailWidthLocationThirdImageEdit) }}
+                        {{ form_row(form.thumbnailHeightLocationThirdImageEdit) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tabImagesLocationFourthImage" aria-labelledby="imagesLocationFourthImageTab">
+                    {% set tabTitle = __('Image settings for locations fourth image') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                
+                        {{ form_row(form.enableShrinkingForLocationFourthImage) }}
+                        <div id="shrinkDetailsLocationFourthImage">
+                        {{ form_row(form.shrinkWidthLocationFourthImage) }}
+                        {{ form_row(form.shrinkHeightLocationFourthImage) }}
+                        </div>
+                        {{ form_row(form.thumbnailModeLocationFourthImage) }}
+                        {{ form_row(form.thumbnailWidthLocationFourthImageView) }}
+                        {{ form_row(form.thumbnailHeightLocationFourthImageView) }}
+                        {{ form_row(form.thumbnailWidthLocationFourthImageDisplay) }}
+                        {{ form_row(form.thumbnailHeightLocationFourthImageDisplay) }}
+                        {{ form_row(form.thumbnailWidthLocationFourthImageEdit) }}
+                        {{ form_row(form.thumbnailHeightLocationFourthImageEdit) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tabImagesLocationFifthImage" aria-labelledby="imagesLocationFifthImageTab">
+                    {% set tabTitle = __('Image settings for locations fifth image') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                
+                        {{ form_row(form.enableShrinkingForLocationFifthImage) }}
+                        <div id="shrinkDetailsLocationFifthImage">
+                        {{ form_row(form.shrinkWidthLocationFifthImage) }}
+                        {{ form_row(form.shrinkHeightLocationFifthImage) }}
+                        </div>
+                        {{ form_row(form.thumbnailModeLocationFifthImage) }}
+                        {{ form_row(form.thumbnailWidthLocationFifthImageView) }}
+                        {{ form_row(form.thumbnailHeightLocationFifthImageView) }}
+                        {{ form_row(form.thumbnailWidthLocationFifthImageDisplay) }}
+                        {{ form_row(form.thumbnailHeightLocationFifthImageDisplay) }}
+                        {{ form_row(form.thumbnailWidthLocationFifthImageEdit) }}
+                        {{ form_row(form.thumbnailHeightLocationFifthImageEdit) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tabImagesLocationSixthImage" aria-labelledby="imagesLocationSixthImageTab">
+                    {% set tabTitle = __('Image settings for locations sixth image') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                
+                        {{ form_row(form.enableShrinkingForLocationSixthImage) }}
+                        <div id="shrinkDetailsLocationSixthImage">
+                        {{ form_row(form.shrinkWidthLocationSixthImage) }}
+                        {{ form_row(form.shrinkHeightLocationSixthImage) }}
+                        </div>
+                        {{ form_row(form.thumbnailModeLocationSixthImage) }}
+                        {{ form_row(form.thumbnailWidthLocationSixthImageView) }}
+                        {{ form_row(form.thumbnailHeightLocationSixthImageView) }}
+                        {{ form_row(form.thumbnailWidthLocationSixthImageDisplay) }}
+                        {{ form_row(form.thumbnailHeightLocationSixthImageDisplay) }}
+                        {{ form_row(form.thumbnailWidthLocationSixthImageEdit) }}
+                        {{ form_row(form.thumbnailHeightLocationSixthImageEdit) }}
+                    </fieldset>
+                </div>
                 <div role="tabpanel" class="tab-pane fade" id="tabImagesPartImageOfPart" aria-labelledby="imagesPartImageOfPartTab">
                     {% set tabTitle = __('Image settings for parts image of part') %}
                     <fieldset>
@@ -207,25 +333,6 @@
                         {{ form_row(form.thumbnailHeightPartImageOfPartDisplay) }}
                         {{ form_row(form.thumbnailWidthPartImageOfPartEdit) }}
                         {{ form_row(form.thumbnailHeightPartImageOfPartEdit) }}
-                    </fieldset>
-                </div>
-                <div role="tabpanel" class="tab-pane fade" id="tabImagesImageOfLocationImage" aria-labelledby="imagesImageOfLocationImageTab">
-                    {% set tabTitle = __('Image settings for images of location image') %}
-                    <fieldset>
-                        <legend>{{ tabTitle }}</legend>
-                
-                        {{ form_row(form.enableShrinkingForImageOfLocationImage) }}
-                        <div id="shrinkDetailsImageOfLocationImage">
-                        {{ form_row(form.shrinkWidthImageOfLocationImage) }}
-                        {{ form_row(form.shrinkHeightImageOfLocationImage) }}
-                        </div>
-                        {{ form_row(form.thumbnailModeImageOfLocationImage) }}
-                        {{ form_row(form.thumbnailWidthImageOfLocationImageView) }}
-                        {{ form_row(form.thumbnailHeightImageOfLocationImageView) }}
-                        {{ form_row(form.thumbnailWidthImageOfLocationImageDisplay) }}
-                        {{ form_row(form.thumbnailHeightImageOfLocationImageDisplay) }}
-                        {{ form_row(form.thumbnailWidthImageOfLocationImageEdit) }}
-                        {{ form_row(form.thumbnailHeightImageOfLocationImageEdit) }}
                     </fieldset>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="tabImagesOfferImageOfOffer" aria-labelledby="imagesOfferImageOfOfferTab">
@@ -362,10 +469,6 @@
                         <p><a href="{{ path('zikula_workflow_editor_index', { 'workflow': 'muyourcitymodule_standard' }) }}" title="{{ __('Edit workflow for locations') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit locations workflow') }}</a>
                         <h4>{{ __('Parts') }}</h4>
                         <p><a href="{{ path('zikula_workflow_editor_index', { 'workflow': 'muyourcitymodule_none' }) }}" title="{{ __('Edit workflow for parts') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit parts workflow') }}</a>
-                        <h4>{{ __('Images of location') }}</h4>
-                        <p><a href="{{ path('zikula_workflow_editor_index', { 'workflow': 'muyourcitymodule_none' }) }}" title="{{ __('Edit workflow for images of location') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit images of location workflow') }}</a>
-                        <h4>{{ __('Files of location') }}</h4>
-                        <p><a href="{{ path('zikula_workflow_editor_index', { 'workflow': 'muyourcitymodule_none' }) }}" title="{{ __('Edit workflow for files of location') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit files of location workflow') }}</a>
                         <h4>{{ __('Offers') }}</h4>
                         <p><a href="{{ path('zikula_workflow_editor_index', { 'workflow': 'muyourcitymodule_none' }) }}" title="{{ __('Edit workflow for offers') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit offers workflow') }}</a>
                         <h4>{{ __('Menus of location') }}</h4>

@@ -145,28 +145,6 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
                 }
             }
 
-            if (true === $this->variableApi->get('MUYourCityModule', 'linkOwnImagesOfLocationOnAccountPage', true)) {
-                $objectType = 'imageOfLocation';
-                if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
-                    $links[] = [
-                        'url' => $this->router->generate('muyourcitymodule_' . strtolower($objectType) . '_view', ['own' => 1]),
-                        'text' => $this->__('My images of location', 'muyourcitymodule'),
-                        'icon' => 'list-alt'
-                    ];
-                }
-            }
-
-            if (true === $this->variableApi->get('MUYourCityModule', 'linkOwnFilesOfLocationOnAccountPage', true)) {
-                $objectType = 'fileOfLocation';
-                if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
-                    $links[] = [
-                        'url' => $this->router->generate('muyourcitymodule_' . strtolower($objectType) . '_view', ['own' => 1]),
-                        'text' => $this->__('My files of location', 'muyourcitymodule'),
-                        'icon' => 'list-alt'
-                    ];
-                }
-            }
-
             if (true === $this->variableApi->get('MUYourCityModule', 'linkOwnOffersOnAccountPage', true)) {
                 $objectType = 'offer';
                 if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
@@ -321,22 +299,6 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
                 'url' => $this->router->generate('muyourcitymodule_part_' . $routeArea . 'view'),
                 'text' => $this->__('Parts', 'muyourcitymodule'),
                 'title' => $this->__('Part list', 'muyourcitymodule')
-            ];
-        }
-        if (in_array('imageOfLocation', $allowedObjectTypes)
-            && $this->permissionApi->hasPermission($this->getBundleName() . ':ImageOfLocation:', '::', $permLevel)) {
-            $links[] = [
-                'url' => $this->router->generate('muyourcitymodule_imageoflocation_' . $routeArea . 'view'),
-                'text' => $this->__('Images of location', 'muyourcitymodule'),
-                'title' => $this->__('Image of location list', 'muyourcitymodule')
-            ];
-        }
-        if (in_array('fileOfLocation', $allowedObjectTypes)
-            && $this->permissionApi->hasPermission($this->getBundleName() . ':FileOfLocation:', '::', $permLevel)) {
-            $links[] = [
-                'url' => $this->router->generate('muyourcitymodule_fileoflocation_' . $routeArea . 'view'),
-                'text' => $this->__('Files of location', 'muyourcitymodule'),
-                'title' => $this->__('File of location list', 'muyourcitymodule')
             ];
         }
         if (in_array('offer', $allowedObjectTypes)

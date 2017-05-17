@@ -48,6 +48,9 @@ abstract class AbstractOfferEntity extends EntityAccess implements Translatable
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer", unique=true)
+     * @Assert\Type(type="integer")
+     * @Assert\NotNull()
+     * @Assert\LessThan(value=1000000000)
      * @var integer $id
      */
     protected $id = 0;
@@ -183,6 +186,15 @@ abstract class AbstractOfferEntity extends EntityAccess implements Translatable
      */
     protected $inViewUntil;
     
+    /**
+     * If you have more than one location, select the correct one!
+     * @ORM\Column(length=255)
+     * @Assert\NotBlank()
+     * @YourCityAssert\ListEntry(entityName="offer", propertyName="myLocation", multiple=false)
+     * @var string $myLocation
+     */
+    protected $myLocation = '';
+    
     
     /**
      * Used locale to override Translation listener's locale.
@@ -193,20 +205,6 @@ abstract class AbstractOfferEntity extends EntityAccess implements Translatable
      * @var string $locale
      */
     protected $locale;
-    
-    /**
-     * Bidirectional - Many offers [offers] are linked by one location [location] (OWNING SIDE).
-     *
-     * @ORM\ManyToOne(targetEntity="MU\YourCityModule\Entity\LocationEntity", inversedBy="offers")
-     * @ORM\JoinTable(name="mu_yourcity_location",
-     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
-     * )
-     * @Assert\NotNull(message="Choosing a location is required.")
-     * @Assert\Type(type="MU\YourCityModule\Entity\LocationEntity")
-     * @var \MU\YourCityModule\Entity\LocationEntity $location
-     */
-    protected $location;
     
     
     /**
@@ -626,6 +624,30 @@ abstract class AbstractOfferEntity extends EntityAccess implements Translatable
     }
     
     /**
+     * Returns the my location.
+     *
+     * @return string
+     */
+    public function getMyLocation()
+    {
+        return $this->myLocation;
+    }
+    
+    /**
+     * Sets the my location.
+     *
+     * @param string $myLocation
+     *
+     * @return void
+     */
+    public function setMyLocation($myLocation)
+    {
+        if ($this->myLocation !== $myLocation) {
+            $this->myLocation = isset($myLocation) ? $myLocation : '';
+        }
+    }
+    
+    /**
      * Returns the locale.
      *
      * @return string
@@ -649,28 +671,6 @@ abstract class AbstractOfferEntity extends EntityAccess implements Translatable
         }
     }
     
-    
-    /**
-     * Returns the location.
-     *
-     * @return \MU\YourCityModule\Entity\LocationEntity
-     */
-    public function getLocation()
-    {
-        return $this->location;
-    }
-    
-    /**
-     * Sets the location.
-     *
-     * @param \MU\YourCityModule\Entity\LocationEntity $location
-     *
-     * @return void
-     */
-    public function setLocation($location = null)
-    {
-        $this->location = $location;
-    }
     
     
     

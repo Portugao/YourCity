@@ -148,6 +148,12 @@ abstract class AbstractListEntriesHelper
                     case 'branchOfLocation':
                         $result = true;
                         break;
+                    case 'servicesOfLocation':
+                        $result = true;
+                        break;
+                    case 'specialsOfLocation':
+                        $result = true;
+                        break;
                 }
                 break;
             case 'part':
@@ -157,23 +163,12 @@ abstract class AbstractListEntriesHelper
                         break;
                 }
                 break;
-            case 'imageOfLocation':
-                switch ($fieldName) {
-                    case 'workflowState':
-                        $result = false;
-                        break;
-                }
-                break;
-            case 'fileOfLocation':
-                switch ($fieldName) {
-                    case 'workflowState':
-                        $result = false;
-                        break;
-                }
-                break;
             case 'offer':
                 switch ($fieldName) {
                     case 'workflowState':
+                        $result = false;
+                        break;
+                    case 'myLocation':
                         $result = false;
                         break;
                 }
@@ -186,11 +181,17 @@ abstract class AbstractListEntriesHelper
                     case 'kindOfMenu':
                         $result = false;
                         break;
+                    case 'myLocation':
+                        $result = false;
+                        break;
                 }
                 break;
             case 'partOfMenu':
                 switch ($fieldName) {
                     case 'workflowState':
+                        $result = false;
+                        break;
+                    case 'myLocation':
                         $result = false;
                         break;
                 }
@@ -203,6 +204,9 @@ abstract class AbstractListEntriesHelper
                     case 'kindOfDish':
                         $result = true;
                         break;
+                    case 'myLocation':
+                        $result = false;
+                        break;
                 }
                 break;
             case 'event':
@@ -212,6 +216,9 @@ abstract class AbstractListEntriesHelper
                         break;
                     case 'kindOfEvent':
                         $result = true;
+                        break;
+                    case 'myLocation':
+                        $result = false;
                         break;
                 }
                 break;
@@ -224,6 +231,9 @@ abstract class AbstractListEntriesHelper
                         $result = true;
                         break;
                     case 'today':
+                        $result = false;
+                        break;
+                    case 'myLocation':
                         $result = false;
                         break;
                 }
@@ -289,6 +299,12 @@ abstract class AbstractListEntriesHelper
                     case 'branchOfLocation':
                         $entries = $this->getBranchOfLocationEntriesForLocation();
                         break;
+                    case 'servicesOfLocation':
+                        $entries = $this->getServicesOfLocationEntriesForLocation();
+                        break;
+                    case 'specialsOfLocation':
+                        $entries = $this->getSpecialsOfLocationEntriesForLocation();
+                        break;
                 }
                 break;
             case 'part':
@@ -298,24 +314,13 @@ abstract class AbstractListEntriesHelper
                         break;
                 }
                 break;
-            case 'imageOfLocation':
-                switch ($fieldName) {
-                    case 'workflowState':
-                        $entries = $this->getWorkflowStateEntriesForImageOfLocation();
-                        break;
-                }
-                break;
-            case 'fileOfLocation':
-                switch ($fieldName) {
-                    case 'workflowState':
-                        $entries = $this->getWorkflowStateEntriesForFileOfLocation();
-                        break;
-                }
-                break;
             case 'offer':
                 switch ($fieldName) {
                     case 'workflowState':
                         $entries = $this->getWorkflowStateEntriesForOffer();
+                        break;
+                    case 'myLocation':
+                        $entries = $this->getMyLocationEntriesForOffer();
                         break;
                 }
                 break;
@@ -327,12 +332,18 @@ abstract class AbstractListEntriesHelper
                     case 'kindOfMenu':
                         $entries = $this->getKindOfMenuEntriesForMenuOfLocation();
                         break;
+                    case 'myLocation':
+                        $entries = $this->getMyLocationEntriesForMenuOfLocation();
+                        break;
                 }
                 break;
             case 'partOfMenu':
                 switch ($fieldName) {
                     case 'workflowState':
                         $entries = $this->getWorkflowStateEntriesForPartOfMenu();
+                        break;
+                    case 'myLocation':
+                        $entries = $this->getMyLocationEntriesForPartOfMenu();
                         break;
                 }
                 break;
@@ -344,6 +355,9 @@ abstract class AbstractListEntriesHelper
                     case 'kindOfDish':
                         $entries = $this->getKindOfDishEntriesForDish();
                         break;
+                    case 'myLocation':
+                        $entries = $this->getMyLocationEntriesForDish();
+                        break;
                 }
                 break;
             case 'event':
@@ -353,6 +367,9 @@ abstract class AbstractListEntriesHelper
                         break;
                     case 'kindOfEvent':
                         $entries = $this->getKindOfEventEntriesForEvent();
+                        break;
+                    case 'myLocation':
+                        $entries = $this->getMyLocationEntriesForEvent();
                         break;
                 }
                 break;
@@ -366,6 +383,9 @@ abstract class AbstractListEntriesHelper
                         break;
                     case 'today':
                         $entries = $this->getTodayEntriesForProduct();
+                        break;
+                    case 'myLocation':
+                        $entries = $this->getMyLocationEntriesForProduct();
                         break;
                 }
                 break;
@@ -522,63 +542,70 @@ abstract class AbstractListEntriesHelper
     }
     
     /**
+     * Get 'services of location' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getServicesOfLocationEntriesForLocation()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => 'none',
+            'text'    => $this->__('None'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => 'all',
+            'text'    => $this->__('All'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => 'none',
+            'text'    => $this->__('None'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
+     * Get 'specials of location' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getSpecialsOfLocationEntriesForLocation()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => 'all',
+            'text'    => $this->__('All'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => 'none',
+            'text'    => $this->__('None'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
      * Get 'workflow state' list entries.
      *
      * @return array Array with desired list entries
      */
     public function getWorkflowStateEntriesForPart()
-    {
-        $states = [];
-        $states[] = [
-            'value'   => 'approved',
-            'text'    => $this->__('Approved'),
-            'title'   => $this->__('Content has been approved and is available online.'),
-            'image'   => '',
-            'default' => false
-        ];
-        $states[] = [
-            'value'   => '!approved',
-            'text'    => $this->__('All except approved'),
-            'title'   => $this->__('Shows all items except these which are approved'),
-            'image'   => '',
-            'default' => false
-        ];
-    
-        return $states;
-    }
-    
-    /**
-     * Get 'workflow state' list entries.
-     *
-     * @return array Array with desired list entries
-     */
-    public function getWorkflowStateEntriesForImageOfLocation()
-    {
-        $states = [];
-        $states[] = [
-            'value'   => 'approved',
-            'text'    => $this->__('Approved'),
-            'title'   => $this->__('Content has been approved and is available online.'),
-            'image'   => '',
-            'default' => false
-        ];
-        $states[] = [
-            'value'   => '!approved',
-            'text'    => $this->__('All except approved'),
-            'title'   => $this->__('Shows all items except these which are approved'),
-            'image'   => '',
-            'default' => false
-        ];
-    
-        return $states;
-    }
-    
-    /**
-     * Get 'workflow state' list entries.
-     *
-     * @return array Array with desired list entries
-     */
-    public function getWorkflowStateEntriesForFileOfLocation()
     {
         $states = [];
         $states[] = [
@@ -646,6 +673,25 @@ abstract class AbstractListEntriesHelper
             'value'   => '!archived',
             'text'    => $this->__('All except archived'),
             'title'   => $this->__('Shows all items except these which are archived'),
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
+     * Get 'my location' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getMyLocationEntriesForOffer()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => 'none',
+            'text'    => $this->__('None'),
+            'title'   => '',
             'image'   => '',
             'default' => false
         ];
@@ -769,6 +815,25 @@ abstract class AbstractListEntriesHelper
     }
     
     /**
+     * Get 'my location' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getMyLocationEntriesForMenuOfLocation()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => 'none',
+            'text'    => $this->__('None'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
      * Get 'workflow state' list entries.
      *
      * @return array Array with desired list entries
@@ -787,6 +852,25 @@ abstract class AbstractListEntriesHelper
             'value'   => '!approved',
             'text'    => $this->__('All except approved'),
             'title'   => $this->__('Shows all items except these which are approved'),
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
+     * Get 'my location' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getMyLocationEntriesForPartOfMenu()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => 'none',
+            'text'    => $this->__('None'),
+            'title'   => '',
             'image'   => '',
             'default' => false
         ];
@@ -845,6 +929,25 @@ abstract class AbstractListEntriesHelper
         $states[] = [
             'value'   => 'other',
             'text'    => $this->__('Other'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
+     * Get 'my location' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getMyLocationEntriesForDish()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => 'none',
+            'text'    => $this->__('None'),
             'title'   => '',
             'image'   => '',
             'default' => false
@@ -932,6 +1035,25 @@ abstract class AbstractListEntriesHelper
         $states[] = [
             'value'   => 'other',
             'text'    => $this->__('Other'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
+     * Get 'my location' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getMyLocationEntriesForEvent()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => 'none',
+            'text'    => $this->__('None'),
             'title'   => '',
             'image'   => '',
             'default' => false
@@ -1045,6 +1167,25 @@ abstract class AbstractListEntriesHelper
         $states[] = [
             'value'   => '>50',
             'text'    => $this->__('More than fifty'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
+     * Get 'my location' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getMyLocationEntriesForProduct()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => 'none',
+            'text'    => $this->__('None'),
             'title'   => '',
             'image'   => '',
             'default' => false

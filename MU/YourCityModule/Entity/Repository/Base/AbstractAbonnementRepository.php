@@ -667,7 +667,7 @@ abstract class AbstractAbonnementRepository extends EntityRepository
      */
     protected function addJoinsToSelection()
     {
-        $selection = ', tblLocation';
+        $selection = '';
     
         return $selection;
     }
@@ -681,7 +681,6 @@ abstract class AbstractAbonnementRepository extends EntityRepository
      */
     protected function addJoinsToFrom(QueryBuilder $qb)
     {
-        $qb->leftJoin('tbl.location', 'tblLocation');
     
         return $qb;
     }

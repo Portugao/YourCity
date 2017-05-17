@@ -65,6 +65,7 @@ abstract class AbstractMenuOfLocationRepository extends EntityRepository
             'effectivUntil',
             'inViewFrom',
             'inViewUntil',
+            'myLocation',
             'createdBy',
             'createdDate',
             'updatedBy',
@@ -704,7 +705,7 @@ abstract class AbstractMenuOfLocationRepository extends EntityRepository
      */
     protected function addJoinsToSelection()
     {
-        $selection = ', tblLocation, tblDishes, tblPartsOfMenu';
+        $selection = ', tblDishes, tblPartsOfMenu';
     
         return $selection;
     }
@@ -718,7 +719,6 @@ abstract class AbstractMenuOfLocationRepository extends EntityRepository
      */
     protected function addJoinsToFrom(QueryBuilder $qb)
     {
-        $qb->leftJoin('tbl.location', 'tblLocation');
         $qb->leftJoin('tbl.dishes', 'tblDishes');
         $qb->leftJoin('tbl.partsOfMenu', 'tblPartsOfMenu');
     

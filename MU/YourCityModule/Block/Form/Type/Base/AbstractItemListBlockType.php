@@ -79,8 +79,6 @@ abstract class AbstractItemListBlockType extends AbstractType
                 $this->__('Branches') => 'branch',
                 $this->__('Locations') => 'location',
                 $this->__('Parts') => 'part',
-                $this->__('Images of location') => 'imageOfLocation',
-                $this->__('Files of location') => 'fileOfLocation',
                 $this->__('Offers') => 'offer',
                 $this->__('Menus of location') => 'menuOfLocation',
                 $this->__('Parts of menu') => 'partOfMenu',

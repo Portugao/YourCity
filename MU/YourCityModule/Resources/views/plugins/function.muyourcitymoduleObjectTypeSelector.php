@@ -39,14 +39,6 @@ function smarty_function_muyourcitymoduleObjectTypeSelector($params, $view)
         'value' => 'part'
     ];
     $result[] = [
-        'text' => __('Images of location', $dom),
-        'value' => 'imageOfLocation'
-    ];
-    $result[] = [
-        'text' => __('Files of location', $dom),
-        'value' => 'fileOfLocation'
-    ];
-    $result[] = [
         'text' => __('Offers', $dom),
         'value' => 'offer'
     ];

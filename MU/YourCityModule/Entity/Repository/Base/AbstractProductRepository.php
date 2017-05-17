@@ -57,6 +57,7 @@ abstract class AbstractProductRepository extends EntityRepository
         return [
             'workflowState',
             'name',
+            'keywordsForProduct',
             'description',
             'kindOfProduct',
             'today',
@@ -68,6 +69,7 @@ abstract class AbstractProductRepository extends EntityRepository
             'saturday',
             'sunday',
             'priceOfProduct',
+            'myLocation',
             'createdBy',
             'createdDate',
             'updatedBy',
@@ -495,7 +497,7 @@ abstract class AbstractProductRepository extends EntityRepository
         if (!$isPaginated) {
             $result = $query->getResult();
         } else {
-            $paginator = new Paginator($query, true);
+            $paginator = new Paginator($query, false);
     
             $count = count($paginator);
             $result = $paginator;
@@ -707,7 +709,7 @@ abstract class AbstractProductRepository extends EntityRepository
      */
     protected function addJoinsToSelection()
     {
-        $selection = ', tblLocation';
+        $selection = '';
     
         return $selection;
     }
@@ -721,7 +723,6 @@ abstract class AbstractProductRepository extends EntityRepository
      */
     protected function addJoinsToFrom(QueryBuilder $qb)
     {
-        $qb->leftJoin('tbl.location', 'tblLocation');
     
         return $qb;
     }

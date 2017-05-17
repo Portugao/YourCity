@@ -157,6 +157,7 @@ abstract class AbstractProductFinderType extends AbstractType
                 'empty_data' => '',
                 'choices' => [
                     $this->__('Name') => 'name',
+                    $this->__('Keywords for product') => 'keywordsForProduct',
                     $this->__('Description') => 'description',
                     $this->__('Kind of product') => 'kindOfProduct',
                     $this->__('Today') => 'today',
@@ -168,6 +169,7 @@ abstract class AbstractProductFinderType extends AbstractType
                     $this->__('Saturday') => 'saturday',
                     $this->__('Sunday') => 'sunday',
                     $this->__('Price of product') => 'priceOfProduct',
+                    $this->__('My location') => 'myLocation',
                     $this->__('Creation date') => 'createdDate',
                     $this->__('Creator') => 'createdBy',
                     $this->__('Update date') => 'updatedDate',

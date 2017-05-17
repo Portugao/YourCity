@@ -28,8 +28,6 @@ use MU\YourCityModule\YourCityEvents;
 use MU\YourCityModule\Event\FilterBranchEvent;
 use MU\YourCityModule\Event\FilterLocationEvent;
 use MU\YourCityModule\Event\FilterPartEvent;
-use MU\YourCityModule\Event\FilterImageOfLocationEvent;
-use MU\YourCityModule\Event\FilterFileOfLocationEvent;
 use MU\YourCityModule\Event\FilterOfferEvent;
 use MU\YourCityModule\Event\FilterMenuOfLocationEvent;
 use MU\YourCityModule\Event\FilterPartOfMenuEvent;
@@ -353,16 +351,10 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
                 $uploadFields = ['imageOfBranch'];
                 break;
             case 'location':
-                $uploadFields = ['logoOfYourLocation', 'imageOfLocation'];
+                $uploadFields = ['logoOfYourLocation', 'imageOfLocation', 'firstImage', 'secondImage', 'thirdImage', 'fourthImage', 'fifthImage', 'sixthImage', 'firstFile', 'secondFile'];
                 break;
             case 'part':
                 $uploadFields = ['imageOfPart'];
-                break;
-            case 'imageOfLocation':
-                $uploadFields = ['image'];
-                break;
-            case 'fileOfLocation':
-                $uploadFields = ['fileOfFile'];
                 break;
             case 'offer':
                 $uploadFields = ['imageOfOffer'];

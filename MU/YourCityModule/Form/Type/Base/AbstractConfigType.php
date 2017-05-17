@@ -123,6 +123,16 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Enter the city.')
                 ],
             ])
+            ->add('standardZipCode', TextType::class, [
+                'label' => $this->__('Standard zip code') . ':',
+                'required' => false,
+                'data' => isset($this->moduleVars['standardZipCode']) ? $this->moduleVars['standardZipCode'] : '',
+                'empty_data' => '28195',
+                'attr' => [
+                    'maxlength' => 255,
+                    'title' => $this->__('Enter the standard zip code.')
+                ],
+            ])
             ->add('areaCode', TextType::class, [
                 'label' => $this->__('Area code') . ':',
                 'required' => false,
@@ -255,62 +265,6 @@ abstract class AbstractConfigType extends AbstractType
                 'data' => (bool)(isset($this->moduleVars['linkOwnPartsOnAccountPage']) ? $this->moduleVars['linkOwnPartsOnAccountPage'] : true),
                 'attr' => [
                     'title' => $this->__('The link own parts on account page option.')
-                ],
-            ])
-            ->add('imageOfLocationEntriesPerPage', IntegerType::class, [
-                'label' => $this->__('Image of location entries per page') . ':',
-                'label_attr' => [
-                    'class' => 'tooltips',
-                    'title' => $this->__('The amount of images of location shown per page')
-                ],
-                'help' => $this->__('The amount of images of location shown per page'),
-                'required' => false,
-                'data' => isset($this->moduleVars['imageOfLocationEntriesPerPage']) ? intval($this->moduleVars['imageOfLocationEntriesPerPage']) : intval(10),
-                'empty_data' => intval('10'),
-                'attr' => [
-                    'maxlength' => 255,
-                    'title' => $this->__('Enter the image of location entries per page.') . ' ' . $this->__('Only digits are allowed.')
-                ],'scale' => 0
-            ])
-            ->add('linkOwnImagesOfLocationOnAccountPage', CheckboxType::class, [
-                'label' => $this->__('Link own images of location on account page') . ':',
-                'label_attr' => [
-                    'class' => 'tooltips',
-                    'title' => $this->__('Whether to add a link to images of location of the current user on his account page')
-                ],
-                'help' => $this->__('Whether to add a link to images of location of the current user on his account page'),
-                'required' => false,
-                'data' => (bool)(isset($this->moduleVars['linkOwnImagesOfLocationOnAccountPage']) ? $this->moduleVars['linkOwnImagesOfLocationOnAccountPage'] : true),
-                'attr' => [
-                    'title' => $this->__('The link own images of location on account page option.')
-                ],
-            ])
-            ->add('fileOfLocationEntriesPerPage', IntegerType::class, [
-                'label' => $this->__('File of location entries per page') . ':',
-                'label_attr' => [
-                    'class' => 'tooltips',
-                    'title' => $this->__('The amount of files of location shown per page')
-                ],
-                'help' => $this->__('The amount of files of location shown per page'),
-                'required' => false,
-                'data' => isset($this->moduleVars['fileOfLocationEntriesPerPage']) ? intval($this->moduleVars['fileOfLocationEntriesPerPage']) : intval(10),
-                'empty_data' => intval('10'),
-                'attr' => [
-                    'maxlength' => 255,
-                    'title' => $this->__('Enter the file of location entries per page.') . ' ' . $this->__('Only digits are allowed.')
-                ],'scale' => 0
-            ])
-            ->add('linkOwnFilesOfLocationOnAccountPage', CheckboxType::class, [
-                'label' => $this->__('Link own files of location on account page') . ':',
-                'label_attr' => [
-                    'class' => 'tooltips',
-                    'title' => $this->__('Whether to add a link to files of location of the current user on his account page')
-                ],
-                'help' => $this->__('Whether to add a link to files of location of the current user on his account page'),
-                'required' => false,
-                'data' => (bool)(isset($this->moduleVars['linkOwnFilesOfLocationOnAccountPage']) ? $this->moduleVars['linkOwnFilesOfLocationOnAccountPage'] : true),
-                'attr' => [
-                    'title' => $this->__('The link own files of location on account page option.')
                 ],
             ])
             ->add('offerEntriesPerPage', IntegerType::class, [
@@ -1063,6 +1017,978 @@ abstract class AbstractConfigType extends AbstractType
                 ],'scale' => 0,
                 'input_group' => ['right' => $this->__('pixels')]
             ])
+            ->add('enableShrinkingForLocationFirstImage', CheckboxType::class, [
+                'label' => $this->__('Enable shrinking') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image.')
+                ],
+                'help' => $this->__('Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image.'),
+                'required' => false,
+                'data' => (bool)(isset($this->moduleVars['enableShrinkingForLocationFirstImage']) ? $this->moduleVars['enableShrinkingForLocationFirstImage'] : false),
+                'attr' => [
+                    'title' => $this->__('The enable shrinking option.'),
+                    'class' => 'shrink-enabler'
+                ],
+            ])
+            ->add('shrinkWidthLocationFirstImage', IntegerType::class, [
+                'label' => $this->__('Shrink width') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('The maximum image width in pixels.')
+                ],
+                'help' => $this->__('The maximum image width in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['shrinkWidthLocationFirstImage']) ? intval($this->moduleVars['shrinkWidthLocationFirstImage']) : intval(800),
+                'empty_data' => intval('800'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the shrink width.') . ' ' . $this->__('Only digits are allowed.'),
+                    'class' => 'shrinkdimension-shrinkwidthlocationfirstimage'
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('shrinkHeightLocationFirstImage', IntegerType::class, [
+                'label' => $this->__('Shrink height') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('The maximum image height in pixels.')
+                ],
+                'help' => $this->__('The maximum image height in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['shrinkHeightLocationFirstImage']) ? intval($this->moduleVars['shrinkHeightLocationFirstImage']) : intval(600),
+                'empty_data' => intval('600'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the shrink height.') . ' ' . $this->__('Only digits are allowed.'),
+                    'class' => 'shrinkdimension-shrinkheightlocationfirstimage'
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailModeLocationFirstImage', ChoiceType::class, [
+                'label' => $this->__('Thumbnail mode') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail mode (inset or outbound).')
+                ],
+                'help' => $this->__('Thumbnail mode (inset or outbound).'),
+                'data' => isset($this->moduleVars['thumbnailModeLocationFirstImage']) ? $this->moduleVars['thumbnailModeLocationFirstImage'] : '',
+                'empty_data' => 'inset',
+                'attr' => [
+                    'title' => $this->__('Choose the thumbnail mode.')
+                ],'choices' => [
+                    $this->__('Inset') => 'inset',
+                    $this->__('Outbound') => 'outbound'
+                ],
+                'choices_as_values' => true,
+                'multiple' => false
+            ])
+            ->add('thumbnailWidthLocationFirstImageView', IntegerType::class, [
+                'label' => $this->__('Thumbnail width view') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail width on view pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail width on view pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailWidthLocationFirstImageView']) ? intval($this->moduleVars['thumbnailWidthLocationFirstImageView']) : intval(32),
+                'empty_data' => intval('32'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail width view.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailHeightLocationFirstImageView', IntegerType::class, [
+                'label' => $this->__('Thumbnail height view') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail height on view pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail height on view pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailHeightLocationFirstImageView']) ? intval($this->moduleVars['thumbnailHeightLocationFirstImageView']) : intval(24),
+                'empty_data' => intval('24'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail height view.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailWidthLocationFirstImageDisplay', IntegerType::class, [
+                'label' => $this->__('Thumbnail width display') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail width on display pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail width on display pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailWidthLocationFirstImageDisplay']) ? intval($this->moduleVars['thumbnailWidthLocationFirstImageDisplay']) : intval(240),
+                'empty_data' => intval('240'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail width display.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailHeightLocationFirstImageDisplay', IntegerType::class, [
+                'label' => $this->__('Thumbnail height display') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail height on display pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail height on display pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailHeightLocationFirstImageDisplay']) ? intval($this->moduleVars['thumbnailHeightLocationFirstImageDisplay']) : intval(180),
+                'empty_data' => intval('180'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail height display.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailWidthLocationFirstImageEdit', IntegerType::class, [
+                'label' => $this->__('Thumbnail width edit') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail width on edit pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail width on edit pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailWidthLocationFirstImageEdit']) ? intval($this->moduleVars['thumbnailWidthLocationFirstImageEdit']) : intval(240),
+                'empty_data' => intval('240'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail width edit.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailHeightLocationFirstImageEdit', IntegerType::class, [
+                'label' => $this->__('Thumbnail height edit') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail height on edit pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail height on edit pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailHeightLocationFirstImageEdit']) ? intval($this->moduleVars['thumbnailHeightLocationFirstImageEdit']) : intval(180),
+                'empty_data' => intval('180'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail height edit.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('enableShrinkingForLocationSecondImage', CheckboxType::class, [
+                'label' => $this->__('Enable shrinking') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image.')
+                ],
+                'help' => $this->__('Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image.'),
+                'required' => false,
+                'data' => (bool)(isset($this->moduleVars['enableShrinkingForLocationSecondImage']) ? $this->moduleVars['enableShrinkingForLocationSecondImage'] : false),
+                'attr' => [
+                    'title' => $this->__('The enable shrinking option.'),
+                    'class' => 'shrink-enabler'
+                ],
+            ])
+            ->add('shrinkWidthLocationSecondImage', IntegerType::class, [
+                'label' => $this->__('Shrink width') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('The maximum image width in pixels.')
+                ],
+                'help' => $this->__('The maximum image width in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['shrinkWidthLocationSecondImage']) ? intval($this->moduleVars['shrinkWidthLocationSecondImage']) : intval(800),
+                'empty_data' => intval('800'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the shrink width.') . ' ' . $this->__('Only digits are allowed.'),
+                    'class' => 'shrinkdimension-shrinkwidthlocationsecondimage'
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('shrinkHeightLocationSecondImage', IntegerType::class, [
+                'label' => $this->__('Shrink height') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('The maximum image height in pixels.')
+                ],
+                'help' => $this->__('The maximum image height in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['shrinkHeightLocationSecondImage']) ? intval($this->moduleVars['shrinkHeightLocationSecondImage']) : intval(600),
+                'empty_data' => intval('600'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the shrink height.') . ' ' . $this->__('Only digits are allowed.'),
+                    'class' => 'shrinkdimension-shrinkheightlocationsecondimage'
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailModeLocationSecondImage', ChoiceType::class, [
+                'label' => $this->__('Thumbnail mode') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail mode (inset or outbound).')
+                ],
+                'help' => $this->__('Thumbnail mode (inset or outbound).'),
+                'data' => isset($this->moduleVars['thumbnailModeLocationSecondImage']) ? $this->moduleVars['thumbnailModeLocationSecondImage'] : '',
+                'empty_data' => 'inset',
+                'attr' => [
+                    'title' => $this->__('Choose the thumbnail mode.')
+                ],'choices' => [
+                    $this->__('Inset') => 'inset',
+                    $this->__('Outbound') => 'outbound'
+                ],
+                'choices_as_values' => true,
+                'multiple' => false
+            ])
+            ->add('thumbnailWidthLocationSecondImageView', IntegerType::class, [
+                'label' => $this->__('Thumbnail width view') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail width on view pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail width on view pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailWidthLocationSecondImageView']) ? intval($this->moduleVars['thumbnailWidthLocationSecondImageView']) : intval(32),
+                'empty_data' => intval('32'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail width view.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailHeightLocationSecondImageView', IntegerType::class, [
+                'label' => $this->__('Thumbnail height view') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail height on view pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail height on view pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailHeightLocationSecondImageView']) ? intval($this->moduleVars['thumbnailHeightLocationSecondImageView']) : intval(24),
+                'empty_data' => intval('24'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail height view.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailWidthLocationSecondImageDisplay', IntegerType::class, [
+                'label' => $this->__('Thumbnail width display') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail width on display pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail width on display pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailWidthLocationSecondImageDisplay']) ? intval($this->moduleVars['thumbnailWidthLocationSecondImageDisplay']) : intval(240),
+                'empty_data' => intval('240'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail width display.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailHeightLocationSecondImageDisplay', IntegerType::class, [
+                'label' => $this->__('Thumbnail height display') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail height on display pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail height on display pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailHeightLocationSecondImageDisplay']) ? intval($this->moduleVars['thumbnailHeightLocationSecondImageDisplay']) : intval(180),
+                'empty_data' => intval('180'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail height display.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailWidthLocationSecondImageEdit', IntegerType::class, [
+                'label' => $this->__('Thumbnail width edit') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail width on edit pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail width on edit pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailWidthLocationSecondImageEdit']) ? intval($this->moduleVars['thumbnailWidthLocationSecondImageEdit']) : intval(240),
+                'empty_data' => intval('240'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail width edit.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailHeightLocationSecondImageEdit', IntegerType::class, [
+                'label' => $this->__('Thumbnail height edit') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail height on edit pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail height on edit pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailHeightLocationSecondImageEdit']) ? intval($this->moduleVars['thumbnailHeightLocationSecondImageEdit']) : intval(180),
+                'empty_data' => intval('180'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail height edit.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('enableShrinkingForLocationThirdImage', CheckboxType::class, [
+                'label' => $this->__('Enable shrinking') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image.')
+                ],
+                'help' => $this->__('Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image.'),
+                'required' => false,
+                'data' => (bool)(isset($this->moduleVars['enableShrinkingForLocationThirdImage']) ? $this->moduleVars['enableShrinkingForLocationThirdImage'] : false),
+                'attr' => [
+                    'title' => $this->__('The enable shrinking option.'),
+                    'class' => 'shrink-enabler'
+                ],
+            ])
+            ->add('shrinkWidthLocationThirdImage', IntegerType::class, [
+                'label' => $this->__('Shrink width') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('The maximum image width in pixels.')
+                ],
+                'help' => $this->__('The maximum image width in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['shrinkWidthLocationThirdImage']) ? intval($this->moduleVars['shrinkWidthLocationThirdImage']) : intval(800),
+                'empty_data' => intval('800'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the shrink width.') . ' ' . $this->__('Only digits are allowed.'),
+                    'class' => 'shrinkdimension-shrinkwidthlocationthirdimage'
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('shrinkHeightLocationThirdImage', IntegerType::class, [
+                'label' => $this->__('Shrink height') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('The maximum image height in pixels.')
+                ],
+                'help' => $this->__('The maximum image height in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['shrinkHeightLocationThirdImage']) ? intval($this->moduleVars['shrinkHeightLocationThirdImage']) : intval(600),
+                'empty_data' => intval('600'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the shrink height.') . ' ' . $this->__('Only digits are allowed.'),
+                    'class' => 'shrinkdimension-shrinkheightlocationthirdimage'
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailModeLocationThirdImage', ChoiceType::class, [
+                'label' => $this->__('Thumbnail mode') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail mode (inset or outbound).')
+                ],
+                'help' => $this->__('Thumbnail mode (inset or outbound).'),
+                'data' => isset($this->moduleVars['thumbnailModeLocationThirdImage']) ? $this->moduleVars['thumbnailModeLocationThirdImage'] : '',
+                'empty_data' => 'inset',
+                'attr' => [
+                    'title' => $this->__('Choose the thumbnail mode.')
+                ],'choices' => [
+                    $this->__('Inset') => 'inset',
+                    $this->__('Outbound') => 'outbound'
+                ],
+                'choices_as_values' => true,
+                'multiple' => false
+            ])
+            ->add('thumbnailWidthLocationThirdImageView', IntegerType::class, [
+                'label' => $this->__('Thumbnail width view') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail width on view pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail width on view pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailWidthLocationThirdImageView']) ? intval($this->moduleVars['thumbnailWidthLocationThirdImageView']) : intval(32),
+                'empty_data' => intval('32'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail width view.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailHeightLocationThirdImageView', IntegerType::class, [
+                'label' => $this->__('Thumbnail height view') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail height on view pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail height on view pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailHeightLocationThirdImageView']) ? intval($this->moduleVars['thumbnailHeightLocationThirdImageView']) : intval(24),
+                'empty_data' => intval('24'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail height view.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailWidthLocationThirdImageDisplay', IntegerType::class, [
+                'label' => $this->__('Thumbnail width display') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail width on display pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail width on display pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailWidthLocationThirdImageDisplay']) ? intval($this->moduleVars['thumbnailWidthLocationThirdImageDisplay']) : intval(240),
+                'empty_data' => intval('240'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail width display.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailHeightLocationThirdImageDisplay', IntegerType::class, [
+                'label' => $this->__('Thumbnail height display') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail height on display pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail height on display pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailHeightLocationThirdImageDisplay']) ? intval($this->moduleVars['thumbnailHeightLocationThirdImageDisplay']) : intval(180),
+                'empty_data' => intval('180'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail height display.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailWidthLocationThirdImageEdit', IntegerType::class, [
+                'label' => $this->__('Thumbnail width edit') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail width on edit pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail width on edit pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailWidthLocationThirdImageEdit']) ? intval($this->moduleVars['thumbnailWidthLocationThirdImageEdit']) : intval(240),
+                'empty_data' => intval('240'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail width edit.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailHeightLocationThirdImageEdit', IntegerType::class, [
+                'label' => $this->__('Thumbnail height edit') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail height on edit pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail height on edit pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailHeightLocationThirdImageEdit']) ? intval($this->moduleVars['thumbnailHeightLocationThirdImageEdit']) : intval(180),
+                'empty_data' => intval('180'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail height edit.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('enableShrinkingForLocationFourthImage', CheckboxType::class, [
+                'label' => $this->__('Enable shrinking') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image.')
+                ],
+                'help' => $this->__('Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image.'),
+                'required' => false,
+                'data' => (bool)(isset($this->moduleVars['enableShrinkingForLocationFourthImage']) ? $this->moduleVars['enableShrinkingForLocationFourthImage'] : false),
+                'attr' => [
+                    'title' => $this->__('The enable shrinking option.'),
+                    'class' => 'shrink-enabler'
+                ],
+            ])
+            ->add('shrinkWidthLocationFourthImage', IntegerType::class, [
+                'label' => $this->__('Shrink width') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('The maximum image width in pixels.')
+                ],
+                'help' => $this->__('The maximum image width in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['shrinkWidthLocationFourthImage']) ? intval($this->moduleVars['shrinkWidthLocationFourthImage']) : intval(800),
+                'empty_data' => intval('800'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the shrink width.') . ' ' . $this->__('Only digits are allowed.'),
+                    'class' => 'shrinkdimension-shrinkwidthlocationfourthimage'
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('shrinkHeightLocationFourthImage', IntegerType::class, [
+                'label' => $this->__('Shrink height') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('The maximum image height in pixels.')
+                ],
+                'help' => $this->__('The maximum image height in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['shrinkHeightLocationFourthImage']) ? intval($this->moduleVars['shrinkHeightLocationFourthImage']) : intval(600),
+                'empty_data' => intval('600'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the shrink height.') . ' ' . $this->__('Only digits are allowed.'),
+                    'class' => 'shrinkdimension-shrinkheightlocationfourthimage'
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailModeLocationFourthImage', ChoiceType::class, [
+                'label' => $this->__('Thumbnail mode') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail mode (inset or outbound).')
+                ],
+                'help' => $this->__('Thumbnail mode (inset or outbound).'),
+                'data' => isset($this->moduleVars['thumbnailModeLocationFourthImage']) ? $this->moduleVars['thumbnailModeLocationFourthImage'] : '',
+                'empty_data' => 'inset',
+                'attr' => [
+                    'title' => $this->__('Choose the thumbnail mode.')
+                ],'choices' => [
+                    $this->__('Inset') => 'inset',
+                    $this->__('Outbound') => 'outbound'
+                ],
+                'choices_as_values' => true,
+                'multiple' => false
+            ])
+            ->add('thumbnailWidthLocationFourthImageView', IntegerType::class, [
+                'label' => $this->__('Thumbnail width view') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail width on view pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail width on view pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailWidthLocationFourthImageView']) ? intval($this->moduleVars['thumbnailWidthLocationFourthImageView']) : intval(32),
+                'empty_data' => intval('32'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail width view.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailHeightLocationFourthImageView', IntegerType::class, [
+                'label' => $this->__('Thumbnail height view') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail height on view pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail height on view pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailHeightLocationFourthImageView']) ? intval($this->moduleVars['thumbnailHeightLocationFourthImageView']) : intval(24),
+                'empty_data' => intval('24'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail height view.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailWidthLocationFourthImageDisplay', IntegerType::class, [
+                'label' => $this->__('Thumbnail width display') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail width on display pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail width on display pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailWidthLocationFourthImageDisplay']) ? intval($this->moduleVars['thumbnailWidthLocationFourthImageDisplay']) : intval(240),
+                'empty_data' => intval('240'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail width display.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailHeightLocationFourthImageDisplay', IntegerType::class, [
+                'label' => $this->__('Thumbnail height display') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail height on display pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail height on display pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailHeightLocationFourthImageDisplay']) ? intval($this->moduleVars['thumbnailHeightLocationFourthImageDisplay']) : intval(180),
+                'empty_data' => intval('180'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail height display.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailWidthLocationFourthImageEdit', IntegerType::class, [
+                'label' => $this->__('Thumbnail width edit') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail width on edit pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail width on edit pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailWidthLocationFourthImageEdit']) ? intval($this->moduleVars['thumbnailWidthLocationFourthImageEdit']) : intval(240),
+                'empty_data' => intval('240'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail width edit.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailHeightLocationFourthImageEdit', IntegerType::class, [
+                'label' => $this->__('Thumbnail height edit') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail height on edit pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail height on edit pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailHeightLocationFourthImageEdit']) ? intval($this->moduleVars['thumbnailHeightLocationFourthImageEdit']) : intval(180),
+                'empty_data' => intval('180'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail height edit.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('enableShrinkingForLocationFifthImage', CheckboxType::class, [
+                'label' => $this->__('Enable shrinking') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image.')
+                ],
+                'help' => $this->__('Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image.'),
+                'required' => false,
+                'data' => (bool)(isset($this->moduleVars['enableShrinkingForLocationFifthImage']) ? $this->moduleVars['enableShrinkingForLocationFifthImage'] : false),
+                'attr' => [
+                    'title' => $this->__('The enable shrinking option.'),
+                    'class' => 'shrink-enabler'
+                ],
+            ])
+            ->add('shrinkWidthLocationFifthImage', IntegerType::class, [
+                'label' => $this->__('Shrink width') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('The maximum image width in pixels.')
+                ],
+                'help' => $this->__('The maximum image width in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['shrinkWidthLocationFifthImage']) ? intval($this->moduleVars['shrinkWidthLocationFifthImage']) : intval(800),
+                'empty_data' => intval('800'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the shrink width.') . ' ' . $this->__('Only digits are allowed.'),
+                    'class' => 'shrinkdimension-shrinkwidthlocationfifthimage'
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('shrinkHeightLocationFifthImage', IntegerType::class, [
+                'label' => $this->__('Shrink height') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('The maximum image height in pixels.')
+                ],
+                'help' => $this->__('The maximum image height in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['shrinkHeightLocationFifthImage']) ? intval($this->moduleVars['shrinkHeightLocationFifthImage']) : intval(600),
+                'empty_data' => intval('600'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the shrink height.') . ' ' . $this->__('Only digits are allowed.'),
+                    'class' => 'shrinkdimension-shrinkheightlocationfifthimage'
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailModeLocationFifthImage', ChoiceType::class, [
+                'label' => $this->__('Thumbnail mode') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail mode (inset or outbound).')
+                ],
+                'help' => $this->__('Thumbnail mode (inset or outbound).'),
+                'data' => isset($this->moduleVars['thumbnailModeLocationFifthImage']) ? $this->moduleVars['thumbnailModeLocationFifthImage'] : '',
+                'empty_data' => 'inset',
+                'attr' => [
+                    'title' => $this->__('Choose the thumbnail mode.')
+                ],'choices' => [
+                    $this->__('Inset') => 'inset',
+                    $this->__('Outbound') => 'outbound'
+                ],
+                'choices_as_values' => true,
+                'multiple' => false
+            ])
+            ->add('thumbnailWidthLocationFifthImageView', IntegerType::class, [
+                'label' => $this->__('Thumbnail width view') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail width on view pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail width on view pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailWidthLocationFifthImageView']) ? intval($this->moduleVars['thumbnailWidthLocationFifthImageView']) : intval(32),
+                'empty_data' => intval('32'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail width view.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailHeightLocationFifthImageView', IntegerType::class, [
+                'label' => $this->__('Thumbnail height view') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail height on view pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail height on view pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailHeightLocationFifthImageView']) ? intval($this->moduleVars['thumbnailHeightLocationFifthImageView']) : intval(24),
+                'empty_data' => intval('24'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail height view.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailWidthLocationFifthImageDisplay', IntegerType::class, [
+                'label' => $this->__('Thumbnail width display') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail width on display pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail width on display pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailWidthLocationFifthImageDisplay']) ? intval($this->moduleVars['thumbnailWidthLocationFifthImageDisplay']) : intval(240),
+                'empty_data' => intval('240'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail width display.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailHeightLocationFifthImageDisplay', IntegerType::class, [
+                'label' => $this->__('Thumbnail height display') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail height on display pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail height on display pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailHeightLocationFifthImageDisplay']) ? intval($this->moduleVars['thumbnailHeightLocationFifthImageDisplay']) : intval(180),
+                'empty_data' => intval('180'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail height display.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailWidthLocationFifthImageEdit', IntegerType::class, [
+                'label' => $this->__('Thumbnail width edit') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail width on edit pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail width on edit pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailWidthLocationFifthImageEdit']) ? intval($this->moduleVars['thumbnailWidthLocationFifthImageEdit']) : intval(240),
+                'empty_data' => intval('240'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail width edit.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailHeightLocationFifthImageEdit', IntegerType::class, [
+                'label' => $this->__('Thumbnail height edit') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail height on edit pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail height on edit pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailHeightLocationFifthImageEdit']) ? intval($this->moduleVars['thumbnailHeightLocationFifthImageEdit']) : intval(180),
+                'empty_data' => intval('180'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail height edit.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('enableShrinkingForLocationSixthImage', CheckboxType::class, [
+                'label' => $this->__('Enable shrinking') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image.')
+                ],
+                'help' => $this->__('Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image.'),
+                'required' => false,
+                'data' => (bool)(isset($this->moduleVars['enableShrinkingForLocationSixthImage']) ? $this->moduleVars['enableShrinkingForLocationSixthImage'] : false),
+                'attr' => [
+                    'title' => $this->__('The enable shrinking option.'),
+                    'class' => 'shrink-enabler'
+                ],
+            ])
+            ->add('shrinkWidthLocationSixthImage', IntegerType::class, [
+                'label' => $this->__('Shrink width') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('The maximum image width in pixels.')
+                ],
+                'help' => $this->__('The maximum image width in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['shrinkWidthLocationSixthImage']) ? intval($this->moduleVars['shrinkWidthLocationSixthImage']) : intval(800),
+                'empty_data' => intval('800'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the shrink width.') . ' ' . $this->__('Only digits are allowed.'),
+                    'class' => 'shrinkdimension-shrinkwidthlocationsixthimage'
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('shrinkHeightLocationSixthImage', IntegerType::class, [
+                'label' => $this->__('Shrink height') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('The maximum image height in pixels.')
+                ],
+                'help' => $this->__('The maximum image height in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['shrinkHeightLocationSixthImage']) ? intval($this->moduleVars['shrinkHeightLocationSixthImage']) : intval(600),
+                'empty_data' => intval('600'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the shrink height.') . ' ' . $this->__('Only digits are allowed.'),
+                    'class' => 'shrinkdimension-shrinkheightlocationsixthimage'
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailModeLocationSixthImage', ChoiceType::class, [
+                'label' => $this->__('Thumbnail mode') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail mode (inset or outbound).')
+                ],
+                'help' => $this->__('Thumbnail mode (inset or outbound).'),
+                'data' => isset($this->moduleVars['thumbnailModeLocationSixthImage']) ? $this->moduleVars['thumbnailModeLocationSixthImage'] : '',
+                'empty_data' => 'inset',
+                'attr' => [
+                    'title' => $this->__('Choose the thumbnail mode.')
+                ],'choices' => [
+                    $this->__('Inset') => 'inset',
+                    $this->__('Outbound') => 'outbound'
+                ],
+                'choices_as_values' => true,
+                'multiple' => false
+            ])
+            ->add('thumbnailWidthLocationSixthImageView', IntegerType::class, [
+                'label' => $this->__('Thumbnail width view') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail width on view pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail width on view pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailWidthLocationSixthImageView']) ? intval($this->moduleVars['thumbnailWidthLocationSixthImageView']) : intval(32),
+                'empty_data' => intval('32'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail width view.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailHeightLocationSixthImageView', IntegerType::class, [
+                'label' => $this->__('Thumbnail height view') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail height on view pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail height on view pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailHeightLocationSixthImageView']) ? intval($this->moduleVars['thumbnailHeightLocationSixthImageView']) : intval(24),
+                'empty_data' => intval('24'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail height view.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailWidthLocationSixthImageDisplay', IntegerType::class, [
+                'label' => $this->__('Thumbnail width display') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail width on display pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail width on display pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailWidthLocationSixthImageDisplay']) ? intval($this->moduleVars['thumbnailWidthLocationSixthImageDisplay']) : intval(240),
+                'empty_data' => intval('240'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail width display.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailHeightLocationSixthImageDisplay', IntegerType::class, [
+                'label' => $this->__('Thumbnail height display') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail height on display pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail height on display pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailHeightLocationSixthImageDisplay']) ? intval($this->moduleVars['thumbnailHeightLocationSixthImageDisplay']) : intval(180),
+                'empty_data' => intval('180'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail height display.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailWidthLocationSixthImageEdit', IntegerType::class, [
+                'label' => $this->__('Thumbnail width edit') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail width on edit pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail width on edit pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailWidthLocationSixthImageEdit']) ? intval($this->moduleVars['thumbnailWidthLocationSixthImageEdit']) : intval(240),
+                'empty_data' => intval('240'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail width edit.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
+            ->add('thumbnailHeightLocationSixthImageEdit', IntegerType::class, [
+                'label' => $this->__('Thumbnail height edit') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Thumbnail height on edit pages in pixels.')
+                ],
+                'help' => $this->__('Thumbnail height on edit pages in pixels.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['thumbnailHeightLocationSixthImageEdit']) ? intval($this->moduleVars['thumbnailHeightLocationSixthImageEdit']) : intval(180),
+                'empty_data' => intval('180'),
+                'attr' => [
+                    'maxlength' => 4,
+                    'title' => $this->__('Enter the thumbnail height edit.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0,
+                'input_group' => ['right' => $this->__('pixels')]
+            ])
             ->add('enableShrinkingForPartImageOfPart', CheckboxType::class, [
                 'label' => $this->__('Enable shrinking') . ':',
                 'label_attr' => [
@@ -1218,168 +2144,6 @@ abstract class AbstractConfigType extends AbstractType
                 'help' => $this->__('Thumbnail height on edit pages in pixels.'),
                 'required' => false,
                 'data' => isset($this->moduleVars['thumbnailHeightPartImageOfPartEdit']) ? intval($this->moduleVars['thumbnailHeightPartImageOfPartEdit']) : intval(180),
-                'empty_data' => intval('180'),
-                'attr' => [
-                    'maxlength' => 4,
-                    'title' => $this->__('Enter the thumbnail height edit.') . ' ' . $this->__('Only digits are allowed.')
-                ],'scale' => 0,
-                'input_group' => ['right' => $this->__('pixels')]
-            ])
-            ->add('enableShrinkingForImageOfLocationImage', CheckboxType::class, [
-                'label' => $this->__('Enable shrinking') . ':',
-                'label_attr' => [
-                    'class' => 'tooltips',
-                    'title' => $this->__('Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image.')
-                ],
-                'help' => $this->__('Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image.'),
-                'required' => false,
-                'data' => (bool)(isset($this->moduleVars['enableShrinkingForImageOfLocationImage']) ? $this->moduleVars['enableShrinkingForImageOfLocationImage'] : false),
-                'attr' => [
-                    'title' => $this->__('The enable shrinking option.'),
-                    'class' => 'shrink-enabler'
-                ],
-            ])
-            ->add('shrinkWidthImageOfLocationImage', IntegerType::class, [
-                'label' => $this->__('Shrink width') . ':',
-                'label_attr' => [
-                    'class' => 'tooltips',
-                    'title' => $this->__('The maximum image width in pixels.')
-                ],
-                'help' => $this->__('The maximum image width in pixels.'),
-                'required' => false,
-                'data' => isset($this->moduleVars['shrinkWidthImageOfLocationImage']) ? intval($this->moduleVars['shrinkWidthImageOfLocationImage']) : intval(800),
-                'empty_data' => intval('800'),
-                'attr' => [
-                    'maxlength' => 4,
-                    'title' => $this->__('Enter the shrink width.') . ' ' . $this->__('Only digits are allowed.'),
-                    'class' => 'shrinkdimension-shrinkwidthimageoflocationimage'
-                ],'scale' => 0,
-                'input_group' => ['right' => $this->__('pixels')]
-            ])
-            ->add('shrinkHeightImageOfLocationImage', IntegerType::class, [
-                'label' => $this->__('Shrink height') . ':',
-                'label_attr' => [
-                    'class' => 'tooltips',
-                    'title' => $this->__('The maximum image height in pixels.')
-                ],
-                'help' => $this->__('The maximum image height in pixels.'),
-                'required' => false,
-                'data' => isset($this->moduleVars['shrinkHeightImageOfLocationImage']) ? intval($this->moduleVars['shrinkHeightImageOfLocationImage']) : intval(600),
-                'empty_data' => intval('600'),
-                'attr' => [
-                    'maxlength' => 4,
-                    'title' => $this->__('Enter the shrink height.') . ' ' . $this->__('Only digits are allowed.'),
-                    'class' => 'shrinkdimension-shrinkheightimageoflocationimage'
-                ],'scale' => 0,
-                'input_group' => ['right' => $this->__('pixels')]
-            ])
-            ->add('thumbnailModeImageOfLocationImage', ChoiceType::class, [
-                'label' => $this->__('Thumbnail mode') . ':',
-                'label_attr' => [
-                    'class' => 'tooltips',
-                    'title' => $this->__('Thumbnail mode (inset or outbound).')
-                ],
-                'help' => $this->__('Thumbnail mode (inset or outbound).'),
-                'data' => isset($this->moduleVars['thumbnailModeImageOfLocationImage']) ? $this->moduleVars['thumbnailModeImageOfLocationImage'] : '',
-                'empty_data' => 'inset',
-                'attr' => [
-                    'title' => $this->__('Choose the thumbnail mode.')
-                ],'choices' => [
-                    $this->__('Inset') => 'inset',
-                    $this->__('Outbound') => 'outbound'
-                ],
-                'choices_as_values' => true,
-                'multiple' => false
-            ])
-            ->add('thumbnailWidthImageOfLocationImageView', IntegerType::class, [
-                'label' => $this->__('Thumbnail width view') . ':',
-                'label_attr' => [
-                    'class' => 'tooltips',
-                    'title' => $this->__('Thumbnail width on view pages in pixels.')
-                ],
-                'help' => $this->__('Thumbnail width on view pages in pixels.'),
-                'required' => false,
-                'data' => isset($this->moduleVars['thumbnailWidthImageOfLocationImageView']) ? intval($this->moduleVars['thumbnailWidthImageOfLocationImageView']) : intval(32),
-                'empty_data' => intval('32'),
-                'attr' => [
-                    'maxlength' => 4,
-                    'title' => $this->__('Enter the thumbnail width view.') . ' ' . $this->__('Only digits are allowed.')
-                ],'scale' => 0,
-                'input_group' => ['right' => $this->__('pixels')]
-            ])
-            ->add('thumbnailHeightImageOfLocationImageView', IntegerType::class, [
-                'label' => $this->__('Thumbnail height view') . ':',
-                'label_attr' => [
-                    'class' => 'tooltips',
-                    'title' => $this->__('Thumbnail height on view pages in pixels.')
-                ],
-                'help' => $this->__('Thumbnail height on view pages in pixels.'),
-                'required' => false,
-                'data' => isset($this->moduleVars['thumbnailHeightImageOfLocationImageView']) ? intval($this->moduleVars['thumbnailHeightImageOfLocationImageView']) : intval(24),
-                'empty_data' => intval('24'),
-                'attr' => [
-                    'maxlength' => 4,
-                    'title' => $this->__('Enter the thumbnail height view.') . ' ' . $this->__('Only digits are allowed.')
-                ],'scale' => 0,
-                'input_group' => ['right' => $this->__('pixels')]
-            ])
-            ->add('thumbnailWidthImageOfLocationImageDisplay', IntegerType::class, [
-                'label' => $this->__('Thumbnail width display') . ':',
-                'label_attr' => [
-                    'class' => 'tooltips',
-                    'title' => $this->__('Thumbnail width on display pages in pixels.')
-                ],
-                'help' => $this->__('Thumbnail width on display pages in pixels.'),
-                'required' => false,
-                'data' => isset($this->moduleVars['thumbnailWidthImageOfLocationImageDisplay']) ? intval($this->moduleVars['thumbnailWidthImageOfLocationImageDisplay']) : intval(240),
-                'empty_data' => intval('240'),
-                'attr' => [
-                    'maxlength' => 4,
-                    'title' => $this->__('Enter the thumbnail width display.') . ' ' . $this->__('Only digits are allowed.')
-                ],'scale' => 0,
-                'input_group' => ['right' => $this->__('pixels')]
-            ])
-            ->add('thumbnailHeightImageOfLocationImageDisplay', IntegerType::class, [
-                'label' => $this->__('Thumbnail height display') . ':',
-                'label_attr' => [
-                    'class' => 'tooltips',
-                    'title' => $this->__('Thumbnail height on display pages in pixels.')
-                ],
-                'help' => $this->__('Thumbnail height on display pages in pixels.'),
-                'required' => false,
-                'data' => isset($this->moduleVars['thumbnailHeightImageOfLocationImageDisplay']) ? intval($this->moduleVars['thumbnailHeightImageOfLocationImageDisplay']) : intval(180),
-                'empty_data' => intval('180'),
-                'attr' => [
-                    'maxlength' => 4,
-                    'title' => $this->__('Enter the thumbnail height display.') . ' ' . $this->__('Only digits are allowed.')
-                ],'scale' => 0,
-                'input_group' => ['right' => $this->__('pixels')]
-            ])
-            ->add('thumbnailWidthImageOfLocationImageEdit', IntegerType::class, [
-                'label' => $this->__('Thumbnail width edit') . ':',
-                'label_attr' => [
-                    'class' => 'tooltips',
-                    'title' => $this->__('Thumbnail width on edit pages in pixels.')
-                ],
-                'help' => $this->__('Thumbnail width on edit pages in pixels.'),
-                'required' => false,
-                'data' => isset($this->moduleVars['thumbnailWidthImageOfLocationImageEdit']) ? intval($this->moduleVars['thumbnailWidthImageOfLocationImageEdit']) : intval(240),
-                'empty_data' => intval('240'),
-                'attr' => [
-                    'maxlength' => 4,
-                    'title' => $this->__('Enter the thumbnail width edit.') . ' ' . $this->__('Only digits are allowed.')
-                ],'scale' => 0,
-                'input_group' => ['right' => $this->__('pixels')]
-            ])
-            ->add('thumbnailHeightImageOfLocationImageEdit', IntegerType::class, [
-                'label' => $this->__('Thumbnail height edit') . ':',
-                'label_attr' => [
-                    'class' => 'tooltips',
-                    'title' => $this->__('Thumbnail height on edit pages in pixels.')
-                ],
-                'help' => $this->__('Thumbnail height on edit pages in pixels.'),
-                'required' => false,
-                'data' => isset($this->moduleVars['thumbnailHeightImageOfLocationImageEdit']) ? intval($this->moduleVars['thumbnailHeightImageOfLocationImageEdit']) : intval(180),
                 'empty_data' => intval('180'),
                 'attr' => [
                     'maxlength' => 4,
@@ -2224,8 +2988,6 @@ abstract class AbstractConfigType extends AbstractType
                     $this->__('Branch') => 'branch',
                     $this->__('Location') => 'location',
                     $this->__('Part') => 'part',
-                    $this->__('Image of location') => 'imageOfLocation',
-                    $this->__('File of location') => 'fileOfLocation',
                     $this->__('Offer') => 'offer',
                     $this->__('Menu of location') => 'menuOfLocation',
                     $this->__('Part of menu') => 'partOfMenu',

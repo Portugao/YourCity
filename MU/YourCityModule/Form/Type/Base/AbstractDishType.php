@@ -12,7 +12,6 @@
 
 namespace MU\YourCityModule\Form\Type\Base;
 
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -133,7 +132,6 @@ abstract class AbstractDishType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addEntityFields($builder, $options);
-        $this->addIncomingRelationshipFields($builder, $options);
         $this->addModerationFields($builder, $options);
         $this->addReturnControlField($builder, $options);
         $this->addSubmitButtons($builder, $options);
@@ -286,76 +284,32 @@ abstract class AbstractDishType extends AbstractType
             'required' => true,
             'scale' => 0
         ]);
-    }
-
-    /**
-     * Adds fields for incoming relationships.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
-    public function addIncomingRelationshipFields(FormBuilderInterface $builder, array $options)
-    {
-        $queryBuilder = function(EntityRepository $er) {
-            // select without joins
-            return $er->getListQueryBuilder('', '', false);
-        };
-        $entityDisplayHelper = $this->entityDisplayHelper;
-        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
-            return $entityDisplayHelper->getFormattedTitle($entity);
-        };
-        $builder->add('menuOfLocation', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
-            'class' => 'MUYourCityModule:MenuOfLocationEntity',
-            'choice_label' => $choiceLabelClosure,
-            'multiple' => false,
-            'expanded' => false,
-            'query_builder' => $queryBuilder,
-            'placeholder' => $this->__('Please choose an option'),
-            'required' => false,
-            'label' => $this->__('Menu of location'),
+        
+        $listEntries = $this->listHelper->getEntries('dish', 'myLocation');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('myLocation', ChoiceType::class, [
+            'label' => $this->__('My location') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('If you have more than one location, select the correct one!')
+            ],
+            'help' => $this->__('If you have more than one location, select the correct one!'),
+            'empty_data' => '',
             'attr' => [
-                'title' => $this->__('Choose the menu of location')
-            ]
-        ]);
-        $queryBuilder = function(EntityRepository $er) {
-            // select without joins
-            return $er->getListQueryBuilder('', '', false);
-        };
-        $entityDisplayHelper = $this->entityDisplayHelper;
-        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
-            return $entityDisplayHelper->getFormattedTitle($entity);
-        };
-        $builder->add('partOfMenu', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
-            'class' => 'MUYourCityModule:PartOfMenuEntity',
-            'choice_label' => $choiceLabelClosure,
+                'class' => '',
+                'title' => $this->__('Choose the my location')
+            ],
+            'required' => true,
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_attr' => $choiceAttributes,
             'multiple' => false,
-            'expanded' => false,
-            'query_builder' => $queryBuilder,
-            'placeholder' => $this->__('Please choose an option'),
-            'required' => false,
-            'label' => $this->__('Part of menu'),
-            'attr' => [
-                'title' => $this->__('Choose the part of menu')
-            ]
-        ]);
-        $queryBuilder = function(EntityRepository $er) {
-            // select without joins
-            return $er->getListQueryBuilder('', '', false);
-        };
-        $entityDisplayHelper = $this->entityDisplayHelper;
-        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
-            return $entityDisplayHelper->getFormattedTitle($entity);
-        };
-        $builder->add('location', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
-            'class' => 'MUYourCityModule:LocationEntity',
-            'choice_label' => $choiceLabelClosure,
-            'multiple' => false,
-            'expanded' => false,
-            'query_builder' => $queryBuilder,
-            'label' => $this->__('Location'),
-            'attr' => [
-                'title' => $this->__('Choose the location')
-            ]
+            'expanded' => false
         ]);
     }
 

@@ -140,6 +140,7 @@ abstract class AbstractProductController extends AbstractController
         $sortableColumns->addColumns([
             new Column('workflowState'),
             new Column('name'),
+            new Column('keywordsForProduct'),
             new Column('description'),
             new Column('kindOfProduct'),
             new Column('today'),
@@ -151,7 +152,7 @@ abstract class AbstractProductController extends AbstractController
             new Column('saturday'),
             new Column('sunday'),
             new Column('priceOfProduct'),
-            new Column('location'),
+            new Column('myLocation'),
             new Column('createdBy'),
             new Column('createdDate'),
             new Column('updatedBy'),

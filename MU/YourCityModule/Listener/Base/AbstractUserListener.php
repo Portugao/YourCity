@@ -158,26 +158,6 @@ abstract class AbstractUserListener implements EventSubscriberInterface
         $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->currentUserApi->get('uname'), 'entities' => 'parts'];
         $this->logger->notice('{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.', $logArgs);
         
-        $repo = $this->entityFactory->getRepository('imageOfLocation');
-        // set creator to admin (UsersConstant::USER_ID_ADMIN) for all images of location created by this user
-        $repo->updateCreator($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
-        
-        // set last editor to admin (UsersConstant::USER_ID_ADMIN) for all images of location updated by this user
-        $repo->updateLastEditor($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
-        
-        $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->currentUserApi->get('uname'), 'entities' => 'images of location'];
-        $this->logger->notice('{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.', $logArgs);
-        
-        $repo = $this->entityFactory->getRepository('fileOfLocation');
-        // set creator to admin (UsersConstant::USER_ID_ADMIN) for all files of location created by this user
-        $repo->updateCreator($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
-        
-        // set last editor to admin (UsersConstant::USER_ID_ADMIN) for all files of location updated by this user
-        $repo->updateLastEditor($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
-        
-        $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->currentUserApi->get('uname'), 'entities' => 'files of location'];
-        $this->logger->notice('{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.', $logArgs);
-        
         $repo = $this->entityFactory->getRepository('offer');
         // set creator to admin (UsersConstant::USER_ID_ADMIN) for all offers created by this user
         $repo->updateCreator($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);

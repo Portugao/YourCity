@@ -56,8 +56,8 @@ abstract class AbstractSpecialOfLocationRepository extends EntityRepository
     {
         return [
             'name',
-            'description',
             'descriptionForGoogle',
+            'description',
             'colorOfIcon',
             'createdBy',
             'createdDate',
@@ -486,7 +486,7 @@ abstract class AbstractSpecialOfLocationRepository extends EntityRepository
         if (!$isPaginated) {
             $result = $query->getResult();
         } else {
-            $paginator = new Paginator($query, true);
+            $paginator = new Paginator($query, false);
     
             $count = count($paginator);
             $result = $paginator;
@@ -698,7 +698,7 @@ abstract class AbstractSpecialOfLocationRepository extends EntityRepository
      */
     protected function addJoinsToSelection()
     {
-        $selection = ', tblLocations';
+        $selection = '';
     
         return $selection;
     }
@@ -712,7 +712,6 @@ abstract class AbstractSpecialOfLocationRepository extends EntityRepository
      */
     protected function addJoinsToFrom(QueryBuilder $qb)
     {
-        $qb->leftJoin('tbl.locations', 'tblLocations');
     
         return $qb;
     }

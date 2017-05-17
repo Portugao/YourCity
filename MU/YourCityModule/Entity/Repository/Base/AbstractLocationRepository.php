@@ -58,6 +58,7 @@ abstract class AbstractLocationRepository extends EntityRepository
             'workflowState',
             'name',
             'letterForOrder',
+            'keywordsForLocation',
             'logoOfYourLocation',
             'description',
             'street',
@@ -71,6 +72,16 @@ abstract class AbstractLocationRepository extends EntityRepository
             'tram',
             'bus',
             'openingHours',
+            'servicesOfLocation',
+            'specialsOfLocation',
+            'firstImage',
+            'secondImage',
+            'thirdImage',
+            'fourthImage',
+            'fifthImage',
+            'sixthImage',
+            'firstFile',
+            'secondFile',
             'latitude',
             'longitude',
             'createdBy',
@@ -833,7 +844,7 @@ abstract class AbstractLocationRepository extends EntityRepository
      */
     protected function addJoinsToSelection()
     {
-        $selection = ', tblImagesOfLocation, tblFilesOfLocation, tblOffers, tblMenuOfLocation, tblEvents, tblProducts, tblDishes, tblSpecialsOfLocation, tblServicesOfLocation, tblAbonnements, tblPartsOfMenu';
+        $selection = ', tblAbonnements';
     
         return $selection;
     }
@@ -847,17 +858,7 @@ abstract class AbstractLocationRepository extends EntityRepository
      */
     protected function addJoinsToFrom(QueryBuilder $qb)
     {
-        $qb->leftJoin('tbl.imagesOfLocation', 'tblImagesOfLocation');
-        $qb->leftJoin('tbl.filesOfLocation', 'tblFilesOfLocation');
-        $qb->leftJoin('tbl.offers', 'tblOffers');
-        $qb->leftJoin('tbl.menuOfLocation', 'tblMenuOfLocation');
-        $qb->leftJoin('tbl.events', 'tblEvents');
-        $qb->leftJoin('tbl.products', 'tblProducts');
-        $qb->leftJoin('tbl.dishes', 'tblDishes');
-        $qb->leftJoin('tbl.specialsOfLocation', 'tblSpecialsOfLocation');
-        $qb->leftJoin('tbl.servicesOfLocation', 'tblServicesOfLocation');
         $qb->leftJoin('tbl.abonnements', 'tblAbonnements');
-        $qb->leftJoin('tbl.partsOfMenu', 'tblPartsOfMenu');
     
         return $qb;
     }

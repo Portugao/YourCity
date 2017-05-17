@@ -66,6 +66,7 @@ abstract class AbstractEventRepository extends EntityRepository
             'city',
             'inViewFrom',
             'inViewUntil',
+            'myLocation',
             'latitude',
             'longitude',
             'createdBy',
@@ -495,7 +496,7 @@ abstract class AbstractEventRepository extends EntityRepository
         if (!$isPaginated) {
             $result = $query->getResult();
         } else {
-            $paginator = new Paginator($query, true);
+            $paginator = new Paginator($query, false);
     
             $count = count($paginator);
             $result = $paginator;
@@ -707,7 +708,7 @@ abstract class AbstractEventRepository extends EntityRepository
      */
     protected function addJoinsToSelection()
     {
-        $selection = ', tblLocation';
+        $selection = '';
     
         return $selection;
     }
@@ -721,7 +722,6 @@ abstract class AbstractEventRepository extends EntityRepository
      */
     protected function addJoinsToFrom(QueryBuilder $qb)
     {
-        $qb->leftJoin('tbl.location', 'tblLocation');
     
         return $qb;
     }

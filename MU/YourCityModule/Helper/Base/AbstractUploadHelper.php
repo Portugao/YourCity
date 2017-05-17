@@ -103,7 +103,7 @@ abstract class AbstractUploadHelper
         $this->moduleVars = $moduleVars;
         $this->dataDirectory = $dataDirectory;
 
-        $this->allowedObjectTypes = ['branch', 'location', 'part', 'imageOfLocation', 'fileOfLocation', 'offer', 'menuOfLocation', 'dish', 'event', 'product'];
+        $this->allowedObjectTypes = ['branch', 'location', 'part', 'offer', 'menuOfLocation', 'dish', 'event', 'product'];
         $this->imageFileTypes = ['gif', 'jpeg', 'jpg', 'png', 'swf'];
         $this->forbiddenFileTypes = ['cgi', 'pl', 'asp', 'phtml', 'php', 'php3', 'php4', 'php5', 'exe', 'com', 'bat', 'jsp', 'cfm', 'shtml'];
     }
@@ -333,16 +333,34 @@ abstract class AbstractUploadHelper
                     case 'imageOfLocation':
                         $allowedExtensions = ['gif', 'jpeg', 'jpg', 'png'];
                         break;
+                    case 'firstImage':
+                        $allowedExtensions = ['gif', 'jpeg', 'jpg', 'png'];
+                        break;
+                    case 'secondImage':
+                        $allowedExtensions = ['gif', 'jpeg', 'jpg', 'png'];
+                        break;
+                    case 'thirdImage':
+                        $allowedExtensions = ['gif', 'jpeg', 'jpg', 'png'];
+                        break;
+                    case 'fourthImage':
+                        $allowedExtensions = ['gif', 'jpeg', 'jpg', 'png'];
+                        break;
+                    case 'fifthImage':
+                        $allowedExtensions = ['gif', 'jpeg', 'jpg', 'png'];
+                        break;
+                    case 'sixthImage':
+                        $allowedExtensions = ['gif', 'jpeg', 'jpg', 'png'];
+                        break;
+                    case 'firstFile':
+                        $allowedExtensions = ['pdf'];
+                        break;
+                    case 'secondFile':
+                        $allowedExtensions = ['pdf'];
+                        break;
                 }
                     break;
             case 'part':
                 $allowedExtensions = ['gif', 'jpeg', 'jpg', 'png'];
-                    break;
-            case 'imageOfLocation':
-                $allowedExtensions = ['gif', 'jpeg', 'jpg', 'png'];
-                    break;
-            case 'fileOfLocation':
-                $allowedExtensions = ['pdf'];
                     break;
             case 'offer':
                 $allowedExtensions = ['gif', 'jpeg', 'jpg', 'png'];
@@ -405,15 +423,33 @@ abstract class AbstractUploadHelper
                     case 'imageOfLocation':
                         $namingScheme = 0;
                         break;
+                    case 'firstImage':
+                        $namingScheme = 0;
+                        break;
+                    case 'secondImage':
+                        $namingScheme = 0;
+                        break;
+                    case 'thirdImage':
+                        $namingScheme = 0;
+                        break;
+                    case 'fourthImage':
+                        $namingScheme = 0;
+                        break;
+                    case 'fifthImage':
+                        $namingScheme = 0;
+                        break;
+                    case 'sixthImage':
+                        $namingScheme = 0;
+                        break;
+                    case 'firstFile':
+                        $namingScheme = 0;
+                        break;
+                    case 'secondFile':
+                        $namingScheme = 0;
+                        break;
                 }
                     break;
             case 'part':
-                $namingScheme = 0;
-                    break;
-            case 'imageOfLocation':
-                $namingScheme = 0;
-                    break;
-            case 'fileOfLocation':
                 $namingScheme = 0;
                     break;
             case 'offer':
@@ -535,16 +571,34 @@ abstract class AbstractUploadHelper
                     case 'imageOfLocation':
                         $basePath .= 'imageoflocation/';
                         break;
+                    case 'firstImage':
+                        $basePath .= 'firstimage/';
+                        break;
+                    case 'secondImage':
+                        $basePath .= 'secondimage/';
+                        break;
+                    case 'thirdImage':
+                        $basePath .= 'thirdimage/';
+                        break;
+                    case 'fourthImage':
+                        $basePath .= 'fourthimage/';
+                        break;
+                    case 'fifthImage':
+                        $basePath .= 'fifthimage/';
+                        break;
+                    case 'sixthImage':
+                        $basePath .= 'sixthimage/';
+                        break;
+                    case 'firstFile':
+                        $basePath .= 'firstfile/';
+                        break;
+                    case 'secondFile':
+                        $basePath .= 'secondfile/';
+                        break;
                 }
                 break;
             case 'part':
                 $basePath .= 'parts/imageofpart/';
-                break;
-            case 'imageOfLocation':
-                $basePath .= 'imagesoflocation/image/';
-                break;
-            case 'fileOfLocation':
-                $basePath .= 'filesoflocation/fileoffile/';
                 break;
             case 'offer':
                 $basePath .= 'offers/imageofoffer/';
@@ -620,12 +674,16 @@ abstract class AbstractUploadHelper
     
         $result &= $this->checkAndCreateUploadFolder('location', 'logoOfYourLocation', 'gif, jpeg, jpg, png');
         $result &= $this->checkAndCreateUploadFolder('location', 'imageOfLocation', 'gif, jpeg, jpg, png');
+        $result &= $this->checkAndCreateUploadFolder('location', 'firstImage', 'gif, jpeg, jpg, png');
+        $result &= $this->checkAndCreateUploadFolder('location', 'secondImage', 'gif, jpeg, jpg, png');
+        $result &= $this->checkAndCreateUploadFolder('location', 'thirdImage', 'gif, jpeg, jpg, png');
+        $result &= $this->checkAndCreateUploadFolder('location', 'fourthImage', 'gif, jpeg, jpg, png');
+        $result &= $this->checkAndCreateUploadFolder('location', 'fifthImage', 'gif, jpeg, jpg, png');
+        $result &= $this->checkAndCreateUploadFolder('location', 'sixthImage', 'gif, jpeg, jpg, png');
+        $result &= $this->checkAndCreateUploadFolder('location', 'firstFile', 'pdf');
+        $result &= $this->checkAndCreateUploadFolder('location', 'secondFile', 'pdf');
     
         $result &= $this->checkAndCreateUploadFolder('part', 'imageOfPart', 'gif, jpeg, jpg, png');
-    
-        $result &= $this->checkAndCreateUploadFolder('imageOfLocation', 'image', 'gif, jpeg, jpg, png');
-    
-        $result &= $this->checkAndCreateUploadFolder('fileOfLocation', 'fileOfFile', 'pdf');
     
         $result &= $this->checkAndCreateUploadFolder('offer', 'imageOfOffer', 'gif, jpeg, jpg, png');
     

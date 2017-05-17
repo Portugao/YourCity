@@ -3,9 +3,10 @@
     <id>{{ location.id }}</id>
     <name><![CDATA[{{ location.name }}]]></name>
     <letterForOrder><![CDATA[{{ location.letterForOrder }}]]></letterForOrder>
+    <keywordsForLocation><![CDATA[{{ location.keywordsForLocation }}]]></keywordsForLocation>
+    <descriptionForGoogle><![CDATA[{{ location.descriptionForGoogle }}]]></descriptionForGoogle>
     <slogan><![CDATA[{{ location.slogan }}]]></slogan>
     <logoOfYourLocation{% if location.logoOfYourLocation is not empty and location.logoOfYourLocationMeta|default %} extension="{{ location.logoOfYourLocationMeta.extension }}" size="{{ location.logoOfYourLocationMeta.size }}" isImage="{% if location.logoOfYourLocationMeta.isImage %}true{% else %}false{% endif %}"{% if location.logoOfYourLocationMeta.isImage %} width="{{ location.logoOfYourLocationMeta.width }}" height="{{ location.logoOfYourLocationMeta.height }}" format="{{ location.logoOfYourLocationMeta.format }}"{% endif %}{% endif %}>{{ location.logoOfYourLocation }}</logoOfYourLocation>
-    <descriptionForGoogle><![CDATA[{{ location.descriptionForGoogle }}]]></descriptionForGoogle>
     <description><![CDATA[{{ location.description|safeHtml }}]]></description>
     <description2><![CDATA[{{ location.description2|safeHtml }}]]></description2>
     <imageOfLocation{% if location.imageOfLocation is not empty and location.imageOfLocationMeta|default %} extension="{{ location.imageOfLocationMeta.extension }}" size="{{ location.imageOfLocationMeta.size }}" isImage="{% if location.imageOfLocationMeta.isImage %}true{% else %}false{% endif %}"{% if location.imageOfLocationMeta.isImage %} width="{{ location.imageOfLocationMeta.width }}" height="{{ location.imageOfLocationMeta.height }}" format="{{ location.imageOfLocationMeta.format }}"{% endif %}{% endif %}>{{ location.imageOfLocation }}</imageOfLocation>
@@ -58,63 +59,24 @@
     <endOnSunday>{{ location.endOnSunday|localizeddate('none', 'short') }}</endOnSunday>
     <start2OnSunday>{{ location.start2OnSunday|localizeddate('none', 'short') }}</start2OnSunday>
     <end2OnSunday>{{ location.end2OnSunday|localizeddate('none', 'short') }}</end2OnSunday>
+    <partOfCity>{{ location.partOfCity|muyourcitymodule_listEntry('location', 'partOfCity') }}</partOfCity>
+    <branchOfLocation>{{ location.branchOfLocation|muyourcitymodule_listEntry('location', 'branchOfLocation') }}</branchOfLocation>
+    <servicesOfLocation>{{ location.servicesOfLocation|muyourcitymodule_listEntry('location', 'servicesOfLocation') }}</servicesOfLocation>
+    <specialsOfLocation>{{ location.specialsOfLocation|muyourcitymodule_listEntry('location', 'specialsOfLocation') }}</specialsOfLocation>
+    <firstImage{% if location.firstImage is not empty and location.firstImageMeta|default %} extension="{{ location.firstImageMeta.extension }}" size="{{ location.firstImageMeta.size }}" isImage="{% if location.firstImageMeta.isImage %}true{% else %}false{% endif %}"{% if location.firstImageMeta.isImage %} width="{{ location.firstImageMeta.width }}" height="{{ location.firstImageMeta.height }}" format="{{ location.firstImageMeta.format }}"{% endif %}{% endif %}>{{ location.firstImage }}</firstImage>
+    <secondImage{% if location.secondImage is not empty and location.secondImageMeta|default %} extension="{{ location.secondImageMeta.extension }}" size="{{ location.secondImageMeta.size }}" isImage="{% if location.secondImageMeta.isImage %}true{% else %}false{% endif %}"{% if location.secondImageMeta.isImage %} width="{{ location.secondImageMeta.width }}" height="{{ location.secondImageMeta.height }}" format="{{ location.secondImageMeta.format }}"{% endif %}{% endif %}>{{ location.secondImage }}</secondImage>
+    <thirdImage{% if location.thirdImage is not empty and location.thirdImageMeta|default %} extension="{{ location.thirdImageMeta.extension }}" size="{{ location.thirdImageMeta.size }}" isImage="{% if location.thirdImageMeta.isImage %}true{% else %}false{% endif %}"{% if location.thirdImageMeta.isImage %} width="{{ location.thirdImageMeta.width }}" height="{{ location.thirdImageMeta.height }}" format="{{ location.thirdImageMeta.format }}"{% endif %}{% endif %}>{{ location.thirdImage }}</thirdImage>
+    <fourthImage{% if location.fourthImage is not empty and location.fourthImageMeta|default %} extension="{{ location.fourthImageMeta.extension }}" size="{{ location.fourthImageMeta.size }}" isImage="{% if location.fourthImageMeta.isImage %}true{% else %}false{% endif %}"{% if location.fourthImageMeta.isImage %} width="{{ location.fourthImageMeta.width }}" height="{{ location.fourthImageMeta.height }}" format="{{ location.fourthImageMeta.format }}"{% endif %}{% endif %}>{{ location.fourthImage }}</fourthImage>
+    <fifthImage{% if location.fifthImage is not empty and location.fifthImageMeta|default %} extension="{{ location.fifthImageMeta.extension }}" size="{{ location.fifthImageMeta.size }}" isImage="{% if location.fifthImageMeta.isImage %}true{% else %}false{% endif %}"{% if location.fifthImageMeta.isImage %} width="{{ location.fifthImageMeta.width }}" height="{{ location.fifthImageMeta.height }}" format="{{ location.fifthImageMeta.format }}"{% endif %}{% endif %}>{{ location.fifthImage }}</fifthImage>
+    <sixthImage{% if location.sixthImage is not empty and location.sixthImageMeta|default %} extension="{{ location.sixthImageMeta.extension }}" size="{{ location.sixthImageMeta.size }}" isImage="{% if location.sixthImageMeta.isImage %}true{% else %}false{% endif %}"{% if location.sixthImageMeta.isImage %} width="{{ location.sixthImageMeta.width }}" height="{{ location.sixthImageMeta.height }}" format="{{ location.sixthImageMeta.format }}"{% endif %}{% endif %}>{{ location.sixthImage }}</sixthImage>
+    <firstFile{% if location.firstFile is not empty and location.firstFileMeta|default %} extension="{{ location.firstFileMeta.extension }}" size="{{ location.firstFileMeta.size }}" isImage="{% if location.firstFileMeta.isImage %}true{% else %}false{% endif %}"{% if location.firstFileMeta.isImage %} width="{{ location.firstFileMeta.width }}" height="{{ location.firstFileMeta.height }}" format="{{ location.firstFileMeta.format }}"{% endif %}{% endif %}>{{ location.firstFile }}</firstFile>
+    <secondFile{% if location.secondFile is not empty and location.secondFileMeta|default %} extension="{{ location.secondFileMeta.extension }}" size="{{ location.secondFileMeta.size }}" isImage="{% if location.secondFileMeta.isImage %}true{% else %}false{% endif %}"{% if location.secondFileMeta.isImage %} width="{{ location.secondFileMeta.width }}" height="{{ location.secondFileMeta.height }}" format="{{ location.secondFileMeta.format }}"{% endif %}{% endif %}>{{ location.secondFile }}</secondFile>
     <owner>{% if location.owner|default and location.owner.getUid() > 0 %}{{ location.owner.getUname() }}{% endif %}</owner>
     <admin1>{% if location.admin1|default and location.admin1.getUid() > 0 %}{{ location.admin1.getUname() }}{% endif %}</admin1>
     <admin2>{% if location.admin2|default and location.admin2.getUid() > 0 %}{{ location.admin2.getUname() }}{% endif %}</admin2>
-    <partOfCity>{{ location.partOfCity|muyourcitymodule_listEntry('location', 'partOfCity') }}</partOfCity>
-    <branchOfLocation>{{ location.branchOfLocation|muyourcitymodule_listEntry('location', 'branchOfLocation') }}</branchOfLocation>
     <latitude>{{ location.latitude|muyourcitymodule_geoData }}</latitude>
     <longitude>{{ location.longitude|muyourcitymodule_geoData }}</longitude>
     <workflowState>{{ location.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
-    <imagesOfLocation>
-    {% if location.imagesOfLocation|default %}
-        {% for relatedItem in location.imagesOfLocation %}
-        <imageOfLocation>{{ relatedItem|muyourcitymodule_formattedTitle }}</imageOfLocation>
-        {% endfor %}
-    {% endif %}
-    </imagesOfLocation>
-    <filesOfLocation>
-    {% if location.filesOfLocation|default %}
-        {% for relatedItem in location.filesOfLocation %}
-        <fileOfLocation>{{ relatedItem|muyourcitymodule_formattedTitle }}</fileOfLocation>
-        {% endfor %}
-    {% endif %}
-    </filesOfLocation>
-    <offers>
-    {% if location.offers|default %}
-        {% for relatedItem in location.offers %}
-        <offer>{{ relatedItem|muyourcitymodule_formattedTitle }}</offer>
-        {% endfor %}
-    {% endif %}
-    </offers>
-    <menuOfLocation>
-    {% if location.menuOfLocation|default %}
-        {% for relatedItem in location.menuOfLocation %}
-        <menuOfLocation>{{ relatedItem|muyourcitymodule_formattedTitle }}</menuOfLocation>
-        {% endfor %}
-    {% endif %}
-    </menuOfLocation>
-    <events>
-    {% if location.events|default %}
-        {% for relatedItem in location.events %}
-        <event>{{ relatedItem|muyourcitymodule_formattedTitle }}</event>
-        {% endfor %}
-    {% endif %}
-    </events>
-    <products>
-    {% if location.products|default %}
-        {% for relatedItem in location.products %}
-        <product>{{ relatedItem|muyourcitymodule_formattedTitle }}</product>
-        {% endfor %}
-    {% endif %}
-    </products>
-    <dishes>
-    {% if location.dishes|default %}
-        {% for relatedItem in location.dishes %}
-        <dish>{{ relatedItem|muyourcitymodule_formattedTitle }}</dish>
-        {% endfor %}
-    {% endif %}
-    </dishes>
     <abonnements>
     {% if location.abonnements|default %}
         {% for relatedItem in location.abonnements %}
@@ -122,25 +84,4 @@
         {% endfor %}
     {% endif %}
     </abonnements>
-    <partsOfMenu>
-    {% if location.partsOfMenu|default %}
-        {% for relatedItem in location.partsOfMenu %}
-        <partOfMenu>{{ relatedItem|muyourcitymodule_formattedTitle }}</partOfMenu>
-        {% endfor %}
-    {% endif %}
-    </partsOfMenu>
-    <specialsOfLocation>
-    {% if location.specialsOfLocation|default %}
-        {% for relatedItem in location.specialsOfLocation %}
-        <specialOfLocation>{{ relatedItem|muyourcitymodule_formattedTitle }}</specialOfLocation>
-        {% endfor %}
-    {% endif %}
-    </specialsOfLocation>
-    <servicesOfLocation>
-    {% if location.servicesOfLocation|default %}
-        {% for relatedItem in location.servicesOfLocation %}
-        <serviceOfLocation>{{ relatedItem|muyourcitymodule_formattedTitle }}</serviceOfLocation>
-        {% endfor %}
-    {% endif %}
-    </servicesOfLocation>
 </location>

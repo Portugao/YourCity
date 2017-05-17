@@ -166,6 +166,7 @@ abstract class AbstractOfferFinderType extends AbstractType
                     $this->__('Effectiv from') => 'effectivFrom',
                     $this->__('Effectiv until') => 'effectivUntil',
                     $this->__('In view until') => 'inViewUntil',
+                    $this->__('My location') => 'myLocation',
                     $this->__('Creation date') => 'createdDate',
                     $this->__('Creator') => 'createdBy',
                     $this->__('Update date') => 'updatedDate',

@@ -15,8 +15,6 @@ namespace MU\YourCityModule\Entity\Factory\Base;
 use MU\YourCityModule\Entity\BranchEntity;
 use MU\YourCityModule\Entity\LocationEntity;
 use MU\YourCityModule\Entity\PartEntity;
-use MU\YourCityModule\Entity\ImageOfLocationEntity;
-use MU\YourCityModule\Entity\FileOfLocationEntity;
 use MU\YourCityModule\Entity\OfferEntity;
 use MU\YourCityModule\Entity\MenuOfLocationEntity;
 use MU\YourCityModule\Entity\PartOfMenuEntity;
@@ -101,6 +99,22 @@ abstract class AbstractEntityInitialiser
             }
         }
 
+        $listEntries = $this->listEntriesHelper->getServicesOfLocationEntriesForLocation();
+        foreach ($listEntries as $listEntry) {
+            if (true === $listEntry['default']) {
+                $entity->setServicesOfLocation($listEntry['value']);
+                break;
+            }
+        }
+
+        $listEntries = $this->listEntriesHelper->getSpecialsOfLocationEntriesForLocation();
+        foreach ($listEntries as $listEntry) {
+            if (true === $listEntry['default']) {
+                $entity->setSpecialsOfLocation($listEntry['value']);
+                break;
+            }
+        }
+
 
         $entity->setLatitude($this->defaultLatitude);
         $entity->setLongitude($this->defaultLongitude);
@@ -122,32 +136,6 @@ abstract class AbstractEntityInitialiser
     }
 
     /**
-     * Initialises a given imageOfLocation instance.
-     *
-     * @param ImageOfLocationEntity $entity The newly created entity instance
-     *
-     * @return ImageOfLocationEntity The updated entity instance
-     */
-    public function initImageOfLocation(ImageOfLocationEntity $entity)
-    {
-
-        return $entity;
-    }
-
-    /**
-     * Initialises a given fileOfLocation instance.
-     *
-     * @param FileOfLocationEntity $entity The newly created entity instance
-     *
-     * @return FileOfLocationEntity The updated entity instance
-     */
-    public function initFileOfLocation(FileOfLocationEntity $entity)
-    {
-
-        return $entity;
-    }
-
-    /**
      * Initialises a given offer instance.
      *
      * @param OfferEntity $entity The newly created entity instance
@@ -156,6 +144,15 @@ abstract class AbstractEntityInitialiser
      */
     public function initOffer(OfferEntity $entity)
     {
+        $listEntries = $this->listEntriesHelper->getMyLocationEntriesForOffer();
+        $items = [];
+        foreach ($listEntries as $listEntry) {
+            if (true === $listEntry['default']) {
+                $items[] = $listEntry['value'];
+            }
+        }
+        $entity->setMyLocation(implode('###', $items));
+
 
         return $entity;
     }
@@ -178,6 +175,15 @@ abstract class AbstractEntityInitialiser
         }
         $entity->setKindOfMenu(implode('###', $items));
 
+        $listEntries = $this->listEntriesHelper->getMyLocationEntriesForMenuOfLocation();
+        $items = [];
+        foreach ($listEntries as $listEntry) {
+            if (true === $listEntry['default']) {
+                $items[] = $listEntry['value'];
+            }
+        }
+        $entity->setMyLocation(implode('###', $items));
+
 
         return $entity;
     }
@@ -191,6 +197,15 @@ abstract class AbstractEntityInitialiser
      */
     public function initPartOfMenu(PartOfMenuEntity $entity)
     {
+        $listEntries = $this->listEntriesHelper->getMyLocationEntriesForPartOfMenu();
+        $items = [];
+        foreach ($listEntries as $listEntry) {
+            if (true === $listEntry['default']) {
+                $items[] = $listEntry['value'];
+            }
+        }
+        $entity->setMyLocation(implode('###', $items));
+
 
         return $entity;
     }
@@ -212,6 +227,15 @@ abstract class AbstractEntityInitialiser
             }
         }
 
+        $listEntries = $this->listEntriesHelper->getMyLocationEntriesForDish();
+        $items = [];
+        foreach ($listEntries as $listEntry) {
+            if (true === $listEntry['default']) {
+                $items[] = $listEntry['value'];
+            }
+        }
+        $entity->setMyLocation(implode('###', $items));
+
 
         return $entity;
     }
@@ -232,6 +256,15 @@ abstract class AbstractEntityInitialiser
                 break;
             }
         }
+
+        $listEntries = $this->listEntriesHelper->getMyLocationEntriesForEvent();
+        $items = [];
+        foreach ($listEntries as $listEntry) {
+            if (true === $listEntry['default']) {
+                $items[] = $listEntry['value'];
+            }
+        }
+        $entity->setMyLocation(implode('###', $items));
 
 
         $entity->setLatitude($this->defaultLatitude);
@@ -265,6 +298,15 @@ abstract class AbstractEntityInitialiser
             }
         }
         $entity->setToday(implode('###', $items));
+
+        $listEntries = $this->listEntriesHelper->getMyLocationEntriesForProduct();
+        $items = [];
+        foreach ($listEntries as $listEntry) {
+            if (true === $listEntry['default']) {
+                $items[] = $listEntry['value'];
+            }
+        }
+        $entity->setMyLocation(implode('###', $items));
 
 
         return $entity;

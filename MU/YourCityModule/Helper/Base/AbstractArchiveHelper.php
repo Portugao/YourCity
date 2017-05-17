@@ -212,7 +212,7 @@ abstract class AbstractArchiveHelper
             $objectType = $entity->get_objectType();
             $url = null;
     
-            $hasDisplayPage = in_array($objectType, ['branch', 'location', 'part', 'imageOfLocation', 'fileOfLocation', 'offer', 'menuOfLocation', 'partOfMenu', 'dish', 'event', 'product', 'specialOfLocation', 'serviceOfLocation']);
+            $hasDisplayPage = in_array($objectType, ['branch', 'location', 'part', 'offer', 'menuOfLocation', 'partOfMenu', 'dish', 'event', 'product', 'specialOfLocation', 'serviceOfLocation']);
             if ($hasDisplayPage) {
                 $urlArgs = $entity->createUrlArgs();
                 $urlArgs['_locale'] = $this->request->getLocale();

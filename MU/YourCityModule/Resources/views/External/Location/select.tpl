@@ -21,6 +21,7 @@
                     <option value="workflowState"{if $sort eq 'workflowState'} selected="selected"{/if}>{gt text='Workflow state'}</option>
                     <option value="name"{if $sort eq 'name'} selected="selected"{/if}>{gt text='Name'}</option>
                     <option value="letterForOrder"{if $sort eq 'letterForOrder'} selected="selected"{/if}>{gt text='Letter for order'}</option>
+                    <option value="keywordsForLocation"{if $sort eq 'keywordsForLocation'} selected="selected"{/if}>{gt text='Keywords for location'}</option>
                     <option value="logoOfYourLocation"{if $sort eq 'logoOfYourLocation'} selected="selected"{/if}>{gt text='Logo of your location'}</option>
                     <option value="description"{if $sort eq 'description'} selected="selected"{/if}>{gt text='Description'}</option>
                     <option value="street"{if $sort eq 'street'} selected="selected"{/if}>{gt text='Street'}</option>
@@ -34,6 +35,16 @@
                     <option value="tram"{if $sort eq 'tram'} selected="selected"{/if}>{gt text='Tram'}</option>
                     <option value="bus"{if $sort eq 'bus'} selected="selected"{/if}>{gt text='Bus'}</option>
                     <option value="openingHours"{if $sort eq 'openingHours'} selected="selected"{/if}>{gt text='Opening hours'}</option>
+                    <option value="servicesOfLocation"{if $sort eq 'servicesOfLocation'} selected="selected"{/if}>{gt text='Services of location'}</option>
+                    <option value="specialsOfLocation"{if $sort eq 'specialsOfLocation'} selected="selected"{/if}>{gt text='Specials of location'}</option>
+                    <option value="firstImage"{if $sort eq 'firstImage'} selected="selected"{/if}>{gt text='First image'}</option>
+                    <option value="secondImage"{if $sort eq 'secondImage'} selected="selected"{/if}>{gt text='Second image'}</option>
+                    <option value="thirdImage"{if $sort eq 'thirdImage'} selected="selected"{/if}>{gt text='Third image'}</option>
+                    <option value="fourthImage"{if $sort eq 'fourthImage'} selected="selected"{/if}>{gt text='Fourth image'}</option>
+                    <option value="fifthImage"{if $sort eq 'fifthImage'} selected="selected"{/if}>{gt text='Fifth image'}</option>
+                    <option value="sixthImage"{if $sort eq 'sixthImage'} selected="selected"{/if}>{gt text='Sixth image'}</option>
+                    <option value="firstFile"{if $sort eq 'firstFile'} selected="selected"{/if}>{gt text='First file'}</option>
+                    <option value="secondFile"{if $sort eq 'secondFile'} selected="selected"{/if}>{gt text='Second file'}</option>
                     <option value="createdDate"{if $sort eq 'createdDate'} selected="selected"{/if}>{gt text='Creation date'}</option>
                     <option value="createdBy"{if $sort eq 'createdBy'} selected="selected"{/if}>{gt text='Creator'}</option>
                     <option value="updatedDate"{if $sort eq 'updatedDate'} selected="selected"{/if}>{gt text='Update date'}</option>

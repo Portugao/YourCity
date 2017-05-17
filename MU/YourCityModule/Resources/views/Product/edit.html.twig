@@ -39,8 +39,8 @@
                                 <legend>{{ language|languageName|safeHtml }}</legend>
                                 {% if language == app.request.locale %}
                                     {{ form_row(form.name) }}
+                                    {{ form_row(form.keywordsForProduct) }}
                                     {{ form_row(form.description) }}
-                                    {{ form_row(form.kindOfProduct) }}
                                 {% else %}
                                     {{ form_row(attribute(form, 'translations' ~ language)) }}
                                 {% endif %}
@@ -54,12 +54,13 @@
             <fieldset>
                 <legend>{{ language|languageName|safeHtml }}</legend>
                 {{ form_row(form.name) }}
+                {{ form_row(form.keywordsForProduct) }}
                 {{ form_row(form.description) }}
-                {{ form_row(form.kindOfProduct) }}
             </fieldset>
         {% endif %}
         <fieldset>
             <legend>{{ __('Further properties') }}</legend>
+            {{ form_row(form.kindOfProduct) }}
             {{ form_row(form.imageOfProduct) }}
             {{ form_row(form.today) }}
             {{ form_row(form.monday) }}
@@ -70,12 +71,9 @@
             {{ form_row(form.saturday) }}
             {{ form_row(form.sunday) }}
             {{ form_row(form.priceOfProduct) }}
+            {{ form_row(form.myLocation) }}
         </fieldset>
         
-        {{ include(
-            '@MUYourCityModule/Location/includeSelectOne.html.twig',
-            { group: 'product', alias: 'location', aliasReverse: 'products', mandatory: true, idPrefix: 'yourcityProduct_Location', linkingItem: product, displayMode: 'choices' }
-        ) }}
         {% if mode != 'create' %}
             {{ include('@MUYourCityModule/Helper/includeStandardFieldsEdit.html.twig', { obj: product }) }}
         {% endif %}

@@ -96,52 +96,6 @@ abstract class AbstractHookContainer extends ZikulaHookContainer
         $bundle->addEvent('filter', 'muyourcitymodule.filter_hooks.parts.filter');
         $this->registerHookSubscriberBundle($bundle);
         
-        $bundle = new SubscriberBundle('MUYourCityModule', 'subscriber.muyourcitymodule.ui_hooks.imagesoflocation', 'ui_hooks', $this->__('muyourcitymodule. Images of location Display Hooks'));
-        
-        // Display hook for view/display templates.
-        $bundle->addEvent('display_view', 'muyourcitymodule.ui_hooks.imagesoflocation.display_view');
-        // Display hook for create/edit forms.
-        $bundle->addEvent('form_edit', 'muyourcitymodule.ui_hooks.imagesoflocation.form_edit');
-        // Display hook for delete dialogues.
-        $bundle->addEvent('form_delete', 'muyourcitymodule.ui_hooks.imagesoflocation.form_delete');
-        // Validate input from an ui create/edit form.
-        $bundle->addEvent('validate_edit', 'muyourcitymodule.ui_hooks.imagesoflocation.validate_edit');
-        // Validate input from an ui delete form.
-        $bundle->addEvent('validate_delete', 'muyourcitymodule.ui_hooks.imagesoflocation.validate_delete');
-        // Perform the final update actions for a ui create/edit form.
-        $bundle->addEvent('process_edit', 'muyourcitymodule.ui_hooks.imagesoflocation.process_edit');
-        // Perform the final delete actions for a ui form.
-        $bundle->addEvent('process_delete', 'muyourcitymodule.ui_hooks.imagesoflocation.process_delete');
-        $this->registerHookSubscriberBundle($bundle);
-        
-        $bundle = new SubscriberBundle('MUYourCityModule', 'subscriber.muyourcitymodule.filter_hooks.imagesoflocation', 'filter_hooks', $this->__('muyourcitymodule. Images of location Filter Hooks'));
-        // A filter applied to the given area.
-        $bundle->addEvent('filter', 'muyourcitymodule.filter_hooks.imagesoflocation.filter');
-        $this->registerHookSubscriberBundle($bundle);
-        
-        $bundle = new SubscriberBundle('MUYourCityModule', 'subscriber.muyourcitymodule.ui_hooks.filesoflocation', 'ui_hooks', $this->__('muyourcitymodule. Files of location Display Hooks'));
-        
-        // Display hook for view/display templates.
-        $bundle->addEvent('display_view', 'muyourcitymodule.ui_hooks.filesoflocation.display_view');
-        // Display hook for create/edit forms.
-        $bundle->addEvent('form_edit', 'muyourcitymodule.ui_hooks.filesoflocation.form_edit');
-        // Display hook for delete dialogues.
-        $bundle->addEvent('form_delete', 'muyourcitymodule.ui_hooks.filesoflocation.form_delete');
-        // Validate input from an ui create/edit form.
-        $bundle->addEvent('validate_edit', 'muyourcitymodule.ui_hooks.filesoflocation.validate_edit');
-        // Validate input from an ui delete form.
-        $bundle->addEvent('validate_delete', 'muyourcitymodule.ui_hooks.filesoflocation.validate_delete');
-        // Perform the final update actions for a ui create/edit form.
-        $bundle->addEvent('process_edit', 'muyourcitymodule.ui_hooks.filesoflocation.process_edit');
-        // Perform the final delete actions for a ui form.
-        $bundle->addEvent('process_delete', 'muyourcitymodule.ui_hooks.filesoflocation.process_delete');
-        $this->registerHookSubscriberBundle($bundle);
-        
-        $bundle = new SubscriberBundle('MUYourCityModule', 'subscriber.muyourcitymodule.filter_hooks.filesoflocation', 'filter_hooks', $this->__('muyourcitymodule. Files of location Filter Hooks'));
-        // A filter applied to the given area.
-        $bundle->addEvent('filter', 'muyourcitymodule.filter_hooks.filesoflocation.filter');
-        $this->registerHookSubscriberBundle($bundle);
-        
         $bundle = new SubscriberBundle('MUYourCityModule', 'subscriber.muyourcitymodule.ui_hooks.offers', 'ui_hooks', $this->__('muyourcitymodule. Offers Display Hooks'));
         
         // Display hook for view/display templates.

@@ -78,7 +78,7 @@ abstract class AbstractEntityFactory
         $repository = $this->objectManager->getRepository($entityClass);
         $repository->setCollectionFilterHelper($this->collectionFilterHelper);
 
-        if (in_array($objectType, ['branch', 'location', 'part', 'imageOfLocation', 'fileOfLocation', 'offer', 'menuOfLocation', 'partOfMenu', 'dish', 'event', 'product', 'specialOfLocation', 'serviceOfLocation'])) {
+        if (in_array($objectType, ['branch', 'location', 'part', 'offer', 'menuOfLocation', 'partOfMenu', 'dish', 'event', 'product', 'specialOfLocation', 'serviceOfLocation'])) {
             $repository->setTranslationsEnabled($this->featureActivationHelper->isEnabled(FeatureActivationHelper::TRANSLATIONS, $objectType));
         }
 
@@ -129,38 +129,6 @@ abstract class AbstractEntityFactory
         $entity = new $entityClass();
 
         $this->entityInitialiser->initPart($entity);
-
-        return $entity;
-    }
-
-    /**
-     * Creates a new imageOfLocation instance.
-     *
-     * @return MU\YourCityModule\Entity\imageOfLocationEntity The newly created entity instance
-     */
-    public function createImageOfLocation()
-    {
-        $entityClass = 'MU\\YourCityModule\\Entity\\ImageOfLocationEntity';
-
-        $entity = new $entityClass();
-
-        $this->entityInitialiser->initImageOfLocation($entity);
-
-        return $entity;
-    }
-
-    /**
-     * Creates a new fileOfLocation instance.
-     *
-     * @return MU\YourCityModule\Entity\fileOfLocationEntity The newly created entity instance
-     */
-    public function createFileOfLocation()
-    {
-        $entityClass = 'MU\\YourCityModule\\Entity\\FileOfLocationEntity';
-
-        $entity = new $entityClass();
-
-        $this->entityInitialiser->initFileOfLocation($entity);
 
         return $entity;
     }

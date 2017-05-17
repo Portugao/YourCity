@@ -9,8 +9,6 @@ workflow:
             supports:
                 - MU\YourCityModule\Entity\BranchEntity
                 - MU\YourCityModule\Entity\PartEntity
-                - MU\YourCityModule\Entity\ImageOfLocationEntity
-                - MU\YourCityModule\Entity\FileOfLocationEntity
                 - MU\YourCityModule\Entity\OfferEntity
                 - MU\YourCityModule\Entity\MenuOfLocationEntity
                 - MU\YourCityModule\Entity\PartOfMenuEntity

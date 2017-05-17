@@ -12,6 +12,6 @@
     <effectivUntil>{{ offer.effectivUntil|localizeddate('medium', 'short') }}</effectivUntil>
     <inViewFrom>{{ offer.inViewFrom|localizeddate('medium', 'short') }}</inViewFrom>
     <inViewUntil>{{ offer.inViewUntil|localizeddate('medium', 'short') }}</inViewUntil>
+    <myLocation>{{ offer.myLocation|muyourcitymodule_listEntry('offer', 'myLocation') }}</myLocation>
     <workflowState>{{ offer.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
-    <location>{% if offer.location|default %}{{ offer.location|muyourcitymodule_formattedTitle }}{% endif %}</location>
 </offer>

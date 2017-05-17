@@ -149,7 +149,7 @@ abstract class AbstractEventController extends AbstractController
             new Column('city'),
             new Column('inViewFrom'),
             new Column('inViewUntil'),
-            new Column('location'),
+            new Column('myLocation'),
             new Column('latitude'),
             new Column('longitude'),
             new Column('createdBy'),

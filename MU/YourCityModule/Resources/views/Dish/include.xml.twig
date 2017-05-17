@@ -8,8 +8,6 @@
     <priceOfDish>{{ dish.priceOfDish|localizedcurrency('EUR') }}</priceOfDish>
     <ingredients><![CDATA[{{ dish.ingredients }}]]></ingredients>
     <positionOfDish>{{ dish.positionOfDish }}</positionOfDish>
+    <myLocation>{{ dish.myLocation|muyourcitymodule_listEntry('dish', 'myLocation') }}</myLocation>
     <workflowState>{{ dish.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
-    <menuOfLocation>{% if dish.menuOfLocation|default %}{{ dish.menuOfLocation|muyourcitymodule_formattedTitle }}{% endif %}</menuOfLocation>
-    <partOfMenu>{% if dish.partOfMenu|default %}{{ dish.partOfMenu|muyourcitymodule_formattedTitle }}{% endif %}</partOfMenu>
-    <location>{% if dish.location|default %}{{ dish.location|muyourcitymodule_formattedTitle }}{% endif %}</location>
 </dish>

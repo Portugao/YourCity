@@ -16,12 +16,6 @@
             {% if 'part' in activatedObjectTypes %}
                 <li{{ objectType == 'part' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'part', 'editor': editorName}) }}" title="{{ __('Search and select part') }}">{{ __('Parts') }}</a></li>
             {% endif %}
-            {% if 'imageOfLocation' in activatedObjectTypes %}
-                <li{{ objectType == 'imageOfLocation' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'imageOfLocation', 'editor': editorName}) }}" title="{{ __('Search and select image of location') }}">{{ __('Images of location') }}</a></li>
-            {% endif %}
-            {% if 'fileOfLocation' in activatedObjectTypes %}
-                <li{{ objectType == 'fileOfLocation' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'fileOfLocation', 'editor': editorName}) }}" title="{{ __('Search and select file of location') }}">{{ __('Files of location') }}</a></li>
-            {% endif %}
             {% if 'offer' in activatedObjectTypes %}
                 <li{{ objectType == 'offer' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'offer', 'editor': editorName}) }}" title="{{ __('Search and select offer') }}">{{ __('Offers') }}</a></li>
             {% endif %}

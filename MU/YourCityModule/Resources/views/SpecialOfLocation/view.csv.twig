@@ -1,16 +1,8 @@
 {# purpose of this template: specials of location view csv view #}
-{% spaceless %}"{{ __('Name') }}";"{{ __('Description') }}";"{{ __('Description for google') }}";"{{ __('Icon for special') }}";"{{ __('Color of icon') }}";"{{ __('Workflow state') }}"
-;"{{ __('Locations') }}"
+{% spaceless %}"{{ __('Name') }}";"{{ __('Description for google') }}";"{{ __('Description') }}";"{{ __('Icon for special') }}";"{{ __('Color of icon') }}";"{{ __('Workflow state') }}"
 {% endspaceless %}
 {% for specialOfLocation in items %}
 {% spaceless %}
-    "{{ specialOfLocation.name }}";"{{ specialOfLocation.description|safeHtml }}";"{{ specialOfLocation.descriptionForGoogle }}";"{{ specialOfLocation.iconForSpecial }}";"{{ specialOfLocation.colorOfIcon }}";"{{ specialOfLocation.workflowState|muyourcitymodule_objectState(false)|lower }}"
-    ;"
-    {% if specialOfLocation.locations|default %}
-        {% for relatedItem in specialOfLocation.locations %}
-        {{ relatedItem|muyourcitymodule_formattedTitle }}{% if not loop.last %}, {% endif %}
-        {% endfor %}
-    {% endif %}
-    "
+    "{{ specialOfLocation.name }}";"{{ specialOfLocation.descriptionForGoogle }}";"{{ specialOfLocation.description|safeHtml }}";"{{ specialOfLocation.iconForSpecial }}";"<span class="label label-default" style="background-color: {{ specialOfLocation.colorOfIcon|e('html_attr') }}">{{ specialOfLocation.colorOfIcon }}</label>";"{{ specialOfLocation.workflowState|muyourcitymodule_objectState(false)|lower }}"
 {% endspaceless %}
 {% endfor %}

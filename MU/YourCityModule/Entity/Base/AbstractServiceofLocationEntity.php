@@ -13,7 +13,6 @@
 namespace MU\YourCityModule\Entity\Base;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Translatable\Translatable;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -48,6 +47,9 @@ abstract class AbstractServiceOfLocationEntity extends EntityAccess implements T
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer", unique=true)
+     * @Assert\Type(type="integer")
+     * @Assert\NotNull()
+     * @Assert\LessThan(value=1000000000)
      * @var integer $id
      */
     protected $id = 0;
@@ -73,19 +75,19 @@ abstract class AbstractServiceOfLocationEntity extends EntityAccess implements T
     
     /**
      * @Gedmo\Translatable
-     * @ORM\Column(type="text", length=2000, nullable=true)
-     * @Assert\Length(min="0", max="2000")
-     * @var text $description
-     */
-    protected $description = '';
-    
-    /**
-     * @Gedmo\Translatable
      * @ORM\Column(length=255, nullable=true)
      * @Assert\Length(min="0", max="255")
      * @var string $descriptionForGoogle
      */
     protected $descriptionForGoogle = '';
+    
+    /**
+     * @Gedmo\Translatable
+     * @ORM\Column(type="text", length=2000, nullable=true)
+     * @Assert\Length(min="0", max="2000")
+     * @var text $description
+     */
+    protected $description = '';
     
     /**
      * Enter a bootstrap icon.
@@ -107,14 +109,6 @@ abstract class AbstractServiceOfLocationEntity extends EntityAccess implements T
      */
     protected $locale;
     
-    /**
-     * Bidirectional - Many servicesOfLocation [services of location] are linked by many locations [locations] (INVERSE SIDE).
-     *
-     * @ORM\ManyToMany(targetEntity="MU\YourCityModule\Entity\LocationEntity", mappedBy="servicesOfLocation")
-     * @ORM\OrderBy({"letterForOrder" = "ASC"})
-     * @var \MU\YourCityModule\Entity\LocationEntity[] $locations
-     */
-    protected $locations = null;
     
     /**
      * ServiceOfLocationEntity constructor.
@@ -125,7 +119,6 @@ abstract class AbstractServiceOfLocationEntity extends EntityAccess implements T
      */
     public function __construct()
     {
-        $this->locations = new ArrayCollection();
     }
     
     /**
@@ -226,30 +219,6 @@ abstract class AbstractServiceOfLocationEntity extends EntityAccess implements T
     }
     
     /**
-     * Returns the description.
-     *
-     * @return text
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-    
-    /**
-     * Sets the description.
-     *
-     * @param text $description
-     *
-     * @return void
-     */
-    public function setDescription($description)
-    {
-        if ($this->description !== $description) {
-            $this->description = $description;
-        }
-    }
-    
-    /**
      * Returns the description for google.
      *
      * @return string
@@ -270,6 +239,30 @@ abstract class AbstractServiceOfLocationEntity extends EntityAccess implements T
     {
         if ($this->descriptionForGoogle !== $descriptionForGoogle) {
             $this->descriptionForGoogle = $descriptionForGoogle;
+        }
+    }
+    
+    /**
+     * Returns the description.
+     *
+     * @return text
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+    
+    /**
+     * Sets the description.
+     *
+     * @param text $description
+     *
+     * @return void
+     */
+    public function setDescription($description)
+    {
+        if ($this->description !== $description) {
+            $this->description = $description;
         }
     }
     
@@ -321,56 +314,6 @@ abstract class AbstractServiceOfLocationEntity extends EntityAccess implements T
         }
     }
     
-    
-    /**
-     * Returns the locations.
-     *
-     * @return \MU\YourCityModule\Entity\LocationEntity[]
-     */
-    public function getLocations()
-    {
-        return $this->locations;
-    }
-    
-    /**
-     * Sets the locations.
-     *
-     * @param \MU\YourCityModule\Entity\LocationEntity[] $locations
-     *
-     * @return void
-     */
-    public function setLocations($locations)
-    {
-        foreach ($locations as $locationSingle) {
-            $this->addLocations($locationSingle);
-        }
-    }
-    
-    /**
-     * Adds an instance of \MU\YourCityModule\Entity\LocationEntity to the list of locations.
-     *
-     * @param \MU\YourCityModule\Entity\LocationEntity $location The instance to be added to the collection
-     *
-     * @return void
-     */
-    public function addLocations(\MU\YourCityModule\Entity\LocationEntity $location)
-    {
-        $this->locations->add($location);
-        $location->addServicesOfLocation($this);
-    }
-    
-    /**
-     * Removes an instance of \MU\YourCityModule\Entity\LocationEntity from the list of locations.
-     *
-     * @param \MU\YourCityModule\Entity\LocationEntity $location The instance to be removed from the collection
-     *
-     * @return void
-     */
-    public function removeLocations(\MU\YourCityModule\Entity\LocationEntity $location)
-    {
-        $this->locations->removeElement($location);
-        $location->removeServicesOfLocation($this);
-    }
     
     
     

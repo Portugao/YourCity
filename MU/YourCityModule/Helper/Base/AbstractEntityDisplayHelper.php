@@ -19,8 +19,6 @@ use Zikula\Common\Translator\TranslatorInterface;
 use MU\YourCityModule\Entity\BranchEntity;
 use MU\YourCityModule\Entity\LocationEntity;
 use MU\YourCityModule\Entity\PartEntity;
-use MU\YourCityModule\Entity\ImageOfLocationEntity;
-use MU\YourCityModule\Entity\FileOfLocationEntity;
 use MU\YourCityModule\Entity\OfferEntity;
 use MU\YourCityModule\Entity\MenuOfLocationEntity;
 use MU\YourCityModule\Entity\PartOfMenuEntity;
@@ -100,12 +98,6 @@ abstract class AbstractEntityDisplayHelper
         if ($entity instanceof PartEntity) {
             return $this->formatPart($entity);
         }
-        if ($entity instanceof ImageOfLocationEntity) {
-            return $this->formatImageOfLocation($entity);
-        }
-        if ($entity instanceof FileOfLocationEntity) {
-            return $this->formatFileOfLocation($entity);
-        }
         if ($entity instanceof OfferEntity) {
             return $this->formatOffer($entity);
         }
@@ -177,34 +169,6 @@ abstract class AbstractEntityDisplayHelper
      * @return string The formatted title
      */
     protected function formatPart(PartEntity $entity)
-    {
-        return $this->translator->__f('%name%', [
-            '%name%' => $entity->getName()
-        ]);
-    }
-    
-    /**
-     * Returns the formatted title for a given entity.
-     *
-     * @param ImageOfLocationEntity $entity The given entity instance
-     *
-     * @return string The formatted title
-     */
-    protected function formatImageOfLocation(ImageOfLocationEntity $entity)
-    {
-        return $this->translator->__f('%name%', [
-            '%name%' => $entity->getName()
-        ]);
-    }
-    
-    /**
-     * Returns the formatted title for a given entity.
-     *
-     * @param FileOfLocationEntity $entity The given entity instance
-     *
-     * @return string The formatted title
-     */
-    protected function formatFileOfLocation(FileOfLocationEntity $entity)
     {
         return $this->translator->__f('%name%', [
             '%name%' => $entity->getName()
@@ -355,12 +319,6 @@ abstract class AbstractEntityDisplayHelper
         if ($objectType == 'part') {
             return 'name';
         }
-        if ($objectType == 'imageOfLocation') {
-            return 'name';
-        }
-        if ($objectType == 'fileOfLocation') {
-            return 'name';
-        }
         if ($objectType == 'offer') {
             return 'name';
         }
@@ -408,12 +366,6 @@ abstract class AbstractEntityDisplayHelper
             return 'description';
         }
         if ($objectType == 'part') {
-            return 'description';
-        }
-        if ($objectType == 'imageOfLocation') {
-            return 'description';
-        }
-        if ($objectType == 'fileOfLocation') {
             return 'description';
         }
         if ($objectType == 'offer') {
@@ -465,9 +417,6 @@ abstract class AbstractEntityDisplayHelper
         if ($objectType == 'part') {
             return 'imageOfPart';
         }
-        if ($objectType == 'imageOfLocation') {
-            return 'image';
-        }
         if ($objectType == 'offer') {
             return 'imageOfOffer';
         }
@@ -504,12 +453,6 @@ abstract class AbstractEntityDisplayHelper
             return 'createdDate';
         }
         if ($objectType == 'part') {
-            return 'createdDate';
-        }
-        if ($objectType == 'imageOfLocation') {
-            return 'createdDate';
-        }
-        if ($objectType == 'fileOfLocation') {
             return 'createdDate';
         }
         if ($objectType == 'offer') {

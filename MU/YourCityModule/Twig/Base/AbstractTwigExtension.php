@@ -321,14 +321,6 @@ abstract class AbstractTwigExtension extends Twig_Extension
             'value' => 'part'
         ];
         $result[] = [
-            'text' => $this->__('Images of location'),
-            'value' => 'imageOfLocation'
-        ];
-        $result[] = [
-            'text' => $this->__('Files of location'),
-            'value' => 'fileOfLocation'
-        ];
-        $result[] = [
             'text' => $this->__('Offers'),
             'value' => 'offer'
         ];

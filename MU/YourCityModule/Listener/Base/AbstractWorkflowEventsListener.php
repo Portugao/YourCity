@@ -125,37 +125,7 @@ abstract class AbstractWorkflowEventsListener implements EventSubscriberInterfac
             // check if deleting the entity would break related child entities
             if ($objectType == 'location') {
                 $isBlocked = false;
-                if (count($entity->getImagesOfLocation()) > 0) {
-                    $isBlocked = true;
-                }
-                if (count($entity->getFilesOfLocation()) > 0) {
-                    $isBlocked = true;
-                }
-                if (count($entity->getOffers()) > 0) {
-                    $isBlocked = true;
-                }
-                if (count($entity->getMenuOfLocation()) > 0) {
-                    $isBlocked = true;
-                }
-                if (count($entity->getEvents()) > 0) {
-                    $isBlocked = true;
-                }
-                if (count($entity->getProducts()) > 0) {
-                    $isBlocked = true;
-                }
-                if (count($entity->getDishes()) > 0) {
-                    $isBlocked = true;
-                }
-                if (count($entity->getSpecialsOfLocation()) > 0) {
-                    $isBlocked = true;
-                }
-                if (count($entity->getServicesOfLocation()) > 0) {
-                    $isBlocked = true;
-                }
                 if (count($entity->getAbonnements()) > 0) {
-                    $isBlocked = true;
-                }
-                if (count($entity->getPartsOfMenu()) > 0) {
                     $isBlocked = true;
                 }
                 $event->setBlocked($isBlocked);

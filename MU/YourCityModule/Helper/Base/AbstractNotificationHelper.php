@@ -382,8 +382,8 @@ abstract class AbstractNotificationHelper
     
         $urlArgs = $this->entity->createUrlArgs();
     
-        $hasDisplayAction = in_array($objectType, ['branch', 'location', 'part', 'imageOfLocation', 'fileOfLocation', 'offer', 'menuOfLocation', 'partOfMenu', 'dish', 'event', 'product', 'specialOfLocation', 'serviceOfLocation']);
-        $hasEditAction = in_array($objectType, ['branch', 'location', 'part', 'imageOfLocation', 'fileOfLocation', 'offer', 'menuOfLocation', 'partOfMenu', 'dish', 'event', 'product', 'specialOfLocation', 'serviceOfLocation', 'abonnement']);
+        $hasDisplayAction = in_array($objectType, ['branch', 'location', 'part', 'offer', 'menuOfLocation', 'partOfMenu', 'dish', 'event', 'product', 'specialOfLocation', 'serviceOfLocation']);
+        $hasEditAction = in_array($objectType, ['branch', 'location', 'part', 'offer', 'menuOfLocation', 'partOfMenu', 'dish', 'event', 'product', 'specialOfLocation', 'serviceOfLocation', 'abonnement']);
         $routeArea = in_array($this->recipientType, ['moderator', 'superModerator']) ? 'admin' : '';
         $routePrefix = 'muyourcitymodule_' . strtolower($objectType) . '_' . $routeArea;
     

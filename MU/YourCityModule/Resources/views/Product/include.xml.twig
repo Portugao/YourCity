@@ -2,6 +2,7 @@
 <product id="{{ product.getId() }}" createdon="{{ product.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ product.updatedDate|localizeddate('medium', 'short') }}">
     <id>{{ product.id }}</id>
     <name><![CDATA[{{ product.name }}]]></name>
+    <keywordsForProduct><![CDATA[{{ product.keywordsForProduct }}]]></keywordsForProduct>
     <description><![CDATA[{{ product.description|safeHtml }}]]></description>
     <kindOfProduct>{{ product.kindOfProduct|muyourcitymodule_listEntry('product', 'kindOfProduct') }}</kindOfProduct>
     <imageOfProduct{% if product.imageOfProduct is not empty and product.imageOfProductMeta|default %} extension="{{ product.imageOfProductMeta.extension }}" size="{{ product.imageOfProductMeta.size }}" isImage="{% if product.imageOfProductMeta.isImage %}true{% else %}false{% endif %}"{% if product.imageOfProductMeta.isImage %} width="{{ product.imageOfProductMeta.width }}" height="{{ product.imageOfProductMeta.height }}" format="{{ product.imageOfProductMeta.format }}"{% endif %}{% endif %}>{{ product.imageOfProduct }}</imageOfProduct>
@@ -14,6 +15,6 @@
     <saturday>{% if not product.saturday %}0{% else %}1{% endif %}</saturday>
     <sunday>{% if not product.sunday %}0{% else %}1{% endif %}</sunday>
     <priceOfProduct>{{ product.priceOfProduct|localizedcurrency('EUR') }}</priceOfProduct>
+    <myLocation>{{ product.myLocation|muyourcitymodule_listEntry('product', 'myLocation') }}</myLocation>
     <workflowState>{{ product.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
-    <location>{% if product.location|default %}{{ product.location|muyourcitymodule_formattedTitle }}{% endif %}</location>
 </product>

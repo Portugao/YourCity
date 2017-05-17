@@ -69,36 +69,6 @@ abstract class AbstractEditHandler extends EditHandler
     }
     
     /**
-     * Initialises relationship presets.
-     */
-    protected function initRelationPresets()
-    {
-        $entity = $this->entityRef;
-    
-        
-        // assign identifiers of predefined incoming relationships
-        // editable relation, we store the id and assign it now to show it in UI
-        $this->relationPresets['menuOfLocation'] = $this->request->get('menuOfLocation', '');
-        if (!empty($this->relationPresets['menuOfLocation'])) {
-            $relObj = $this->entityFactory->getRepository('menuOfLocation')->selectById($this->relationPresets['menuOfLocation']);
-            if (null !== $relObj) {
-                $relObj->addPartsOfMenu($entity);
-            }
-        }
-        // editable relation, we store the id and assign it now to show it in UI
-        $this->relationPresets['location'] = $this->request->get('location', '');
-        if (!empty($this->relationPresets['location'])) {
-            $relObj = $this->entityFactory->getRepository('location')->selectById($this->relationPresets['location']);
-            if (null !== $relObj) {
-                $relObj->addPartsOfMenu($entity);
-            }
-        }
-    
-        // save entity reference for later reuse
-        $this->entityRef = $entity;
-    }
-    
-    /**
      * Creates the form type.
      */
     protected function createForm()
@@ -157,18 +127,6 @@ abstract class AbstractEditHandler extends EditHandler
         $codes[] = 'userDisplayMenuOfLocation';
         // admin detail page of related menu of location
         $codes[] = 'adminDisplayMenuOfLocation';
-        // user list of locations
-        $codes[] = 'userViewLocations';
-        // admin list of locations
-        $codes[] = 'adminViewLocations';
-        // user list of own locations
-        $codes[] = 'userOwnViewLocations';
-        // admin list of own locations
-        $codes[] = 'adminOwnViewLocations';
-        // user detail page of related location
-        $codes[] = 'userDisplayLocation';
-        // admin detail page of related location
-        $codes[] = 'adminDisplayLocation';
     
         return $codes;
     }
@@ -356,19 +314,6 @@ abstract class AbstractEditHandler extends EditHandler
             case 'adminDisplayMenuOfLocation':
                 if (!empty($this->relationPresets['menuOfLocation'])) {
                     return $this->router->generate('muyourcitymodule_menuoflocation_' . $routeArea . 'display',  ['id' => $this->relationPresets['menuOfLocation']]);
-                }
-    
-                return $this->getDefaultReturnUrl($args);
-            case 'userViewLocations':
-            case 'adminViewLocations':
-                return $this->router->generate('muyourcitymodule_location_' . $routeArea . 'view');
-            case 'userOwnViewLocations':
-            case 'adminOwnViewLocations':
-                return $this->router->generate('muyourcitymodule_location_' . $routeArea . 'view', ['own' => 1]);
-            case 'userDisplayLocation':
-            case 'adminDisplayLocation':
-                if (!empty($this->relationPresets['location'])) {
-                    return $this->router->generate('muyourcitymodule_location_' . $routeArea . 'display',  ['id' => $this->relationPresets['location']]);
                 }
     
                 return $this->getDefaultReturnUrl($args);

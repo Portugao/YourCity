@@ -12,7 +12,6 @@
 
 namespace MU\YourCityModule\Form\Type\Base;
 
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -38,8 +37,6 @@ use MU\YourCityModule\Entity\Factory\EntityFactory;
 use MU\YourCityModule\Form\Type\Field\TranslationType;
 use MU\YourCityModule\Form\Type\Field\UploadType;
 use MU\YourCityModule\Form\Type\Field\UserType;
-use MU\YourCityModule\Helper\CollectionFilterHelper;
-use MU\YourCityModule\Helper\EntityDisplayHelper;
 use MU\YourCityModule\Helper\FeatureActivationHelper;
 use MU\YourCityModule\Helper\ListEntriesHelper;
 use MU\YourCityModule\Helper\TranslatableHelper;
@@ -55,16 +52,6 @@ abstract class AbstractOfferType extends AbstractType
      * @var EntityFactory
      */
     protected $entityFactory;
-
-    /**
-     * @var CollectionFilterHelper
-     */
-    protected $collectionFilterHelper;
-
-    /**
-     * @var EntityDisplayHelper
-     */
-    protected $entityDisplayHelper;
 
     /**
      * @var VariableApiInterface
@@ -91,8 +78,6 @@ abstract class AbstractOfferType extends AbstractType
      *
      * @param TranslatorInterface $translator     Translator service instance
      * @param EntityFactory       $entityFactory EntityFactory service instance
-     * @param CollectionFilterHelper $collectionFilterHelper CollectionFilterHelper service instance
-     * @param EntityDisplayHelper $entityDisplayHelper EntityDisplayHelper service instance
      * @param VariableApiInterface $variableApi VariableApi service instance
      * @param TranslatableHelper  $translatableHelper TranslatableHelper service instance
      * @param ListEntriesHelper   $listHelper     ListEntriesHelper service instance
@@ -101,8 +86,6 @@ abstract class AbstractOfferType extends AbstractType
     public function __construct(
         TranslatorInterface $translator,
         EntityFactory $entityFactory,
-        CollectionFilterHelper $collectionFilterHelper,
-        EntityDisplayHelper $entityDisplayHelper,
         VariableApiInterface $variableApi,
         TranslatableHelper $translatableHelper,
         ListEntriesHelper $listHelper,
@@ -110,8 +93,6 @@ abstract class AbstractOfferType extends AbstractType
     ) {
         $this->setTranslator($translator);
         $this->entityFactory = $entityFactory;
-        $this->collectionFilterHelper = $collectionFilterHelper;
-        $this->entityDisplayHelper = $entityDisplayHelper;
         $this->variableApi = $variableApi;
         $this->translatableHelper = $translatableHelper;
         $this->listHelper = $listHelper;
@@ -134,7 +115,6 @@ abstract class AbstractOfferType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addEntityFields($builder, $options);
-        $this->addIncomingRelationshipFields($builder, $options);
         $this->addModerationFields($builder, $options);
         $this->addReturnControlField($builder, $options);
         $this->addSubmitButtons($builder, $options);
@@ -370,34 +350,32 @@ abstract class AbstractOfferType extends AbstractType
             'date_widget' => 'single_text',
             'time_widget' => 'single_text'
         ]);
-    }
-
-    /**
-     * Adds fields for incoming relationships.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
-    public function addIncomingRelationshipFields(FormBuilderInterface $builder, array $options)
-    {
-        $queryBuilder = function(EntityRepository $er) {
-            // select without joins
-            return $er->getListQueryBuilder('', '', false);
-        };
-        $entityDisplayHelper = $this->entityDisplayHelper;
-        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
-            return $entityDisplayHelper->getFormattedTitle($entity);
-        };
-        $builder->add('location', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
-            'class' => 'MUYourCityModule:LocationEntity',
-            'choice_label' => $choiceLabelClosure,
-            'multiple' => false,
-            'expanded' => false,
-            'query_builder' => $queryBuilder,
-            'label' => $this->__('Location'),
+        
+        $listEntries = $this->listHelper->getEntries('offer', 'myLocation');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('myLocation', ChoiceType::class, [
+            'label' => $this->__('My location') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('If you have more than one location, select the correct one!')
+            ],
+            'help' => $this->__('If you have more than one location, select the correct one!'),
+            'empty_data' => '',
             'attr' => [
-                'title' => $this->__('Choose the location')
-            ]
+                'class' => '',
+                'title' => $this->__('Choose the my location')
+            ],
+            'required' => true,
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => false,
+            'expanded' => false
         ]);
     }
 
@@ -522,8 +500,6 @@ abstract class AbstractOfferType extends AbstractType
                 'actions' => [],
                 'has_moderate_permission' => false,
                 'translations' => [],
-                'filter_by_ownership' => true,
-                'inline_usage' => false
             ])
             ->setRequired(['entity', 'mode', 'actions'])
             ->setAllowedTypes([
@@ -531,8 +507,6 @@ abstract class AbstractOfferType extends AbstractType
                 'actions' => 'array',
                 'has_moderate_permission' => 'bool',
                 'translations' => 'array',
-                'filter_by_ownership' => 'bool',
-                'inline_usage' => 'bool'
             ])
             ->setAllowedValues([
                 'mode' => ['create', 'edit']

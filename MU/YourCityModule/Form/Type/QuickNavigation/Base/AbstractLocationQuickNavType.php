@@ -163,6 +163,46 @@ abstract class AbstractLocationQuickNavType extends AbstractType
             'multiple' => true,
             'expanded' => false
         ]);
+        $listEntries = $this->listHelper->getEntries('location', 'servicesOfLocation');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('servicesOfLocation', MultiListType::class, [
+            'label' => $this->__('Services of location'),
+            'attr' => [
+                'class' => 'input-sm'
+            ],
+            'required' => false,
+            'placeholder' => $this->__('All'),
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => true,
+            'expanded' => false
+        ]);
+        $listEntries = $this->listHelper->getEntries('location', 'specialsOfLocation');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('specialsOfLocation', MultiListType::class, [
+            'label' => $this->__('Specials of location'),
+            'attr' => [
+                'class' => 'input-sm'
+            ],
+            'required' => false,
+            'placeholder' => $this->__('All'),
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => true,
+            'expanded' => false
+        ]);
     }
 
     /**
@@ -245,6 +285,7 @@ abstract class AbstractLocationQuickNavType extends AbstractType
                     $this->__('Workflow state') => 'workflowState',
                     $this->__('Name') => 'name',
                     $this->__('Letter for order') => 'letterForOrder',
+                    $this->__('Keywords for location') => 'keywordsForLocation',
                     $this->__('Logo of your location') => 'logoOfYourLocation',
                     $this->__('Description') => 'description',
                     $this->__('Street') => 'street',
@@ -258,6 +299,16 @@ abstract class AbstractLocationQuickNavType extends AbstractType
                     $this->__('Tram') => 'tram',
                     $this->__('Bus') => 'bus',
                     $this->__('Opening hours') => 'openingHours',
+                    $this->__('Services of location') => 'servicesOfLocation',
+                    $this->__('Specials of location') => 'specialsOfLocation',
+                    $this->__('First image') => 'firstImage',
+                    $this->__('Second image') => 'secondImage',
+                    $this->__('Third image') => 'thirdImage',
+                    $this->__('Fourth image') => 'fourthImage',
+                    $this->__('Fifth image') => 'fifthImage',
+                    $this->__('Sixth image') => 'sixthImage',
+                    $this->__('First file') => 'firstFile',
+                    $this->__('Second file') => 'secondFile',
                     $this->__('Creation date') => 'createdDate',
                     $this->__('Creator') => 'createdBy',
                     $this->__('Update date') => 'updatedDate',

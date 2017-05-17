@@ -67,12 +67,9 @@
             {{ form_row(form.effectivUntil) }}
             {{ form_row(form.inViewFrom) }}
             {{ form_row(form.inViewUntil) }}
+            {{ form_row(form.myLocation) }}
         </fieldset>
         
-        {{ include(
-            '@MUYourCityModule/Location/includeSelectOne.html.twig',
-            { group: 'menuoflocation', alias: 'location', aliasReverse: 'menuOfLocation', mandatory: true, idPrefix: 'yourcityMenuOfLocation_Location', linkingItem: menuoflocation, displayMode: 'choices' }
-        ) }}
         {% if mode != 'create' %}
             {{ include('@MUYourCityModule/Helper/includeStandardFieldsEdit.html.twig', { obj: menuoflocation }) }}
         {% endif %}

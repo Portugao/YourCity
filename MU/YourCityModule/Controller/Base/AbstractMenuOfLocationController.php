@@ -148,7 +148,7 @@ abstract class AbstractMenuOfLocationController extends AbstractController
             new Column('effectivUntil'),
             new Column('inViewFrom'),
             new Column('inViewUntil'),
-            new Column('location'),
+            new Column('myLocation'),
             new Column('createdBy'),
             new Column('createdDate'),
             new Column('updatedBy'),

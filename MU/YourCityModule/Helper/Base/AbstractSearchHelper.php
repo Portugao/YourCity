@@ -171,9 +171,10 @@ abstract class AbstractSearchHelper implements SearchableInterface
                     $whereArray[] = 'tbl.workflowState';
                     $whereArray[] = 'tbl.name';
                     $whereArray[] = 'tbl.letterForOrder';
+                    $whereArray[] = 'tbl.keywordsForLocation';
+                    $whereArray[] = 'tbl.descriptionForGoogle';
                     $whereArray[] = 'tbl.slogan';
                     $whereArray[] = 'tbl.logoOfYourLocation';
-                    $whereArray[] = 'tbl.descriptionForGoogle';
                     $whereArray[] = 'tbl.description';
                     $whereArray[] = 'tbl.description2';
                     $whereArray[] = 'tbl.imageOfLocation';
@@ -190,6 +191,16 @@ abstract class AbstractSearchHelper implements SearchableInterface
                     $whereArray[] = 'tbl.openingHours';
                     $whereArray[] = 'tbl.partOfCity';
                     $whereArray[] = 'tbl.branchOfLocation';
+                    $whereArray[] = 'tbl.servicesOfLocation';
+                    $whereArray[] = 'tbl.specialsOfLocation';
+                    $whereArray[] = 'tbl.firstImage';
+                    $whereArray[] = 'tbl.secondImage';
+                    $whereArray[] = 'tbl.thirdImage';
+                    $whereArray[] = 'tbl.fourthImage';
+                    $whereArray[] = 'tbl.fifthImage';
+                    $whereArray[] = 'tbl.sixthImage';
+                    $whereArray[] = 'tbl.firstFile';
+                    $whereArray[] = 'tbl.secondFile';
                     break;
                 case 'part':
                     $whereArray[] = 'tbl.workflowState';
@@ -198,24 +209,13 @@ abstract class AbstractSearchHelper implements SearchableInterface
                     $whereArray[] = 'tbl.description';
                     $whereArray[] = 'tbl.imageOfPart';
                     break;
-                case 'imageOfLocation':
-                    $whereArray[] = 'tbl.workflowState';
-                    $whereArray[] = 'tbl.name';
-                    $whereArray[] = 'tbl.description';
-                    $whereArray[] = 'tbl.image';
-                    break;
-                case 'fileOfLocation':
-                    $whereArray[] = 'tbl.workflowState';
-                    $whereArray[] = 'tbl.name';
-                    $whereArray[] = 'tbl.description';
-                    $whereArray[] = 'tbl.fileOfFile';
-                    break;
                 case 'offer':
                     $whereArray[] = 'tbl.workflowState';
                     $whereArray[] = 'tbl.name';
                     $whereArray[] = 'tbl.description';
                     $whereArray[] = 'tbl.urlToOfferOnHomepage';
                     $whereArray[] = 'tbl.imageOfOffer';
+                    $whereArray[] = 'tbl.myLocation';
                     break;
                 case 'menuOfLocation':
                     $whereArray[] = 'tbl.workflowState';
@@ -224,11 +224,13 @@ abstract class AbstractSearchHelper implements SearchableInterface
                     $whereArray[] = 'tbl.imageOfMenu';
                     $whereArray[] = 'tbl.kindOfMenu';
                     $whereArray[] = 'tbl.additionalRemarks';
+                    $whereArray[] = 'tbl.myLocation';
                     break;
                 case 'partOfMenu':
                     $whereArray[] = 'tbl.workflowState';
                     $whereArray[] = 'tbl.name';
                     $whereArray[] = 'tbl.description';
+                    $whereArray[] = 'tbl.myLocation';
                     break;
                 case 'dish':
                     $whereArray[] = 'tbl.workflowState';
@@ -237,6 +239,7 @@ abstract class AbstractSearchHelper implements SearchableInterface
                     $whereArray[] = 'tbl.kindOfDish';
                     $whereArray[] = 'tbl.imageOfDish';
                     $whereArray[] = 'tbl.ingredients';
+                    $whereArray[] = 'tbl.myLocation';
                     break;
                 case 'event':
                     $whereArray[] = 'tbl.workflowState';
@@ -248,28 +251,31 @@ abstract class AbstractSearchHelper implements SearchableInterface
                     $whereArray[] = 'tbl.numberOfStreet';
                     $whereArray[] = 'tbl.zipCode';
                     $whereArray[] = 'tbl.city';
+                    $whereArray[] = 'tbl.myLocation';
                     break;
                 case 'product':
                     $whereArray[] = 'tbl.workflowState';
                     $whereArray[] = 'tbl.name';
+                    $whereArray[] = 'tbl.keywordsForProduct';
                     $whereArray[] = 'tbl.description';
                     $whereArray[] = 'tbl.kindOfProduct';
                     $whereArray[] = 'tbl.imageOfProduct';
                     $whereArray[] = 'tbl.today';
+                    $whereArray[] = 'tbl.myLocation';
                     break;
                 case 'specialOfLocation':
                     $whereArray[] = 'tbl.workflowState';
                     $whereArray[] = 'tbl.name';
-                    $whereArray[] = 'tbl.description';
                     $whereArray[] = 'tbl.descriptionForGoogle';
+                    $whereArray[] = 'tbl.description';
                     $whereArray[] = 'tbl.iconForSpecial';
                     $whereArray[] = 'tbl.colorOfIcon';
                     break;
                 case 'serviceOfLocation':
                     $whereArray[] = 'tbl.workflowState';
                     $whereArray[] = 'tbl.name';
-                    $whereArray[] = 'tbl.description';
                     $whereArray[] = 'tbl.descriptionForGoogle';
+                    $whereArray[] = 'tbl.description';
                     $whereArray[] = 'tbl.iconForService';
                     break;
                 case 'abonnement':
@@ -302,7 +308,7 @@ abstract class AbstractSearchHelper implements SearchableInterface
     
             $descriptionFieldName = $this->entityDisplayHelper->getDescriptionFieldName($objectType);
     
-            $entitiesWithDisplayAction = ['branch', 'location', 'part', 'imageOfLocation', 'fileOfLocation', 'offer', 'menuOfLocation', 'partOfMenu', 'dish', 'event', 'product', 'specialOfLocation', 'serviceOfLocation'];
+            $entitiesWithDisplayAction = ['branch', 'location', 'part', 'offer', 'menuOfLocation', 'partOfMenu', 'dish', 'event', 'product', 'specialOfLocation', 'serviceOfLocation'];
     
             foreach ($entities as $entity) {
                 $urlArgs = $entity->createUrlArgs();
@@ -354,14 +360,6 @@ abstract class AbstractSearchHelper implements SearchableInterface
             'mUYourCityModuleParts' => [
                 'value' => 'part',
                 'label' => $this->__('Parts')
-            ],
-            'mUYourCityModuleImagesOfLocation' => [
-                'value' => 'imageOfLocation',
-                'label' => $this->__('Images of location')
-            ],
-            'mUYourCityModuleFilesOfLocation' => [
-                'value' => 'fileOfLocation',
-                'label' => $this->__('Files of location')
             ],
             'mUYourCityModuleOffers' => [
                 'value' => 'offer',

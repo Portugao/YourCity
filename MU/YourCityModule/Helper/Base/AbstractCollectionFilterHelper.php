@@ -20,8 +20,6 @@ use Zikula\UsersModule\Constant as UsersConstant;
 use MU\YourCityModule\Entity\BranchEntity;
 use MU\YourCityModule\Entity\LocationEntity;
 use MU\YourCityModule\Entity\PartEntity;
-use MU\YourCityModule\Entity\ImageOfLocationEntity;
-use MU\YourCityModule\Entity\FileOfLocationEntity;
 use MU\YourCityModule\Entity\OfferEntity;
 use MU\YourCityModule\Entity\MenuOfLocationEntity;
 use MU\YourCityModule\Entity\PartOfMenuEntity;
@@ -94,12 +92,6 @@ abstract class AbstractCollectionFilterHelper
         if ($objectType == 'part') {
             return $this->getViewQuickNavParametersForPart($context, $args);
         }
-        if ($objectType == 'imageOfLocation') {
-            return $this->getViewQuickNavParametersForImageOfLocation($context, $args);
-        }
-        if ($objectType == 'fileOfLocation') {
-            return $this->getViewQuickNavParametersForFileOfLocation($context, $args);
-        }
         if ($objectType == 'offer') {
             return $this->getViewQuickNavParametersForOffer($context, $args);
         }
@@ -149,12 +141,6 @@ abstract class AbstractCollectionFilterHelper
         }
         if ($objectType == 'part') {
             return $this->addCommonViewFiltersForPart($qb);
-        }
-        if ($objectType == 'imageOfLocation') {
-            return $this->addCommonViewFiltersForImageOfLocation($qb);
-        }
-        if ($objectType == 'fileOfLocation') {
-            return $this->addCommonViewFiltersForFileOfLocation($qb);
         }
         if ($objectType == 'offer') {
             return $this->addCommonViewFiltersForOffer($qb);
@@ -206,12 +192,6 @@ abstract class AbstractCollectionFilterHelper
         }
         if ($objectType == 'part') {
             return $this->applyDefaultFiltersForPart($qb, $parameters);
-        }
-        if ($objectType == 'imageOfLocation') {
-            return $this->applyDefaultFiltersForImageOfLocation($qb, $parameters);
-        }
-        if ($objectType == 'fileOfLocation') {
-            return $this->applyDefaultFiltersForFileOfLocation($qb, $parameters);
         }
         if ($objectType == 'offer') {
             return $this->applyDefaultFiltersForOffer($qb, $parameters);
@@ -283,6 +263,8 @@ abstract class AbstractCollectionFilterHelper
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
         $parameters['partOfCity'] = $this->request->query->get('partOfCity', '');
         $parameters['branchOfLocation'] = $this->request->query->get('branchOfLocation', '');
+        $parameters['servicesOfLocation'] = $this->request->query->get('servicesOfLocation', '');
+        $parameters['specialsOfLocation'] = $this->request->query->get('specialsOfLocation', '');
         $parameters['owner'] = (int) $this->request->query->get('owner', 0);
         $parameters['admin1'] = (int) $this->request->query->get('admin1', 0);
         $parameters['admin2'] = (int) $this->request->query->get('admin2', 0);
@@ -330,50 +312,6 @@ abstract class AbstractCollectionFilterHelper
      *
      * @return array List of template variables to be assigned
      */
-    protected function getViewQuickNavParametersForImageOfLocation($context = '', $args = [])
-    {
-        $parameters = [];
-        if (!is_object($this->request)) {
-            return $parameters;
-        }
-    
-        $parameters['location'] = $this->request->query->get('location', 0);
-        $parameters['workflowState'] = $this->request->query->get('workflowState', '');
-        $parameters['q'] = $this->request->query->get('q', '');
-    
-        return $parameters;
-    }
-    
-    /**
-     * Returns an array of additional template variables for view quick navigation forms.
-     *
-     * @param string $context Usage context (allowed values: controllerAction, api, actionHandler, block, contentType)
-     * @param array  $args    Additional arguments
-     *
-     * @return array List of template variables to be assigned
-     */
-    protected function getViewQuickNavParametersForFileOfLocation($context = '', $args = [])
-    {
-        $parameters = [];
-        if (!is_object($this->request)) {
-            return $parameters;
-        }
-    
-        $parameters['location'] = $this->request->query->get('location', 0);
-        $parameters['workflowState'] = $this->request->query->get('workflowState', '');
-        $parameters['q'] = $this->request->query->get('q', '');
-    
-        return $parameters;
-    }
-    
-    /**
-     * Returns an array of additional template variables for view quick navigation forms.
-     *
-     * @param string $context Usage context (allowed values: controllerAction, api, actionHandler, block, contentType)
-     * @param array  $args    Additional arguments
-     *
-     * @return array List of template variables to be assigned
-     */
     protected function getViewQuickNavParametersForOffer($context = '', $args = [])
     {
         $parameters = [];
@@ -381,8 +319,8 @@ abstract class AbstractCollectionFilterHelper
             return $parameters;
         }
     
-        $parameters['location'] = $this->request->query->get('location', 0);
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
+        $parameters['myLocation'] = $this->request->query->get('myLocation', '');
         $parameters['q'] = $this->request->query->get('q', '');
     
         return $parameters;
@@ -403,9 +341,9 @@ abstract class AbstractCollectionFilterHelper
             return $parameters;
         }
     
-        $parameters['location'] = $this->request->query->get('location', 0);
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
         $parameters['kindOfMenu'] = $this->request->query->get('kindOfMenu', '');
+        $parameters['myLocation'] = $this->request->query->get('myLocation', '');
         $parameters['q'] = $this->request->query->get('q', '');
     
         return $parameters;
@@ -426,9 +364,8 @@ abstract class AbstractCollectionFilterHelper
             return $parameters;
         }
     
-        $parameters['menuOfLocation'] = $this->request->query->get('menuOfLocation', 0);
-        $parameters['location'] = $this->request->query->get('location', 0);
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
+        $parameters['myLocation'] = $this->request->query->get('myLocation', '');
         $parameters['q'] = $this->request->query->get('q', '');
     
         return $parameters;
@@ -449,11 +386,9 @@ abstract class AbstractCollectionFilterHelper
             return $parameters;
         }
     
-        $parameters['menuOfLocation'] = $this->request->query->get('menuOfLocation', 0);
-        $parameters['partOfMenu'] = $this->request->query->get('partOfMenu', 0);
-        $parameters['location'] = $this->request->query->get('location', 0);
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
         $parameters['kindOfDish'] = $this->request->query->get('kindOfDish', '');
+        $parameters['myLocation'] = $this->request->query->get('myLocation', '');
         $parameters['q'] = $this->request->query->get('q', '');
     
         return $parameters;
@@ -474,9 +409,9 @@ abstract class AbstractCollectionFilterHelper
             return $parameters;
         }
     
-        $parameters['location'] = $this->request->query->get('location', 0);
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
         $parameters['kindOfEvent'] = $this->request->query->get('kindOfEvent', '');
+        $parameters['myLocation'] = $this->request->query->get('myLocation', '');
         $parameters['q'] = $this->request->query->get('q', '');
     
         return $parameters;
@@ -497,10 +432,10 @@ abstract class AbstractCollectionFilterHelper
             return $parameters;
         }
     
-        $parameters['location'] = $this->request->query->get('location', 0);
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
         $parameters['kindOfProduct'] = $this->request->query->get('kindOfProduct', '');
         $parameters['today'] = $this->request->query->get('today', '');
+        $parameters['myLocation'] = $this->request->query->get('myLocation', '');
         $parameters['q'] = $this->request->query->get('q', '');
         $parameters['monday'] = $this->request->query->get('monday', '');
         $parameters['tuesday'] = $this->request->query->get('tuesday', '');
@@ -570,7 +505,6 @@ abstract class AbstractCollectionFilterHelper
             return $parameters;
         }
     
-        $parameters['location'] = $this->request->query->get('location', 0);
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
         $parameters['q'] = $this->request->query->get('q', '');
         $parameters['showMenus'] = $this->request->query->get('showMenus', '');
@@ -732,94 +666,6 @@ abstract class AbstractCollectionFilterHelper
         }
     
         $qb = $this->applyDefaultFiltersForPart($qb, $parameters);
-    
-        return $qb;
-    }
-    
-    /**
-     * Adds quick navigation related filter options as where clauses.
-     *
-     * @param QueryBuilder $qb Query builder to be enhanced
-     *
-     * @return QueryBuilder Enriched query builder instance
-     */
-    protected function addCommonViewFiltersForImageOfLocation(QueryBuilder $qb)
-    {
-        $routeName = $this->request->get('_route');
-        if (false !== strpos($routeName, 'edit')) {
-            return $qb;
-        }
-    
-        $parameters = $this->getViewQuickNavParametersForImageOfLocation();
-        foreach ($parameters as $k => $v) {
-            if (in_array($k, ['q', 'searchterm'])) {
-                // quick search
-                if (!empty($v)) {
-                    $repository = $this->entityFactory->getRepository('imageOfLocation');
-                    $qb = $repository->addSearchFilter('imageOfLocation', $qb, $v);
-                }
-            } else if (!is_array($v)) {
-                // field filter
-                if ((!is_numeric($v) && $v != '') || (is_numeric($v) && $v > 0)) {
-                    if ($k == 'workflowState' && substr($v, 0, 1) == '!') {
-                        $qb->andWhere('tbl.' . $k . ' != :' . $k)
-                           ->setParameter($k, substr($v, 1, strlen($v)-1));
-                    } elseif (substr($v, 0, 1) == '%') {
-                        $qb->andWhere('tbl.' . $k . ' LIKE :' . $k)
-                           ->setParameter($k, '%' . $v . '%');
-                    } else {
-                        $qb->andWhere('tbl.' . $k . ' = :' . $k)
-                           ->setParameter($k, $v);
-                   }
-                }
-            }
-        }
-    
-        $qb = $this->applyDefaultFiltersForImageOfLocation($qb, $parameters);
-    
-        return $qb;
-    }
-    
-    /**
-     * Adds quick navigation related filter options as where clauses.
-     *
-     * @param QueryBuilder $qb Query builder to be enhanced
-     *
-     * @return QueryBuilder Enriched query builder instance
-     */
-    protected function addCommonViewFiltersForFileOfLocation(QueryBuilder $qb)
-    {
-        $routeName = $this->request->get('_route');
-        if (false !== strpos($routeName, 'edit')) {
-            return $qb;
-        }
-    
-        $parameters = $this->getViewQuickNavParametersForFileOfLocation();
-        foreach ($parameters as $k => $v) {
-            if (in_array($k, ['q', 'searchterm'])) {
-                // quick search
-                if (!empty($v)) {
-                    $repository = $this->entityFactory->getRepository('fileOfLocation');
-                    $qb = $repository->addSearchFilter('fileOfLocation', $qb, $v);
-                }
-            } else if (!is_array($v)) {
-                // field filter
-                if ((!is_numeric($v) && $v != '') || (is_numeric($v) && $v > 0)) {
-                    if ($k == 'workflowState' && substr($v, 0, 1) == '!') {
-                        $qb->andWhere('tbl.' . $k . ' != :' . $k)
-                           ->setParameter($k, substr($v, 1, strlen($v)-1));
-                    } elseif (substr($v, 0, 1) == '%') {
-                        $qb->andWhere('tbl.' . $k . ' LIKE :' . $k)
-                           ->setParameter($k, '%' . $v . '%');
-                    } else {
-                        $qb->andWhere('tbl.' . $k . ' = :' . $k)
-                           ->setParameter($k, $v);
-                   }
-                }
-            }
-        }
-    
-        $qb = $this->applyDefaultFiltersForFileOfLocation($qb, $parameters);
     
         return $qb;
     }
@@ -1324,56 +1170,6 @@ abstract class AbstractCollectionFilterHelper
      *
      * @return QueryBuilder Enriched query builder instance
      */
-    protected function applyDefaultFiltersForImageOfLocation(QueryBuilder $qb, $parameters = [])
-    {
-        $routeName = $this->request->get('_route');
-        $isAdminArea = false !== strpos($routeName, 'muyourcitymodule_image of location_admin');
-        if ($isAdminArea) {
-            return $qb;
-        }
-    
-        $showOnlyOwnEntries = (bool)$this->request->query->getInt('own', $this->showOnlyOwnEntries);
-    
-        if ($showOnlyOwnEntries) {
-            $qb = $this->addCreatorFilter($qb);
-        }
-    
-        return $qb;
-    }
-    
-    /**
-     * Adds default filters as where clauses.
-     *
-     * @param QueryBuilder $qb         Query builder to be enhanced
-     * @param array        $parameters List of determined filter options
-     *
-     * @return QueryBuilder Enriched query builder instance
-     */
-    protected function applyDefaultFiltersForFileOfLocation(QueryBuilder $qb, $parameters = [])
-    {
-        $routeName = $this->request->get('_route');
-        $isAdminArea = false !== strpos($routeName, 'muyourcitymodule_file of location_admin');
-        if ($isAdminArea) {
-            return $qb;
-        }
-    
-        $showOnlyOwnEntries = (bool)$this->request->query->getInt('own', $this->showOnlyOwnEntries);
-    
-        if ($showOnlyOwnEntries) {
-            $qb = $this->addCreatorFilter($qb);
-        }
-    
-        return $qb;
-    }
-    
-    /**
-     * Adds default filters as where clauses.
-     *
-     * @param QueryBuilder $qb         Query builder to be enhanced
-     * @param array        $parameters List of determined filter options
-     *
-     * @return QueryBuilder Enriched query builder instance
-     */
     protected function applyDefaultFiltersForOffer(QueryBuilder $qb, $parameters = [])
     {
         $routeName = $this->request->get('_route');
@@ -1685,12 +1481,14 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchName'] = '%' . $fragment . '%';
             $filters[] = 'tbl.letterForOrder LIKE :searchLetterForOrder';
             $parameters['searchLetterForOrder'] = '%' . $fragment . '%';
+            $filters[] = 'tbl.keywordsForLocation LIKE :searchKeywordsForLocation';
+            $parameters['searchKeywordsForLocation'] = '%' . $fragment . '%';
+            $filters[] = 'tbl.descriptionForGoogle LIKE :searchDescriptionForGoogle';
+            $parameters['searchDescriptionForGoogle'] = '%' . $fragment . '%';
             $filters[] = 'tbl.slogan LIKE :searchSlogan';
             $parameters['searchSlogan'] = '%' . $fragment . '%';
             $filters[] = 'tbl.logoOfYourLocation = :searchLogoOfYourLocation';
             $parameters['searchLogoOfYourLocation'] = $fragment;
-            $filters[] = 'tbl.descriptionForGoogle LIKE :searchDescriptionForGoogle';
-            $parameters['searchDescriptionForGoogle'] = '%' . $fragment . '%';
             $filters[] = 'tbl.description LIKE :searchDescription';
             $parameters['searchDescription'] = '%' . $fragment . '%';
             $filters[] = 'tbl.description2 LIKE :searchDescription2';
@@ -1779,6 +1577,26 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchPartOfCity'] = $fragment;
             $filters[] = 'tbl.branchOfLocation = :searchBranchOfLocation';
             $parameters['searchBranchOfLocation'] = $fragment;
+            $filters[] = 'tbl.servicesOfLocation = :searchServicesOfLocation';
+            $parameters['searchServicesOfLocation'] = $fragment;
+            $filters[] = 'tbl.specialsOfLocation = :searchSpecialsOfLocation';
+            $parameters['searchSpecialsOfLocation'] = $fragment;
+            $filters[] = 'tbl.firstImage = :searchFirstImage';
+            $parameters['searchFirstImage'] = $fragment;
+            $filters[] = 'tbl.secondImage = :searchSecondImage';
+            $parameters['searchSecondImage'] = $fragment;
+            $filters[] = 'tbl.thirdImage = :searchThirdImage';
+            $parameters['searchThirdImage'] = $fragment;
+            $filters[] = 'tbl.fourthImage = :searchFourthImage';
+            $parameters['searchFourthImage'] = $fragment;
+            $filters[] = 'tbl.fifthImage = :searchFifthImage';
+            $parameters['searchFifthImage'] = $fragment;
+            $filters[] = 'tbl.sixthImage = :searchSixthImage';
+            $parameters['searchSixthImage'] = $fragment;
+            $filters[] = 'tbl.firstFile = :searchFirstFile';
+            $parameters['searchFirstFile'] = $fragment;
+            $filters[] = 'tbl.secondFile = :searchSecondFile';
+            $parameters['searchSecondFile'] = $fragment;
         }
         if ($objectType == 'part') {
             $filters[] = 'tbl.name LIKE :searchName';
@@ -1789,26 +1607,6 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchDescription'] = '%' . $fragment . '%';
             $filters[] = 'tbl.imageOfPart = :searchImageOfPart';
             $parameters['searchImageOfPart'] = $fragment;
-        }
-        if ($objectType == 'imageOfLocation') {
-            $filters[] = 'tbl.name LIKE :searchName';
-            $parameters['searchName'] = '%' . $fragment . '%';
-            $filters[] = 'tbl.description LIKE :searchDescription';
-            $parameters['searchDescription'] = '%' . $fragment . '%';
-            $filters[] = 'tbl.image = :searchImage';
-            $parameters['searchImage'] = $fragment;
-            $filters[] = 'tbl.positionOfImage = :searchPositionOfImage';
-            $parameters['searchPositionOfImage'] = $fragment;
-        }
-        if ($objectType == 'fileOfLocation') {
-            $filters[] = 'tbl.name LIKE :searchName';
-            $parameters['searchName'] = '%' . $fragment . '%';
-            $filters[] = 'tbl.description LIKE :searchDescription';
-            $parameters['searchDescription'] = '%' . $fragment . '%';
-            $filters[] = 'tbl.fileOfFile = :searchFileOfFile';
-            $parameters['searchFileOfFile'] = $fragment;
-            $filters[] = 'tbl.positionOfFile = :searchPositionOfFile';
-            $parameters['searchPositionOfFile'] = $fragment;
         }
         if ($objectType == 'offer') {
             $filters[] = 'tbl.workflowState = :searchWorkflowState';
@@ -1835,6 +1633,8 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchInViewFrom'] = $fragment;
             $filters[] = 'tbl.inViewUntil = :searchInViewUntil';
             $parameters['searchInViewUntil'] = $fragment;
+            $filters[] = 'tbl.myLocation = :searchMyLocation';
+            $parameters['searchMyLocation'] = $fragment;
         }
         if ($objectType == 'menuOfLocation') {
             $filters[] = 'tbl.workflowState = :searchWorkflowState';
@@ -1859,6 +1659,8 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchInViewFrom'] = $fragment;
             $filters[] = 'tbl.inViewUntil = :searchInViewUntil';
             $parameters['searchInViewUntil'] = $fragment;
+            $filters[] = 'tbl.myLocation = :searchMyLocation';
+            $parameters['searchMyLocation'] = $fragment;
         }
         if ($objectType == 'partOfMenu') {
             $filters[] = 'tbl.name LIKE :searchName';
@@ -1867,6 +1669,8 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchDescription'] = '%' . $fragment . '%';
             $filters[] = 'tbl.positionOfPart = :searchPositionOfPart';
             $parameters['searchPositionOfPart'] = $fragment;
+            $filters[] = 'tbl.myLocation = :searchMyLocation';
+            $parameters['searchMyLocation'] = $fragment;
         }
         if ($objectType == 'dish') {
             $filters[] = 'tbl.name LIKE :searchName';
@@ -1883,6 +1687,8 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchIngredients'] = '%' . $fragment . '%';
             $filters[] = 'tbl.positionOfDish = :searchPositionOfDish';
             $parameters['searchPositionOfDish'] = $fragment;
+            $filters[] = 'tbl.myLocation = :searchMyLocation';
+            $parameters['searchMyLocation'] = $fragment;
         }
         if ($objectType == 'event') {
             $filters[] = 'tbl.workflowState = :searchWorkflowState';
@@ -1915,12 +1721,16 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchInViewFrom'] = $fragment;
             $filters[] = 'tbl.inViewUntil = :searchInViewUntil';
             $parameters['searchInViewUntil'] = $fragment;
+            $filters[] = 'tbl.myLocation = :searchMyLocation';
+            $parameters['searchMyLocation'] = $fragment;
         }
         if ($objectType == 'product') {
             $filters[] = 'tbl.workflowState = :searchWorkflowState';
             $parameters['searchWorkflowState'] = $fragment;
             $filters[] = 'tbl.name LIKE :searchName';
             $parameters['searchName'] = '%' . $fragment . '%';
+            $filters[] = 'tbl.keywordsForProduct LIKE :searchKeywordsForProduct';
+            $parameters['searchKeywordsForProduct'] = '%' . $fragment . '%';
             $filters[] = 'tbl.description LIKE :searchDescription';
             $parameters['searchDescription'] = '%' . $fragment . '%';
             $filters[] = 'tbl.kindOfProduct = :searchKindOfProduct';
@@ -1931,14 +1741,16 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchToday'] = $fragment;
             $filters[] = 'tbl.priceOfProduct = :searchPriceOfProduct';
             $parameters['searchPriceOfProduct'] = $fragment;
+            $filters[] = 'tbl.myLocation = :searchMyLocation';
+            $parameters['searchMyLocation'] = $fragment;
         }
         if ($objectType == 'specialOfLocation') {
             $filters[] = 'tbl.name LIKE :searchName';
             $parameters['searchName'] = '%' . $fragment . '%';
-            $filters[] = 'tbl.description LIKE :searchDescription';
-            $parameters['searchDescription'] = '%' . $fragment . '%';
             $filters[] = 'tbl.descriptionForGoogle LIKE :searchDescriptionForGoogle';
             $parameters['searchDescriptionForGoogle'] = '%' . $fragment . '%';
+            $filters[] = 'tbl.description LIKE :searchDescription';
+            $parameters['searchDescription'] = '%' . $fragment . '%';
             $filters[] = 'tbl.iconForSpecial LIKE :searchIconForSpecial';
             $parameters['searchIconForSpecial'] = '%' . $fragment . '%';
             $filters[] = 'tbl.colorOfIcon LIKE :searchColorOfIcon';
@@ -1947,10 +1759,10 @@ abstract class AbstractCollectionFilterHelper
         if ($objectType == 'serviceOfLocation') {
             $filters[] = 'tbl.name LIKE :searchName';
             $parameters['searchName'] = '%' . $fragment . '%';
-            $filters[] = 'tbl.description LIKE :searchDescription';
-            $parameters['searchDescription'] = '%' . $fragment . '%';
             $filters[] = 'tbl.descriptionForGoogle LIKE :searchDescriptionForGoogle';
             $parameters['searchDescriptionForGoogle'] = '%' . $fragment . '%';
+            $filters[] = 'tbl.description LIKE :searchDescription';
+            $parameters['searchDescription'] = '%' . $fragment . '%';
             $filters[] = 'tbl.iconForService LIKE :searchIconForService';
             $parameters['searchIconForService'] = '%' . $fragment . '%';
         }

@@ -2,15 +2,8 @@
 <serviceoflocation id="{{ serviceOfLocation.getId() }}" createdon="{{ serviceOfLocation.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ serviceOfLocation.updatedDate|localizeddate('medium', 'short') }}">
     <id>{{ serviceOfLocation.id }}</id>
     <name><![CDATA[{{ serviceOfLocation.name }}]]></name>
-    <description><![CDATA[{{ serviceOfLocation.description|safeHtml }}]]></description>
     <descriptionForGoogle><![CDATA[{{ serviceOfLocation.descriptionForGoogle }}]]></descriptionForGoogle>
+    <description><![CDATA[{{ serviceOfLocation.description|safeHtml }}]]></description>
     <iconForService><![CDATA[{{ serviceOfLocation.iconForService }}]]></iconForService>
     <workflowState>{{ serviceOfLocation.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
-    <locations>
-    {% if serviceOfLocation.locations|default %}
-        {% for relatedItem in serviceOfLocation.locations %}
-        <location>{{ relatedItem|muyourcitymodule_formattedTitle }}</location>
-        {% endfor %}
-    {% endif %}
-    </locations>
 </serviceoflocation>

@@ -64,38 +64,23 @@ abstract class AbstractModelHelper
             case 'part':
                 $result = true;
                 break;
-            case 'imageOfLocation':
-                $result = true;
-                $result &= $this->hasExistingInstances('location');
-                break;
-            case 'fileOfLocation':
-                $result = true;
-                $result &= $this->hasExistingInstances('location');
-                break;
             case 'offer':
                 $result = true;
-                $result &= $this->hasExistingInstances('location');
                 break;
             case 'menuOfLocation':
                 $result = true;
-                $result &= $this->hasExistingInstances('location');
                 break;
             case 'partOfMenu':
                 $result = true;
-                $result &= $this->hasExistingInstances('menuOfLocation');
-                $result &= $this->hasExistingInstances('location');
                 break;
             case 'dish':
                 $result = true;
-                $result &= $this->hasExistingInstances('location');
                 break;
             case 'event':
                 $result = true;
-                $result &= $this->hasExistingInstances('location');
                 break;
             case 'product':
                 $result = true;
-                $result &= $this->hasExistingInstances('location');
                 break;
             case 'specialOfLocation':
                 $result = true;
@@ -105,7 +90,6 @@ abstract class AbstractModelHelper
                 break;
             case 'abonnement':
                 $result = true;
-                $result &= $this->hasExistingInstances('location');
                 break;
         }
     

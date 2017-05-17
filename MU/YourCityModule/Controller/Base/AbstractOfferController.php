@@ -149,7 +149,7 @@ abstract class AbstractOfferController extends AbstractController
             new Column('effectivFrom'),
             new Column('effectivUntil'),
             new Column('inViewUntil'),
-            new Column('location'),
+            new Column('myLocation'),
             new Column('createdBy'),
             new Column('createdDate'),
             new Column('updatedBy'),

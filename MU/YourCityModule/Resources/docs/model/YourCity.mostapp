@@ -12,7 +12,7 @@ application "YourCity" {
         versionAllGeneratedFiles false
         generatePoweredByBacklinksIntoFooterTemplates false
         generateTests false
-        markFiles "Container/LinkContainer.php,\r\nController/AbonnementController.php,\r\nController/LocationController.php,\r\nEntity/LocationEntity.php,\r\nEntity/Repository/LocationRepository.php,\r\nEntity/Repository/MenuOfLocationRepository.php,\r\nForm/Type/AbonnementType.php,\r\nHelper/CollectionFilterHelper.php,\r\nHelper/ControllerHelper.php,\r\nHelper/ModelHelper.php,\r\nMenu/ItemActionsMenu.php,\r\nResources/public/css/style.css,\r\nResources/config/forms.yml,\r\nResources/views/base.html.twig,\r\nResources/views/Abonnement/edit.html.twig,\r\nResources/views/Abonnement/view.html.twig,\r\nResources/views/Block/itemlist_modify.html.twig,\r\nResources/views/Branch/display.html.twig,\r\nResources/views/Branch/view.html.twig,\r\nResources/views/Dish/display.html.twig,\r\nResources/views/Dish/view.html.twig,\r\nResources/views/Event/display.html.twig,\r\nResources/views/Event/view.html.twig,\r\nResources/views/FileOfLocatiojn/display.html.twig,\r\nResources/views/FileOfLocation/view.html.twig,\r\nResources/views/ImageOfLocation/display.html.twig,\r\nResources/views/ImageOfLocation/view.html.twig,\r\nResources/views/Location/display.html.twig,\r\nResources/views/Location/edit.html.twig,\r\nResources/views/Location/view.html.twig,\r\nResources/views/MenuOfLocation/display.html.twig,\r\nResources/views/MenuOfLocation/view.html.twig,\r\nResources/views/Offer/display.html.twig,\r\nResources/views/Offer/view.html.twig,\r\nResources/views/Part/display.html.twig,\r\nResources/views/Part/view.html.twig,\r\nResources/views/PartOfMenu/display.html.twig,\r\nResources/views/PartOfMenu/view.html.twig,\r\nResources/views/Product/view.html.twig,\r\nResources/views/Product/display.html.twig,\r\nResources/views/Part/view.html.twig,\r\nResources/views/SpecialOfLocation/display.html.twig,\r\nResources/views/SpecialOfLocation/view.html.twig,\r\nResources/views/ServiceOfLocation/view.html.twig,\r\nResources/views/ServiceOfLocation/display.html.twig"
+        markFiles "Block/Form/Type/ItemListBlockType.php,\r\nContainer/LinkContainer.php,\r\nController/AbonnementController.php,\r\nController/LocationController.php,\r\nEntity/LocationEntity.php,\r\nEntity/Repository/LocationRepository.php,\r\nEntity/Repository/MenuOfLocationRepository.php,\r\nForm/Type/AbonnementType.php,\r\nHelper/CollectionFilterHelper.php,\r\nHelper/ControllerHelper.php,\r\nHelper/ListEntriesHelper.php,\r\nHelper/ModelHelper.php,\r\nMenu/ItemActionsMenu.php,\r\nResources/public/css/style.css,\r\nResources/config/forms.yml,\r\nResources/views/base.html.twig,\r\nResources/views/Abonnement/edit.html.twig,\r\nResources/views/Abonnement/view.html.twig,\r\nResources/views/Block/itemlist_modify.html.twig,\r\nResources/views/Branch/display.html.twig,\r\nResources/views/Branch/view.html.twig,\r\nResources/views/Dish/display.html.twig,\r\nResources/views/Dish/view.html.twig,\r\nResources/views/Event/display.html.twig,\r\nResources/views/Event/view.html.twig,\r\nResources/views/FileOfLocatiojn/display.html.twig,\r\nResources/views/FileOfLocation/view.html.twig,\r\nResources/views/ImageOfLocation/display.html.twig,\r\nResources/views/ImageOfLocation/view.html.twig,\r\nResources/views/Location/display.html.twig,\r\nResources/views/Location/edit.html.twig,\r\nResources/views/Location/view.html.twig,\r\nResources/views/MenuOfLocation/display.html.twig,\r\nResources/views/MenuOfLocation/view.html.twig,\r\nResources/views/Offer/display.html.twig,\r\nResources/views/Offer/view.html.twig,\r\nResources/views/Part/display.html.twig,\r\nResources/views/Part/view.html.twig,\r\nResources/views/PartOfMenu/display.html.twig,\r\nResources/views/PartOfMenu/view.html.twig,\r\nResources/views/Product/view.html.twig,\r\nResources/views/Product/display.html.twig,\r\nResources/views/Part/view.html.twig,\r\nResources/views/SpecialOfLocation/display.html.twig,\r\nResources/views/SpecialOfLocation/view.html.twig,\r\nResources/views/ServiceOfLocation/view.html.twig,\r\nResources/views/ServiceOfLocation/display.html.twig"
     }
     entities {
         entity "branch" {
@@ -60,6 +60,16 @@ application "YourCity" {
                     documentation "Enter the letter for ordering of the location."
                     displayType DISPLAY_SORTING
                 },
+                string "keywordsForLocation" translatable {
+                    documentation "here you can enter keywords for search optimization."
+                    mandatory false
+                },
+                string "descriptionForGoogle" nullable translatable {
+                    documentation "Enter the description for google and Co.\r\nOnly 170 characters are allowed."
+                    mandatory false
+                    displayType NONE
+                length 170
+                },
                 string "slogan" nullable translatable {
                     documentation "Slogan or additional name of your company."
                     mandatory false
@@ -74,12 +84,6 @@ application "YourCity" {
                     maxHeight 400
                     allowLandscape false
                     allowPortrait false
-                },
-                string "descriptionForGoogle" nullable translatable {
-                    documentation "Enter the description for google and Co.\r\nOnly 170 characters are allowed."
-                    mandatory false
-                    displayType NONE
-                length 170
                 },
                 text "description" nullable translatable {
                     documentation "Enter a description of your location (company) and your products.\r\nMaximum 2000 characters."
@@ -286,6 +290,70 @@ application "YourCity" {
                 displayType DISPLAY
                 }
             ,
+                list "partOfCity" {
+                    displayType DISPLAY
+                    items {
+                        listItem "None" ( "none" )
+                    }
+                },
+                list "branchOfLocation" multiple {
+                    displayType DISPLAY
+                    items {
+                        listItem "All" ( "all" ),
+                        listItem "None" ( "none" )
+                    }
+                }
+            ,
+                list "servicesOfLocation" multiple expanded {
+                    items {
+                        listItem "None" ( "none" ),
+                        listItem "All" ( "all" ),
+                        listItem "None" ( "none" )
+                    }
+                },
+                list "specialsOfLocation" multiple expanded {
+                    items {
+                        listItem "All" ( "all" ),
+                        listItem "None" ( "none" )
+                    }
+                },
+                upload "firstImage" {
+                    documentation "This and the following images are optional for premium customers."
+                    mandatory false
+                    maxSize "200k"
+                },
+                upload "secondImage" {
+                    mandatory false
+                    maxSize "200k"
+                },
+                upload "thirdImage" {
+                    mandatory false
+                    maxSize "200k"
+                },
+                upload "fourthImage" {
+                    mandatory false
+                    maxSize "200k"
+                },
+                upload "fifthImage" {
+                    mandatory false
+                    maxSize "200k"
+                },
+                upload "sixthImage" {
+                    mandatory false
+                    maxSize "200k"
+                },
+                upload "firstFile" {
+                    mandatory false
+                    allowedExtensions "pdf"
+                    maxSize "200k"
+                    mimeTypes "application/pdf"
+                },
+                upload "secondFile" {
+                    mandatory false
+                    allowedExtensions "pdf"
+                    maxSize "200k"
+                    mimeTypes "application/pdf"
+                },
                 user "owner" nullable {
                     mandatory false
                     displayType NONE
@@ -300,20 +368,6 @@ application "YourCity" {
                     mandatory false
                     displayType NONE
                     onAccountDeletionCreator DELETE
-                }
-            ,
-                list "partOfCity" {
-                    displayType DISPLAY
-                    items {
-                        listItem "None" ( "none" )
-                    }
-                },
-                list "branchOfLocation" translatable multiple {
-                    displayType DISPLAY
-                    items {
-                        listItem "All" ( "all" ),
-                        listItem "None" ( "none" )
-                    }
                 }
             }
             actions {
@@ -344,57 +398,6 @@ application "YourCity" {
                 upload "imageOfPart" {
                     mandatory false
                 displayType DISPLAY
-                }
-            }
-            actions {
-                mainAction "Index",
-                viewAction "View",
-                displayAction "Display",
-                editAction "Edit",
-                deleteAction "Delete"
-            }
-        },
-        entity "imageOfLocation" {
-            nameMultiple "imagesOfLocation"
-            displayPattern "#name#"
-            fields {
-                string "name" translatable {
-                    mandatory true
-                },
-                text "description" nullable translatable {
-                    documentation "Maximum 2000 characters."
-                    mandatory false
-                },
-                upload "image",
-                integer "positionOfImage" {
-                    defaultValue "0"
-                    displayType NONE
-                }
-            }
-            actions {
-                mainAction "Index",
-                viewAction "View",
-                displayAction "Display",
-                editAction "Edit",
-                deleteAction "Delete"
-            }
-        },
-        entity "fileOfLocation" {
-            nameMultiple "filesOfLocation"
-            displayPattern "#name#"
-            fields {
-                string "name" translatable,
-                text "description" nullable translatable {
-                    documentation "Maximum 2000 characters."
-                    mandatory false
-                },
-                upload "fileOfFile" {
-                    allowedExtensions "pdf"
-                    mimeTypes "application/pdf"
-                },
-                integer "positionOfFile" {
-                    defaultValue "0"
-                    displayType NONE
                 }
             }
             actions {
@@ -460,6 +463,13 @@ application "YourCity" {
                 datetime "inViewUntil" nullable endDate {
                     mandatory false
                 }
+            ,
+                list "myLocation" {
+                    documentation "If you have more than one location, select the correct one!"
+                    items {
+                        listItem "None" ( "none" )
+                    }
+                }
             }
             actions {
                 mainAction "Index",
@@ -523,6 +533,13 @@ application "YourCity" {
                 datetime "inViewUntil" nullable endDate {
                     mandatory false
                 }
+            ,
+                list "myLocation" {
+                    documentation "If you have more than one location, select the correct one!"
+                    items {
+                        listItem "None" ( "none" )
+                    }
+                }
             }
             actions {
                 mainAction "Index",
@@ -546,6 +563,13 @@ application "YourCity" {
                 integer "positionOfPart" {
                     defaultValue "0"
                 displayType NONE
+                }
+            ,
+                list "myLocation" {
+                    documentation "If you have more than one location, select the correct one!"
+                    items {
+                        listItem "None" ( "none" )
+                    }
                 }
             }
             actions {
@@ -586,6 +610,13 @@ application "YourCity" {
                 },
                 integer "positionOfDish" {
                     defaultValue "0"
+                }
+            ,
+                list "myLocation" {
+                    documentation "If you have more than one location, select the correct one!"
+                    items {
+                        listItem "None" ( "none" )
+                    }
                 }
             }
             actions {
@@ -654,6 +685,13 @@ application "YourCity" {
                     documentation "Here you can enter the date and time until this event will appear in the overview of events.\r\nThen it will get put into the archive. Then you only are able to reuse it as model.\r\nIf you do not enter a value, this event will be shown further after the end."
                     mandatory false
                 }
+            ,
+                list "myLocation" {
+                    documentation "If you have more than one location, select the correct one!"
+                    items {
+                        listItem "None" ( "none" )
+                    }
+                }
             }
             actions {
                 mainAction "Index",
@@ -674,10 +712,13 @@ application "YourCity" {
                     documentation "Maximum 100 characters, better only 57."
                     length 100
                 },
+                string "keywordsForProduct" translatable {
+                    mandatory false
+                },
                 text "description" nullable translatable {
                     mandatory false
                 },
-                list "kindOfProduct" translatable multiple {
+                list "kindOfProduct" multiple {
                     defaultValue "other"
                     items {
                         listItem "apparel" ( "apparel" ),
@@ -725,6 +766,13 @@ application "YourCity" {
                     defaultValue "0.00"
                     mandatory false
                 }
+            ,
+                list "myLocation" {
+                    documentation "If you have more than one location, select the correct one!"
+                    items {
+                        listItem "None" ( "none" )
+                    }
+                }
             }
             actions {
                 mainAction "Index",
@@ -743,11 +791,11 @@ application "YourCity" {
                     documentation "Only 100 characters, better only 57."
                     length 100
                 },
-                text "description" nullable translatable {
-                    documentation "Only 2000 characters."
+                string "descriptionForGoogle" nullable translatable {
                     mandatory false
                 },
-                string "descriptionForGoogle" nullable translatable {
+                text "description" nullable translatable {
+                    documentation "Only 2000 characters."
                     mandatory false
                 },
                 string "iconForSpecial" {
@@ -778,14 +826,14 @@ application "YourCity" {
                     documentation "Only 100 characters."
                     length 100
                 },
+                string "descriptionForGoogle" nullable translatable {
+                    mandatory false
+                },
                 text "description" nullable translatable {
                     mandatory false
                 displayType NONE
                 }
             ,
-                string "descriptionForGoogle" nullable translatable {
-                    mandatory false
-                },
                 string "iconForService" {
                     documentation "Enter a bootstrap icon."
                     mandatory false
@@ -886,39 +934,6 @@ application "YourCity" {
     }
     relations {
         one2many {
-            source 
-            "location"
-            sourceAlias "location"
-            target "imageOfLocation"
-            targetAlias "imagesOfLocation"
-            nullable false
-            orderBy "positionOfImage"
-        },
-        one2many {
-            source "location"
-            sourceAlias "location"
-            target "fileOfLocation"
-            targetAlias "filesOfLocation"
-            nullable false
-            orderBy "positionOfFile"
-        },
-        one2many {
-            source "location"
-            sourceAlias "location"
-            target "offer"
-            targetAlias "offers"
-        nullable false
-        orderBy "effectivFrom"
-        },
-        one2many {
-            source "location"
-            sourceAlias "location"
-            target "menuOfLocation"
-            targetAlias "menuOfLocation"
-            nullable false
-            orderBy "positionOfMenu"
-        },
-        one2many {
             source "menuOfLocation"
             sourceAlias "menuOfLocation"
             target "dish"
@@ -944,66 +959,10 @@ application "YourCity" {
         one2many {
             source "location"
             sourceAlias "location"
-            target "event"
-            targetAlias "events"
-        nullable false
-        orderBy "startDate"
-        }
-    ,
-        one2many {
-            source "location"
-            sourceAlias "location"
-            target "product"
-            targetAlias "products"
-            nullable false
-            orderBy "name"
-        },
-        one2many {
-            source "location"
-            sourceAlias "location"
-            target "dish"
-            targetAlias "dishes"
-            nullable false
-            orderBy "positionOfDish"
-        }
-    ,
-        many2many {
-            source "location"
-            sourceAlias "locations"
-            target "specialOfLocation"
-            targetAlias "specialsOfLocation"
-            expandedTarget true
-            refClass "LocationSpecialOfLocation"
-            orderBy "name"
-        orderByReverse "letterForOrder"
-        },
-        many2many {
-            source "location"
-            sourceAlias "locations"
-            target "serviceOfLocation"
-            targetAlias "servicesOfLocation"
-            expandedTarget true
-            refClass "LocationServiceofLocation"
-            orderBy "name"
-        orderByReverse "letterForOrder"
-        }
-    ,
-        one2many {
-            source "location"
-            sourceAlias "location"
             target "abonnement"
             targetAlias "abonnements"
         nullable false
         orderBy ""
-        }
-    ,
-        one2many {
-            source "location"
-            sourceAlias "location"
-            target "partOfMenu"
-            targetAlias "partsOfMenu"
-            nullable false
-            orderBy "name"
         }
     }
     variables {
@@ -1011,6 +970,9 @@ application "YourCity" {
             vars {
                 textVar "city" {
                     value "Bremen"
+                },
+                textVar "standardZipCode" {
+                    value "28195"
                 },
                 textVar "areaCode" {
                     value "0421"

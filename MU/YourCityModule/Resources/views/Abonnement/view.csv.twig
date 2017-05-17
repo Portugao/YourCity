@@ -1,10 +1,8 @@
 {# purpose of this template: abonnements view csv view #}
 {% spaceless %}"{{ __('Name') }}";"{{ __('Show menus') }}";"{{ __('Send message for menus') }}";"{{ __('Show offers') }}";"{{ __('Send message for offers') }}";"{{ __('Show events') }}";"{{ __('Send message for events') }}";"{{ __('Show products') }}";"{{ __('Send message for products') }}";"{{ __('Show option one') }}";"{{ __('Send message to option one') }}";"{{ __('Show option two') }}";"{{ __('Send message to option two') }}";"{{ __('Show option three') }}";"{{ __('Send message to option three') }}";"{{ __('Position of abo') }}";"{{ __('Workflow state') }}"
-;"{{ __('Location') }}"
 {% endspaceless %}
 {% for abonnement in items %}
 {% spaceless %}
     "{{ abonnement.name }}";"{% if not abonnement.showMenus %}0{% else %}1{% endif %}";"{% if not abonnement.sendMessageForMenus %}0{% else %}1{% endif %}";"{% if not abonnement.showOffers %}0{% else %}1{% endif %}";"{% if not abonnement.sendMessageForOffers %}0{% else %}1{% endif %}";"{% if not abonnement.showEvents %}0{% else %}1{% endif %}";"{% if not abonnement.sendMessageForEvents %}0{% else %}1{% endif %}";"{% if not abonnement.showProducts %}0{% else %}1{% endif %}";"{% if not abonnement.sendMessageForProducts %}0{% else %}1{% endif %}";"{% if not abonnement.showOptionOne %}0{% else %}1{% endif %}";"{% if not abonnement.sendMessageToOptionOne %}0{% else %}1{% endif %}";"{% if not abonnement.showOptionTwo %}0{% else %}1{% endif %}";"{% if not abonnement.sendMessageToOptionTwo %}0{% else %}1{% endif %}";"{% if not abonnement.showOptionThree %}0{% else %}1{% endif %}";"{% if not abonnement.sendMessageToOptionThree %}0{% else %}1{% endif %}";"{{ abonnement.positionOfAbo }}";"{{ abonnement.workflowState|muyourcitymodule_objectState(false)|lower }}"
-    ;"{% if abonnement.location|default %}{{ abonnement.location|muyourcitymodule_formattedTitle }}{% endif %}"
 {% endspaceless %}
 {% endfor %}

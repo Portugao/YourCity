@@ -66,6 +66,7 @@ abstract class AbstractOfferRepository extends EntityRepository
             'effectivFrom',
             'effectivUntil',
             'inViewUntil',
+            'myLocation',
             'createdBy',
             'createdDate',
             'updatedBy',
@@ -493,7 +494,7 @@ abstract class AbstractOfferRepository extends EntityRepository
         if (!$isPaginated) {
             $result = $query->getResult();
         } else {
-            $paginator = new Paginator($query, true);
+            $paginator = new Paginator($query, false);
     
             $count = count($paginator);
             $result = $paginator;
@@ -705,7 +706,7 @@ abstract class AbstractOfferRepository extends EntityRepository
      */
     protected function addJoinsToSelection()
     {
-        $selection = ', tblLocation';
+        $selection = '';
     
         return $selection;
     }
@@ -719,7 +720,6 @@ abstract class AbstractOfferRepository extends EntityRepository
      */
     protected function addJoinsToFrom(QueryBuilder $qb)
     {
-        $qb->leftJoin('tbl.location', 'tblLocation');
     
         return $qb;
     }

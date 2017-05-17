@@ -48,6 +48,9 @@ abstract class AbstractProductEntity extends EntityAccess implements Translatabl
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer", unique=true)
+     * @Assert\Type(type="integer")
+     * @Assert\NotNull()
+     * @Assert\LessThan(value=1000000000)
      * @var integer $id
      */
     protected $id = 0;
@@ -73,6 +76,15 @@ abstract class AbstractProductEntity extends EntityAccess implements Translatabl
     
     /**
      * @Gedmo\Translatable
+     * @ORM\Column(length=255)
+     * @Assert\NotNull()
+     * @Assert\Length(min="0", max="255")
+     * @var string $keywordsForProduct
+     */
+    protected $keywordsForProduct = '';
+    
+    /**
+     * @Gedmo\Translatable
      * @ORM\Column(type="text", length=2000, nullable=true)
      * @Assert\Length(min="0", max="2000")
      * @var text $description
@@ -80,7 +92,6 @@ abstract class AbstractProductEntity extends EntityAccess implements Translatabl
     protected $description = '';
     
     /**
-     * @Gedmo\Translatable
      * @ORM\Column(length=255)
      * @Assert\NotBlank()
      * @YourCityAssert\ListEntry(entityName="product", propertyName="kindOfProduct", multiple=true)
@@ -190,6 +201,15 @@ abstract class AbstractProductEntity extends EntityAccess implements Translatabl
      */
     protected $priceOfProduct = 0.00;
     
+    /**
+     * If you have more than one location, select the correct one!
+     * @ORM\Column(length=255)
+     * @Assert\NotBlank()
+     * @YourCityAssert\ListEntry(entityName="product", propertyName="myLocation", multiple=false)
+     * @var string $myLocation
+     */
+    protected $myLocation = '';
+    
     
     /**
      * Used locale to override Translation listener's locale.
@@ -200,20 +220,6 @@ abstract class AbstractProductEntity extends EntityAccess implements Translatabl
      * @var string $locale
      */
     protected $locale;
-    
-    /**
-     * Bidirectional - Many products [products] are linked by one location [location] (OWNING SIDE).
-     *
-     * @ORM\ManyToOne(targetEntity="MU\YourCityModule\Entity\LocationEntity", inversedBy="products")
-     * @ORM\JoinTable(name="mu_yourcity_location",
-     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
-     * )
-     * @Assert\NotNull(message="Choosing a location is required.")
-     * @Assert\Type(type="MU\YourCityModule\Entity\LocationEntity")
-     * @var \MU\YourCityModule\Entity\LocationEntity $location
-     */
-    protected $location;
     
     
     /**
@@ -321,6 +327,30 @@ abstract class AbstractProductEntity extends EntityAccess implements Translatabl
     {
         if ($this->name !== $name) {
             $this->name = isset($name) ? $name : '';
+        }
+    }
+    
+    /**
+     * Returns the keywords for product.
+     *
+     * @return string
+     */
+    public function getKeywordsForProduct()
+    {
+        return $this->keywordsForProduct;
+    }
+    
+    /**
+     * Sets the keywords for product.
+     *
+     * @param string $keywordsForProduct
+     *
+     * @return void
+     */
+    public function setKeywordsForProduct($keywordsForProduct)
+    {
+        if ($this->keywordsForProduct !== $keywordsForProduct) {
+            $this->keywordsForProduct = isset($keywordsForProduct) ? $keywordsForProduct : '';
         }
     }
     
@@ -661,6 +691,30 @@ abstract class AbstractProductEntity extends EntityAccess implements Translatabl
     }
     
     /**
+     * Returns the my location.
+     *
+     * @return string
+     */
+    public function getMyLocation()
+    {
+        return $this->myLocation;
+    }
+    
+    /**
+     * Sets the my location.
+     *
+     * @param string $myLocation
+     *
+     * @return void
+     */
+    public function setMyLocation($myLocation)
+    {
+        if ($this->myLocation !== $myLocation) {
+            $this->myLocation = isset($myLocation) ? $myLocation : '';
+        }
+    }
+    
+    /**
      * Returns the locale.
      *
      * @return string
@@ -684,28 +738,6 @@ abstract class AbstractProductEntity extends EntityAccess implements Translatabl
         }
     }
     
-    
-    /**
-     * Returns the location.
-     *
-     * @return \MU\YourCityModule\Entity\LocationEntity
-     */
-    public function getLocation()
-    {
-        return $this->location;
-    }
-    
-    /**
-     * Sets the location.
-     *
-     * @param \MU\YourCityModule\Entity\LocationEntity $location
-     *
-     * @return void
-     */
-    public function setLocation($location = null)
-    {
-        $this->location = $location;
-    }
     
     
     

@@ -2,16 +2,9 @@
 <specialoflocation id="{{ specialOfLocation.getId() }}" createdon="{{ specialOfLocation.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ specialOfLocation.updatedDate|localizeddate('medium', 'short') }}">
     <id>{{ specialOfLocation.id }}</id>
     <name><![CDATA[{{ specialOfLocation.name }}]]></name>
-    <description><![CDATA[{{ specialOfLocation.description|safeHtml }}]]></description>
     <descriptionForGoogle><![CDATA[{{ specialOfLocation.descriptionForGoogle }}]]></descriptionForGoogle>
+    <description><![CDATA[{{ specialOfLocation.description|safeHtml }}]]></description>
     <iconForSpecial><![CDATA[{{ specialOfLocation.iconForSpecial }}]]></iconForSpecial>
-    <colorOfIcon><![CDATA[{{ specialOfLocation.colorOfIcon }}]]></colorOfIcon>
+    <colorOfIcon><![CDATA[<span class="label label-default" style="background-color: {{ specialOfLocation.colorOfIcon|e('html_attr') }}">{{ specialOfLocation.colorOfIcon }}</label>]]></colorOfIcon>
     <workflowState>{{ specialOfLocation.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
-    <locations>
-    {% if specialOfLocation.locations|default %}
-        {% for relatedItem in specialOfLocation.locations %}
-        <location>{{ relatedItem|muyourcitymodule_formattedTitle }}</location>
-        {% endfor %}
-    {% endif %}
-    </locations>
 </specialoflocation>

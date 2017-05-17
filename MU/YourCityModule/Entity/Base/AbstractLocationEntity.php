@@ -89,6 +89,26 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     protected $letterForOrder = '';
     
     /**
+     * here you can enter keywords for search optimization.
+     * @Gedmo\Translatable
+     * @ORM\Column(length=255)
+     * @Assert\NotNull()
+     * @Assert\Length(min="0", max="255")
+     * @var string $keywordsForLocation
+     */
+    protected $keywordsForLocation = '';
+    
+    /**
+     * Enter the description for google and Co.
+     Only 170 characters are allowed.
+     * @Gedmo\Translatable
+     * @ORM\Column(length=170, nullable=true)
+     * @Assert\Length(min="0", max="170")
+     * @var string $descriptionForGoogle
+     */
+    protected $descriptionForGoogle = '';
+    
+    /**
      * Slogan or additional name of your company.
      * @Gedmo\Translatable
      * @ORM\Column(length=255, nullable=true)
@@ -131,16 +151,6 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
      * @var string $logoOfYourLocationUrl
      */
     protected $logoOfYourLocationUrl = '';
-    
-    /**
-     * Enter the description for google and Co.
-     Only 170 characters are allowed.
-     * @Gedmo\Translatable
-     * @ORM\Column(length=170, nullable=true)
-     * @Assert\Length(min="0", max="170")
-     * @var string $descriptionForGoogle
-     */
-    protected $descriptionForGoogle = '';
     
     /**
      * Enter a description of your location (company) and your products.
@@ -559,6 +569,275 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     protected $end2OnSunday;
     
     /**
+     * @ORM\Column(length=255)
+     * @Assert\NotBlank()
+     * @YourCityAssert\ListEntry(entityName="location", propertyName="partOfCity", multiple=false)
+     * @var string $partOfCity
+     */
+    protected $partOfCity = '';
+    
+    /**
+     * @ORM\Column(length=255)
+     * @Assert\NotBlank()
+     * @YourCityAssert\ListEntry(entityName="location", propertyName="branchOfLocation", multiple=true)
+     * @var string $branchOfLocation
+     */
+    protected $branchOfLocation = '';
+    
+    /**
+     * @ORM\Column(length=255)
+     * @Assert\NotBlank()
+     * @YourCityAssert\ListEntry(entityName="location", propertyName="servicesOfLocation", multiple=true)
+     * @var string $servicesOfLocation
+     */
+    protected $servicesOfLocation = '';
+    
+    /**
+     * @ORM\Column(length=255)
+     * @Assert\NotBlank()
+     * @YourCityAssert\ListEntry(entityName="location", propertyName="specialsOfLocation", multiple=true)
+     * @var string $specialsOfLocation
+     */
+    protected $specialsOfLocation = '';
+    
+    /**
+     * First image meta data array.
+     *
+     * @ORM\Column(type="array")
+     * @Assert\Type(type="array")
+     * @var array $firstImageMeta
+     */
+    protected $firstImageMeta = [];
+    
+    /**
+     * This and the following images are optional for premium customers.
+     * @ORM\Column(length=255, nullable=true)
+     * @Assert\Length(min="0", max="255")
+     * @Assert\File(
+     *    maxSize = "200k",
+     *    mimeTypes = {"image/*"}
+     * )
+     * @Assert\Image(
+     * )
+     * @var string $firstImage
+     */
+    protected $firstImage = null;
+    
+    /**
+     * Full first image path as url.
+     *
+     * @Assert\Type(type="string")
+     * @var string $firstImageUrl
+     */
+    protected $firstImageUrl = '';
+    
+    /**
+     * Second image meta data array.
+     *
+     * @ORM\Column(type="array")
+     * @Assert\Type(type="array")
+     * @var array $secondImageMeta
+     */
+    protected $secondImageMeta = [];
+    
+    /**
+     * @ORM\Column(length=255, nullable=true)
+     * @Assert\Length(min="0", max="255")
+     * @Assert\File(
+     *    maxSize = "200k",
+     *    mimeTypes = {"image/*"}
+     * )
+     * @Assert\Image(
+     * )
+     * @var string $secondImage
+     */
+    protected $secondImage = null;
+    
+    /**
+     * Full second image path as url.
+     *
+     * @Assert\Type(type="string")
+     * @var string $secondImageUrl
+     */
+    protected $secondImageUrl = '';
+    
+    /**
+     * Third image meta data array.
+     *
+     * @ORM\Column(type="array")
+     * @Assert\Type(type="array")
+     * @var array $thirdImageMeta
+     */
+    protected $thirdImageMeta = [];
+    
+    /**
+     * @ORM\Column(length=255, nullable=true)
+     * @Assert\Length(min="0", max="255")
+     * @Assert\File(
+     *    maxSize = "200k",
+     *    mimeTypes = {"image/*"}
+     * )
+     * @Assert\Image(
+     * )
+     * @var string $thirdImage
+     */
+    protected $thirdImage = null;
+    
+    /**
+     * Full third image path as url.
+     *
+     * @Assert\Type(type="string")
+     * @var string $thirdImageUrl
+     */
+    protected $thirdImageUrl = '';
+    
+    /**
+     * Fourth image meta data array.
+     *
+     * @ORM\Column(type="array")
+     * @Assert\Type(type="array")
+     * @var array $fourthImageMeta
+     */
+    protected $fourthImageMeta = [];
+    
+    /**
+     * @ORM\Column(length=255, nullable=true)
+     * @Assert\Length(min="0", max="255")
+     * @Assert\File(
+     *    maxSize = "200k",
+     *    mimeTypes = {"image/*"}
+     * )
+     * @Assert\Image(
+     * )
+     * @var string $fourthImage
+     */
+    protected $fourthImage = null;
+    
+    /**
+     * Full fourth image path as url.
+     *
+     * @Assert\Type(type="string")
+     * @var string $fourthImageUrl
+     */
+    protected $fourthImageUrl = '';
+    
+    /**
+     * Fifth image meta data array.
+     *
+     * @ORM\Column(type="array")
+     * @Assert\Type(type="array")
+     * @var array $fifthImageMeta
+     */
+    protected $fifthImageMeta = [];
+    
+    /**
+     * @ORM\Column(length=255, nullable=true)
+     * @Assert\Length(min="0", max="255")
+     * @Assert\File(
+     *    maxSize = "200k",
+     *    mimeTypes = {"image/*"}
+     * )
+     * @Assert\Image(
+     * )
+     * @var string $fifthImage
+     */
+    protected $fifthImage = null;
+    
+    /**
+     * Full fifth image path as url.
+     *
+     * @Assert\Type(type="string")
+     * @var string $fifthImageUrl
+     */
+    protected $fifthImageUrl = '';
+    
+    /**
+     * Sixth image meta data array.
+     *
+     * @ORM\Column(type="array")
+     * @Assert\Type(type="array")
+     * @var array $sixthImageMeta
+     */
+    protected $sixthImageMeta = [];
+    
+    /**
+     * @ORM\Column(length=255, nullable=true)
+     * @Assert\Length(min="0", max="255")
+     * @Assert\File(
+     *    maxSize = "200k",
+     *    mimeTypes = {"image/*"}
+     * )
+     * @Assert\Image(
+     * )
+     * @var string $sixthImage
+     */
+    protected $sixthImage = null;
+    
+    /**
+     * Full sixth image path as url.
+     *
+     * @Assert\Type(type="string")
+     * @var string $sixthImageUrl
+     */
+    protected $sixthImageUrl = '';
+    
+    /**
+     * First file meta data array.
+     *
+     * @ORM\Column(type="array")
+     * @Assert\Type(type="array")
+     * @var array $firstFileMeta
+     */
+    protected $firstFileMeta = [];
+    
+    /**
+     * @ORM\Column(length=255, nullable=true)
+     * @Assert\Length(min="0", max="255")
+     * @Assert\File(
+     *    maxSize = "200k",
+     *    mimeTypes = {"application/pdf"}
+     * )
+     * @var string $firstFile
+     */
+    protected $firstFile = null;
+    
+    /**
+     * Full first file path as url.
+     *
+     * @Assert\Type(type="string")
+     * @var string $firstFileUrl
+     */
+    protected $firstFileUrl = '';
+    
+    /**
+     * Second file meta data array.
+     *
+     * @ORM\Column(type="array")
+     * @Assert\Type(type="array")
+     * @var array $secondFileMeta
+     */
+    protected $secondFileMeta = [];
+    
+    /**
+     * @ORM\Column(length=255, nullable=true)
+     * @Assert\Length(min="0", max="255")
+     * @Assert\File(
+     *    maxSize = "200k",
+     *    mimeTypes = {"application/pdf"}
+     * )
+     * @var string $secondFile
+     */
+    protected $secondFile = null;
+    
+    /**
+     * Full second file path as url.
+     *
+     * @Assert\Type(type="string")
+     * @var string $secondFileUrl
+     */
+    protected $secondFileUrl = '';
+    
+    /**
      * @ORM\ManyToOne(targetEntity="Zikula\UsersModule\Entity\UserEntity")
      * @ORM\JoinColumn(referencedColumnName="uid")
      * @var UserEntity $owner
@@ -578,23 +857,6 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
      * @var UserEntity $admin2
      */
     protected $admin2 = null;
-    
-    /**
-     * @ORM\Column(length=255)
-     * @Assert\NotBlank()
-     * @YourCityAssert\ListEntry(entityName="location", propertyName="partOfCity", multiple=false)
-     * @var string $partOfCity
-     */
-    protected $partOfCity = '';
-    
-    /**
-     * @Gedmo\Translatable
-     * @ORM\Column(length=255)
-     * @Assert\NotBlank()
-     * @YourCityAssert\ListEntry(entityName="location", propertyName="branchOfLocation", multiple=true)
-     * @var string $branchOfLocation
-     */
-    protected $branchOfLocation = '';
     
     
     /**
@@ -616,125 +878,9 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     protected $locale;
     
     /**
-     * Bidirectional - One location [location] has many imagesOfLocation [images of location] (INVERSE SIDE).
+     * Unidirectional - One location [location] has many abonnements [abonnements] (INVERSE SIDE).
      *
-     * @ORM\OneToMany(targetEntity="MU\YourCityModule\Entity\ImageOfLocationEntity", mappedBy="location")
-     * @ORM\JoinTable(name="mu_yourcity_locationimagesoflocation",
-     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
-     * )
-     * @ORM\OrderBy({"positionOfImage" = "ASC"})
-     * @Assert\NotNull(message="Choosing at least one of the images of location is required.")
-     * @var \MU\YourCityModule\Entity\ImageOfLocationEntity[] $imagesOfLocation
-     */
-    protected $imagesOfLocation = null;
-    
-    /**
-     * Bidirectional - One location [location] has many filesOfLocation [files of location] (INVERSE SIDE).
-     *
-     * @ORM\OneToMany(targetEntity="MU\YourCityModule\Entity\FileOfLocationEntity", mappedBy="location")
-     * @ORM\JoinTable(name="mu_yourcity_locationfilesoflocation",
-     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
-     * )
-     * @ORM\OrderBy({"positionOfFile" = "ASC"})
-     * @Assert\NotNull(message="Choosing at least one of the files of location is required.")
-     * @var \MU\YourCityModule\Entity\FileOfLocationEntity[] $filesOfLocation
-     */
-    protected $filesOfLocation = null;
-    
-    /**
-     * Bidirectional - One location [location] has many offers [offers] (INVERSE SIDE).
-     *
-     * @ORM\OneToMany(targetEntity="MU\YourCityModule\Entity\OfferEntity", mappedBy="location")
-     * @ORM\JoinTable(name="mu_yourcity_locationoffers",
-     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
-     * )
-     * @ORM\OrderBy({"effectivFrom" = "ASC"})
-     * @Assert\NotNull(message="Choosing at least one of the offers is required.")
-     * @var \MU\YourCityModule\Entity\OfferEntity[] $offers
-     */
-    protected $offers = null;
-    
-    /**
-     * Bidirectional - One location [location] has many menuOfLocation [menus of location] (INVERSE SIDE).
-     *
-     * @ORM\OneToMany(targetEntity="MU\YourCityModule\Entity\MenuOfLocationEntity", mappedBy="location")
-     * @ORM\JoinTable(name="mu_yourcity_locationmenuoflocation",
-     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
-     * )
-     * @ORM\OrderBy({"positionOfMenu" = "ASC"})
-     * @Assert\NotNull(message="Choosing at least one of the menu of location is required.")
-     * @var \MU\YourCityModule\Entity\MenuOfLocationEntity[] $menuOfLocation
-     */
-    protected $menuOfLocation = null;
-    
-    /**
-     * Bidirectional - One location [location] has many events [events] (INVERSE SIDE).
-     *
-     * @ORM\OneToMany(targetEntity="MU\YourCityModule\Entity\EventEntity", mappedBy="location")
-     * @ORM\JoinTable(name="mu_yourcity_locationevents",
-     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
-     * )
-     * @ORM\OrderBy({"startDate" = "ASC"})
-     * @Assert\NotNull(message="Choosing at least one of the events is required.")
-     * @var \MU\YourCityModule\Entity\EventEntity[] $events
-     */
-    protected $events = null;
-    
-    /**
-     * Bidirectional - One location [location] has many products [products] (INVERSE SIDE).
-     *
-     * @ORM\OneToMany(targetEntity="MU\YourCityModule\Entity\ProductEntity", mappedBy="location")
-     * @ORM\JoinTable(name="mu_yourcity_locationproducts",
-     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
-     * )
-     * @ORM\OrderBy({"name" = "ASC"})
-     * @Assert\NotNull(message="Choosing at least one of the products is required.")
-     * @var \MU\YourCityModule\Entity\ProductEntity[] $products
-     */
-    protected $products = null;
-    
-    /**
-     * Bidirectional - One location [location] has many dishes [dishes] (INVERSE SIDE).
-     *
-     * @ORM\OneToMany(targetEntity="MU\YourCityModule\Entity\DishEntity", mappedBy="location")
-     * @ORM\JoinTable(name="mu_yourcity_locationdishes",
-     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
-     * )
-     * @ORM\OrderBy({"positionOfDish" = "ASC"})
-     * @Assert\NotNull(message="Choosing at least one of the dishes is required.")
-     * @var \MU\YourCityModule\Entity\DishEntity[] $dishes
-     */
-    protected $dishes = null;
-    
-    /**
-     * Bidirectional - Many locations [locations] have many specialsOfLocation [specials of location] (OWNING SIDE).
-     *
-     * @ORM\ManyToMany(targetEntity="MU\YourCityModule\Entity\SpecialOfLocationEntity", inversedBy="locations")
-     * @ORM\JoinTable(name="mu_yourcity_location_specialoflocation")
-     * @ORM\OrderBy({"name" = "ASC"})
-     * @var \MU\YourCityModule\Entity\SpecialOfLocationEntity[] $specialsOfLocation
-     */
-    protected $specialsOfLocation = null;
-    /**
-     * Bidirectional - Many locations [locations] have many servicesOfLocation [services of location] (OWNING SIDE).
-     *
-     * @ORM\ManyToMany(targetEntity="MU\YourCityModule\Entity\ServiceOfLocationEntity", inversedBy="locations")
-     * @ORM\JoinTable(name="mu_yourcity_location_serviceoflocation")
-     * @ORM\OrderBy({"name" = "ASC"})
-     * @var \MU\YourCityModule\Entity\ServiceOfLocationEntity[] $servicesOfLocation
-     */
-    protected $servicesOfLocation = null;
-    /**
-     * Bidirectional - One location [location] has many abonnements [abonnements] (INVERSE SIDE).
-     *
-     * @ORM\OneToMany(targetEntity="MU\YourCityModule\Entity\AbonnementEntity", mappedBy="location")
+     * @ORM\ManyToMany(targetEntity="MU\YourCityModule\Entity\AbonnementEntity")
      * @ORM\JoinTable(name="mu_yourcity_locationabonnements",
      *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
      *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
@@ -743,20 +889,6 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
      * @var \MU\YourCityModule\Entity\AbonnementEntity[] $abonnements
      */
     protected $abonnements = null;
-    
-    /**
-     * Bidirectional - One location [location] has many partsOfMenu [parts of menu] (INVERSE SIDE).
-     *
-     * @ORM\OneToMany(targetEntity="MU\YourCityModule\Entity\PartOfMenuEntity", mappedBy="location")
-     * @ORM\JoinTable(name="mu_yourcity_locationpartsofmenu",
-     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
-     * )
-     * @ORM\OrderBy({"name" = "ASC"})
-     * @Assert\NotNull(message="Choosing at least one of the parts of menu is required.")
-     * @var \MU\YourCityModule\Entity\PartOfMenuEntity[] $partsOfMenu
-     */
-    protected $partsOfMenu = null;
     
     
     /**
@@ -768,17 +900,7 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
      */
     public function __construct()
     {
-        $this->imagesOfLocation = new ArrayCollection();
-        $this->filesOfLocation = new ArrayCollection();
-        $this->offers = new ArrayCollection();
-        $this->menuOfLocation = new ArrayCollection();
-        $this->events = new ArrayCollection();
-        $this->products = new ArrayCollection();
-        $this->dishes = new ArrayCollection();
         $this->abonnements = new ArrayCollection();
-        $this->partsOfMenu = new ArrayCollection();
-        $this->specialsOfLocation = new ArrayCollection();
-        $this->servicesOfLocation = new ArrayCollection();
     }
     
     /**
@@ -903,6 +1025,54 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     }
     
     /**
+     * Returns the keywords for location.
+     *
+     * @return string
+     */
+    public function getKeywordsForLocation()
+    {
+        return $this->keywordsForLocation;
+    }
+    
+    /**
+     * Sets the keywords for location.
+     *
+     * @param string $keywordsForLocation
+     *
+     * @return void
+     */
+    public function setKeywordsForLocation($keywordsForLocation)
+    {
+        if ($this->keywordsForLocation !== $keywordsForLocation) {
+            $this->keywordsForLocation = isset($keywordsForLocation) ? $keywordsForLocation : '';
+        }
+    }
+    
+    /**
+     * Returns the description for google.
+     *
+     * @return string
+     */
+    public function getDescriptionForGoogle()
+    {
+        return $this->descriptionForGoogle;
+    }
+    
+    /**
+     * Sets the description for google.
+     *
+     * @param string $descriptionForGoogle
+     *
+     * @return void
+     */
+    public function setDescriptionForGoogle($descriptionForGoogle)
+    {
+        if ($this->descriptionForGoogle !== $descriptionForGoogle) {
+            $this->descriptionForGoogle = $descriptionForGoogle;
+        }
+    }
+    
+    /**
      * Returns the slogan.
      *
      * @return string
@@ -995,30 +1165,6 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     {
         if ($this->logoOfYourLocationMeta !== $logoOfYourLocationMeta) {
             $this->logoOfYourLocationMeta = $logoOfYourLocationMeta;
-        }
-    }
-    
-    /**
-     * Returns the description for google.
-     *
-     * @return string
-     */
-    public function getDescriptionForGoogle()
-    {
-        return $this->descriptionForGoogle;
-    }
-    
-    /**
-     * Sets the description for google.
-     *
-     * @param string $descriptionForGoogle
-     *
-     * @return void
-     */
-    public function setDescriptionForGoogle($descriptionForGoogle)
-    {
-        if ($this->descriptionForGoogle !== $descriptionForGoogle) {
-            $this->descriptionForGoogle = $descriptionForGoogle;
         }
     }
     
@@ -2487,6 +2633,678 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     }
     
     /**
+     * Returns the part of city.
+     *
+     * @return string
+     */
+    public function getPartOfCity()
+    {
+        return $this->partOfCity;
+    }
+    
+    /**
+     * Sets the part of city.
+     *
+     * @param string $partOfCity
+     *
+     * @return void
+     */
+    public function setPartOfCity($partOfCity)
+    {
+        if ($this->partOfCity !== $partOfCity) {
+            $this->partOfCity = isset($partOfCity) ? $partOfCity : '';
+        }
+    }
+    
+    /**
+     * Returns the branch of location.
+     *
+     * @return string
+     */
+    public function getBranchOfLocation()
+    {
+        return $this->branchOfLocation;
+    }
+    
+    /**
+     * Sets the branch of location.
+     *
+     * @param string $branchOfLocation
+     *
+     * @return void
+     */
+    public function setBranchOfLocation($branchOfLocation)
+    {
+        if ($this->branchOfLocation !== $branchOfLocation) {
+            $this->branchOfLocation = isset($branchOfLocation) ? $branchOfLocation : '';
+        }
+    }
+    
+    /**
+     * Returns the services of location.
+     *
+     * @return string
+     */
+    public function getServicesOfLocation()
+    {
+        return $this->servicesOfLocation;
+    }
+    
+    /**
+     * Sets the services of location.
+     *
+     * @param string $servicesOfLocation
+     *
+     * @return void
+     */
+    public function setServicesOfLocation($servicesOfLocation)
+    {
+        if ($this->servicesOfLocation !== $servicesOfLocation) {
+            $this->servicesOfLocation = isset($servicesOfLocation) ? $servicesOfLocation : '';
+        }
+    }
+    
+    /**
+     * Returns the specials of location.
+     *
+     * @return string
+     */
+    public function getSpecialsOfLocation()
+    {
+        return $this->specialsOfLocation;
+    }
+    
+    /**
+     * Sets the specials of location.
+     *
+     * @param string $specialsOfLocation
+     *
+     * @return void
+     */
+    public function setSpecialsOfLocation($specialsOfLocation)
+    {
+        if ($this->specialsOfLocation !== $specialsOfLocation) {
+            $this->specialsOfLocation = isset($specialsOfLocation) ? $specialsOfLocation : '';
+        }
+    }
+    
+    /**
+     * Returns the first image.
+     *
+     * @return string
+     */
+    public function getFirstImage()
+    {
+        return $this->firstImage;
+    }
+    
+    /**
+     * Sets the first image.
+     *
+     * @param string $firstImage
+     *
+     * @return void
+     */
+    public function setFirstImage($firstImage)
+    {
+        if ($this->firstImage !== $firstImage) {
+            $this->firstImage = $firstImage;
+        }
+    }
+    
+    /**
+     * Returns the first image url.
+     *
+     * @return string
+     */
+    public function getFirstImageUrl()
+    {
+        return $this->firstImageUrl;
+    }
+    
+    /**
+     * Sets the first image url.
+     *
+     * @param string $firstImageUrl
+     *
+     * @return void
+     */
+    public function setFirstImageUrl($firstImageUrl)
+    {
+        if ($this->firstImageUrl !== $firstImageUrl) {
+            $this->firstImageUrl = $firstImageUrl;
+        }
+    }
+    
+    /**
+     * Returns the first image meta.
+     *
+     * @return array
+     */
+    public function getFirstImageMeta()
+    {
+        return $this->firstImageMeta;
+    }
+    
+    /**
+     * Sets the first image meta.
+     *
+     * @param array $firstImageMeta
+     *
+     * @return void
+     */
+    public function setFirstImageMeta($firstImageMeta = [])
+    {
+        if ($this->firstImageMeta !== $firstImageMeta) {
+            $this->firstImageMeta = $firstImageMeta;
+        }
+    }
+    
+    /**
+     * Returns the second image.
+     *
+     * @return string
+     */
+    public function getSecondImage()
+    {
+        return $this->secondImage;
+    }
+    
+    /**
+     * Sets the second image.
+     *
+     * @param string $secondImage
+     *
+     * @return void
+     */
+    public function setSecondImage($secondImage)
+    {
+        if ($this->secondImage !== $secondImage) {
+            $this->secondImage = $secondImage;
+        }
+    }
+    
+    /**
+     * Returns the second image url.
+     *
+     * @return string
+     */
+    public function getSecondImageUrl()
+    {
+        return $this->secondImageUrl;
+    }
+    
+    /**
+     * Sets the second image url.
+     *
+     * @param string $secondImageUrl
+     *
+     * @return void
+     */
+    public function setSecondImageUrl($secondImageUrl)
+    {
+        if ($this->secondImageUrl !== $secondImageUrl) {
+            $this->secondImageUrl = $secondImageUrl;
+        }
+    }
+    
+    /**
+     * Returns the second image meta.
+     *
+     * @return array
+     */
+    public function getSecondImageMeta()
+    {
+        return $this->secondImageMeta;
+    }
+    
+    /**
+     * Sets the second image meta.
+     *
+     * @param array $secondImageMeta
+     *
+     * @return void
+     */
+    public function setSecondImageMeta($secondImageMeta = [])
+    {
+        if ($this->secondImageMeta !== $secondImageMeta) {
+            $this->secondImageMeta = $secondImageMeta;
+        }
+    }
+    
+    /**
+     * Returns the third image.
+     *
+     * @return string
+     */
+    public function getThirdImage()
+    {
+        return $this->thirdImage;
+    }
+    
+    /**
+     * Sets the third image.
+     *
+     * @param string $thirdImage
+     *
+     * @return void
+     */
+    public function setThirdImage($thirdImage)
+    {
+        if ($this->thirdImage !== $thirdImage) {
+            $this->thirdImage = $thirdImage;
+        }
+    }
+    
+    /**
+     * Returns the third image url.
+     *
+     * @return string
+     */
+    public function getThirdImageUrl()
+    {
+        return $this->thirdImageUrl;
+    }
+    
+    /**
+     * Sets the third image url.
+     *
+     * @param string $thirdImageUrl
+     *
+     * @return void
+     */
+    public function setThirdImageUrl($thirdImageUrl)
+    {
+        if ($this->thirdImageUrl !== $thirdImageUrl) {
+            $this->thirdImageUrl = $thirdImageUrl;
+        }
+    }
+    
+    /**
+     * Returns the third image meta.
+     *
+     * @return array
+     */
+    public function getThirdImageMeta()
+    {
+        return $this->thirdImageMeta;
+    }
+    
+    /**
+     * Sets the third image meta.
+     *
+     * @param array $thirdImageMeta
+     *
+     * @return void
+     */
+    public function setThirdImageMeta($thirdImageMeta = [])
+    {
+        if ($this->thirdImageMeta !== $thirdImageMeta) {
+            $this->thirdImageMeta = $thirdImageMeta;
+        }
+    }
+    
+    /**
+     * Returns the fourth image.
+     *
+     * @return string
+     */
+    public function getFourthImage()
+    {
+        return $this->fourthImage;
+    }
+    
+    /**
+     * Sets the fourth image.
+     *
+     * @param string $fourthImage
+     *
+     * @return void
+     */
+    public function setFourthImage($fourthImage)
+    {
+        if ($this->fourthImage !== $fourthImage) {
+            $this->fourthImage = $fourthImage;
+        }
+    }
+    
+    /**
+     * Returns the fourth image url.
+     *
+     * @return string
+     */
+    public function getFourthImageUrl()
+    {
+        return $this->fourthImageUrl;
+    }
+    
+    /**
+     * Sets the fourth image url.
+     *
+     * @param string $fourthImageUrl
+     *
+     * @return void
+     */
+    public function setFourthImageUrl($fourthImageUrl)
+    {
+        if ($this->fourthImageUrl !== $fourthImageUrl) {
+            $this->fourthImageUrl = $fourthImageUrl;
+        }
+    }
+    
+    /**
+     * Returns the fourth image meta.
+     *
+     * @return array
+     */
+    public function getFourthImageMeta()
+    {
+        return $this->fourthImageMeta;
+    }
+    
+    /**
+     * Sets the fourth image meta.
+     *
+     * @param array $fourthImageMeta
+     *
+     * @return void
+     */
+    public function setFourthImageMeta($fourthImageMeta = [])
+    {
+        if ($this->fourthImageMeta !== $fourthImageMeta) {
+            $this->fourthImageMeta = $fourthImageMeta;
+        }
+    }
+    
+    /**
+     * Returns the fifth image.
+     *
+     * @return string
+     */
+    public function getFifthImage()
+    {
+        return $this->fifthImage;
+    }
+    
+    /**
+     * Sets the fifth image.
+     *
+     * @param string $fifthImage
+     *
+     * @return void
+     */
+    public function setFifthImage($fifthImage)
+    {
+        if ($this->fifthImage !== $fifthImage) {
+            $this->fifthImage = $fifthImage;
+        }
+    }
+    
+    /**
+     * Returns the fifth image url.
+     *
+     * @return string
+     */
+    public function getFifthImageUrl()
+    {
+        return $this->fifthImageUrl;
+    }
+    
+    /**
+     * Sets the fifth image url.
+     *
+     * @param string $fifthImageUrl
+     *
+     * @return void
+     */
+    public function setFifthImageUrl($fifthImageUrl)
+    {
+        if ($this->fifthImageUrl !== $fifthImageUrl) {
+            $this->fifthImageUrl = $fifthImageUrl;
+        }
+    }
+    
+    /**
+     * Returns the fifth image meta.
+     *
+     * @return array
+     */
+    public function getFifthImageMeta()
+    {
+        return $this->fifthImageMeta;
+    }
+    
+    /**
+     * Sets the fifth image meta.
+     *
+     * @param array $fifthImageMeta
+     *
+     * @return void
+     */
+    public function setFifthImageMeta($fifthImageMeta = [])
+    {
+        if ($this->fifthImageMeta !== $fifthImageMeta) {
+            $this->fifthImageMeta = $fifthImageMeta;
+        }
+    }
+    
+    /**
+     * Returns the sixth image.
+     *
+     * @return string
+     */
+    public function getSixthImage()
+    {
+        return $this->sixthImage;
+    }
+    
+    /**
+     * Sets the sixth image.
+     *
+     * @param string $sixthImage
+     *
+     * @return void
+     */
+    public function setSixthImage($sixthImage)
+    {
+        if ($this->sixthImage !== $sixthImage) {
+            $this->sixthImage = $sixthImage;
+        }
+    }
+    
+    /**
+     * Returns the sixth image url.
+     *
+     * @return string
+     */
+    public function getSixthImageUrl()
+    {
+        return $this->sixthImageUrl;
+    }
+    
+    /**
+     * Sets the sixth image url.
+     *
+     * @param string $sixthImageUrl
+     *
+     * @return void
+     */
+    public function setSixthImageUrl($sixthImageUrl)
+    {
+        if ($this->sixthImageUrl !== $sixthImageUrl) {
+            $this->sixthImageUrl = $sixthImageUrl;
+        }
+    }
+    
+    /**
+     * Returns the sixth image meta.
+     *
+     * @return array
+     */
+    public function getSixthImageMeta()
+    {
+        return $this->sixthImageMeta;
+    }
+    
+    /**
+     * Sets the sixth image meta.
+     *
+     * @param array $sixthImageMeta
+     *
+     * @return void
+     */
+    public function setSixthImageMeta($sixthImageMeta = [])
+    {
+        if ($this->sixthImageMeta !== $sixthImageMeta) {
+            $this->sixthImageMeta = $sixthImageMeta;
+        }
+    }
+    
+    /**
+     * Returns the first file.
+     *
+     * @return string
+     */
+    public function getFirstFile()
+    {
+        return $this->firstFile;
+    }
+    
+    /**
+     * Sets the first file.
+     *
+     * @param string $firstFile
+     *
+     * @return void
+     */
+    public function setFirstFile($firstFile)
+    {
+        if ($this->firstFile !== $firstFile) {
+            $this->firstFile = $firstFile;
+        }
+    }
+    
+    /**
+     * Returns the first file url.
+     *
+     * @return string
+     */
+    public function getFirstFileUrl()
+    {
+        return $this->firstFileUrl;
+    }
+    
+    /**
+     * Sets the first file url.
+     *
+     * @param string $firstFileUrl
+     *
+     * @return void
+     */
+    public function setFirstFileUrl($firstFileUrl)
+    {
+        if ($this->firstFileUrl !== $firstFileUrl) {
+            $this->firstFileUrl = $firstFileUrl;
+        }
+    }
+    
+    /**
+     * Returns the first file meta.
+     *
+     * @return array
+     */
+    public function getFirstFileMeta()
+    {
+        return $this->firstFileMeta;
+    }
+    
+    /**
+     * Sets the first file meta.
+     *
+     * @param array $firstFileMeta
+     *
+     * @return void
+     */
+    public function setFirstFileMeta($firstFileMeta = [])
+    {
+        if ($this->firstFileMeta !== $firstFileMeta) {
+            $this->firstFileMeta = $firstFileMeta;
+        }
+    }
+    
+    /**
+     * Returns the second file.
+     *
+     * @return string
+     */
+    public function getSecondFile()
+    {
+        return $this->secondFile;
+    }
+    
+    /**
+     * Sets the second file.
+     *
+     * @param string $secondFile
+     *
+     * @return void
+     */
+    public function setSecondFile($secondFile)
+    {
+        if ($this->secondFile !== $secondFile) {
+            $this->secondFile = $secondFile;
+        }
+    }
+    
+    /**
+     * Returns the second file url.
+     *
+     * @return string
+     */
+    public function getSecondFileUrl()
+    {
+        return $this->secondFileUrl;
+    }
+    
+    /**
+     * Sets the second file url.
+     *
+     * @param string $secondFileUrl
+     *
+     * @return void
+     */
+    public function setSecondFileUrl($secondFileUrl)
+    {
+        if ($this->secondFileUrl !== $secondFileUrl) {
+            $this->secondFileUrl = $secondFileUrl;
+        }
+    }
+    
+    /**
+     * Returns the second file meta.
+     *
+     * @return array
+     */
+    public function getSecondFileMeta()
+    {
+        return $this->secondFileMeta;
+    }
+    
+    /**
+     * Sets the second file meta.
+     *
+     * @param array $secondFileMeta
+     *
+     * @return void
+     */
+    public function setSecondFileMeta($secondFileMeta = [])
+    {
+        if ($this->secondFileMeta !== $secondFileMeta) {
+            $this->secondFileMeta = $secondFileMeta;
+        }
+    }
+    
+    /**
      * Returns the owner.
      *
      * @return UserEntity
@@ -2559,54 +3377,6 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     }
     
     /**
-     * Returns the part of city.
-     *
-     * @return string
-     */
-    public function getPartOfCity()
-    {
-        return $this->partOfCity;
-    }
-    
-    /**
-     * Sets the part of city.
-     *
-     * @param string $partOfCity
-     *
-     * @return void
-     */
-    public function setPartOfCity($partOfCity)
-    {
-        if ($this->partOfCity !== $partOfCity) {
-            $this->partOfCity = isset($partOfCity) ? $partOfCity : '';
-        }
-    }
-    
-    /**
-     * Returns the branch of location.
-     *
-     * @return string
-     */
-    public function getBranchOfLocation()
-    {
-        return $this->branchOfLocation;
-    }
-    
-    /**
-     * Sets the branch of location.
-     *
-     * @param string $branchOfLocation
-     *
-     * @return void
-     */
-    public function setBranchOfLocation($branchOfLocation)
-    {
-        if ($this->branchOfLocation !== $branchOfLocation) {
-            $this->branchOfLocation = isset($branchOfLocation) ? $branchOfLocation : '';
-        }
-    }
-    
-    /**
      * Returns the slug.
      *
      * @return string
@@ -2656,452 +3426,6 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     
     
     /**
-     * Returns the images of location.
-     *
-     * @return \MU\YourCityModule\Entity\ImageOfLocationEntity[]
-     */
-    public function getImagesOfLocation()
-    {
-        return $this->imagesOfLocation;
-    }
-    
-    /**
-     * Sets the images of location.
-     *
-     * @param \MU\YourCityModule\Entity\ImageOfLocationEntity[] $imagesOfLocation
-     *
-     * @return void
-     */
-    public function setImagesOfLocation($imagesOfLocation)
-    {
-        foreach ($imagesOfLocation as $imageOfLocationSingle) {
-            $this->addImagesOfLocation($imageOfLocationSingle);
-        }
-    }
-    
-    /**
-     * Adds an instance of \MU\YourCityModule\Entity\ImageOfLocationEntity to the list of images of location.
-     *
-     * @param \MU\YourCityModule\Entity\ImageOfLocationEntity $imageOfLocation The instance to be added to the collection
-     *
-     * @return void
-     */
-    public function addImagesOfLocation(\MU\YourCityModule\Entity\ImageOfLocationEntity $imageOfLocation)
-    {
-        $this->imagesOfLocation->add($imageOfLocation);
-        $imageOfLocation->setLocation($this);
-    }
-    
-    /**
-     * Removes an instance of \MU\YourCityModule\Entity\ImageOfLocationEntity from the list of images of location.
-     *
-     * @param \MU\YourCityModule\Entity\ImageOfLocationEntity $imageOfLocation The instance to be removed from the collection
-     *
-     * @return void
-     */
-    public function removeImagesOfLocation(\MU\YourCityModule\Entity\ImageOfLocationEntity $imageOfLocation)
-    {
-        $this->imagesOfLocation->removeElement($imageOfLocation);
-        $imageOfLocation->setLocation(null);
-    }
-    
-    /**
-     * Returns the files of location.
-     *
-     * @return \MU\YourCityModule\Entity\FileOfLocationEntity[]
-     */
-    public function getFilesOfLocation()
-    {
-        return $this->filesOfLocation;
-    }
-    
-    /**
-     * Sets the files of location.
-     *
-     * @param \MU\YourCityModule\Entity\FileOfLocationEntity[] $filesOfLocation
-     *
-     * @return void
-     */
-    public function setFilesOfLocation($filesOfLocation)
-    {
-        foreach ($filesOfLocation as $fileOfLocationSingle) {
-            $this->addFilesOfLocation($fileOfLocationSingle);
-        }
-    }
-    
-    /**
-     * Adds an instance of \MU\YourCityModule\Entity\FileOfLocationEntity to the list of files of location.
-     *
-     * @param \MU\YourCityModule\Entity\FileOfLocationEntity $fileOfLocation The instance to be added to the collection
-     *
-     * @return void
-     */
-    public function addFilesOfLocation(\MU\YourCityModule\Entity\FileOfLocationEntity $fileOfLocation)
-    {
-        $this->filesOfLocation->add($fileOfLocation);
-        $fileOfLocation->setLocation($this);
-    }
-    
-    /**
-     * Removes an instance of \MU\YourCityModule\Entity\FileOfLocationEntity from the list of files of location.
-     *
-     * @param \MU\YourCityModule\Entity\FileOfLocationEntity $fileOfLocation The instance to be removed from the collection
-     *
-     * @return void
-     */
-    public function removeFilesOfLocation(\MU\YourCityModule\Entity\FileOfLocationEntity $fileOfLocation)
-    {
-        $this->filesOfLocation->removeElement($fileOfLocation);
-        $fileOfLocation->setLocation(null);
-    }
-    
-    /**
-     * Returns the offers.
-     *
-     * @return \MU\YourCityModule\Entity\OfferEntity[]
-     */
-    public function getOffers()
-    {
-        return $this->offers;
-    }
-    
-    /**
-     * Sets the offers.
-     *
-     * @param \MU\YourCityModule\Entity\OfferEntity[] $offers
-     *
-     * @return void
-     */
-    public function setOffers($offers)
-    {
-        foreach ($offers as $offerSingle) {
-            $this->addOffers($offerSingle);
-        }
-    }
-    
-    /**
-     * Adds an instance of \MU\YourCityModule\Entity\OfferEntity to the list of offers.
-     *
-     * @param \MU\YourCityModule\Entity\OfferEntity $offer The instance to be added to the collection
-     *
-     * @return void
-     */
-    public function addOffers(\MU\YourCityModule\Entity\OfferEntity $offer)
-    {
-        $this->offers->add($offer);
-        $offer->setLocation($this);
-    }
-    
-    /**
-     * Removes an instance of \MU\YourCityModule\Entity\OfferEntity from the list of offers.
-     *
-     * @param \MU\YourCityModule\Entity\OfferEntity $offer The instance to be removed from the collection
-     *
-     * @return void
-     */
-    public function removeOffers(\MU\YourCityModule\Entity\OfferEntity $offer)
-    {
-        $this->offers->removeElement($offer);
-        $offer->setLocation(null);
-    }
-    
-    /**
-     * Returns the menu of location.
-     *
-     * @return \MU\YourCityModule\Entity\MenuOfLocationEntity[]
-     */
-    public function getMenuOfLocation()
-    {
-        return $this->menuOfLocation;
-    }
-    
-    /**
-     * Sets the menu of location.
-     *
-     * @param \MU\YourCityModule\Entity\MenuOfLocationEntity[] $menuOfLocation
-     *
-     * @return void
-     */
-    public function setMenuOfLocation($menuOfLocation)
-    {
-        foreach ($menuOfLocation as $menuOfLocationSingle) {
-            $this->addMenuOfLocation($menuOfLocationSingle);
-        }
-    }
-    
-    /**
-     * Adds an instance of \MU\YourCityModule\Entity\MenuOfLocationEntity to the list of menu of location.
-     *
-     * @param \MU\YourCityModule\Entity\MenuOfLocationEntity $menuOfLocation The instance to be added to the collection
-     *
-     * @return void
-     */
-    public function addMenuOfLocation(\MU\YourCityModule\Entity\MenuOfLocationEntity $menuOfLocation)
-    {
-        $this->menuOfLocation->add($menuOfLocation);
-        $menuOfLocation->setLocation($this);
-    }
-    
-    /**
-     * Removes an instance of \MU\YourCityModule\Entity\MenuOfLocationEntity from the list of menu of location.
-     *
-     * @param \MU\YourCityModule\Entity\MenuOfLocationEntity $menuOfLocation The instance to be removed from the collection
-     *
-     * @return void
-     */
-    public function removeMenuOfLocation(\MU\YourCityModule\Entity\MenuOfLocationEntity $menuOfLocation)
-    {
-        $this->menuOfLocation->removeElement($menuOfLocation);
-        $menuOfLocation->setLocation(null);
-    }
-    
-    /**
-     * Returns the events.
-     *
-     * @return \MU\YourCityModule\Entity\EventEntity[]
-     */
-    public function getEvents()
-    {
-        return $this->events;
-    }
-    
-    /**
-     * Sets the events.
-     *
-     * @param \MU\YourCityModule\Entity\EventEntity[] $events
-     *
-     * @return void
-     */
-    public function setEvents($events)
-    {
-        foreach ($events as $eventSingle) {
-            $this->addEvents($eventSingle);
-        }
-    }
-    
-    /**
-     * Adds an instance of \MU\YourCityModule\Entity\EventEntity to the list of events.
-     *
-     * @param \MU\YourCityModule\Entity\EventEntity $event The instance to be added to the collection
-     *
-     * @return void
-     */
-    public function addEvents(\MU\YourCityModule\Entity\EventEntity $event)
-    {
-        $this->events->add($event);
-        $event->setLocation($this);
-    }
-    
-    /**
-     * Removes an instance of \MU\YourCityModule\Entity\EventEntity from the list of events.
-     *
-     * @param \MU\YourCityModule\Entity\EventEntity $event The instance to be removed from the collection
-     *
-     * @return void
-     */
-    public function removeEvents(\MU\YourCityModule\Entity\EventEntity $event)
-    {
-        $this->events->removeElement($event);
-        $event->setLocation(null);
-    }
-    
-    /**
-     * Returns the products.
-     *
-     * @return \MU\YourCityModule\Entity\ProductEntity[]
-     */
-    public function getProducts()
-    {
-        return $this->products;
-    }
-    
-    /**
-     * Sets the products.
-     *
-     * @param \MU\YourCityModule\Entity\ProductEntity[] $products
-     *
-     * @return void
-     */
-    public function setProducts($products)
-    {
-        foreach ($products as $productSingle) {
-            $this->addProducts($productSingle);
-        }
-    }
-    
-    /**
-     * Adds an instance of \MU\YourCityModule\Entity\ProductEntity to the list of products.
-     *
-     * @param \MU\YourCityModule\Entity\ProductEntity $product The instance to be added to the collection
-     *
-     * @return void
-     */
-    public function addProducts(\MU\YourCityModule\Entity\ProductEntity $product)
-    {
-        $this->products->add($product);
-        $product->setLocation($this);
-    }
-    
-    /**
-     * Removes an instance of \MU\YourCityModule\Entity\ProductEntity from the list of products.
-     *
-     * @param \MU\YourCityModule\Entity\ProductEntity $product The instance to be removed from the collection
-     *
-     * @return void
-     */
-    public function removeProducts(\MU\YourCityModule\Entity\ProductEntity $product)
-    {
-        $this->products->removeElement($product);
-        $product->setLocation(null);
-    }
-    
-    /**
-     * Returns the dishes.
-     *
-     * @return \MU\YourCityModule\Entity\DishEntity[]
-     */
-    public function getDishes()
-    {
-        return $this->dishes;
-    }
-    
-    /**
-     * Sets the dishes.
-     *
-     * @param \MU\YourCityModule\Entity\DishEntity[] $dishes
-     *
-     * @return void
-     */
-    public function setDishes($dishes)
-    {
-        foreach ($dishes as $dishSingle) {
-            $this->addDishes($dishSingle);
-        }
-    }
-    
-    /**
-     * Adds an instance of \MU\YourCityModule\Entity\DishEntity to the list of dishes.
-     *
-     * @param \MU\YourCityModule\Entity\DishEntity $dish The instance to be added to the collection
-     *
-     * @return void
-     */
-    public function addDishes(\MU\YourCityModule\Entity\DishEntity $dish)
-    {
-        $this->dishes->add($dish);
-        $dish->setLocation($this);
-    }
-    
-    /**
-     * Removes an instance of \MU\YourCityModule\Entity\DishEntity from the list of dishes.
-     *
-     * @param \MU\YourCityModule\Entity\DishEntity $dish The instance to be removed from the collection
-     *
-     * @return void
-     */
-    public function removeDishes(\MU\YourCityModule\Entity\DishEntity $dish)
-    {
-        $this->dishes->removeElement($dish);
-        $dish->setLocation(null);
-    }
-    
-    /**
-     * Returns the specials of location.
-     *
-     * @return \MU\YourCityModule\Entity\SpecialOfLocationEntity[]
-     */
-    public function getSpecialsOfLocation()
-    {
-        return $this->specialsOfLocation;
-    }
-    
-    /**
-     * Sets the specials of location.
-     *
-     * @param \MU\YourCityModule\Entity\SpecialOfLocationEntity[] $specialsOfLocation
-     *
-     * @return void
-     */
-    public function setSpecialsOfLocation($specialsOfLocation)
-    {
-        foreach ($specialsOfLocation as $specialOfLocationSingle) {
-            $this->addSpecialsOfLocation($specialOfLocationSingle);
-        }
-    }
-    
-    /**
-     * Adds an instance of \MU\YourCityModule\Entity\SpecialOfLocationEntity to the list of specials of location.
-     *
-     * @param \MU\YourCityModule\Entity\SpecialOfLocationEntity $specialOfLocation The instance to be added to the collection
-     *
-     * @return void
-     */
-    public function addSpecialsOfLocation(\MU\YourCityModule\Entity\SpecialOfLocationEntity $specialOfLocation)
-    {
-        $this->specialsOfLocation->add($specialOfLocation);
-    }
-    
-    /**
-     * Removes an instance of \MU\YourCityModule\Entity\SpecialOfLocationEntity from the list of specials of location.
-     *
-     * @param \MU\YourCityModule\Entity\SpecialOfLocationEntity $specialOfLocation The instance to be removed from the collection
-     *
-     * @return void
-     */
-    public function removeSpecialsOfLocation(\MU\YourCityModule\Entity\SpecialOfLocationEntity $specialOfLocation)
-    {
-        $this->specialsOfLocation->removeElement($specialOfLocation);
-    }
-    
-    /**
-     * Returns the services of location.
-     *
-     * @return \MU\YourCityModule\Entity\ServiceOfLocationEntity[]
-     */
-    public function getServicesOfLocation()
-    {
-        return $this->servicesOfLocation;
-    }
-    
-    /**
-     * Sets the services of location.
-     *
-     * @param \MU\YourCityModule\Entity\ServiceOfLocationEntity[] $servicesOfLocation
-     *
-     * @return void
-     */
-    public function setServicesOfLocation($servicesOfLocation)
-    {
-        foreach ($servicesOfLocation as $serviceOfLocationSingle) {
-            $this->addServicesOfLocation($serviceOfLocationSingle);
-        }
-    }
-    
-    /**
-     * Adds an instance of \MU\YourCityModule\Entity\ServiceOfLocationEntity to the list of services of location.
-     *
-     * @param \MU\YourCityModule\Entity\ServiceOfLocationEntity $serviceOfLocation The instance to be added to the collection
-     *
-     * @return void
-     */
-    public function addServicesOfLocation(\MU\YourCityModule\Entity\ServiceOfLocationEntity $serviceOfLocation)
-    {
-        $this->servicesOfLocation->add($serviceOfLocation);
-    }
-    
-    /**
-     * Removes an instance of \MU\YourCityModule\Entity\ServiceOfLocationEntity from the list of services of location.
-     *
-     * @param \MU\YourCityModule\Entity\ServiceOfLocationEntity $serviceOfLocation The instance to be removed from the collection
-     *
-     * @return void
-     */
-    public function removeServicesOfLocation(\MU\YourCityModule\Entity\ServiceOfLocationEntity $serviceOfLocation)
-    {
-        $this->servicesOfLocation->removeElement($serviceOfLocation);
-    }
-    
-    /**
      * Returns the abonnements.
      *
      * @return \MU\YourCityModule\Entity\AbonnementEntity[]
@@ -3135,7 +3459,6 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     public function addAbonnements(\MU\YourCityModule\Entity\AbonnementEntity $abonnement)
     {
         $this->abonnements->add($abonnement);
-        $abonnement->setLocation($this);
     }
     
     /**
@@ -3148,57 +3471,6 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     public function removeAbonnements(\MU\YourCityModule\Entity\AbonnementEntity $abonnement)
     {
         $this->abonnements->removeElement($abonnement);
-        $abonnement->setLocation(null);
-    }
-    
-    /**
-     * Returns the parts of menu.
-     *
-     * @return \MU\YourCityModule\Entity\PartOfMenuEntity[]
-     */
-    public function getPartsOfMenu()
-    {
-        return $this->partsOfMenu;
-    }
-    
-    /**
-     * Sets the parts of menu.
-     *
-     * @param \MU\YourCityModule\Entity\PartOfMenuEntity[] $partsOfMenu
-     *
-     * @return void
-     */
-    public function setPartsOfMenu($partsOfMenu)
-    {
-        foreach ($partsOfMenu as $partOfMenuSingle) {
-            $this->addPartsOfMenu($partOfMenuSingle);
-        }
-    }
-    
-    /**
-     * Adds an instance of \MU\YourCityModule\Entity\PartOfMenuEntity to the list of parts of menu.
-     *
-     * @param \MU\YourCityModule\Entity\PartOfMenuEntity $partOfMenu The instance to be added to the collection
-     *
-     * @return void
-     */
-    public function addPartsOfMenu(\MU\YourCityModule\Entity\PartOfMenuEntity $partOfMenu)
-    {
-        $this->partsOfMenu->add($partOfMenu);
-        $partOfMenu->setLocation($this);
-    }
-    
-    /**
-     * Removes an instance of \MU\YourCityModule\Entity\PartOfMenuEntity from the list of parts of menu.
-     *
-     * @param \MU\YourCityModule\Entity\PartOfMenuEntity $partOfMenu The instance to be removed from the collection
-     *
-     * @return void
-     */
-    public function removePartsOfMenu(\MU\YourCityModule\Entity\PartOfMenuEntity $partOfMenu)
-    {
-        $this->partsOfMenu->removeElement($partOfMenu);
-        $partOfMenu->setLocation(null);
     }
     
     
@@ -3377,6 +3649,30 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
         $this->setImageOfLocation(null);
         $this->setImageOfLocationMeta([]);
         $this->setImageOfLocationUrl('');
+        $this->setFirstImage(null);
+        $this->setFirstImageMeta([]);
+        $this->setFirstImageUrl('');
+        $this->setSecondImage(null);
+        $this->setSecondImageMeta([]);
+        $this->setSecondImageUrl('');
+        $this->setThirdImage(null);
+        $this->setThirdImageMeta([]);
+        $this->setThirdImageUrl('');
+        $this->setFourthImage(null);
+        $this->setFourthImageMeta([]);
+        $this->setFourthImageUrl('');
+        $this->setFifthImage(null);
+        $this->setFifthImageMeta([]);
+        $this->setFifthImageUrl('');
+        $this->setSixthImage(null);
+        $this->setSixthImageMeta([]);
+        $this->setSixthImageUrl('');
+        $this->setFirstFile(null);
+        $this->setFirstFileMeta([]);
+        $this->setFirstFileUrl('');
+        $this->setSecondFile(null);
+        $this->setSecondFileMeta([]);
+        $this->setSecondFileUrl('');
     
         $this->setCreatedBy(null);
         $this->setCreatedDate(null);

@@ -11,8 +11,8 @@
     <effectivUntil>{{ menuOfLocation.effectivUntil|localizeddate('medium', 'short') }}</effectivUntil>
     <inViewFrom>{{ menuOfLocation.inViewFrom|localizeddate('medium', 'short') }}</inViewFrom>
     <inViewUntil>{{ menuOfLocation.inViewUntil|localizeddate('medium', 'short') }}</inViewUntil>
+    <myLocation>{{ menuOfLocation.myLocation|muyourcitymodule_listEntry('menuOfLocation', 'myLocation') }}</myLocation>
     <workflowState>{{ menuOfLocation.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
-    <location>{% if menuOfLocation.location|default %}{{ menuOfLocation.location|muyourcitymodule_formattedTitle }}{% endif %}</location>
     <dishes>
     {% if menuOfLocation.dishes|default %}
         {% for relatedItem in menuOfLocation.dishes %}
