@@ -14,12 +14,17 @@ namespace MU\YourCityModule\Helper;
 
 use MU\YourCityModule\Helper\Base\AbstractListEntriesHelper;
 use MU\YourCityModule\Entity\Factory\EntityFactory;
+use MU\YourCityModule\Helper\ControllerHelper;
 
 /**
  * Helper implementation class for list field entries related methods.
  */
 class ListEntriesHelper extends AbstractListEntriesHelper
 {
+	/**
+	 * @var ControllerHelper
+	 */
+	protected $controllerHelper;
 	/**
 	 * @var EntityFactory
 	 */
@@ -74,8 +79,157 @@ class ListEntriesHelper extends AbstractListEntriesHelper
         return $states;
     }
     
+    /**
+     * Get 'my location' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getMyLocationEntriesForEvent()
+    {
+        $states = [];
+        $states = $this->getLocations();
+    
+    	return $states;
+    }
+    
+    /**
+     * Get 'my location' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getMyLocationEntriesForOffer()
+    {
+    	$states = [];
+    	$states[] = $this->getLocations();
+    
+    	return $states;
+    }
+    
+    /**
+     * Get 'my location' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getMyLocationEntriesForProduct()
+    {
+    	$states = [];
+    	$states[] = $this->getLocations();
+    	return $states;
+    }
+    
+    /**
+     * Get 'services of location' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getServicesOfLocationEntriesForLocation()
+    {
+    	$states = [];
+    	$serviceRepository = $this->entityFactory->getRepository('serviceOfLocation');
+    	$services = $serviceRepository->findAll();
+    	foreach ($services as $service) {
+    		$states[] = [
+    				'value'   => $service['name'],
+    				'text'    => $service['name'],
+    				'title'   => '',
+    				'image'   => '',
+    				'default' => false
+    		];
+    	}
+    
+    	return $states;
+    }
+    
+    /**
+     * Get 'specials of location' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getSpecialsOfLocationEntriesForLocation()
+    {
+    	$states = [];
+    	$specialRepository = $this->entityFactory->getRepository('specialOfLocation');
+    	$specials = $specialRepository->findAll();
+    	foreach ($specials as $special) {
+    		$states[] = [
+    				'value'   => $special['name'],
+    				'text'    => $special['name'],
+    				'title'   => '',
+    				'image'   => '',
+    				'default' => false
+    		];
+    	}    	
+    
+    	return $states;
+    }
+    
+    /**
+     * Get 'locations' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getLocations()
+    {
+    	$uid = $this->controllerHelper->getUid();
+    	$locationRepository = $this->entityFactory->getRepository('location');
+    	if ($uid != 2) {
+    	$criteria = array('owner' => $uid);
+    	$criteria2 = array('admin1' => $uid);
+    	$criteria3 = array('admin2' => $uid);
+    	$locations = $locationRepository->findBy($criteria);
+    	$locations2 = $locationRepository->findBy($criteria2);
+    	$locations3 = $locationRepository->findBy($criteria3);
+    	$states = [];
+    	foreach ($locations as $location) {
+    		$states[] = [
+    				'value'   => $location['id'],
+    				'text'    => $location['name'],
+    				'title'   => '',
+    				'image'   => '',
+    				'default' => false
+    		];
+    	}
+    	foreach ($locations2 as $location) {
+    		$states[] = [
+    				'value'   => $location['id'],
+    				'text'    => $location['name'],
+    				'title'   => '',
+    				'image'   => '',
+    				'default' => false
+    		];
+    	}
+    	foreach ($locations3 as $location) {
+    		$states[] = [
+    				'value'   => $location['id'],
+    				'text'    => $location['name'],
+    				'title'   => '',
+    				'image'   => '',
+    				'default' => false
+    		];
+    	}
+    	} else {
+    		$locations = $locationRepository->findAll();
+    		foreach ($locations as $location) {
+    			$states[] = [
+    					'value'   => $location['id'],
+    					'text'    => $location['name'],
+    					'title'   => '',
+    					'image'   => '',
+    					'default' => false
+    			];
+    		}
+    	}
+    
+    	return $states;
+    }
+    
     public function setEntityFactory(EntityFactory $entityFactory)
     {
     	$this->entityFactory = $entityFactory;
+    }
+    
+    public function setControllerHelper(ControllerHelper $controllerHelper)
+    {
+    	$this->controllerHelper = $controllerHelper;
     }
 }
