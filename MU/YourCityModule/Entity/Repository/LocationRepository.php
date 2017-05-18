@@ -60,9 +60,9 @@ class LocationRepository extends AbstractLocationRepository
      */
     protected function addJoinsToSelection()
     {
-    	$selection = ', tblImagesOfLocation, tblFilesOfLocation, tblOffers, tblMenuOfLocation, tblEvents, tblProducts, tblSpecialsOfLocation, tblServicesOfLocation';
+        $selection = ', tblAbonnements';
     
-    	return $selection;
+        return $selection;
     }
     
     /**
@@ -74,15 +74,8 @@ class LocationRepository extends AbstractLocationRepository
      */
     protected function addJoinsToFrom(QueryBuilder $qb)
     {
-    	$qb->leftJoin('tbl.imagesOfLocation', 'tblImagesOfLocation');
-    	$qb->leftJoin('tbl.filesOfLocation', 'tblFilesOfLocation');
-    	$qb->leftJoin('tbl.offers', 'tblOffers');
-    	$qb->leftJoin('tbl.menuOfLocation', 'tblMenuOfLocation');
-    	$qb->leftJoin('tbl.events', 'tblEvents');
-    	$qb->leftJoin('tbl.products', 'tblProducts');
-    	$qb->leftJoin('tbl.specialsOfLocation', 'tblSpecialsOfLocation');
-    	$qb->leftJoin('tbl.servicesOfLocation', 'tblServicesOfLocation');
+        $qb->leftJoin('tbl.abonnements', 'tblAbonnements');
     
-    	return $qb;
+        return $qb;
     }
 }
