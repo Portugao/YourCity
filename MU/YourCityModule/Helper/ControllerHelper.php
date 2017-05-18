@@ -18,6 +18,8 @@ use Zikula\Component\SortableColumns\SortableColumns;
 use Zikula\Core\RouteUrl;
 use Zikula\UsersModule\Entity\UserEntity;
 use DateUtil;
+use Doctrine\Common\Collections\Criteria;
+use DateTime;
 
 
 /**
@@ -50,20 +52,33 @@ class ControllerHelper extends AbstractControllerHelper
     	}
     	
     	$entity = $templateParameters[$objectType];
+    	// we get a repository for locations
+    	$locationRepository = $this->modelHelper->getRepository('location');
     	
-    	
-    	if ($objectType == 'part') {
-    		$locationRepository = $this->modelHelper->getRepository('location');
-    		$criteria = array('partOfCity' => $entity['name']);
-    		
+    	if ($objectType == 'part') {   		
+    		$criteria = array('partOfCity' => $entity['name']);   		
     		$locationsForPart = $locationRepository->findBy($criteria);
     	}
     	
     	if ($objectType == 'branch') {
-    		$locationRepository = $this->modelHelper->getRepository('location');
-    		$criteria = array('branchOfLocation' => $entity['name']);
+    		$criteria = new \Doctrine\Common\Collections\Criteria();
+    		$criteria
+    		->orWhere($criteria->expr()->contains('branchOfLocation', '###' . $entity['name'] . '###'));
+    		$locationsForBranch = $locationRepository->matching($criteria);
+    		
+    	}
+    	if ($objectType == 'serviceOfLocation') {
+    		$criteria = new \Doctrine\Common\Collections\Criteria();
+    		$criteria
+    		->orWhere($criteria->expr()->contains('servicesOfLocation', '###' . $entity['name'] . '###'));
+    		$locationsWithService = $locationRepository->matching($criteria);
+    	}
     	
-    		$locationsForBranch = $locationRepository->findBy($criteria);
+    	if ($objectType == 'specialOfLocation') {
+    		$criteria = new \Doctrine\Common\Collections\Criteria();
+    		$criteria
+    		->orWhere($criteria->expr()->contains('specialsOfLocation', '###' . $entity['name'] . '###'));
+    		$locationsWithSpecial = $locationRepository->matching($criteria);
     	}
     	
     	$actualDay = $this->getActualDay();
@@ -73,19 +88,22 @@ class ControllerHelper extends AbstractControllerHelper
     		$location['showHours'] = 'none';
     		if ($location['closedForEver'] == 1) {
     			$location['state'] = 'closedForEver';
-    			$location['showHours'] = $this->__('Closed today');
+    			$location['showHours'] = $this->__('Closed for ever');
     			//$locations[] = $location;
     		} else {
     			if ($location['agreement'] == 1) {
     				$location['state'] = 'agreement';
+    				$location['showHours'] = $this->__('Appointments by agreement');
     				//$locations[] = $location;
     			} else {
     				if ($location['unclearTimes'] == 1) {
     					$location['state'] = 'unclear';
+    					$location['showHours'] = $this->__('Unclear opening hours');
     					//$locations[] = $location;
     				} else {
     					if ($location['closedOn' . $actualDay] == 1) {
     						$location['state'] = 'closedThisDay';
+    						$location['showHours'] = $this->__('Closed this day');
     						//$locations[] = $location;
     					} else {
     						$location['state'] = $this->checkActualDay($actualDay, $location);
@@ -106,6 +124,12 @@ class ControllerHelper extends AbstractControllerHelper
     		if ($objectType == 'branch') {
     			$relevantLocations = $locationsForBranch;
     		}
+    		if ($objectType == 'serviceOfLocation') {
+    			$relevantLocations = $locationsWithService;
+    		}
+    		if ($objectType == 'specialOfLocation') {
+    			$relevantLocations = $locationsWithSpecial;
+    		}
     		foreach ($relevantLocations as $location) {
     			$location['showHours'] = 'none';
     			if ($location['closedForEver'] == 1) {
@@ -125,6 +149,7 @@ class ControllerHelper extends AbstractControllerHelper
     							$location['state'] = 'closedThisDay';
     							$locations[] = $location;
     						} else {
+    							$location = $locationRepository->find($location['id']);
     							$location['state'] = $this->checkActualDay($actualDay, $location);
     							$location['showHours'] = $this->checkActualDay($actualDay, $location, 2);
     							$locations[] = $location;
@@ -133,12 +158,12 @@ class ControllerHelper extends AbstractControllerHelper
     				}
     			}
     		}
-    		if ($objectType != 'part' && $objectType != 'branch') {
+    		if ($objectType != 'part' && $objectType != 'branch' && $objectType != 'serviceOfLocation' && $objectType != 'specialOfLocation') {
     		foreach ($templateParameters[$objectType]['locations'] as $i => $value) {
     			unset($templateParameters[$objectType]['locations'][$i]);
     		}
     		}
-    		if ($objectType != 'part' && $objectType != 'branch') {
+    		if ($objectType != 'part' && $objectType != 'branch' && $objectType != 'serviceOfLocation' && $objectType != 'specialOfLocation') {
     		$templateParameters[$objectType]['locations'] = $locations;
     		} else {
     			$templateParameters['locations'] = $locations;
@@ -302,15 +327,45 @@ class ControllerHelper extends AbstractControllerHelper
      * @return string
      */
     private function checkActualDay($actualDay, $location, $kind = 1) {
-    	$startTime = \DateUtil::formatDatetime($location['startOn' . $actualDay], 'timelong');
-    	$endTime = \DateUtil::formatDatetime($location['endOn' . $actualDay], 'timelong');
-    	$start2Time = \DateUtil::formatDatetime($location['start2On' . $actualDay], 'timelong');
-    	$end2Time = \DateUtil::formatDatetime($location['end2On' . $actualDay], 'timelong');
     	
-    	$startTimeFine = \DateUtil::formatDatetime($location['startOn' . $actualDay], 'timebrief');
+    	$function = 'getStartOn' . $actualDay;
+    	$startTime = $location->$function();
+    	if ($startTime) {
+    		$startTime = $startTime->format('H:i');
+    	} else {
+    		$startTime = '';
+    	}
+    	    	
+    	$function = 'getEndOn' . $actualDay;
+    	$endTime = $location->$function();
+    	if ($endTime) {
+    	$endTime = $endTime->format('H:i');
+    	} else {
+    		$endTime == '';
+    	}
+
+    	$function = 'getStart2On' . $actualDay;
+    	$start2Time = $location->$function();
+    	if ($start2Time) {
+    		$start2Time = $start2Time->format('H:i');
+    	} else {
+    		$start2Time = '';
+    	}
+    	
+    	$function = 'getEnd2On' . $actualDay;
+    	$end2Time = $location->$function();
+    	if ($end2Time) {
+    		$end2Time = $end2Time->format('H:i');
+    	} else {
+    		$end2Time == '';
+    	}
+    	
+    	//$end2Time = \DateUtil::formatDatetime($location['end2On' . $actualDay], 'timebrief');
+    	
+    	/*$startTimeFine = \DateUtil::formatDatetime($location['startOn' . $actualDay], 'timebrief');
     	$endTimeFine = \DateUtil::formatDatetime($location['endOn' . $actualDay], 'timebrief');
     	$start2TimeFine = \DateUtil::formatDatetime($location['start2On' . $actualDay], 'timebrief');
-    	$end2TimeFine = \DateUtil::formatDatetime($location['end2On' . $actualDay], 'timebrief');
+    	$end2TimeFine = \DateUtil::formatDatetime($location['end2On' . $actualDay], 'timebrief');*/
     	
 		switch ($actualDay) {
 			case 'Sunday' :
@@ -336,83 +391,106 @@ class ControllerHelper extends AbstractControllerHelper
 				break;				
 		}
 		
-		$nextStartTime = \DateUtil::formatDatetime($location['startOn' . $nextDay], 'timelong');
+		$function = 'getStartOn' . $nextDay;
+		$nextStartTime = $location->$function();
+		if ($nextStartTime) {
+			$nextStartTime = $nextStartTime->format('H:i');
+		} else {
+			$nextStartTime = '';
+		}
+		
+		$function = 'getEndOn' . $nextDay;
+		$nextEndTime = $location->$function();
+		if ($nextEndTime) {
+			$nextEndTime = $nextEndTime->format('H:i');
+		} else {
+			$nextEndTime == '';
+		}
+		
+		$function = 'getStart2On' . $nextDay;
+		$nextStart2Time = $location->$function();
+		if ($nextStart2Time) {
+			$nextStart2Time = $nextStart2Time->format('H:i');
+		} else {
+			$nextStart2Time = '';
+		}
+		
+		$function = 'getEnd2On' . $nextDay;
+		$nextEnd2Time = $location->$function();
+		if ($nextEnd2Time) {
+			$nextEnd2Time = $nextEnd2Time->format('H:i');
+		} else {
+			$nextEnd2Time == '';
+		}
+		
+		/*$nextStartTime = \DateUtil::formatDatetime($location['startOn' . $nextDay], 'timelong');
 		$nextEndTime = \DateUtil::formatDatetime($location['endOn' . $nextDay], 'timelong');
 		$nextStart2Time = \DateUtil::formatDatetime($location['start2On' . $nextDay], 'timelong');
-		$nextEnd2Time = \DateUtil::formatDatetime($location['end2On' . $nextDay], 'timelong');
+		$nextEnd2Time = \DateUtil::formatDatetime($location['end2On' . $nextDay], 'timelong');*/
     	
     	// we get actual time
-    	$actualTime = date('H:i:s');
+    	$actualTime = date('H:i');
     	// we set state
     	$state = '';
     	// we check the first times
     	if ($startTime != '') {
     	    if ($startTime < $actualTime) {
-
     	    	if ($endTime != '') {
- 
-    		    if ($endTime >= $actualTime || ($endTime < $actualTime && $nextStartTime != '' && $nextStartTime > $actualTime)) {
-
-    			    $state = 'open';
-    		    } else {
-
-    		    	$state = 'closed';
-    		    }
+    		        if ($endTime >= $actualTime || $endTime == '00:00' || ($endTime > '00:00' && $endTime < $nextStartTime && $actualTime > $startTime)) {
+    			        $state = 'open';
+    		        } else {
+    		    	    $state = 'closed';
+    		        }
+    	        } else {
+    		        $state = 'openEnd';
+    	        }
     	    } else {
-    		    $state = 'openEnd';
-    	    }
-    	} else {
     		if ($endTime == '') {
     			$state = 'openEnd';
     		} else {
-    		$state = 'closed';
+    		    $state = 'closed';
     		}
-    	}
+    	    }
     	}
 
+
     	// we check the second times
+    	if ($state != 'open') {
     	if ($start2Time != '') {
     		if ($start2Time < $actualTime) {
     			if ($end2Time != '') {
-    				if ($end2Time >= $actualTime || ($end2Time < $actualTime && $nextStartTime != '' && $nextStartTime > $actualTime)) {
-    					if ($state != 'open') {
+    				if ($end2Time >= $actualTime || $end2Time == '00:00' || ($end2Time > '00:00' && $end2Time < $nextStartTime && $actualTime > $start2Time)) {
     					    $state = 'open';
-    					}
     				} else {
-    					if ($state != 'closed') {
     					    $state = 'closed';
-    					}
     				}
     			} else {
-    				if ($state != 'openEnd') {
     				    $state = 'openEnd';
-    				}
     			}
     		} else {
-    		    if ($end2Time == '' && $state != 'openEnd') {
+    		    if ($end2Time == '') {
     			$state = 'openEnd';
     		} else {
-    			if ($state != 'closed') {
     		        $state = 'closed';
-    			}
     		}
     		}
     	}
+    }
     	
     	if ($state == 'open' || $state == 'openEnd' || $state == 'closed') {
-    		$hours = $startTimeFine;
+    		$hours = $startTime;
     		if ($endTime != '') {
-    			$hours .= ' - ' . $endTimeFine;
+    			$hours .= ' - ' . $endTime;
     		} else {
     			if ($start2Time == '') {
     			$hours .= ' - ' . $this->__('Open end');
     			}
     		}
     		if ($start2Time != '') {
-    			$hours .= "\n" . $start2TimeFine;
+    			$hours .= "\n" . $start2Time;
     			
     		    if ($end2Time != '') {
-    			    $hours .= ' - ' . $end2TimeFine;
+    			    $hours .= ' - ' . $end2Time;
     		    } else {
     			    $hours .= ' - ' . $this->__('Open End');
     		    }    			
@@ -435,12 +513,21 @@ class ControllerHelper extends AbstractControllerHelper
      */
     private function getActualDay()
     {
-    	$wochentage = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Tuesday', 'Friday', 'Saturday');
+    	$wochentage = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
     	
     	$tag = date ( "w" );
     	$year = date ( "Y" );
     	
     	return $wochentage[$tag];
     	
+    }
+    
+    /**
+     * 
+     */
+    public function getUid()
+    {
+    	$uid = $this->currentUserApi->get('uid');
+    	return $uid;
     }
 }
