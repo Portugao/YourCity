@@ -187,7 +187,7 @@ abstract class AbstractImportController extends AbstractController
     			$newLocation->setParts($parts);
     			}*/
     			$newLocation->setPartOfCity($data[0]['partOfCity']);
-    			$newLocation->setPartOfCity($data[0]['branchOfLocation']);
+    			$newLocation->setBranchOfLocation($data[0]['branchOfLocation']);
     			
     			
     			
