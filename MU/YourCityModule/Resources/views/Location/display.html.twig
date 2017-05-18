@@ -1,11 +1,11 @@
 {# purpose of this template: locations display view #}
 {% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
 {% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
-{% block pageTitle %}{{ location|muyourcitymodule_formattedTitle|default(__('Location')) }}{% endblock %}
-{% block title %}
-    {% if location.descriptionForGoogle is not empty %}
+{% block pageTitle %}{{ location|muyourcitymodule_formattedTitle|default(__('Location')) }}    {% if location.descriptionForGoogle is not empty %}
     {{ setMetaTag('description', location.descriptionForGoogle) }}
-    {% endif %}
+    {% endif %}{% endblock %}
+{% block title %}
+
     <div class="row">
     <div class="col-md-3">
     <div id="location-logo">
@@ -84,7 +84,10 @@
             <dt>{{ __('State') }}</dt>
             <dd>{{ location.workflowState|muyourcitymodule_listEntry('location', 'workflowState') }}</dd>
         {% endif %}
-        
+        <h3>{{ __('Branches') }}</h3>
+        <h4>{{ location.branchOfLocation|muyourcitymodule_listEntry('location', 'branchOfLocation') }}</h4>
+        <h3>{{ __('Part') }}</h3>
+        <h4>{{ location.partOfCity|muyourcitymodule_listEntry('location', 'partOfCity') }}</h4>
         {% if location.description is not empty %}
             {{ location.description|safeHtml }}<br />
         {% endif %}
@@ -339,33 +342,26 @@
         {{ block('display_hooks') }}
         </div>
         <div class="col-sm-5">
-            {% if location.specialsOfLocation|default %}
-            <h3>{{ __('Specials of location') }}</h3>
-            {{ include(
-                '@MUYourCityModule/SpecialOfLocation/includeDisplayItemListManyOwn.html.twig',
-                { items: location.specialsOfLocation }
-            ) }}
-            {% endif %}
+        {% if location.specialsOfLocation is not empty %}
+            <h4>{{ __('Specials') }}</h4>
+            {{ location.specialsOfLocation|muyourcitymodule_listEntry('location', 'specialsOfLocation') }}
+        {% endif %}
             
-            {% if location.servicesOfLocation|default %}
-            <h3>{{ __('Services of location') }}</h3>
-            {{ include(
-                '@MUYourCityModule/ServiceOfLocation/includeDisplayItemListMany.html.twig',
-                { items: location.servicesOfLocation }
-            ) }}
-            {% endif %}
+        {% if location.servicesOfLocation is not empty %}
+            <h4>{{ __('Services') }}</h4>
+            {{ location.servicesOfLocation|muyourcitymodule_listEntry('location', 'servicesOfLocation') }}
+        {% endif %}
             
-            {% if location.bsagStop is not empty %}
-                <h3>{{ __('Public transport') }}</h3>
-                <h4>{{ location.bsagStop }}</h4>
-                {% if location.tram is not empty %}
-                    <span class="location-tram"><i class="fa fa-train" aria-hidden="true"></i> {{ location.tram }}</span><br />
-                {% endif %}
-        
-                {% if location.bus is not empty %}
-                    <span class="location-bus"><i class="fa fa-bus" aria-hidden="true"></i> {{ location.bus }}</span><br />
-                {% endif %}
+        {% if location.bsagStop is not empty %}
+            <h3>{{ __('Public transport') }}</h3>
+            <h4>{{ location.bsagStop }}</h4>
+            {% if location.tram is not empty %}
+                 <span class="location-tram"><i class="fa fa-train" aria-hidden="true"></i> {{ location.tram }}</span><br />
+            {% endif %}    
+            {% if location.bus is not empty %}
+                <span class="location-bus"><i class="fa fa-bus" aria-hidden="true"></i> {{ location.bus }}</span><br />
             {% endif %}
+        {% endif %}
             
         </div>
         <br style="clear: both;" />
@@ -375,26 +371,36 @@
         <div id="mapContainer" class="muyourcitymodule-mapcontainer"></div>
         {% endif %}
         
-        <div class="col-md-12">    
-            {% if location.filesOfLocation|default %}
-                {% if routeArea == 'admin' %}
-                    <h4>{{ __('Files of location') }}</h4>
-                {% else %}
-                   <h3>{{ __('Files of location') }}</h3>
-                {% endif %}
-                {{ include(
-                    '@MUYourCityModule/FileOfLocation/includeDisplayItemListMany.html.twig',
-                    { items: location.filesOfLocation }
-                ) }}
-            {% endif %}        
-        </div><br />
-        
-        {% set mayManage = hasPermission('MUYourCityModule:FileOfLocation:', '::', 'ACCESS_EDIT') %}
-        {% if mayManage %}
-        <p class="managelink">
-            {% set createTitle = __('Create file of location') %}
-            <a href="{{ path('muyourcitymodule_fileoflocation_' ~ routeArea ~ 'edit', { location: location.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
-        </p>
+        {% if location.firstFile is not empty or location.secondFile is not empty %}
+        <h4>{{ __('Downloads') }}</h4>
+        {% if location.firstFile is not empty %}
+            <dt>{{ __('First file') }}</dt>
+            <dd>{% if location.firstFile is not empty and location.firstFileMeta|default %}
+                        <a href="{{ location.firstFileUrl }}" title="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if location.firstFileMeta.isImage %} class="image-link"{% endif %}>
+            {% if location.firstFileMeta.isImage %}
+                {% set thumbOptions = attribute(thumbRuntimeOptions, 'locationFirstFile') %}
+                <img src="{{ location.firstFile.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+            {% else %}
+                {{ __('Download') }} ({{ location.firstFileMeta.size|muyourcitymodule_fileSize(location.firstFile.getPathname(), false, false) }})
+            {% endif %}
+            </a>
+            {% else %}&nbsp;{% endif %}
+            </dd>
+        {% endif %}
+        {% if location.secondFile is not empty %}
+            <dt>{{ __('Second file') }}</dt>
+            <dd>{% if location.secondFile is not empty and location.secondFileMeta|default %}
+                        <a href="{{ location.secondFileUrl }}" title="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if location.secondFileMeta.isImage %} class="image-link"{% endif %}>
+            {% if location.secondFileMeta.isImage %}
+                {% set thumbOptions = attribute(thumbRuntimeOptions, 'locationSecondFile') %}
+                <img src="{{ location.secondFile.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+            {% else %}
+                {{ __('Download') }} ({{ location.secondFileMeta.size|muyourcitymodule_fileSize(location.secondFile.getPathname(), false, false) }})
+            {% endif %}
+            </a>
+            {% else %}&nbsp;{% endif %}
+            </dd>
+        {% endif %}
         {% endif %}
               
         </div>
@@ -409,171 +415,7 @@
         
 {% endblock %}
 {% block related_items %}
-    {#% if routeArea == 'admin' %}
-        <h4>{{ __('Images of location') }}</h4>
-    {% else %}
-        <h3>{{ __('Images of location') }}</h3>
-    {% endif %}
     
-    {% if location.imagesOfLocation|default %}
-        {{ include(
-            '@MUYourCityModule/ImageOfLocation/includeDisplayItemListMany.html.twig',
-            { items: location.imagesOfLocation }
-        ) }}
-    {% endif %#}
-    
-    {% set mayManage = hasPermission('MUYourCityModule:ImageOfLocation:', '::', 'ACCESS_EDIT') %}
-    {% if mayManage %}
-        <p class="managelink">
-            {% set createTitle = __('Create image of location') %}
-            <a href="{{ path('muyourcitymodule_imageoflocation_' ~ routeArea ~ 'edit', { location: location.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
-        </p>
-    {% endif %}
-    
-    {% if location.offers|default %}
-    {% if routeArea == 'admin' %}
-        <h4>{{ __('Offers') }}</h4>
-    {% else %}
-        <h3>{{ __('Offers') }}</h3>
-    {% endif %}
-
-        {{ include(
-            '@MUYourCityModule/Offer/includeDisplayItemListMany.html.twig',
-            { items: location.offers }
-        ) }}
-    {% endif %}
-    
-    {% set mayManage = hasPermission('MUYourCityModule:Offer:', '::', 'ACCESS_EDIT') %}
-    {% if mayManage %}
-        <p class="managelink">
-            {% set createTitle = __('Create offer') %}
-            <a href="{{ path('muyourcitymodule_offer_' ~ routeArea ~ 'edit', { location: location.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
-        </p>
-    {% endif %}
-    
-    {% if location.menuOfLocation|default %}    
-    {% if routeArea == 'admin' %}
-        <h4>{{ __('Menus of location') }}</h4>
-    {% else %}
-        <h3>{{ __('Menus of location') }}</h3>
-    {% endif %} 
-
-        {{ include(
-            '@MUYourCityModule/MenuOfLocation/includeDisplayItemListMany.html.twig',
-            { items: location.menuOfLocation }
-        ) }}
-    {% endif %}
-    
-    {% set mayManage = hasPermission('MUYourCityModule:MenuOfLocation:', '::', 'ACCESS_EDIT') %}
-    {% if mayManage %}
-        <p class="managelink">
-            {% set createTitle = __('Create menu of location') %}
-            <a href="{{ path('muyourcitymodule_menuoflocation_' ~ routeArea ~ 'edit', { location: location.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
-        </p>
-    {% endif %}
-    
-    {% if location.events|default %}    
-    {% if routeArea == 'admin' %}
-        <h4>{{ __('Events') }}</h4>
-    {% else %}
-        <h3>{{ __('Events') }}</h3>
-    {% endif %} 
-
-        {{ include(
-            '@MUYourCityModule/Event/includeDisplayItemListMany.html.twig',
-            { items: location.events }
-        ) }}
-    {% endif %}
-    
-    {% set mayManage = hasPermission('MUYourCityModule:Event:', '::', 'ACCESS_EDIT') %}
-    {% if mayManage %}
-        <p class="managelink">
-            {% set createTitle = __('Create event') %}
-            <a href="{{ path('muyourcitymodule_event_' ~ routeArea ~ 'edit', { location: location.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
-        </p>
-    {% endif %}
-    
-    {% if location.products|default %}   
-    {% if routeArea == 'admin' %}
-        <h4>{{ __('Products') }}</h4>
-    {% else %}
-        <h3>{{ __('Products') }}</h3>
-    {% endif %} 
-
-        {{ include(
-            '@MUYourCityModule/Product/includeDisplayItemListMany.html.twig',
-            { items: location.products }
-        ) }}
-    {% endif %}
-    
-    {% set mayManage = hasPermission('MUYourCityModule:Product:', '::', 'ACCESS_EDIT') %}
-    {% if mayManage %}
-        <p class="managelink">
-            {% set createTitle = __('Create product') %}
-            <a href="{{ path('muyourcitymodule_product_' ~ routeArea ~ 'edit', { location: location.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
-        </p>
-    {% endif %}
-    
-    {% if routeArea == 'admin' %}
-        <h4>{{ __('Dishes') }}</h4>
-    {% endif %}
-    
-    {% if location.dishes|default and routeArea == 'admin' %}
-        {{ include(
-            '@MUYourCityModule/Dish/includeDisplayItemListMany.html.twig',
-            { items: location.dishes }
-        ) }}
-    {% endif %}
-    
-    {% set mayManage = hasPermission('MUYourCityModule:Dish:', '::', 'ACCESS_EDIT') %}
-    {% if mayManage %}
-        <p class="managelink">
-            {% set createTitle = __('Create dish') %}
-            <a href="{{ path('muyourcitymodule_dish_' ~ routeArea ~ 'edit', { location: location.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
-        </p>
-    {% endif %}
-    
-    {% if location.branches|default %}    
-    {% if routeArea == 'admin' %}
-        <h4>{{ __('Branches') }}</h4>
-    {% else %}
-        <h3>{{ __('Branches') }}</h3>
-    {% endif %}
-
-        {{ include(
-            '@MUYourCityModule/Branch/includeDisplayItemListMany.html.twig',
-            { items: location.branches }
-        ) }}
-    {% endif %}
-    
-    {% set mayManage = hasPermission('MUYourCityModule:Branch:', '::', 'ACCESS_EDIT') %}
-    {% if mayManage %}
-        <p class="managelink">
-            {% set createTitle = __('Create branch') %}
-            <a href="{{ path('muyourcitymodule_branch_' ~ routeArea ~ 'edit', { locations: location.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
-        </p>
-    {% endif %}
-    
-    {% if location.parts|default %}    
-    {% if routeArea == 'admin' %}
-        <h4>{{ __('Part') }}</h4>
-    {% else %}
-        <h3>{{ __('Part') }}</h3>
-    {% endif %}
-    
-        {{ include(
-            '@MUYourCityModule/Part/includeDisplayItemListMany.html.twig',
-            { items: location.parts }
-        ) }}
-    {% endif %}
-    
-    {% set mayManage = hasPermission('MUYourCityModule:Part:', '::', 'ACCESS_EDIT') %}
-    {% if mayManage %}
-        <p class="managelink">
-            {% set createTitle = __('Create part') %}
-            <a href="{{ path('muyourcitymodule_part_' ~ routeArea ~ 'edit', { locations: location.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
-        </p>
-    {% endif %}
     
 {% endblock %}
 {% block display_hooks %}
