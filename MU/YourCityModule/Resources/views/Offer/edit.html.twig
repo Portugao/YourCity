@@ -67,12 +67,9 @@
             {{ form_row(form.effectivUntil) }}
             {{ form_row(form.inViewFrom) }}
             {{ form_row(form.inViewUntil) }}
+            {{ form_row(form.myLocation) }}
         </fieldset>
         
-        {{ include(
-            '@MUYourCityModule/Location/includeSelectOne.html.twig',
-            { group: 'offer', alias: 'location', aliasReverse: 'offers', mandatory: true, idPrefix: 'yourcityOffer_Location', linkingItem: offer, displayMode: 'choices' }
-        ) }}
         {% if mode != 'create' %}
             {{ include('@MUYourCityModule/Helper/includeStandardFieldsEdit.html.twig', { obj: offer }) }}
         {% endif %}

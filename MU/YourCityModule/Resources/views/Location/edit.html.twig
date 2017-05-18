@@ -6,7 +6,6 @@
     {{ parent() }}
     {{ pageAddAsset('javascript', zasset('@MUYourCityModule:js/MUYourCityModule.Validation.js'), 98) }}
     {{ pageAddAsset('javascript', zasset('@MUYourCityModule:js/MUYourCityModule.EditFunctions.js'), 99) }}
-    {{ pageAddAsset('javascript', asset('typeahead/typeahead.bundle.min.js')) }}
 {% endblock %}
 {% block title mode == 'create' ? __('Create location') : __('Edit location') %}
 {% block admin_page_icon mode == 'create' ? 'plus' : 'pencil-square-o' %}
@@ -39,11 +38,11 @@
                             <fieldset>
                                 <legend>{{ language|languageName|safeHtml }}</legend>
                                 {% if language == app.request.locale %}
-                                    {{ form_row(form.slogan) }}
+                                    {{ form_row(form.keywordsForLocation) }}
                                     {{ form_row(form.descriptionForGoogle) }}
+                                    {{ form_row(form.slogan) }}
                                     {{ form_row(form.description) }}
                                     {{ form_row(form.description2) }}
-                                    {{ form_row(form.branchOfLocation) }}
                                 {% else %}
                                     {{ form_row(attribute(form, 'translations' ~ language)) }}
                                 {% endif %}
@@ -56,11 +55,11 @@
             {% set language = app.request.locale %}
             <fieldset>
                 <legend>{{ language|languageName|safeHtml }}</legend>
-                {{ form_row(form.slogan) }}
+                {{ form_row(form.keywordsForLocation) }}
                 {{ form_row(form.descriptionForGoogle) }}
+                {{ form_row(form.slogan) }}
                 {{ form_row(form.description) }}
                 {{ form_row(form.description2) }}
-                {{ form_row(form.branchOfLocation) }}
             </fieldset>
         {% endif %}
         <fieldset>
@@ -73,26 +72,16 @@
             {{ form_row(form.numberOfStreet) }}
             {{ form_row(form.zipCode) }}
             {{ form_row(form.city) }}
-            {{ form_row(form.partOfCity) }}
             {{ form_row(form.telefon) }}
             {{ form_row(form.mobil) }}
             {{ form_row(form.homepage) }}
             {{ form_row(form.bsagStop) }}
             {{ form_row(form.tram) }}
             {{ form_row(form.bus) }}
-            {% if mode == 'create' %}
-            <div class="hidden">
-            {% endif %}
             {{ form_row(form.closedForEver) }}
-            {% if mode == 'create' %}
-            </div>
-            {% endif %}
             {{ form_row(form.agreement) }}
             {{ form_row(form.unclearTimes) }}
             {{ form_row(form.openingHours) }}
-            {% if mode == 'create' %}
-            <div class="hidden">
-            {% endif %}
             {{ form_row(form.closedOnMonday) }}
             {{ form_row(form.startOnMonday) }}
             {{ form_row(form.endOnMonday) }}
@@ -128,13 +117,21 @@
             {{ form_row(form.endOnSunday) }}
             {{ form_row(form.start2OnSunday) }}
             {{ form_row(form.end2OnSunday) }}
-
+            {{ form_row(form.partOfCity) }}
+            {{ form_row(form.branchOfLocation) }}
+            {{ form_row(form.servicesOfLocation) }}
+            {{ form_row(form.specialsOfLocation) }}
+            {{ form_row(form.firstImage) }}
+            {{ form_row(form.secondImage) }}
+            {{ form_row(form.thirdImage) }}
+            {{ form_row(form.fourthImage) }}
+            {{ form_row(form.fifthImage) }}
+            {{ form_row(form.sixthImage) }}
+            {{ form_row(form.firstFile) }}
+            {{ form_row(form.secondFile) }}
             {{ form_row(form.owner) }}
             {{ form_row(form.admin1) }}
             {{ form_row(form.admin2) }}
-            {% if mode == 'create' %}
-            </div>
-            {% endif %}
             {{ form_row(form.latitude) }}
             {{ form_row(form.longitude) }}
         </fieldset>
@@ -145,14 +142,6 @@
             </div>
         </fieldset>
         
-        {{ include(
-            '@MUYourCityModule/SpecialOfLocation/includeSelectMany.html.twig',
-            { group: 'location', alias: 'specialsOfLocation', aliasReverse: 'locations', mandatory: false, idPrefix: 'yourcityLocation_SpecialsOfLocation', linkingItem: location, displayMode: 'choices' }
-        ) }}
-        {{ include(
-            '@MUYourCityModule/ServiceOfLocation/includeSelectMany.html.twig',
-            { group: 'location', alias: 'servicesOfLocation', aliasReverse: 'locations', mandatory: false, idPrefix: 'yourcityLocation_ServicesOfLocation', linkingItem: location, displayMode: 'choices' }
-        ) }}
         {% if mode != 'create' %}
             {{ include('@MUYourCityModule/Helper/includeStandardFieldsEdit.html.twig', { obj: location }) }}
         {% endif %}
@@ -244,6 +233,14 @@
                 mUYourCityInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ location.id }}{% endif %}');
                 mUYourCityInitUploadField('muyourcitymodule_location_logoOfYourLocation_logoOfYourLocation');
                 mUYourCityInitUploadField('muyourcitymodule_location_imageOfLocation_imageOfLocation');
+                mUYourCityInitUploadField('muyourcitymodule_location_firstImage_firstImage');
+                mUYourCityInitUploadField('muyourcitymodule_location_secondImage_secondImage');
+                mUYourCityInitUploadField('muyourcitymodule_location_thirdImage_thirdImage');
+                mUYourCityInitUploadField('muyourcitymodule_location_fourthImage_fourthImage');
+                mUYourCityInitUploadField('muyourcitymodule_location_fifthImage_fifthImage');
+                mUYourCityInitUploadField('muyourcitymodule_location_sixthImage_sixthImage');
+                mUYourCityInitUploadField('muyourcitymodule_location_firstFile_firstFile');
+                mUYourCityInitUploadField('muyourcitymodule_location_secondFile_secondFile');
             });
         })(jQuery);
     /* ]]> */

@@ -59,16 +59,9 @@
         <fieldset>
             <legend>{{ __('Further properties') }}</legend>
             {{ form_row(form.positionOfPart) }}
+            {{ form_row(form.myLocation) }}
         </fieldset>
         
-        {{ include(
-            '@MUYourCityModule/MenuOfLocation/includeSelectOne.html.twig',
-            { group: 'partofmenu', alias: 'menuOfLocation', aliasReverse: 'partsOfMenu', mandatory: true, idPrefix: 'yourcityPartOfMenu_MenuOfLocation', linkingItem: partofmenu, displayMode: 'choices' }
-        ) }}
-        {{ include(
-            '@MUYourCityModule/Location/includeSelectOne.html.twig',
-            { group: 'partofmenu', alias: 'location', aliasReverse: 'partsOfMenu', mandatory: true, idPrefix: 'yourcityPartOfMenu_Location', linkingItem: partofmenu, displayMode: 'choices' }
-        ) }}
         {% if mode != 'create' %}
             {{ include('@MUYourCityModule/Helper/includeStandardFieldsEdit.html.twig', { obj: partofmenu }) }}
         {% endif %}

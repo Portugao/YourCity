@@ -63,20 +63,9 @@
             {{ form_row(form.priceOfDish) }}
             {{ form_row(form.ingredients) }}
             {{ form_row(form.positionOfDish) }}
+            {{ form_row(form.myLocation) }}
         </fieldset>
         
-        {{ include(
-            '@MUYourCityModule/MenuOfLocation/includeSelectOne.html.twig',
-            { group: 'dish', alias: 'menuOfLocation', aliasReverse: 'dishes', mandatory: false, idPrefix: 'yourcityDish_MenuOfLocation', linkingItem: dish, displayMode: 'choices' }
-        ) }}
-        {{ include(
-            '@MUYourCityModule/PartOfMenu/includeSelectOne.html.twig',
-            { group: 'dish', alias: 'partOfMenu', aliasReverse: 'dishes', mandatory: false, idPrefix: 'yourcityDish_PartOfMenu', linkingItem: dish, displayMode: 'choices' }
-        ) }}
-        {{ include(
-            '@MUYourCityModule/Location/includeSelectOne.html.twig',
-            { group: 'dish', alias: 'location', aliasReverse: 'dishes', mandatory: true, idPrefix: 'yourcityDish_Location', linkingItem: dish, displayMode: 'choices' }
-        ) }}
         {% if mode != 'create' %}
             {{ include('@MUYourCityModule/Helper/includeStandardFieldsEdit.html.twig', { obj: dish }) }}
         {% endif %}

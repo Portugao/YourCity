@@ -17,12 +17,12 @@
     <div class="muyourcitymodule-serviceoflocation muyourcitymodule-display">
 
     <div class="row">
-        <div class="col-sm-9">
+        <div class="col-sm-12">
     <dl>
-        {% if serviceOfLocation.name is not empty %}
+        {#% if serviceOfLocation.name is not empty %}
             <dt>{{ __('Name') }}</dt>
             <dd>{{ serviceOfLocation.name }}</dd>
-        {% endif %}
+        {% endif %#}
         {% if serviceOfLocation.description is not empty %}
             <dt>{{ __('Description') }}</dt>
             <dd>{{ serviceOfLocation.description|safeHtml }}</dd>
@@ -34,10 +34,10 @@
         
     </dl>
     
-    {% if serviceOfLocation.locations|default %}
+    {% if locations|default %}
         {{ include(
             '@MUYourCityModule/Location/includeDisplayItemListManyOwn.html.twig',
-            { items: serviceOfLocation.locations }
+            { items: locations }
         ) }}
     {% endif %}
 
@@ -47,25 +47,25 @@
     
     {{ block('display_hooks') }}
         </div>
-        <div class="col-sm-3">
+        {#<div class="col-sm-3">
             {{ block('related_items') }}
-        </div>
+        </div>#}
     </div>
 </div>
 {% endblock %}
 {% block related_items %}
-    {% if routeArea == 'admin' %}
+    {#% if routeArea == 'admin' %}
         <h4>{{ __('Locations') }}</h4>
     {% else %}
         <h3>{{ __('Locations') }}</h3>
     {% endif %}
     
-    {#% if serviceOfLocation.locations|default %}
+    {% if serviceOfLocation.locations|default %}
         {{ include(
             '@MUYourCityModule/Location/includeDisplayItemListManyOwn.html.twig',
             { items: serviceOfLocation.locations }
         ) }}
-    {% endif %#}
+    {% endif %}
     
     {% set mayManage = hasPermission('MUYourCityModule:Location:', '::', 'ACCESS_COMMENT') %}
     {% if mayManage %}
@@ -73,7 +73,7 @@
             {% set createTitle = __('Create location') %}
             <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'edit', { servicesofLocation: serviceOfLocation.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
         </p>
-    {% endif %}
+    {% endif %#}
 {% endblock %}
 {% block display_hooks %}
     {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.servicesOflocation.display_view', id=serviceOfLocation.id, urlObject=currentUrlObject) %}

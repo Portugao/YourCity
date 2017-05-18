@@ -70,6 +70,7 @@
             {{ form_row(form.end2Date) }}
             {{ form_row(form.inViewFrom) }}
             {{ form_row(form.inViewUntil) }}
+            {{ form_row(form.myLocation) }}
             {{ form_row(form.latitude) }}
             {{ form_row(form.longitude) }}
         </fieldset>
@@ -80,10 +81,6 @@
             </div>
         </fieldset>
         
-        {{ include(
-            '@MUYourCityModule/Location/includeSelectOne.html.twig',
-            { group: 'event', alias: 'location', aliasReverse: 'events', mandatory: true, idPrefix: 'yourcityEvent_Location', linkingItem: event, displayMode: 'choices' }
-        ) }}
         {% if mode != 'create' %}
             {{ include('@MUYourCityModule/Helper/includeStandardFieldsEdit.html.twig', { obj: event }) }}
         {% endif %}

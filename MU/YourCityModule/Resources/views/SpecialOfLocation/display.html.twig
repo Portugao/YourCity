@@ -31,10 +31,10 @@
             {{ specialOfLocation.description|safeHtml }}
         {% endif %}
     
-        {% if specialOfLocation.locations|default %}
+        {% if locations|default %}
             {{ include(
                '@MUYourCityModule/Location/includeDisplayItemListManyOwn.html.twig',
-                { items: specialOfLocation.locations }
+                { items: locations }
             ) }}
         {% endif %}
         
@@ -51,7 +51,7 @@
 </div>
 {% endblock %}
 {% block related_items %}
-    {% if routeArea == 'admin' %}
+    {#% if routeArea == 'admin' %}
         <h4>{{ __('Locations') }}</h4>
     {% else %}
         <h3>{{ __('Locations') }}</h3>
@@ -70,7 +70,7 @@
             {% set createTitle = __('Create location') %}
             <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'edit', { specialsOfLocation: specialOfLocation.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
         </p>
-    {% endif %}
+    {% endif %#}
 {% endblock %}
 {% block display_hooks %}
     {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.specialsoflocation.display_view', id=specialOfLocation.id, urlObject=currentUrlObject) %}
