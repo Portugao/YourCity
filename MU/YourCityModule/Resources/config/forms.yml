@@ -28,34 +28,10 @@ services:
         tags:
             - { name: form.type }
     
-    mu_yourcity_module.form.type.imageoflocationquicknav:
-        class: MU\YourCityModule\Form\Type\QuickNavigation\ImageOfLocationQuickNavType
-        arguments:
-            - "@translator.default"
-            - "@request_stack"
-            - "@mu_yourcity_module.entity_display_helper"
-            - "@mu_yourcity_module.listentries_helper"
-            - "@mu_yourcity_module.feature_activation_helper"
-        tags:
-            - { name: form.type }
-    
-    mu_yourcity_module.form.type.fileoflocationquicknav:
-        class: MU\YourCityModule\Form\Type\QuickNavigation\FileOfLocationQuickNavType
-        arguments:
-            - "@translator.default"
-            - "@request_stack"
-            - "@mu_yourcity_module.entity_display_helper"
-            - "@mu_yourcity_module.listentries_helper"
-            - "@mu_yourcity_module.feature_activation_helper"
-        tags:
-            - { name: form.type }
-    
     mu_yourcity_module.form.type.offerquicknav:
         class: MU\YourCityModule\Form\Type\QuickNavigation\OfferQuickNavType
         arguments:
             - "@translator.default"
-            - "@request_stack"
-            - "@mu_yourcity_module.entity_display_helper"
             - "@mu_yourcity_module.listentries_helper"
             - "@mu_yourcity_module.feature_activation_helper"
         tags:
@@ -65,8 +41,6 @@ services:
         class: MU\YourCityModule\Form\Type\QuickNavigation\MenuOfLocationQuickNavType
         arguments:
             - "@translator.default"
-            - "@request_stack"
-            - "@mu_yourcity_module.entity_display_helper"
             - "@mu_yourcity_module.listentries_helper"
             - "@mu_yourcity_module.feature_activation_helper"
         tags:
@@ -76,8 +50,6 @@ services:
         class: MU\YourCityModule\Form\Type\QuickNavigation\PartOfMenuQuickNavType
         arguments:
             - "@translator.default"
-            - "@request_stack"
-            - "@mu_yourcity_module.entity_display_helper"
             - "@mu_yourcity_module.listentries_helper"
             - "@mu_yourcity_module.feature_activation_helper"
         tags:
@@ -87,8 +59,6 @@ services:
         class: MU\YourCityModule\Form\Type\QuickNavigation\DishQuickNavType
         arguments:
             - "@translator.default"
-            - "@request_stack"
-            - "@mu_yourcity_module.entity_display_helper"
             - "@mu_yourcity_module.listentries_helper"
             - "@mu_yourcity_module.feature_activation_helper"
         tags:
@@ -98,8 +68,6 @@ services:
         class: MU\YourCityModule\Form\Type\QuickNavigation\EventQuickNavType
         arguments:
             - "@translator.default"
-            - "@request_stack"
-            - "@mu_yourcity_module.entity_display_helper"
             - "@mu_yourcity_module.listentries_helper"
             - "@mu_yourcity_module.feature_activation_helper"
         tags:
@@ -109,8 +77,6 @@ services:
         class: MU\YourCityModule\Form\Type\QuickNavigation\ProductQuickNavType
         arguments:
             - "@translator.default"
-            - "@request_stack"
-            - "@mu_yourcity_module.entity_display_helper"
             - "@mu_yourcity_module.listentries_helper"
             - "@mu_yourcity_module.feature_activation_helper"
         tags:
@@ -138,8 +104,6 @@ services:
         class: MU\YourCityModule\Form\Type\QuickNavigation\AbonnementQuickNavType
         arguments:
             - "@translator.default"
-            - "@request_stack"
-            - "@mu_yourcity_module.entity_display_helper"
             - "@mu_yourcity_module.listentries_helper"
             - "@mu_yourcity_module.feature_activation_helper"
         tags:
@@ -258,84 +222,6 @@ services:
         tags:
             - { name: form.type }
     
-    mu_yourcity_module.form.handler.imageoflocation:
-        class: MU\YourCityModule\Form\Handler\ImageOfLocation\EditHandler
-        arguments:
-            - "@kernel"
-            - "@translator.default"
-            - "@form.factory"
-            - "@request_stack"
-            - "@router"
-            - "@logger"
-            - "@zikula_permissions_module.api.permission"
-            - "@zikula_extensions_module.api.variable"
-            - "@zikula_users_module.current_user"
-            - "@zikula_groups_module.group_application_repository"
-            - "@mu_yourcity_module.entity_factory"
-            - "@mu_yourcity_module.controller_helper"
-            - "@mu_yourcity_module.model_helper"
-            - "@mu_yourcity_module.workflow_helper"
-            - "@mu_yourcity_module.hook_helper"
-            - "@mu_yourcity_module.translatable_helper"
-            - "@mu_yourcity_module.feature_activation_helper"
-        calls:
-            - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
-        tags:
-            - { name: form.type }
-    
-    mu_yourcity_module.form.type.imageoflocation:
-        class: MU\YourCityModule\Form\Type\ImageOfLocationType
-        arguments:
-            - "@translator.default"
-            - "@mu_yourcity_module.entity_factory"
-            - "@mu_yourcity_module.collection_filter_helper"
-            - "@mu_yourcity_module.entity_display_helper"
-            - "@zikula_extensions_module.api.variable"
-            - "@mu_yourcity_module.translatable_helper"
-            - "@mu_yourcity_module.listentries_helper"
-            - "@mu_yourcity_module.feature_activation_helper"
-        tags:
-            - { name: form.type }
-    
-    mu_yourcity_module.form.handler.fileoflocation:
-        class: MU\YourCityModule\Form\Handler\FileOfLocation\EditHandler
-        arguments:
-            - "@kernel"
-            - "@translator.default"
-            - "@form.factory"
-            - "@request_stack"
-            - "@router"
-            - "@logger"
-            - "@zikula_permissions_module.api.permission"
-            - "@zikula_extensions_module.api.variable"
-            - "@zikula_users_module.current_user"
-            - "@zikula_groups_module.group_application_repository"
-            - "@mu_yourcity_module.entity_factory"
-            - "@mu_yourcity_module.controller_helper"
-            - "@mu_yourcity_module.model_helper"
-            - "@mu_yourcity_module.workflow_helper"
-            - "@mu_yourcity_module.hook_helper"
-            - "@mu_yourcity_module.translatable_helper"
-            - "@mu_yourcity_module.feature_activation_helper"
-        calls:
-            - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
-        tags:
-            - { name: form.type }
-    
-    mu_yourcity_module.form.type.fileoflocation:
-        class: MU\YourCityModule\Form\Type\FileOfLocationType
-        arguments:
-            - "@translator.default"
-            - "@mu_yourcity_module.entity_factory"
-            - "@mu_yourcity_module.collection_filter_helper"
-            - "@mu_yourcity_module.entity_display_helper"
-            - "@zikula_extensions_module.api.variable"
-            - "@mu_yourcity_module.translatable_helper"
-            - "@mu_yourcity_module.listentries_helper"
-            - "@mu_yourcity_module.feature_activation_helper"
-        tags:
-            - { name: form.type }
-    
     mu_yourcity_module.form.handler.offer:
         class: MU\YourCityModule\Form\Handler\Offer\EditHandler
         arguments:
@@ -366,8 +252,6 @@ services:
         arguments:
             - "@translator.default"
             - "@mu_yourcity_module.entity_factory"
-            - "@mu_yourcity_module.collection_filter_helper"
-            - "@mu_yourcity_module.entity_display_helper"
             - "@zikula_extensions_module.api.variable"
             - "@mu_yourcity_module.translatable_helper"
             - "@mu_yourcity_module.listentries_helper"
@@ -522,8 +406,6 @@ services:
         arguments:
             - "@translator.default"
             - "@mu_yourcity_module.entity_factory"
-            - "@mu_yourcity_module.collection_filter_helper"
-            - "@mu_yourcity_module.entity_display_helper"
             - "@zikula_extensions_module.api.variable"
             - "@mu_yourcity_module.translatable_helper"
             - "@mu_yourcity_module.listentries_helper"
@@ -561,8 +443,6 @@ services:
         arguments:
             - "@translator.default"
             - "@mu_yourcity_module.entity_factory"
-            - "@mu_yourcity_module.collection_filter_helper"
-            - "@mu_yourcity_module.entity_display_helper"
             - "@zikula_extensions_module.api.variable"
             - "@mu_yourcity_module.translatable_helper"
             - "@mu_yourcity_module.listentries_helper"
@@ -600,8 +480,6 @@ services:
         arguments:
             - "@translator.default"
             - "@mu_yourcity_module.entity_factory"
-            - "@mu_yourcity_module.collection_filter_helper"
-            - "@mu_yourcity_module.entity_display_helper"
             - "@zikula_extensions_module.api.variable"
             - "@mu_yourcity_module.translatable_helper"
             - "@mu_yourcity_module.listentries_helper"
@@ -639,8 +517,6 @@ services:
         arguments:
             - "@translator.default"
             - "@mu_yourcity_module.entity_factory"
-            - "@mu_yourcity_module.collection_filter_helper"
-            - "@mu_yourcity_module.entity_display_helper"
             - "@zikula_extensions_module.api.variable"
             - "@mu_yourcity_module.translatable_helper"
             - "@mu_yourcity_module.listentries_helper"
@@ -710,22 +586,6 @@ services:
     
     mu_yourcity_module.form.type.partfinder:
         class: MU\YourCityModule\Form\Type\Finder\PartFinderType
-        arguments:
-            - "@translator.default"
-            - "@mu_yourcity_module.feature_activation_helper"
-        tags:
-            - { name: form.type }
-    
-    mu_yourcity_module.form.type.imageoflocationfinder:
-        class: MU\YourCityModule\Form\Type\Finder\ImageOfLocationFinderType
-        arguments:
-            - "@translator.default"
-            - "@mu_yourcity_module.feature_activation_helper"
-        tags:
-            - { name: form.type }
-    
-    mu_yourcity_module.form.type.fileoflocationfinder:
-        class: MU\YourCityModule\Form\Type\Finder\FileOfLocationFinderType
         arguments:
             - "@translator.default"
             - "@mu_yourcity_module.feature_activation_helper"
