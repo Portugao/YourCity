@@ -11,6 +11,10 @@
             {% endif %}
             <div class="item-container"> 
             <h3>{{ location.name }}</h3>
+            <h4>{{ __('Branches') }}</h4>
+            {{ location.branchOfLocation|muyourcitymodule_listEntry('location', 'branchOfLocation') }}
+            <h4>{{ __('Part') }}</h4>
+            {{ location.partOfCity|muyourcitymodule_listEntry('location', 'partOfCity') }}  
             <div class="placeholder">
             <img src="/themes/Bootstrap2Theme/Resources/public/images/placeholder.png" /></div>
             {{ location.description|truncate(100) }}<br />
