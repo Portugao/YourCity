@@ -80,6 +80,15 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     protected $name = '';
     
     /**
+     * Slogan or additional name of your company.
+     * @Gedmo\Translatable
+     * @ORM\Column(length=255, nullable=true)
+     * @Assert\Length(min="0", max="255")
+     * @var string $slogan
+     */
+    protected $slogan = '';
+    
+    /**
      * Enter the letter for ordering of the location.
      * @ORM\Column(length=255)
      * @Assert\NotBlank()
@@ -89,7 +98,7 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     protected $letterForOrder = '';
     
     /**
-     * here you can enter keywords for search optimization.
+     * Here you can enter keywords for search optimization.
      * @Gedmo\Translatable
      * @ORM\Column(length=255)
      * @Assert\NotNull()
@@ -107,15 +116,6 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
      * @var string $descriptionForGoogle
      */
     protected $descriptionForGoogle = '';
-    
-    /**
-     * Slogan or additional name of your company.
-     * @Gedmo\Translatable
-     * @ORM\Column(length=255, nullable=true)
-     * @Assert\Length(min="0", max="255")
-     * @var string $slogan
-     */
-    protected $slogan = '';
     
     /**
      * Logo of your location meta data array.
@@ -233,6 +233,14 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
      * @var string $city
      */
     protected $city = '';
+    
+    /**
+     * @ORM\Column(length=255)
+     * @Assert\NotBlank()
+     * @YourCityAssert\ListEntry(entityName="location", propertyName="partOfCity", multiple=false)
+     * @var string $partOfCity
+     */
+    protected $partOfCity = '';
     
     /**
      * @ORM\Column(length=255)
@@ -569,38 +577,6 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     protected $end2OnSunday;
     
     /**
-     * @ORM\Column(length=255)
-     * @Assert\NotBlank()
-     * @YourCityAssert\ListEntry(entityName="location", propertyName="partOfCity", multiple=false)
-     * @var string $partOfCity
-     */
-    protected $partOfCity = '';
-    
-    /**
-     * @ORM\Column(length=255)
-     * @Assert\NotBlank()
-     * @YourCityAssert\ListEntry(entityName="location", propertyName="branchOfLocation", multiple=true)
-     * @var string $branchOfLocation
-     */
-    protected $branchOfLocation = '';
-    
-    /**
-     * @ORM\Column(length=255)
-     * @Assert\NotBlank()
-     * @YourCityAssert\ListEntry(entityName="location", propertyName="servicesOfLocation", multiple=true)
-     * @var string $servicesOfLocation
-     */
-    protected $servicesOfLocation = '';
-    
-    /**
-     * @ORM\Column(length=255)
-     * @Assert\NotBlank()
-     * @YourCityAssert\ListEntry(entityName="location", propertyName="specialsOfLocation", multiple=true)
-     * @var string $specialsOfLocation
-     */
-    protected $specialsOfLocation = '';
-    
-    /**
      * First image meta data array.
      *
      * @ORM\Column(type="array")
@@ -878,9 +854,9 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     protected $locale;
     
     /**
-     * Unidirectional - One location [location] has many abonnements [abonnements] (INVERSE SIDE).
+     * Bidirectional - One location [location] has many abonnements [abonnements] (INVERSE SIDE).
      *
-     * @ORM\ManyToMany(targetEntity="MU\YourCityModule\Entity\AbonnementEntity")
+     * @ORM\OneToMany(targetEntity="MU\YourCityModule\Entity\AbonnementEntity", mappedBy="location")
      * @ORM\JoinTable(name="mu_yourcity_locationabonnements",
      *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
      *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
@@ -890,6 +866,45 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
      */
     protected $abonnements = null;
     
+    /**
+     * Bidirectional - Many locations [locations] have many branches [branches] (OWNING SIDE).
+     *
+     * @ORM\ManyToMany(targetEntity="MU\YourCityModule\Entity\BranchEntity", inversedBy="locations")
+     * @ORM\JoinTable(name="mu_yourcity_location_branch",
+     *      joinColumns={@ORM\JoinColumn(name="location_id", referencedColumnName="id" , nullable=false)},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="branch_id", referencedColumnName="id" , nullable=false)}
+     * )
+     * @ORM\OrderBy({"name" = "ASC"})
+     * @Assert\NotNull(message="Choosing at least one of the branches is required.")
+     * @var \MU\YourCityModule\Entity\BranchEntity[] $branches
+     */
+    protected $branches = null;
+    /**
+     * Bidirectional - Many locations [locations] have many servicesOfLocation [services of location] (OWNING SIDE).
+     *
+     * @ORM\ManyToMany(targetEntity="MU\YourCityModule\Entity\ServiceOfLocationEntity", inversedBy="locations")
+     * @ORM\JoinTable(name="mu_yourcity_location_serviceoflocation",
+     *      joinColumns={@ORM\JoinColumn(name="location_id", referencedColumnName="id" , nullable=false)},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="serviceoflocation_id", referencedColumnName="id" , nullable=false)}
+     * )
+     * @ORM\OrderBy({"name" = "ASC"})
+     * @Assert\NotNull(message="Choosing at least one of the services of location is required.")
+     * @var \MU\YourCityModule\Entity\ServiceOfLocationEntity[] $servicesOfLocation
+     */
+    protected $servicesOfLocation = null;
+    /**
+     * Bidirectional - Many locations [locations] have many specialsOfLocation [specials of location] (OWNING SIDE).
+     *
+     * @ORM\ManyToMany(targetEntity="MU\YourCityModule\Entity\SpecialOfLocationEntity", inversedBy="locations")
+     * @ORM\JoinTable(name="mu_yourcity_location_specialoflocation",
+     *      joinColumns={@ORM\JoinColumn(name="location_id", referencedColumnName="id" , nullable=false)},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="specialoflocation_id", referencedColumnName="id" , nullable=false)}
+     * )
+     * @ORM\OrderBy({"name" = "ASC"})
+     * @Assert\NotNull(message="Choosing at least one of the specials of location is required.")
+     * @var \MU\YourCityModule\Entity\SpecialOfLocationEntity[] $specialsOfLocation
+     */
+    protected $specialsOfLocation = null;
     
     /**
      * LocationEntity constructor.
@@ -901,6 +916,9 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     public function __construct()
     {
         $this->abonnements = new ArrayCollection();
+        $this->branches = new ArrayCollection();
+        $this->servicesOfLocation = new ArrayCollection();
+        $this->specialsOfLocation = new ArrayCollection();
     }
     
     /**
@@ -1001,6 +1019,30 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     }
     
     /**
+     * Returns the slogan.
+     *
+     * @return string
+     */
+    public function getSlogan()
+    {
+        return $this->slogan;
+    }
+    
+    /**
+     * Sets the slogan.
+     *
+     * @param string $slogan
+     *
+     * @return void
+     */
+    public function setSlogan($slogan)
+    {
+        if ($this->slogan !== $slogan) {
+            $this->slogan = $slogan;
+        }
+    }
+    
+    /**
      * Returns the letter for order.
      *
      * @return string
@@ -1069,30 +1111,6 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     {
         if ($this->descriptionForGoogle !== $descriptionForGoogle) {
             $this->descriptionForGoogle = $descriptionForGoogle;
-        }
-    }
-    
-    /**
-     * Returns the slogan.
-     *
-     * @return string
-     */
-    public function getSlogan()
-    {
-        return $this->slogan;
-    }
-    
-    /**
-     * Sets the slogan.
-     *
-     * @param string $slogan
-     *
-     * @return void
-     */
-    public function setSlogan($slogan)
-    {
-        if ($this->slogan !== $slogan) {
-            $this->slogan = $slogan;
         }
     }
     
@@ -1381,6 +1399,30 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     {
         if ($this->city !== $city) {
             $this->city = isset($city) ? $city : '';
+        }
+    }
+    
+    /**
+     * Returns the part of city.
+     *
+     * @return string
+     */
+    public function getPartOfCity()
+    {
+        return $this->partOfCity;
+    }
+    
+    /**
+     * Sets the part of city.
+     *
+     * @param string $partOfCity
+     *
+     * @return void
+     */
+    public function setPartOfCity($partOfCity)
+    {
+        if ($this->partOfCity !== $partOfCity) {
+            $this->partOfCity = isset($partOfCity) ? $partOfCity : '';
         }
     }
     
@@ -2633,102 +2675,6 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     }
     
     /**
-     * Returns the part of city.
-     *
-     * @return string
-     */
-    public function getPartOfCity()
-    {
-        return $this->partOfCity;
-    }
-    
-    /**
-     * Sets the part of city.
-     *
-     * @param string $partOfCity
-     *
-     * @return void
-     */
-    public function setPartOfCity($partOfCity)
-    {
-        if ($this->partOfCity !== $partOfCity) {
-            $this->partOfCity = isset($partOfCity) ? $partOfCity : '';
-        }
-    }
-    
-    /**
-     * Returns the branch of location.
-     *
-     * @return string
-     */
-    public function getBranchOfLocation()
-    {
-        return $this->branchOfLocation;
-    }
-    
-    /**
-     * Sets the branch of location.
-     *
-     * @param string $branchOfLocation
-     *
-     * @return void
-     */
-    public function setBranchOfLocation($branchOfLocation)
-    {
-        if ($this->branchOfLocation !== $branchOfLocation) {
-            $this->branchOfLocation = isset($branchOfLocation) ? $branchOfLocation : '';
-        }
-    }
-    
-    /**
-     * Returns the services of location.
-     *
-     * @return string
-     */
-    public function getServicesOfLocation()
-    {
-        return $this->servicesOfLocation;
-    }
-    
-    /**
-     * Sets the services of location.
-     *
-     * @param string $servicesOfLocation
-     *
-     * @return void
-     */
-    public function setServicesOfLocation($servicesOfLocation)
-    {
-        if ($this->servicesOfLocation !== $servicesOfLocation) {
-            $this->servicesOfLocation = isset($servicesOfLocation) ? $servicesOfLocation : '';
-        }
-    }
-    
-    /**
-     * Returns the specials of location.
-     *
-     * @return string
-     */
-    public function getSpecialsOfLocation()
-    {
-        return $this->specialsOfLocation;
-    }
-    
-    /**
-     * Sets the specials of location.
-     *
-     * @param string $specialsOfLocation
-     *
-     * @return void
-     */
-    public function setSpecialsOfLocation($specialsOfLocation)
-    {
-        if ($this->specialsOfLocation !== $specialsOfLocation) {
-            $this->specialsOfLocation = isset($specialsOfLocation) ? $specialsOfLocation : '';
-        }
-    }
-    
-    /**
      * Returns the first image.
      *
      * @return string
@@ -3459,6 +3405,7 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     public function addAbonnements(\MU\YourCityModule\Entity\AbonnementEntity $abonnement)
     {
         $this->abonnements->add($abonnement);
+        $abonnement->setLocation($this);
     }
     
     /**
@@ -3471,6 +3418,151 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     public function removeAbonnements(\MU\YourCityModule\Entity\AbonnementEntity $abonnement)
     {
         $this->abonnements->removeElement($abonnement);
+        $abonnement->setLocation(null);
+    }
+    
+    /**
+     * Returns the branches.
+     *
+     * @return \MU\YourCityModule\Entity\BranchEntity[]
+     */
+    public function getBranches()
+    {
+        return $this->branches;
+    }
+    
+    /**
+     * Sets the branches.
+     *
+     * @param \MU\YourCityModule\Entity\BranchEntity[] $branches
+     *
+     * @return void
+     */
+    public function setBranches($branches)
+    {
+        foreach ($branches as $branchSingle) {
+            $this->addBranches($branchSingle);
+        }
+    }
+    
+    /**
+     * Adds an instance of \MU\YourCityModule\Entity\BranchEntity to the list of branches.
+     *
+     * @param \MU\YourCityModule\Entity\BranchEntity $branch The instance to be added to the collection
+     *
+     * @return void
+     */
+    public function addBranches(\MU\YourCityModule\Entity\BranchEntity $branch)
+    {
+        $this->branches->add($branch);
+    }
+    
+    /**
+     * Removes an instance of \MU\YourCityModule\Entity\BranchEntity from the list of branches.
+     *
+     * @param \MU\YourCityModule\Entity\BranchEntity $branch The instance to be removed from the collection
+     *
+     * @return void
+     */
+    public function removeBranches(\MU\YourCityModule\Entity\BranchEntity $branch)
+    {
+        $this->branches->removeElement($branch);
+    }
+    
+    /**
+     * Returns the services of location.
+     *
+     * @return \MU\YourCityModule\Entity\ServiceOfLocationEntity[]
+     */
+    public function getServicesOfLocation()
+    {
+        return $this->servicesOfLocation;
+    }
+    
+    /**
+     * Sets the services of location.
+     *
+     * @param \MU\YourCityModule\Entity\ServiceOfLocationEntity[] $servicesOfLocation
+     *
+     * @return void
+     */
+    public function setServicesOfLocation($servicesOfLocation)
+    {
+        foreach ($servicesOfLocation as $serviceOfLocationSingle) {
+            $this->addServicesOfLocation($serviceOfLocationSingle);
+        }
+    }
+    
+    /**
+     * Adds an instance of \MU\YourCityModule\Entity\ServiceOfLocationEntity to the list of services of location.
+     *
+     * @param \MU\YourCityModule\Entity\ServiceOfLocationEntity $serviceOfLocation The instance to be added to the collection
+     *
+     * @return void
+     */
+    public function addServicesOfLocation(\MU\YourCityModule\Entity\ServiceOfLocationEntity $serviceOfLocation)
+    {
+        $this->servicesOfLocation->add($serviceOfLocation);
+    }
+    
+    /**
+     * Removes an instance of \MU\YourCityModule\Entity\ServiceOfLocationEntity from the list of services of location.
+     *
+     * @param \MU\YourCityModule\Entity\ServiceOfLocationEntity $serviceOfLocation The instance to be removed from the collection
+     *
+     * @return void
+     */
+    public function removeServicesOfLocation(\MU\YourCityModule\Entity\ServiceOfLocationEntity $serviceOfLocation)
+    {
+        $this->servicesOfLocation->removeElement($serviceOfLocation);
+    }
+    
+    /**
+     * Returns the specials of location.
+     *
+     * @return \MU\YourCityModule\Entity\SpecialOfLocationEntity[]
+     */
+    public function getSpecialsOfLocation()
+    {
+        return $this->specialsOfLocation;
+    }
+    
+    /**
+     * Sets the specials of location.
+     *
+     * @param \MU\YourCityModule\Entity\SpecialOfLocationEntity[] $specialsOfLocation
+     *
+     * @return void
+     */
+    public function setSpecialsOfLocation($specialsOfLocation)
+    {
+        foreach ($specialsOfLocation as $specialOfLocationSingle) {
+            $this->addSpecialsOfLocation($specialOfLocationSingle);
+        }
+    }
+    
+    /**
+     * Adds an instance of \MU\YourCityModule\Entity\SpecialOfLocationEntity to the list of specials of location.
+     *
+     * @param \MU\YourCityModule\Entity\SpecialOfLocationEntity $specialOfLocation The instance to be added to the collection
+     *
+     * @return void
+     */
+    public function addSpecialsOfLocation(\MU\YourCityModule\Entity\SpecialOfLocationEntity $specialOfLocation)
+    {
+        $this->specialsOfLocation->add($specialOfLocation);
+    }
+    
+    /**
+     * Removes an instance of \MU\YourCityModule\Entity\SpecialOfLocationEntity from the list of specials of location.
+     *
+     * @param \MU\YourCityModule\Entity\SpecialOfLocationEntity $specialOfLocation The instance to be removed from the collection
+     *
+     * @return void
+     */
+    public function removeSpecialsOfLocation(\MU\YourCityModule\Entity\SpecialOfLocationEntity $specialOfLocation)
+    {
+        $this->specialsOfLocation->removeElement($specialOfLocation);
     }
     
     

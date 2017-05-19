@@ -31,6 +31,8 @@ use MU\YourCityModule\Entity\Factory\EntityFactory;
 use MU\YourCityModule\Form\Type\Field\ColourType;
 use MU\YourCityModule\Form\Type\Field\TranslationType;
 use MU\YourCityModule\Form\Type\Field\UserType;
+use MU\YourCityModule\Helper\CollectionFilterHelper;
+use MU\YourCityModule\Helper\EntityDisplayHelper;
 use MU\YourCityModule\Helper\FeatureActivationHelper;
 use MU\YourCityModule\Helper\ListEntriesHelper;
 use MU\YourCityModule\Helper\TranslatableHelper;
@@ -46,6 +48,16 @@ abstract class AbstractSpecialOfLocationType extends AbstractType
      * @var EntityFactory
      */
     protected $entityFactory;
+
+    /**
+     * @var CollectionFilterHelper
+     */
+    protected $collectionFilterHelper;
+
+    /**
+     * @var EntityDisplayHelper
+     */
+    protected $entityDisplayHelper;
 
     /**
      * @var VariableApiInterface
@@ -72,6 +84,8 @@ abstract class AbstractSpecialOfLocationType extends AbstractType
      *
      * @param TranslatorInterface $translator     Translator service instance
      * @param EntityFactory       $entityFactory EntityFactory service instance
+     * @param CollectionFilterHelper $collectionFilterHelper CollectionFilterHelper service instance
+     * @param EntityDisplayHelper $entityDisplayHelper EntityDisplayHelper service instance
      * @param VariableApiInterface $variableApi VariableApi service instance
      * @param TranslatableHelper  $translatableHelper TranslatableHelper service instance
      * @param ListEntriesHelper   $listHelper     ListEntriesHelper service instance
@@ -80,6 +94,8 @@ abstract class AbstractSpecialOfLocationType extends AbstractType
     public function __construct(
         TranslatorInterface $translator,
         EntityFactory $entityFactory,
+        CollectionFilterHelper $collectionFilterHelper,
+        EntityDisplayHelper $entityDisplayHelper,
         VariableApiInterface $variableApi,
         TranslatableHelper $translatableHelper,
         ListEntriesHelper $listHelper,
@@ -87,6 +103,8 @@ abstract class AbstractSpecialOfLocationType extends AbstractType
     ) {
         $this->setTranslator($translator);
         $this->entityFactory = $entityFactory;
+        $this->collectionFilterHelper = $collectionFilterHelper;
+        $this->entityDisplayHelper = $entityDisplayHelper;
         $this->variableApi = $variableApi;
         $this->translatableHelper = $translatableHelper;
         $this->listHelper = $listHelper;
@@ -332,6 +350,8 @@ abstract class AbstractSpecialOfLocationType extends AbstractType
                 'actions' => [],
                 'has_moderate_permission' => false,
                 'translations' => [],
+                'filter_by_ownership' => true,
+                'inline_usage' => false
             ])
             ->setRequired(['mode', 'actions'])
             ->setAllowedTypes([
@@ -339,6 +359,8 @@ abstract class AbstractSpecialOfLocationType extends AbstractType
                 'actions' => 'array',
                 'has_moderate_permission' => 'bool',
                 'translations' => 'array',
+                'filter_by_ownership' => 'bool',
+                'inline_usage' => 'bool'
             ])
             ->setAllowedValues([
                 'mode' => ['create', 'edit']

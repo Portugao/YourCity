@@ -69,6 +69,44 @@ abstract class AbstractEditHandler extends EditHandler
     }
     
     /**
+     * Initialises relationship presets.
+     */
+    protected function initRelationPresets()
+    {
+        $entity = $this->entityRef;
+    
+        
+        // assign identifiers of predefined outgoing many to many relationships
+        // editable relation, we store the id and assign it now to show it in UI
+        $this->relationPresets['branches'] = $this->request->get('branches', '');
+        if (!empty($this->relationPresets['branches'])) {
+            $relObj = $this->entityFactory->getRepository('branch')->selectById($this->relationPresets['branches']);
+            if (null !== $relObj) {
+                $relObj->addLocations($entity);
+            }
+        }
+        // editable relation, we store the id and assign it now to show it in UI
+        $this->relationPresets['servicesOfLocation'] = $this->request->get('servicesOfLocation', '');
+        if (!empty($this->relationPresets['servicesOfLocation'])) {
+            $relObj = $this->entityFactory->getRepository('serviceOfLocation')->selectById($this->relationPresets['servicesOfLocation']);
+            if (null !== $relObj) {
+                $relObj->addLocations($entity);
+            }
+        }
+        // editable relation, we store the id and assign it now to show it in UI
+        $this->relationPresets['specialsOfLocation'] = $this->request->get('specialsOfLocation', '');
+        if (!empty($this->relationPresets['specialsOfLocation'])) {
+            $relObj = $this->entityFactory->getRepository('specialOfLocation')->selectById($this->relationPresets['specialsOfLocation']);
+            if (null !== $relObj) {
+                $relObj->addLocations($entity);
+            }
+        }
+    
+        // save entity reference for later reuse
+        $this->entityRef = $entity;
+    }
+    
+    /**
      * Creates the form type.
      */
     protected function createForm()

@@ -7,4 +7,11 @@
     <iconForSpecial><![CDATA[{{ specialOfLocation.iconForSpecial }}]]></iconForSpecial>
     <colorOfIcon><![CDATA[<span class="label label-default" style="background-color: {{ specialOfLocation.colorOfIcon|e('html_attr') }}">{{ specialOfLocation.colorOfIcon }}</label>]]></colorOfIcon>
     <workflowState>{{ specialOfLocation.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
+    <locations>
+    {% if specialOfLocation.locations|default %}
+        {% for relatedItem in specialOfLocation.locations %}
+        <location>{{ relatedItem|muyourcitymodule_formattedTitle }}</location>
+        {% endfor %}
+    {% endif %}
+    </locations>
 </specialoflocation>

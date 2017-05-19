@@ -155,8 +155,6 @@ abstract class AbstractLocationController extends AbstractController
             new Column('tram'),
             new Column('bus'),
             new Column('openingHours'),
-            new Column('servicesOfLocation'),
-            new Column('specialsOfLocation'),
             new Column('firstImage'),
             new Column('secondImage'),
             new Column('thirdImage'),

@@ -145,15 +145,6 @@ abstract class AbstractListEntriesHelper
                     case 'partOfCity':
                         $result = false;
                         break;
-                    case 'branchOfLocation':
-                        $result = true;
-                        break;
-                    case 'servicesOfLocation':
-                        $result = true;
-                        break;
-                    case 'specialsOfLocation':
-                        $result = true;
-                        break;
                 }
                 break;
             case 'part':
@@ -295,15 +286,6 @@ abstract class AbstractListEntriesHelper
                         break;
                     case 'partOfCity':
                         $entries = $this->getPartOfCityEntriesForLocation();
-                        break;
-                    case 'branchOfLocation':
-                        $entries = $this->getBranchOfLocationEntriesForLocation();
-                        break;
-                    case 'servicesOfLocation':
-                        $entries = $this->getServicesOfLocationEntriesForLocation();
-                        break;
-                    case 'specialsOfLocation':
-                        $entries = $this->getSpecialsOfLocationEntriesForLocation();
                         break;
                 }
                 break;
@@ -504,91 +486,6 @@ abstract class AbstractListEntriesHelper
     public function getPartOfCityEntriesForLocation()
     {
         $states = [];
-        $states[] = [
-            'value'   => 'none',
-            'text'    => $this->__('None'),
-            'title'   => '',
-            'image'   => '',
-            'default' => false
-        ];
-    
-        return $states;
-    }
-    
-    /**
-     * Get 'branch of location' list entries.
-     *
-     * @return array Array with desired list entries
-     */
-    public function getBranchOfLocationEntriesForLocation()
-    {
-        $states = [];
-        $states[] = [
-            'value'   => 'all',
-            'text'    => $this->__('All'),
-            'title'   => '',
-            'image'   => '',
-            'default' => false
-        ];
-        $states[] = [
-            'value'   => 'none',
-            'text'    => $this->__('None'),
-            'title'   => '',
-            'image'   => '',
-            'default' => false
-        ];
-    
-        return $states;
-    }
-    
-    /**
-     * Get 'services of location' list entries.
-     *
-     * @return array Array with desired list entries
-     */
-    public function getServicesOfLocationEntriesForLocation()
-    {
-        $states = [];
-        $states[] = [
-            'value'   => 'none',
-            'text'    => $this->__('None'),
-            'title'   => '',
-            'image'   => '',
-            'default' => false
-        ];
-        $states[] = [
-            'value'   => 'all',
-            'text'    => $this->__('All'),
-            'title'   => '',
-            'image'   => '',
-            'default' => false
-        ];
-        $states[] = [
-            'value'   => 'none',
-            'text'    => $this->__('None'),
-            'title'   => '',
-            'image'   => '',
-            'default' => false
-        ];
-    
-        return $states;
-    }
-    
-    /**
-     * Get 'specials of location' list entries.
-     *
-     * @return array Array with desired list entries
-     */
-    public function getSpecialsOfLocationEntriesForLocation()
-    {
-        $states = [];
-        $states[] = [
-            'value'   => 'all',
-            'text'    => $this->__('All'),
-            'title'   => '',
-            'image'   => '',
-            'default' => false
-        ];
         $states[] = [
             'value'   => 'none',
             'text'    => $this->__('None'),

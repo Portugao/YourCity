@@ -6,4 +6,11 @@
     <description><![CDATA[{{ serviceOfLocation.description|safeHtml }}]]></description>
     <iconForService><![CDATA[{{ serviceOfLocation.iconForService }}]]></iconForService>
     <workflowState>{{ serviceOfLocation.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
+    <locations>
+    {% if serviceOfLocation.locations|default %}
+        {% for relatedItem in serviceOfLocation.locations %}
+        <location>{{ relatedItem|muyourcitymodule_formattedTitle }}</location>
+        {% endfor %}
+    {% endif %}
+    </locations>
 </serviceoflocation>

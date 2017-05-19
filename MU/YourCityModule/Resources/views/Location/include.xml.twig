@@ -2,10 +2,10 @@
 <location id="{{ location.getId() }}" createdon="{{ location.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ location.updatedDate|localizeddate('medium', 'short') }}">
     <id>{{ location.id }}</id>
     <name><![CDATA[{{ location.name }}]]></name>
+    <slogan><![CDATA[{{ location.slogan }}]]></slogan>
     <letterForOrder><![CDATA[{{ location.letterForOrder }}]]></letterForOrder>
     <keywordsForLocation><![CDATA[{{ location.keywordsForLocation }}]]></keywordsForLocation>
     <descriptionForGoogle><![CDATA[{{ location.descriptionForGoogle }}]]></descriptionForGoogle>
-    <slogan><![CDATA[{{ location.slogan }}]]></slogan>
     <logoOfYourLocation{% if location.logoOfYourLocation is not empty and location.logoOfYourLocationMeta|default %} extension="{{ location.logoOfYourLocationMeta.extension }}" size="{{ location.logoOfYourLocationMeta.size }}" isImage="{% if location.logoOfYourLocationMeta.isImage %}true{% else %}false{% endif %}"{% if location.logoOfYourLocationMeta.isImage %} width="{{ location.logoOfYourLocationMeta.width }}" height="{{ location.logoOfYourLocationMeta.height }}" format="{{ location.logoOfYourLocationMeta.format }}"{% endif %}{% endif %}>{{ location.logoOfYourLocation }}</logoOfYourLocation>
     <description><![CDATA[{{ location.description|safeHtml }}]]></description>
     <description2><![CDATA[{{ location.description2|safeHtml }}]]></description2>
@@ -14,6 +14,7 @@
     <numberOfStreet><![CDATA[{{ location.numberOfStreet }}]]></numberOfStreet>
     <zipCode><![CDATA[{{ location.zipCode }}]]></zipCode>
     <city><![CDATA[{{ location.city }}]]></city>
+    <partOfCity>{{ location.partOfCity|muyourcitymodule_listEntry('location', 'partOfCity') }}</partOfCity>
     <telefon><![CDATA[{{ location.telefon }}]]></telefon>
     <mobil><![CDATA[{{ location.mobil }}]]></mobil>
     <homepage>{{ location.homepage }}</homepage>
@@ -59,10 +60,6 @@
     <endOnSunday>{{ location.endOnSunday|localizeddate('none', 'short') }}</endOnSunday>
     <start2OnSunday>{{ location.start2OnSunday|localizeddate('none', 'short') }}</start2OnSunday>
     <end2OnSunday>{{ location.end2OnSunday|localizeddate('none', 'short') }}</end2OnSunday>
-    <partOfCity>{{ location.partOfCity|muyourcitymodule_listEntry('location', 'partOfCity') }}</partOfCity>
-    <branchOfLocation>{{ location.branchOfLocation|muyourcitymodule_listEntry('location', 'branchOfLocation') }}</branchOfLocation>
-    <servicesOfLocation>{{ location.servicesOfLocation|muyourcitymodule_listEntry('location', 'servicesOfLocation') }}</servicesOfLocation>
-    <specialsOfLocation>{{ location.specialsOfLocation|muyourcitymodule_listEntry('location', 'specialsOfLocation') }}</specialsOfLocation>
     <firstImage{% if location.firstImage is not empty and location.firstImageMeta|default %} extension="{{ location.firstImageMeta.extension }}" size="{{ location.firstImageMeta.size }}" isImage="{% if location.firstImageMeta.isImage %}true{% else %}false{% endif %}"{% if location.firstImageMeta.isImage %} width="{{ location.firstImageMeta.width }}" height="{{ location.firstImageMeta.height }}" format="{{ location.firstImageMeta.format }}"{% endif %}{% endif %}>{{ location.firstImage }}</firstImage>
     <secondImage{% if location.secondImage is not empty and location.secondImageMeta|default %} extension="{{ location.secondImageMeta.extension }}" size="{{ location.secondImageMeta.size }}" isImage="{% if location.secondImageMeta.isImage %}true{% else %}false{% endif %}"{% if location.secondImageMeta.isImage %} width="{{ location.secondImageMeta.width }}" height="{{ location.secondImageMeta.height }}" format="{{ location.secondImageMeta.format }}"{% endif %}{% endif %}>{{ location.secondImage }}</secondImage>
     <thirdImage{% if location.thirdImage is not empty and location.thirdImageMeta|default %} extension="{{ location.thirdImageMeta.extension }}" size="{{ location.thirdImageMeta.size }}" isImage="{% if location.thirdImageMeta.isImage %}true{% else %}false{% endif %}"{% if location.thirdImageMeta.isImage %} width="{{ location.thirdImageMeta.width }}" height="{{ location.thirdImageMeta.height }}" format="{{ location.thirdImageMeta.format }}"{% endif %}{% endif %}>{{ location.thirdImage }}</thirdImage>
@@ -84,4 +81,25 @@
         {% endfor %}
     {% endif %}
     </abonnements>
+    <branches>
+    {% if location.branches|default %}
+        {% for relatedItem in location.branches %}
+        <branch>{{ relatedItem|muyourcitymodule_formattedTitle }}</branch>
+        {% endfor %}
+    {% endif %}
+    </branches>
+    <servicesOfLocation>
+    {% if location.servicesOfLocation|default %}
+        {% for relatedItem in location.servicesOfLocation %}
+        <serviceOfLocation>{{ relatedItem|muyourcitymodule_formattedTitle }}</serviceOfLocation>
+        {% endfor %}
+    {% endif %}
+    </servicesOfLocation>
+    <specialsOfLocation>
+    {% if location.specialsOfLocation|default %}
+        {% for relatedItem in location.specialsOfLocation %}
+        <specialOfLocation>{{ relatedItem|muyourcitymodule_formattedTitle }}</specialOfLocation>
+        {% endfor %}
+    {% endif %}
+    </specialsOfLocation>
 </location>

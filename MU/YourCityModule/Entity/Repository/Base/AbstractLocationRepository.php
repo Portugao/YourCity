@@ -72,8 +72,6 @@ abstract class AbstractLocationRepository extends EntityRepository
             'tram',
             'bus',
             'openingHours',
-            'servicesOfLocation',
-            'specialsOfLocation',
             'firstImage',
             'secondImage',
             'thirdImage',
@@ -844,7 +842,7 @@ abstract class AbstractLocationRepository extends EntityRepository
      */
     protected function addJoinsToSelection()
     {
-        $selection = ', tblAbonnements';
+        $selection = ', tblAbonnements, tblBranches, tblServicesOfLocation, tblSpecialsOfLocation';
     
         return $selection;
     }
@@ -859,6 +857,9 @@ abstract class AbstractLocationRepository extends EntityRepository
     protected function addJoinsToFrom(QueryBuilder $qb)
     {
         $qb->leftJoin('tbl.abonnements', 'tblAbonnements');
+        $qb->leftJoin('tbl.branches', 'tblBranches');
+        $qb->leftJoin('tbl.servicesOfLocation', 'tblServicesOfLocation');
+        $qb->leftJoin('tbl.specialsOfLocation', 'tblSpecialsOfLocation');
     
         return $qb;
     }

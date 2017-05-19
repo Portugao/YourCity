@@ -148,6 +148,7 @@ abstract class AbstractAbonnementController extends AbstractController
             new Column('sendMessageForEvents'),
             new Column('showProducts'),
             new Column('sendMessageForProducts'),
+            new Column('location'),
             new Column('createdBy'),
             new Column('createdDate'),
             new Column('updatedBy'),

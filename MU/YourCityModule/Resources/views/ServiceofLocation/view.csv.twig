@@ -1,8 +1,16 @@
 {# purpose of this template: services of location view csv view #}
 {% spaceless %}"{{ __('Name') }}";"{{ __('Description for google') }}";"{{ __('Description') }}";"{{ __('Icon for service') }}";"{{ __('Workflow state') }}"
+;"{{ __('Locations') }}"
 {% endspaceless %}
 {% for serviceOfLocation in items %}
 {% spaceless %}
     "{{ serviceOfLocation.name }}";"{{ serviceOfLocation.descriptionForGoogle }}";"{{ serviceOfLocation.description|safeHtml }}";"{{ serviceOfLocation.iconForService }}";"{{ serviceOfLocation.workflowState|muyourcitymodule_objectState(false)|lower }}"
+    ;"
+    {% if serviceOfLocation.locations|default %}
+        {% for relatedItem in serviceOfLocation.locations %}
+        {{ relatedItem|muyourcitymodule_formattedTitle }}{% if not loop.last %}, {% endif %}
+        {% endfor %}
+    {% endif %}
+    "
 {% endspaceless %}
 {% endfor %}

@@ -262,9 +262,6 @@ abstract class AbstractCollectionFilterHelper
     
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
         $parameters['partOfCity'] = $this->request->query->get('partOfCity', '');
-        $parameters['branchOfLocation'] = $this->request->query->get('branchOfLocation', '');
-        $parameters['servicesOfLocation'] = $this->request->query->get('servicesOfLocation', '');
-        $parameters['specialsOfLocation'] = $this->request->query->get('specialsOfLocation', '');
         $parameters['owner'] = (int) $this->request->query->get('owner', 0);
         $parameters['admin1'] = (int) $this->request->query->get('admin1', 0);
         $parameters['admin2'] = (int) $this->request->query->get('admin2', 0);
@@ -505,6 +502,7 @@ abstract class AbstractCollectionFilterHelper
             return $parameters;
         }
     
+        $parameters['location'] = $this->request->query->get('location', 0);
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
         $parameters['q'] = $this->request->query->get('q', '');
         $parameters['showMenus'] = $this->request->query->get('showMenus', '');
@@ -544,8 +542,7 @@ abstract class AbstractCollectionFilterHelper
             if (in_array($k, ['q', 'searchterm'])) {
                 // quick search
                 if (!empty($v)) {
-                    $repository = $this->entityFactory->getRepository('branch');
-                    $qb = $repository->addSearchFilter('branch', $qb, $v);
+                    $qb = $this->addSearchFilter('branch', $qb, $v);
                 }
             } else if (!is_array($v)) {
                 // field filter
@@ -588,8 +585,7 @@ abstract class AbstractCollectionFilterHelper
             if (in_array($k, ['q', 'searchterm'])) {
                 // quick search
                 if (!empty($v)) {
-                    $repository = $this->entityFactory->getRepository('location');
-                    $qb = $repository->addSearchFilter('location', $qb, $v);
+                    $qb = $this->addSearchFilter('location', $qb, $v);
                 }
             } elseif (in_array($k, ['closedForEver', 'agreement', 'unclearTimes', 'closedOnMonday', 'closedOnTuesday', 'closedOnWednesday', 'closedOnThursday', 'closedOnFriday', 'closedOnSaturday', 'closedOnSunday'])) {
                 // boolean filter
@@ -645,8 +641,7 @@ abstract class AbstractCollectionFilterHelper
             if (in_array($k, ['q', 'searchterm'])) {
                 // quick search
                 if (!empty($v)) {
-                    $repository = $this->entityFactory->getRepository('part');
-                    $qb = $repository->addSearchFilter('part', $qb, $v);
+                    $qb = $this->addSearchFilter('part', $qb, $v);
                 }
             } else if (!is_array($v)) {
                 // field filter
@@ -689,8 +684,7 @@ abstract class AbstractCollectionFilterHelper
             if (in_array($k, ['q', 'searchterm'])) {
                 // quick search
                 if (!empty($v)) {
-                    $repository = $this->entityFactory->getRepository('offer');
-                    $qb = $repository->addSearchFilter('offer', $qb, $v);
+                    $qb = $this->addSearchFilter('offer', $qb, $v);
                 }
             } else if (!is_array($v)) {
                 // field filter
@@ -733,8 +727,7 @@ abstract class AbstractCollectionFilterHelper
             if (in_array($k, ['q', 'searchterm'])) {
                 // quick search
                 if (!empty($v)) {
-                    $repository = $this->entityFactory->getRepository('menuOfLocation');
-                    $qb = $repository->addSearchFilter('menuOfLocation', $qb, $v);
+                    $qb = $this->addSearchFilter('menuOfLocation', $qb, $v);
                 }
             } else if (!is_array($v)) {
                 // field filter
@@ -777,8 +770,7 @@ abstract class AbstractCollectionFilterHelper
             if (in_array($k, ['q', 'searchterm'])) {
                 // quick search
                 if (!empty($v)) {
-                    $repository = $this->entityFactory->getRepository('partOfMenu');
-                    $qb = $repository->addSearchFilter('partOfMenu', $qb, $v);
+                    $qb = $this->addSearchFilter('partOfMenu', $qb, $v);
                 }
             } else if (!is_array($v)) {
                 // field filter
@@ -821,8 +813,7 @@ abstract class AbstractCollectionFilterHelper
             if (in_array($k, ['q', 'searchterm'])) {
                 // quick search
                 if (!empty($v)) {
-                    $repository = $this->entityFactory->getRepository('dish');
-                    $qb = $repository->addSearchFilter('dish', $qb, $v);
+                    $qb = $this->addSearchFilter('dish', $qb, $v);
                 }
             } else if (!is_array($v)) {
                 // field filter
@@ -865,8 +856,7 @@ abstract class AbstractCollectionFilterHelper
             if (in_array($k, ['q', 'searchterm'])) {
                 // quick search
                 if (!empty($v)) {
-                    $repository = $this->entityFactory->getRepository('event');
-                    $qb = $repository->addSearchFilter('event', $qb, $v);
+                    $qb = $this->addSearchFilter('event', $qb, $v);
                 }
             } else if (!is_array($v)) {
                 // field filter
@@ -909,8 +899,7 @@ abstract class AbstractCollectionFilterHelper
             if (in_array($k, ['q', 'searchterm'])) {
                 // quick search
                 if (!empty($v)) {
-                    $repository = $this->entityFactory->getRepository('product');
-                    $qb = $repository->addSearchFilter('product', $qb, $v);
+                    $qb = $this->addSearchFilter('product', $qb, $v);
                 }
             } elseif (in_array($k, ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'])) {
                 // boolean filter
@@ -960,8 +949,7 @@ abstract class AbstractCollectionFilterHelper
             if (in_array($k, ['q', 'searchterm'])) {
                 // quick search
                 if (!empty($v)) {
-                    $repository = $this->entityFactory->getRepository('specialOfLocation');
-                    $qb = $repository->addSearchFilter('specialOfLocation', $qb, $v);
+                    $qb = $this->addSearchFilter('specialOfLocation', $qb, $v);
                 }
             } else if (!is_array($v)) {
                 // field filter
@@ -1004,8 +992,7 @@ abstract class AbstractCollectionFilterHelper
             if (in_array($k, ['q', 'searchterm'])) {
                 // quick search
                 if (!empty($v)) {
-                    $repository = $this->entityFactory->getRepository('serviceOfLocation');
-                    $qb = $repository->addSearchFilter('serviceOfLocation', $qb, $v);
+                    $qb = $this->addSearchFilter('serviceOfLocation', $qb, $v);
                 }
             } else if (!is_array($v)) {
                 // field filter
@@ -1048,8 +1035,7 @@ abstract class AbstractCollectionFilterHelper
             if (in_array($k, ['q', 'searchterm'])) {
                 // quick search
                 if (!empty($v)) {
-                    $repository = $this->entityFactory->getRepository('abonnement');
-                    $qb = $repository->addSearchFilter('abonnement', $qb, $v);
+                    $qb = $this->addSearchFilter('abonnement', $qb, $v);
                 }
             } elseif (in_array($k, ['showMenus', 'sendMessageForMenus', 'showOffers', 'sendMessageForOffers', 'showEvents', 'sendMessageForEvents', 'showProducts', 'sendMessageForProducts', 'showOptionOne', 'sendMessageToOptionOne', 'showOptionTwo', 'sendMessageToOptionTwo', 'showOptionThree', 'sendMessageToOptionThree'])) {
                 // boolean filter
@@ -1479,14 +1465,14 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchWorkflowState'] = $fragment;
             $filters[] = 'tbl.name LIKE :searchName';
             $parameters['searchName'] = '%' . $fragment . '%';
+            $filters[] = 'tbl.slogan LIKE :searchSlogan';
+            $parameters['searchSlogan'] = '%' . $fragment . '%';
             $filters[] = 'tbl.letterForOrder LIKE :searchLetterForOrder';
             $parameters['searchLetterForOrder'] = '%' . $fragment . '%';
             $filters[] = 'tbl.keywordsForLocation LIKE :searchKeywordsForLocation';
             $parameters['searchKeywordsForLocation'] = '%' . $fragment . '%';
             $filters[] = 'tbl.descriptionForGoogle LIKE :searchDescriptionForGoogle';
             $parameters['searchDescriptionForGoogle'] = '%' . $fragment . '%';
-            $filters[] = 'tbl.slogan LIKE :searchSlogan';
-            $parameters['searchSlogan'] = '%' . $fragment . '%';
             $filters[] = 'tbl.logoOfYourLocation = :searchLogoOfYourLocation';
             $parameters['searchLogoOfYourLocation'] = $fragment;
             $filters[] = 'tbl.description LIKE :searchDescription';
@@ -1503,6 +1489,8 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchZipCode'] = '%' . $fragment . '%';
             $filters[] = 'tbl.city LIKE :searchCity';
             $parameters['searchCity'] = '%' . $fragment . '%';
+            $filters[] = 'tbl.partOfCity = :searchPartOfCity';
+            $parameters['searchPartOfCity'] = $fragment;
             $filters[] = 'tbl.telefon LIKE :searchTelefon';
             $parameters['searchTelefon'] = '%' . $fragment . '%';
             $filters[] = 'tbl.mobil LIKE :searchMobil';
@@ -1573,14 +1561,6 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchStart2OnSunday'] = $fragment;
             $filters[] = 'tbl.end2OnSunday = :searchEnd2OnSunday';
             $parameters['searchEnd2OnSunday'] = $fragment;
-            $filters[] = 'tbl.partOfCity = :searchPartOfCity';
-            $parameters['searchPartOfCity'] = $fragment;
-            $filters[] = 'tbl.branchOfLocation = :searchBranchOfLocation';
-            $parameters['searchBranchOfLocation'] = $fragment;
-            $filters[] = 'tbl.servicesOfLocation = :searchServicesOfLocation';
-            $parameters['searchServicesOfLocation'] = $fragment;
-            $filters[] = 'tbl.specialsOfLocation = :searchSpecialsOfLocation';
-            $parameters['searchSpecialsOfLocation'] = $fragment;
             $filters[] = 'tbl.firstImage = :searchFirstImage';
             $parameters['searchFirstImage'] = $fragment;
             $filters[] = 'tbl.secondImage = :searchSecondImage';

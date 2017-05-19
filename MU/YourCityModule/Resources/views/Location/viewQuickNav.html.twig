@@ -25,27 +25,6 @@
             {% if partOfCityFilter is defined and partOfCityFilter != true %}
                 </div>
             {% endif %}
-            {% if branchOfLocationFilter is defined and branchOfLocationFilter != true %}
-                <div class="hidden">
-            {% endif %}
-                {{ form_row(quickNavForm.branchOfLocation) }}
-            {% if branchOfLocationFilter is defined and branchOfLocationFilter != true %}
-                </div>
-            {% endif %}
-            {% if servicesOfLocationFilter is defined and servicesOfLocationFilter != true %}
-                <div class="hidden">
-            {% endif %}
-                {{ form_row(quickNavForm.servicesOfLocation) }}
-            {% if servicesOfLocationFilter is defined and servicesOfLocationFilter != true %}
-                </div>
-            {% endif %}
-            {% if specialsOfLocationFilter is defined and specialsOfLocationFilter != true %}
-                <div class="hidden">
-            {% endif %}
-                {{ form_row(quickNavForm.specialsOfLocation) }}
-            {% if specialsOfLocationFilter is defined and specialsOfLocationFilter != true %}
-                </div>
-            {% endif %}
             {% if ownerFilter is defined and ownerFilter != true %}
                 <div class="hidden">
             {% endif %}

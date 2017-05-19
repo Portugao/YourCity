@@ -170,10 +170,10 @@ abstract class AbstractSearchHelper implements SearchableInterface
                 case 'location':
                     $whereArray[] = 'tbl.workflowState';
                     $whereArray[] = 'tbl.name';
+                    $whereArray[] = 'tbl.slogan';
                     $whereArray[] = 'tbl.letterForOrder';
                     $whereArray[] = 'tbl.keywordsForLocation';
                     $whereArray[] = 'tbl.descriptionForGoogle';
-                    $whereArray[] = 'tbl.slogan';
                     $whereArray[] = 'tbl.logoOfYourLocation';
                     $whereArray[] = 'tbl.description';
                     $whereArray[] = 'tbl.description2';
@@ -182,6 +182,7 @@ abstract class AbstractSearchHelper implements SearchableInterface
                     $whereArray[] = 'tbl.numberOfStreet';
                     $whereArray[] = 'tbl.zipCode';
                     $whereArray[] = 'tbl.city';
+                    $whereArray[] = 'tbl.partOfCity';
                     $whereArray[] = 'tbl.telefon';
                     $whereArray[] = 'tbl.mobil';
                     $whereArray[] = 'tbl.homepage';
@@ -189,10 +190,6 @@ abstract class AbstractSearchHelper implements SearchableInterface
                     $whereArray[] = 'tbl.tram';
                     $whereArray[] = 'tbl.bus';
                     $whereArray[] = 'tbl.openingHours';
-                    $whereArray[] = 'tbl.partOfCity';
-                    $whereArray[] = 'tbl.branchOfLocation';
-                    $whereArray[] = 'tbl.servicesOfLocation';
-                    $whereArray[] = 'tbl.specialsOfLocation';
                     $whereArray[] = 'tbl.firstImage';
                     $whereArray[] = 'tbl.secondImage';
                     $whereArray[] = 'tbl.thirdImage';

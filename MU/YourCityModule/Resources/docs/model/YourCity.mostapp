@@ -56,12 +56,18 @@ application "YourCity" {
                     documentation "Enter the name of your company. If your company is registered somewhere, enter the exact name."
                     sluggablePosition 1
                 },
+                string "slogan" nullable translatable {
+                    documentation "Slogan or additional name of your company."
+                    mandatory false
+                    displayType NONE
+                    sluggablePosition 0
+                },
                 string "letterForOrder" {
                     documentation "Enter the letter for ordering of the location."
                     displayType DISPLAY_SORTING
                 },
                 string "keywordsForLocation" translatable {
-                    documentation "here you can enter keywords for search optimization."
+                    documentation "Here you can enter keywords for search optimization."
                     mandatory false
                 },
                 string "descriptionForGoogle" nullable translatable {
@@ -69,12 +75,6 @@ application "YourCity" {
                     mandatory false
                     displayType NONE
                 length 170
-                },
-                string "slogan" nullable translatable {
-                    documentation "Slogan or additional name of your company."
-                    mandatory false
-                    displayType NONE
-                    sluggablePosition 0
                 },
                 upload "logoOfYourLocation" {
                     documentation "If your location has a logo, you can upload it here."
@@ -111,6 +111,12 @@ application "YourCity" {
                 },
                 string "city" {
                     mandatory false
+                },
+                list "partOfCity" {
+                    displayType DISPLAY
+                    items {
+                        listItem "None" ( "none" )
+                    }
                 },
                 string "telefon" {
                     mandatory false
@@ -290,33 +296,6 @@ application "YourCity" {
                 displayType DISPLAY
                 }
             ,
-                list "partOfCity" {
-                    displayType DISPLAY
-                    items {
-                        listItem "None" ( "none" )
-                    }
-                },
-                list "branchOfLocation" multiple {
-                    displayType DISPLAY
-                    items {
-                        listItem "All" ( "all" ),
-                        listItem "None" ( "none" )
-                    }
-                }
-            ,
-                list "servicesOfLocation" multiple expanded {
-                    items {
-                        listItem "None" ( "none" ),
-                        listItem "All" ( "all" ),
-                        listItem "None" ( "none" )
-                    }
-                },
-                list "specialsOfLocation" multiple expanded {
-                    items {
-                        listItem "All" ( "all" ),
-                        listItem "None" ( "none" )
-                    }
-                },
                 upload "firstImage" {
                     documentation "This and the following images are optional for premium customers."
                     mandatory false
@@ -956,13 +935,47 @@ application "YourCity" {
             nullable true
             orderBy "positionOfDish"
         },
-        one2many {
+        one2many bidirectional {
             source "location"
             sourceAlias "location"
             target "abonnement"
             targetAlias "abonnements"
         nullable false
         orderBy ""
+        }
+    ,
+        many2many bidirectional {
+            source "location"
+            sourceAlias "locations"
+            target "branch"
+            targetAlias "branches"
+            nullable false
+            expandedTarget true
+            refClass "LocationBranch"
+            orderBy "name"
+            orderByReverse "letterForOrder"
+        },
+        many2many bidirectional {
+            source "location"
+            sourceAlias "locations"
+            target "serviceOfLocation"
+            targetAlias "servicesOfLocation"
+            nullable false
+            expandedTarget true
+            refClass "LocationServiceOfLocation"
+            orderBy "name"
+            orderByReverse "letterForOrder"
+        },
+        many2many bidirectional {
+            source "location"
+            sourceAlias "locations"
+            target "specialOfLocation"
+            targetAlias "specialsOfLocation"
+            nullable false
+            expandedTarget true
+            refClass "LocationSpecialOfLocation"
+            orderBy "name"
+            orderByReverse "letterForOrder"
         }
     }
     variables {

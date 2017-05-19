@@ -12,6 +12,7 @@
 
 namespace MU\YourCityModule\Form\Type\Base;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -34,7 +35,6 @@ use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 use MU\YourCityModule\Entity\Factory\EntityFactory;
 use MU\YourCityModule\Form\Type\Field\GeoType;
-use MU\YourCityModule\Form\Type\Field\MultiListType;
 use MU\YourCityModule\Form\Type\Field\TranslationType;
 use MU\YourCityModule\Form\Type\Field\UploadType;
 use MU\YourCityModule\Form\Type\Field\UserType;
@@ -134,6 +134,7 @@ abstract class AbstractLocationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addEntityFields($builder, $options);
+        $this->addOutgoingRelationshipFields($builder, $options);
         $this->addAdditionalNotificationRemarksField($builder, $options);
         $this->addModerationFields($builder, $options);
         $this->addReturnControlField($builder, $options);
@@ -166,13 +167,29 @@ abstract class AbstractLocationType extends AbstractType
     public function addEntityFields(FormBuilderInterface $builder, array $options)
     {
         
+        $builder->add('slogan', TextType::class, [
+            'label' => $this->__('Slogan') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Slogan or additional name of your company.')
+            ],
+            'help' => $this->__('Slogan or additional name of your company.'),
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => '',
+                'title' => $this->__('Enter the slogan of the location')
+            ],
+            'required' => false,
+        ]);
+        
         $builder->add('keywordsForLocation', TextType::class, [
             'label' => $this->__('Keywords for location') . ':',
             'label_attr' => [
                 'class' => 'tooltips',
-                'title' => $this->__('here you can enter keywords for search optimization.')
+                'title' => $this->__('Here you can enter keywords for search optimization.')
             ],
-            'help' => $this->__('here you can enter keywords for search optimization.'),
+            'help' => $this->__('Here you can enter keywords for search optimization.'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 255,
@@ -196,22 +213,6 @@ abstract class AbstractLocationType extends AbstractType
                 'maxlength' => 170,
                 'class' => '',
                 'title' => $this->__('Enter the description for google of the location')
-            ],
-            'required' => false,
-        ]);
-        
-        $builder->add('slogan', TextType::class, [
-            'label' => $this->__('Slogan') . ':',
-            'label_attr' => [
-                'class' => 'tooltips',
-                'title' => $this->__('Slogan or additional name of your company.')
-            ],
-            'help' => $this->__('Slogan or additional name of your company.'),
-            'empty_data' => '',
-            'attr' => [
-                'maxlength' => 255,
-                'class' => '',
-                'title' => $this->__('Enter the slogan of the location')
             ],
             'required' => false,
         ]);
@@ -379,6 +380,28 @@ abstract class AbstractLocationType extends AbstractType
                 'title' => $this->__('Enter the city of the location')
             ],
             'required' => false,
+        ]);
+        
+        $listEntries = $this->listHelper->getEntries('location', 'partOfCity');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('partOfCity', ChoiceType::class, [
+            'label' => $this->__('Part of city') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('Choose the part of city')
+            ],
+            'required' => true,
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => false,
+            'expanded' => false
         ]);
         
         $builder->add('telefon', TextType::class, [
@@ -917,100 +940,6 @@ abstract class AbstractLocationType extends AbstractType
             'widget' => 'single_text'
         ]);
         
-        $listEntries = $this->listHelper->getEntries('location', 'partOfCity');
-        $choices = [];
-        $choiceAttributes = [];
-        foreach ($listEntries as $entry) {
-            $choices[$entry['text']] = $entry['value'];
-            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
-        }
-        $builder->add('partOfCity', ChoiceType::class, [
-            'label' => $this->__('Part of city') . ':',
-            'empty_data' => '',
-            'attr' => [
-                'class' => '',
-                'title' => $this->__('Choose the part of city')
-            ],
-            'required' => true,
-            'choices' => $choices,
-            'choices_as_values' => true,
-            'choice_attr' => $choiceAttributes,
-            'multiple' => false,
-            'expanded' => false
-        ]);
-        
-        $listEntries = $this->listHelper->getEntries('location', 'branchOfLocation');
-        $choices = [];
-        $choiceAttributes = [];
-        foreach ($listEntries as $entry) {
-            $choices[$entry['text']] = $entry['value'];
-            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
-        }
-        $builder->add('branchOfLocation', MultiListType::class, [
-            'label' => $this->__('Branch of location') . ':',
-            'empty_data' => '',
-            'attr' => [
-                'class' => '',
-                'title' => $this->__('Choose the branch of location')
-            ],
-            'required' => true,
-            'choices' => $choices,
-            'choices_as_values' => true,
-            'choice_attr' => $choiceAttributes,
-            'multiple' => true,
-            'expanded' => false
-        ]);
-        
-        $listEntries = $this->listHelper->getEntries('location', 'servicesOfLocation');
-        $choices = [];
-        $choiceAttributes = [];
-        foreach ($listEntries as $entry) {
-            $choices[$entry['text']] = $entry['value'];
-            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
-        }
-        $builder->add('servicesOfLocation', MultiListType::class, [
-            'label' => $this->__('Services of location') . ':',
-            'label_attr' => [
-                'class' => 'checkbox-inline'
-            ],
-            'empty_data' => '',
-            'attr' => [
-                'class' => '',
-                'title' => $this->__('Choose the services of location')
-            ],
-            'required' => true,
-            'choices' => $choices,
-            'choices_as_values' => true,
-            'choice_attr' => $choiceAttributes,
-            'multiple' => true,
-            'expanded' => true
-        ]);
-        
-        $listEntries = $this->listHelper->getEntries('location', 'specialsOfLocation');
-        $choices = [];
-        $choiceAttributes = [];
-        foreach ($listEntries as $entry) {
-            $choices[$entry['text']] = $entry['value'];
-            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
-        }
-        $builder->add('specialsOfLocation', MultiListType::class, [
-            'label' => $this->__('Specials of location') . ':',
-            'label_attr' => [
-                'class' => 'checkbox-inline'
-            ],
-            'empty_data' => '',
-            'attr' => [
-                'class' => '',
-                'title' => $this->__('Choose the specials of location')
-            ],
-            'required' => true,
-            'choices' => $choices,
-            'choices_as_values' => true,
-            'choice_attr' => $choiceAttributes,
-            'multiple' => true,
-            'expanded' => true
-        ]);
-        
         $builder->add('firstImage', UploadType::class, [
             'label' => $this->__('First image') . ':',
             'label_attr' => [
@@ -1176,6 +1105,85 @@ abstract class AbstractLocationType extends AbstractType
     }
 
     /**
+     * Adds fields for outgoing relationships.
+     *
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
+     */
+    public function addOutgoingRelationshipFields(FormBuilderInterface $builder, array $options)
+    {
+        $queryBuilder = function(EntityRepository $er) {
+            // select without joins
+            return $er->getListQueryBuilder('', '', false);
+        };
+        $entityDisplayHelper = $this->entityDisplayHelper;
+        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
+            return $entityDisplayHelper->getFormattedTitle($entity);
+        };
+        $builder->add('branches', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
+            'class' => 'MUYourCityModule:BranchEntity',
+            'choice_label' => $choiceLabelClosure,
+            'by_reference' => false,
+            'multiple' => true,
+            'expanded' => true,
+            'query_builder' => $queryBuilder,
+            'label' => $this->__('Branches'),
+            'label_attr' => [
+                'class' => 'checkbox-inline'
+            ],
+            'attr' => [
+                'title' => $this->__('Choose the branches')
+            ]
+        ]);
+        $queryBuilder = function(EntityRepository $er) {
+            // select without joins
+            return $er->getListQueryBuilder('', '', false);
+        };
+        $entityDisplayHelper = $this->entityDisplayHelper;
+        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
+            return $entityDisplayHelper->getFormattedTitle($entity);
+        };
+        $builder->add('servicesOfLocation', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
+            'class' => 'MUYourCityModule:ServiceOfLocationEntity',
+            'choice_label' => $choiceLabelClosure,
+            'by_reference' => false,
+            'multiple' => true,
+            'expanded' => true,
+            'query_builder' => $queryBuilder,
+            'label' => $this->__('Services of location'),
+            'label_attr' => [
+                'class' => 'checkbox-inline'
+            ],
+            'attr' => [
+                'title' => $this->__('Choose the services of location')
+            ]
+        ]);
+        $queryBuilder = function(EntityRepository $er) {
+            // select without joins
+            return $er->getListQueryBuilder('', '', false);
+        };
+        $entityDisplayHelper = $this->entityDisplayHelper;
+        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
+            return $entityDisplayHelper->getFormattedTitle($entity);
+        };
+        $builder->add('specialsOfLocation', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
+            'class' => 'MUYourCityModule:SpecialOfLocationEntity',
+            'choice_label' => $choiceLabelClosure,
+            'by_reference' => false,
+            'multiple' => true,
+            'expanded' => true,
+            'query_builder' => $queryBuilder,
+            'label' => $this->__('Specials of location'),
+            'label_attr' => [
+                'class' => 'checkbox-inline'
+            ],
+            'attr' => [
+                'title' => $this->__('Choose the specials of location')
+            ]
+        ]);
+    }
+
+    /**
      * Adds a field for additional notification remarks.
      *
      * @param FormBuilderInterface $builder The form builder
@@ -1319,9 +1327,6 @@ abstract class AbstractLocationType extends AbstractType
                     return $this->entityFactory->createLocation();
                 },
                 'error_mapping' => [
-                    'isBranchOfLocationValueAllowed' => 'branchOfLocation',
-                    'isServicesOfLocationValueAllowed' => 'servicesOfLocation',
-                    'isSpecialsOfLocationValueAllowed' => 'specialsOfLocation',
                     'isOwnerUserValid' => 'owner',
                     'isAdmin1UserValid' => 'admin1',
                     'isAdmin2UserValid' => 'admin2',

@@ -21,7 +21,6 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
-use MU\YourCityModule\Form\Type\Field\MultiListType;
 use MU\YourCityModule\Helper\FeatureActivationHelper;
 use MU\YourCityModule\Helper\ListEntriesHelper;
 
@@ -143,66 +142,6 @@ abstract class AbstractLocationQuickNavType extends AbstractType
             'multiple' => false,
             'expanded' => false
         ]);
-        $listEntries = $this->listHelper->getEntries('location', 'branchOfLocation');
-        $choices = [];
-        $choiceAttributes = [];
-        foreach ($listEntries as $entry) {
-            $choices[$entry['text']] = $entry['value'];
-            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
-        }
-        $builder->add('branchOfLocation', MultiListType::class, [
-            'label' => $this->__('Branch of location'),
-            'attr' => [
-                'class' => 'input-sm'
-            ],
-            'required' => false,
-            'placeholder' => $this->__('All'),
-            'choices' => $choices,
-            'choices_as_values' => true,
-            'choice_attr' => $choiceAttributes,
-            'multiple' => true,
-            'expanded' => false
-        ]);
-        $listEntries = $this->listHelper->getEntries('location', 'servicesOfLocation');
-        $choices = [];
-        $choiceAttributes = [];
-        foreach ($listEntries as $entry) {
-            $choices[$entry['text']] = $entry['value'];
-            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
-        }
-        $builder->add('servicesOfLocation', MultiListType::class, [
-            'label' => $this->__('Services of location'),
-            'attr' => [
-                'class' => 'input-sm'
-            ],
-            'required' => false,
-            'placeholder' => $this->__('All'),
-            'choices' => $choices,
-            'choices_as_values' => true,
-            'choice_attr' => $choiceAttributes,
-            'multiple' => true,
-            'expanded' => false
-        ]);
-        $listEntries = $this->listHelper->getEntries('location', 'specialsOfLocation');
-        $choices = [];
-        $choiceAttributes = [];
-        foreach ($listEntries as $entry) {
-            $choices[$entry['text']] = $entry['value'];
-            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
-        }
-        $builder->add('specialsOfLocation', MultiListType::class, [
-            'label' => $this->__('Specials of location'),
-            'attr' => [
-                'class' => 'input-sm'
-            ],
-            'required' => false,
-            'placeholder' => $this->__('All'),
-            'choices' => $choices,
-            'choices_as_values' => true,
-            'choice_attr' => $choiceAttributes,
-            'multiple' => true,
-            'expanded' => false
-        ]);
     }
 
     /**
@@ -299,8 +238,6 @@ abstract class AbstractLocationQuickNavType extends AbstractType
                     $this->__('Tram') => 'tram',
                     $this->__('Bus') => 'bus',
                     $this->__('Opening hours') => 'openingHours',
-                    $this->__('Services of location') => 'servicesOfLocation',
-                    $this->__('Specials of location') => 'specialsOfLocation',
                     $this->__('First image') => 'firstImage',
                     $this->__('Second image') => 'secondImage',
                     $this->__('Third image') => 'thirdImage',

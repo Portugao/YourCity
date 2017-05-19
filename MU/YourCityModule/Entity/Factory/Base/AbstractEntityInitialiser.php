@@ -91,30 +91,6 @@ abstract class AbstractEntityInitialiser
         }
         $entity->setPartOfCity(implode('###', $items));
 
-        $listEntries = $this->listEntriesHelper->getBranchOfLocationEntriesForLocation();
-        foreach ($listEntries as $listEntry) {
-            if (true === $listEntry['default']) {
-                $entity->setBranchOfLocation($listEntry['value']);
-                break;
-            }
-        }
-
-        $listEntries = $this->listEntriesHelper->getServicesOfLocationEntriesForLocation();
-        foreach ($listEntries as $listEntry) {
-            if (true === $listEntry['default']) {
-                $entity->setServicesOfLocation($listEntry['value']);
-                break;
-            }
-        }
-
-        $listEntries = $this->listEntriesHelper->getSpecialsOfLocationEntriesForLocation();
-        foreach ($listEntries as $listEntry) {
-            if (true === $listEntry['default']) {
-                $entity->setSpecialsOfLocation($listEntry['value']);
-                break;
-            }
-        }
-
 
         $entity->setLatitude($this->defaultLatitude);
         $entity->setLongitude($this->defaultLongitude);

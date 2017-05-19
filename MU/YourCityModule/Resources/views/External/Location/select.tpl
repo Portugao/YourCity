@@ -35,8 +35,6 @@
                     <option value="tram"{if $sort eq 'tram'} selected="selected"{/if}>{gt text='Tram'}</option>
                     <option value="bus"{if $sort eq 'bus'} selected="selected"{/if}>{gt text='Bus'}</option>
                     <option value="openingHours"{if $sort eq 'openingHours'} selected="selected"{/if}>{gt text='Opening hours'}</option>
-                    <option value="servicesOfLocation"{if $sort eq 'servicesOfLocation'} selected="selected"{/if}>{gt text='Services of location'}</option>
-                    <option value="specialsOfLocation"{if $sort eq 'specialsOfLocation'} selected="selected"{/if}>{gt text='Specials of location'}</option>
                     <option value="firstImage"{if $sort eq 'firstImage'} selected="selected"{/if}>{gt text='First image'}</option>
                     <option value="secondImage"{if $sort eq 'secondImage'} selected="selected"{/if}>{gt text='Second image'}</option>
                     <option value="thirdImage"{if $sort eq 'thirdImage'} selected="selected"{/if}>{gt text='Third image'}</option>
