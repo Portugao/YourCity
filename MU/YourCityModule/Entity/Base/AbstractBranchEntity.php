@@ -134,7 +134,6 @@ abstract class AbstractBranchEntity extends EntityAccess implements Translatable
      *
      * @ORM\ManyToMany(targetEntity="MU\YourCityModule\Entity\LocationEntity", mappedBy="branches")
      * @ORM\OrderBy({"letterForOrder" = "ASC"})
-     * @Assert\NotNull(message="Choosing at least one of the locations is required.")
      * @var \MU\YourCityModule\Entity\LocationEntity[] $locations
      */
     protected $locations = null;
