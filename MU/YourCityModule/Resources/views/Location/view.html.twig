@@ -17,13 +17,16 @@
                 {% if location.state == 'closed' %}
                     {% set state = 'locationClosed' %}
                 {% endif %}
+                {% if location.state == 'closedForEver' %}
+                    {% set state = 'locationForEver' %}
+                {% endif %}
                 {% if location.state == 'open' %}
                     {% set state = 'locationOpen' %}
                 {% endif %}
                 {% if location.state == 'agreement' %}
                     {% set state = 'locationAgreement' %}
                 {% endif %}
-                    <span class="status-icon {{ state }}">{% if state == 'locationClosed' or state == 'locationAgreement' %}<i class="fa fa-circle-o" aria-hidden="true"></i>{% endif %}{% if state == 'locationOpen' %}<i class="fa fa-circle" aria-hidden="true"></i>{% endif %} <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': location.id, 'slug': location.slug }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ location.name|notifyFilters('muyourcitymodule.filterhook.locations') }}
+                    <span class="status-icon {{ state }}">{% if state == 'locationClosed' or state == 'locationAgreement' %}<i class="fa fa-circle-o" aria-hidden="true"></i>{% endif %}{% if state == 'locationOpen' or state == 'locationForEver' %}<i class="fa fa-circle" aria-hidden="true"></i>{% endif %} <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': location.id, 'slug': location.slug }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ location.name|notifyFilters('muyourcitymodule.filterhook.locations') }}
                     </a></span><br />
                     {% for part in location.parts %}
                         <a href="{{ path('muyourcitymodule_part_' ~ routeArea ~ 'display', { 'id': part.id }) }}">{{ part.name }}</a> 

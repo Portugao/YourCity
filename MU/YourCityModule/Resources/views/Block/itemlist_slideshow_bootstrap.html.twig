@@ -10,9 +10,13 @@
                 <div class="item">
             {% endif %}
             <div class="item-container"> 
-            <h3>{{ location.name }}</h3>
-            <h4>{{ __('Branches') }}</h4>
-            {{ location.branchOfLocation|muyourcitymodule_listEntry('location', 'branchOfLocation') }}
+            <h2>{{ location.name }}</h2>
+            <h3>{{ __('Branches') }}</h3>
+            {% if location.branches|default %}
+                {% for branch in location.branches %}
+                    {{ branch.name }}
+                {% endfor %}
+            {% endif %}
             <h4>{{ __('Part') }}</h4>
             {{ location.partOfCity|muyourcitymodule_listEntry('location', 'partOfCity') }}  
             <div class="placeholder">

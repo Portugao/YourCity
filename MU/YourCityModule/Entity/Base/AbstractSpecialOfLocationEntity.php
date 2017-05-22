@@ -123,7 +123,6 @@ abstract class AbstractSpecialOfLocationEntity extends EntityAccess implements T
      *
      * @ORM\ManyToMany(targetEntity="MU\YourCityModule\Entity\LocationEntity", mappedBy="specialsOfLocation")
      * @ORM\OrderBy({"letterForOrder" = "ASC"})
-     * @Assert\NotNull(message="Choosing at least one of the locations is required.")
      * @var \MU\YourCityModule\Entity\LocationEntity[] $locations
      */
     protected $locations = null;

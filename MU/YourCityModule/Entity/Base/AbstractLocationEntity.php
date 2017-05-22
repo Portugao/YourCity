@@ -870,12 +870,8 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
      * Bidirectional - Many locations [locations] have many branches [branches] (OWNING SIDE).
      *
      * @ORM\ManyToMany(targetEntity="MU\YourCityModule\Entity\BranchEntity", inversedBy="locations")
-     * @ORM\JoinTable(name="mu_yourcity_location_branch",
-     *      joinColumns={@ORM\JoinColumn(name="location_id", referencedColumnName="id" , nullable=false)},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="branch_id", referencedColumnName="id" , nullable=false)}
-     * )
+     * @ORM\JoinTable(name="mu_yourcity_location_branch")
      * @ORM\OrderBy({"name" = "ASC"})
-     * @Assert\NotNull(message="Choosing at least one of the branches is required.")
      * @var \MU\YourCityModule\Entity\BranchEntity[] $branches
      */
     protected $branches = null;
@@ -883,12 +879,8 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
      * Bidirectional - Many locations [locations] have many servicesOfLocation [services of location] (OWNING SIDE).
      *
      * @ORM\ManyToMany(targetEntity="MU\YourCityModule\Entity\ServiceOfLocationEntity", inversedBy="locations")
-     * @ORM\JoinTable(name="mu_yourcity_location_serviceoflocation",
-     *      joinColumns={@ORM\JoinColumn(name="location_id", referencedColumnName="id" , nullable=false)},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="serviceoflocation_id", referencedColumnName="id" , nullable=false)}
-     * )
+     * @ORM\JoinTable(name="mu_yourcity_location_serviceoflocation")
      * @ORM\OrderBy({"name" = "ASC"})
-     * @Assert\NotNull(message="Choosing at least one of the services of location is required.")
      * @var \MU\YourCityModule\Entity\ServiceOfLocationEntity[] $servicesOfLocation
      */
     protected $servicesOfLocation = null;
@@ -896,12 +888,8 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
      * Bidirectional - Many locations [locations] have many specialsOfLocation [specials of location] (OWNING SIDE).
      *
      * @ORM\ManyToMany(targetEntity="MU\YourCityModule\Entity\SpecialOfLocationEntity", inversedBy="locations")
-     * @ORM\JoinTable(name="mu_yourcity_location_specialoflocation",
-     *      joinColumns={@ORM\JoinColumn(name="location_id", referencedColumnName="id" , nullable=false)},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="specialoflocation_id", referencedColumnName="id" , nullable=false)}
-     * )
+     * @ORM\JoinTable(name="mu_yourcity_location_specialoflocation")
      * @ORM\OrderBy({"name" = "ASC"})
-     * @Assert\NotNull(message="Choosing at least one of the specials of location is required.")
      * @var \MU\YourCityModule\Entity\SpecialOfLocationEntity[] $specialsOfLocation
      */
     protected $specialsOfLocation = null;
