@@ -34,10 +34,10 @@
         
     </dl>
     
-    {% if locations|default %}
+    {% if serviceOfLocations.locations|default %}
         {{ include(
             '@MUYourCityModule/Location/includeDisplayItemListManyOwn.html.twig',
-            { items: locations }
+            { items: serviceOfLocations.locations }
         ) }}
     {% endif %}
 
