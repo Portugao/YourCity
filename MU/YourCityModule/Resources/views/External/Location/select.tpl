@@ -35,14 +35,6 @@
                     <option value="tram"{if $sort eq 'tram'} selected="selected"{/if}>{gt text='Tram'}</option>
                     <option value="bus"{if $sort eq 'bus'} selected="selected"{/if}>{gt text='Bus'}</option>
                     <option value="openingHours"{if $sort eq 'openingHours'} selected="selected"{/if}>{gt text='Opening hours'}</option>
-                    <option value="firstImage"{if $sort eq 'firstImage'} selected="selected"{/if}>{gt text='First image'}</option>
-                    <option value="secondImage"{if $sort eq 'secondImage'} selected="selected"{/if}>{gt text='Second image'}</option>
-                    <option value="thirdImage"{if $sort eq 'thirdImage'} selected="selected"{/if}>{gt text='Third image'}</option>
-                    <option value="fourthImage"{if $sort eq 'fourthImage'} selected="selected"{/if}>{gt text='Fourth image'}</option>
-                    <option value="fifthImage"{if $sort eq 'fifthImage'} selected="selected"{/if}>{gt text='Fifth image'}</option>
-                    <option value="sixthImage"{if $sort eq 'sixthImage'} selected="selected"{/if}>{gt text='Sixth image'}</option>
-                    <option value="firstFile"{if $sort eq 'firstFile'} selected="selected"{/if}>{gt text='First file'}</option>
-                    <option value="secondFile"{if $sort eq 'secondFile'} selected="selected"{/if}>{gt text='Second file'}</option>
                     <option value="createdDate"{if $sort eq 'createdDate'} selected="selected"{/if}>{gt text='Creation date'}</option>
                     <option value="createdBy"{if $sort eq 'createdBy'} selected="selected"{/if}>{gt text='Creator'}</option>
                     <option value="updatedDate"{if $sort eq 'updatedDate'} selected="selected"{/if}>{gt text='Update date'}</option>

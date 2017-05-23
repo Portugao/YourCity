@@ -11,6 +11,13 @@
     <div id="collapsePartOfMenuQuickNav" class="collapse">
         <fieldset>
             <h3>{{ __('Quick navigation') }}</h3>
+            {% if menuOfLocationFilter is defined and menuOfLocationFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.menuOfLocation) }}
+            {% if menuOfLocationFilter is defined and menuOfLocationFilter != true %}
+                </div>
+            {% endif %}
             {% if workflowStateFilter is defined and workflowStateFilter != true %}
                 <div class="hidden">
             {% endif %}

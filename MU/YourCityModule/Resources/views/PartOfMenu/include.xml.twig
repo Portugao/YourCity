@@ -6,6 +6,7 @@
     <positionOfPart>{{ partOfMenu.positionOfPart }}</positionOfPart>
     <myLocation>{{ partOfMenu.myLocation|muyourcitymodule_listEntry('partOfMenu', 'myLocation') }}</myLocation>
     <workflowState>{{ partOfMenu.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
+    <menuOfLocation>{% if partOfMenu.menuOfLocation|default %}{{ partOfMenu.menuOfLocation|muyourcitymodule_formattedTitle }}{% endif %}</menuOfLocation>
     <dishes>
     {% if partOfMenu.dishes|default %}
         {% for relatedItem in partOfMenu.dishes %}

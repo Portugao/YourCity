@@ -22,13 +22,14 @@
                 <col id="cItemActions" />
                 <col id="cName" />
                 <col id="cDescription" />
+                <col id="cKindOfDish" />
                 <col id="cImageOfDish" />
                 <col id="cPriceOfDish" />
+                <col id="cIngredients" />
                 <col id="cPositionOfDish" />
-                <col id="cMenuOfLocation" />
-                <col id="cPartOfMenu" />
-                <col id="cLocation" />
+                <col id="cMyLocation" />
             </colgroup>
+            <thead>
             <thead>
             <tr>
                 {% if routeArea == 'admin' %}
@@ -43,23 +44,23 @@
                 <th id="hDescription" scope="col" class="text-left">
                     <a href="{{ sort.description.url }}" title="{{ __f('Sort by %s', {'%s': 'description'}) }}" class="{{ sort.description.class }}">{{ __('Description') }}</a>
                 </th>
+                <th id="hKindOfDish" scope="col" class="text-left">
+                    <a href="{{ sort.kindOfDish.url }}" title="{{ __f('Sort by %s', {'%s': 'kind of dish'}) }}" class="{{ sort.kindOfDish.class }}">{{ __('Kind of dish') }}</a>
+                </th>
                 <th id="hImageOfDish" scope="col" class="text-left">
                     <a href="{{ sort.imageOfDish.url }}" title="{{ __f('Sort by %s', {'%s': 'image of dish'}) }}" class="{{ sort.imageOfDish.class }}">{{ __('Image of dish') }}</a>
                 </th>
                 <th id="hPriceOfDish" scope="col" class="text-right">
                     <a href="{{ sort.priceOfDish.url }}" title="{{ __f('Sort by %s', {'%s': 'price of dish'}) }}" class="{{ sort.priceOfDish.class }}">{{ __('Price of dish') }}</a>
                 </th>
+                <th id="hIngredients" scope="col" class="text-left">
+                    <a href="{{ sort.ingredients.url }}" title="{{ __f('Sort by %s', {'%s': 'ingredients'}) }}" class="{{ sort.ingredients.class }}">{{ __('Ingredients') }}</a>
+                </th>
                 <th id="hPositionOfDish" scope="col" class="text-right">
                     <a href="{{ sort.positionOfDish.url }}" title="{{ __f('Sort by %s', {'%s': 'position of dish'}) }}" class="{{ sort.positionOfDish.class }}">{{ __('Position of dish') }}</a>
                 </th>
-                <th id="hMenuOfLocation" scope="col" class="text-left">
-                    <a href="{{ sort.menuOfLocation.url }}" title="{{ __f('Sort by %s', {'%s': 'menu of location'}) }}" class="{{ sort.menuOfLocation.class }}">{{ __('Menu of location') }}</a>
-                </th>
-                <th id="hPartOfMenu" scope="col" class="text-left">
-                    <a href="{{ sort.partOfMenu.url }}" title="{{ __f('Sort by %s', {'%s': 'part of menu'}) }}" class="{{ sort.partOfMenu.class }}">{{ __('Part of menu') }}</a>
-                </th>
-                <th id="hLocation" scope="col" class="text-left">
-                    <a href="{{ sort.location.url }}" title="{{ __f('Sort by %s', {'%s': 'location'}) }}" class="{{ sort.location.class }}">{{ __('Location') }}</a>
+                <th id="hMyLocation" scope="col" class="text-left">
+                    <a href="{{ sort.myLocation.url }}" title="{{ __f('Sort by %s', {'%s': 'my location'}) }}" class="{{ sort.myLocation.class }}">{{ __('My location') }}</a>
                 </th>
             </tr>
             </thead>
@@ -69,21 +70,24 @@
             <tr>
                 {% if routeArea == 'admin' %}
                     <td headers="hSelect" class="fixed-column text-center z-w02">
-                        <input type="checkbox" name="items[]" value="{{ dish.id }}" class="muyourcity-toggle-checkbox" />
+                        <input type="checkbox" name="items[]" value="{{ dish.getKey() }}" class="muyourcity-toggle-checkbox" />
                     </td>
                 {% endif %}
-                <td id="itemActions{{ dish.id }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
+                <td id="itemActions{{ dish.getKey() }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
                     {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: dish, area: routeArea, context: 'view' }) %}
                     <div class="dropdown">
-                        <a id="itemActions{{ dish.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
+                        <a id="itemActions{{ dish.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
                         {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
                     </div>
                 </td>
                 <td headers="hName" class="text-left">
-                    <a href="{{ path('muyourcitymodule_dish_' ~ routeArea ~ 'display', { 'id': dish.id }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ dish.name|notifyFilters('muyourcitymodule.filterhook.dishes')|safeHtml }}</a>
+                    <a href="{{ path('muyourcitymodule_dish_' ~ routeArea ~ 'display', { 'id': dish.getId() }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ dish.name|notifyFilters('muyourcitymodule.filterhook.dishes')|safeHtml }}</a>
                 </td>
                 <td headers="hDescription" class="text-left">
                     {{ dish.description|safeHtml|truncate(50) }}
+                </td>
+                <td headers="hKindOfDish" class="text-left">
+                    {{ dish.kindOfDish|muyourcitymodule_listEntry('dish', 'kindOfDish') }}
                 </td>
                 <td headers="hImageOfDish" class="text-left">
                     {% if dish.imageOfDish is not empty and dish.imageOfDishMeta|default %}
@@ -100,38 +104,14 @@
                 <td headers="hPriceOfDish" class="text-right">
                     {{ dish.priceOfDish|localizedcurrency('EUR') }}
                 </td>
+                <td headers="hIngredients" class="text-left">
+                    {{ dish.ingredients }}
+                </td>
                 <td headers="hPositionOfDish" class="text-right">
                     {{ dish.positionOfDish }}
                 </td>
-                <td headers="hMenuOfLocation" class="text-left">
-                    {% if dish.menuOfLocation|default %}
-                        <a href="{{ path('muyourcitymodule_menuoflocation_' ~ routeArea ~ 'display', { 'id': dish.menuOfLocation.id }) }}">{% spaceless %}
-                          {{ dish.menuOfLocation|muyourcitymodule_formattedTitle }}
-                        {% endspaceless %}</a>
-                        <a id="menuOfLocationItem{{ dish.id }}_rel_{{ dish.menuOfLocation.id }}Display" href="{{ path('muyourcitymodule_menuoflocation_' ~ routeArea ~ 'display', {'id': dish.menuOfLocation.id, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ dish.menuOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
-                    {% else %}
-                        {{ __('Not set.') }}
-                    {% endif %}
-                </td>
-                <td headers="hPartOfMenu" class="text-left">
-                    {% if dish.partOfMenu|default %}
-                        <a href="{{ path('muyourcitymodule_partofmenu_' ~ routeArea ~ 'display', { 'id': dish.partOfMenu.id }) }}">{% spaceless %}
-                          {{ dish.partOfMenu|muyourcitymodule_formattedTitle }}
-                        {% endspaceless %}</a>
-                        <a id="partOfMenuItem{{ dish.id }}_rel_{{ dish.partOfMenu.id }}Display" href="{{ path('muyourcitymodule_partofmenu_' ~ routeArea ~ 'display', {'id': dish.partOfMenu.id, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ dish.partOfMenu|muyourcitymodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
-                    {% else %}
-                        {{ __('Not set.') }}
-                    {% endif %}
-                </td>
-                <td headers="hLocation" class="text-left">
-                    {% if dish.location|default %}
-                        <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': dish.location.id, 'slug': dish.location.slug }) }}">{% spaceless %}
-                          {{ dish.location|muyourcitymodule_formattedTitle }}
-                        {% endspaceless %}</a>
-                        <a id="locationItem{{ dish.id }}_rel_{{ dish.location.id }}Display" href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', {'id': dish.location.id, 'slug': dish.location.slug, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ dish.location|muyourcitymodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
-                    {% else %}
-                        {{ __('Not set.') }}
-                    {% endif %}
+                <td headers="hMyLocation" class="text-left">
+                    {{ dish.myLocation|muyourcitymodule_listEntry('dish', 'myLocation') }}
                 </td>
             </tr>
         {% else %}
