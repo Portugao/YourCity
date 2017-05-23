@@ -42,6 +42,27 @@ class LocationEntity extends BaseEntity
 	 */
 	protected  $showHours;
 	
+	/**
+	 * var array $events
+	 */
+	protected $events;
+	
+	/**
+	 * var array $menus
+	 */
+	protected $menus;
+	
+	/**
+	 * var array $offers
+	 */
+	protected $offers;
+	
+	/**
+	 * var array $products
+	 */
+	protected $products;
+	
+	
     /**
      * Returns the mobil.
      *
@@ -87,6 +108,102 @@ class LocationEntity extends BaseEntity
     {
     	if ($this->showHours !== $showHours) {
     		$this->showHours = isset($showHours) ? $showHours : '';
+    	}
+    }
+    
+    /**
+     * Returns the events.
+     *
+     * @return array
+     */
+    public function getEvents()
+    {
+    	return $this->events;
+    }
+    
+    /**
+     * Sets the events.
+     *
+     * @param array $events
+     *
+     * @return void
+     */
+    public function setEvents($events)
+    {
+    	if ($this->events !== $events) {
+    		$this->events = isset($events) ? $events : '';
+    	}
+    }
+    
+    /**
+     * Returns the menus.
+     *
+     * @return array
+     */
+    public function getMenus()
+    {
+    	return $this->menus;
+    }
+    
+    /**
+     * Sets the menus.
+     *
+     * @param array $menus
+     *
+     * @return void
+     */
+    public function setMenus($menus)
+    {
+    	if ($this->menus !== $menus) {
+    		$this->menus = isset($menus) ? $menus : '';
+    	}
+    }
+    
+    /**
+     * Returns the offers.
+     *
+     * @return array
+     */
+    public function getOffers()
+    {
+    	return $this->offers;
+    }
+    
+    /**
+     * Sets the offers.
+     *
+     * @param array $offers
+     *
+     * @return void
+     */
+    public function setOffers($offers)
+    {
+    	if ($this->offers !== $offers) {
+    		$this->offers = isset($offers) ? $offers : '';
+    	}
+    }
+    
+    /**
+     * Returns the products.
+     *
+     * @return array
+     */
+    public function getProducts()
+    {
+    	return $this->products;
+    }
+    
+    /**
+     * Sets the products.
+     *
+     * @param array $products
+     *
+     * @return void
+     */
+    public function setProducts($products)
+    {
+    	if ($this->products !== $products) {
+    		$this->products = isset($products) ? $products : '';
     	}
     }
 }
