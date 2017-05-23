@@ -21,7 +21,7 @@ use Psr\Log\LoggerInterface;
  * This is the base repository class for the many to many relationship
  * between location and service of location entities.
  */
-class AbstractLocationServiceofLocationRepository extends EntityRepository
+class AbstractLocationServiceOfLocationRepository extends EntityRepository
 {
     /**
      * Deletes all items in this table.
@@ -31,11 +31,11 @@ class AbstractLocationServiceofLocationRepository extends EntityRepository
     public function truncateTable(LoggerInterface $logger)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->delete('\\MU\\YourCityModule\\Entity\\LocationServiceofLocation', 'tbl');
+        $qb->delete('\\MU\\YourCityModule\\Entity\\LocationServiceOfLocation', 'tbl');
         $query = $qb->getQuery();
         $query->execute();
 
-        $logArgs = ['app' => 'MUYourCityModule', 'entity' => 'location serviceof location'];
+        $logArgs = ['app' => 'MUYourCityModule', 'entity' => 'location service of location'];
         $logger->debug('{app}: Truncated the {entity} entity table.', $logArgs);
     }
 }

@@ -12,7 +12,7 @@
 
 namespace MU\YourCityModule\Entity\Repository;
 
-use MU\YourCityModule\Entity\Repository\Base\AbstractLocationServiceofLocationRepository;
+use MU\YourCityModule\Entity\Repository\Base\AbstractLocationServiceOfLocationRepository;
 
 /**
  * Repository class used to implement own convenience methods for performing certain DQL queries.
@@ -20,7 +20,7 @@ use MU\YourCityModule\Entity\Repository\Base\AbstractLocationServiceofLocationRe
  * This is the concrete repository class for the many to many relationship
  * between location and service of location entities.
  */
-class LocationServiceofLocationRepository extends AbstractLocationServiceofLocationRepository
+class LocationServiceOfLocationRepository extends AbstractLocationServiceOfLocationRepository
 {
     // feel free to add your own methods here, like for example reusable DQL queries
 }
