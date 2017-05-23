@@ -16,8 +16,21 @@
 {% endif %}
 <br style="clear: both;" />
 
+{% if item.events|default and showEvents == true %}
+    <h3>{{ __('Events') }}</h3>
+    {% for event in item.events %}
+    <div class="col-md-6 abo-location-list">
+        {{ include(
+            '@MUYourCityModule/Event/includeDisplayItemListOneOwn.html.twig',
+                { item: event }
+            ) }}
+    </div>
+    {% endfor %}
+    <br style="clear: both;" />
+{% endif %}
+
 {% if item.menuOfLocation|default and showMenus == true %}
-    <h2>{{ __('Menus') }}</h2>
+    <h3>{{ __('Menus') }}</h3>
     {% for menu in item.menuOfLocation %}
     {#% if menu|length <= 4 %#}
         <div class="col-md-12 abo-location-list menu">
@@ -34,7 +47,7 @@
 {% endif %}
 
 {% if item.offers|default and showOffers == true %}
-    <h2>{{ __('Offers') }}</h2>
+    <h3>{{ __('Offers') }}</h3>
     {% for offer in item.offers %}
     {% if item.offers|length <= 4 %}
         <div class="col-md-12 abo-location-list offer">
@@ -50,26 +63,13 @@
         <br style="clear: both;" />
 {% endif %}
 
-{% if item.events|default and showEvents == true %}
-    <h2>{{ __('Events') }}</h2>
-    {% for event in item.events %}
-    <div class="col-md-6 abo-location-list">
-        {{ include(
-            '@MUYourCityModule/Event/includeDisplayItemListOneOwn.html.twig',
-                { item: event }
-            ) }}
-    </div>
-    {% endfor %}
-    <br style="clear: both;" />
-{% endif %}
-
 {% if item.products|default and showProducts == true %}
-    <h2>{{ __('Products') }}</h2>
+    <h3>{{ __('Products') }}</h3>
     {% for product in item.products %}
     {% if item.products|length <= 4 %}
-        <div class="col-md-6 abo-location-list product">
+        <div class="col-sm-6 col-md-4 abo-location-list product">
     {% else %}
-        <div class="col-md-4 abo-location-list product">
+        <div class="col-sm-6 col-md-3 abo-location-list product">
     {% endif %}
         {{ include(
         '@MUYourCityModule/Product/includeDisplayItemListOneOwn.html.twig',

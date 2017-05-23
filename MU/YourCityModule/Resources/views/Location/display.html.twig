@@ -26,6 +26,9 @@
     {% if location.state == 'closed' %}
         {% set state = 'locationClosed' %}
     {% endif %}
+    {% if location.state == 'closedForEver' %}
+        {% set state = 'locationForEver' %}
+    {% endif %}
     {% if location.state == 'open' %}
         {% set state = 'locationOpen' %}
     {% endif %}
@@ -41,7 +44,7 @@
     {% if location.state == 'openEnd' %}
         {% set state = 'locationOpenEnd' %}
     {% endif %}
-    <span class="status-icon {{ state }}">{% if state == 'locationUnclear' %}<i class="fa fa-circle-o-notch" aria-hidden="true"></i>{% endif %}{% if state == 'locationAgreement' or state == 'locationOpenEnd' %}<i class="fa fa-clock-o" aria-hidden="true"></i>{% endif %}{% if state == 'locationClosed' %}<i class="fa fa-circle-o" aria-hidden="true"></i>{% endif %}{% if state == 'locationOpen' %}<i class="fa fa-circle" aria-hidden="true"></i>{% endif %}</span>
+    <span class="status-icon {{ state }}">{% if state == 'locationUnclear' %}<i class="fa fa-circle-o-notch" aria-hidden="true"></i>{% endif %}{% if state == 'locationAgreement' or state == 'locationOpenEnd' %}<i class="fa fa-clock-o" aria-hidden="true"></i>{% endif %}{% if state == 'locationForEver' %}<i class="fa fa-circle" aria-hidden="true"></i>{% endif %}{% if state == 'locationClosed' %}<i class="fa fa-circle-o" aria-hidden="true"></i>{% endif %}{% if state == 'locationOpen' %}<i class="fa fa-circle" aria-hidden="true"></i>{% endif %}</span>
     
         {% set templateTitle = location.name %}
         {{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.locations.filter') }}{% if routeArea == 'admin' %} <small>({{ location.workflowState|muyourcitymodule_objectState(false)|lower }})</small>{% endif %}
@@ -78,6 +81,11 @@
     
     <div class="muyourcitymodule-location muyourcitymodule-display">
     <div class="row">
+        <div class="col-sm-4">
+            {{ block('related_items') }}
+            {{ showblockposition('leftOfLocation') }}
+        </div>
+        
         <div class="col-sm-8">    
         <div class="col-sm-7">
         {% if location.workflowState is not empty and routeArea == 'admin' %}
@@ -85,7 +93,12 @@
             <dd>{{ location.workflowState|muyourcitymodule_listEntry('location', 'workflowState') }}</dd>
         {% endif %}
         <h3>{{ __('Branches') }}</h3>
-        <h4>{{ location.branchOfLocation|muyourcitymodule_listEntry('location', 'branchOfLocation') }}</h4>
+        <h4>    {% if location.branches|default %}
+        {{ include(
+            '@MUYourCityModule/Branch/includeDisplayItemListManyOwn.html.twig',
+            { items: location.branches }
+        ) }}
+        {% endif %}</h4>
         <h3>{{ __('Part') }}</h3>
         <h4>{{ location.partOfCity|muyourcitymodule_listEntry('location', 'partOfCity') }}</h4>
         {% if location.description is not empty %}
@@ -120,21 +133,7 @@
             {% endif %}
             {% else %}&nbsp;{% endif %}<br />
         {% endif %}
-        
-        {% if location.imagesOfLocation|default %}
-        {{ include(
-            '@MUYourCityModule/ImageOfLocation/includeDisplayItemListMany.html.twig',
-            { items: location.imagesOfLocation }
-        ) }}
-    {% endif %}
-    
-    {% set mayManage = hasPermission('MUYourCityModule:ImageOfLocation:', '::', 'ACCESS_EDIT') %}
-    {% if mayManage %}
-        <p class="managelink">
-            {% set createTitle = __('Create image of location') %}
-            <a href="{{ path('muyourcitymodule_imageoflocation_' ~ routeArea ~ 'edit', { location: location.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
-        </p>
-    {% endif %}
+
                
         <h3>{{ __('Opening hours') }}</h3>
         
@@ -351,6 +350,34 @@
             <h4>{{ __('Services') }}</h4>
             {{ location.servicesOfLocation|muyourcitymodule_listEntry('location', 'servicesOfLocation') }}
         {% endif %}
+        
+        {% if location.events is not empty %}
+            <h4>{{ __('Events') }}</h4>
+            {% for event in location.events %}
+                {{ event.name }}
+            {% endfor %}
+        {% endif %}
+        
+        {% if location.menus is not empty %}
+            <h4>{{ __('Menus') }}</h4>
+            {% for menu in location.menus %}
+                {{ menu.name }}
+            {% endfor %}
+        {% endif %}
+        
+        {% if location.offers is not empty %}
+            <h4>{{ __('Offers') }}</h4>
+            {% for offer in location.offers %}
+                {{ offer.name }}
+            {% endfor %}
+        {% endif %}
+        
+        {% if location.products is not empty %}
+            <h4>{{ __('Products') }}</h4>
+            {% for product in location.products %}
+                {{ product.name }}
+            {% endfor %}
+        {% endif %}
             
         {% if location.bsagStop is not empty %}
             <h3>{{ __('Public transport') }}</h3>
@@ -404,10 +431,6 @@
         {% endif %}
               
         </div>
-        <div class="col-sm-4">
-            {{ block('related_items') }}
-        </div>
-
         </div>
         {#% endif %#}
     </div>

@@ -52,7 +52,7 @@
         
         {% if offer.percentOfOffer == 0 %}
         {% if offer.priceOfOffer > 0 %}
-            <h4>{{ __('Price of offer') }}</h4>
+            <h3>{{ __('Price of offer') }}</h3>
             <span class="offerPrice">{{ offer.priceOfOffer|localizedcurrency('EUR') }}</span>
         {% endif %}
         {% if offer.normalPrice > 0 %}
@@ -65,37 +65,27 @@
         {% endif %}
 
         {% if offer.urlToOfferOnHomepage is not empty %}
-            <dt>{{ __('Url to offer on homepage') }}</dt>
-            <dd>{% if offer.urlToOfferOnHomepage is not empty %}
+            {{ __('Url to offer on homepage') }}
+            {% if offer.urlToOfferOnHomepage is not empty %}
             {% if not isQuickView %}
-            <a href="{{ offer.urlToOfferOnHomepage }}" title="{{ __('Visit this page') }}" class="fa fa-external-link-square"></a>
+            <a href="{{ offer.urlToOfferOnHomepage }}" title="{{ __('Visit this page') }}" class="fa fa-external-link-square"></a><br />
             {% else %}
-                {{ offer.urlToOfferOnHomepage }}
+                {{ offer.urlToOfferOnHomepage }}<br />
             {% endif %}
             {% else %}&nbsp;{% endif %}
-            </dd>
-        {% endif %}
+            
+        {% endif %}<br />
                        
         {% if offer.text is not empty %}
-            <dt>{{ __('Description') }}</dt>
-            <dd>{{ offer.text|safeHtml }}</dd>
+            {{ __('Description') }}
+            {{ offer.text|safeHtml }}<br />
         {% endif %}
 
-        {% if offer.location|default %}
-            <dt>{{ __('Location') }}</dt>
-            <dd>
-              {% if not isQuickView %}
-                  <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': offer.location.id, 'slug': offer.location.slug }) }}">{% spaceless %}
-                    {{ offer.location|muyourcitymodule_formattedTitle|default(__('Offer')) }}
-                  {% endspaceless %}</a>
-                  <a id="locationItem{{ offer.location.id }}Display" href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': offer.location.id, 'slug': offer.location.slug, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ offer.location|muyourcitymodule_formattedTitle|default(__('Location'))|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
-              {% else %}
-                  {{ offer.location|muyourcitymodule_formattedTitle|default(__('Offer')) }}
-              {% endif %}
-            </dd>
+        {% if offer.myLocation is not empty %}
+            {{ __('Location') }} :
+            {{ offer.myLocation|muyourcitymodule_listEntry('offer', 'myLocation') }}
         {% endif %}
-        
-    </dl>
+
 
     {#{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: offer }) }#}
 

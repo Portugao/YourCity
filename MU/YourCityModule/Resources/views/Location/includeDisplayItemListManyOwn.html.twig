@@ -40,6 +40,9 @@
                 {% if location.state == 'closed' %}
                     {% set state = 'locationClosed' %}
                 {% endif %}
+                {% if location.state == 'closedForEver' %}
+                    {% set state = 'locationForEver' %}
+                {% endif %}
                 {% if location.state == 'open' %}
                     {% set state = 'locationOpen' %}
                 {% endif %}
@@ -55,7 +58,7 @@
                 {% if location.state == 'openEnd' %}
                     {% set state = 'locationOpenEnd' %}
                 {% endif %}
-                    <span class="status-icon {{ state }}">{% if state == 'locationUnclear' %}<i class="fa fa-circle-o-notch" aria-hidden="true"></i>{% endif %}{% if state == 'locationAgreement' or state == 'locationOpenEnd' %}<i class="fa fa-clock-o" aria-hidden="true"></i>{% endif %}{% if state == 'locationClosed' %}<i class="fa fa-circle-o" aria-hidden="true"></i>{% endif %}{% if state == 'locationOpen' %}<i class="fa fa-circle" aria-hidden="true"></i>{% endif %} <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': location.id, 'slug': location.slug }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ location.name|notifyFilters('muyourcitymodule.filterhook.locations') }}
+                    <span class="status-icon {{ state }}">{% if state == 'locationUnclear' %}<i class="fa fa-circle-o-notch" aria-hidden="true"></i>{% endif %}{% if state == 'locationAgreement' or state == 'locationOpenEnd' %}<i class="fa fa-clock-o" aria-hidden="true"></i>{% endif %}{% if state == 'locationClosed' %}<i class="fa fa-circle-o" aria-hidden="true"></i>{% endif %}{% if state == 'locationOpen' or state == 'locationForEver' %}<i class="fa fa-circle" aria-hidden="true"></i>{% endif %} <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': location.id, 'slug': location.slug }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ location.name|notifyFilters('muyourcitymodule.filterhook.locations') }}
                     </a></span><br style="clear: both;" />
                     {% if location.slogan is not empty %}
                         <span class="location-slogan-list">{{ location.slogan }}</span><br style="clear: both;" />
@@ -73,11 +76,11 @@
                     {% if location.partOfCity %}
                         {{ __('Part') }}: {{ location.partOfCity }}<br style="clear: both;" />
                     {% endif %}
-                    {% for part in location.parts %}
+                    {#% for part in location.parts %}
                         {% if loop.index == 1 %}
                         {{ __('Part') }}: <a href="{{ path('muyourcitymodule_part_' ~ routeArea ~ 'display', { 'id': part.id }) }}">{{ part.name }}</a> 
                         {% endif %}
-                    {% endfor %}<br />
+                    {% endfor %#}
                     {% endif %}
                     {% if isBranch == false %}
                     {% for branch in location.branches %}
