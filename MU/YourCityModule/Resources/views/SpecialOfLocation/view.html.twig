@@ -7,7 +7,7 @@
 
     {{ block('page_nav_links') }}
 
-    {{ include('@MUYourCityModule/SpecialOfLocation/viewQuickNav.html.twig', { workflowStateFilter: false }) }}{# see template file for available options #}
+    {#{ include('@MUYourCityModule/SpecialOfLocation/viewQuickNav.html.twig', { workflowStateFilter: false }) }}{# see template file for available options #}
 
     {% if routeArea != 'admin' and items %}
         {% for special in items %}

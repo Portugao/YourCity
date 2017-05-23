@@ -7,8 +7,18 @@
 
     {{ block('page_nav_links') }}
 
-    {{ include('@MUYourCityModule/ServiceOfLocation/viewQuickNav.html.twig', { workflowStateFilter: false }) }}{# see template file for available options #}
+    {#{ include('@MUYourCityModule/ServiceOfLocation/viewQuickNav.html.twig', { workflowStateFilter: false }) }}{# see template file for available options #}
 
+    {% if routeArea != 'admin' %}
+        {% for service in items %}
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 service-list">
+                <a href="{{ path('muyourcitymodule_serviceoflocation_' ~ routeArea ~ 'display', { 'id': service.id }) }}">{{ service.name }}</a>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <br style="clear: both;" />
+
+    {% if routeArea == 'admin' %}
     {% if routeArea == 'admin' %}
     <form action="{{ path('muyourcitymodule_serviceoflocation_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="servicesOfLocationViewForm" class="form-horizontal" role="form">
         <div>
@@ -66,6 +76,7 @@
             </tbody>
         </table>
         </div>
+        {% endif %}
         
         {% if all != 1 and pager|default %}
             {{ pager({ rowcount: pager.amountOfItems, limit: pager.itemsPerPage, display: 'page', route: 'muyourcitymodule_serviceoflocation_' ~ routeArea ~ 'view'}) }}
