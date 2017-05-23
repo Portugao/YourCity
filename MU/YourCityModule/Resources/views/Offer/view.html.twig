@@ -30,13 +30,9 @@
                 <span class="normalPrice">{{ offer.normalPrice|localizedcurrency('EUR') }}</span><br />
                 {% endif %}
                 {% endif %}                
-                {% if offer.location|default %}
-                    <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': offer.location.id, 'slug': offer.location.slug }) }}" data-placement="bottom" data-toggle="tooltip" title="{{ offer.location.name }} - {{ offer.location.street }} {{ offer.location.numberOfStreet }}">{% spaceless %}
-                          {{ offer.location.name }}
-                    {% endspaceless %}</a>
-                        <a id="locationItem{{ offer.id }}_rel_{{ offer.location.id }}Display" href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', {'id': offer.location.id, 'slug': offer.location.slug, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ offer.location|muyourcitymodule_formattedTitle|default(__('Location'))|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
-                {% else %}
-                    {{ __('Not set.') }}
+                {% if offer.myLocation is not empty %}
+                    {{ __('Location') }}: 
+                    {{ offer.myLocation|muyourcitymodule_listEntry('offer', 'myLocation') }}
                 {% endif %} 
                 </div>          
             </div>
@@ -54,12 +50,16 @@
                 <col id="cWorkflowState" />
                 {% endif %}
                 <col id="cName" />
-                <col id="cText" />
+                <col id="cDescription" />
                 <col id="cUrlToOfferOnHomepage" />
                 <col id="cImageOfOffer" />
                 <col id="cPriceOfOffer" />
                 <col id="cNormalPrice" />
-                <col id="cLocation" />
+                <col id="cPercentOfOffer" />
+                <col id="cEffectivFrom" />
+                <col id="cEffectivUntil" />
+                <col id="cInViewUntil" />
+                <col id="cMyLocation" />
             </colgroup>
             <thead>
             <tr>
@@ -77,7 +77,7 @@
                 <th id="hName" scope="col" class="text-left">
                     <a href="{{ sort.name.url }}" title="{{ __f('Sort by %s', {'%s': 'name'}) }}" class="{{ sort.name.class }}">{{ __('Name') }}</a>
                 </th>
-                <th id="hText" scope="col" class="text-left">
+                <th id="hDescription" scope="col" class="text-left">
                     <a href="{{ sort.description.url }}" title="{{ __f('Sort by %s', {'%s': 'description'}) }}" class="{{ sort.description.class }}">{{ __('Description') }}</a>
                 </th>
                 <th id="hUrlToOfferOnHomepage" scope="col" class="text-center">
@@ -92,8 +92,20 @@
                 <th id="hNormalPrice" scope="col" class="text-right">
                     <a href="{{ sort.normalPrice.url }}" title="{{ __f('Sort by %s', {'%s': 'normal price'}) }}" class="{{ sort.normalPrice.class }}">{{ __('Normal price') }}</a>
                 </th>
-                <th id="hLocation" scope="col" class="text-left">
-                    <a href="{{ sort.location.url }}" title="{{ __f('Sort by %s', {'%s': 'location'}) }}" class="{{ sort.location.class }}">{{ __('Location') }}</a>
+                <th id="hPercentOfOffer" scope="col" class="text-right">
+                    <a href="{{ sort.percentOfOffer.url }}" title="{{ __f('Sort by %s', {'%s': 'percent of offer'}) }}" class="{{ sort.percentOfOffer.class }}">{{ __('Percent of offer') }}</a>
+                </th>
+                <th id="hEffectivFrom" scope="col" class="text-left">
+                    <a href="{{ sort.effectivFrom.url }}" title="{{ __f('Sort by %s', {'%s': 'effectiv from'}) }}" class="{{ sort.effectivFrom.class }}">{{ __('Effectiv from') }}</a>
+                </th>
+                <th id="hEffectivUntil" scope="col" class="text-left">
+                    <a href="{{ sort.effectivUntil.url }}" title="{{ __f('Sort by %s', {'%s': 'effectiv until'}) }}" class="{{ sort.effectivUntil.class }}">{{ __('Effectiv until') }}</a>
+                </th>
+                <th id="hInViewUntil" scope="col" class="text-left">
+                    <a href="{{ sort.inViewUntil.url }}" title="{{ __f('Sort by %s', {'%s': 'in view until'}) }}" class="{{ sort.inViewUntil.class }}">{{ __('In view until') }}</a>
+                </th>
+                <th id="hMyLocation" scope="col" class="text-left">
+                    <a href="{{ sort.myLocation.url }}" title="{{ __f('Sort by %s', {'%s': 'my location'}) }}" class="{{ sort.myLocation.class }}">{{ __('My location') }}</a>
                 </th>
             </tr>
             </thead>
@@ -103,13 +115,13 @@
             <tr>
                 {% if routeArea == 'admin' %}
                     <td headers="hSelect" class="fixed-column text-center z-w02">
-                        <input type="checkbox" name="items[]" value="{{ offer.id }}" class="muyourcity-toggle-checkbox" />
+                        <input type="checkbox" name="items[]" value="{{ offer.getKey() }}" class="muyourcity-toggle-checkbox" />
                     </td>
                 {% endif %}
-                <td id="itemActions{{ offer.id }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
+                <td id="itemActions{{ offer.getKey() }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
                     {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: offer, area: routeArea, context: 'view' }) %}
                     <div class="dropdown">
-                        <a id="itemActions{{ offer.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
+                        <a id="itemActions{{ offer.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
                         {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
                     </div>
                 </td>
@@ -117,7 +129,7 @@
                     {{ offer.workflowState|muyourcitymodule_objectState }}
                 </td>
                 {% endif %}<td headers="hName" class="text-left">
-                    <a href="{{ path('muyourcitymodule_offer_' ~ routeArea ~ 'display', { 'id': offer.id }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ offer.name|notifyFilters('muyourcitymodule.filterhook.offers') }}</a>
+                    <a href="{{ path('muyourcitymodule_offer_' ~ routeArea ~ 'display', { 'id': offer.getId() }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ offer.name|notifyFilters('muyourcitymodule.filterhook.offers')|safeHtml }}</a>
                 </td>
                 <td headers="hDescription" class="text-left">
                     {{ offer.description|safeHtml|truncate(50) }}
@@ -129,10 +141,10 @@
                 </td>
                 <td headers="hImageOfOffer" class="text-left">
                     {% if offer.imageOfOffer is not empty and offer.imageOfOfferMeta|default %}
-                                <a href="{{ offer.imageOfOfferUrl }}" title="{{ offer|muyourcitymodule_formattedTitle|default(__('Offer'))|e('html_attr') }}"{% if offer.imageOfOfferMeta.isImage %} class="image-link"{% endif %}>
+                                <a href="{{ offer.imageOfOfferUrl }}" title="{{ offer|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if offer.imageOfOfferMeta.isImage %} class="image-link"{% endif %}>
                     {% if offer.imageOfOfferMeta.isImage %}
                         {% set thumbOptions = attribute(thumbRuntimeOptions, 'offerImageOfOffer') %}
-                        <img src="{{ offer.imageOfOffer.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ offer|muyourcitymodule_formattedTitle|default(__('Offer'))|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+                        <img src="{{ offer.imageOfOffer.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ offer|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
                     {% else %}
                         {{ __('Download') }} ({{ offer.imageOfOfferMeta.size|muyourcitymodule_fileSize(offer.imageOfOffer.getPathname(), false, false) }})
                     {% endif %}
@@ -145,20 +157,25 @@
                 <td headers="hNormalPrice" class="text-right">
                     {{ offer.normalPrice|localizedcurrency('EUR') }}
                 </td>
-                <td headers="hLocation" class="text-left">
-                    {% if offer.location|default %}
-                        <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': offer.location.id, 'slug': offer.location.slug }) }}">{% spaceless %}
-                          {{ offer.location|muyourcitymodule_formattedTitle|default(__('Offer')) }}
-                        {% endspaceless %}</a>
-                        <a id="locationItem{{ offer.id }}_rel_{{ offer.location.id }}Display" href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', {'id': offer.location.id, 'slug': offer.location.slug, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ offer|muyourcitymodule_formattedTitle|default(__('Offer')) }}"><span class="fa fa-id-card-o"></span></a>
-                    {% else %}
-                        {{ __('Not set.') }}
-                    {% endif %}
+                <td headers="hPercentOfOffer" class="text-right">
+                    {{ offer.percentOfOffer }}%
+                </td>
+                <td headers="hEffectivFrom" class="text-left">
+                    {{ offer.effectivFrom|localizeddate('medium', 'short') }}
+                </td>
+                <td headers="hEffectivUntil" class="text-left">
+                    {{ offer.effectivUntil|localizeddate('medium', 'short') }}
+                </td>
+                <td headers="hInViewUntil" class="text-left">
+                    {{ offer.inViewUntil|localizeddate('medium', 'short') }}
+                </td>
+                <td headers="hMyLocation" class="text-left">
+                    {{ offer.myLocation|muyourcitymodule_listEntry('offer', 'myLocation') }}
                 </td>
             </tr>
         {% else %}
             <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
-                <td class="text-left" colspan="{% if routeArea == 'admin' %}10{% else %}9{% endif %}">
+                <td class="text-left" colspan="{% if routeArea == 'admin' %}14{% else %}13{% endif %}">
             {{ __('No offers found.') }}
               </td>
             </tr>

@@ -20,8 +20,7 @@
             <div class="menu-view-box">
                 <span class="menu-view-box-name"><a href="{{ path('muyourcitymodule_menuoflocation_' ~ routeArea ~ 'display', { 'id': menu.id }) }}">{{ menu.name }}</a></span><br style="clear: both;" />
                 {{ menu.description }}<br style="clear: both;" />
-                {{ __('Location') }}: <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': menu.location.id, 'slug': menu.location.slug }) }}">{{ menu.location.name }}</a>
-            </div>
+                {{ menu.myLocation|muyourcitymodule_listEntry('menuOfLocation', 'myLocation') }}         </div>
         </div>
         {% endfor %}        
     {% endif %}
@@ -40,9 +39,13 @@
                 <col id="cName" />
                 <col id="cDescription" />
                 <col id="cImageOfMenu" />
+                <col id="cKindOfMenu" />
+                <col id="cAdditionalRemarks" />
                 <col id="cEffectivFrom" />
                 <col id="cEffectivUntil" />
-                <col id="cLocation" />
+                <col id="cInViewFrom" />
+                <col id="cInViewUntil" />
+                <col id="cMyLocation" />
             </colgroup>
             <thead>
             <tr>
@@ -66,14 +69,26 @@
                 <th id="hImageOfMenu" scope="col" class="text-left">
                     <a href="{{ sort.imageOfMenu.url }}" title="{{ __f('Sort by %s', {'%s': 'image of menu'}) }}" class="{{ sort.imageOfMenu.class }}">{{ __('Image of menu') }}</a>
                 </th>
+                <th id="hKindOfMenu" scope="col" class="text-left">
+                    <a href="{{ sort.kindOfMenu.url }}" title="{{ __f('Sort by %s', {'%s': 'kind of menu'}) }}" class="{{ sort.kindOfMenu.class }}">{{ __('Kind of menu') }}</a>
+                </th>
+                <th id="hAdditionalRemarks" scope="col" class="text-left">
+                    <a href="{{ sort.additionalRemarks.url }}" title="{{ __f('Sort by %s', {'%s': 'additional remarks'}) }}" class="{{ sort.additionalRemarks.class }}">{{ __('Additional remarks') }}</a>
+                </th>
                 <th id="hEffectivFrom" scope="col" class="text-left">
                     <a href="{{ sort.effectivFrom.url }}" title="{{ __f('Sort by %s', {'%s': 'effectiv from'}) }}" class="{{ sort.effectivFrom.class }}">{{ __('Effectiv from') }}</a>
                 </th>
                 <th id="hEffectivUntil" scope="col" class="text-left">
                     <a href="{{ sort.effectivUntil.url }}" title="{{ __f('Sort by %s', {'%s': 'effectiv until'}) }}" class="{{ sort.effectivUntil.class }}">{{ __('Effectiv until') }}</a>
                 </th>
-                <th id="hLocation" scope="col" class="text-left">
-                    <a href="{{ sort.location.url }}" title="{{ __f('Sort by %s', {'%s': 'location'}) }}" class="{{ sort.location.class }}">{{ __('Location') }}</a>
+                <th id="hInViewFrom" scope="col" class="text-left">
+                    <a href="{{ sort.inViewFrom.url }}" title="{{ __f('Sort by %s', {'%s': 'in view from'}) }}" class="{{ sort.inViewFrom.class }}">{{ __('In view from') }}</a>
+                </th>
+                <th id="hInViewUntil" scope="col" class="text-left">
+                    <a href="{{ sort.inViewUntil.url }}" title="{{ __f('Sort by %s', {'%s': 'in view until'}) }}" class="{{ sort.inViewUntil.class }}">{{ __('In view until') }}</a>
+                </th>
+                <th id="hMyLocation" scope="col" class="text-left">
+                    <a href="{{ sort.myLocation.url }}" title="{{ __f('Sort by %s', {'%s': 'my location'}) }}" class="{{ sort.myLocation.class }}">{{ __('My location') }}</a>
                 </th>
             </tr>
             </thead>
@@ -83,13 +98,13 @@
             <tr>
                 {% if routeArea == 'admin' %}
                     <td headers="hSelect" class="fixed-column text-center z-w02">
-                        <input type="checkbox" name="items[]" value="{{ menuOfLocation.id }}" class="muyourcity-toggle-checkbox" />
+                        <input type="checkbox" name="items[]" value="{{ menuOfLocation.getKey() }}" class="muyourcity-toggle-checkbox" />
                     </td>
                 {% endif %}
-                <td id="itemActions{{ menuOfLocation.id }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
+                <td id="itemActions{{ menuOfLocation.getKey() }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
                     {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: menuOfLocation, area: routeArea, context: 'view' }) %}
                     <div class="dropdown">
-                        <a id="itemActions{{ menuOfLocation.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
+                        <a id="itemActions{{ menuOfLocation.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
                         {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
                     </div>
                 </td>
@@ -97,7 +112,7 @@
                     {{ menuOfLocation.workflowState|muyourcitymodule_objectState }}
                 </td>
                 {% endif %}<td headers="hName" class="text-left">
-                    <a href="{{ path('muyourcitymodule_menuoflocation_' ~ routeArea ~ 'display', { 'id': menuOfLocation.id }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ menuOfLocation.name|notifyFilters('muyourcitymodule.filterhook.menusoflocation') }}</a>
+                    <a href="{{ path('muyourcitymodule_menuoflocation_' ~ routeArea ~ 'display', { 'id': menuOfLocation.getId() }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ menuOfLocation.name|notifyFilters('muyourcitymodule.filterhook.menusoflocation')|safeHtml }}</a>
                 </td>
                 <td headers="hDescription" class="text-left">
                     {{ menuOfLocation.description|safeHtml|truncate(50) }}
@@ -114,26 +129,31 @@
                     </a>
                     {% else %}&nbsp;{% endif %}
                 </td>
+                <td headers="hKindOfMenu" class="text-left">
+                    {{ menuOfLocation.kindOfMenu|muyourcitymodule_listEntry('menuOfLocation', 'kindOfMenu') }}
+                </td>
+                <td headers="hAdditionalRemarks" class="text-left">
+                    {{ menuOfLocation.additionalRemarks|safeHtml|truncate(50) }}
+                </td>
                 <td headers="hEffectivFrom" class="text-left">
                     {{ menuOfLocation.effectivFrom|localizeddate('medium', 'short') }}
                 </td>
                 <td headers="hEffectivUntil" class="text-left">
                     {{ menuOfLocation.effectivUntil|localizeddate('medium', 'short') }}
                 </td>
-                <td headers="hLocation" class="text-left">
-                    {% if menuOfLocation.location|default %}
-                        <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': menuOfLocation.location.id, 'slug': menuOfLocation.location.slug }) }}">{% spaceless %}
-                          {{ menuOfLocation.location|muyourcitymodule_formattedTitle }}
-                        {% endspaceless %}</a>
-                        <a id="locationItem{{ menuOfLocation.id }}_rel_{{ menuOfLocation.location.id }}Display" href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', {'id': menuOfLocation.location.id, 'slug': menuOfLocation.location.slug, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ menuOfLocation.location|muyourcitymodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
-                    {% else %}
-                        {{ __('Not set.') }}
-                    {% endif %}
+                <td headers="hInViewFrom" class="text-left">
+                    {{ menuOfLocation.inViewFrom|localizeddate('medium', 'short') }}
+                </td>
+                <td headers="hInViewUntil" class="text-left">
+                    {{ menuOfLocation.inViewUntil|localizeddate('medium', 'short') }}
+                </td>
+                <td headers="hMyLocation" class="text-left">
+                    {{ menuOfLocation.myLocation|muyourcitymodule_listEntry('menuOfLocation', 'myLocation') }}
                 </td>
             </tr>
         {% else %}
             <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
-                <td class="text-left" colspan="{% if routeArea == 'admin' %}9{% else %}8{% endif %}">
+                <td class="text-left" colspan="{% if routeArea == 'admin' %}13{% else %}12{% endif %}">
             {{ __('No menus of location found.') }}
               </td>
             </tr>

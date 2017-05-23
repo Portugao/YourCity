@@ -1,7 +1,7 @@
 {# purpose of this template: menus of location display view #}
 {% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
 {% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
-{% block pageTitle %}{{ menuOfLocation|muyourcitymodule_formattedTitle|default(__('Menu of location')) }} - {{ menuOfLocation.location.name }}{% endblock %}
+{% block pageTitle %}{{ menuOfLocation|muyourcitymodule_formattedTitle|default(__('Menu of location')) }} - {{ menuOfLocation.myLocation|muyourcitymodule_listEntry('menuOfLocation', 'myLocation') }}{% endblock %}
 {% block title %}
 
     <div id="imageOfMenu">

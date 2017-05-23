@@ -22,7 +22,7 @@
                 <col id="cItemActions" />
                 <col id="cName" />
                 <col id="cDescription" />
-                <col id="cMenuOfLocation" />
+                <col id="cMyLocation" />
             </colgroup>
             <thead>
             <tr>
@@ -38,8 +38,8 @@
                 <th id="hDescription" scope="col" class="text-left">
                     <a href="{{ sort.description.url }}" title="{{ __f('Sort by %s', {'%s': 'description'}) }}" class="{{ sort.description.class }}">{{ __('Description') }}</a>
                 </th>
-                <th id="hMenuOfLocation" scope="col" class="text-left">
-                    <a href="{{ sort.menuOfLocation.url }}" title="{{ __f('Sort by %s', {'%s': 'menu of location'}) }}" class="{{ sort.menuOfLocation.class }}">{{ __('Menu of location') }}</a>
+                <th id="hMyLocation" scope="col" class="text-left">
+                    <a href="{{ sort.myLocation.url }}" title="{{ __f('Sort by %s', {'%s': 'my location'}) }}" class="{{ sort.myLocation.class }}">{{ __('My location') }}</a>
                 </th>
             </tr>
             </thead>
@@ -49,31 +49,24 @@
             <tr>
                 {% if routeArea == 'admin' %}
                     <td headers="hSelect" class="fixed-column text-center z-w02">
-                        <input type="checkbox" name="items[]" value="{{ partOfMenu.id }}" class="muyourcity-toggle-checkbox" />
+                        <input type="checkbox" name="items[]" value="{{ partOfMenu.getKey() }}" class="muyourcity-toggle-checkbox" />
                     </td>
                 {% endif %}
-                <td id="itemActions{{ partOfMenu.id }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
+                <td id="itemActions{{ partOfMenu.getKey() }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
                     {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: partOfMenu, area: routeArea, context: 'view' }) %}
                     <div class="dropdown">
-                        <a id="itemActions{{ partOfMenu.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
+                        <a id="itemActions{{ partOfMenu.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
                         {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
                     </div>
                 </td>
                 <td headers="hName" class="text-left">
-                    <a href="{{ path('muyourcitymodule_partofmenu_' ~ routeArea ~ 'display', { 'id': partOfMenu.id }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ partOfMenu.name|notifyFilters('muyourcitymodule.filterhook.partsofmenu')|safeHtml }}</a>
+                    <a href="{{ path('muyourcitymodule_partofmenu_' ~ routeArea ~ 'display', { 'id': partOfMenu.getId() }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ partOfMenu.name|notifyFilters('muyourcitymodule.filterhook.partsofmenu')|safeHtml }}</a>
                 </td>
                 <td headers="hDescription" class="text-left">
                     {{ partOfMenu.description|safeHtml|truncate(50) }}
                 </td>
-                <td headers="hMenuOfLocation" class="text-left">
-                    {% if partOfMenu.menuOfLocation|default %}
-                        <a href="{{ path('muyourcitymodule_menuoflocation_' ~ routeArea ~ 'display', { 'id': partOfMenu.menuOfLocation.id }) }}">{% spaceless %}
-                          {{ partOfMenu.menuOfLocation|muyourcitymodule_formattedTitle }}
-                        {% endspaceless %}</a>
-                        <a id="menuOfLocationItem{{ partOfMenu.id }}_rel_{{ partOfMenu.menuOfLocation.id }}Display" href="{{ path('muyourcitymodule_menuoflocation_' ~ routeArea ~ 'display', {'id': partOfMenu.menuOfLocation.id, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ partOfMenu.menuOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
-                    {% else %}
-                        {{ __('Not set.') }}
-                    {% endif %}
+                <td headers="hMyLocation" class="text-left">
+                    {{ partOfMenu.myLocation|muyourcitymodule_listEntry('partOfMenu', 'myLocation') }}
                 </td>
             </tr>
         {% else %}
