@@ -484,7 +484,7 @@ abstract class AbstractServiceOfLocationRepository extends EntityRepository
         if (!$isPaginated) {
             $result = $query->getResult();
         } else {
-            $paginator = new Paginator($query, false);
+            $paginator = new Paginator($query, true);
     
             $count = count($paginator);
             $result = $paginator;
@@ -696,7 +696,7 @@ abstract class AbstractServiceOfLocationRepository extends EntityRepository
      */
     protected function addJoinsToSelection()
     {
-        $selection = '';
+        $selection = ', tblLocations';
     
         return $selection;
     }
@@ -710,6 +710,7 @@ abstract class AbstractServiceOfLocationRepository extends EntityRepository
      */
     protected function addJoinsToFrom(QueryBuilder $qb)
     {
+        $qb->leftJoin('tbl.locations', 'tblLocations');
     
         return $qb;
     }

@@ -702,7 +702,7 @@ abstract class AbstractDishRepository extends EntityRepository
      */
     protected function addJoinsToSelection()
     {
-        $selection = '';
+        $selection = ', tblMenuOfLocation, tblPartOfMenu';
     
         return $selection;
     }
@@ -716,6 +716,8 @@ abstract class AbstractDishRepository extends EntityRepository
      */
     protected function addJoinsToFrom(QueryBuilder $qb)
     {
+        $qb->leftJoin('tbl.menuOfLocation', 'tblMenuOfLocation');
+        $qb->leftJoin('tbl.partOfMenu', 'tblPartOfMenu');
     
         return $qb;
     }

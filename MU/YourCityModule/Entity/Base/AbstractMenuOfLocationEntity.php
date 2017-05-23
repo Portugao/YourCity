@@ -190,9 +190,9 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
     protected $locale;
     
     /**
-     * Unidirectional - One menuOfLocation [menu of location] has many dishes [dishes] (INVERSE SIDE).
+     * Bidirectional - One menuOfLocation [menu of location] has many dishes [dishes] (INVERSE SIDE).
      *
-     * @ORM\ManyToMany(targetEntity="MU\YourCityModule\Entity\DishEntity")
+     * @ORM\OneToMany(targetEntity="MU\YourCityModule\Entity\DishEntity", mappedBy="menuOfLocation")
      * @ORM\JoinTable(name="mu_yourcity_menuoflocationdishes")
      * @ORM\OrderBy({"positionOfDish" = "ASC"})
      * @var \MU\YourCityModule\Entity\DishEntity[] $dishes
@@ -200,15 +200,11 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
     protected $dishes = null;
     
     /**
-     * Unidirectional - One menuOfLocation [menu of location] has many partsOfMenu [parts of menu] (INVERSE SIDE).
+     * Bidirectional - One menuOfLocation [menu of location] has many partsOfMenu [parts of menu] (INVERSE SIDE).
      *
-     * @ORM\ManyToMany(targetEntity="MU\YourCityModule\Entity\PartOfMenuEntity")
-     * @ORM\JoinTable(name="mu_yourcity_menuoflocationpartsofmenu",
-     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
-     * )
+     * @ORM\OneToMany(targetEntity="MU\YourCityModule\Entity\PartOfMenuEntity", mappedBy="menuOfLocation")
+     * @ORM\JoinTable(name="mu_yourcity_menuoflocationpartsofmenu")
      * @ORM\OrderBy({"positionOfPart" = "ASC"})
-     * @Assert\NotNull(message="Choosing at least one of the parts of menu is required.")
      * @var \MU\YourCityModule\Entity\PartOfMenuEntity[] $partsOfMenu
      */
     protected $partsOfMenu = null;
@@ -680,6 +676,9 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
      */
     public function setDishes($dishes)
     {
+        foreach ($this->dishes as $dishSingle) {
+            $this->removeDishes($dishSingle);
+        }
         foreach ($dishes as $dishSingle) {
             $this->addDishes($dishSingle);
         }
@@ -695,6 +694,7 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
     public function addDishes(\MU\YourCityModule\Entity\DishEntity $dish)
     {
         $this->dishes->add($dish);
+        $dish->setMenuOfLocation($this);
     }
     
     /**
@@ -707,6 +707,7 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
     public function removeDishes(\MU\YourCityModule\Entity\DishEntity $dish)
     {
         $this->dishes->removeElement($dish);
+        $dish->setMenuOfLocation(null);
     }
     
     /**
@@ -728,6 +729,9 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
      */
     public function setPartsOfMenu($partsOfMenu)
     {
+        foreach ($this->partsOfMenu as $partOfMenuSingle) {
+            $this->removePartsOfMenu($partOfMenuSingle);
+        }
         foreach ($partsOfMenu as $partOfMenuSingle) {
             $this->addPartsOfMenu($partOfMenuSingle);
         }
@@ -743,6 +747,7 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
     public function addPartsOfMenu(\MU\YourCityModule\Entity\PartOfMenuEntity $partOfMenu)
     {
         $this->partsOfMenu->add($partOfMenu);
+        $partOfMenu->setMenuOfLocation($this);
     }
     
     /**
@@ -755,6 +760,7 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
     public function removePartsOfMenu(\MU\YourCityModule\Entity\PartOfMenuEntity $partOfMenu)
     {
         $this->partsOfMenu->removeElement($partOfMenu);
+        $partOfMenu->setMenuOfLocation(null);
     }
     
     

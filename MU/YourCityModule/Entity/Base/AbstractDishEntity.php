@@ -164,6 +164,26 @@ abstract class AbstractDishEntity extends EntityAccess implements Translatable
      */
     protected $locale;
     
+    /**
+     * Bidirectional - Many dishes [dishes] are linked by one menuOfLocation [menu of location] (OWNING SIDE).
+     *
+     * @ORM\ManyToOne(targetEntity="MU\YourCityModule\Entity\MenuOfLocationEntity", inversedBy="dishes")
+     * @ORM\JoinTable(name="mu_yourcity_menuoflocation")
+     * @Assert\Type(type="MU\YourCityModule\Entity\MenuOfLocationEntity")
+     * @var \MU\YourCityModule\Entity\MenuOfLocationEntity $menuOfLocation
+     */
+    protected $menuOfLocation;
+    
+    /**
+     * Bidirectional - Many dishes [dishes] are linked by one partOfMenu [part of menu] (OWNING SIDE).
+     *
+     * @ORM\ManyToOne(targetEntity="MU\YourCityModule\Entity\PartOfMenuEntity", inversedBy="dishes")
+     * @ORM\JoinTable(name="mu_yourcity_partofmenu")
+     * @Assert\Type(type="MU\YourCityModule\Entity\PartOfMenuEntity")
+     * @var \MU\YourCityModule\Entity\PartOfMenuEntity $partOfMenu
+     */
+    protected $partOfMenu;
+    
     
     /**
      * DishEntity constructor.
@@ -513,6 +533,50 @@ abstract class AbstractDishEntity extends EntityAccess implements Translatable
         }
     }
     
+    
+    /**
+     * Returns the menu of location.
+     *
+     * @return \MU\YourCityModule\Entity\MenuOfLocationEntity
+     */
+    public function getMenuOfLocation()
+    {
+        return $this->menuOfLocation;
+    }
+    
+    /**
+     * Sets the menu of location.
+     *
+     * @param \MU\YourCityModule\Entity\MenuOfLocationEntity $menuOfLocation
+     *
+     * @return void
+     */
+    public function setMenuOfLocation($menuOfLocation = null)
+    {
+        $this->menuOfLocation = $menuOfLocation;
+    }
+    
+    /**
+     * Returns the part of menu.
+     *
+     * @return \MU\YourCityModule\Entity\PartOfMenuEntity
+     */
+    public function getPartOfMenu()
+    {
+        return $this->partOfMenu;
+    }
+    
+    /**
+     * Sets the part of menu.
+     *
+     * @param \MU\YourCityModule\Entity\PartOfMenuEntity $partOfMenu
+     *
+     * @return void
+     */
+    public function setPartOfMenu($partOfMenu = null)
+    {
+        $this->partOfMenu = $partOfMenu;
+    }
     
     
     

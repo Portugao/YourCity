@@ -411,6 +411,9 @@ abstract class AbstractBranchEntity extends EntityAccess implements Translatable
      */
     public function setLocations($locations)
     {
+        foreach ($this->locations as $locationSingle) {
+            $this->removeLocations($locationSingle);
+        }
         foreach ($locations as $locationSingle) {
             $this->addLocations($locationSingle);
         }

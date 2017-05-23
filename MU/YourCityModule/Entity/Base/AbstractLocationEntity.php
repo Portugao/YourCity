@@ -3378,6 +3378,9 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
      */
     public function setAbonnements($abonnements)
     {
+        foreach ($this->abonnements as $abonnementSingle) {
+            $this->removeAbonnements($abonnementSingle);
+        }
         foreach ($abonnements as $abonnementSingle) {
             $this->addAbonnements($abonnementSingle);
         }
@@ -3428,6 +3431,9 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
      */
     public function setBranches($branches)
     {
+        foreach ($this->branches as $branchSingle) {
+            $this->removeBranches($branchSingle);
+        }
         foreach ($branches as $branchSingle) {
             $this->addBranches($branchSingle);
         }
@@ -3476,6 +3482,9 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
      */
     public function setServicesOfLocation($servicesOfLocation)
     {
+        foreach ($this->servicesOfLocation as $serviceOfLocationSingle) {
+            $this->removeServicesOfLocation($serviceOfLocationSingle);
+        }
         foreach ($servicesOfLocation as $serviceOfLocationSingle) {
             $this->addServicesOfLocation($serviceOfLocationSingle);
         }
@@ -3524,6 +3533,9 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
      */
     public function setSpecialsOfLocation($specialsOfLocation)
     {
+        foreach ($this->specialsOfLocation as $specialOfLocationSingle) {
+            $this->removeSpecialsOfLocation($specialOfLocationSingle);
+        }
         foreach ($specialsOfLocation as $specialOfLocationSingle) {
             $this->addSpecialsOfLocation($specialOfLocationSingle);
         }

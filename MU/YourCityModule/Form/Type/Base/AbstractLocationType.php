@@ -1127,6 +1127,7 @@ abstract class AbstractLocationType extends AbstractType
             'multiple' => true,
             'expanded' => true,
             'query_builder' => $queryBuilder,
+            'required' => false,
             'label' => $this->__('Branches'),
             'label_attr' => [
                 'class' => 'checkbox-inline'
@@ -1150,6 +1151,7 @@ abstract class AbstractLocationType extends AbstractType
             'multiple' => true,
             'expanded' => true,
             'query_builder' => $queryBuilder,
+            'required' => false,
             'label' => $this->__('Services of location'),
             'label_attr' => [
                 'class' => 'checkbox-inline'
@@ -1173,6 +1175,7 @@ abstract class AbstractLocationType extends AbstractType
             'multiple' => true,
             'expanded' => true,
             'query_builder' => $queryBuilder,
+            'required' => false,
             'label' => $this->__('Specials of location'),
             'label_attr' => [
                 'class' => 'checkbox-inline'

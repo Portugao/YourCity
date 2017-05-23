@@ -406,6 +406,8 @@ abstract class AbstractDishController extends AbstractController
             new Column('ingredients'),
             new Column('positionOfDish'),
             new Column('myLocation'),
+            new Column('menuOfLocation'),
+            new Column('partOfMenu'),
             new Column('createdBy'),
             new Column('createdDate'),
             new Column('updatedBy'),

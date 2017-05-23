@@ -57,7 +57,6 @@ abstract class AbstractModelHelper
         switch ($objectType) {
             case 'branch':
                 $result = true;
-                $result &= $this->hasExistingInstances('location');
                 break;
             case 'location':
                 $result = true;
@@ -85,11 +84,9 @@ abstract class AbstractModelHelper
                 break;
             case 'specialOfLocation':
                 $result = true;
-                $result &= $this->hasExistingInstances('location');
                 break;
             case 'serviceOfLocation':
                 $result = true;
-                $result &= $this->hasExistingInstances('location');
                 break;
             case 'abonnement':
                 $result = true;

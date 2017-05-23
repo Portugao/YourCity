@@ -361,6 +361,7 @@ abstract class AbstractCollectionFilterHelper
             return $parameters;
         }
     
+        $parameters['menuOfLocation'] = $this->request->query->get('menuOfLocation', 0);
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
         $parameters['myLocation'] = $this->request->query->get('myLocation', '');
         $parameters['q'] = $this->request->query->get('q', '');
@@ -383,6 +384,8 @@ abstract class AbstractCollectionFilterHelper
             return $parameters;
         }
     
+        $parameters['menuOfLocation'] = $this->request->query->get('menuOfLocation', 0);
+        $parameters['partOfMenu'] = $this->request->query->get('partOfMenu', 0);
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
         $parameters['kindOfDish'] = $this->request->query->get('kindOfDish', '');
         $parameters['myLocation'] = $this->request->query->get('myLocation', '');

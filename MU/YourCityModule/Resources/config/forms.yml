@@ -104,6 +104,8 @@ services:
         class: MU\YourCityModule\Form\Type\QuickNavigation\AbonnementQuickNavType
         arguments:
             - "@translator.default"
+            - "@request_stack"
+            - "@mu_yourcity_module.entity_display_helper"
             - "@mu_yourcity_module.listentries_helper"
             - "@mu_yourcity_module.feature_activation_helper"
         tags:
@@ -139,6 +141,8 @@ services:
         arguments:
             - "@translator.default"
             - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.collection_filter_helper"
+            - "@mu_yourcity_module.entity_display_helper"
             - "@zikula_extensions_module.api.variable"
             - "@mu_yourcity_module.translatable_helper"
             - "@mu_yourcity_module.listentries_helper"
@@ -480,6 +484,8 @@ services:
         arguments:
             - "@translator.default"
             - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.collection_filter_helper"
+            - "@mu_yourcity_module.entity_display_helper"
             - "@zikula_extensions_module.api.variable"
             - "@mu_yourcity_module.translatable_helper"
             - "@mu_yourcity_module.listentries_helper"
@@ -517,6 +523,8 @@ services:
         arguments:
             - "@translator.default"
             - "@mu_yourcity_module.entity_factory"
+            - "@mu_yourcity_module.collection_filter_helper"
+            - "@mu_yourcity_module.entity_display_helper"
             - "@zikula_extensions_module.api.variable"
             - "@mu_yourcity_module.translatable_helper"
             - "@mu_yourcity_module.listentries_helper"

@@ -111,9 +111,19 @@ abstract class AbstractPartOfMenuEntity extends EntityAccess implements Translat
     protected $locale;
     
     /**
-     * Unidirectional - One partOfMenu [part of menu] has many dishes [dishes] (INVERSE SIDE).
+     * Bidirectional - Many partsOfMenu [parts of menu] are linked by one menuOfLocation [menu of location] (OWNING SIDE).
      *
-     * @ORM\ManyToMany(targetEntity="MU\YourCityModule\Entity\DishEntity")
+     * @ORM\ManyToOne(targetEntity="MU\YourCityModule\Entity\MenuOfLocationEntity", inversedBy="partsOfMenu")
+     * @ORM\JoinTable(name="mu_yourcity_menuoflocation")
+     * @Assert\Type(type="MU\YourCityModule\Entity\MenuOfLocationEntity")
+     * @var \MU\YourCityModule\Entity\MenuOfLocationEntity $menuOfLocation
+     */
+    protected $menuOfLocation;
+    
+    /**
+     * Bidirectional - One partOfMenu [part of menu] has many dishes [dishes] (INVERSE SIDE).
+     *
+     * @ORM\OneToMany(targetEntity="MU\YourCityModule\Entity\DishEntity", mappedBy="partOfMenu")
      * @ORM\JoinTable(name="mu_yourcity_partofmenudishes")
      * @ORM\OrderBy({"positionOfDish" = "ASC"})
      * @var \MU\YourCityModule\Entity\DishEntity[] $dishes
@@ -328,6 +338,28 @@ abstract class AbstractPartOfMenuEntity extends EntityAccess implements Translat
     
     
     /**
+     * Returns the menu of location.
+     *
+     * @return \MU\YourCityModule\Entity\MenuOfLocationEntity
+     */
+    public function getMenuOfLocation()
+    {
+        return $this->menuOfLocation;
+    }
+    
+    /**
+     * Sets the menu of location.
+     *
+     * @param \MU\YourCityModule\Entity\MenuOfLocationEntity $menuOfLocation
+     *
+     * @return void
+     */
+    public function setMenuOfLocation($menuOfLocation = null)
+    {
+        $this->menuOfLocation = $menuOfLocation;
+    }
+    
+    /**
      * Returns the dishes.
      *
      * @return \MU\YourCityModule\Entity\DishEntity[]
@@ -346,6 +378,9 @@ abstract class AbstractPartOfMenuEntity extends EntityAccess implements Translat
      */
     public function setDishes($dishes)
     {
+        foreach ($this->dishes as $dishSingle) {
+            $this->removeDishes($dishSingle);
+        }
         foreach ($dishes as $dishSingle) {
             $this->addDishes($dishSingle);
         }
@@ -361,6 +396,7 @@ abstract class AbstractPartOfMenuEntity extends EntityAccess implements Translat
     public function addDishes(\MU\YourCityModule\Entity\DishEntity $dish)
     {
         $this->dishes->add($dish);
+        $dish->setPartOfMenu($this);
     }
     
     /**
@@ -373,6 +409,7 @@ abstract class AbstractPartOfMenuEntity extends EntityAccess implements Translat
     public function removeDishes(\MU\YourCityModule\Entity\DishEntity $dish)
     {
         $this->dishes->removeElement($dish);
+        $dish->setPartOfMenu(null);
     }
     
     
