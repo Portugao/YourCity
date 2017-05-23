@@ -84,32 +84,36 @@ abstract class AbstractImportController extends AbstractController
     	
     	
     	$results = $this->getDatas();
-
-    	if ($results) {
+        
+    	if ($results) {	
     		foreach ($results as $result) {
-    			$locations[] = $result;
+    			    $locations[] = $result;
     		}
     	}
 
     	// we get an entity manager
-    	$entityManager = $this->container->get('doctrine.entitymanager');
-    	
-    	
+    	$entityManager = $this->container->get('doctrine.entitymanager');    	
 
     	if (is_array($locations)) {
+    			$counter = 0;
     		foreach ($locations as $location) {
-
+    			if ($counter > 519 && $counter < 700) {
     			$data = $this->buildArrayForDatas($location);
     			// we build new location
     			$newLocation = new \MU\YourCityModule\Entity\LocationEntity();
     			
-    			$newLocation->setWorkflowState('approved');    			
+    			if ($data[0]['closedForEver']) {
+    				$newLocation->setWorkflowState('suspended');
+    			} else {
+    			    $newLocation->setWorkflowState('approved');    
+    			}
     			$newLocation->setName($data[0]['name']);
     			$newLocation->setLetterForOrder($data[0]['letterForOrder']);   			
-    			$newLocation->setDescription($data[0]['description']);
+    			$newLocation->setDescription(NULL);
     			$newLocation->setDescription2(NULL);
     			$newLocation->setDescriptionForGoogle(NULL);
-    			$newLocation->setSlogan($data[0]['slogan']);
+    			$newLocation->setSlogan(NULL);
+    			$newLocation->setKeywordsForLocation(NULL);
     			
     			$newLocation->setStreet($data[0]['street']);
     			$newLocation->setNumberOfStreet($data[0]['numberOfStreet']);
@@ -174,28 +178,29 @@ abstract class AbstractImportController extends AbstractController
     			
     			$newLocation->setSlug($data[0]['slug']);
     			
-    			/*$modelHelper = $this->get('mu_yourcity_module.model_helper');
+    			$modelHelper = $this->get('mu_yourcity_module.model_helper');
     			$branchRespository = $modelHelper->getRepository('Branch');
-    			$partRepository = $modelHelper->getRepository('Part');
+    			/*$partRepository = $modelHelper->getRepository('Part');*/
     			
     			if ($data[0]['branchId'] && $data[0]['branchId'] > 0) {
     			$branches[] = $branchRespository->find($data[0]['branchId']);
     			$newLocation->setBranches($branches);
     			}
-    			if ($data[0]['partId'] && $data[0]['partId'] > 0) {    			
+    			/*if ($data[0]['partId'] && $data[0]['partId'] > 0) {    			
     			$parts[] = $partRepository->find($data[0]['partId']);
     			$newLocation->setParts($parts);
     			}*/
     			$newLocation->setPartOfCity($data[0]['partOfCity']);
-    			$newLocation->setBranchOfLocation($data[0]['branchOfLocation']);
-    			
-    			
+    			/*$newLocation->setBranchOfLocation($data[0]['branchOfLocation']);*/ 			
     			
     			unset($branches);
-    			unset($parts);
+    			//unset($parts);
     			
     			$entityManager->persist($newLocation);
     			$entityManager->flush();
+    			
+    			}
+    			$counter = $counter + 1;
     		}
     	}
     	else {
@@ -486,6 +491,8 @@ abstract class AbstractImportController extends AbstractController
     			$partId = 88;
     		}
     		
+    		$result['field15'] = utf8_encode($result['field15']);
+    		
     		$branchId = 0;
     		
     		// branch handling
@@ -634,10 +641,10 @@ abstract class AbstractImportController extends AbstractController
     			$longitude = '';
     		}
     		
-    		if (isset($result['187'])) {
-    			$closedForEver = $result['187'];
+    		if (isset($result['187']) == 1) {
+    			$closedForEver = true;
     		} else {
-    			$closedForEver = 0;
+    			$closedForEver = false;
     		}
     		if (isset($result['199'])) {
     			$openingHours = $result['199'];
@@ -646,15 +653,15 @@ abstract class AbstractImportController extends AbstractController
     		}
     		
     		$data[0] = array(
-    				'id' => $result['id'],
     				'workflowState' => 'approved',
     				'name' => $result['field9'],
     				'letterForOrder' => $result['field107'],
-    				'slogan' => $result['field106'],
+    				'slogan' => '',
+    				'keywordsForLocation' => NULL,
     				'logoOfYourLocationMeta' => 'a:0:{}',
     				'logoOfYourLocation' => NULL,
     				'descriptionForGoogle' => '',
-    				'description' => $result['field10'],
+    				'description' => '',
     		        'description2' => '',
     		        'imageOfLocationMeta' => 'a:0:{}',
     		        'imageOfLocation' => NULL,
@@ -719,8 +726,7 @@ abstract class AbstractImportController extends AbstractController
     				'admin2_id' => NULL,
     				'createdBy_id' => $result['cr_uid'],
     				'updatedBy_id' => $result['lu_uid'],
-    				'partOfCity' => $result['field15'],
-    				'branchOfLocation' => $result['field16']
+    				'partOfCity' => $result['field15']
     				)
     		        		;
     	
