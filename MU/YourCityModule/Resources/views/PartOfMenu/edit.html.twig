@@ -62,6 +62,10 @@
             {{ form_row(form.myLocation) }}
         </fieldset>
         
+        {{ include(
+            '@MUYourCityModule/MenuOfLocation/includeSelectOne.html.twig',
+            { group: 'partofmenu', alias: 'menuOfLocation', aliasReverse: 'partsOfMenu', mandatory: false, idPrefix: 'yourcityPartOfMenu_MenuOfLocation', linkingItem: partofmenu, displayMode: 'choices' }
+        ) }}
         {% if mode != 'create' %}
             {{ include('@MUYourCityModule/Helper/includeStandardFieldsEdit.html.twig', { obj: partofmenu }) }}
         {% endif %}
