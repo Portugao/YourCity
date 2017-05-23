@@ -38,9 +38,9 @@
                             <fieldset>
                                 <legend>{{ language|languageName|safeHtml }}</legend>
                                 {% if language == app.request.locale %}
+                                    {{ form_row(form.slogan) }}
                                     {{ form_row(form.keywordsForLocation) }}
                                     {{ form_row(form.descriptionForGoogle) }}
-                                    {{ form_row(form.slogan) }}
                                     {{ form_row(form.description) }}
                                     {{ form_row(form.description2) }}
                                 {% else %}
@@ -55,9 +55,9 @@
             {% set language = app.request.locale %}
             <fieldset>
                 <legend>{{ language|languageName|safeHtml }}</legend>
+                {{ form_row(form.slogan) }}
                 {{ form_row(form.keywordsForLocation) }}
                 {{ form_row(form.descriptionForGoogle) }}
-                {{ form_row(form.slogan) }}
                 {{ form_row(form.description) }}
                 {{ form_row(form.description2) }}
             </fieldset>
@@ -72,6 +72,7 @@
             {{ form_row(form.numberOfStreet) }}
             {{ form_row(form.zipCode) }}
             {{ form_row(form.city) }}
+            {{ form_row(form.partOfCity) }}
             {{ form_row(form.telefon) }}
             {{ form_row(form.mobil) }}
             {{ form_row(form.homepage) }}
@@ -117,10 +118,6 @@
             {{ form_row(form.endOnSunday) }}
             {{ form_row(form.start2OnSunday) }}
             {{ form_row(form.end2OnSunday) }}
-            {{ form_row(form.partOfCity) }}
-            {{ form_row(form.branchOfLocation) }}
-            {{ form_row(form.servicesOfLocation) }}
-            {{ form_row(form.specialsOfLocation) }}
             {{ form_row(form.firstImage) }}
             {{ form_row(form.secondImage) }}
             {{ form_row(form.thirdImage) }}
@@ -142,6 +139,18 @@
             </div>
         </fieldset>
         
+        {{ include(
+            '@MUYourCityModule/Branch/includeSelectMany.html.twig',
+            { group: 'location', alias: 'branches', aliasReverse: 'locations', mandatory: false, idPrefix: 'yourcityLocation_Branches', linkingItem: location, displayMode: 'choices' }
+        ) }}
+        {{ include(
+            '@MUYourCityModule/ServiceOfLocation/includeSelectMany.html.twig',
+            { group: 'location', alias: 'servicesOfLocation', aliasReverse: 'locations', mandatory: false, idPrefix: 'yourcityLocation_ServicesOfLocation', linkingItem: location, displayMode: 'choices' }
+        ) }}
+        {{ include(
+            '@MUYourCityModule/SpecialOfLocation/includeSelectMany.html.twig',
+            { group: 'location', alias: 'specialsOfLocation', aliasReverse: 'locations', mandatory: false, idPrefix: 'yourcityLocation_SpecialsOfLocation', linkingItem: location, displayMode: 'choices' }
+        ) }}
         {% if mode != 'create' %}
             {{ include('@MUYourCityModule/Helper/includeStandardFieldsEdit.html.twig', { obj: location }) }}
         {% endif %}
