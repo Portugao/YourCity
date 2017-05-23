@@ -50,6 +50,7 @@ class CollectionFilterHelper extends AbstractCollectionFilterHelper
      */
     protected function applyDefaultFiltersForOffer(QueryBuilder $qb, $parameters = [])
     {
+        $routeName = $this->request->get('_route');
         $isAdminArea = false !== strpos($routeName, 'muyourcitymodule_offer_admin');
         if ($isAdminArea) {
             return $qb;
@@ -72,7 +73,7 @@ class CollectionFilterHelper extends AbstractCollectionFilterHelper
         $userId = $this->currentUserApi->isLoggedIn() ? $this->currentUserApi->get('uid') : UsersConstant::USER_ID_ANONYMOUS;
         $userGroup = \UserUtil::getGroupListForUser($userId);
         $userGroupArray = explode(',', $userGroup);
-        if (!in_array('2', $userGroupArray)) {
+        if (!in_array('2', $userGroupArray) && (!in_array('3', $userGroupArray))) {
         $startDate = $this->request->query->get('inViewFrom', date('Y-m-d H:i:s'));
         $qb->andWhere('(tbl.inViewFrom <= :startDate OR tbl.inViewFrom IS NULL)')
            ->setParameter('startDate', $startDate);
@@ -80,6 +81,10 @@ class CollectionFilterHelper extends AbstractCollectionFilterHelper
         $endDate = $this->request->query->get('inViewUntil', date('Y-m-d H:i:s'));
         $qb->andWhere('(tbl.inViewUntil >= :endDate OR tbl.inViewUntil IS NULL)')
            ->setParameter('endDate', $endDate);
+        } else {
+        	if (in_array('3', $userGroupArray)) {
+        		$qb->andWhere();
+        	}
         }
     
         return $qb;

@@ -61,7 +61,7 @@ class ListEntriesHelper extends AbstractListEntriesHelper
      *
      * @return array Array with desired list entries
      */
-    public function getBranchOfLocationEntriesForLocation()
+    /*public function getBranchOfLocationEntriesForLocation()
     {
     	$branchRespository = $this->entityFactory->getRepository('branch');
     	$branches = $branchRespository->findAll();
@@ -77,7 +77,7 @@ class ListEntriesHelper extends AbstractListEntriesHelper
         }
     
         return $states;
-    }
+    }*/
     
     /**
      * Get 'my location' list entries.
@@ -86,8 +86,43 @@ class ListEntriesHelper extends AbstractListEntriesHelper
      */
     public function getMyLocationEntriesForEvent()
     {
-        $states = [];
         $states = $this->getLocations();
+    
+    	return $states;
+    }
+    
+    /**
+     * Get 'my location' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getMyLocationEntriesForMenuOfLocation()
+    {
+        $states = $this->getLocations();
+    
+    	return $states;
+    }
+    
+    /**
+     * Get 'my location' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getMyLocationEntriesForPartOfMenu()
+    {
+        $states = $this->getLocations();
+    
+        return $states;
+    }
+    
+    /**
+     * Get 'my location' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getMyLocationEntriesForDish()
+    {
+    	$states = $this->getLocations();
     
     	return $states;
     }
@@ -99,8 +134,7 @@ class ListEntriesHelper extends AbstractListEntriesHelper
      */
     public function getMyLocationEntriesForOffer()
     {
-    	$states = [];
-    	$states[] = $this->getLocations();
+    	$states = $this->getLocations();
     
     	return $states;
     }
@@ -112,54 +146,7 @@ class ListEntriesHelper extends AbstractListEntriesHelper
      */
     public function getMyLocationEntriesForProduct()
     {
-    	$states = [];
-    	$states[] = $this->getLocations();
-    	return $states;
-    }
-    
-    /**
-     * Get 'services of location' list entries.
-     *
-     * @return array Array with desired list entries
-     */
-    public function getServicesOfLocationEntriesForLocation()
-    {
-    	$states = [];
-    	$serviceRepository = $this->entityFactory->getRepository('serviceOfLocation');
-    	$services = $serviceRepository->findAll();
-    	foreach ($services as $service) {
-    		$states[] = [
-    				'value'   => $service['name'],
-    				'text'    => $service['name'],
-    				'title'   => '',
-    				'image'   => '',
-    				'default' => false
-    		];
-    	}
-    
-    	return $states;
-    }
-    
-    /**
-     * Get 'specials of location' list entries.
-     *
-     * @return array Array with desired list entries
-     */
-    public function getSpecialsOfLocationEntriesForLocation()
-    {
-    	$states = [];
-    	$specialRepository = $this->entityFactory->getRepository('specialOfLocation');
-    	$specials = $specialRepository->findAll();
-    	foreach ($specials as $special) {
-    		$states[] = [
-    				'value'   => $special['name'],
-    				'text'    => $special['name'],
-    				'title'   => '',
-    				'image'   => '',
-    				'default' => false
-    		];
-    	}    	
-    
+    	$states = $this->getLocations();
     	return $states;
     }
     
@@ -170,7 +157,8 @@ class ListEntriesHelper extends AbstractListEntriesHelper
      */
     public function getLocations()
     {
-    	$uid = $this->controllerHelper->getUid();
+    	//$uid = $this->controllerHelper->getUid();
+    	$uid = 2;
     	$locationRepository = $this->entityFactory->getRepository('location');
     	if ($uid != 2) {
     	$criteria = array('owner' => $uid);
@@ -208,11 +196,11 @@ class ListEntriesHelper extends AbstractListEntriesHelper
     		];
     	}
     	} else {
-    		$locations = $locationRepository->findAll();
+    		$locations = $locationRepository->findBy(array(), array('name' => 'ASC'));
     		foreach ($locations as $location) {
     			$states[] = [
     					'value'   => $location['id'],
-    					'text'    => $location['name'],
+    					'text'    => $location['name'] . ' - ' . $location['street'],
     					'title'   => '',
     					'image'   => '',
     					'default' => false

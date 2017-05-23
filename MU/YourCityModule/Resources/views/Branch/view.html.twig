@@ -78,6 +78,7 @@
             </tbody>
         </table>
         </div>
+        {% endif %}
         
         {% if all != 1 and pager|default %}
             {{ pager({ rowcount: pager.amountOfItems, limit: pager.itemsPerPage, display: 'page', route: 'muyourcitymodule_branch_' ~ routeArea ~ 'view'}) }}
@@ -97,7 +98,6 @@
             </fieldset>
         </div>
     </form>
-    {% endif %}
     {% endif %}
 
     {{ block('display_hooks') }}

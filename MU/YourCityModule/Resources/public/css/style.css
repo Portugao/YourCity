@@ -168,6 +168,11 @@ div.muyourcitymodule-view .avatar img {
 	font-size: 1.2em;
 }
 
+.list-group-item-display {
+	border: none;
+	list-style-type: none
+}
+
 /**********ABO**************/
 .abonnement-edit {
 	position: absolute;
@@ -210,7 +215,7 @@ div.muyourcitymodule-view .avatar img {
 }
 
 .event-view-box-name {
-	font-size: 2em;
+	font-size: 1.4em;
 }
 
 .event-view-box-from {
@@ -227,6 +232,10 @@ div.muyourcitymodule-view .avatar img {
 
 .locationClosed {
 	color: #ff0000;
+}
+
+.locationForEver {
+	color: #940b03;
 }
 
 .locationOpen {
@@ -325,7 +334,7 @@ div.muyourcitymodule-view .avatar img {
 }
 
 .product {
-	background: #f8f8f8;
+	
 }
 
 #branch-user-list {
@@ -440,7 +449,13 @@ div.muyourcitymodule-view .avatar img {
 }
 
 .product-list-title {
-	font-size: 2em;
+	font-size: 1.4em;
+}
+
+/***************SERVICE****************/
+
+.service-list {
+	font-size: 1.4em;
 }
 
 .slider {

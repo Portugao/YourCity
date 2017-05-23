@@ -21,7 +21,7 @@
                         <a href="{{ product.imageOfProductUrl }}" title="{{ product|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if product.imageOfProductMeta.isImage %} class="image-link"{% endif %}>
             {% if product.imageOfProductMeta.isImage %}
                 {% set thumbOptions = attribute(thumbRuntimeOptions, 'productImageOfProduct') %}
-                <img src="{{ product.imageOfProduct.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ product|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail img-responsive" />
+                <img src="{{ product.imageOfProduct.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ product|muyourcitymodule_formattedTitle|e('html_attr') }}" class="img-responsive" />
             {% else %}
                 {{ __('Download') }} ({{ product.imageOfProductMeta.size|muyourcitymodule_fileSize(product.imageOfProduct.getPathname(), false, false) }})
             {% endif %}
@@ -29,31 +29,32 @@
             {% else %}&nbsp;{% endif %}
         {% endif %}
     </div>
-    <dl>
+
         {#% if product.name is not empty %}
             <dt>{{ __('Name') }}</dt>
             <dd>{{ product.name }}</dd>
         {% endif %#}
         {% if product.description is not empty %}
-            <dt>{{ __('Description') }}</dt>
-            <dd>{{ product.description|safeHtml }}</dd>
+            {{ __('Description') }}
+            {{ product.description|safeHtml }}<br />
         {% endif %}
         {% if product.kindOfProduct is not empty %}
-            <dt>{{ __('Kind of product') }}</dt>
-            <dd>{{ product.kindOfProduct|muyourcitymodule_listEntry('product', 'kindOfProduct') }}</dd>
+            <h3>{{ __('Kind of product') }}</h3>
+            {{ product.kindOfProduct|muyourcitymodule_listEntry('product', 'kindOfProduct') }}<br />
         {% endif %}
-        <h3>{{ __('Availability today') }}</h3>
+        <h3>{{ __('Availability') }}</h3>
+        <h4>{{ __('Availability today') }}</h4>
         {% if product.today is not empty %}
-            <dt>{{ __('Today') }}</dt>
-            <dd>{{ product.today|muyourcitymodule_listEntry('product', 'today') }}</dd>
+            {{ __('Today') }}
+            {{ product.today|muyourcitymodule_listEntry('product', 'today') }}<br />
         {% else %}
-            {{ __('No information about the availability today.') }}
+            {{ __('No information about the availability today.') }}<br />
         {% endif %}
-        <h3>{{ __('General availability on weekdays') }}</h3>
+        <h4>{{ __('General availability on weekdays') }}</h4>
         {% if product.monday == true or product.tuesday == true or product.wednesday == true or product.thursday == true or product.friday == true or product.saturday == true  or product.sunday == true %}
         {% if product.monday is not empty %}
-            <dt>{{ __('Monday') }}</dt>
-            <dd>{% set itemid = product|muyourcitymodule_formattedTitle|default(__('Product')) %}
+            {{ __('Monday') }}
+            {% set itemid = product|muyourcitymodule_formattedTitle|default(__('Product')) %}
             <a id="toggleMonday{{ itemid }}" href="javascript:void(0);" class="muyourcity-ajax-toggle hidden" data-object-type="product" data-field-name="monday" data-item-id="{{ itemid }}">
                 <i class="fa fa-check{% if not product.monday %} hidden{% endif %}" id="yesMonday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
                 <i class="fa fa-times{% if product.monday %} hidden{% endif %}" id="noMonday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
@@ -68,8 +69,8 @@
             </dd>
         {% endif %}
         {% if product.tuesday is not empty %}
-            <dt>{{ __('Tuesday') }}</dt>
-            <dd>{% set itemid = product|muyourcitymodule_formattedTitle|default(__('Product')) %}
+            {{ __('Tuesday') }}</dt>
+            {% set itemid = product|muyourcitymodule_formattedTitle|default(__('Product')) %}
             <a id="toggleTuesday{{ itemid }}" href="javascript:void(0);" class="muyourcity-ajax-toggle hidden" data-object-type="product" data-field-name="tuesday" data-item-id="{{ itemid }}">
                 <i class="fa fa-check{% if not product.tuesday %} hidden{% endif %}" id="yesTuesday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
                 <i class="fa fa-times{% if product.tuesday %} hidden{% endif %}" id="noTuesday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
@@ -84,8 +85,8 @@
             </dd>
         {% endif %}
         {% if product.wednesday is not empty %}
-            <dt>{{ __('Wednesday') }}</dt>
-            <dd>{% set itemid = product|muyourcitymodule_formattedTitle|default(__('Product')) %}
+            {{ __('Wednesday') }}
+            {% set itemid = product|muyourcitymodule_formattedTitle|default(__('Product')) %}
             <a id="toggleWednesday{{ itemid }}" href="javascript:void(0);" class="muyourcity-ajax-toggle hidden" data-object-type="product" data-field-name="wednesday" data-item-id="{{ itemid }}">
                 <i class="fa fa-check{% if not product.wednesday %} hidden{% endif %}" id="yesWednesday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
                 <i class="fa fa-times{% if product.wednesday %} hidden{% endif %}" id="noWednesday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
@@ -97,11 +98,10 @@
                     <i class="fa fa-times" title="{{ __('No') }}"></i>
                 {% endif %}
             </div></noscript>
-            </dd>
         {% endif %}
         {% if product.thursday is not empty %}
-            <dt>{{ __('Thursday') }}</dt>
-            <dd>{% set itemid = product|muyourcitymodule_formattedTitle|default(__('Product')) %}
+            {{ __('Thursday') }}
+            {% set itemid = product|muyourcitymodule_formattedTitle|default(__('Product')) %}
             <a id="toggleThursday{{ itemid }}" href="javascript:void(0);" class="muyourcity-ajax-toggle hidden" data-object-type="product" data-field-name="thursday" data-item-id="{{ itemid }}">
                 <i class="fa fa-check{% if not product.thursday %} hidden{% endif %}" id="yesThursday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
                 <i class="fa fa-times{% if product.thursday %} hidden{% endif %}" id="noThursday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
@@ -113,11 +113,10 @@
                     <i class="fa fa-times" title="{{ __('No') }}"></i>
                 {% endif %}
             </div></noscript>
-            </dd>
         {% endif %}
         {% if product.friday is not empty %}
-            <dt>{{ __('Friday') }}</dt>
-            <dd>{% set itemid = product|muyourcitymodule_formattedTitle|default(__('Product')) %}
+            {{ __('Friday') }}
+            {% set itemid = product|muyourcitymodule_formattedTitle|default(__('Product')) %}
             <a id="toggleFriday{{ itemid }}" href="javascript:void(0);" class="muyourcity-ajax-toggle hidden" data-object-type="product" data-field-name="friday" data-item-id="{{ itemid }}">
                 <i class="fa fa-check{% if not product.friday %} hidden{% endif %}" id="yesFriday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
                 <i class="fa fa-times{% if product.friday %} hidden{% endif %}" id="noFriday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
@@ -129,11 +128,10 @@
                     <i class="fa fa-times" title="{{ __('No') }}"></i>
                 {% endif %}
             </div></noscript>
-            </dd>
         {% endif %}
         {% if product.saturday is not empty %}
-            <dt>{{ __('Saturday') }}</dt>
-            <dd>{% set itemid = product|muyourcitymodule_formattedTitle|default(__('Product')) %}
+            {{ __('Saturday') }}
+            {% set itemid = product|muyourcitymodule_formattedTitle|default(__('Product')) %}
             <a id="toggleSaturday{{ itemid }}" href="javascript:void(0);" class="muyourcity-ajax-toggle hidden" data-object-type="product" data-field-name="saturday" data-item-id="{{ itemid }}">
                 <i class="fa fa-check{% if not product.saturday %} hidden{% endif %}" id="yesSaturday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
                 <i class="fa fa-times{% if product.saturday %} hidden{% endif %}" id="noSaturday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
@@ -145,11 +143,10 @@
                     <i class="fa fa-times" title="{{ __('No') }}"></i>
                 {% endif %}
             </div></noscript>
-            </dd>
         {% endif %}
         {% if product.sunday is not empty %}
-            <dt>{{ __('Sunday') }}</dt>
-            <dd>{% set itemid = product|muyourcitymodule_formattedTitle|default(__('Product')) %}
+            {{ __('Sunday') }}</dt>
+            {% set itemid = product|muyourcitymodule_formattedTitle|default(__('Product')) %}
             <a id="toggleSunday{{ itemid }}" href="javascript:void(0);" class="muyourcity-ajax-toggle hidden" data-object-type="product" data-field-name="sunday" data-item-id="{{ itemid }}">
                 <i class="fa fa-check{% if not product.sunday %} hidden{% endif %}" id="yesSunday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
                 <i class="fa fa-times{% if product.sunday %} hidden{% endif %}" id="noSunday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
@@ -161,14 +158,15 @@
                     <i class="fa fa-times" title="{{ __('No') }}"></i>
                 {% endif %}
             </div></noscript>
-            </dd>
         {% endif %}
         {% else %}
            {{ __('No informations available') }}
         {% endif %}
-        {% if product.priceOfProduct is not empty %}
-            <h3>{{ __('Price of product') }}</h3>
-            <dd>{{ product.priceOfProduct|localizedcurrency('EUR') }}</dd>
+        <h3>{{ __('Price of product') }}</h3>
+        {% if product.priceOfProduct != 0 %}
+            {{ product.priceOfProduct|localizedcurrency('EUR') }}
+        {% else %}
+        {{ __('No price information') }}
         {% endif %}
         {% if product.location|default %}
             <dt>{{ __('Location') }}</dt>

@@ -19,8 +19,6 @@ use Zikula\Core\RouteUrl;
 use Zikula\UsersModule\Entity\UserEntity;
 use DateUtil;
 use Doctrine\Common\Collections\Criteria;
-use DateTime;
-
 
 /**
  * Helper implementation class for controller layer methods.
@@ -54,13 +52,37 @@ class ControllerHelper extends AbstractControllerHelper
     	$entity = $templateParameters[$objectType];
     	// we get a repository for locations
     	$locationRepository = $this->modelHelper->getRepository('location');
+    	$eventRepository = $this->modelHelper->getRepository('event');
+    	$menuRepository = $this->modelHelper->getRepository('menuOfLocation');
+    	$offerRepository = $this->modelHelper->getRepository('offer');
+    	$productRepository = $this->modelHelper->getRepository('product');
     	
     	if ($objectType == 'part') {   		
-    		$criteria = array('partOfCity' => $entity['name']);   		
-    		$locationsForPart = $locationRepository->findBy($criteria);
+    		//$criteria = array('partOfCity' => $entity['name']);   		
+    		$locationsForPart = $locationRepository->findBy(array('partOfCity' => $entity['name']), array('name' => 'ASC'));
     	}
     	
-    	if ($objectType == 'branch') {
+    	if ($objectType == 'location') {
+    		//$criteria = array('partOfCity' => $entity['name']);
+    		$events = $eventRepository->findBy(array('id' => $entity['id']), array('name' => 'ASC'));
+    		if ($events) {
+    			$templateParameters[$objectType]['events'] = $events;
+    		}
+    		$menus = $menuRepository->findBy(array('id' => $entity['id']), array('name' => 'ASC'));
+    		if ($menus) {
+    			$templateParameters[$objectType]['menus'] = $menus;
+    		}
+    		$offers = $offerRepository->findBy(array('id' => $entity['id']), array('name' => 'ASC'));
+    		if ($offers) {
+    			$templateParameters[$objectType]['offers'] = $offers;
+    		}
+    		$products = $productRepository->findBy(array('id' => $entity['id']), array('name' => 'ASC'));
+    		if ($products) {
+    			$templateParameters[$objectType]['products'] = $products;
+    		}
+    	}
+    	
+    	/*if ($objectType == 'branch') {
     		$criteria = new \Doctrine\Common\Collections\Criteria();
     		$criteria
     		->orWhere($criteria->expr()->contains('branchOfLocation', '###' . $entity['name'] . '###'));
@@ -79,7 +101,7 @@ class ControllerHelper extends AbstractControllerHelper
     		$criteria
     		->orWhere($criteria->expr()->contains('specialsOfLocation', '###' . $entity['name'] . '###'));
     		$locationsWithSpecial = $locationRepository->matching($criteria);
-    	}
+    	}*/
     	
     	$actualDay = $this->getActualDay();
     	
@@ -122,19 +144,19 @@ class ControllerHelper extends AbstractControllerHelper
     			$relevantLocations = $locationsForPart;
     		}
     		if ($objectType == 'branch') {
-    			$relevantLocations = $locationsForBranch;
+    			$relevantLocations = $entity['locations'];
     		}
     		if ($objectType == 'serviceOfLocation') {
-    			$relevantLocations = $locationsWithService;
+    			$relevantLocations = $entity['locations'];
     		}
     		if ($objectType == 'specialOfLocation') {
-    			$relevantLocations = $locationsWithSpecial;
+    			$relevantLocations = $entity['locations'];
     		}
     		foreach ($relevantLocations as $location) {
     			$location['showHours'] = 'none';
     			if ($location['closedForEver'] == 1) {
     				$location['state'] = 'closedForEver';
-    				$location['showHours'] = $this->__('Closed today');
+    				$location['showHours'] = $this->__('Closed forever');
     				$locations[] = $location;    				
     			} else {
     				if ($location['agreement'] == 1) {
@@ -158,12 +180,12 @@ class ControllerHelper extends AbstractControllerHelper
     				}
     			}
     		}
-    		if ($objectType != 'part' && $objectType != 'branch' && $objectType != 'serviceOfLocation' && $objectType != 'specialOfLocation') {
+    		if ($objectType != 'part') {
     		foreach ($templateParameters[$objectType]['locations'] as $i => $value) {
     			unset($templateParameters[$objectType]['locations'][$i]);
     		}
     		}
-    		if ($objectType != 'part' && $objectType != 'branch' && $objectType != 'serviceOfLocation' && $objectType != 'specialOfLocation') {
+    		if ($objectType != 'part') {
     		$templateParameters[$objectType]['locations'] = $locations;
     		} else {
     			$templateParameters['locations'] = $locations;
@@ -285,7 +307,38 @@ class ControllerHelper extends AbstractControllerHelper
     	$templateParameters['sort'] = $sort;
     	$templateParameters['sortdir'] = $sortdir;
     	$templateParameters['items'] = $entities;
+    	
+    	if ($objectType == 'abonnement') {
+    		$abos = '';
+    		$eventRepository = $this->entityFactory->getRepository('event');
+    		$menuRepository = $this->entityFactory->getRepository('menuOfLocation');
+    		$offerRepository = $this->entityFactory->getRepository('offer');
+    		$productRepository = $this->entityFactory->getRepository('product');
+    		foreach ($entities as $entity) {
+    		$events = $eventRepository->findBy(array('myLocation' => $entity['location']['id']), array('name' => 'ASC'));
+    		if ($events) {
+    		$entity['location']['events'] = $events;
+    		}
+    		$menus = $menuRepository->findBy(array('myLocation' => $entity['location']['id']), array('name' => 'ASC'));
+    		if ($menus) {
+    		$entity['location']['menus'] = $menus;
+    		}
+    	    $offers = $offerRepository->findBy(array('myLocation' => $entity['location']['id']), array('name' => 'ASC'));
+    	    if ($offers) {
+    	    $entity['location']['offers'] = $offers;
+    	    }
+    		$products = $productRepository->findBy(array('myLocation' => $entity['location']['id']), array('name' => 'ASC'));
+    		if ($products) {
+    		$entity['location']['products'] = $products;
+    		}
+    		$abos[] = $entity;
+    	    }
     
+    	if ($abos && is_array($abos)) {
+    	unset($templateParameters['items']);
+    	$templateParameters['items'] = $abos;
+    	}
+    	}
     
     	if (true === $supportsHooks) {
     		// build RouteUrl instance for display hooks
@@ -459,7 +512,7 @@ class ControllerHelper extends AbstractControllerHelper
     	if ($start2Time != '') {
     		if ($start2Time < $actualTime) {
     			if ($end2Time != '') {
-    				if ($end2Time >= $actualTime || $end2Time == '00:00' || ($end2Time > '00:00' && $end2Time < $nextStartTime && $actualTime > $start2Time)) {
+    				if ($end2Time >= $actualTime || $end2Time == '00:00' || ($end2Time > '00:00' && $end2Time < $nextStartTime && $actualTime > $start2Time) || ($startTime == '00:00' && $startTime == '00:00')) {
     					    $state = 'open';
     				} else {
     					    $state = 'closed';
@@ -477,7 +530,7 @@ class ControllerHelper extends AbstractControllerHelper
     	}
     }
     	
-    	if ($state == 'open' || $state == 'openEnd' || $state == 'closed') {
+    	if ($state == 'open' || $state == 'openEnd' || $state == 'closed' || ($end2Time > '00:00' && $end2Time < $nextStartTime && $actualTime > $start2Time) || ($startTime == '00:00' && $startTime == '00:00')) {
     		$hours = $startTime;
     		if ($endTime != '') {
     			$hours .= ' - ' . $endTime;

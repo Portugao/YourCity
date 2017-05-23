@@ -41,10 +41,10 @@
         <br style="clear: both;" />
 
     
-    {% if locations|default %}
+    {% if branch.locations|default %}
         {{ include(
             '@MUYourCityModule/Location/includeDisplayItemListManyOwn.html.twig',
-            { items: locations }
+            { items: branch.locations }
         ) }}
     {% else %}
         {{ __('No locations in this branch') }}
