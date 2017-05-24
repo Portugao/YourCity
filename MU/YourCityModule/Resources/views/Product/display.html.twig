@@ -35,7 +35,6 @@
             <dd>{{ product.name }}</dd>
         {% endif %#}
         {% if product.description is not empty %}
-            {{ __('Description') }}
             {{ product.description|safeHtml }}<br />
         {% endif %}
         {% if product.kindOfProduct is not empty %}
