@@ -202,6 +202,14 @@ abstract class AbstractProductEntity extends EntityAccess implements Translatabl
     protected $priceOfProduct = 0.00;
     
     /**
+     * @ORM\Column(length=255)
+     * @Assert\NotNull()
+     * @YourCityAssert\ListEntry(entityName="product", propertyName="priceAdditional", multiple=false)
+     * @var string $priceAdditional
+     */
+    protected $priceAdditional = '';
+    
+    /**
      * If you have more than one location, select the correct one!
      * @ORM\Column(length=255)
      * @Assert\NotBlank()
@@ -687,6 +695,30 @@ abstract class AbstractProductEntity extends EntityAccess implements Translatabl
     {
         if (floatval($this->priceOfProduct) !== floatval($priceOfProduct)) {
             $this->priceOfProduct = floatval($priceOfProduct);
+        }
+    }
+    
+    /**
+     * Returns the price additional.
+     *
+     * @return string
+     */
+    public function getPriceAdditional()
+    {
+        return $this->priceAdditional;
+    }
+    
+    /**
+     * Sets the price additional.
+     *
+     * @param string $priceAdditional
+     *
+     * @return void
+     */
+    public function setPriceAdditional($priceAdditional)
+    {
+        if ($this->priceAdditional !== $priceAdditional) {
+            $this->priceAdditional = isset($priceAdditional) ? $priceAdditional : '';
         }
     }
     

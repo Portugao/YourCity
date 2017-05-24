@@ -342,6 +342,29 @@ abstract class AbstractProductType extends AbstractType
             'scale' => 2
         ]);
         
+        $listEntries = $this->listHelper->getEntries('product', 'priceAdditional');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('priceAdditional', ChoiceType::class, [
+            'label' => $this->__('Price additional') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('Choose the price additional')
+            ],
+            'required' => false,
+            'placeholder' => $this->__('Choose an option'),
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => false,
+            'expanded' => false
+        ]);
+        
         $listEntries = $this->listHelper->getEntries('product', 'myLocation');
         $choices = [];
         $choiceAttributes = [];

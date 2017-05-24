@@ -224,6 +224,9 @@ abstract class AbstractListEntriesHelper
                     case 'today':
                         $result = false;
                         break;
+                    case 'priceAdditional':
+                        $result = false;
+                        break;
                     case 'myLocation':
                         $result = false;
                         break;
@@ -365,6 +368,9 @@ abstract class AbstractListEntriesHelper
                         break;
                     case 'today':
                         $entries = $this->getTodayEntriesForProduct();
+                        break;
+                    case 'priceAdditional':
+                        $entries = $this->getPriceAdditionalEntriesForProduct();
                         break;
                     case 'myLocation':
                         $entries = $this->getMyLocationEntriesForProduct();
@@ -1064,6 +1070,46 @@ abstract class AbstractListEntriesHelper
         $states[] = [
             'value'   => '>50',
             'text'    => $this->__('More than fifty'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
+     * Get 'price additional' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getPriceAdditionalEntriesForProduct()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => 'permonth',
+            'text'    => $this->__('Per month'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => 'perweek',
+            'text'    => $this->__('Per week'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => 'perday',
+            'text'    => $this->__('Per day'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => 'perkilo',
+            'text'    => $this->__('Per kilo'),
             'title'   => '',
             'image'   => '',
             'default' => false

@@ -152,6 +152,7 @@ abstract class AbstractProductController extends AbstractController
             new Column('saturday'),
             new Column('sunday'),
             new Column('priceOfProduct'),
+            new Column('priceAdditional'),
             new Column('myLocation'),
             new Column('createdBy'),
             new Column('createdDate'),

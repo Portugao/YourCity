@@ -258,6 +258,7 @@ abstract class AbstractSearchHelper implements SearchableInterface
                     $whereArray[] = 'tbl.kindOfProduct';
                     $whereArray[] = 'tbl.imageOfProduct';
                     $whereArray[] = 'tbl.today';
+                    $whereArray[] = 'tbl.priceAdditional';
                     $whereArray[] = 'tbl.myLocation';
                     break;
                 case 'specialOfLocation':

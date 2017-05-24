@@ -15,6 +15,7 @@
     <saturday>{% if not product.saturday %}0{% else %}1{% endif %}</saturday>
     <sunday>{% if not product.sunday %}0{% else %}1{% endif %}</sunday>
     <priceOfProduct>{{ product.priceOfProduct|localizedcurrency('EUR') }}</priceOfProduct>
+    <priceAdditional>{{ product.priceAdditional|muyourcitymodule_listEntry('product', 'priceAdditional') }}</priceAdditional>
     <myLocation>{{ product.myLocation|muyourcitymodule_listEntry('product', 'myLocation') }}</myLocation>
     <workflowState>{{ product.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
 </product>

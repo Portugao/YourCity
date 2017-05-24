@@ -32,6 +32,7 @@
                     <option value="saturday"{if $sort eq 'saturday'} selected="selected"{/if}>{gt text='Saturday'}</option>
                     <option value="sunday"{if $sort eq 'sunday'} selected="selected"{/if}>{gt text='Sunday'}</option>
                     <option value="priceOfProduct"{if $sort eq 'priceOfProduct'} selected="selected"{/if}>{gt text='Price of product'}</option>
+                    <option value="priceAdditional"{if $sort eq 'priceAdditional'} selected="selected"{/if}>{gt text='Price additional'}</option>
                     <option value="myLocation"{if $sort eq 'myLocation'} selected="selected"{/if}>{gt text='My location'}</option>
                     <option value="createdDate"{if $sort eq 'createdDate'} selected="selected"{/if}>{gt text='Creation date'}</option>
                     <option value="createdBy"{if $sort eq 'createdBy'} selected="selected"{/if}>{gt text='Creator'}</option>

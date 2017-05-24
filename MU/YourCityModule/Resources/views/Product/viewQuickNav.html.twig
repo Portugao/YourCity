@@ -32,6 +32,13 @@
             {% if todayFilter is defined and todayFilter != true %}
                 </div>
             {% endif %}
+            {% if priceAdditionalFilter is defined and priceAdditionalFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.priceAdditional) }}
+            {% if priceAdditionalFilter is defined and priceAdditionalFilter != true %}
+                </div>
+            {% endif %}
             {% if myLocationFilter is defined and myLocationFilter != true %}
                 <div class="hidden">
             {% endif %}

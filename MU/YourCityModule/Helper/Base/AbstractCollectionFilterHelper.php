@@ -435,6 +435,7 @@ abstract class AbstractCollectionFilterHelper
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
         $parameters['kindOfProduct'] = $this->request->query->get('kindOfProduct', '');
         $parameters['today'] = $this->request->query->get('today', '');
+        $parameters['priceAdditional'] = $this->request->query->get('priceAdditional', '');
         $parameters['myLocation'] = $this->request->query->get('myLocation', '');
         $parameters['q'] = $this->request->query->get('q', '');
         $parameters['monday'] = $this->request->query->get('monday', '');
@@ -1724,6 +1725,8 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchToday'] = $fragment;
             $filters[] = 'tbl.priceOfProduct = :searchPriceOfProduct';
             $parameters['searchPriceOfProduct'] = $fragment;
+            $filters[] = 'tbl.priceAdditional = :searchPriceAdditional';
+            $parameters['searchPriceAdditional'] = $fragment;
             $filters[] = 'tbl.myLocation = :searchMyLocation';
             $parameters['searchMyLocation'] = $fragment;
         }

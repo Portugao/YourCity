@@ -69,6 +69,7 @@ abstract class AbstractProductRepository extends EntityRepository
             'saturday',
             'sunday',
             'priceOfProduct',
+            'priceAdditional',
             'myLocation',
             'createdBy',
             'createdDate',

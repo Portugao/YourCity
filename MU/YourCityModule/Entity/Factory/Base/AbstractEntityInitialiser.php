@@ -275,6 +275,15 @@ abstract class AbstractEntityInitialiser
         }
         $entity->setToday(implode('###', $items));
 
+        $listEntries = $this->listEntriesHelper->getPriceAdditionalEntriesForProduct();
+        $items = [];
+        foreach ($listEntries as $listEntry) {
+            if (true === $listEntry['default']) {
+                $items[] = $listEntry['value'];
+            }
+        }
+        $entity->setPriceAdditional(implode('###', $items));
+
         $listEntries = $this->listEntriesHelper->getMyLocationEntriesForProduct();
         $items = [];
         foreach ($listEntries as $listEntry) {

@@ -161,6 +161,26 @@ abstract class AbstractProductQuickNavType extends AbstractType
             'multiple' => false,
             'expanded' => false
         ]);
+        $listEntries = $this->listHelper->getEntries('product', 'priceAdditional');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('priceAdditional', ChoiceType::class, [
+            'label' => $this->__('Price additional'),
+            'attr' => [
+                'class' => 'input-sm'
+            ],
+            'required' => false,
+            'placeholder' => $this->__('All'),
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => false,
+            'expanded' => false
+        ]);
         $listEntries = $this->listHelper->getEntries('product', 'myLocation');
         $choices = [];
         $choiceAttributes = [];
@@ -230,6 +250,7 @@ abstract class AbstractProductQuickNavType extends AbstractType
                     $this->__('Saturday') => 'saturday',
                     $this->__('Sunday') => 'sunday',
                     $this->__('Price of product') => 'priceOfProduct',
+                    $this->__('Price additional') => 'priceAdditional',
                     $this->__('My location') => 'myLocation',
                     $this->__('Creation date') => 'createdDate',
                     $this->__('Creator') => 'createdBy',
