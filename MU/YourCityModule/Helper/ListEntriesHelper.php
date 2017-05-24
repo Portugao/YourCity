@@ -157,8 +157,8 @@ class ListEntriesHelper extends AbstractListEntriesHelper
      */
     public function getLocations()
     {
-    	//$uid = $this->controllerHelper->getUid();
-    	$uid = 2;
+    	$uid = $this->controllerHelper->getUid();
+    	//$uid = 2;
     	$locationRepository = $this->entityFactory->getRepository('location');
     	if ($uid != 2) {
     	$criteria = array('owner' => $uid);
