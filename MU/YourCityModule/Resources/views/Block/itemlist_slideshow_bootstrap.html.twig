@@ -10,35 +10,28 @@
                 <div class="item">
             {% endif %}
             <div class="item-container"> 
-            <h2>{{ location.name }}</h2>
-            <h3>{{ __('Branches') }}</h3>
+            <h3>{{ location.name }}</h3>
+
+            <div class="row">
+            <div class="col-md-6">
             {% if location.branches|default %}
+            <h4>{{ __('Branches') }}</h4>
                 {% for branch in location.branches %}
                     {{ branch.name }}
                 {% endfor %}
             {% endif %}
+            </div>
+            <div class="col-md-6">
             <h4>{{ __('Part') }}</h4>
-            {{ location.partOfCity|muyourcitymodule_listEntry('location', 'partOfCity') }}  
+            {{ location.partOfCity|muyourcitymodule_listEntry('location', 'partOfCity') }}
+            </div>
+            </div>
             <div class="placeholder">
             <img src="/themes/Bootstrap2Theme/Resources/public/images/placeholder.png" /></div>
             {{ location.description|truncate(100) }}<br />
-            {{ location.street }} {{ location.numberOfStreet }}<br />
-            {{ location.zipCode }} {{ location.city }}<br /><br />
-            {{ location.telefon }}<br />
-            {% if location.homepage is not empty %}
-            <a href="{{ location.homepage }}" title="{{ __('Visit this page') }}" class="fa fa-external-link-square"></a>
-            {% else %}&nbsp;{% endif %}<br />
+
             {% if vars.sorting != 'random' %}
-            {% if location.branches|default %}{{ __('Branches') }}: 
-                {% for branch in location.branches %}
-                    {{ branch.name }} 
-                {% endfor %}<br />
-            {% endif %}
-            {% if location.parts|default %}{{ __('Part') }}: 
-                {% for part in location.parts %}
-                    {{ part.name }} 
-                {% endfor %}<br /><br />
-            {% endif %}
+
             {% endif %}
     
             <a href="{{ path('muyourcitymodule_location_display', { 'id': location.id, 'slug': location.slug }) }}" class="btn btn-danger btn-sm" href="#" role="button">{{ __('More about') }} {{ location.name }}</a>
@@ -47,8 +40,30 @@
         {% endfor %}
     {% endif %}
     
+    {% if objectType == 'menuOfLocation' %}
+        {% if items[0] is defined %}
+            {% for menu in items %}
+            {% if loop.index == 1 %}
+                <div class="item active">
+            {% else %}
+                <div class="item">
+            {% endif %}
+            <div class="item-container"> 
+            <div class="menuItem">
+                {{ menu.name }}
+            </div>
+            </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <h4>{{ __('No menus available at this moment') }}</h4>
+            {{ __('Use the possibility to present your menus on a central platform!') }}   
+        {% endif %}
+    {% endif %}
+    
     {% if objectType == 'offer' %}
-        {% for location in items %}
+        {% if items[0] is defined %}
+        {% for offer in items %}
             {% if loop.index == 1 %}
                 <div class="item active">
             {% else %}
@@ -62,12 +77,74 @@
             <h2>{{ offer.name }}</h2>
             {{ offer.description|truncate(100) }}<br />
             <a href="{{ path('muyourcitymodule_offer_display', { 'id': offer.id }) }}" class="btn btn-primary btn-sm" href="#" role="button">{{ __('More') }}</a>
-        </div>
+            </div> 
+            </div>
+            </div>
+        {% endfor %}
+        {% else %}
+            <h4>{{ __('No offers available at this moment') }}</h4>
+            {{ __('Use the possibility to present your offers on a central platform!') }}
+        {% endif %}
+    {% endif %}
     
-    </div>
+        {% if objectType == 'product' %}
+        {% for product in items %}
+            {% if loop.index == 1 %}
+                <div class="item active">
+            {% else %}
+                <div class="item">
+            {% endif %}
+            <div class="item-container"> 
+            <div class="productItem">
+            <h3>{{ product.name }}</h3>
+            {#{ product.description|safeHtml|truncate(100) }}
+            <h4>{{ __('Avaibility on weekdays') }}</h4>
+            {{ __('Monday') }}
+            {% set itemid = product|muyourcitymodule_formattedTitle|default(__('Product')) %}
+                <i class="fa fa-check{% if not product.monday %} hidden{% endif %}" id="yesMonday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
+                <i class="fa fa-times{% if product.monday %} hidden{% endif %}" id="noMonday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
+            {{ __('Tuesday') }}
+                <i class="fa fa-check{% if not product.tuesday %} hidden{% endif %}" id="yesTuesday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
+                <i class="fa fa-times{% if product.tuesday %} hidden{% endif %}" id="noTuesday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
+            {{ __('Wednesday') }}    
+                <i class="fa fa-check{% if not product.wednesday %} hidden{% endif %}" id="yesWednesday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
+                <i class="fa fa-times{% if product.wednesday %} hidden{% endif %}" id="noWednesday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
+            {{ __('Thursday') }}
+                <i class="fa fa-check{% if not product.thursday %} hidden{% endif %}" id="yesThursday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
+                <i class="fa fa-times{% if product.thursday %} hidden{% endif %}" id="noThursday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
+            {{ __('Friday') }}
+                <i class="fa fa-check{% if not product.friday %} hidden{% endif %}" id="yesFriday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
+                <i class="fa fa-times{% if product.friday %} hidden{% endif %}" id="noFriday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
+            {{ __('Saturday') }}
+                <i class="fa fa-check{% if not product.saturday %} hidden{% endif %}" id="yesSaturday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
+                <i class="fa fa-times{% if product.saturday %} hidden{% endif %}" id="noSaturday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
+            {{ __('Sunday') }}     
+                <i class="fa fa-check{% if not product.sunday %} hidden{% endif %}" id="yesSunday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
+                <i class="fa fa-times{% if product.sunday %} hidden{% endif %}" id="noSunday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
+                <br />#}
+            <h4>{{ __('Price of product') }}</h4>
+            {% if product.priceOfProduct != 0 %}
+                {{ product.priceOfProduct|localizedcurrency('EUR') }}
+                {% if product.priceAdditional is not empty %}
+                    {% if product.priceAdditional == 'permonth' %}
+                        {{ __('per month') }}
+                    {% endif %}
+                {% endif %}
+            {% else %}
+                {{ __('No price information') }}
+            {% endif %}<br /><br />
+            
+            {% if product.myLocation is not empty %}
+                {{ __('Location') }}: {{ product.myLocation|muyourcitymodule_listEntry('product', 'myLocation') }}<br /><br />
+        {% endif %}    
+
+            <a href="{{ path('muyourcitymodule_product_display', { 'id': product.id }) }}" class="btn btn-primary btn-sm" href="#" role="button">{{ __('More') }}</a>
+            </div> 
+            </div>
             </div>
         {% endfor %}
     {% endif %}
+    
     </div>
     
     <a class="left carousel-control" href="#Carousel{{ vars.bid }}" data-slide="prev"><i class="fa fa-chevron-left"></i></a>
