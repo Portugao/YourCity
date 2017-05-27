@@ -36,7 +36,12 @@
 {% if items|default and items|length > 0 %}
     <h3>{{ __('Locations') }}</h3>
             {% for location in items %}
-                <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3 item-list">
+            {% if location.imageOfLocation != '' %}
+                {#% set thumbOptions = attribute(thumbRuntimeOptions, 'branchImageOfBranch') %#}
+                <div style="background: url({{ location.imageOfLocation.getPathname()|imagine_filter('zkroot') }}); background-repeat: no-repeat; background-position: center center; background-size: cover;" class="col-xs-12 col-sm-6 col-md-4 col-lg-4 item-list">
+            {% else %}
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 item-list">
+            {% endif %}            
                 {% if location.state == 'closed' %}
                     {% set state = 'locationClosed' %}
                 {% endif %}
@@ -89,7 +94,7 @@
                         {% endif %}
                     {% endfor %}
                     {% endif %}
-                </li>
+                </div>
             {% endfor %}
 {% endif %}
 <br style="clear: both;" />
