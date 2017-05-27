@@ -7,7 +7,7 @@
 
     {{ block('page_nav_links') }}
 
-    {{ include('@MUYourCityModule/Product/viewQuickNav.html.twig', { workflowStateFilter: false }) }}{# see template file for available options #}
+    {#{ include('@MUYourCityModule/Product/viewQuickNav.html.twig', { workflowStateFilter: false }) }}{# see template file for available options #}
 
     {% if routeArea != 'admin' %} 
         {% for product in items %}
