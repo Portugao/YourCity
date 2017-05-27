@@ -7,7 +7,7 @@
 
     {{ block('page_nav_links') }}
 
-    {{ include('@MUYourCityModule/Event/viewQuickNav.html.twig') }}{# see template file for available options #}
+    {#{ include('@MUYourCityModule/Event/viewQuickNav.html.twig') }}{# see template file for available options #}
 
     {% if routeArea == 'admin' %}
     <form action="{{ path('muyourcitymodule_event_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="eventsViewForm" class="form-horizontal" role="form">
@@ -44,10 +44,14 @@
                 <col id="cName" />
                 <col id="cDescription" />
                 <col id="cImageOfEvent" />
+                <col id="cKindOfEvent" />
                 <col id="cStreet" />
                 <col id="cNumberOfStreet" />
                 <col id="cZipCode" />
                 <col id="cCity" />
+                <col id="cInViewFrom" />
+                <col id="cInViewUntil" />
+                <col id="cMyLocation" />
             </colgroup>
             <thead>
             <tr>
@@ -71,6 +75,9 @@
                 <th id="hImageOfEvent" scope="col" class="text-left">
                     <a href="{{ sort.imageOfEvent.url }}" title="{{ __f('Sort by %s', {'%s': 'image of event'}) }}" class="{{ sort.imageOfEvent.class }}">{{ __('Image of event') }}</a>
                 </th>
+                <th id="hKindOfEvent" scope="col" class="text-left">
+                    <a href="{{ sort.kindOfEvent.url }}" title="{{ __f('Sort by %s', {'%s': 'kind of event'}) }}" class="{{ sort.kindOfEvent.class }}">{{ __('Kind of event') }}</a>
+                </th>
                 <th id="hStreet" scope="col" class="text-left">
                     <a href="{{ sort.street.url }}" title="{{ __f('Sort by %s', {'%s': 'street'}) }}" class="{{ sort.street.class }}">{{ __('Street') }}</a>
                 </th>
@@ -83,6 +90,15 @@
                 <th id="hCity" scope="col" class="text-left">
                     <a href="{{ sort.city.url }}" title="{{ __f('Sort by %s', {'%s': 'city'}) }}" class="{{ sort.city.class }}">{{ __('City') }}</a>
                 </th>
+                <th id="hInViewFrom" scope="col" class="text-left">
+                    <a href="{{ sort.inViewFrom.url }}" title="{{ __f('Sort by %s', {'%s': 'in view from'}) }}" class="{{ sort.inViewFrom.class }}">{{ __('In view from') }}</a>
+                </th>
+                <th id="hInViewUntil" scope="col" class="text-left">
+                    <a href="{{ sort.inViewUntil.url }}" title="{{ __f('Sort by %s', {'%s': 'in view until'}) }}" class="{{ sort.inViewUntil.class }}">{{ __('In view until') }}</a>
+                </th>
+                <th id="hMyLocation" scope="col" class="text-left">
+                    <a href="{{ sort.myLocation.url }}" title="{{ __f('Sort by %s', {'%s': 'my location'}) }}" class="{{ sort.myLocation.class }}">{{ __('My location') }}</a>
+                </th>
             </tr>
             </thead>
             <tbody>
@@ -91,13 +107,13 @@
             <tr>
                 {% if routeArea == 'admin' %}
                     <td headers="hSelect" class="fixed-column text-center z-w02">
-                        <input type="checkbox" name="items[]" value="{{ event.id }}" class="muyourcity-toggle-checkbox" />
+                        <input type="checkbox" name="items[]" value="{{ event.getKey() }}" class="muyourcity-toggle-checkbox" />
                     </td>
                 {% endif %}
-                <td id="itemActions{{ event.id }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
+                <td id="itemActions{{ event.getKey() }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
                     {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: event, area: routeArea, context: 'view' }) %}
                     <div class="dropdown">
-                        <a id="itemActions{{ event.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
+                        <a id="itemActions{{ event.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
                         {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
                     </div>
                 </td>
@@ -105,7 +121,7 @@
                     {{ event.workflowState|muyourcitymodule_objectState }}
                 </td>
                 {% endif %}<td headers="hName" class="text-left">
-                    <a href="{{ path('muyourcitymodule_event_' ~ routeArea ~ 'display', { 'id': event.id }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ event.name|notifyFilters('muyourcitymodule.filterhook.events') }}</a>
+                    <a href="{{ path('muyourcitymodule_event_' ~ routeArea ~ 'display', { 'id': event.getId() }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ event.name|notifyFilters('muyourcitymodule.filterhook.events')|safeHtml }}</a>
                 </td>
                 <td headers="hDescription" class="text-left">
                     {{ event.description|safeHtml|truncate(50) }}
@@ -122,6 +138,9 @@
                     </a>
                     {% else %}&nbsp;{% endif %}
                 </td>
+                <td headers="hKindOfEvent" class="text-left">
+                    {{ event.kindOfEvent|muyourcitymodule_listEntry('event', 'kindOfEvent') }}
+                </td>
                 <td headers="hStreet" class="text-left">
                     {{ event.street }}
                 </td>
@@ -133,6 +152,15 @@
                 </td>
                 <td headers="hCity" class="text-left">
                     {{ event.city }}
+                </td>
+                <td headers="hInViewFrom" class="text-left">
+                    {{ event.inViewFrom|localizeddate('medium', 'short') }}
+                </td>
+                <td headers="hInViewUntil" class="text-left">
+                    {{ event.inViewUntil|localizeddate('medium', 'short') }}
+                </td>
+                <td headers="hMyLocation" class="text-left">
+                    {{ event.myLocation|muyourcitymodule_listEntry('event', 'myLocation') }}
                 </td>
             </tr>
         {% else %}
