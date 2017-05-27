@@ -5,9 +5,28 @@
     {{ setMetaTag('description', location.descriptionForGoogle) }}
     {% endif %}{% endblock %}
 {% block title %}
+    {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: location, area: routeArea, context: 'display' }) %}
+    <div class="dropdown">
+        <a id="itemActions{{ location.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
+        {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
+    </div> 
 
+{% endblock %}
+{% block admin_page_icon 'eye' %}
+{% block content %}
+    
+    {% set isQuickView = app.request.query.getBoolean('raw', false) %}
+    
+    <div class="muyourcitymodule-location muyourcitymodule-display">
+    
+    <div class="col-sm-3">
+        {{ block('related_items') }}
+        {{ showblockposition('leftOfLocation') }}
+    </div>
+    
+    <div class="col-sm-9">
     <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-2">
     <div id="location-logo">
             {% if location.logoOfYourLocation is not empty and location.logoOfYourLocationMeta|default %}
                         <a href="{{ location.logoOfYourLocationUrl }}" title="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if location.logoOfYourLocationMeta.isImage %} class="image-link"{% endif %}>
@@ -22,7 +41,7 @@
     </div>
     </div>
     
-    <div class="col-md-6">
+    <div class="col-md-7">
     {% if location.state == 'closed' %}
         {% set state = 'locationClosed' %}
     {% endif %}
@@ -44,10 +63,10 @@
     {% if location.state == 'openEnd' %}
         {% set state = 'locationOpenEnd' %}
     {% endif %}
-    <span class="status-icon {{ state }}">{% if state == 'locationUnclear' %}<i class="fa fa-circle-o-notch" aria-hidden="true"></i>{% endif %}{% if state == 'locationAgreement' or state == 'locationOpenEnd' %}<i class="fa fa-clock-o" aria-hidden="true"></i>{% endif %}{% if state == 'locationForEver' %}<i class="fa fa-circle" aria-hidden="true"></i>{% endif %}{% if state == 'locationClosed' %}<i class="fa fa-circle-o" aria-hidden="true"></i>{% endif %}{% if state == 'locationOpen' %}<i class="fa fa-circle" aria-hidden="true"></i>{% endif %}</span>
+    <h2><span class="status-icon {{ state }}">{% if state == 'locationUnclear' %}<i class="fa fa-circle-o-notch" aria-hidden="true"></i>{% endif %}{% if state == 'locationAgreement' or state == 'locationOpenEnd' %}<i class="fa fa-clock-o" aria-hidden="true"></i>{% endif %}{% if state == 'locationForEver' %}<i class="fa fa-circle" aria-hidden="true"></i>{% endif %}{% if state == 'locationClosed' %}<i class="fa fa-circle-o" aria-hidden="true"></i>{% endif %}{% if state == 'locationOpen' %}<i class="fa fa-circle" aria-hidden="true"></i>{% endif %}</span>
     
         {% set templateTitle = location.name %}
-        {{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.locations.filter') }}{% if routeArea == 'admin' %} <small>({{ location.workflowState|muyourcitymodule_objectState(false)|lower }})</small>{% endif %}
+		{{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.locations.filter') }}{% if routeArea == 'admin' %} <small>({{ location.workflowState|muyourcitymodule_objectState(false)|lower }})</small>{% endif %}</h2>
     </div>
     
     <div class="col-md-3">
@@ -65,28 +84,13 @@
             {% else %}&nbsp;{% endif %}
         </div>
     {% endif %}
-    
-         {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: location, area: routeArea, context: 'display' }) %}
-    <div class="dropdown">
-        <a id="itemActions{{ location.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
-        {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
-    </div>  
+     
     </div>  
     </div>
-{% endblock %}
-{% block admin_page_icon 'eye' %}
-{% block content %}
     
-    {% set isQuickView = app.request.query.getBoolean('raw', false) %}
-    
-    <div class="muyourcitymodule-location muyourcitymodule-display">
     <div class="row">
-        <div class="col-sm-4">
-            {{ block('related_items') }}
-            {{ showblockposition('leftOfLocation') }}
-        </div>
         
-        <div class="col-sm-8">    
+        <div class="col-sm-12">    
         <div class="col-sm-7">
         {% if location.workflowState is not empty and routeArea == 'admin' %}
             <dt>{{ __('State') }}</dt>
@@ -430,6 +434,7 @@
         {% endif %}
         {% endif %}
               
+        </div>
         </div>
         </div>
         {#% endif %#}
