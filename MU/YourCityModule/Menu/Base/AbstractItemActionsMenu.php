@@ -383,7 +383,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $title = $this->__('Create dish');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_dish_' . $routeArea . 'edit',
-                    'routeParameters' => ['menuoflocation' => $entity->getKey()]
+                    'routeParameters' => ['menusoflocation' => $entity->getKey()]
                 ])->setAttribute('icon', 'fa fa-plus');
                 $menu[$title]->setLinkAttribute('title', $title);
             }
@@ -394,7 +394,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $title = $this->__('Create part of menu');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_partofmenu_' . $routeArea . 'edit',
-                    'routeParameters' => ['menuoflocation' => $entity->getKey()]
+                    'routeParameters' => ['menusoflocation' => $entity->getKey()]
                 ])->setAttribute('icon', 'fa fa-plus');
                 $menu[$title]->setLinkAttribute('title', $title);
             }
@@ -455,7 +455,18 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $title = $this->__('Create dish');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_dish_' . $routeArea . 'edit',
-                    'routeParameters' => ['partofmenu' => $entity->getKey()]
+                    'routeParameters' => ['partsofmenu' => $entity->getKey()]
+                ])->setAttribute('icon', 'fa fa-plus');
+                $menu[$title]->setLinkAttribute('title', $title);
+            }
+            
+            $relatedComponent = 'MUYourCityModule:MenuOfLocation:';
+            $relatedInstance = $entity->getKey() . '::';
+            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
+                $title = $this->__('Create menu of location');
+                $menu->addChild($title, [
+                    'route' => 'muyourcitymodule_menuoflocation_' . $routeArea . 'edit',
+                    'routeParameters' => ['partsofmenu' => $entity->getKey()]
                 ])->setAttribute('icon', 'fa fa-plus');
                 $menu[$title]->setLinkAttribute('title', $title);
             }
@@ -505,6 +516,30 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'view'
                 ])->setAttribute('icon', 'fa fa-reply');
+                $menu[$title]->setLinkAttribute('title', $title);
+            }
+            
+            // more actions for adding new related items
+            
+            $relatedComponent = 'MUYourCityModule:MenuOfLocation:';
+            $relatedInstance = $entity->getKey() . '::';
+            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
+                $title = $this->__('Create menu of location');
+                $menu->addChild($title, [
+                    'route' => 'muyourcitymodule_menuoflocation_' . $routeArea . 'edit',
+                    'routeParameters' => ['dishes' => $entity->getKey()]
+                ])->setAttribute('icon', 'fa fa-plus');
+                $menu[$title]->setLinkAttribute('title', $title);
+            }
+            
+            $relatedComponent = 'MUYourCityModule:PartOfMenu:';
+            $relatedInstance = $entity->getKey() . '::';
+            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
+                $title = $this->__('Create part of menu');
+                $menu->addChild($title, [
+                    'route' => 'muyourcitymodule_partofmenu_' . $routeArea . 'edit',
+                    'routeParameters' => ['dishes' => $entity->getKey()]
+                ])->setAttribute('icon', 'fa fa-plus');
                 $menu[$title]->setLinkAttribute('title', $title);
             }
         }

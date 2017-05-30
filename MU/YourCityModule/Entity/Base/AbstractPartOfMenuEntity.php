@@ -111,25 +111,22 @@ abstract class AbstractPartOfMenuEntity extends EntityAccess implements Translat
     protected $locale;
     
     /**
-     * Bidirectional - Many partsOfMenu [parts of menu] are linked by one menuOfLocation [menu of location] (OWNING SIDE).
+     * Bidirectional - Many partsOfMenu [parts of menu] are linked by many menusOfLocation [menus of location] (INVERSE SIDE).
      *
-     * @ORM\ManyToOne(targetEntity="MU\YourCityModule\Entity\MenuOfLocationEntity", inversedBy="partsOfMenu")
-     * @ORM\JoinTable(name="mu_yourcity_menuoflocation")
-     * @Assert\Type(type="MU\YourCityModule\Entity\MenuOfLocationEntity")
-     * @var \MU\YourCityModule\Entity\MenuOfLocationEntity $menuOfLocation
+     * @ORM\ManyToMany(targetEntity="MU\YourCityModule\Entity\MenuOfLocationEntity", mappedBy="partsOfMenu")
+     * @ORM\OrderBy({"name" = "ASC"})
+     * @var \MU\YourCityModule\Entity\MenuOfLocationEntity[] $menusOfLocation
      */
-    protected $menuOfLocation;
-    
+    protected $menusOfLocation = null;
     /**
-     * Bidirectional - One partOfMenu [part of menu] has many dishes [dishes] (INVERSE SIDE).
+     * Bidirectional - Many partsOfMenu [parts of menu] have many dishes [dishes] (OWNING SIDE).
      *
-     * @ORM\OneToMany(targetEntity="MU\YourCityModule\Entity\DishEntity", mappedBy="partOfMenu")
-     * @ORM\JoinTable(name="mu_yourcity_partofmenudishes")
+     * @ORM\ManyToMany(targetEntity="MU\YourCityModule\Entity\DishEntity", inversedBy="partsOfMenu")
+     * @ORM\JoinTable(name="mu_yourcity_partofmenu_dish")
      * @ORM\OrderBy({"positionOfDish" = "ASC"})
      * @var \MU\YourCityModule\Entity\DishEntity[] $dishes
      */
     protected $dishes = null;
-    
     
     /**
      * PartOfMenuEntity constructor.
@@ -141,6 +138,7 @@ abstract class AbstractPartOfMenuEntity extends EntityAccess implements Translat
     public function __construct()
     {
         $this->dishes = new ArrayCollection();
+        $this->menusOfLocation = new ArrayCollection();
     }
     
     /**
@@ -338,25 +336,56 @@ abstract class AbstractPartOfMenuEntity extends EntityAccess implements Translat
     
     
     /**
-     * Returns the menu of location.
+     * Returns the menus of location.
      *
-     * @return \MU\YourCityModule\Entity\MenuOfLocationEntity
+     * @return \MU\YourCityModule\Entity\MenuOfLocationEntity[]
      */
-    public function getMenuOfLocation()
+    public function getMenusOfLocation()
     {
-        return $this->menuOfLocation;
+        return $this->menusOfLocation;
     }
     
     /**
-     * Sets the menu of location.
+     * Sets the menus of location.
      *
-     * @param \MU\YourCityModule\Entity\MenuOfLocationEntity $menuOfLocation
+     * @param \MU\YourCityModule\Entity\MenuOfLocationEntity[] $menusOfLocation
      *
      * @return void
      */
-    public function setMenuOfLocation($menuOfLocation = null)
+    public function setMenusOfLocation($menusOfLocation)
     {
-        $this->menuOfLocation = $menuOfLocation;
+        foreach ($this->menusOfLocation as $menuOfLocationSingle) {
+            $this->removeMenusOfLocation($menuOfLocationSingle);
+        }
+        foreach ($menusOfLocation as $menuOfLocationSingle) {
+            $this->addMenusOfLocation($menuOfLocationSingle);
+        }
+    }
+    
+    /**
+     * Adds an instance of \MU\YourCityModule\Entity\MenuOfLocationEntity to the list of menus of location.
+     *
+     * @param \MU\YourCityModule\Entity\MenuOfLocationEntity $menuOfLocation The instance to be added to the collection
+     *
+     * @return void
+     */
+    public function addMenusOfLocation(\MU\YourCityModule\Entity\MenuOfLocationEntity $menuOfLocation)
+    {
+        $this->menusOfLocation->add($menuOfLocation);
+        $menuOfLocation->addPartsOfMenu($this);
+    }
+    
+    /**
+     * Removes an instance of \MU\YourCityModule\Entity\MenuOfLocationEntity from the list of menus of location.
+     *
+     * @param \MU\YourCityModule\Entity\MenuOfLocationEntity $menuOfLocation The instance to be removed from the collection
+     *
+     * @return void
+     */
+    public function removeMenusOfLocation(\MU\YourCityModule\Entity\MenuOfLocationEntity $menuOfLocation)
+    {
+        $this->menusOfLocation->removeElement($menuOfLocation);
+        $menuOfLocation->removePartsOfMenu($this);
     }
     
     /**
@@ -396,7 +425,6 @@ abstract class AbstractPartOfMenuEntity extends EntityAccess implements Translat
     public function addDishes(\MU\YourCityModule\Entity\DishEntity $dish)
     {
         $this->dishes->add($dish);
-        $dish->setPartOfMenu($this);
     }
     
     /**
@@ -409,7 +437,6 @@ abstract class AbstractPartOfMenuEntity extends EntityAccess implements Translat
     public function removeDishes(\MU\YourCityModule\Entity\DishEntity $dish)
     {
         $this->dishes->removeElement($dish);
-        $dish->setPartOfMenu(null);
     }
     
     

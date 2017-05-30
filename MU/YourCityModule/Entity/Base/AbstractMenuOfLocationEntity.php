@@ -190,25 +190,23 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
     protected $locale;
     
     /**
-     * Bidirectional - One menuOfLocation [menu of location] has many dishes [dishes] (INVERSE SIDE).
+     * Bidirectional - Many menusOfLocation [menus of location] have many dishes [dishes] (OWNING SIDE).
      *
-     * @ORM\OneToMany(targetEntity="MU\YourCityModule\Entity\DishEntity", mappedBy="menuOfLocation")
-     * @ORM\JoinTable(name="mu_yourcity_menuoflocationdishes")
+     * @ORM\ManyToMany(targetEntity="MU\YourCityModule\Entity\DishEntity", inversedBy="menusOfLocation")
+     * @ORM\JoinTable(name="mu_yourcity_menuoflocation_dish")
      * @ORM\OrderBy({"positionOfDish" = "ASC"})
      * @var \MU\YourCityModule\Entity\DishEntity[] $dishes
      */
     protected $dishes = null;
-    
     /**
-     * Bidirectional - One menuOfLocation [menu of location] has many partsOfMenu [parts of menu] (INVERSE SIDE).
+     * Bidirectional - Many menusOfLocation [menus of location] have many partsOfMenu [parts of menu] (OWNING SIDE).
      *
-     * @ORM\OneToMany(targetEntity="MU\YourCityModule\Entity\PartOfMenuEntity", mappedBy="menuOfLocation")
-     * @ORM\JoinTable(name="mu_yourcity_menuoflocationpartsofmenu")
+     * @ORM\ManyToMany(targetEntity="MU\YourCityModule\Entity\PartOfMenuEntity", inversedBy="menusOfLocation")
+     * @ORM\JoinTable(name="mu_yourcity_menuoflocation_partofmenu")
      * @ORM\OrderBy({"positionOfPart" = "ASC"})
      * @var \MU\YourCityModule\Entity\PartOfMenuEntity[] $partsOfMenu
      */
     protected $partsOfMenu = null;
-    
     
     /**
      * MenuOfLocationEntity constructor.
@@ -694,7 +692,6 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
     public function addDishes(\MU\YourCityModule\Entity\DishEntity $dish)
     {
         $this->dishes->add($dish);
-        $dish->setMenuOfLocation($this);
     }
     
     /**
@@ -707,7 +704,6 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
     public function removeDishes(\MU\YourCityModule\Entity\DishEntity $dish)
     {
         $this->dishes->removeElement($dish);
-        $dish->setMenuOfLocation(null);
     }
     
     /**
@@ -747,7 +743,6 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
     public function addPartsOfMenu(\MU\YourCityModule\Entity\PartOfMenuEntity $partOfMenu)
     {
         $this->partsOfMenu->add($partOfMenu);
-        $partOfMenu->setMenuOfLocation($this);
     }
     
     /**
@@ -760,7 +755,6 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
     public function removePartsOfMenu(\MU\YourCityModule\Entity\PartOfMenuEntity $partOfMenu)
     {
         $this->partsOfMenu->removeElement($partOfMenu);
-        $partOfMenu->setMenuOfLocation(null);
     }
     
     

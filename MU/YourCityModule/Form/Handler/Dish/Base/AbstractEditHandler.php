@@ -77,22 +77,10 @@ abstract class AbstractEditHandler extends EditHandler
     
         
         // assign identifiers of predefined incoming relationships
-        // editable relation, we store the id and assign it now to show it in UI
-        $this->relationPresets['menuOfLocation'] = $this->request->get('menuOfLocation', '');
-        if (!empty($this->relationPresets['menuOfLocation'])) {
-            $relObj = $this->entityFactory->getRepository('menuOfLocation')->selectById($this->relationPresets['menuOfLocation']);
-            if (null !== $relObj) {
-                $relObj->addDishes($entity);
-            }
-        }
-        // editable relation, we store the id and assign it now to show it in UI
-        $this->relationPresets['partOfMenu'] = $this->request->get('partOfMenu', '');
-        if (!empty($this->relationPresets['partOfMenu'])) {
-            $relObj = $this->entityFactory->getRepository('partOfMenu')->selectById($this->relationPresets['partOfMenu']);
-            if (null !== $relObj) {
-                $relObj->addDishes($entity);
-            }
-        }
+        // non-editable relation, we store the id and assign it in handleCommand
+        $this->relationPresets['menusOfLocation'] = $this->request->get('menusOfLocation', '');
+        // non-editable relation, we store the id and assign it in handleCommand
+        $this->relationPresets['partsOfMenu'] = $this->request->get('partsOfMenu', '');
     
         // save entity reference for later reuse
         $this->entityRef = $entity;
@@ -146,30 +134,6 @@ abstract class AbstractEditHandler extends EditHandler
         // admin detail page of treated dish
         $codes[] = 'adminDisplay';
     
-        // user list of menus of location
-        $codes[] = 'userViewMenusOfLocation';
-        // admin list of menus of location
-        $codes[] = 'adminViewMenusOfLocation';
-        // user list of own menus of location
-        $codes[] = 'userOwnViewMenusOfLocation';
-        // admin list of own menus of location
-        $codes[] = 'adminOwnViewMenusOfLocation';
-        // user detail page of related menu of location
-        $codes[] = 'userDisplayMenuOfLocation';
-        // admin detail page of related menu of location
-        $codes[] = 'adminDisplayMenuOfLocation';
-        // user list of parts of menu
-        $codes[] = 'userViewPartsOfMenu';
-        // admin list of parts of menu
-        $codes[] = 'adminViewPartsOfMenu';
-        // user list of own parts of menu
-        $codes[] = 'userOwnViewPartsOfMenu';
-        // admin list of own parts of menu
-        $codes[] = 'adminOwnViewPartsOfMenu';
-        // user detail page of related part of menu
-        $codes[] = 'userDisplayPartOfMenu';
-        // admin detail page of related part of menu
-        $codes[] = 'adminDisplayPartOfMenu';
     
         return $codes;
     }
@@ -299,6 +263,23 @@ abstract class AbstractEditHandler extends EditHandler
             // store new identifier
             $this->idValue = $entity->getKey();
         }
+        
+        if ($args['commandName'] == 'create') {
+            // save predefined incoming relationship from parent entity
+            if (!empty($this->relationPresets['menusOfLocation'])) {
+                $relObj = $this->entityFactory->getRepository('menuOfLocation')->selectById($this->relationPresets['menusOfLocation']);
+                if (null !== $relObj) {
+                    $entity->addMenusOfLocation($relObj);
+                }
+            }
+            if (!empty($this->relationPresets['partsOfMenu'])) {
+                $relObj = $this->entityFactory->getRepository('partOfMenu')->selectById($this->relationPresets['partsOfMenu']);
+                if (null !== $relObj) {
+                    $entity->addPartsOfMenu($relObj);
+                }
+            }
+            $this->entityFactory->getObjectManager()->flush();
+        }
     
         return $success;
     }
@@ -344,32 +325,6 @@ abstract class AbstractEditHandler extends EditHandler
             case 'adminDisplay':
                 if ($args['commandName'] != 'delete' && !($this->templateParameters['mode'] == 'create' && $args['commandName'] == 'cancel')) {
                     return $this->router->generate($routePrefix . 'display', $this->entityRef->createUrlArgs());
-                }
-    
-                return $this->getDefaultReturnUrl($args);
-            case 'userViewMenusOfLocation':
-            case 'adminViewMenusOfLocation':
-                return $this->router->generate('muyourcitymodule_menuoflocation_' . $routeArea . 'view');
-            case 'userOwnViewMenusOfLocation':
-            case 'adminOwnViewMenusOfLocation':
-                return $this->router->generate('muyourcitymodule_menuoflocation_' . $routeArea . 'view', ['own' => 1]);
-            case 'userDisplayMenuOfLocation':
-            case 'adminDisplayMenuOfLocation':
-                if (!empty($this->relationPresets['menuOfLocation'])) {
-                    return $this->router->generate('muyourcitymodule_menuoflocation_' . $routeArea . 'display',  ['id' => $this->relationPresets['menuOfLocation']]);
-                }
-    
-                return $this->getDefaultReturnUrl($args);
-            case 'userViewPartsOfMenu':
-            case 'adminViewPartsOfMenu':
-                return $this->router->generate('muyourcitymodule_partofmenu_' . $routeArea . 'view');
-            case 'userOwnViewPartsOfMenu':
-            case 'adminOwnViewPartsOfMenu':
-                return $this->router->generate('muyourcitymodule_partofmenu_' . $routeArea . 'view', ['own' => 1]);
-            case 'userDisplayPartOfMenu':
-            case 'adminDisplayPartOfMenu':
-                if (!empty($this->relationPresets['partOfMenu'])) {
-                    return $this->router->generate('muyourcitymodule_partofmenu_' . $routeArea . 'display',  ['id' => $this->relationPresets['partOfMenu']]);
                 }
     
                 return $this->getDefaultReturnUrl($args);

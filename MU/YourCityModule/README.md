@@ -1,4 +1,4 @@
-# m u\YourCity 0.1.0
+# m u\YourCity 0.1.1
 
 Your City is an application to manage locations in your city.
 

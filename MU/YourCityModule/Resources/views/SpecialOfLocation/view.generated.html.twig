@@ -21,8 +21,9 @@
                 {% endif %}
                 <col id="cItemActions" />
                 <col id="cName" />
+                <col id="cDescriptionForGoogle" />
                 <col id="cDescription" />
-                <col id="cIconForSpecial" />
+                <col id="cColorOfIcon" />
             </colgroup>
             <thead>
             <tr>
@@ -35,11 +36,14 @@
                 <th id="hName" scope="col" class="text-left">
                     <a href="{{ sort.name.url }}" title="{{ __f('Sort by %s', {'%s': 'name'}) }}" class="{{ sort.name.class }}">{{ __('Name') }}</a>
                 </th>
+                <th id="hDescriptionForGoogle" scope="col" class="text-left">
+                    <a href="{{ sort.descriptionForGoogle.url }}" title="{{ __f('Sort by %s', {'%s': 'description for google'}) }}" class="{{ sort.descriptionForGoogle.class }}">{{ __('Description for google') }}</a>
+                </th>
                 <th id="hDescription" scope="col" class="text-left">
                     <a href="{{ sort.description.url }}" title="{{ __f('Sort by %s', {'%s': 'description'}) }}" class="{{ sort.description.class }}">{{ __('Description') }}</a>
                 </th>
-                <th id="hIconForSpecial" scope="col" class="text-left">
-                    <a href="{{ sort.iconForSpecial.url }}" title="{{ __f('Sort by %s', {'%s': 'icon for special'}) }}" class="{{ sort.iconForSpecial.class }}">{{ __('Icon for special') }}</a>
+                <th id="hColorOfIcon" scope="col" class="text-left">
+                    <a href="{{ sort.colorOfIcon.url }}" title="{{ __f('Sort by %s', {'%s': 'color of icon'}) }}" class="{{ sort.colorOfIcon.class }}">{{ __('Color of icon') }}</a>
                 </th>
             </tr>
             </thead>
@@ -49,29 +53,32 @@
             <tr>
                 {% if routeArea == 'admin' %}
                     <td headers="hSelect" class="fixed-column text-center z-w02">
-                        <input type="checkbox" name="items[]" value="{{ specialOfLocation.id }}" class="muyourcity-toggle-checkbox" />
+                        <input type="checkbox" name="items[]" value="{{ specialOfLocation.getKey() }}" class="muyourcity-toggle-checkbox" />
                     </td>
                 {% endif %}
-                <td id="itemActions{{ specialOfLocation.id }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
+                <td id="itemActions{{ specialOfLocation.getKey() }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
                     {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: specialOfLocation, area: routeArea, context: 'view' }) %}
                     <div class="dropdown">
-                        <a id="itemActions{{ specialOfLocation.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
+                        <a id="itemActions{{ specialOfLocation.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
                         {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
                     </div>
                 </td>
                 <td headers="hName" class="text-left">
-                    <a href="{{ path('muyourcitymodule_specialoflocation_' ~ routeArea ~ 'display', { 'id': specialOfLocation.id }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ specialOfLocation.name|notifyFilters('muyourcitymodule.filterhook.specialsoflocation') }}</a>
+                    <a href="{{ path('muyourcitymodule_specialoflocation_' ~ routeArea ~ 'display', { 'id': specialOfLocation.getId() }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ specialOfLocation.name|notifyFilters('muyourcitymodule.filterhook.specialsoflocation')|safeHtml }}</a>
+                </td>
+                <td headers="hDescriptionForGoogle" class="text-left">
+                    {{ specialOfLocation.descriptionForGoogle }}
                 </td>
                 <td headers="hDescription" class="text-left">
                     {{ specialOfLocation.description|safeHtml|truncate(50) }}
                 </td>
-                <td headers="hIconForSpecial" class="text-left">
-                    {{ specialOfLocation.iconForSpecial }}
+                <td headers="hColorOfIcon" class="text-left">
+                    <span class="label label-default" style="background-color: {{ specialOfLocation.colorOfIcon|e('html_attr') }}">{{ specialOfLocation.colorOfIcon }}</label>
                 </td>
             </tr>
         {% else %}
             <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
-                <td class="text-left" colspan="{% if routeArea == 'admin' %}5{% else %}4{% endif %}">
+                <td class="text-left" colspan="{% if routeArea == 'admin' %}6{% else %}5{% endif %}">
             {{ __('No specials of location found.') }}
               </td>
             </tr>

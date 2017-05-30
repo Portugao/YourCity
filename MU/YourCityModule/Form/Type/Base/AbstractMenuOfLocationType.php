@@ -12,6 +12,7 @@
 
 namespace MU\YourCityModule\Form\Type\Base;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -130,6 +131,7 @@ abstract class AbstractMenuOfLocationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addEntityFields($builder, $options);
+        $this->addOutgoingRelationshipFields($builder, $options);
         $this->addModerationFields($builder, $options);
         $this->addReturnControlField($builder, $options);
         $this->addSubmitButtons($builder, $options);
@@ -364,6 +366,64 @@ abstract class AbstractMenuOfLocationType extends AbstractType
             'choice_attr' => $choiceAttributes,
             'multiple' => false,
             'expanded' => false
+        ]);
+    }
+
+    /**
+     * Adds fields for outgoing relationships.
+     *
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
+     */
+    public function addOutgoingRelationshipFields(FormBuilderInterface $builder, array $options)
+    {
+        $queryBuilder = function(EntityRepository $er) {
+            // select without joins
+            return $er->getListQueryBuilder('', '', false);
+        };
+        $entityDisplayHelper = $this->entityDisplayHelper;
+        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
+            return $entityDisplayHelper->getFormattedTitle($entity);
+        };
+        $builder->add('dishes', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
+            'class' => 'MUYourCityModule:DishEntity',
+            'choice_label' => $choiceLabelClosure,
+            'by_reference' => false,
+            'multiple' => true,
+            'expanded' => true,
+            'query_builder' => $queryBuilder,
+            'required' => false,
+            'label' => $this->__('Dishes'),
+            'label_attr' => [
+                'class' => 'checkbox-inline'
+            ],
+            'attr' => [
+                'title' => $this->__('Choose the dishes')
+            ]
+        ]);
+        $queryBuilder = function(EntityRepository $er) {
+            // select without joins
+            return $er->getListQueryBuilder('', '', false);
+        };
+        $entityDisplayHelper = $this->entityDisplayHelper;
+        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
+            return $entityDisplayHelper->getFormattedTitle($entity);
+        };
+        $builder->add('partsOfMenu', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
+            'class' => 'MUYourCityModule:PartOfMenuEntity',
+            'choice_label' => $choiceLabelClosure,
+            'by_reference' => false,
+            'multiple' => true,
+            'expanded' => true,
+            'query_builder' => $queryBuilder,
+            'required' => false,
+            'label' => $this->__('Parts of menu'),
+            'label_attr' => [
+                'class' => 'checkbox-inline'
+            ],
+            'attr' => [
+                'title' => $this->__('Choose the parts of menu')
+            ]
         ]);
     }
 

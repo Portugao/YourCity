@@ -70,6 +70,14 @@
             {{ form_row(form.myLocation) }}
         </fieldset>
         
+        {{ include(
+            '@MUYourCityModule/Dish/includeSelectMany.html.twig',
+            { group: 'menuoflocation', alias: 'dishes', aliasReverse: 'menusOfLocation', mandatory: false, idPrefix: 'yourcityMenuOfLocation_Dishes', linkingItem: menuoflocation, displayMode: 'choices' }
+        ) }}
+        {{ include(
+            '@MUYourCityModule/PartOfMenu/includeSelectMany.html.twig',
+            { group: 'menuoflocation', alias: 'partsOfMenu', aliasReverse: 'menusOfLocation', mandatory: false, idPrefix: 'yourcityMenuOfLocation_PartsOfMenu', linkingItem: menuoflocation, displayMode: 'choices' }
+        ) }}
         {% if mode != 'create' %}
             {{ include('@MUYourCityModule/Helper/includeStandardFieldsEdit.html.twig', { obj: menuoflocation }) }}
         {% endif %}

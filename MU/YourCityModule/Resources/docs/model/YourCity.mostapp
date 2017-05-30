@@ -4,7 +4,7 @@ application "YourCity" {
     author "Michael Ueberschaer"
     email "info@homepages-mit-zikula.de"
     url "https://homepages-mit-zikula.de"
-    version "0.1.0"
+    version "0.1.1"
     prefix "yourcity"
     generatorSettings {
         settingsContainer "Settings"
@@ -930,29 +930,6 @@ application "YourCity" {
     }
     relations {
         one2many bidirectional {
-            source "menuOfLocation"
-            sourceAlias "menuOfLocation"
-            target "dish"
-            targetAlias "dishes"
-            orderBy "positionOfDish"
-        },
-        one2many bidirectional {
-            source "menuOfLocation"
-            sourceAlias "menuOfLocation"
-            target "partOfMenu"
-            targetAlias "partsOfMenu"
-            nullable true
-            orderBy "positionOfPart"
-        },
-        one2many bidirectional {
-            source "partOfMenu"
-            sourceAlias "partOfMenu"
-            target "dish"
-            targetAlias "dishes"
-            nullable true
-            orderBy "positionOfDish"
-        },
-        one2many bidirectional {
             source "location"
             sourceAlias "location"
             target "abonnement"
@@ -993,6 +970,37 @@ application "YourCity" {
             refClass "LocationSpecialOfLocation"
             orderBy "name"
             orderByReverse "letterForOrder"
+        }
+    ,
+        many2many bidirectional {
+            source "menuOfLocation"
+            sourceAlias "menusOfLocation"
+            target "dish"
+            targetAlias "dishes"
+            expandedTarget true
+            refClass "MenuOfLocationDish"
+            orderBy "positionOfDish"
+            orderByReverse ""
+        },
+        many2many bidirectional {
+            source "partOfMenu"
+            sourceAlias "partsOfMenu"
+            target "dish"
+            targetAlias "dishes"
+            expandedTarget true
+            refClass "PartOfMenuDish"
+            orderBy "positionOfDish"
+            orderByReverse "positionOfPart"
+        },
+        many2many bidirectional {
+            source "menuOfLocation"
+            sourceAlias "menusOfLocation"
+            target "partOfMenu"
+            targetAlias "partsOfMenu"
+            expandedTarget true
+            refClass "MenuOfLocationPartOfMenu"
+            orderBy "positionOfPart"
+            orderByReverse "name"
         }
     }
     variables {
