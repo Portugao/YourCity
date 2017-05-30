@@ -97,12 +97,12 @@ abstract class AbstractImportController extends AbstractController
     	if (is_array($locations)) {
     			$counter = 0;
     		foreach ($locations as $location) {
-    			if ($counter > 519 && $counter < 700) {
+    			if ($counter > 449 && $counter < 700) {
     			$data = $this->buildArrayForDatas($location);
     			// we build new location
     			$newLocation = new \MU\YourCityModule\Entity\LocationEntity();
     			
-    			if ($data[0]['closedForEver']) {
+    			if ($data[0]['closedForEver'] == 1) {
     				$newLocation->setWorkflowState('suspended');
     			} else {
     			    $newLocation->setWorkflowState('approved');    
