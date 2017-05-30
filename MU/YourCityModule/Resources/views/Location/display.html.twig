@@ -41,7 +41,7 @@
     </div>
     </div>
     
-    <div class="col-md-7">
+    <div class="col-md-6">
     {% if location.state == 'closed' %}
         {% set state = 'locationClosed' %}
     {% endif %}
@@ -69,8 +69,7 @@
 		{{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.locations.filter') }}{% if routeArea == 'admin' %} <small>({{ location.workflowState|muyourcitymodule_objectState(false)|lower }})</small>{% endif %}</h2>
     </div>
     
-    <div class="col-md-3">
-    
+    <div class="col-md-4">  
     {% if location.imageOfLocation is not empty %}
         <div id="locationImage">{% if location.imageOfLocation is not empty and location.imageOfLocationMeta|default %}
                         <a href="{{ location.imageOfLocationUrl }}" title="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if location.imageOfLocationMeta.isImage %} class="image-link"{% endif %}>
@@ -86,10 +85,8 @@
     {% endif %}
      
     </div>  
-    </div>
-    
-    <div class="row">
-        
+    </div>   
+    <div class="row">       
         <div class="col-sm-12">    
         <div class="col-sm-7">
         {% if location.workflowState is not empty and routeArea == 'admin' %}

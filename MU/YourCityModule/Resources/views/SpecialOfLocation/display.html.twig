@@ -1,9 +1,9 @@
 {# purpose of this template: specials of location display view #}
 {% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
 {% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
-{% block pageTitle %}{{ specialOfLocation|muyourcitymodule_formattedTitle|default(__('Special of location')) }}{% endblock %}
+{% block pageTitle %}{{ specialOfLocation.name }}{% endblock %}
 {% block title %}
-    {% set templateTitle = specialOfLocation|muyourcitymodule_formattedTitle|default(__('Special of location')) %}
+    {% set templateTitle = specialOfLocation.name %}
     {{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.specialsoflocation.filter') }}
     {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: specialOfLocation, area: routeArea, context: 'display' }) %}
     <div class="dropdown">

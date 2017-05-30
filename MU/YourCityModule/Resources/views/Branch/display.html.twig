@@ -1,9 +1,9 @@
 {# purpose of this template: branches display view #}
 {% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
 {% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
-{% block pageTitle %}{{ branch|muyourcitymodule_formattedTitle|default(__('Branch')) }}{% endblock %}
+{% block pageTitle %}{{ branch.name|safeHtml }}{% endblock %}
 {% block title %}
-    {% set templateTitle = branch|muyourcitymodule_formattedTitle|default(__('Branch')) %}
+    {% set templateTitle = branch.name %}
     {{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.branches.filter') }}
     {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: branch, area: routeArea, context: 'display' }) %}
     <div class="dropdown">
@@ -44,7 +44,7 @@
     {% if branch.locations|default %}
         {{ include(
             '@MUYourCityModule/Location/includeDisplayItemListManyOwn.html.twig',
-            { items: branch.locations }
+            { items: branch.locations, entity: 'branch' }
         ) }}
     {% else %}
         {{ __('No locations in this branch') }}

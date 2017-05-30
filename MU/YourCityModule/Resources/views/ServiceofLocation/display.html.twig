@@ -1,9 +1,9 @@
 {# purpose of this template: services of location display view #}
 {% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
 {% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
-{% block pageTitle %}{{ serviceOfLocation|muyourcitymodule_formattedTitle|default(__('Service of location')) }}{% endblock %}
+{% block pageTitle %}{{ serviceOfLocation.name }}{% endblock %}
 {% block title %}
-    {% set templateTitle = serviceOfLocation|muyourcitymodule_formattedTitle|default(__('Service of location')) %}
+    {% set templateTitle = serviceOfLocation.name %}
     {{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.servicesOflocation.filter') }}
     {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: serviceOfLocation, area: routeArea, context: 'display' }) %}
     <div class="dropdown">

@@ -1,9 +1,9 @@
 {# purpose of this template: parts display view #}
 {% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
 {% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
-{% block pageTitle %}{{ part|muyourcitymodule_formattedTitle|default(__('Part')) }}{% endblock %}
+{% block pageTitle %}{{ part.name }}{% endblock %}
 {% block title %}
-    {% set templateTitle = part|muyourcitymodule_formattedTitle|default(__('Part')) %}
+    {% set templateTitle = part.name %}
     {{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.parts.filter') }}
     {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: part, area: routeArea, context: 'display' }) %}
     <div class="dropdown">
@@ -44,7 +44,7 @@
     {% if locations|default %}
         {{ include(
             '@MUYourCityModule/Location/includeDisplayItemListManyOwn.html.twig',
-            { items: locations }
+            { items: locations, entity: 'part' }
         ) }}
     {% endif %}
 
