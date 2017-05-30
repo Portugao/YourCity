@@ -161,6 +161,7 @@ class ControllerHelper extends AbstractControllerHelper
     			} else {
     				if ($location['agreement'] == 1) {
     					$location['state'] = 'agreement';
+    					
     					$locations[] = $location;
     				} else {
     					if ($location['unclearTimes'] == 1) {
@@ -169,6 +170,7 @@ class ControllerHelper extends AbstractControllerHelper
     					} else {
     						if ($location['closedOn' . $actualDay] == 1) {
     							$location['state'] = 'closedThisDay';
+    							$location['showHours'] = $this->__('Today closed');
     							$locations[] = $location;
     						} else {
     							$location = $locationRepository->find($location['id']);
@@ -582,5 +584,94 @@ class ControllerHelper extends AbstractControllerHelper
     {
     	$uid = $this->currentUserApi->get('uid');
     	return $uid;
+    }
+    
+    /**
+     * Returns an array of additional template variables which are specific to the object type treated by this repository.
+     *
+     * @param string $objectType Name of treated entity type
+     * @param array  $parameters Given parameters to enrich
+     * @param string $context    Usage context (allowed values: controllerAction, api, actionHandler, block, contentType)
+     * @param array  $args       Additional arguments
+     *
+     * @return array List of template variables to be assigned
+     */
+    public function addTemplateParameters($objectType = '', array $parameters = [], $context = '', array $args = [])
+    {
+    	if (!in_array($context, ['controllerAction', 'api', 'actionHandler', 'block', 'contentType', 'mailz'])) {
+    		$context = 'controllerAction';
+    	}
+    
+    	if ($context == 'controllerAction') {
+    		if (!isset($args['action'])) {
+    			$routeName = $this->request->get('_route');
+    			$routeNameParts = explode('_', $routeName);
+    			$args['action'] = end($routeNameParts);
+    		}
+    		if (in_array($args['action'], ['index', 'view'])) {
+    			$parameters = array_merge($parameters, $this->collectionFilterHelper->getViewQuickNavParameters($objectType, $context, $args));
+    		}
+    
+    		// initialise Imagine runtime options
+    		if ($objectType == 'branch') {
+    			$thumbRuntimeOptions = [];
+    			$thumbRuntimeOptions[$objectType . 'ImageOfBranch'] = $this->imageHelper->getRuntimeOptions($objectType, 'imageOfBranch', $context, $args);
+    			$thumbRuntimeOptions['location' . 'ImageOfLocation'] = $this->imageHelper->getRuntimeOptions('location', 'imageOfLocation', 'locationInDisplay', $args);
+    			$parameters['thumbRuntimeOptions'] = $thumbRuntimeOptions;
+    		}
+    		if ($objectType == 'location') {
+    			$thumbRuntimeOptions = [];
+    			$thumbRuntimeOptions[$objectType . 'LogoOfYourLocation'] = $this->imageHelper->getRuntimeOptions($objectType, 'logoOfYourLocation', $context, $args);
+    			$thumbRuntimeOptions[$objectType . 'ImageOfLocation'] = $this->imageHelper->getRuntimeOptions($objectType, 'imageOfLocation', $context, $args);
+    			$thumbRuntimeOptions[$objectType . 'FirstImage'] = $this->imageHelper->getRuntimeOptions($objectType, 'firstImage', $context, $args);
+    			$thumbRuntimeOptions[$objectType . 'SecondImage'] = $this->imageHelper->getRuntimeOptions($objectType, 'secondImage', $context, $args);
+    			$thumbRuntimeOptions[$objectType . 'ThirdImage'] = $this->imageHelper->getRuntimeOptions($objectType, 'thirdImage', $context, $args);
+    			$thumbRuntimeOptions[$objectType . 'FourthImage'] = $this->imageHelper->getRuntimeOptions($objectType, 'fourthImage', $context, $args);
+    			$thumbRuntimeOptions[$objectType . 'FifthImage'] = $this->imageHelper->getRuntimeOptions($objectType, 'fifthImage', $context, $args);
+    			$thumbRuntimeOptions[$objectType . 'SixthImage'] = $this->imageHelper->getRuntimeOptions($objectType, 'sixthImage', $context, $args);
+    			$thumbRuntimeOptions[$objectType . 'FirstFile'] = $this->imageHelper->getRuntimeOptions($objectType, 'firstFile', $context, $args);
+    			$thumbRuntimeOptions[$objectType . 'SecondFile'] = $this->imageHelper->getRuntimeOptions($objectType, 'secondFile', $context, $args);
+    			$parameters['thumbRuntimeOptions'] = $thumbRuntimeOptions;
+    		}
+    		if ($objectType == 'part') {
+    			$thumbRuntimeOptions = [];
+    			$thumbRuntimeOptions[$objectType . 'ImageOfPart'] = $this->imageHelper->getRuntimeOptions($objectType, 'imageOfPart', $context, $args);
+    			$thumbRuntimeOptions['location' . 'ImageOfLocation'] = $this->imageHelper->getRuntimeOptions('location', 'imageOfLocation', 'locationInDisplay', $args);
+    			$parameters['thumbRuntimeOptions'] = $thumbRuntimeOptions;
+    		}
+    		if ($objectType == 'offer') {
+    			$thumbRuntimeOptions = [];
+    			$thumbRuntimeOptions[$objectType . 'ImageOfOffer'] = $this->imageHelper->getRuntimeOptions($objectType, 'imageOfOffer', $context, $args);
+    			$parameters['thumbRuntimeOptions'] = $thumbRuntimeOptions;
+    		}
+    		if ($objectType == 'menuOfLocation') {
+    			$thumbRuntimeOptions = [];
+    			$thumbRuntimeOptions[$objectType . 'ImageOfMenu'] = $this->imageHelper->getRuntimeOptions($objectType, 'imageOfMenu', $context, $args);
+    			$parameters['thumbRuntimeOptions'] = $thumbRuntimeOptions;
+    		}
+    		if ($objectType == 'dish') {
+    			$thumbRuntimeOptions = [];
+    			$thumbRuntimeOptions[$objectType . 'ImageOfDish'] = $this->imageHelper->getRuntimeOptions($objectType, 'imageOfDish', $context, $args);
+    			$parameters['thumbRuntimeOptions'] = $thumbRuntimeOptions;
+    		}
+    		if ($objectType == 'event') {
+    			$thumbRuntimeOptions = [];
+    			$thumbRuntimeOptions[$objectType . 'ImageOfEvent'] = $this->imageHelper->getRuntimeOptions($objectType, 'imageOfEvent', $context, $args);
+    			$parameters['thumbRuntimeOptions'] = $thumbRuntimeOptions;
+    		}
+    		if ($objectType == 'product') {
+    			$thumbRuntimeOptions = [];
+    			$thumbRuntimeOptions[$objectType . 'ImageOfProduct'] = $this->imageHelper->getRuntimeOptions($objectType, 'imageOfProduct', $context, $args);
+    			$parameters['thumbRuntimeOptions'] = $thumbRuntimeOptions;
+    		}
+    		if (in_array($args['action'], ['display', 'edit', 'view'])) {
+    			// use separate preset for images in related items
+    			$parameters['relationThumbRuntimeOptions'] = $this->imageHelper->getCustomRuntimeOptions('', '', 'MUYourCityModule_relateditem', $context, $args);
+    		}
+    	}
+    
+    	$parameters['featureActivationHelper'] = $this->featureActivationHelper;
+    
+    	return $parameters;
     }
 }
