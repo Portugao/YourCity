@@ -234,6 +234,10 @@ div.muyourcitymodule-view .avatar img {
 	color: #ff0000;
 }
 
+.locationClosedThis {
+	color: #ff0000;
+}
+
 .locationForEver {
 	color: #940b03;
 }
@@ -292,20 +296,20 @@ div.muyourcitymodule-view .avatar img {
 	border-radius: 5px;
 	border: 1px solid #ddd;
 	padding: 5px;
-	margin: 10px 0 0 0;
+	margin: 0 0 10px 0;
+    min-height: 120px;
+    list-style-type: none;
+}
+
+.item-list-img {
+	float: right;
+	margin: 0 0 0 15px;
 }
 
 
 .abo-location-list {
 	position: relative;
 	margin: 10px 0 0 0;
-}
-
-.item-list {
-	list-style-type: none;
-	/*font-size: 1.4em;*/
-	min-height: 160px;
-	margin: 0 0 10px 0;
 }
 
 .item-list .status-icon {
@@ -318,8 +322,8 @@ div.muyourcitymodule-view .avatar img {
 }
 
 .status-icon {
-	float: left;
-	margin: 0 15px 0 0;
+	/*float: left;*/
+	margin: 0;
 }
 
 .abo {
