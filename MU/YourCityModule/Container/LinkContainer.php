@@ -86,28 +86,6 @@ class LinkContainer extends AbstractLinkContainer
                 }
             }
 
-            if (true === $this->variableApi->get('MUYourCityModule', 'linkOwnImagesOfLocationOnAccountPage', true)) {
-                $objectType = 'imageOfLocation';
-                if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
-                    $links[] = [
-                        'url' => $this->router->generate('muyourcitymodule_' . strtolower($objectType) . '_view', ['own' => 1]),
-                        'text' => $this->__('My images of location', 'muyourcitymodule'),
-                        'icon' => 'list-alt'
-                    ];
-                }
-            }
-
-            if (true === $this->variableApi->get('MUYourCityModule', 'linkOwnFilesOfLocationOnAccountPage', true)) {
-                $objectType = 'fileOfLocation';
-                if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
-                    $links[] = [
-                        'url' => $this->router->generate('muyourcitymodule_' . strtolower($objectType) . '_view', ['own' => 1]),
-                        'text' => $this->__('My files of location', 'muyourcitymodule'),
-                        'icon' => 'list-alt'
-                    ];
-                }
-            }
-
             if (true === $this->variableApi->get('MUYourCityModule', 'linkOwnOffersOnAccountPage', true)) {
                 $objectType = 'offer';
                 if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
