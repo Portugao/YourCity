@@ -167,18 +167,9 @@
         {% else %}
         {{ __('No price information') }}
         {% endif %}
-        {% if product.location|default %}
-            <dt>{{ __('Location') }}</dt>
-            <dd>
-              {% if not isQuickView %}
-                  <a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': product.location.id, 'slug': product.location.slug }) }}">{% spaceless %}
-                    {{ product.location|muyourcitymodule_formattedTitle }}
-                  {% endspaceless %}</a>
-                  <a id="locationItem{{ product.location.id }}Display" href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': product.location.id, 'slug': product.location.slug, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ product.location|muyourcitymodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
-              {% else %}
-                  {{ product.location|muyourcitymodule_formattedTitle }}
-              {% endif %}
-            </dd>
+        {% if product.myLocation is not empty %}
+            <h3>{{ __('Location') }}:</h3> 
+            {{ product.myLocation|muyourcitymodule_listEntry('product', 'myLocation') }}
         {% endif %}
         
     </dl>
