@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Zikula 1.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-29 19:30+0200\n"
-"PO-Revision-Date: 2017-05-29 19:55+0200\n"
+"PO-Revision-Date: 2017-06-02 00:08+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -2463,7 +2463,7 @@ msgstr "Sonntag?"
 
 #: Form/Type/Base/AbstractProductType.php:337
 msgid "Enter the price of product of the product"
-msgstr ""
+msgstr "Geben Sie den Preis für das Produkt ein"
 
 #: Form/Type/Base/AbstractProductType.php:357
 msgid "Choose the price additional"
@@ -2483,6 +2483,8 @@ msgstr "Wähle den Preiszusatz"
 #: Form/Type/Base/AbstractMenuOfLocationType.php:355
 msgid "If you have more than one location, select the correct one!"
 msgstr ""
+"Wenn Sie mehr als eine Location haben, wählen Sie bitte die korrekte "
+"Location aus!"
 
 #: Form/Type/Base/AbstractProductType.php:385
 #: Form/Type/Base/AbstractEventType.php:396
@@ -2496,11 +2498,11 @@ msgstr "Wählen Sie Ihre Location"
 #: Form/Type/Base/AbstractEventType.php:152
 #: Form/Type/Base/AbstractEventType.php:154
 msgid "Maximum 100 characters; better only 57 for SEO."
-msgstr ""
+msgstr "Maximal 100 Zeichen; besser nur 57 für SEO."
 
 #: Form/Type/Base/AbstractEventType.php:159
 msgid "Enter the name of the event"
-msgstr ""
+msgstr "Geben Sie den Namen der Veranstaltung ein"
 
 #: Form/Type/Base/AbstractEventType.php:168
 #: Form/Type/Base/AbstractEventType.php:170
@@ -2511,15 +2513,15 @@ msgstr ""
 #: Form/Type/Base/AbstractMenuOfLocationType.php:188
 #: Form/Type/Base/AbstractMenuOfLocationType.php:190
 msgid "Maximum 2000 characters."
-msgstr ""
+msgstr "Maximum 2000 Zeichen."
 
 #: Form/Type/Base/AbstractEventType.php:175
 msgid "Enter the description of the event"
-msgstr ""
+msgstr "Geben Sie die Beschreibung der Veranstaltung ein"
 
 #: Form/Type/Base/AbstractEventType.php:203
 msgid "Enter the image of event of the event"
-msgstr ""
+msgstr "Laden Sie ein Foto zur Veranstaltung hoch"
 
 #: Form/Type/Base/AbstractEventType.php:223
 msgid "Choose the kind of event"
@@ -2527,19 +2529,19 @@ msgstr "Wählen Sie die Art der Veranstaltung"
 
 #: Form/Type/Base/AbstractEventType.php:239
 msgid "Enter the street of the event"
-msgstr ""
+msgstr "Geben Sie die Straße zur Veranstaltung ein"
 
 #: Form/Type/Base/AbstractEventType.php:250
 msgid "Enter the number of street of the event"
-msgstr ""
+msgstr "Geben Sie die Straßennummer zur Veranstaltung ein"
 
 #: Form/Type/Base/AbstractEventType.php:261
 msgid "Enter the zip code of the event"
-msgstr ""
+msgstr "Geben Sie die Postleitzahl ein"
 
 #: Form/Type/Base/AbstractEventType.php:272
 msgid "Enter the city of the event"
-msgstr ""
+msgstr "Geben Sie den Ort ein"
 
 #: Form/Type/Base/AbstractEventType.php:278
 msgid "Start date"
@@ -2547,7 +2549,7 @@ msgstr "Startdatum"
 
 #: Form/Type/Base/AbstractEventType.php:282
 msgid "Enter the start date of the event"
-msgstr ""
+msgstr "Geben Sie das Startdatum der Veranstaltung ein"
 
 #: Form/Type/Base/AbstractEventType.php:292
 msgid "End date"
@@ -2555,7 +2557,7 @@ msgstr "Enddatum"
 
 #: Form/Type/Base/AbstractEventType.php:296
 msgid "Enter the end date of the event"
-msgstr ""
+msgstr "Geben Sie das Enddatum der Veranstaltung ein"
 
 #: Form/Type/Base/AbstractEventType.php:306
 msgid "Start 2 date"
@@ -2563,15 +2565,15 @@ msgstr "Zweites Startdatum"
 
 #: Form/Type/Base/AbstractEventType.php:310
 msgid "Enter the start 2 date of the event"
-msgstr ""
+msgstr "Geben Sie das 2. Startdatum der Veranstaltung ein"
 
 #: Form/Type/Base/AbstractEventType.php:320
 msgid "End 2 date"
-msgstr ""
+msgstr "2. Enddatum"
 
 #: Form/Type/Base/AbstractEventType.php:324
 msgid "Enter the end 2 date of the event"
-msgstr ""
+msgstr "Geben Sie das 2. Enddatum der Veranstaltung ein"
 
 #: Form/Type/Base/AbstractEventType.php:337
 msgid ""
