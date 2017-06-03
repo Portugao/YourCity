@@ -318,6 +318,7 @@ class LocationController extends AbstractLocationController
             new Column('workflowState'),
             new Column('name'),
             new Column('letterForOrder'),
+            new Column('keywordsForLocation'),
             new Column('logoOfYourLocation'),
             new Column('description'),
             new Column('street'),
