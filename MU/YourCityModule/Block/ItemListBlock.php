@@ -13,7 +13,6 @@
 namespace MU\YourCityModule\Block;
 
 use MU\YourCityModule\Block\Base\AbstractItemListBlock;
-use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 
 /**
  * Generic item list block implementation class.
