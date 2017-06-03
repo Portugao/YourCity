@@ -13,9 +13,7 @@
 namespace MU\YourCityModule\Form\Type;
 
 use MU\YourCityModule\Form\Type\Base\AbstractAbonnementType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -23,5 +21,32 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class AbonnementType extends AbstractAbonnementType
 {
-    // feel free to extend the abonnement editing form type class here
+    /**
+     * Adds fields for incoming relationships.
+     *
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
+     */
+    public function addIncomingRelationshipFields(FormBuilderInterface $builder, array $options)
+    {
+        $queryBuilder = function(EntityRepository $er) {
+            // select without joins
+            return $er->getListQueryBuilder('', '', false);
+        };
+        $entityDisplayHelper = $this->entityDisplayHelper;
+        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
+            return $entityDisplayHelper->getFormattedTitle($entity);
+        };
+        $builder->add('location', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
+            'class' => 'MUYourCityModule:LocationEntity',
+            'choice_label' => $choiceLabelClosure,
+            'multiple' => false,
+            'expanded' => false,
+            'query_builder' => $queryBuilder,
+            'label' => $this->__('Location'),
+            'attr' => [
+                'title' => $this->__('Choose the location')
+            ]
+        ]);
+    }
 }
