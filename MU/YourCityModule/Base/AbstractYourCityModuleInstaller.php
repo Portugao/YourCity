@@ -265,12 +265,12 @@ abstract class AbstractYourCityModuleInstaller extends AbstractExtensionInstalle
      */
     public function upgrade($oldVersion)
     {
-    /*
+    
         $logger = $this->container->get('logger');
     
         // Upgrade dependent on old version number
         switch ($oldVersion) {
-            case '1.0.0':
+            case '0.1.0':
                 // do something
                 // ...
                 // update the database schema
