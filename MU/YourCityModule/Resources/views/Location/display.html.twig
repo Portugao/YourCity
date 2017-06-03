@@ -102,9 +102,6 @@
         {% endif %}</h4>
         <h3>{{ __('Part') }}</h3>
         <h4>{{ location.partOfCity|muyourcitymodule_listEntry('location', 'partOfCity') }}</h4>
-        {% if location.description is not empty %}
-            {{ location.description|safeHtml }}<br />
-        {% endif %}
 
         {% if location.street is not empty %}
             {{ location.street }} 
@@ -125,17 +122,19 @@
             {{ location.mobil }}<br />
         {% endif %}
         {% if location.homepage is not empty %}
-            {#{ __('Homepage') }#} 
-            {% if location.homepage is not empty %}
             {% if not isQuickView %}
-            <a href="{{ location.homepage }}" title="{{ __('Visit this page') }}" class="fa fa-external-link-square fa-2x"></a>
+                <a href="{{ location.homepage }}" title="{{ __('Visit this page') }}" class="fa fa-external-link-square fa-2x"></a>
             {% else %}
                 {{ location.homepage }}
             {% endif %}
-            {% else %}&nbsp;{% endif %}<br />
+        {% else %}
+            &nbsp;
+        {% endif %}<br /><br />
+        
+        {% if location.description is not empty %}
+            {{ location.description|safeHtml }}<br />
         {% endif %}
-
-               
+            
         <h3>{{ __('Opening hours') }}</h3>
         
         {% if location.agreement == false and location.unclearTimes == false and location.closedForEver == false %}
