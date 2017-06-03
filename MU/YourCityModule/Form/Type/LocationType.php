@@ -13,11 +13,92 @@
 namespace MU\YourCityModule\Form\Type;
 
 use MU\YourCityModule\Form\Type\Base\AbstractLocationType;
-
+use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Form\FormBuilderInterface;
 /**
  * Location editing form type implementation class.
  */
 class LocationType extends AbstractLocationType
 {
-    // feel free to extend the location editing form type class here
+    /**
+     * Adds fields for outgoing relationships.
+     *
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
+     */
+    public function addOutgoingRelationshipFields(FormBuilderInterface $builder, array $options)
+    {
+        $queryBuilder = function(EntityRepository $er) {
+            // select without joins
+            return $er->getListQueryBuilder('', '', false);
+        };
+        $entityDisplayHelper = $this->entityDisplayHelper;
+        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
+            return $entity['name'];
+        };
+        $builder->add('branches', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
+            'class' => 'MUYourCityModule:BranchEntity',
+            'choice_label' => $choiceLabelClosure,
+            'by_reference' => false,
+            'multiple' => true,
+            'expanded' => true,
+            'query_builder' => $queryBuilder,
+            'required' => false,
+            'label' => $this->__('Branches'),
+            'label_attr' => [
+                'class' => 'checkbox-inline'
+            ],
+            'attr' => [
+                'title' => $this->__('Choose the branches')
+            ]
+        ]);
+        $queryBuilder = function(EntityRepository $er) {
+            // select without joins
+            return $er->getListQueryBuilder('', '', false);
+        };
+        $entityDisplayHelper = $this->entityDisplayHelper;
+        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
+            return $entity['name'];
+        };
+        $builder->add('servicesOfLocation', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
+            'class' => 'MUYourCityModule:ServiceOfLocationEntity',
+            'choice_label' => $choiceLabelClosure,
+            'by_reference' => false,
+            'multiple' => true,
+            'expanded' => true,
+            'query_builder' => $queryBuilder,
+            'required' => false,
+            'label' => $this->__('Services of location'),
+            'label_attr' => [
+                'class' => 'checkbox-inline'
+            ],
+            'attr' => [
+                'title' => $this->__('Choose the services of location')
+            ]
+        ]);
+        $queryBuilder = function(EntityRepository $er) {
+            // select without joins
+            return $er->getListQueryBuilder('', '', false);
+        };
+        $entityDisplayHelper = $this->entityDisplayHelper;
+        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
+            return $entity['name'];
+        };
+        $builder->add('specialsOfLocation', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
+            'class' => 'MUYourCityModule:SpecialOfLocationEntity',
+            'choice_label' => $choiceLabelClosure,
+            'by_reference' => false,
+            'multiple' => true,
+            'expanded' => true,
+            'query_builder' => $queryBuilder,
+            'required' => false,
+            'label' => $this->__('Specials of location'),
+            'label_attr' => [
+                'class' => 'checkbox-inline'
+            ],
+            'attr' => [
+                'title' => $this->__('Choose the specials of location')
+            ]
+        ]);
+    }
 }
