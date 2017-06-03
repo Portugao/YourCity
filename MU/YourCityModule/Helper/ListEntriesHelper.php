@@ -15,6 +15,7 @@ namespace MU\YourCityModule\Helper;
 use MU\YourCityModule\Helper\Base\AbstractListEntriesHelper;
 use MU\YourCityModule\Entity\Factory\EntityFactory;
 use MU\YourCityModule\Helper\ControllerHelper;
+use Doctrine\Common\Collections\Criteria;
 
 /**
  * Helper implementation class for list field entries related methods.
@@ -29,6 +30,64 @@ class ListEntriesHelper extends AbstractListEntriesHelper
 	 * @var EntityFactory
 	 */
 	protected $entityFactory;
+	
+	/**
+	 * Return the name or names for a given list item.
+	 *
+	 * @param string $value      The dropdown value to process
+	 * @param string $objectType The treated object type
+	 * @param string $fieldName  The list field's name
+	 * @param string $delimiter  String used as separator for multiple selections
+	 *
+	 * @return string List item name
+	 */
+	public function resolve($value, $objectType = '', $fieldName = '', $delimiter = ', ')
+	{
+		if ((empty($value) && $value != '0') || empty($objectType) || empty($fieldName)) {
+			return $value;
+		}
+	
+		$isMulti = $this->hasMultipleSelection($objectType, $fieldName);
+		if (true === $isMulti) {
+			$value = $this->extractMultiList($value);
+		}
+	
+		$options = $this->getEntries($objectType, $fieldName);
+		$result = '';
+	
+		if (true === $isMulti) {
+			foreach ($options as $option) {
+				if (!in_array($option['value'], $value)) {
+					continue;
+				}
+				if (!empty($result)) {
+					$result .= $delimiter;
+				}
+				$result .= $option['text'];
+			}
+		} else {
+			foreach ($options as $option) {
+				if ($option['value'] != $value) {
+					continue;
+				}
+				$result = $option['text'];
+				break;
+			}
+		}
+		/*if ($objectType == 'product') {
+			$repository = $this->entityFactory->getRepository('location');
+			$criteria = new \Doctrine\Common\Collections\Criteria();
+			$criteria
+			->orWhere($criteria->expr()->contains('name', $result));
+			$locations = $repository->matching($criteria);
+			$result = '';
+			foreach ($locations as $location) {
+			$result = $location['name'] . 'Hallo';
+			}
+		}*/
+	
+		return $result;
+	}
 	
 	/**
 	 * Get 'part of city' list entries.
