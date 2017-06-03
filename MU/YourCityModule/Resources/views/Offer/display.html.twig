@@ -1,9 +1,9 @@
 {# purpose of this template: offers display view #}
 {% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
 {% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
-{% block pageTitle %}{{ offer|muyourcitymodule_formattedTitle|default(__('Offer')) }}{% endblock %}
+{% block pageTitle %}{{ offer.name }}{% endblock %}
 {% block title %}
-    {% set templateTitle = offer|muyourcitymodule_formattedTitle|default(__('Offer')) %}
+    {% set templateTitle = offer.name %}
     {{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.offers.filter') }}{% if routeArea == 'admin' %} <small>({{ offer.workflowState|muyourcitymodule_objectState(false)|lower }})</small>{% endif %}
     {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: offer, area: routeArea, context: 'display' }) %}
     <div class="dropdown">
@@ -47,7 +47,7 @@
         {% endif %}
         {% if offer.effectivUntil is not empty %}
             - {#{ __('Effectiv until') }#} 
-            <br />{{ offer.effectivUntil|localizeddate('medium', 'short') }}</h3>
+            {{ offer.effectivUntil|localizeddate('medium', 'short') }}</h3>
         {% endif %}
         
         {% if offer.percentOfOffer == 0 %}
@@ -76,9 +76,9 @@
             
         {% endif %}<br />
                        
-        {% if offer.text is not empty %}
-            {{ __('Description') }}
-            {{ offer.text|safeHtml }}<br />
+        {% if offer.description is not empty %}
+            <h4>{{ __('Description') }}</h4>
+            {{ offer.description|safeHtml }}<br />
         {% endif %}
 
         {% if offer.myLocation is not empty %}

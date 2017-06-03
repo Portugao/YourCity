@@ -6,11 +6,11 @@
             <img src="{{ item.logoOfYourLocation.getPathname()|imagine_filter('zkroot', relationThumbRuntimeOptions) }}" alt="{{ item|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ relationThumbRuntimeOptions.thumbnail.size[0] }}" height="{{ relationThumbRuntimeOptions.thumbnail.size[1] }}" class="img-rounded" />
     </div>
     <div class="col-md-10 location-h2">
-        <h2><a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': item.id, 'slug': item.slug }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ item|muyourcitymodule_formattedTitle }}</a></h2>
+        <h2><a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': item.id, 'slug': item.slug }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ item.name }}</a></h2>
     </div>
 {% else %}
     <div class="col-md-12 location-h2">
-        <h2><a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': item.id, 'slug': item.slug }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ item|muyourcitymodule_formattedTitle }}</a></h2>
+        <h2><a href="{{ path('muyourcitymodule_location_' ~ routeArea ~ 'display', { 'id': item.id, 'slug': item.slug }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ item.name }}</a></h2>
     </div>
 
 {% endif %}
@@ -54,10 +54,12 @@
     {% else %}
         <div class="col-md-6 abo-location-list offer">
     {% endif %}
-        {{ include(
+    {{ offer.name }} 
+        <a id="offerItem{{ offer.getKey() }}Display" href="{{ path('muyourcitymodule_offer_' ~ routeArea ~ 'display', { 'id': offer.getId(), 'raw': 1 }) }}" title="{{ __('Open quick view window') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ offer.name }}"><span class="fa fa-id-card-o"></span></a>
+        {#{ include(
         '@MUYourCityModule/Offer/includeDisplayItemListOneOwn.html.twig',
             { item: offer }
-        ) }}
+        ) }#}
         </div>
     {% endfor %}
         <br style="clear: both;" />
@@ -71,10 +73,12 @@
     {% else %}
         <div class="col-sm-6 col-md-3 abo-location-list product">
     {% endif %}
-        {{ include(
+    {{ product.name }} 
+    <a id="productItem{{ product.getKey() }}Display" href="{{ path('muyourcitymodule_product_' ~ routeArea ~ 'display', { 'id': product.getId(), 'raw': 1 }) }}" title="{{ __('Open quick view window') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ product.name }}"><span class="fa fa-id-card-o"></span></a>
+        {#{ include(
         '@MUYourCityModule/Product/includeDisplayItemListOneOwn.html.twig',
             { item: product }
-        ) }}
+        ) }#}
         </div>
     {% endfor %}
 {% endif %}
