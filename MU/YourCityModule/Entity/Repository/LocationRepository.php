@@ -15,6 +15,7 @@ namespace MU\YourCityModule\Entity\Repository;
 use MU\YourCityModule\Entity\Repository\Base\AbstractLocationRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
+use MU\YourCityModule\Entity\LocationEntity;
 
 /**
  * Repository class used to implement own convenience methods for performing certain DQL queries.
@@ -29,6 +30,65 @@ class LocationRepository extends AbstractLocationRepository
     protected $defaultSortingField = 'letterForOrder';
     
     /**
+     * Builds a generic Doctrine query supporting WHERE and ORDER BY.
+     *
+     * @param string  $where    The where clause to use when retrieving the collection (optional) (default='')
+     * @param string  $orderBy  The order-by clause to use when retrieving the collection (optional) (default='')
+     * @param boolean $useJoins Whether to include joining related objects (optional) (default=true)
+     * @param boolean $slimMode If activated only some basic fields are selected without using any joins (optional) (default=false)
+     *
+     * @return QueryBuilder Query builder instance to be further processed
+     */
+    public function genericBaseBlockQuery($where = '', $orderBy = '', $useJoins = true, $slimMode = false)
+    {
+    	// normally we select the whole table
+    	$selection = 'tbl';
+    
+    	if (true === $slimMode) {
+    		// but for the slim version we select only the basic fields, and no joins
+    
+    		$selection = 'tbl.id';
+    
+    
+    		$selection .= ', tbl.name';
+    
+    
+    		$selection .= ', tbl.zipCode';
+    
+    
+    		$selection .= ', tbl.city';
+    
+    
+    		$selection .= ', tbl.street';
+    
+    
+    		$selection .= ', tbl.numberOfStreet';
+    		$selection .= ', tbl.slug';
+    		$useJoins = false;
+    	}
+    
+    	if (true === $useJoins) {
+    		$selection .= $this->addBlockJoinsToSelection();
+    	}
+    
+    	$qb = $this->getEntityManager()->createQueryBuilder();
+    	$qb->select($selection)
+    	->from('MU\YourCityModule\Entity\LocationEntity', 'tbl');
+    
+    	if (true === $useJoins) {
+    		$this->addBlockJoinsToFrom($qb);
+    	}
+    
+    	if (!empty($where)) {
+    		$qb->andWhere($where);
+    	}
+    
+    	$this->genericBaseQueryAddOrderBy($qb, $orderBy);
+    
+    	return $qb;
+    }
+    
+    /**
      * Returns query builder for selecting a list of objects with a given where clause.
      *
      * @param string  $where    The where clause to use when retrieving the collection (optional) (default='')
@@ -40,11 +100,13 @@ class LocationRepository extends AbstractLocationRepository
      */
     public function getListQueryBuilder($where = '', $orderBy = '', $useJoins = true, $slimMode = false)
     {
+    	
+    	
     	$uid = \UserUtil::getVar('uid');
     	if (\UserUtil::isLoggedIn() && $uid != 2) {
     		$where = 'tbl.owner = ' . \DataUtil::formatForDisplay($uid) . ' or tbl.admin1 = ' . \DataUtil::formatForDisplay($uid)  .  ' or tbl.admin2 = ' . \DataUtil::formatForDisplay($uid);
     	}
-    	//$useJoins = false;
+    	$useJoins = false;
     	$qb = $this->genericBaseQuery($where, $orderBy, $useJoins, $slimMode);
     	if ((!$useJoins || !$slimMode) && null !== $this->collectionFilterHelper) {
     		$qb = $this->collectionFilterHelper->addCommonViewFilters('location', $qb);
@@ -80,5 +142,31 @@ class LocationRepository extends AbstractLocationRepository
         $qb->leftJoin('tbl.specialsOfLocation', 'tblSpecialsOfLocation');
     
         return $qb;
+    }
+    
+    /**
+     * Helper method to add join selections.
+     *
+     * @return String Enhancement for select clause
+     */
+    protected function addBlockJoinsToSelection()
+    {
+    	$selection = ', tblBranches';
+    
+    	return $selection;
+    }
+    
+    /**
+     * Helper method to add joins to from clause.
+     *
+     * @param QueryBuilder $qb Query builder instance used to create the query
+     *
+     * @return QueryBuilder The query builder enriched by additional joins
+     */
+    protected function addBlockJoinsToFrom(QueryBuilder $qb)
+    {
+    	$qb->leftJoin('tbl.branches', 'tblBranches');
+    
+    	return $qb;
     }
 }
