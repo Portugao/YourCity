@@ -293,7 +293,7 @@ class ControllerHelper extends AbstractControllerHelper
     
     		// OWN CODE
     		// retrieve item list with pagination    		
-    		if ($objectType == 'location' || $objectType == 'part' || $objectType == 'branch' || $objectType == 'serviceoflocation') {
+    		if ($objectType == 'location' || $objectType == 'branch') {
     			list($entities, $objectCount) = $repository->selectWherePaginated($where, $sort . ' ' . $sortdir, $currentPage, $resultsPerPage, false);
     			    			
     		} else {
@@ -311,6 +311,7 @@ class ControllerHelper extends AbstractControllerHelper
     	$templateParameters['items'] = $entities;
     	
     	if ($objectType == 'abonnement') {
+
     		$abos = '';
     		$eventRepository = $this->entityFactory->getRepository('event');
     		$menuRepository = $this->entityFactory->getRepository('menuOfLocation');
@@ -491,7 +492,7 @@ class ControllerHelper extends AbstractControllerHelper
     	if ($startTime != '') {
     	    if ($startTime < $actualTime) {
     	    	if ($endTime != '') {
-    		        if ($endTime >= $actualTime || $endTime == '00:00' || ($endTime > '00:00' && $endTime < $nextStartTime && $actualTime > $startTime)) {
+    		        if ($endTime >= $actualTime || $endTime == '00:00' || ($endTime > '00:00' && $endTime < $nextStartTime && $actualTime > $startTime) || $endTime > '00:00' && $endTime < '06:00' && $actualTime < $endTime) {
     			        $state = 'open';
     		        } else {
     		    	    $state = 'closed';
@@ -584,6 +585,21 @@ class ControllerHelper extends AbstractControllerHelper
     {
     	$uid = $this->currentUserApi->get('uid');
     	return $uid;
+    }
+    
+    /**
+     * 
+     */
+    public function getLocations()
+    {
+    	$repository = $this->entityFactory->getRepository('location');
+    	$locations = $repository->findAll();
+    	foreach ($locations as $location) {
+    		$ids[] = $location['id'];
+    		$idsString = implode(',', $ids);
+    	}
+    	$this->variableApi->set('MUYourCityModule', 'locationIds', $idsString);
+    	return;
     }
     
     /**
