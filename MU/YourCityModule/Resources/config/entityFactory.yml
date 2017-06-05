@@ -15,3 +15,6 @@ services:
         - "@mu_yourcity_module.listentries_helper"
         - "@=service('zikula_extensions_module.api.variable').get('MUYourCityModule', 'defaultLatitude', 0.00)"
         - "@=service('zikula_extensions_module.api.variable').get('MUYourCityModule', 'defaultLongitude', 0.00)"
+        - "@=service('zikula_extensions_module.api.variable').get('MUYourCityModule', 'city', '')" 
+        - "@=service('zikula_extensions_module.api.variable').get('MUYourCityModule', 'areaCode', '')"
+        - "@=service('zikula_extensions_module.api.variable').get('MUYourCityModule', 'standardZipCode', '')"       

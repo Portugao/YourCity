@@ -13,11 +13,73 @@
 namespace MU\YourCityModule\Entity\Factory;
 
 use MU\YourCityModule\Entity\Factory\Base\AbstractEntityInitialiser;
+use MU\YourCityModule\Entity\LocationEntity;
+use MU\YourCityModule\Helper\ListEntriesHelper;
 
 /**
  * Entity initialiser class used to dynamically apply default values to newly created entities.
  */
 class EntityInitialiser extends AbstractEntityInitialiser
 {
-    // feel free to customise the initialiser
+    /**
+     * @var string Default city
+     */
+    protected $defaultCity;
+    
+    /**
+     * @var string Default areaCode
+     */
+    protected $defaultAreaCode;
+    
+    /**
+     * @var string Default zipCode
+     */
+    protected $defaultZipCode;
+	
+	/**
+	 * EntityInitialiser constructor.
+	 *
+	 * @param ListEntriesHelper $listEntriesHelper Helper service for managing list entries
+	 * @param float $defaultLatitude Default latitude for geographical entities
+	 * @param float $defaultLongitude Default longitude for geographical entities
+	 * @param string $defaultCity Default city for locations
+	 * @param string $defaultAreaCode Default areaCode for locations
+	 * @param string $defaultZipCode Default zipCode for Locations
+	 */
+	public function __construct(ListEntriesHelper $listEntriesHelper, $defaultLatitude, $defaultLongitude, $defaultCity, $defaultAreaCode, $defaultZipCode)
+	{
+		$this->listEntriesHelper = $listEntriesHelper;
+		$this->defaultLatitude = $defaultLatitude;
+		$this->defaultLongitude = $defaultLongitude;
+		$this->defaultCity = $defaultCity;
+		$this->defaultAreaCode = $defaultAreaCode;
+		$this->defaultZipCode = $defaultZipCode;
+	}
+	
+    /**
+     * Initialises a given location instance.
+     *
+     * @param LocationEntity $entity The newly created entity instance
+     *
+     * @return LocationEntity The updated entity instance
+     */
+    public function initLocation(LocationEntity $entity)
+    {
+        $listEntries = $this->listEntriesHelper->getPartOfCityEntriesForLocation();
+        $items = [];
+        foreach ($listEntries as $listEntry) {
+            if (true === $listEntry['default']) {
+                $items[] = $listEntry['value'];
+            }
+        }
+        $entity->setPartOfCity(implode('###', $items));
+
+        $entity->setZipCode($this->defaultZipCode);
+        $entity->setCity($this->defaultCity);
+        $entity->setTelefon($this->defaultAreaCode);
+        $entity->setLatitude($this->defaultLatitude);
+        $entity->setLongitude($this->defaultLongitude);
+
+        return $entity;
+    }
 }
