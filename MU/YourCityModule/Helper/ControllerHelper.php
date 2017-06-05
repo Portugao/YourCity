@@ -17,6 +17,7 @@ use MU\YourCityModule\Helper\Base\AbstractControllerHelper;
 use Zikula\Component\SortableColumns\SortableColumns;
 use Zikula\Core\RouteUrl;
 use Zikula\UsersModule\Entity\UserEntity;
+use DataUtil;
 use DateUtil;
 use Doctrine\Common\Collections\Criteria;
 
@@ -588,7 +589,9 @@ class ControllerHelper extends AbstractControllerHelper
     }
     
     /**
+     * saves location informations in mod vars depending on different criterias
      * 
+     * return
      */
     public function getLocations()
     {
@@ -599,6 +602,52 @@ class ControllerHelper extends AbstractControllerHelper
     		$idsString = implode(',', $ids);
     	}
     	$this->variableApi->set('MUYourCityModule', 'locationIds', $idsString);
+    	return;
+    }
+    
+    /**
+     * saves location informations in mod vars depending on different criterias
+     *
+     * return
+     */
+    public function getBranchLocations()
+    {    	 
+    	$repository = $this->entityFactory->getRepository('location');
+    	// search location in branches
+    	$branchRepository = $this->entityFactory->getRepository('branch');
+    	$branches = $branchRepository->findAll();
+    	foreach ($branches as $branch) {
+    		$where = 'tblBranches.id = ' . $branch['id'];
+    		$thisLocations = $repository->selectWhere($where);
+    		foreach ($thisLocations as $thisLocation) {
+    			$branchLocationIds[$branch['id']][] = $thisLocation['id'];
+    		}
+    	}
+    	$branchLocationIds = serialize($branchLocationIds);
+    	$this->variableApi->set('MUYourCityModule', 'branchLocationIds', $branchLocationIds);
+    	return;
+    }
+    
+    /**
+     * saves location informations in mod vars depending on different criterias
+     *
+     * return
+     */
+    public function getPartLocations()
+    {
+    	$repository = $this->entityFactory->getRepository('location');
+    	// search locations in parts
+    	$partRepository = $this->entityFactory->getRepository('part');
+    	$parts = $partRepository->findAll();
+    	foreach ($parts as $part) {
+    		$where = 'tbl.partOfCity = \'' . DataUtil::formatForStore($part['name']) . '\'';
+    		$thisLocations = $repository->selectWhere($where);
+    		foreach ($thisLocations as $thisLocation) {
+    			$partLocationIds[$part['id']][] = $thisLocation['id'];
+    		}
+    	}
+    	$partLocationIds = serialize($partLocationIds);
+    	$this->variableApi->set('MUYourCityModule', 'partLocationIds', $partLocationIds);
     	return;
     }
     
