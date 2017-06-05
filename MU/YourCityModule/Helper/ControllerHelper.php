@@ -589,6 +589,15 @@ class ControllerHelper extends AbstractControllerHelper
     }
     
     /**
+     *
+     */
+    public function getModVar($name)
+    {
+    	$modVar = $this->variableApi->get('MUYourCityModule', $name);
+    	return $modVar;
+    }
+    
+    /**
      * saves location informations in mod vars depending on different criterias
      * 
      * return
@@ -618,7 +627,7 @@ class ControllerHelper extends AbstractControllerHelper
     	$branches = $branchRepository->findAll();
     	foreach ($branches as $branch) {
     		$where = 'tblBranches.id = ' . $branch['id'];
-    		$thisLocations = $repository->selectWhere($where);
+    		$thisLocations = $repository->selectWhereForModVars($where, '', false);
     		foreach ($thisLocations as $thisLocation) {
     			$branchLocationIds[$branch['id']][] = $thisLocation['id'];
     		}
@@ -641,7 +650,7 @@ class ControllerHelper extends AbstractControllerHelper
     	$parts = $partRepository->findAll();
     	foreach ($parts as $part) {
     		$where = 'tbl.partOfCity = \'' . DataUtil::formatForStore($part['name']) . '\'';
-    		$thisLocations = $repository->selectWhere($where);
+    		$thisLocations = $repository->selectWhereForModVars($where, '', false);
     		foreach ($thisLocations as $thisLocation) {
     			$partLocationIds[$part['id']][] = $thisLocation['id'];
     		}

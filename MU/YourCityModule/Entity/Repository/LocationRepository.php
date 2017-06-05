@@ -114,6 +114,25 @@ class LocationRepository extends AbstractLocationRepository
     }
     
     /**
+     * Selects a list of objects with a given where clause.
+     *
+     * @param string  $where    The where clause to use when retrieving the collection (optional) (default='')
+     * @param string  $orderBy  The order-by clause to use when retrieving the collection (optional) (default='')
+     * @param boolean $useJoins Whether to include joining related objects (optional) (default=true)
+     * @param boolean $slimMode If activated only some basic fields are selected without using any joins (optional) (default=false)
+     *
+     * @return ArrayCollection Collection containing retrieved locationEntity instances
+     */
+    public function selectWhereForModVars($where = '', $orderBy = '', $useJoins = true, $slimMode = false)
+    {
+    	$qb = $this->getListQueryBuilder($where, $orderBy, $useJoins, $slimMode);
+    
+    	$query = $this->getQueryFromBuilder($qb);
+    
+    	return $this->retrieveCollectionResult($query, false);
+    }
+    
+    /**
      * Helper method to add join selections.
      *
      * @return String Enhancement for select clause
