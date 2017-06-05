@@ -181,7 +181,7 @@ abstract class AbstractSpecialItemListBlockType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'muyourcitymodule_listblock';
+        return 'muyourcitymodule_speciallistblock';
     }
 
     /**

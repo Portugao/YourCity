@@ -38,7 +38,7 @@ class SpecialItemListBlockType extends AbstractSpecialItemListBlockType
     }
     
     /**
-     * Adds a sorting field.
+     * Adds a selection field.
      *
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
@@ -68,6 +68,13 @@ class SpecialItemListBlockType extends AbstractSpecialItemListBlockType
     			'multiple' => false,
     			'expanded' => false,
     			'required' => false
+    	]);
+    	$builder->add('slideshowspeed', IntegerType::class, [
+    			'label' => $this->__('Speed of the slideshow') . ':',
+    			'help' => $this->__('The time from item to item.') . ' ' . $this->__('Only digits are allowed.'),
+    			'empty_data' => 0,
+    			'required' => false,
+    			'scale' => 0
     	]);
 
     }

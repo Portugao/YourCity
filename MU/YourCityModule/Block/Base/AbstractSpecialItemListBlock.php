@@ -13,8 +13,7 @@
 namespace MU\YourCityModule\Block\Base;
 
 use Zikula\BlocksModule\AbstractBlockHandler;
-use Zikula\Core\AbstractBundle;
-use MU\YourCityModule\Block\Form\Type\ItemListBlockType;
+use MU\YourCityModule\Block\Form\Type\SpecialItemListBlockType;
 
 /**
  * Generic item list block base class.
@@ -120,7 +119,7 @@ abstract class AbstractSpecialItemListBlock extends AbstractBlockHandler
      */
     public function getFormClassName()
     {
-        return ItemListBlockType::class;
+        return SpecialItemListBlockType::class;
     }
     
     /**
@@ -155,7 +154,7 @@ abstract class AbstractSpecialItemListBlock extends AbstractBlockHandler
      */
     public function getFormTemplate()
     {
-        return '@MUYourCityModule/Block/itemlist_modify.html.twig';
+        return '@MUYourCityModule/Block/specialitemlist_modify.html.twig';
     }
     
     /**
