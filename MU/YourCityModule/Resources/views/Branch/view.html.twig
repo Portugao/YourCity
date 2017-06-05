@@ -10,11 +10,13 @@
     {#{ include('@MUYourCityModule/Branch/viewQuickNav.html.twig', { workflowStateFilter: false }) }#}{# see template file for available options #}
 
     {% if routeArea != 'admin' and items %}
+    <ul class="nav">
         {% for branch in items %}
-            <div class="col-xs-12 col-sm-6 col-md-4 branch-list">
-                <a href="{{ path('muyourcitymodule_branch_' ~ routeArea ~ 'display', { 'id': branch.id }) }}">{{ branch.name }}</a>
-            </div>   
+            <li class="col-xs-12 col-sm-6 col-md-4 branch-list">
+                <a class="btn btn-default btn-sm" href="{{ path('muyourcitymodule_branch_' ~ routeArea ~ 'display', { 'id': branch.id }) }}">{{ branch.name }}</a>
+            </li>   
         {% endfor %}
+    </ul>
     {% else %}
     {% endif %}
      <br style="clear: both;" />

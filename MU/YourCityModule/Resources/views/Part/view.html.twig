@@ -10,11 +10,13 @@
     {#{ include('@MUYourCityModule/Part/viewQuickNav.html.twig', { workflowStateFilter: false }) }#}{# see template file for available options #}
 
     {% if routeArea != 'admin' %}
+    <ul class="nav">
         {% for part in items %}
-            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 part-list">
-                <a href="{{ path('muyourcitymodule_part_' ~ routeArea ~ 'display', { 'id': part.id }) }}">{{ part.name }}</a>
-            </div>
+            <li class="col-xs-12 col-sm-6 col-md-4 col-lg-4 part-list">
+                <a class="btn btn-default btn-sm" href="{{ path('muyourcitymodule_part_' ~ routeArea ~ 'display', { 'id': part.id }) }}">{{ part.name }}</a>
+            </li>
         {% endfor %}
+    </ul>
     {% endif %}
     <br style="clear: both;" />
     
