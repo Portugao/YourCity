@@ -45,7 +45,9 @@ abstract class AbstractCronjobController extends AbstractController
     public function adminImportAction(Request $request)
     {
         $controllerHelper = $this->get('mu_yourcity_module.controller_helper');
-        $controllerHelper->getLocations();
+        /*$controllerHelper->getLocations();
+        $controllerHelper->getBranchLocations();*/
+        $controllerHelper->getPartLocations();
         return true;
     }
 
