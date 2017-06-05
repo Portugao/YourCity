@@ -1,9 +1,11 @@
 {# purpose of this template: locations display view #}
 {% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
 {% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
-{% block pageTitle %}{{ location|muyourcitymodule_formattedTitle|default(__('Location')) }}    {% if location.descriptionForGoogle is not empty %}
+{% block pageTitle %}{{ location.name }} {% if location.street != '' %} - {{ location.street }} {% if location.numberOfStreet != '' %} {{ location.numberOfStreet }}{% endif %}{% endif %}{% if location.zipCode != '' and location.city != '' %} - {{ location.zipCode }} {{ location.city }}{% endif %} - {{ __('Auf Achse in Deiner Stadt Bremen') }}   
+{% if location.descriptionForGoogle is not empty %}
     {{ setMetaTag('description', location.descriptionForGoogle) }}
-    {% endif %}{% endblock %}
+{% endif %}
+{% endblock %}
 {% block title %}
     {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: location, area: routeArea, context: 'display' }) %}
     <div class="dropdown">
@@ -154,10 +156,12 @@
                     {% endif %}
                 {% endif %}
                 {% if location.start2OnMonday is not empty %}
-                    <br />{{ location.start2OnMonday|localizeddate('none', 'short') }} -
+                    <br />{{ location.start2OnMonday|localizeddate('none', 'short') }}             
+                    {% if location.end2OnMonday is not empty %}
+                       - {{ location.end2OnMonday|localizeddate('none', 'short') }}
+                    {% else %}
+                        - {{ __('Open end') }}
                 {% endif %}
-                {% if location.end2OnMonday is not empty %}
-                    {{ location.end2OnMonday|localizeddate('none', 'short') }}
                 {% endif %}
             {% else %}
                 {{ __('Closed') }}
@@ -180,10 +184,12 @@
                 {% endif %}
                 {% endif %}
                 {% if location.start2OnTuesday is not empty %}
-                    <br />{{ location.start2OnTuesday|localizeddate('none', 'short') }} -
-                {% endif %}
+                    <br />{{ location.start2OnTuesday|localizeddate('none', 'short') }}
                 {% if location.end2OnTuesday is not empty %}
-                    {{ location.end2OnTuesday|localizeddate('none', 'short') }}
+                    - {{ location.end2OnTuesday|localizeddate('none', 'short') }}
+                {% else %}
+                    - {{ __('Open end') }}
+                {% endif %}
                 {% endif %}
             {% else %}
                 {{ __('Closed') }}
@@ -206,11 +212,13 @@
                 {% endif %}
                 {% endif %}
                 {% if location.start2OnWednesday is not empty %}
-                    <br />{{ location.start2OnWednesday|localizeddate('none', 'short') }} -
-                {% endif %}
+                    <br />{{ location.start2OnWednesday|localizeddate('none', 'short') }}
                 {% if location.end2OnWednesday is not empty %}
-                    {{ location.end2OnWednesday|localizeddate('none', 'short') }}
+                    - {{ location.end2OnWednesday|localizeddate('none', 'short') }}
+                {% else %}
+                    - {{ __('Open end') }}                    
                 {% endif %}
+                {% endif %}                
             {% else %}
                 {{ __('Closed') }}
             {% endif %}
@@ -232,10 +240,12 @@
                 {% endif %}
                 {% endif %}
                 {% if location.start2OnThursday is not empty %}
-                    <br />{{ location.start2OnThursday|localizeddate('none', 'short') }} -
-                {% endif %}
+                    <br />{{ location.start2OnThursday|localizeddate('none', 'short') }}
                 {% if location.end2OnThursday is not empty %}
-                    {{ location.end2OnThursday|localizeddate('none', 'short') }}
+                   - {{ location.end2OnThursday|localizeddate('none', 'short') }}
+                {% else %}
+                    - {{ __('Open end') }}                
+                {% endif %}                
                 {% endif %}
             {% else %}
                 {{ __('Closed') }}
@@ -258,11 +268,13 @@
                 {% endif %}
                 {% endif %}
                 {% if location.start2OnFriday is not empty %}
-                    <br />{{ location.start2OnFriday|localizeddate('none', 'short') }} -
-                {% endif %}
+                    <br />{{ location.start2OnFriday|localizeddate('none', 'short') }}
                 {% if location.end2OnFriday is not empty %}
                     {{ location.end2OnFriday|localizeddate('none', 'short') }}
+                {% else %}
+                    - {{ __('Open end') }}
                 {% endif %}
+                {% endif %}               
             {% else %}
                 {{ __('Closed') }}
             {% endif %}
@@ -284,10 +296,13 @@
                 {% endif %}
                 {% endif %}
                 {% if location.start2OnSaturday is not empty %}
-                    <br />{{ location.start2OnSaturday|localizeddate('none', 'short') }} -
-                {% endif %}
+                    <br />{{ location.start2OnSaturday|localizeddate('none', 'short') }}
+
                 {% if location.end2OnSaturday is not empty %}
                     {{ location.end2OnSaturday|localizeddate('none', 'short') }}
+                {% else %}
+                    - {{ __('Open end') }}
+                {% endif %}                
                 {% endif %}
             {% else %}
                 {{ __('Closed') }}
@@ -310,11 +325,13 @@
                 {% endif %}
                 {% endif %}
                 {% if location.start2OnSunday is not empty %}
-                    <br />{{ location.start2OnSunday|localizeddate('none', 'short') }} -
-                {% endif %}
+                    <br />{{ location.start2OnSunday|localizeddate('none', 'short') }}
                 {% if location.end2OnSunday is not empty %}
                     {{ location.end2OnSunday|localizeddate('none', 'short') }}
-                {% endif %}
+                 {% else %}
+                    - {{ __('Open end') }}
+                 {% endif %}               
+                 {% endif %}
             {% else %}
                 {{ __('Closed') }}
             {% endif %}
