@@ -99,14 +99,12 @@ class LocationRepository extends AbstractLocationRepository
      * @return QueryBuilder Query builder for the given arguments
      */
     public function getListQueryBuilder($where = '', $orderBy = '', $useJoins = true, $slimMode = false)
-    {
-    	
-    	
+    { 	
     	$uid = \UserUtil::getVar('uid');
     	if (\UserUtil::isLoggedIn() && $uid != 2) {
     		$where = 'tbl.owner = ' . \DataUtil::formatForDisplay($uid) . ' or tbl.admin1 = ' . \DataUtil::formatForDisplay($uid)  .  ' or tbl.admin2 = ' . \DataUtil::formatForDisplay($uid);
     	}
-    	$useJoins = false;
+    	//$useJoins = false;
     	$qb = $this->genericBaseQuery($where, $orderBy, $useJoins, $slimMode);
     	if ((!$useJoins || !$slimMode) && null !== $this->collectionFilterHelper) {
     		$qb = $this->collectionFilterHelper->addCommonViewFilters('location', $qb);
