@@ -575,6 +575,13 @@ services:
             - "@translator.default"
         tags:
             - { name: form.type }
+            
+    mu_yourcity_module.form.type.block.specialitemlist:
+        class: MU\YourCityModule\Block\Form\Type\SpecialItemListBlockType
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: form.type }
     
     mu_yourcity_module.form.type.branchfinder:
         class: MU\YourCityModule\Form\Type\Finder\BranchFinderType
