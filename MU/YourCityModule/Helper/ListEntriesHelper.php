@@ -255,7 +255,7 @@ class ListEntriesHelper extends AbstractListEntriesHelper
     		];
     	}
     	} else {
-    		$locations = $locationRepository->findBy(array(), array('name' => 'ASC'));
+    		$locations = $locationRepository->findBy(array('workflowState' => 'approved', 'closedForEver' => false), array('name' => 'ASC'));
     		foreach ($locations as $location) {
     			$states[] = [
     					'value'   => $location['id'],
