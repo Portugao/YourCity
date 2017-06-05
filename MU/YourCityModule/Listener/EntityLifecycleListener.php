@@ -22,46 +22,5 @@ use Symfony\Component\EventDispatcher\Event;
  */
 class EntityLifecycleListener extends AbstractEntityLifecycleListener
 {
-    /**
-     * The preUpdate event occurs before the database update operations to entity data.
-     * It is not called for a DQL UPDATE statement nor when the computed changeset is empty.
-     *
-     * @see http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#preupdate
-     *
-     * @param PreUpdateEventArgs $args Event arguments
-     */
-    public function preUpdate(PreUpdateEventArgs $args)
-    {
-        $entity = $args->getObject();
-        if (!$this->isEntityManagedByThisBundle($entity) || !method_exists($entity, 'get_objectType')) {
-            return;
-        }
-        
-        $uploadFields = $this->getUploadFields($entity->get_objectType());
-        foreach ($uploadFields as $uploadField) {
-            if (empty($entity[$uploadField])) {
-                continue;
-            }
-        
-            if (!($entity[$uploadField] instanceof File)) {
-                $entity[$uploadField] = new File($entity[$uploadField]);
-            }
-            $entity[$uploadField] = $entity[$uploadField]->getFilename();
-        }
-        
-        // create the filter event and dispatch it
-        $event = $this->createFilterEvent($entity);
-        
-        $this->eventDispatcher->dispatch(constant('\\MU\\YourCityModule\\YourCityEvents::' . strtoupper($entity->get_objectType()) . '_PRE_UPDATE'), $event);
-        if ($event->isPropagationStopped()) {
-            return false;
-        }
-        if (!$event) {
-        	return;
-        } else {
-        	$mailHelper = $this->container->get('mu_yourcity_module.notification_helper');
-        
-        	$mailHelper->processSubscriberMails($entity);
-        }
-    }
+
 }
