@@ -62,6 +62,26 @@ class LocationEntity extends BaseEntity
 	 */
 	protected $products;
 	
+	/**
+	 * var bool $isThereEvents
+	 */
+	protected  $isThereEvents;
+	
+	/**
+	 * var bool $isThereMenus
+	 */
+	protected $isThereMenus;
+	
+	/**
+	 * var bool $isThereOffers
+	 */
+	protected $isThereOffers;
+	
+	/**
+	 * var bool $isThereProducts
+	 */
+	protected $isThereProducts;
+	
 	
     /**
      * Returns the mobil.
@@ -204,6 +224,102 @@ class LocationEntity extends BaseEntity
     {
     	if ($this->products !== $products) {
     		$this->products = isset($products) ? $products : '';
+    	}
+    }
+    
+    /**
+     * Returns the isThereEvents
+     *
+     * @return bool
+     */
+    public function getIsThereEvents()
+    {
+    	return $this->isThereEvents;
+    }
+    
+    /**
+     * Sets the isThereEvents
+     *
+     * @param array $isThereEvents
+     *
+     * @return void
+     */
+    public function setIsThereEvents($isThereEvents)
+    {
+    	if ($this->isThereEvents !== $isThereEvents) {
+    		$this->isThereEvents = isset($isThereEvents) ? $isThereEvents : '';
+    	}
+    }
+    
+    /**
+     * Returns the isThereMenus
+     *
+     * @return bool
+     */
+    public function getIsThereMenus()
+    {
+    	return $this->isThereMenus;
+    }
+    
+    /**
+     * Sets the isThereMenus
+     *
+     * @param array $isThereMenus
+     *
+     * @return void
+     */
+    public function setIsThereMenus($isThereMenus)
+    {
+    	if ($this->isThereMenus !== $isThereMenus) {
+    		$this->isThereMenus = isset($isThereMenus) ? $isThereMenus : '';
+    	}
+    }
+    
+    /**
+     * Returns the isThereOffers
+     *
+     * @return bool
+     */
+    public function getIsThereOffers()
+    {
+    	return $this->isThereOffers;
+    }
+    
+    /**
+     * Sets the isThereOffers
+     *
+     * @param array $isThereOffers
+     *
+     * @return void
+     */
+    public function setIsThereOffers($isThereOffers)
+    {
+    	if ($this->isThereOffers !== $isThereOffers) {
+    		$this->isThereOffers = isset($isThereOffers) ? $isThereOffers : '';
+    	}
+    }
+    
+    /**
+     * Returns the isThereProducts
+     *
+     * @return bool
+     */
+    public function getIsThereProducts()
+    {
+    	return $this->isThereProducts;
+    }
+    
+    /**
+     * Sets the isThereProducts
+     *
+     * @param array $isThereProducts
+     *
+     * @return void
+     */
+    public function setIsThereProducts($isThereProducts)
+    {
+    	if ($this->isThereProducts !== $isThereProducts) {
+    		$this->isThereProducts = isset($isThereProducts) ? $isThereProducts : '';
     	}
     }
 }
