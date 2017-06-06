@@ -589,15 +589,6 @@ class ControllerHelper extends AbstractControllerHelper
     }
     
     /**
-     *
-     */
-    public function getModVar($name)
-    {
-    	$modVar = $this->variableApi->get('MUYourCityModule', $name);
-    	return $modVar;
-    }
-    
-    /**
      * saves location informations in mod vars depending on different criterias
      * 
      * return
