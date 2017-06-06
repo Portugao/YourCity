@@ -51,12 +51,54 @@ class ControllerHelper extends AbstractControllerHelper
     	}
     	
     	$entity = $templateParameters[$objectType];
-    	// we get a repository for locations
+    	// we get different repositoriess
     	$locationRepository = $this->modelHelper->getRepository('location');
     	$eventRepository = $this->modelHelper->getRepository('event');
     	$menuRepository = $this->modelHelper->getRepository('menuOfLocation');
     	$offerRepository = $this->modelHelper->getRepository('offer');
     	$productRepository = $this->modelHelper->getRepository('product');
+    	
+    	if ($objectType == 'branch' || $objectType == 'serviceOfLocation' || $objectType == 'specialOfLocation') {
+    		$locations = '';
+    		$entityLocations = $entity['locations'];
+    		$eventRepository = $this->entityFactory->getRepository('event');
+    		$menuRepository = $this->entityFactory->getRepository('menuOfLocation');
+    		$offerRepository = $this->entityFactory->getRepository('offer');
+    		$productRepository = $this->entityFactory->getRepository('product');
+    		if (count($entityLocations) > 0) {
+    		foreach ($entityLocations as $location) {
+    			$events = $eventRepository->findBy(array('myLocation' => $location['id']), array('name' => 'ASC'));
+    			if ($events) {
+    				$location['isThereEvents'] = 1;
+    			} else {
+    				$location['isThereEvents'] = 0;
+    			}
+    			$menus = $menuRepository->findBy(array('myLocation' => $location['id']), array('name' => 'ASC'));
+    			if ($menus) {
+    				$location['isThereMenus'] = 1;
+    			} else {
+    				$location['isThereMenus'] = 0;
+    			}
+    			$offers = $offerRepository->findBy(array('myLocation' => $location['id']), array('name' => 'ASC'));
+    			if ($offers) {
+    				$location['isThereOffers'] = 1;
+    			} else {
+    				$location['isThereOffers'] = 0;
+    			}
+    			$products = $productRepository->findBy(array('myLocation' => $location['id']), array('name' => 'ASC'));
+    			if ($products) {
+    				$location['isThereProducts'] = 1;
+    			} else {
+    				$location['isThereProducts'] = 0;
+    			}
+    			$locations[] = $location;
+    		}
+    		//if ($locations && is_array($locations)) {
+    			//unset($entity['locations']);
+    			$entity['locations'] = $locations;
+    		//}
+    		}
+    	}
     	
     	if ($objectType == 'part') {   		
     		//$criteria = array('partOfCity' => $entity['name']);   		
@@ -65,19 +107,19 @@ class ControllerHelper extends AbstractControllerHelper
     	
     	if ($objectType == 'location') {
     		//$criteria = array('partOfCity' => $entity['name']);
-    		$events = $eventRepository->findBy(array('id' => $entity['id']), array('name' => 'ASC'));
+    		$events = $eventRepository->findBy(array('myLocation' => $entity['id']), array('name' => 'ASC'));
     		if ($events) {
     			$templateParameters[$objectType]['events'] = $events;
     		}
-    		$menus = $menuRepository->findBy(array('id' => $entity['id']), array('name' => 'ASC'));
+    		$menus = $menuRepository->findBy(array('myLocation' => $entity['id']), array('name' => 'ASC'));
     		if ($menus) {
     			$templateParameters[$objectType]['menus'] = $menus;
     		}
-    		$offers = $offerRepository->findBy(array('id' => $entity['id']), array('name' => 'ASC'));
+    		$offers = $offerRepository->findBy(array('myLocation' => $entity['id']), array('name' => 'ASC'));
     		if ($offers) {
     			$templateParameters[$objectType]['offers'] = $offers;
     		}
-    		$products = $productRepository->findBy(array('id' => $entity['id']), array('name' => 'ASC'));
+    		$products = $productRepository->findBy(array('myLocation' => $entity['id']), array('name' => 'ASC'));
     		if ($products) {
     			$templateParameters[$objectType]['products'] = $products;
     		}
