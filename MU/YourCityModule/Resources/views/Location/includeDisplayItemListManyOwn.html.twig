@@ -93,6 +93,19 @@
                         {% endif %}
                     {% endfor %}
                     {% endif %}
+                    {% if location.isThereMenus %}
+                    <i class="fa fa-newspaper-o" aria-hidden="true"></i>
+                    {% endif %}
+                    {% if location.isThereEvents %}
+                    <i class="fa fa-calendar-plus-o" aria-hidden="true"></i>
+                    {% endif %}
+                    {% if location.isThereOffers %}
+                    <i class="fa fa-eye" aria-hidden="true"></i>
+                    {% endif %}
+                    {% if location.isThereProducts %}
+                    <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                    {% endif %}
+                    
                 </div>
             {% endfor %}
 {% endif %}
