@@ -21,20 +21,22 @@
     
     <div class="muyourcitymodule-location muyourcitymodule-display">
     
-    <div class="col-sm-3">
+    <div class="col-sm-4">
         {{ block('related_items') }}
+        {% if location.owner is sameas(NULL) and location.admin1 is sameas(NULL) and location.admin2 is sameas(NULL) %}
         {{ showblockposition('leftOfLocation') }}
+        {% endif %}
     </div>
     
-    <div class="col-sm-9">
+    <div class="col-sm-8">
     <div class="row">
-    <div class="col-md-2">
+    <div class="col-sm-2">
     <div id="location-logo">
             {% if location.logoOfYourLocation is not empty and location.logoOfYourLocationMeta|default %}
                         <a href="{{ location.logoOfYourLocationUrl }}" title="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if location.logoOfYourLocationMeta.isImage %} class="image-link"{% endif %}>
             {% if location.logoOfYourLocationMeta.isImage %}
                 {% set thumbOptions = attribute(thumbRuntimeOptions, 'locationLogoOfYourLocation') %}
-                <img src="{{ location.logoOfYourLocation.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+                <img src="{{ location.logoOfYourLocation.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail img-responsive" />
             {% else %}
                 {{ __('Download') }} ({{ location.logoOfYourLocationMeta.size|muyourcitymodule_fileSize(location.logoOfYourLocation.getPathname(), false, false) }})
             {% endif %}
@@ -43,7 +45,7 @@
     </div>
     </div>
     
-    <div class="col-md-6">
+    <div class="col-md-10">
     {% if location.state == 'closed' %}
         {% set state = 'locationClosed' %}
     {% endif %}
@@ -69,10 +71,17 @@
     
         {% set templateTitle = location.name %}
 		{{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.locations.filter') }}{% if routeArea == 'admin' %} <small>({{ location.workflowState|muyourcitymodule_objectState(false)|lower }})</small>{% endif %}</h2>
-    </div>
-    
-    <div class="col-md-4">  
-    {% if location.imageOfLocation is not empty %}
+    </div> 
+    </div>   
+    <div class="row">       
+        <div class="col-sm-12">    
+        <div class="col-sm-7">
+        {% if location.workflowState is not empty and routeArea == 'admin' %}
+            <dt>{{ __('State') }}</dt>
+            <dd>{{ location.workflowState|muyourcitymodule_listEntry('location', 'workflowState') }}</dd>
+        {% endif %}
+        
+        {% if location.imageOfLocation is not empty %}
         <div id="locationImage">{% if location.imageOfLocation is not empty and location.imageOfLocationMeta|default %}
                         <a href="{{ location.imageOfLocationUrl }}" title="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if location.imageOfLocationMeta.isImage %} class="image-link"{% endif %}>
             {% if location.imageOfLocationMeta.isImage %}
@@ -84,17 +93,8 @@
             </a>
             {% else %}&nbsp;{% endif %}
         </div>
-    {% endif %}
-     
-    </div>  
-    </div>   
-    <div class="row">       
-        <div class="col-sm-12">    
-        <div class="col-sm-7">
-        {% if location.workflowState is not empty and routeArea == 'admin' %}
-            <dt>{{ __('State') }}</dt>
-            <dd>{{ location.workflowState|muyourcitymodule_listEntry('location', 'workflowState') }}</dd>
         {% endif %}
+        <div class="col-md-6">
         <h3>{{ __('Branches') }}</h3>
         <h4>    {% if location.branches|default %}
         {{ include(
@@ -102,9 +102,13 @@
             { items: location.branches }
         ) }}
         {% endif %}</h4>
+        </div>
+        
+        <div class="col-md-6">
         <h3>{{ __('Part') }}</h3>
         <h4>{{ location.partOfCity|muyourcitymodule_listEntry('location', 'partOfCity') }}</h4>
-
+        </div>
+        <br style="clear: both;" />
         {% if location.street is not empty %}
             {{ location.street }} 
         {% endif %}
@@ -342,6 +346,10 @@
         {% elseif location.unclearTimes == true %}
             {{ __('Unclear Opening Hours') }}
         {% endif %}
+        
+        {% if location.openingHours is not empty %}
+        <br />{{ location.openingHours }}
+        {% endif %}
 
         {#% if location.latitude is not empty %}
             <dt>{{ __('Latitude') }}</dt>
@@ -385,14 +393,25 @@
         {% if location.offers is not empty %}
             <h4>{{ __('Offers') }}</h4>
             {% for offer in location.offers %}
-                {{ offer.name }}
+                {{ offer.name }}<br />
+                {% if offer.percentOfOffer != '' %}
+                {{ offer.percentOfOffer }}%
+                {% else %}
+                {{ offer.priceOfoffer|localizedcurrency('EUR')  }}
+                {% endif %}
             {% endfor %}
         {% endif %}
         
         {% if location.products is not empty %}
             <h4>{{ __('Products') }}</h4>
             {% for product in location.products %}
-                {{ product.name }}
+                {{ product.name }}<br />
+                {% if product.priceOfProduct %}
+                {{ product.priceOfProduct|localizedcurrency('EUR')  }} 
+                {% if product.priceAdditional %}
+                {{ product.priceAdditional|muyourcitymodule_listEntry('product', 'priceAdditional') }}
+                {% endif %}
+                {% endif %}
             {% endfor %}
         {% endif %}
             
