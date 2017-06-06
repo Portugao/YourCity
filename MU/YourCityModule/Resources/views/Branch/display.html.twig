@@ -1,7 +1,7 @@
 {# purpose of this template: branches display view #}
 {% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
 {% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
-{% block pageTitle %}{{ branch.name|safeHtml }}{% endblock %}
+{% block pageTitle %}{{ branch.name }}{% endblock %}
 {% block title %}
     {% set templateTitle = branch.name %}
     {{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.branches.filter') }}
