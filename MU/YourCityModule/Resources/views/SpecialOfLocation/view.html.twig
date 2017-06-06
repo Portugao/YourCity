@@ -10,11 +10,13 @@
     {#{ include('@MUYourCityModule/SpecialOfLocation/viewQuickNav.html.twig', { workflowStateFilter: false }) }}{# see template file for available options #}
 
     {% if routeArea != 'admin' and items %}
+    <ul class="nav">
         {% for special in items %}
-            <div class="col-xs-12 col-sm-6 col-md-4 branch-list">
-                <a href="{{ path('muyourcitymodule_specialoflocation_' ~ routeArea ~ 'display', { 'id': special.id }) }}">{{ special.name }}</a>
-            </div>   
+            <li class="col-xs-12 col-sm-6 col-md-4 special-list">
+                <a class="btn btn-default btn-sm" href="{{ path('muyourcitymodule_specialoflocation_' ~ routeArea ~ 'display', { 'id': special.id }) }}">{{ special.name }}</a>
+            </li>   
         {% endfor %}
+    </ul>
     {% else %}
     {% endif %}
      <br style="clear: both;" />
