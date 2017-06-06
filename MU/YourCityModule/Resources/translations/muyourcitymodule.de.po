@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: Zikula 1.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-29 19:30+0200\n"
-"PO-Revision-Date: 2017-06-02 00:08+0200\n"
+"PO-Revision-Date: 2017-06-06 10:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.1\n"
+"X-Generator: Poedit 2.0.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: Resources/views/plugins/function.muyourcitymoduleObjectTypeSelector.php:30
@@ -783,7 +783,7 @@ msgstr ""
 
 #: Form/Handler/PartOfMenu/Base/AbstractEditHandler.php:232
 msgid "Done! Part of menu created."
-msgstr "IErledigt! Kartenteil erstellt."
+msgstr "Erledigt! Kartenteil erstellt."
 
 #: Form/Handler/PartOfMenu/Base/AbstractEditHandler.php:234
 #: Form/Handler/PartOfMenu/Base/AbstractEditHandler.php:241
@@ -2584,6 +2584,8 @@ msgid ""
 "                If you do not enter a value, this event will be shown "
 "further after the end."
 msgstr ""
+"Hier können Sie Datum und Zeit eingeben, ab wann Ihre Veranstaltung "
+"angezeigt werden soll."
 
 #: Form/Type/Base/AbstractEventType.php:341
 msgid ""
@@ -2597,7 +2599,7 @@ msgstr ""
 
 #: Form/Type/Base/AbstractEventType.php:347
 msgid "Enter the in view from of the event"
-msgstr ""
+msgstr "Geben Sie den Beginn der Anzeige in der Übersicht an"
 
 #: Form/Type/Base/AbstractEventType.php:360
 msgid ""
@@ -2650,6 +2652,9 @@ msgid ""
 "            You can also give informations about the price if you do not "
 "want to use the special field for it."
 msgstr ""
+"Geben Sie eine Beschreibung des Angebots ein. Sie können außerdem "
+"Informationen zum Preis eingeben, wenn Sie nicht das dafür vorgesehene Feld "
+"nutzen möchten."
 
 #: Form/Type/Base/AbstractOfferType.php:173
 msgid "Enter the description of the offer"
@@ -2659,6 +2664,7 @@ msgstr "Geben Sie die Beschreibung für das Angebot ein"
 #: Form/Type/Base/AbstractOfferType.php:203
 msgid "If there is a special page on your homepage, enter the url here."
 msgstr ""
+"Geben Sie die URL ein, wenn es eine spezielle Seite auf Ihrer Homepage  gibt."
 
 #: Form/Type/Base/AbstractOfferType.php:208
 msgid "Enter the url to offer on homepage of the offer"
@@ -2666,36 +2672,36 @@ msgstr "Angebotsseite auf der Homepage"
 
 #: Form/Type/Base/AbstractOfferType.php:217
 msgid "Enter the image of offer of the offer"
-msgstr ""
+msgstr "Wählen Sie ein Bild für Ihr Angebot"
 
 #: Form/Type/Base/AbstractOfferType.php:229
 #: Form/Type/Base/AbstractOfferType.php:231
 msgid "Here you can enter the lower price for this offer."
-msgstr ""
+msgstr "Hier können Sie den reduzierten Preis angeben."
 
 #: Form/Type/Base/AbstractOfferType.php:236
 msgid "Enter the price of offer of the offer"
-msgstr ""
+msgstr "Geben Sie den Preis Ihres Angebots an"
 
 #: Form/Type/Base/AbstractOfferType.php:248
 #: Form/Type/Base/AbstractOfferType.php:250
 msgid "Here you can enter the normal price."
-msgstr ""
+msgstr "Hier können Sie den Normalpreis angeben."
 
 #: Form/Type/Base/AbstractOfferType.php:255
 msgid "Enter the normal price of the offer"
-msgstr ""
+msgstr "Geben Sie den Normalpreis Ihres Angebots an"
 
 #: Form/Type/Base/AbstractOfferType.php:267
 #: Form/Type/Base/AbstractOfferType.php:269
 msgid ""
 "If you enter something here, the informations for the prices will not get "
 "shown."
-msgstr ""
+msgstr "Wenn Sie hier etwas eingeben, werden Preise nicht angezeigt."
 
 #: Form/Type/Base/AbstractOfferType.php:274
 msgid "Enter the percent of offer of the offer."
-msgstr ""
+msgstr "Geben Sie den Prozentsatz Ihres Angebots an."
 
 #: Form/Type/Base/AbstractOfferType.php:274
 #: Form/Type/Base/AbstractAbonnementType.php:273
@@ -2838,25 +2844,25 @@ msgstr ""
 #: Block/Form/Type/Base/AbstractItemListBlockType.php:132
 #: Block/Form/Type/Base/AbstractItemListBlockType.php:134
 msgid "Only digits are allowed."
-msgstr ""
+msgstr "Nur Ziffern sind erlaubt."
 
 #: Form/Type/Base/AbstractOfferType.php:285
 #: Form/Type/Base/AbstractOfferType.php:287
 msgid "Enter here the date and time for the start of the offer."
-msgstr ""
+msgstr "Geben Sie hier Startdatum und Startzeit für Ihr Angebot ein."
 
 #: Form/Type/Base/AbstractOfferType.php:291
 msgid "Enter the effectiv from of the offer"
-msgstr ""
+msgstr "Geben Sie ein, ab wann Ihr Angebot gilt"
 
 #: Form/Type/Base/AbstractOfferType.php:304
 #: Form/Type/Base/AbstractOfferType.php:306
 msgid "Enter here the date and time for the end of the offer."
-msgstr ""
+msgstr "Geben Sie hier Enddatum und Endzeit für Ihr Angebot ein."
 
 #: Form/Type/Base/AbstractOfferType.php:310
 msgid "Enter the effectiv until of the offer"
-msgstr ""
+msgstr "Geben Sie ein, bis wann Ihr Angebot gültig ist"
 
 #: Form/Type/Base/AbstractOfferType.php:323
 msgid ""
@@ -2864,6 +2870,9 @@ msgid ""
 "                if you wish, that the offer is still there after the end, "
 "enter none."
 msgstr ""
+"Zu diesem Datum wird Ihr Angebot ins Archiv verschoben. Wenn Sie möchten, "
+"dass Ihr Angebot nach Beendigung dennoch angezeigt wird, lassen Sie dieses "
+"Feld leer."
 
 #: Form/Type/Base/AbstractOfferType.php:326
 msgid ""
@@ -2871,14 +2880,17 @@ msgid ""
 "            if you wish, that the offer is still there after the end, enter "
 "none."
 msgstr ""
+"Zu diesem Datum wird Ihr Angebot ins Archiv verschoben. Wenn Sie möchten, "
+"dass Ihr Angebot nach Beendigung dennoch angezeigt wird, lassen Sie dieses "
+"Feld leer."
 
 #: Form/Type/Base/AbstractOfferType.php:331
 msgid "Enter the in view from of the offer"
-msgstr ""
+msgstr "Geben Sie ein, ab wann Ihr Angebot in der Übersicht erscheinen soll."
 
 #: Form/Type/Base/AbstractOfferType.php:345
 msgid "Enter the in view until of the offer"
-msgstr ""
+msgstr "Geben Sie ein, bis wann Ihr Angebot in der Übersicht erscheinen soll."
 
 #: Form/Type/Base/AbstractLocationType.php:171
 msgid "Slogan"
@@ -2896,23 +2908,25 @@ msgstr "Geben Sie den Slogan der Location ein"
 #: Form/Type/Base/AbstractLocationType.php:190
 #: Form/Type/Base/AbstractLocationType.php:192
 msgid "Here you can enter keywords for search optimization."
-msgstr ""
+msgstr "Hier können Sie Schlüsselwörter für die Suche eingeben."
 
 #: Form/Type/Base/AbstractLocationType.php:197
 msgid "Enter the keywords for location of the location"
-msgstr ""
+msgstr "Geben Sie Schlüsselwörter für Ihre Location ein"
 
 #: Form/Type/Base/AbstractLocationType.php:206
 msgid ""
 "Enter the description for google and Co.\r\n"
 "                Only 170 characters are allowed."
 msgstr ""
+"Geben Sie die Beschreibung für Google & Co ein. Nur 170 Zeichen sind erlaubt."
 
 #: Form/Type/Base/AbstractLocationType.php:209
 msgid ""
 "Enter the description for google and Co.\r\n"
 "            Only 170 characters are allowed."
 msgstr ""
+"Geben Sie die Beschreibung für Google & Co ein. Nur 170 Zeichen sind erlaubt."
 
 #: Form/Type/Base/AbstractLocationType.php:215
 msgid "Enter the description for google of the location"
@@ -2923,16 +2937,20 @@ msgid ""
 "Enter a description of your location (company) and your products.\r\n"
 "                Maximum 2000 characters."
 msgstr ""
+"Geben Sie eine Beschreibung Ihrer Location (Ihres Unternehmens) und Ihrer "
+"Produkte ein. Maximum sind 2000 Zeichen."
 
 #: Form/Type/Base/AbstractLocationType.php:227
 msgid ""
 "Enter a description of your location (company) and your products.\r\n"
 "            Maximum 2000 characters."
 msgstr ""
+"Geben Sie eine Beschreibung Ihrer Location (Ihres Unternehmens) und Ihrer "
+"Produkte ein. Maximum sind 2000 Zeichen."
 
 #: Form/Type/Base/AbstractLocationType.php:233
 msgid "Enter the description of the location"
-msgstr ""
+msgstr "Geben Sie eine Beschreibung Ihrer Location ein"
 
 #: Form/Type/Base/AbstractLocationType.php:239
 msgid "Description 2"
@@ -2942,7 +2960,7 @@ msgstr "Beschreibung 2"
 msgid ""
 "Maximum 2000 characters.\r\n"
 "                Premium option."
-msgstr ""
+msgstr "Maximal 2000 Zeichen. Premium Option."
 
 #: Form/Type/Base/AbstractLocationType.php:245
 msgid ""
@@ -2952,7 +2970,7 @@ msgstr "Maximal 2000 Zeichen. Premium Option."
 
 #: Form/Type/Base/AbstractLocationType.php:251
 msgid "Enter the description 2 of the location"
-msgstr ""
+msgstr "Geben Sie ein 2. Beschreibung ein"
 
 #: Form/Type/Base/AbstractLocationType.php:279
 #: Form/Type/Base/AbstractLocationType.php:281
@@ -2960,6 +2978,8 @@ msgid ""
 "Enter the name of your company. If your company is registered somewhere, "
 "enter the exact name."
 msgstr ""
+"Geben Sie den Namen Ihres Unternehmens ein. Wenn dieses registriert ist, "
+"wählen Sie den exakten Namen."
 
 #: Form/Type/Base/AbstractLocationType.php:286
 msgid "Enter the name of the location"
@@ -2994,46 +3014,36 @@ msgid "Here you can upload an image, that represents your company."
 msgstr ""
 
 #: Form/Type/Base/AbstractLocationType.php:333
-#, fuzzy
-#| msgid "Image of location information"
 msgid "Enter the image of location of the location"
-msgstr "Information zum Bild der Location"
+msgstr "Wählen Sie ein Bild für Ihre Location"
 
 #: Form/Type/Base/AbstractLocationType.php:347
-#, fuzzy
-#| msgid "Services of location"
 msgid "Enter the street of the location"
-msgstr "Dienstleistungen der Location"
+msgstr "Geben Sie die Straße für die Location ein"
 
 #: Form/Type/Base/AbstractLocationType.php:358
 msgid "Enter the number of street of the location"
 msgstr ""
 
 #: Form/Type/Base/AbstractLocationType.php:369
-#, fuzzy
-#| msgid "Service of location"
 msgid "Enter the zip code of the location"
-msgstr "Dienstleistung der Location"
+msgstr "Geben Sie die Postleitzahl ein"
 
 #: Form/Type/Base/AbstractLocationType.php:380
-#, fuzzy
-#| msgid "Service of location"
 msgid "Enter the city of the location"
-msgstr "Dienstleistung der Location"
+msgstr "Geben Sie die Stadt ein"
 
 #: Form/Type/Base/AbstractLocationType.php:397
 msgid "Choose the part of city"
-msgstr ""
+msgstr "Wählen Sie den Stadtteil"
 
 #: Form/Type/Base/AbstractLocationType.php:413
 msgid "Enter the telefon of the location"
-msgstr ""
+msgstr "Geben Sie eine Telefonnummer ein"
 
 #: Form/Type/Base/AbstractLocationType.php:424
-#, fuzzy
-#| msgid "Special of location"
 msgid "Enter the mobil of the location"
-msgstr "Special der Location"
+msgstr "Geben Sie eine mobile Nummer ein"
 
 #: Form/Type/Base/AbstractLocationType.php:435
 msgid "Enter the homepage of the location"
@@ -3066,11 +3076,11 @@ msgstr "Unklare Öffnungszeiten?"
 #: Form/Type/Base/AbstractLocationType.php:504
 #: Form/Type/Base/AbstractLocationType.php:506
 msgid "Make extended informations about the opening hours!"
-msgstr "Geben Sie erweiterte Informationen zu den Öffnungszeiten ein"
+msgstr "Geben Sie die Öffnungszeiten ein, wenn Sie eine Location einreichen."
 
 #: Form/Type/Base/AbstractLocationType.php:511
 msgid "Enter the opening hours of the location"
-msgstr ""
+msgstr "Geben Sie die Öffnungszeiten frei ein"
 
 #: Form/Type/Base/AbstractLocationType.php:520
 msgid "closed on monday ?"
@@ -3102,11 +3112,11 @@ msgstr "Geben Sie den zweiten Start am Montag ein"
 
 #: Form/Type/Base/AbstractLocationType.php:565
 msgid "End 2 on monday"
-msgstr ""
+msgstr "Zweites Ende am Montag"
 
 #: Form/Type/Base/AbstractLocationType.php:570
 msgid "Enter the end 2 on monday of the location"
-msgstr ""
+msgstr "Geben Sie das zweite Ende am Montag ein"
 
 #: Form/Type/Base/AbstractLocationType.php:581
 msgid "closed on tuesday ?"
@@ -3114,11 +3124,11 @@ msgstr "Dienstags geschlossen?"
 
 #: Form/Type/Base/AbstractLocationType.php:587
 msgid "Start on tuesday"
-msgstr ""
+msgstr "Start am Dienstag"
 
 #: Form/Type/Base/AbstractLocationType.php:592
 msgid "Enter the start on tuesday of the location"
-msgstr ""
+msgstr "Geben Sie den Start am Dienstag ein"
 
 #: Form/Type/Base/AbstractLocationType.php:600
 msgid "End on tuesday"
@@ -3126,11 +3136,11 @@ msgstr "Ende am Dienstag"
 
 #: Form/Type/Base/AbstractLocationType.php:605
 msgid "Enter the end on tuesday of the location"
-msgstr ""
+msgstr "Geben Sie das Ende am Dienstag ein"
 
 #: Form/Type/Base/AbstractLocationType.php:613
 msgid "Start 2 on tuesday"
-msgstr ""
+msgstr "Zweiter Start am Dienstag"
 
 #: Form/Type/Base/AbstractLocationType.php:618
 msgid "Enter the start 2 on tuesday of the location"
@@ -3138,7 +3148,7 @@ msgstr ""
 
 #: Form/Type/Base/AbstractLocationType.php:626
 msgid "End 2 on tuesday"
-msgstr ""
+msgstr "Zweites Ende am Dienstag"
 
 #: Form/Type/Base/AbstractLocationType.php:631
 msgid "Enter the end 2 on tuesday of the location"
@@ -3150,11 +3160,11 @@ msgstr "Mittwochs geschlossen?"
 
 #: Form/Type/Base/AbstractLocationType.php:648
 msgid "Start on wednesday"
-msgstr ""
+msgstr "Start am Mittwoch"
 
 #: Form/Type/Base/AbstractLocationType.php:653
 msgid "Enter the start on wednesday of the location"
-msgstr ""
+msgstr "Geben Sie den Start am Mittwoch ein"
 
 #: Form/Type/Base/AbstractLocationType.php:661
 msgid "End on wednesday"
@@ -3162,11 +3172,11 @@ msgstr "Ende am Mittwoch"
 
 #: Form/Type/Base/AbstractLocationType.php:666
 msgid "Enter the end on wednesday of the location"
-msgstr ""
+msgstr "Geben Sie das Ende am Mittwoch ein"
 
 #: Form/Type/Base/AbstractLocationType.php:674
 msgid "Start 2 on wednesday"
-msgstr ""
+msgstr "Zweiter Start am Mittwoch"
 
 #: Form/Type/Base/AbstractLocationType.php:679
 msgid "Enter the start 2 on wednesday of the location"
@@ -3174,7 +3184,7 @@ msgstr ""
 
 #: Form/Type/Base/AbstractLocationType.php:687
 msgid "End 2 on wednesday"
-msgstr ""
+msgstr "Zweites Ende am Mittwoch"
 
 #: Form/Type/Base/AbstractLocationType.php:692
 msgid "Enter the end 2 on wednesday of the location"
@@ -3186,11 +3196,11 @@ msgstr "Donnerstags geschlossen?"
 
 #: Form/Type/Base/AbstractLocationType.php:709
 msgid "Start on thursday"
-msgstr ""
+msgstr "Start am Donnerstag"
 
 #: Form/Type/Base/AbstractLocationType.php:714
 msgid "Enter the start on thursday of the location"
-msgstr ""
+msgstr "Geben Sie den Start am Donnerstag ein"
 
 #: Form/Type/Base/AbstractLocationType.php:722
 msgid "End on thursday"
@@ -3198,11 +3208,11 @@ msgstr "Ende am Donnerstag"
 
 #: Form/Type/Base/AbstractLocationType.php:727
 msgid "Enter the end on thursday of the location"
-msgstr ""
+msgstr "Geben Sie das Ende am Donnerstag ein"
 
 #: Form/Type/Base/AbstractLocationType.php:735
 msgid "Start 2 on thursday"
-msgstr ""
+msgstr "Zweiter Start am Donnerstag"
 
 #: Form/Type/Base/AbstractLocationType.php:740
 msgid "Enter the start 2 on thursday of the location"
@@ -3210,7 +3220,7 @@ msgstr ""
 
 #: Form/Type/Base/AbstractLocationType.php:748
 msgid "End 2 on thursday"
-msgstr ""
+msgstr "Zweites Ende am Donnerstag"
 
 #: Form/Type/Base/AbstractLocationType.php:753
 msgid "Enter the end 2 on thursday of the location"
@@ -3222,23 +3232,23 @@ msgstr ""
 
 #: Form/Type/Base/AbstractLocationType.php:770
 msgid "Start on friday"
-msgstr ""
+msgstr "Start am Freitag"
 
 #: Form/Type/Base/AbstractLocationType.php:775
 msgid "Enter the start on friday of the location"
-msgstr ""
+msgstr "Geben Sie den Start am Freitag ein"
 
 #: Form/Type/Base/AbstractLocationType.php:783
 msgid "End on friday"
-msgstr ""
+msgstr "Ende am Freitag"
 
 #: Form/Type/Base/AbstractLocationType.php:788
 msgid "Enter the end on friday of the location"
-msgstr ""
+msgstr "Geben Sie das Ende am Freitag ein"
 
 #: Form/Type/Base/AbstractLocationType.php:796
 msgid "Start 2 on friday"
-msgstr ""
+msgstr "Zweiter Start am Freitag"
 
 #: Form/Type/Base/AbstractLocationType.php:801
 msgid "Enter the start 2 on friday of the location"
@@ -3262,7 +3272,7 @@ msgstr "Start am Samstag"
 
 #: Form/Type/Base/AbstractLocationType.php:836
 msgid "Enter the start on saturday of the location"
-msgstr ""
+msgstr "Geben Sie den Start am Samstag ein"
 
 #: Form/Type/Base/AbstractLocationType.php:844
 msgid "End on saturday"
@@ -3270,11 +3280,11 @@ msgstr "Ende am Samstag"
 
 #: Form/Type/Base/AbstractLocationType.php:849
 msgid "Enter the end on saturday of the location"
-msgstr ""
+msgstr "Geben Sie das Ende am Samstag ein"
 
 #: Form/Type/Base/AbstractLocationType.php:857
 msgid "Start 2 on saturday"
-msgstr ""
+msgstr "Zweiter Start am Samstag"
 
 #: Form/Type/Base/AbstractLocationType.php:862
 msgid "Enter the start 2 on saturday of the location"
@@ -3282,7 +3292,7 @@ msgstr ""
 
 #: Form/Type/Base/AbstractLocationType.php:870
 msgid "End 2 on saturday"
-msgstr ""
+msgstr "Zweites Ende am Samstag"
 
 #: Form/Type/Base/AbstractLocationType.php:875
 msgid "Enter the end 2 on saturday of the location"
@@ -3294,15 +3304,15 @@ msgstr "Sonntags geschlossen?"
 
 #: Form/Type/Base/AbstractLocationType.php:892
 msgid "Start on sunday"
-msgstr ""
+msgstr "Start am Sonntag"
 
 #: Form/Type/Base/AbstractLocationType.php:897
 msgid "Enter the start on sunday of the location"
-msgstr ""
+msgstr "Geben Sie den Start am Sonntag ein"
 
 #: Form/Type/Base/AbstractLocationType.php:905
 msgid "End on sunday"
-msgstr ""
+msgstr "Ende am Sonntag"
 
 #: Form/Type/Base/AbstractLocationType.php:910
 msgid "Enter the end on sunday of the location"
@@ -3310,7 +3320,7 @@ msgstr ""
 
 #: Form/Type/Base/AbstractLocationType.php:918
 msgid "Start 2 on sunday"
-msgstr ""
+msgstr "Zweiter Start am Sonntag"
 
 #: Form/Type/Base/AbstractLocationType.php:923
 msgid "Enter the start 2 on sunday of the location"
@@ -3318,7 +3328,7 @@ msgstr ""
 
 #: Form/Type/Base/AbstractLocationType.php:931
 msgid "End 2 on sunday"
-msgstr ""
+msgstr "Zweites Ende am Sonntag"
 
 #: Form/Type/Base/AbstractLocationType.php:936
 msgid "Enter the end 2 on sunday of the location"
@@ -3333,6 +3343,7 @@ msgstr "Erstes Bild"
 #: Form/Type/Base/AbstractLocationType.php:949
 msgid "This and the following images are optional for premium customers."
 msgstr ""
+"Dieses und die weiteren Bilder sind optional für einen erweiterten Eintrag."
 
 #: Form/Type/Base/AbstractLocationType.php:952
 msgid "Enter the first image of the location"
@@ -3350,7 +3361,7 @@ msgstr ""
 #: Form/Type/Base/AbstractLocationType.php:973
 #: Form/Type/Finder/Base/AbstractLocationFinderType.php:124
 msgid "Third image"
-msgstr ""
+msgstr "Drittes Bild"
 
 #: Form/Type/Base/AbstractLocationType.php:976
 msgid "Enter the third image of the location"
@@ -3405,11 +3416,11 @@ msgstr "Geben Sie den Inhaber der Location ein"
 
 #: Form/Type/Base/AbstractLocationType.php:1062
 msgid "Enter the admin 1 of the location"
-msgstr ""
+msgstr "Geben Sie den 1. Administrator der Location ein"
 
 #: Form/Type/Base/AbstractLocationType.php:1074
 msgid "Enter the admin 2 of the location"
-msgstr ""
+msgstr "Geben Sie den 2. Administrator der Location ein"
 
 #: Form/Type/Base/AbstractLocationType.php:1136
 msgid "Choose the branches"
@@ -3437,24 +3448,24 @@ msgstr ""
 
 #: Form/Type/Base/AbstractLocationType.php:1212
 msgid "Enter any additions about your content"
-msgstr ""
+msgstr "Geben Sie Anmerkungen zum Inhalt ein"
 
 #: Form/Type/Base/AbstractLocationType.php:1212
 msgid "Enter any additions about your changes"
-msgstr ""
+msgstr "Geben Sie Anmerkungen zu Ihren Änderungen ein"
 
 #: Form/Type/Base/AbstractAbonnementType.php:129
 #: Form/Type/Base/AbstractAbonnementType.php:131
 msgid "Enter the name of the location, you subscribe to."
-msgstr ""
+msgstr "Gib den Namen der abonnierten Location ein."
 
 #: Form/Type/Base/AbstractAbonnementType.php:136
 msgid "Enter the name of the abonnement"
-msgstr ""
+msgstr "Gib den Namen des Abonnements ein"
 
 #: Form/Type/Base/AbstractAbonnementType.php:145
 msgid "show menus ?"
-msgstr ""
+msgstr "Karten zeigen?"
 
 #: Form/Type/Base/AbstractAbonnementType.php:154
 msgid "send message for menus ?"
@@ -3514,7 +3525,7 @@ msgstr "Position des Abos"
 
 #: Form/Type/Base/AbstractAbonnementType.php:273
 msgid "Enter the position of abo of the abonnement."
-msgstr ""
+msgstr "Wähle die Position des Abonnements in der Übersicht."
 
 #: Form/Type/Base/AbstractAbonnementType.php:304
 msgid "Choose the location"
@@ -3531,34 +3542,34 @@ msgstr "Geben Sie den Namen der Dienstleistung an"
 
 #: Form/Type/Base/AbstractServiceOfLocationType.php:165
 msgid "Enter the description for google of the service of location"
-msgstr ""
+msgstr "Geben Sie die Beschreibung für Google der Dienstleistung an"
 
 #: Form/Type/Base/AbstractServiceOfLocationType.php:177
 msgid "Enter the description of the service of location"
-msgstr ""
+msgstr "Geben Sie eine Beschreibung der Dienstleistung ein"
 
 #: Form/Type/Base/AbstractServiceOfLocationType.php:202
 msgid "Icon for service"
-msgstr ""
+msgstr "Icon für diesen Service"
 
 #: Form/Type/Base/AbstractServiceOfLocationType.php:205
 #: Form/Type/Base/AbstractServiceOfLocationType.php:207
 #: Form/Type/Base/AbstractSpecialOfLocationType.php:210
 #: Form/Type/Base/AbstractSpecialOfLocationType.php:212
 msgid "Enter a bootstrap icon."
-msgstr ""
+msgstr "Gib einen Bootstrap Icon ein."
 
 #: Form/Type/Base/AbstractServiceOfLocationType.php:212
 msgid "Enter the icon for service of the service of location"
-msgstr ""
+msgstr "Geben Sie einen Icon ein."
 
 #: Form/Type/Base/AbstractDishType.php:174
 msgid "Enter the name of the dish"
-msgstr ""
+msgstr "geben Sie den Namen des Gerichts ein"
 
 #: Form/Type/Base/AbstractDishType.php:190
 msgid "Enter the description of the dish"
-msgstr ""
+msgstr "Geben Sie eine Beschreibung des Gerichts, Getränks ein"
 
 #: Form/Type/Base/AbstractDishType.php:226
 msgid "Choose the kind of dish"
@@ -3566,11 +3577,11 @@ msgstr "Wählen Sie die Art des Gerichts"
 
 #: Form/Type/Base/AbstractDishType.php:240
 msgid "Enter the image of dish of the dish"
-msgstr ""
+msgstr "Wählen Sie ein Bild für das Gericht, Getränk."
 
 #: Form/Type/Base/AbstractDishType.php:254
 msgid "Enter the price of dish of the dish"
-msgstr ""
+msgstr "Geben Sie einen Preis ein"
 
 #: Form/Type/Base/AbstractDishType.php:266
 #: Form/Type/Base/AbstractDishType.php:268
@@ -3578,56 +3589,52 @@ msgid ""
 "Enter the numbers of ingredients, that you entered in the additional remarks "
 "of your menu!"
 msgstr ""
+"Geben Sie hier die Nummern der Zutaten ein, die Sie in den Anmerkungen Ihrer "
+"Karte angegeben haben."
 
 #: Form/Type/Base/AbstractDishType.php:273
 msgid "Enter the ingredients of the dish"
-msgstr ""
+msgstr "Geben Sie die Zutaten ein"
 
 #: Form/Type/Base/AbstractDishType.php:284
 msgid "Enter the position of dish of the dish."
-msgstr ""
+msgstr "Wählen Sie die Position für das Gericht."
 
 #: Form/Type/Base/AbstractDishType.php:340
 #: Form/Type/Base/AbstractDishType.php:361
 #: Form/Type/Base/AbstractPartOfMenuType.php:258
 msgid "Please choose an option"
-msgstr ""
+msgstr "Bitte wählen Sie ein Option"
 
 #: Form/Type/Base/AbstractDishType.php:344
 #: Form/Type/Base/AbstractPartOfMenuType.php:262
-#, fuzzy
-#| msgid "Menu of location"
 msgid "Choose the menu of location"
-msgstr "Karte der Location"
+msgstr "Wählen Sie die Karte einer Location"
 
 #: Form/Type/Base/AbstractDishType.php:365
-#, fuzzy
-#| msgid "Part of menu"
 msgid "Choose the part of menu"
-msgstr "Teil der Karte"
+msgstr "Wählen Sie einen Teil der Karte"
 
 #: Form/Type/Base/AbstractSpecialOfLocationType.php:148
 #: Form/Type/Base/AbstractSpecialOfLocationType.php:150
 msgid "Only 100 characters, better only 57."
-msgstr ""
+msgstr "Nur 100 Zeichen, besser 57."
 
 #: Form/Type/Base/AbstractSpecialOfLocationType.php:155
-#, fuzzy
-#| msgid "Special of location"
 msgid "Enter the name of the special of location"
-msgstr "Special der Location"
+msgstr "Geben Sie den Namen des Special ein"
 
 #: Form/Type/Base/AbstractSpecialOfLocationType.php:166
 msgid "Enter the description for google of the special of location"
-msgstr ""
+msgstr "Geben Sie eine Beschreibung für Google zum Special ein"
 
 #: Form/Type/Base/AbstractSpecialOfLocationType.php:182
 msgid "Enter the description of the special of location"
-msgstr ""
+msgstr "Geben Sie eine Beschreibung des Specials an"
 
 #: Form/Type/Base/AbstractSpecialOfLocationType.php:207
 msgid "Icon for special"
-msgstr ""
+msgstr "Icon für das Special"
 
 #: Form/Type/Base/AbstractSpecialOfLocationType.php:217
 msgid "Enter the icon for special of the special of location"
@@ -3647,7 +3654,7 @@ msgstr "Geben Sie die Stadt ein"
 
 #: Form/Type/Base/AbstractConfigType.php:127
 msgid "Standard zip code"
-msgstr ""
+msgstr "Standard Postleitzahl"
 
 #: Form/Type/Base/AbstractConfigType.php:133
 msgid "Enter the standard zip code."
@@ -3655,7 +3662,7 @@ msgstr ""
 
 #: Form/Type/Base/AbstractConfigType.php:137
 msgid "Area code"
-msgstr "Postleitzahl"
+msgstr "Vorwahl"
 
 #: Form/Type/Base/AbstractConfigType.php:143
 msgid "Enter the area code."
@@ -3690,7 +3697,7 @@ msgstr ""
 
 #: Form/Type/Base/AbstractConfigType.php:202
 msgid "Link own branches on account page"
-msgstr ""
+msgstr "Branchen Link im Account anzeigen"
 
 #: Form/Type/Base/AbstractConfigType.php:205
 #: Form/Type/Base/AbstractConfigType.php:207
@@ -3704,7 +3711,7 @@ msgstr ""
 
 #: Form/Type/Base/AbstractConfigType.php:215
 msgid "Location entries per page"
-msgstr ""
+msgstr "Einträge pro Seite für Locations"
 
 #: Form/Type/Base/AbstractConfigType.php:218
 #: Form/Type/Base/AbstractConfigType.php:220
@@ -3717,7 +3724,7 @@ msgstr ""
 
 #: Form/Type/Base/AbstractConfigType.php:230
 msgid "Link own locations on account page"
-msgstr ""
+msgstr "Locations Link im Account anzeigen"
 
 #: Form/Type/Base/AbstractConfigType.php:233
 #: Form/Type/Base/AbstractConfigType.php:235
@@ -3744,7 +3751,7 @@ msgstr ""
 
 #: Form/Type/Base/AbstractConfigType.php:258
 msgid "Link own parts on account page"
-msgstr ""
+msgstr "Stadttteile Link im Account anzeigen"
 
 #: Form/Type/Base/AbstractConfigType.php:261
 #: Form/Type/Base/AbstractConfigType.php:263
@@ -3769,10 +3776,8 @@ msgid "Enter the offer entries per page."
 msgstr ""
 
 #: Form/Type/Base/AbstractConfigType.php:286
-#, fuzzy
-#| msgid "Url to offer on homepage"
 msgid "Link own offers on account page"
-msgstr "Angebotsseite auf der Homepage"
+msgstr "Angebote Link im Account anzeigen"
 
 #: Form/Type/Base/AbstractConfigType.php:289
 #: Form/Type/Base/AbstractConfigType.php:291
@@ -3784,10 +3789,8 @@ msgid "The link own offers on account page option."
 msgstr ""
 
 #: Form/Type/Base/AbstractConfigType.php:299
-#, fuzzy
-#| msgid "Menu of location information"
 msgid "Menu of location entries per page"
-msgstr "Information zur Karte der Location"
+msgstr "Einträge pro Seite für Karten"
 
 #: Form/Type/Base/AbstractConfigType.php:302
 #: Form/Type/Base/AbstractConfigType.php:304
@@ -3814,10 +3817,8 @@ msgid "The link own menus of location on account page option."
 msgstr ""
 
 #: Form/Type/Base/AbstractConfigType.php:327
-#, fuzzy
-#| msgid "Part of menu information"
 msgid "Part of menu entries per page"
-msgstr "Information zum Teil der Karte"
+msgstr "Einträge pro Seite für Kartenteile"
 
 #: Form/Type/Base/AbstractConfigType.php:330
 #: Form/Type/Base/AbstractConfigType.php:332
@@ -5643,11 +5644,11 @@ msgstr "Inhalt wurde aktualisiert"
 
 #: Helper/Base/AbstractNotificationHelper.php:361
 msgid "Your submission has been deleted"
-msgstr "Ihre Einreichung wurde gelöscht"
+msgstr "Diese Location wurde gelöscht"
 
 #: Helper/Base/AbstractNotificationHelper.php:363
 msgid "Your submission has been updated"
-msgstr "Ihre Einreichung wurde aktualisiert"
+msgstr "Diese Location wurde aktualisiert"
 
 #: Helper/Base/AbstractListEntriesHelper.php:417
 #: Helper/Base/AbstractListEntriesHelper.php:450
