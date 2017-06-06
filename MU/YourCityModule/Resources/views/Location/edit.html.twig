@@ -10,6 +10,7 @@
 {% block title mode == 'create' ? __('Create location') : __('Edit location') %}
 {% block admin_page_icon mode == 'create' ? 'plus' : 'pencil-square-o' %}
 {% block content %}
+{% set uid = currentUser.get('uid') %}
     <div class="muyourcitymodule-location muyourcitymodule-edit">
         {% form_theme form with [
             '@MUYourCityModule/Form/bootstrap_3.html.twig',
@@ -39,12 +40,30 @@
                                 <legend>{{ language|languageName|safeHtml }}</legend>
                                 {% if language == app.request.locale %}
                                     {{ form_row(form.slogan) }}
+                                    {% if uid != 2 %}
+                                    <div class="hidden">            
+                                    {% endif %}
                                     {{ form_row(form.keywordsForLocation) }}
                                     {{ form_row(form.descriptionForGoogle) }}
+                                    {% if uid != 2 %}
+                                    </div>
+                                    {% endif %}
                                     {{ form_row(form.description) }}
+                                    {% if uid != 2 %}
+                                    <div class="hidden">            
+                                    {% endif %}
                                     {{ form_row(form.description2) }}
+                                    {% if uid != 2 %}
+                                    </div>
+                                    {% endif %}
                                 {% else %}
+                                    {% if uid != 2 %}
+                                    <div class="hidden">            
+                                    {% endif %}                               
                                     {{ form_row(attribute(form, 'translations' ~ language)) }}
+                                    {% if uid != 2 %}
+                                    </div>
+                                    {% endif %}
                                 {% endif %}
                             </fieldset>
                         </div>
@@ -56,10 +75,18 @@
             <fieldset>
                 <legend>{{ language|languageName|safeHtml }}</legend>
                 {{ form_row(form.slogan) }}
+                {% if uid != 2 %}
+                <div class="hidden">
                 {{ form_row(form.keywordsForLocation) }}
                 {{ form_row(form.descriptionForGoogle) }}
+                </div>
+                {% endif %}
                 {{ form_row(form.description) }}
+                {% if uid != 2 %}
+                <div class="hidden">
                 {{ form_row(form.description2) }}
+                </div>
+                {% endif %}
             </fieldset>
         {% endif %}
         <fieldset>
@@ -83,6 +110,9 @@
             {{ form_row(form.agreement) }}
             {{ form_row(form.unclearTimes) }}
             {{ form_row(form.openingHours) }}
+            {% if uid != 2 %}
+            <div class="hidden">            
+            {% endif %}
             {{ form_row(form.closedOnMonday) }}
             {{ form_row(form.startOnMonday) }}
             {{ form_row(form.endOnMonday) }}
@@ -129,10 +159,13 @@
             {{ form_row(form.owner) }}
             {{ form_row(form.admin1) }}
             {{ form_row(form.admin2) }}
+            {% if uid != 2 %}
+            </div>
+            {% endif %}
             {{ form_row(form.latitude) }}
             {{ form_row(form.longitude) }}
         </fieldset>
-        
+        {{ __('Click into the map for setting the correct position of the marker for your submission, if you like!') }}
         <fieldset class="muyourcitymodule-map">
             <legend>{{ __('Map') }}</legend>
             <div id="mapContainer" class="muyourcitymodule-mapcontainer">
@@ -143,6 +176,9 @@
             '@MUYourCityModule/Branch/includeSelectMany.html.twig',
             { group: 'location', alias: 'branches', aliasReverse: 'locations', mandatory: false, idPrefix: 'yourcityLocation_Branches', linkingItem: location, displayMode: 'choices' }
         ) }}
+        {% if uid != 2 %}
+        <div class="hidden">
+        {% endif %}
         {{ include(
             '@MUYourCityModule/ServiceOfLocation/includeSelectMany.html.twig',
             { group: 'location', alias: 'servicesOfLocation', aliasReverse: 'locations', mandatory: false, idPrefix: 'yourcityLocation_ServicesOfLocation', linkingItem: location, displayMode: 'choices' }
@@ -151,6 +187,9 @@
             '@MUYourCityModule/SpecialOfLocation/includeSelectMany.html.twig',
             { group: 'location', alias: 'specialsOfLocation', aliasReverse: 'locations', mandatory: false, idPrefix: 'yourcityLocation_SpecialsOfLocation', linkingItem: location, displayMode: 'choices' }
         ) }}
+        {% if uid != 2 %}
+        </div>
+        {% endif %}
         {% if mode != 'create' %}
             {{ include('@MUYourCityModule/Helper/includeStandardFieldsEdit.html.twig', { obj: location }) }}
         {% endif %}
@@ -165,12 +204,14 @@
                 </fieldset>
             {% endfor %}
         {% endif %}
-        
+
         <fieldset>
             <legend>{{ __('Communication') }}</legend>
             {{ form_row(form.additionalNotificationRemarks) }}
         </fieldset>
-        
+
+        {% if uid != 2 %}
+        <div class="hidden">       
         {% if form.moderationSpecificCreator is defined %}
             <fieldset id="moderationFieldsSection">
                 <legend>{{ __('Moderation') }} <i class="fa fa-expand"></i></legend>
@@ -180,7 +221,8 @@
                 </div>
             </fieldset>
         {% endif %}
-        
+        </div>
+        {% endif %}
         {# include return control #}
         {% if mode == 'create' %}
             <fieldset>
