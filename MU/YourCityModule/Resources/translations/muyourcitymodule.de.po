@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Zikula 1.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-29 19:30+0200\n"
-"PO-Revision-Date: 2017-06-06 10:27+0200\n"
+"PO-Revision-Date: 2017-06-19 10:26+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -2596,6 +2596,8 @@ msgid ""
 "            If you do not enter a value, this event will be shown further "
 "after the end."
 msgstr ""
+"Hier können Sie Datum und Zeit eingeben, ab wann Ihre Veranstaltung "
+"angezeigt werden soll."
 
 #: Form/Type/Base/AbstractEventType.php:347
 msgid "Enter the in view from of the event"
@@ -2610,6 +2612,8 @@ msgid ""
 "                If you do not enter a value, this event will be shown "
 "further after the end."
 msgstr ""
+"Hier können Sie Datum und Zeit eingeben, bis wann Ihre Veranstaltung "
+"angezeigt werden soll."
 
 #: Form/Type/Base/AbstractEventType.php:364
 msgid ""
@@ -2620,10 +2624,12 @@ msgid ""
 "            If you do not enter a value, this event will be shown further "
 "after the end."
 msgstr ""
+"Hier können Sie Datum und Zeit eingeben, bis wann Ihre Veranstaltung "
+"angezeigt werden soll."
 
 #: Form/Type/Base/AbstractEventType.php:370
 msgid "Enter the in view until of the event"
-msgstr ""
+msgstr "Geben Sie das Anzeige Ende ein"
 
 #: Form/Type/Base/AbstractEventType.php:417
 #: Form/Type/Base/AbstractLocationType.php:1092
@@ -2988,20 +2994,20 @@ msgstr "Geben Sie den Namen der Location ein"
 #: Form/Type/Base/AbstractLocationType.php:295
 #: Form/Type/Base/AbstractLocationType.php:297
 msgid "Enter the letter for ordering of the location."
-msgstr ""
+msgstr "Geben Sie den Buchstaben zur Sortierung ein"
 
 #: Form/Type/Base/AbstractLocationType.php:302
 msgid "Enter the letter for order of the location"
-msgstr ""
+msgstr "Geben Sie den Buchstaben zur Sortierung ein"
 
 #: Form/Type/Base/AbstractLocationType.php:311
 #: Form/Type/Base/AbstractLocationType.php:313
 msgid "If your location has a logo, you can upload it here."
-msgstr ""
+msgstr "Wenn Ihr Unternehmen ein Logo hat, können Sie dies hier hochladen."
 
 #: Form/Type/Base/AbstractLocationType.php:316
 msgid "Enter the logo of your location of the location"
-msgstr ""
+msgstr "Wählen Sie Ihr Logo aus"
 
 #: Form/Type/Base/AbstractLocationType.php:325
 #: Form/Type/Finder/Base/AbstractLocationFinderType.php:121
@@ -3012,6 +3018,7 @@ msgstr "Bild zur Location"
 #: Form/Type/Base/AbstractLocationType.php:330
 msgid "Here you can upload an image, that represents your company."
 msgstr ""
+"Hier können Sie ein Bild hochladen, welches ihr Unternehmen repräsentiert."
 
 #: Form/Type/Base/AbstractLocationType.php:333
 msgid "Enter the image of location of the location"
@@ -3023,7 +3030,7 @@ msgstr "Geben Sie die Straße für die Location ein"
 
 #: Form/Type/Base/AbstractLocationType.php:358
 msgid "Enter the number of street of the location"
-msgstr ""
+msgstr "Geben Sie die Hausnummer ein"
 
 #: Form/Type/Base/AbstractLocationType.php:369
 msgid "Enter the zip code of the location"
@@ -3144,7 +3151,7 @@ msgstr "Zweiter Start am Dienstag"
 
 #: Form/Type/Base/AbstractLocationType.php:618
 msgid "Enter the start 2 on tuesday of the location"
-msgstr ""
+msgstr "Geben Sie den 2. Start am Dienstag ein"
 
 #: Form/Type/Base/AbstractLocationType.php:626
 msgid "End 2 on tuesday"
@@ -3152,7 +3159,7 @@ msgstr "Zweites Ende am Dienstag"
 
 #: Form/Type/Base/AbstractLocationType.php:631
 msgid "Enter the end 2 on tuesday of the location"
-msgstr ""
+msgstr "Geben Sie das 2. Ende am Dienstag ein"
 
 #: Form/Type/Base/AbstractLocationType.php:642
 msgid "closed on wednesday ?"
@@ -3180,7 +3187,7 @@ msgstr "Zweiter Start am Mittwoch"
 
 #: Form/Type/Base/AbstractLocationType.php:679
 msgid "Enter the start 2 on wednesday of the location"
-msgstr ""
+msgstr "Geben Sie den 2. Start am Mittwoch ein"
 
 #: Form/Type/Base/AbstractLocationType.php:687
 msgid "End 2 on wednesday"
@@ -3188,7 +3195,7 @@ msgstr "Zweites Ende am Mittwoch"
 
 #: Form/Type/Base/AbstractLocationType.php:692
 msgid "Enter the end 2 on wednesday of the location"
-msgstr ""
+msgstr "Geben Sie das 2. Ende am Mittwoch ein"
 
 #: Form/Type/Base/AbstractLocationType.php:703
 msgid "closed on thursday ?"
@@ -3216,7 +3223,7 @@ msgstr "Zweiter Start am Donnerstag"
 
 #: Form/Type/Base/AbstractLocationType.php:740
 msgid "Enter the start 2 on thursday of the location"
-msgstr ""
+msgstr "Geben Sie den 2. Start am Donnerstag ein"
 
 #: Form/Type/Base/AbstractLocationType.php:748
 msgid "End 2 on thursday"
@@ -3224,11 +3231,11 @@ msgstr "Zweites Ende am Donnerstag"
 
 #: Form/Type/Base/AbstractLocationType.php:753
 msgid "Enter the end 2 on thursday of the location"
-msgstr ""
+msgstr "Geben Sie das 2. Ende am Donnerstag ein"
 
 #: Form/Type/Base/AbstractLocationType.php:764
 msgid "closed on friday ?"
-msgstr ""
+msgstr "Freitags geschlossen?"
 
 #: Form/Type/Base/AbstractLocationType.php:770
 msgid "Start on friday"
@@ -3252,7 +3259,7 @@ msgstr "Zweiter Start am Freitag"
 
 #: Form/Type/Base/AbstractLocationType.php:801
 msgid "Enter the start 2 on friday of the location"
-msgstr ""
+msgstr "Geben Sie den 2. Start am Freitag ein"
 
 #: Form/Type/Base/AbstractLocationType.php:809
 msgid "End 2 on friday"
@@ -3260,7 +3267,7 @@ msgstr "Zweites Ende am Freitag"
 
 #: Form/Type/Base/AbstractLocationType.php:814
 msgid "Enter the end 2 on friday of the location"
-msgstr ""
+msgstr "Geben Sie das 2. Ende am Freitag ein"
 
 #: Form/Type/Base/AbstractLocationType.php:825
 msgid "closed on saturday ?"
@@ -3288,7 +3295,7 @@ msgstr "Zweiter Start am Samstag"
 
 #: Form/Type/Base/AbstractLocationType.php:862
 msgid "Enter the start 2 on saturday of the location"
-msgstr ""
+msgstr "Geben Sie den 2. Start am Samstag ein"
 
 #: Form/Type/Base/AbstractLocationType.php:870
 msgid "End 2 on saturday"
@@ -3296,7 +3303,7 @@ msgstr "Zweites Ende am Samstag"
 
 #: Form/Type/Base/AbstractLocationType.php:875
 msgid "Enter the end 2 on saturday of the location"
-msgstr ""
+msgstr "Geben Sie das 2. Ende am Samstag ein"
 
 #: Form/Type/Base/AbstractLocationType.php:886
 msgid "closed on sunday ?"
@@ -3316,7 +3323,7 @@ msgstr "Ende am Sonntag"
 
 #: Form/Type/Base/AbstractLocationType.php:910
 msgid "Enter the end on sunday of the location"
-msgstr ""
+msgstr "Geben Sie das Ende am Sonntag ein"
 
 #: Form/Type/Base/AbstractLocationType.php:918
 msgid "Start 2 on sunday"
@@ -3324,7 +3331,7 @@ msgstr "Zweiter Start am Sonntag"
 
 #: Form/Type/Base/AbstractLocationType.php:923
 msgid "Enter the start 2 on sunday of the location"
-msgstr ""
+msgstr "Geben Sie den 2. Start am Sonntag ein"
 
 #: Form/Type/Base/AbstractLocationType.php:931
 msgid "End 2 on sunday"
@@ -3332,7 +3339,7 @@ msgstr "Zweites Ende am Sonntag"
 
 #: Form/Type/Base/AbstractLocationType.php:936
 msgid "Enter the end 2 on sunday of the location"
-msgstr ""
+msgstr "Geben Sie das 2. Ende am Sonntag ein"
 
 #: Form/Type/Base/AbstractLocationType.php:944
 #: Form/Type/Finder/Base/AbstractLocationFinderType.php:122
@@ -3347,7 +3354,7 @@ msgstr ""
 
 #: Form/Type/Base/AbstractLocationType.php:952
 msgid "Enter the first image of the location"
-msgstr ""
+msgstr "Wählen Sie das 1. Bild aus"
 
 #: Form/Type/Base/AbstractLocationType.php:961
 #: Form/Type/Finder/Base/AbstractLocationFinderType.php:123
@@ -3356,7 +3363,7 @@ msgstr "Zweites Bild"
 
 #: Form/Type/Base/AbstractLocationType.php:964
 msgid "Enter the second image of the location"
-msgstr ""
+msgstr "Wählen Sie das 2. Bild aus"
 
 #: Form/Type/Base/AbstractLocationType.php:973
 #: Form/Type/Finder/Base/AbstractLocationFinderType.php:124
@@ -3365,7 +3372,7 @@ msgstr "Drittes Bild"
 
 #: Form/Type/Base/AbstractLocationType.php:976
 msgid "Enter the third image of the location"
-msgstr ""
+msgstr "Wählen Sie das 3. Bild aus"
 
 #: Form/Type/Base/AbstractLocationType.php:985
 #: Form/Type/Finder/Base/AbstractLocationFinderType.php:125
@@ -3374,7 +3381,7 @@ msgstr "Viertes Bild"
 
 #: Form/Type/Base/AbstractLocationType.php:988
 msgid "Enter the fourth image of the location"
-msgstr ""
+msgstr "Wählen Sie das 4. Bild aus"
 
 #: Form/Type/Base/AbstractLocationType.php:997
 #: Form/Type/Finder/Base/AbstractLocationFinderType.php:126
@@ -3383,7 +3390,7 @@ msgstr "Fünftes Bild"
 
 #: Form/Type/Base/AbstractLocationType.php:1000
 msgid "Enter the fifth image of the location"
-msgstr ""
+msgstr "Wählen Sie das 5. Bild aus"
 
 #: Form/Type/Base/AbstractLocationType.php:1009
 #: Form/Type/Finder/Base/AbstractLocationFinderType.php:127
@@ -3392,7 +3399,7 @@ msgstr "Sechstes Bild"
 
 #: Form/Type/Base/AbstractLocationType.php:1012
 msgid "Enter the sixth image of the location"
-msgstr ""
+msgstr "Wählen Sie das 6. Bild aus"
 
 #: Form/Type/Base/AbstractLocationType.php:1021
 msgid "First file"
@@ -3400,7 +3407,7 @@ msgstr "Erste Datei"
 
 #: Form/Type/Base/AbstractLocationType.php:1024
 msgid "Enter the first file of the location"
-msgstr ""
+msgstr "Wählen Sie die 1. Datei aus"
 
 #: Form/Type/Base/AbstractLocationType.php:1033
 msgid "Second file"
@@ -3408,7 +3415,7 @@ msgstr "Zweite Datei"
 
 #: Form/Type/Base/AbstractLocationType.php:1036
 msgid "Enter the second file of the location"
-msgstr ""
+msgstr "Wählen Sie die 2. Datei aus"
 
 #: Form/Type/Base/AbstractLocationType.php:1050
 msgid "Enter the owner of the location"
@@ -3424,7 +3431,7 @@ msgstr "Geben Sie den 2. Administrator der Location ein"
 
 #: Form/Type/Base/AbstractLocationType.php:1136
 msgid "Choose the branches"
-msgstr ""
+msgstr "Wählen Sie die Branchen aus"
 
 #: Form/Type/Base/AbstractLocationType.php:1160
 msgid "Choose the services of location"
@@ -3638,11 +3645,11 @@ msgstr "Icon für das Special"
 
 #: Form/Type/Base/AbstractSpecialOfLocationType.php:217
 msgid "Enter the icon for special of the special of location"
-msgstr ""
+msgstr "Geben Sie den Icon für das Special ein"
 
 #: Form/Type/Base/AbstractSpecialOfLocationType.php:228
 msgid "Choose the color of icon of the special of location"
-msgstr ""
+msgstr "Wählen Sie eine Farbe"
 
 #: Form/Type/Base/AbstractConfigType.php:90
 msgid "Update configuration"
@@ -3658,7 +3665,7 @@ msgstr "Standard Postleitzahl"
 
 #: Form/Type/Base/AbstractConfigType.php:133
 msgid "Enter the standard zip code."
-msgstr ""
+msgstr "Geben Sie die Standard Postleitzahl ein."
 
 #: Form/Type/Base/AbstractConfigType.php:137
 msgid "Area code"
@@ -3684,7 +3691,7 @@ msgstr ""
 
 #: Form/Type/Base/AbstractConfigType.php:187
 msgid "Branch entries per page"
-msgstr ""
+msgstr "Anzahl der Brancheneinträge pro Seite"
 
 #: Form/Type/Base/AbstractConfigType.php:190
 #: Form/Type/Base/AbstractConfigType.php:192
