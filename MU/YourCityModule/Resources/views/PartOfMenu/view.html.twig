@@ -23,7 +23,6 @@
                 <col id="cName" />
                 <col id="cDescription" />
                 <col id="cMyLocation" />
-                <col id="cMenuOfLocation" />
             </colgroup>
             <thead>
             <tr>
@@ -41,9 +40,6 @@
                 </th>
                 <th id="hMyLocation" scope="col" class="text-left">
                     <a href="{{ sort.myLocation.url }}" title="{{ __f('Sort by %s', {'%s': 'my location'}) }}" class="{{ sort.myLocation.class }}">{{ __('My location') }}</a>
-                </th>
-                <th id="hMenuOfLocation" scope="col" class="text-left">
-                    <a href="{{ sort.menuOfLocation.url }}" title="{{ __f('Sort by %s', {'%s': 'menu of location'}) }}" class="{{ sort.menuOfLocation.class }}">{{ __('Menu of location') }}</a>
                 </th>
             </tr>
             </thead>
@@ -71,16 +67,6 @@
                 </td>
                 <td headers="hMyLocation" class="text-left">
                     {{ partOfMenu.myLocation|muyourcitymodule_listEntry('partOfMenu', 'myLocation') }}
-                </td>
-                <td headers="hMenuOfLocation" class="text-left">
-                    {% if partOfMenu.menuOfLocation|default %}
-                        <a href="{{ path('muyourcitymodule_menuoflocation_' ~ routeArea ~ 'display', { 'id': partOfMenu.menuOfLocation.getId() }) }}">{% spaceless %}
-                          {{ partOfMenu.menuOfLocation|muyourcitymodule_formattedTitle }}
-                        {% endspaceless %}</a>
-                        <a id="menuOfLocationItem{{ partOfMenu.getKey() }}_rel_{{ partOfMenu.menuOfLocation.getKey() }}Display" href="{{ path('muyourcitymodule_menuoflocation_' ~ routeArea ~ 'display', { 'id': partOfMenu.menuOfLocation.getId(), 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muyourcity-inline-window hidden" data-modal-title="{{ partOfMenu.menuOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
-                    {% else %}
-                        {{ __('Not set.') }}
-                    {% endif %}
                 </td>
             </tr>
         {% else %}
