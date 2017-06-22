@@ -468,24 +468,31 @@ class ControllerHelper extends AbstractControllerHelper
     	
 		switch ($actualDay) {
 			case 'Sunday' :
+				$beforeDay = 'Saturday';
 				$nextDay = 'Monday';
 				break;
 			case 'Monday' :
+				$beforeDay = 'Sunday';
 				$nextDay = 'Tuesday';
 				break;
 			case 'Tuesday' :
+				$beforeDay = 'Monday';
 				$nextDay = 'Wednesday';
 				break;
 			case 'Wednesday' :
+				$beforeDay = 'Tuesday';
 				$nextDay = 'Thursday';
 				break;
 			case 'Thursday' :
+				$beforeDay = 'Wednesday';
 				$nextDay = 'Friday';
 				break;
 			case 'Friday' :
+				$beforeDay = 'Thursday';
 				$nextDay = 'Saturday';
 				break;
 			case 'Saturday' :
+				$beforeDay = 'Friday';
 				$nextDay = 'Sunday';
 				break;				
 		}
@@ -522,10 +529,10 @@ class ControllerHelper extends AbstractControllerHelper
 			$nextEnd2Time == '';
 		}
 		
-		/*$nextStartTime = \DateUtil::formatDatetime($location['startOn' . $nextDay], 'timelong');
-		$nextEndTime = \DateUtil::formatDatetime($location['endOn' . $nextDay], 'timelong');
-		$nextStart2Time = \DateUtil::formatDatetime($location['start2On' . $nextDay], 'timelong');
-		$nextEnd2Time = \DateUtil::formatDatetime($location['end2On' . $nextDay], 'timelong');*/
+		$beforeStartTime = \DateUtil::formatDatetime($location['startOn' . $beforeDay], 'timelong');
+		$beforeEndTime = \DateUtil::formatDatetime($location['endOn' . $beforeDay], 'timelong');
+		$beforeStart2Time = \DateUtil::formatDatetime($location['start2On' . $beforeDay], 'timelong');
+		$beforeEnd2Time = \DateUtil::formatDatetime($location['end2On' . $beforeDay], 'timelong');
     	
     	// we get actual time
     	$actualTime = date('H:i');
@@ -535,7 +542,7 @@ class ControllerHelper extends AbstractControllerHelper
     	if ($startTime != '') {
     	    if ($startTime < $actualTime) {
     	    	if ($endTime != '') {
-    		        if ($endTime >= $actualTime || $endTime == '00:00' || ($endTime > '00:00' && $endTime < $nextStartTime && $actualTime > $startTime) || $endTime > '00:00' && $endTime < '06:00' && $actualTime < $endTime) {
+    		        if ($endTime >= $actualTime || $endTime == '00:00' || ($endTime > '00:00' && $endTime < $nextStartTime && $actualTime > $startTime) || ($actualTime > '00:00' && $actualTime < '06:00' && ($beforeEndTime < $actualTime || $beforeEnd2Time < $actualTime))) {
     			        $state = 'open';
     		        } else {
     		    	    $state = 'closed';
