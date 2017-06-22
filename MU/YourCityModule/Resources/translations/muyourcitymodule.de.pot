@@ -6373,3 +6373,6 @@ msgstr ""
 
 msgid "Open"
 msgstr ""
+
+msgid "Unclear Opening Hours"
+msgstr ""

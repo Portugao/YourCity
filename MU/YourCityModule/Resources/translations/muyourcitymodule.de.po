@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Zikula 1.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-29 19:30+0200\n"
-"PO-Revision-Date: 2017-06-19 10:26+0200\n"
+"POT-Creation-Date: 2017-06-22 10:17+0200\n"
+"PO-Revision-Date: 2017-06-22 10:46+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -4975,11 +4975,11 @@ msgstr ""
 
 #: Form/Type/Base/AbstractConfigType.php:3072
 msgid "Roadmap"
-msgstr ""
+msgstr "Fahrplan"
 
 #: Form/Type/Base/AbstractConfigType.php:3073
 msgid "Satellite"
-msgstr "Satelit"
+msgstr "Satellit"
 
 #: Form/Type/Base/AbstractConfigType.php:3074
 msgid "Hybrid"
@@ -4987,7 +4987,7 @@ msgstr "Hybrid"
 
 #: Form/Type/Base/AbstractConfigType.php:3075
 msgid "Physical"
-msgstr ""
+msgstr "Technisch"
 
 #: Form/Type/Base/AbstractConfigType.php:3081
 msgid "Default zoom level"
@@ -5639,7 +5639,7 @@ msgstr ""
 
 #: Helper/Base/AbstractNotificationHelper.php:353
 msgid "New content has been submitted"
-msgstr ""
+msgstr "Neuer Inhalt wurde eingereicht"
 
 #: Helper/Base/AbstractNotificationHelper.php:355
 msgid "Content has been deleted"
@@ -5744,7 +5744,7 @@ msgstr "Zurück gestellt"
 #: Helper/Base/AbstractListEntriesHelper.php:986
 #: Helper/Base/AbstractListEntriesHelper.php:1210
 msgid "Content has been approved, but is temporarily offline."
-msgstr ""
+msgstr "Der Inhalt wurde freigegeben, ist aber temporär offline."
 
 #: Helper/Base/AbstractListEntriesHelper.php:464
 msgid "All except waiting"
@@ -5752,7 +5752,7 @@ msgstr "Alle außer Wartende"
 
 #: Helper/Base/AbstractListEntriesHelper.php:465
 msgid "Shows all items except these which are waiting"
-msgstr ""
+msgstr "Zeigt alle Elemente ohne die, die warten"
 
 #: Helper/Base/AbstractListEntriesHelper.php:478
 #: Helper/Base/AbstractListEntriesHelper.php:570
@@ -5761,7 +5761,7 @@ msgstr ""
 #: Helper/Base/AbstractListEntriesHelper.php:999
 #: Helper/Base/AbstractListEntriesHelper.php:1223
 msgid "All except suspended"
-msgstr ""
+msgstr "Alle ausgenommen Abgelehnte"
 
 #: Helper/Base/AbstractListEntriesHelper.php:479
 #: Helper/Base/AbstractListEntriesHelper.php:571
@@ -5770,7 +5770,7 @@ msgstr ""
 #: Helper/Base/AbstractListEntriesHelper.php:1000
 #: Helper/Base/AbstractListEntriesHelper.php:1224
 msgid "Shows all items except these which are suspended"
-msgstr ""
+msgstr "Zeigt alle Elemente ohne die Abgelehnten"
 
 #: Helper/Base/AbstractListEntriesHelper.php:497
 #: Helper/Base/AbstractListEntriesHelper.php:596
@@ -5971,12 +5971,16 @@ msgid ""
 "Warning! The upload directory at \"%path%\" exists but is not writable by "
 "the webserver."
 msgstr ""
+"Warnung! Der Upload Ordner \"%path%\" existiert, ist allerdings nicht "
+"beschreibbar."
 
 #: Helper/Base/AbstractUploadHelper.php:750
 msgid ""
 "An error occured during creation of the .htaccess file in directory \"%path%"
 "\"."
 msgstr ""
+"Ein Fehler ist während der Erstellung einer .htaccess Datei im Ordner \"%path"
+"%\" aufgetreten."
 
 #: Container/Base/AbstractLinkContainer.php:120
 msgid "My branches"
@@ -6475,6 +6479,9 @@ msgstr "Offenes Ende"
 
 msgid "Open"
 msgstr "Geöffnet"
+
+msgid "Unclear Opening Hours"
+msgstr "Unklare Öffnungszeiten"
 
 #~ msgid "Image of part information"
 #~ msgstr "Information zum Bild des Teils"
