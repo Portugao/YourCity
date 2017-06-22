@@ -345,6 +345,8 @@
             {{ __('Termine nach Vereinbarung') }}
         {% elseif location.unclearTimes == true %}
             {{ __('Unclear Opening Hours') }}
+        {% elseif location.closedForEver == true %}
+            {{ __('Closed forever') }}
         {% endif %}
         
         {% if location.openingHours is not empty %}
