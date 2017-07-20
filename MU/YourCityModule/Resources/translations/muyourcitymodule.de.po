@@ -6483,8 +6483,16 @@ msgstr "Geöffnet"
 msgid "Unclear Opening Hours"
 msgstr "Unklare Öffnungszeiten"
 
-#~ msgid "Image of part information"
-#~ msgstr "Information zum Bild des Teils"
+msgid "Image of part information"
+msgstr "Information zum Bild des Teils"
 
-#~ msgid "Image of branch information"
-#~ msgstr "Information zum Bild der Branche"
+msgid "Image of branch information"
+msgstr "Information zum Bild der Branche"
+
+msgid "Closed forever"
+msgstr "Dauerhaft geschlossen"
+
+msgid "You are able to subscribe for a location. You can choose events, menus, offers and products to see in your overview."
+msgstr "Du kannst eine Location abonnieren. Du kannst Veranstaltungen, Karten (Speisekarten), Angebote und Produkte für die Anzeige in der Übersicht auswählen."
+
+
