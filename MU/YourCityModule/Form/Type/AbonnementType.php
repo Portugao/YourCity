@@ -31,11 +31,12 @@ class AbonnementType extends AbstractAbonnementType
     {
         $queryBuilder = function(EntityRepository $er) {
             // select without joins
-            return $er->getListQueryBuilder('', '', false);
+            $where = "tbl.workflowState = 'approved' and tbl.closedForEver = false";
+            return $er->getListQueryBuilder($where, '', false);
         };
         $entityDisplayHelper = $this->entityDisplayHelper;
         $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
-            return $entityDisplayHelper->getFormattedTitle($entity);
+            return $entity['name'] . ' - ' . $entity['street'];
         };
         $builder->add('location', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
             'class' => 'MUYourCityModule:LocationEntity',
