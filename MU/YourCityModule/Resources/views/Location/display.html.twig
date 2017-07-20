@@ -3,7 +3,7 @@
 {% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
 {% block pageTitle %}{{ location.name }} {% if location.street != '' %} - {{ location.street }} {% if location.numberOfStreet != '' %} {{ location.numberOfStreet }}{% endif %}{% endif %}{% if location.zipCode != '' and location.city != '' %} - {{ location.zipCode }} {{ location.city }}{% endif %} - {{ __('Auf Achse in Deiner Stadt Bremen') }}   
 {% if location.descriptionForGoogle is not empty %}
-    {{ setMetaTag('description', location.descriptionForGoogle) }}
+    {{ pageSetVar('meta.description', location.descriptionForGoogle) }}
 {% endif %}
 {% endblock %}
 {% block title %}
