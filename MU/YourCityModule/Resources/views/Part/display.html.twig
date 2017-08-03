@@ -1,7 +1,10 @@
 {# purpose of this template: parts display view #}
 {% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
 {% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
-{% block pageTitle %}{{ part.name }}{% endblock %}
+{% block pageTitle %}{{ part.name }}
+{{ pageSetVar('meta.description', part.descriptionForGoogle) }}
+{% endblock %}
+
 {% block title %}
     {% set templateTitle = part.name %}
     {{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.parts.filter') }}
