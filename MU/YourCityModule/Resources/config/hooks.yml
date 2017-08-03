@@ -1,0 +1,253 @@
+services:
+    mu_yourcity_module.hook_subscriber.filter_hooks.branches:
+        class: MU\YourCityModule\HookSubscriber\BranchFilterHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.filter_hooks.branches' }
+
+    mu_yourcity_module.hook_subscriber.form_aware_hook.branches:
+        class: MU\YourCityModule\HookSubscriber\BranchFormAwareHookSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.form_aware_hook.branches' }
+
+    mu_yourcity_module.hook_subscriber.ui_hooks.branches:
+        class: MU\YourCityModule\HookSubscriber\BranchUiHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.ui_hooks.branches' }
+
+    mu_yourcity_module.hook_subscriber.filter_hooks.locations:
+        class: MU\YourCityModule\HookSubscriber\LocationFilterHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.filter_hooks.locations' }
+
+    mu_yourcity_module.hook_subscriber.form_aware_hook.locations:
+        class: MU\YourCityModule\HookSubscriber\LocationFormAwareHookSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.form_aware_hook.locations' }
+
+    mu_yourcity_module.hook_subscriber.ui_hooks.locations:
+        class: MU\YourCityModule\HookSubscriber\LocationUiHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.ui_hooks.locations' }
+
+    mu_yourcity_module.hook_subscriber.filter_hooks.parts:
+        class: MU\YourCityModule\HookSubscriber\PartFilterHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.filter_hooks.parts' }
+
+    mu_yourcity_module.hook_subscriber.form_aware_hook.parts:
+        class: MU\YourCityModule\HookSubscriber\PartFormAwareHookSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.form_aware_hook.parts' }
+
+    mu_yourcity_module.hook_subscriber.ui_hooks.parts:
+        class: MU\YourCityModule\HookSubscriber\PartUiHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.ui_hooks.parts' }
+
+    mu_yourcity_module.hook_subscriber.filter_hooks.offers:
+        class: MU\YourCityModule\HookSubscriber\OfferFilterHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.filter_hooks.offers' }
+
+    mu_yourcity_module.hook_subscriber.form_aware_hook.offers:
+        class: MU\YourCityModule\HookSubscriber\OfferFormAwareHookSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.form_aware_hook.offers' }
+
+    mu_yourcity_module.hook_subscriber.ui_hooks.offers:
+        class: MU\YourCityModule\HookSubscriber\OfferUiHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.ui_hooks.offers' }
+
+    mu_yourcity_module.hook_subscriber.filter_hooks.menusoflocation:
+        class: MU\YourCityModule\HookSubscriber\MenuOfLocationFilterHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.filter_hooks.menusoflocation' }
+
+    mu_yourcity_module.hook_subscriber.form_aware_hook.menusoflocation:
+        class: MU\YourCityModule\HookSubscriber\MenuOfLocationFormAwareHookSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.form_aware_hook.menusoflocation' }
+
+    mu_yourcity_module.hook_subscriber.ui_hooks.menusoflocation:
+        class: MU\YourCityModule\HookSubscriber\MenuOfLocationUiHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.ui_hooks.menusoflocation' }
+
+    mu_yourcity_module.hook_subscriber.filter_hooks.partsofmenu:
+        class: MU\YourCityModule\HookSubscriber\PartOfMenuFilterHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.filter_hooks.partsofmenu' }
+
+    mu_yourcity_module.hook_subscriber.form_aware_hook.partsofmenu:
+        class: MU\YourCityModule\HookSubscriber\PartOfMenuFormAwareHookSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.form_aware_hook.partsofmenu' }
+
+    mu_yourcity_module.hook_subscriber.ui_hooks.partsofmenu:
+        class: MU\YourCityModule\HookSubscriber\PartOfMenuUiHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.ui_hooks.partsofmenu' }
+
+    mu_yourcity_module.hook_subscriber.filter_hooks.dishes:
+        class: MU\YourCityModule\HookSubscriber\DishFilterHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.filter_hooks.dishes' }
+
+    mu_yourcity_module.hook_subscriber.form_aware_hook.dishes:
+        class: MU\YourCityModule\HookSubscriber\DishFormAwareHookSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.form_aware_hook.dishes' }
+
+    mu_yourcity_module.hook_subscriber.ui_hooks.dishes:
+        class: MU\YourCityModule\HookSubscriber\DishUiHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.ui_hooks.dishes' }
+
+    mu_yourcity_module.hook_subscriber.filter_hooks.events:
+        class: MU\YourCityModule\HookSubscriber\EventFilterHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.filter_hooks.events' }
+
+    mu_yourcity_module.hook_subscriber.form_aware_hook.events:
+        class: MU\YourCityModule\HookSubscriber\EventFormAwareHookSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.form_aware_hook.events' }
+
+    mu_yourcity_module.hook_subscriber.ui_hooks.events:
+        class: MU\YourCityModule\HookSubscriber\EventUiHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.ui_hooks.events' }
+
+    mu_yourcity_module.hook_subscriber.filter_hooks.products:
+        class: MU\YourCityModule\HookSubscriber\ProductFilterHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.filter_hooks.products' }
+
+    mu_yourcity_module.hook_subscriber.form_aware_hook.products:
+        class: MU\YourCityModule\HookSubscriber\ProductFormAwareHookSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.form_aware_hook.products' }
+
+    mu_yourcity_module.hook_subscriber.ui_hooks.products:
+        class: MU\YourCityModule\HookSubscriber\ProductUiHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.ui_hooks.products' }
+
+    mu_yourcity_module.hook_subscriber.filter_hooks.specialsoflocation:
+        class: MU\YourCityModule\HookSubscriber\SpecialOfLocationFilterHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.filter_hooks.specialsoflocation' }
+
+    mu_yourcity_module.hook_subscriber.form_aware_hook.specialsoflocation:
+        class: MU\YourCityModule\HookSubscriber\SpecialOfLocationFormAwareHookSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.form_aware_hook.specialsoflocation' }
+
+    mu_yourcity_module.hook_subscriber.ui_hooks.specialsoflocation:
+        class: MU\YourCityModule\HookSubscriber\SpecialOfLocationUiHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.ui_hooks.specialsoflocation' }
+
+    mu_yourcity_module.hook_subscriber.filter_hooks.servicesoflocation:
+        class: MU\YourCityModule\HookSubscriber\ServiceOfLocationFilterHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.filter_hooks.servicesoflocation' }
+
+    mu_yourcity_module.hook_subscriber.form_aware_hook.servicesoflocation:
+        class: MU\YourCityModule\HookSubscriber\ServiceOfLocationFormAwareHookSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.form_aware_hook.servicesoflocation' }
+
+    mu_yourcity_module.hook_subscriber.ui_hooks.servicesoflocation:
+        class: MU\YourCityModule\HookSubscriber\ServiceOfLocationUiHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.ui_hooks.servicesoflocation' }
+
+    mu_yourcity_module.hook_subscriber.filter_hooks.abonnements:
+        class: MU\YourCityModule\HookSubscriber\AbonnementFilterHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.filter_hooks.abonnements' }
+
+    mu_yourcity_module.hook_subscriber.form_aware_hook.abonnements:
+        class: MU\YourCityModule\HookSubscriber\AbonnementFormAwareHookSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.form_aware_hook.abonnements' }
+
+    mu_yourcity_module.hook_subscriber.ui_hooks.abonnements:
+        class: MU\YourCityModule\HookSubscriber\AbonnementUiHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muyourcitymodule.ui_hooks.abonnements' }
+

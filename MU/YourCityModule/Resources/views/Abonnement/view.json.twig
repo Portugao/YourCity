@@ -2,6 +2,6 @@
 [
 {% for abonnement in items %}
     {% if not loop.first %},{% endif %}
-    {{ abonnement.toJson() }}
+    {{ abonnement.toArray()|json_encode() }}
 {% endfor %}
 ]

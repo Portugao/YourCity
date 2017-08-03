@@ -65,7 +65,7 @@ function mUYourCityNewCoordinatesEventHandler() {
  */
 function mUYourCityInitGeoCoding(addressCallback)
 {
-    jQuery('#linkGetCoordinates').click( function (evt) {
+    jQuery('#linkGetCoordinates').click(function (event) {
         mUYourCityDoGeoCoding(addressCallback);
     });
 }
@@ -116,7 +116,7 @@ function mUYourCityHandlePositionError (event) {
 /**
  * Initialises geographical editing features.
  */
-function mUYourCityInitGeographicalEditing(latitude, longitude, mapType, zoomLevel, mode, useGeoLocation)
+function mUYourCityInitGeographicalEditing(latitude, longitude, mapType, zoomLevel, useGeoLocation)
 {
     mUYourCityInitGeographicalDisplay(latitude, longitude, mapType, zoomLevel);
 
@@ -131,7 +131,7 @@ function mUYourCityInitGeographicalEditing(latitude, longitude, mapType, zoomLev
         mUYourCityNewCoordinatesEventHandler();
     });
 
-    if (mode == 'create' && true === useGeoLocation) {
+    if (true === useGeoLocation) {
         // derive default coordinates from users position with html5 geolocation feature
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(mUYourCitySetDefaultCoordinates, mUYourCityHandlePositionError, {
@@ -160,3 +160,18 @@ function mUYourCityInitGeographicalEditing(latitude, longitude, mapType, zoomLev
         mUYourCityInitGeoCoding(determineAddressForGeoCoding);
     */
 }
+
+jQuery(document).ready(function() {
+    var infoElem;
+
+    infoElem = jQuery('#geographicalInfo');
+    if (infoElem.length == 0) {
+        return;
+    }
+
+    if (infoElem.data('context') == 'display') {
+        mUYourCityInitGeographicalDisplay(infoElem.data('latitude'), infoElem.data('longitude'), infoElem.data('map-type'), infoElem.data('zoom-level'));
+    } else if (infoElem.data('context') == 'edit') {
+        mUYourCityInitGeographicalEditing(infoElem.data('latitude'), infoElem.data('longitude'), infoElem.data('map-type'), infoElem.data('zoom-level'), infoElem.data('use-geolocation'));
+    }
+});

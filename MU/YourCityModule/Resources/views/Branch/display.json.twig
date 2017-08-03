@@ -1,2 +1,2 @@
 {# purpose of this template: branches display json view #}
-{{ branch.toJson() }}
+{{ branch.toArray()|json_encode() }}

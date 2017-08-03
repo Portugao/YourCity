@@ -2,6 +2,6 @@
 [
 {% for branch in items %}
     {% if not loop.first %},{% endif %}
-    {{ branch.toJson() }}
+    {{ branch.toArray()|json_encode() }}
 {% endfor %}
 ]

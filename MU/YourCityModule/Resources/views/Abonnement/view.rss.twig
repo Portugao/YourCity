@@ -44,7 +44,7 @@
     {% endif %}
     <description>
         <![CDATA[
-        {{ abonnement.name|replace({ '<br>': '<br />' }) }}
+        {{ abonnement.name|replace({'<br>': '<br />'}) }}
         ]]>
     </description>
     {% if abonnement.createdDate|default %}
