@@ -100,6 +100,7 @@ abstract class AbstractEventEntity extends EntityAccess implements Translatable
      * @ORM\Column(length=255, nullable=true)
      * @Assert\Length(min="0", max="255")
      * @Assert\File(
+     *    maxSize = "200KB",
      *    mimeTypes = {"image/*"}
      * )
      * @Assert\Image(

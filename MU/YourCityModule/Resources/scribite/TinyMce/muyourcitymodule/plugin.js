@@ -79,7 +79,7 @@
                 author: 'Michael Ueberschaer',
                 authorurl: 'https://homepages-mit-zikula.de',
                 infourl: 'https://homepages-mit-zikula.de',
-                version: '0.1.1'
+                version: '0.1.2'
             };
         }
     });
