@@ -19,5 +19,33 @@ use MU\YourCityModule\Base\AbstractYourCityModuleInstaller;
  */
 class YourCityModuleInstaller extends AbstractYourCityModuleInstaller
 {
-    // feel free to extend the installer here
+    /**
+     * Upgrade the MUYourCityModule application from an older version.
+     *
+     * If the upgrade fails at some point, it returns the last upgraded version.
+     *
+     * @param integer $oldVersion Version to upgrade from
+     *
+     * @return boolean True on success, false otherwise
+     *
+     * @throws RuntimeException Thrown if database tables can not be updated
+     */
+    public function upgrade($oldVersion)
+    {
+    
+        $logger = $this->container->get('logger');
+    
+        // Upgrade dependent on old version number
+        switch ($oldVersion) {
+            case '0.1.1':
+            // remove obsolete persisted hooks from the database
+            $this->hookApi->uninstallSubscriberHooks($this->bundle->getMetaData());
+            
+            case '0.1.2':// later use
+        }
+    
+    
+        // update successful
+        return true;
+    }
 }
