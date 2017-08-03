@@ -2,5 +2,5 @@
 <buildpath>
 	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
 	<buildpathentry kind="src" path=""/>
-	<buildpathentry combineaccessrules="false" kind="prj" path="/Zikula1.5"/>
+	<buildpathentry combineaccessrules="false" kind="prj" path="/LastZikula15"/>
 </buildpath>

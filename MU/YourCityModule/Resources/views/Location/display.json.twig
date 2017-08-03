@@ -1,2 +1,2 @@
 {# purpose of this template: locations display json view #}
-{{ location.toJson() }}
+{{ location.toArray()|json_encode() }}

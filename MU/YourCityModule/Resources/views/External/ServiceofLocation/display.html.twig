@@ -1,8 +1,8 @@
 {# Purpose of this template: Display one certain service of location within an external context #}
-<div id="serviceOfLocation{$serviceOfLocation->getKey()}" class="muyourcitymodule-external-serviceoflocation">
+<div id="serviceOfLocation{{ serviceOfLocation.getKey() }}" class="muyourcitymodule-external-serviceoflocation">
 {% if displayMode == 'link' %}
     <p class="muyourcitymodule-external-link">
-    <a href="{{ path('muyourcitymodule_serviceoflocation_display', { 'id': serviceOfLocation.getId() }) }}" title="{{ serviceOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}">
+    <a href="{{ path('muyourcitymodule_serviceoflocation_display', {'id': serviceOfLocation.getId()}) }}" title="{{ serviceOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}">
     {{ serviceOfLocation|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.servicesoflocation.filter')|safeHtml }}
     </a>
     </p>

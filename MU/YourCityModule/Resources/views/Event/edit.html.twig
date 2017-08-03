@@ -82,18 +82,15 @@
         </fieldset>
         
         {% if mode != 'create' %}
-            {{ include('@MUYourCityModule/Helper/includeStandardFieldsEdit.html.twig', { obj: event }) }}
+            {{ include('@MUYourCityModule/Helper/includeStandardFieldsEdit.html.twig', {obj: event}) }}
         {% endif %}
         
-        {% set hookId = mode != 'create' ? event.id : null %}
-        {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.events.form_edit', id=hookId) %}
-        {% if hooks is iterable and hooks|length > 0 %}
-            {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
-                <fieldset>
-                    <legend>{{ providerArea }}</legend>
-                    {{ hook }}
-                </fieldset>
-            {% endfor %}
+        {% if formHookTemplates|length > 0 %}
+            <fieldset>
+                {% for hookTemplate in formHookTemplates %}
+                    {{ include(hookTemplate.0, hookTemplate.1, ignore_missing = true) }}
+                {% endfor %}
+            </fieldset>
         {% endif %}
         
         {% if form.moderationSpecificCreator is defined %}
@@ -125,50 +122,48 @@
             </div>
         </div>
         {{ form_end(form) }}
+        {% set hookId = mode != 'create' ? event.id : null %}
+        {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.events.form_edit', id=hookId) %}
+        {% if hooks is iterable and hooks|length > 0 %}
+            <h3>{{ __('Hooks') }}</h3>
+            {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
+                <h4>{{ providerArea }}</h4>
+                {{ hook }}
+            {% endfor %}
+        {% endif %}
+        
     </div>
 {% endblock %}
 {% block footer %}
     {{ parent() }}
-    {% set editImage = '<span class="fa fa-pencil-square-o"></span>' %}
-    {% set removeImage = '<span class="fa fa-trash-o"></span>' %}
-    
-    {% set geoScripts %}
-        {% set useGeoLocation = getModVar('MUYourCityModule', 'enableEventGeoLocation', false) %}
-        {{ pageAddAsset('javascript', 'https://maps.google.com/maps/api/js?key=' ~ getModVar('MUYourCityModule', 'googleMapsApiKey', '') ~ '&amp;language=' ~ app.request.locale ~ '&amp;sensor=false') }}
-        {{ pageAddAsset('javascript', app.request.basePath ~ '/plugins/Mapstraction/lib/vendor/mxn/mxn.js?(googlev3)') }}
-        {% if useGeoLocation == true %}
-            {{ pageAddAsset('javascript', app.request.basePath ~ '/plugins/Mapstraction/lib/vendor/mxn/mxn.geocoder.js') }}
-            {{ pageAddAsset('javascript', app.request.basePath ~ '/plugins/Mapstraction/lib/vendor/mxn/mxn.googlev3.geocoder.js') }}
-        {% endif %}
+    {% set useGeoLocation = getModVar('MUYourCityModule', 'enableEventGeoLocation', false) %}
+    {{ pageAddAsset('javascript', 'https://maps.google.com/maps/api/js?key=' ~ getModVar('MUYourCityModule', 'googleMapsApiKey', '') ~ '&amp;language=' ~ app.request.locale ~ '&amp;sensor=false') }}
+    {{ pageAddAsset('javascript', app.request.basePath ~ '/plugins/Mapstraction/lib/vendor/mxn/mxn.js?(googlev3)') }}
+    {% if useGeoLocation == true %}
+        {{ pageAddAsset('javascript', app.request.basePath ~ '/plugins/Mapstraction/lib/vendor/mxn/mxn.geocoder.js') }}
+        {{ pageAddAsset('javascript', app.request.basePath ~ '/plugins/Mapstraction/lib/vendor/mxn/mxn.googlev3.geocoder.js') }}
+    {% endif %}
+    <div id="geographicalInfo" class="hidden" data-context="edit" data-latitude="{{ event.latitude|muyourcitymodule_geoData }}" data-longitude="{{ event.longitude|muyourcitymodule_geoData }}" data-map-type="{{ getModVar('MUYourCityModule', 'defaultMapType', 'roadmap') }}" data-zoom-level="{{ getModVar('MUYourCityModule', 'defaultZoomLevel', 18) }}" data-use-geolocation="{% if mode == 'create' and useGeoLocation == true %}true{% else %}false{% endif %}"></div>
+    {% set formInitScript %}
         <script type="text/javascript">
         /* <![CDATA[ */
+            
             ( function($) {
                 $(document).ready(function() {
-                    mUYourCityInitGeographicalEditing({{ event.latitude|muyourcitymodule_geoData }}, {{ event.longitude|muyourcitymodule_geoData }}, '{{ getModVar('MUYourCityModule', 'defaultMapType', 'roadmap') }}', {{ getModVar('MUYourCityModule', 'defaultZoomLevel', 18) }}, '{{ mode }}', {% if useGeoLocation == true %}true{% else %}false{% endif %});
+                    // initialise auto completion for user fields
+                    {% if form.moderationSpecificCreator is defined %}
+                        initUserLiveSearch('muyourcitymodule_event_moderationSpecificCreator');
+                    {% endif %}
+                    mUYourCityInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ event.id }}{% endif %}');
+                    mUYourCityInitUploadField('muyourcitymodule_event_imageOfEvent_imageOfEvent');
+                    mUYourCityInitDateField('muyourcitymodule_event_start2Date');
+                    mUYourCityInitDateField('muyourcitymodule_event_end2Date');
+                    mUYourCityInitDateField('muyourcitymodule_event_inViewFrom');
+                    mUYourCityInitDateField('muyourcitymodule_event_inViewUntil');
                 });
             })(jQuery);
         /* ]]> */
         </script>
     {% endset %}
-    {{ pageAddAsset('footer', geoScripts) }}
-    
-    <script type="text/javascript">
-    /* <![CDATA[ */
-        
-        ( function($) {
-            $(document).ready(function() {
-                // initialise auto completion for user fields
-                {% if form.moderationSpecificCreator is defined %}
-                    mUYourCityInitUserField('muyourcitymodule_event_moderationSpecificCreator', 'getCommonUsersList');
-                {% endif %}
-                mUYourCityInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ event.id }}{% endif %}');
-                mUYourCityInitUploadField('muyourcitymodule_event_imageOfEvent_imageOfEvent');
-                mUYourCityInitDateField('muyourcitymodule_event_start2Date');
-                mUYourCityInitDateField('muyourcitymodule_event_end2Date');
-                mUYourCityInitDateField('muyourcitymodule_event_inViewFrom');
-                mUYourCityInitDateField('muyourcitymodule_event_inViewUntil');
-            });
-        })(jQuery);
-    /* ]]> */
-    </script>
+    {{ pageAddAsset('footer', formInitScript) }}
 {% endblock %}

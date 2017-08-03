@@ -8,37 +8,37 @@
             <ul class="nav nav-tabs">
             {% set activatedObjectTypes = getModVar('MUYourCityModule', 'enabledFinderTypes', []) %}
             {% if 'branch' in activatedObjectTypes %}
-                <li{{ objectType == 'branch' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'branch', 'editor': editorName}) }}" title="{{ __('Search and select branch') }}">{{ __('Branches') }}</a></li>
+                <li{{ objectType == 'branch' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {objectType: 'branch', editor: editorName}) }}" title="{{ __('Search and select branch') }}">{{ __('Branches') }}</a></li>
             {% endif %}
             {% if 'location' in activatedObjectTypes %}
-                <li{{ objectType == 'location' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'location', 'editor': editorName}) }}" title="{{ __('Search and select location') }}">{{ __('Locations') }}</a></li>
+                <li{{ objectType == 'location' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {objectType: 'location', editor: editorName}) }}" title="{{ __('Search and select location') }}">{{ __('Locations') }}</a></li>
             {% endif %}
             {% if 'part' in activatedObjectTypes %}
-                <li{{ objectType == 'part' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'part', 'editor': editorName}) }}" title="{{ __('Search and select part') }}">{{ __('Parts') }}</a></li>
+                <li{{ objectType == 'part' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {objectType: 'part', editor: editorName}) }}" title="{{ __('Search and select part') }}">{{ __('Parts') }}</a></li>
             {% endif %}
             {% if 'offer' in activatedObjectTypes %}
-                <li{{ objectType == 'offer' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'offer', 'editor': editorName}) }}" title="{{ __('Search and select offer') }}">{{ __('Offers') }}</a></li>
+                <li{{ objectType == 'offer' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {objectType: 'offer', editor: editorName}) }}" title="{{ __('Search and select offer') }}">{{ __('Offers') }}</a></li>
             {% endif %}
             {% if 'menuOfLocation' in activatedObjectTypes %}
-                <li{{ objectType == 'menuOfLocation' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'menuOfLocation', 'editor': editorName}) }}" title="{{ __('Search and select menu of location') }}">{{ __('Menus of location') }}</a></li>
+                <li{{ objectType == 'menuOfLocation' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {objectType: 'menuOfLocation', editor: editorName}) }}" title="{{ __('Search and select menu of location') }}">{{ __('Menus of location') }}</a></li>
             {% endif %}
             {% if 'partOfMenu' in activatedObjectTypes %}
-                <li{{ objectType == 'partOfMenu' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'partOfMenu', 'editor': editorName}) }}" title="{{ __('Search and select part of menu') }}">{{ __('Parts of menu') }}</a></li>
+                <li{{ objectType == 'partOfMenu' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {objectType: 'partOfMenu', editor: editorName}) }}" title="{{ __('Search and select part of menu') }}">{{ __('Parts of menu') }}</a></li>
             {% endif %}
             {% if 'dish' in activatedObjectTypes %}
-                <li{{ objectType == 'dish' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'dish', 'editor': editorName}) }}" title="{{ __('Search and select dish') }}">{{ __('Dishes') }}</a></li>
+                <li{{ objectType == 'dish' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {objectType: 'dish', editor: editorName}) }}" title="{{ __('Search and select dish') }}">{{ __('Dishes') }}</a></li>
             {% endif %}
             {% if 'event' in activatedObjectTypes %}
-                <li{{ objectType == 'event' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'event', 'editor': editorName}) }}" title="{{ __('Search and select event') }}">{{ __('Events') }}</a></li>
+                <li{{ objectType == 'event' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {objectType: 'event', editor: editorName}) }}" title="{{ __('Search and select event') }}">{{ __('Events') }}</a></li>
             {% endif %}
             {% if 'product' in activatedObjectTypes %}
-                <li{{ objectType == 'product' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'product', 'editor': editorName}) }}" title="{{ __('Search and select product') }}">{{ __('Products') }}</a></li>
+                <li{{ objectType == 'product' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {objectType: 'product', editor: editorName}) }}" title="{{ __('Search and select product') }}">{{ __('Products') }}</a></li>
             {% endif %}
             {% if 'specialOfLocation' in activatedObjectTypes %}
-                <li{{ objectType == 'specialOfLocation' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'specialOfLocation', 'editor': editorName}) }}" title="{{ __('Search and select special of location') }}">{{ __('Specials of location') }}</a></li>
+                <li{{ objectType == 'specialOfLocation' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {objectType: 'specialOfLocation', editor: editorName}) }}" title="{{ __('Search and select special of location') }}">{{ __('Specials of location') }}</a></li>
             {% endif %}
             {% if 'serviceOfLocation' in activatedObjectTypes %}
-                <li{{ objectType == 'serviceOfLocation' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {'objectType': 'serviceOfLocation', 'editor': editorName}) }}" title="{{ __('Search and select service of location') }}">{{ __('Services of location') }}</a></li>
+                <li{{ objectType == 'serviceOfLocation' ? ' class="active"' : '' }}><a href="{{ path('muyourcitymodule_external_finder', {objectType: 'serviceOfLocation', editor: editorName}) }}" title="{{ __('Search and select service of location') }}">{{ __('Services of location') }}</a></li>
             {% endif %}
             </ul>
         </div>
@@ -46,7 +46,7 @@
             '@MUYourCityModule/Form/bootstrap_3.html.twig',
             'ZikulaFormExtensionBundle:Form:form_div_layout.html.twig'
         ] %}
-        {{ form_start(finderForm, {attr: { id: 'mUYourCityModuleSelectorForm' }}) }}
+        {{ form_start(finderForm, {attr: {id: 'mUYourCityModuleSelectorForm'}}) }}
         {{ form_errors(finderForm) }}
         <fieldset>
             <legend>{{ __('Search and select branch') }}</legend>
@@ -77,8 +77,8 @@
                                             {{ branch|muyourcitymodule_formattedTitle }}
                                         {% endif %}
                                     </a>
-                                    <input type="hidden" id="path{{ itemId }}" value="{{ path('muyourcitymodule_branch_display', { 'id': branch.getId() }) }}" />
-                                    <input type="hidden" id="url{{ itemId }}" value="{{ url('muyourcitymodule_branch_display', { 'id': branch.getId() }) }}" />
+                                    <input type="hidden" id="path{{ itemId }}" value="{{ path('muyourcitymodule_branch_display', {'id': branch.getId()}) }}" />
+                                    <input type="hidden" id="url{{ itemId }}" value="{{ url('muyourcitymodule_branch_display', {'id': branch.getId()}) }}" />
                                     <input type="hidden" id="title{{ itemId }}" value="{{ branch|muyourcitymodule_formattedTitle|e('html_attr') }}" />
                                     <input type="hidden" id="desc{{ itemId }}" value="{% set description %}{% if branch.description is not empty %}{{ branch.description }}{% endif %}
                                     {% endset %}{{ description|striptags|e('html_attr') }}" />
@@ -106,7 +106,7 @@
                 {{ form_row(finderForm.q) }}
             </div>
             <div>
-                {{ pager({ display: 'page', rowcount: pager.numitems, limit: pager.itemsperpage, posvar: 'pos', maxpages: 10, route: 'muyourcitymodule_external_finder'}) }}
+                {{ pager({display: 'page', rowcount: pager.numitems, limit: pager.itemsperpage, posvar: 'pos', maxpages: 10, route: 'muyourcitymodule_external_finder'}) }}
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-9">
@@ -125,14 +125,4 @@
         </fieldset>
     </div>
     #}
-
-    <script type="text/javascript">
-    /* <![CDATA[ */
-        ( function($) {
-            $(document).ready(function() {
-                mUYourCityModule.finder.onLoad();
-            });
-        })(jQuery);
-    /* ]]> */
-    </script>
 {% endblock %}

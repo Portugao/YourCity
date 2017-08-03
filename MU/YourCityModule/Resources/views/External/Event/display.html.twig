@@ -2,10 +2,10 @@
 {{ pageAddAsset('javascript', asset('magnific-popup/jquery.magnific-popup.min.js')) }}
 {{ pageAddAsset('stylesheet', asset('magnific-popup/magnific-popup.css')) }}
 {{ pageAddAsset('javascript', zasset('@MUYourCityModule:js/MUYourCityModule.js')) }}
-<div id="event{$event->getKey()}" class="muyourcitymodule-external-event">
+<div id="event{{ event.getKey() }}" class="muyourcitymodule-external-event">
 {% if displayMode == 'link' %}
     <p class="muyourcitymodule-external-link">
-    <a href="{{ path('muyourcitymodule_event_display', { 'id': event.getId() }) }}" title="{{ event|muyourcitymodule_formattedTitle|e('html_attr') }}">
+    <a href="{{ path('muyourcitymodule_event_display', {'id': event.getId()}) }}" title="{{ event|muyourcitymodule_formattedTitle|e('html_attr') }}">
     {{ event|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.events.filter')|safeHtml }}
     </a>
     </p>

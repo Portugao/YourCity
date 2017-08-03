@@ -2,6 +2,6 @@
 [
 {% for menuOfLocation in items %}
     {% if not loop.first %},{% endif %}
-    {{ menuOfLocation.toJson() }}
+    {{ menuOfLocation.toArray()|json_encode() }}
 {% endfor %}
 ]

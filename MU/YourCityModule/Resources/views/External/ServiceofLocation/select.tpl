@@ -1,5 +1,6 @@
 {* Purpose of this template: Display a popup selector for Forms and Content integration *}
 {assign var='baseID' value='serviceOfLocation'}
+<div id="itemSelectorInfo" class="hidden" data-base-id="{$baseID}" data-selected-id="{$selectedId|default:0}"></div>
 <div class="row">
     <div class="col-sm-8">
         <div class="form-group">
@@ -51,13 +52,3 @@
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-/* <![CDATA[ */
-    ( function($) {
-        $(document).ready(function() {
-            mUYourCityModule.itemSelector.onLoad('{{$baseID}}', {{$selectedId|default:0}});
-        });
-    })(jQuery);
-/* ]]> */
-</script>

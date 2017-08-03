@@ -1,8 +1,8 @@
 {# Purpose of this template: Display one certain special of location within an external context #}
-<div id="specialOfLocation{$specialOfLocation->getKey()}" class="muyourcitymodule-external-specialoflocation">
+<div id="specialOfLocation{{ specialOfLocation.getKey() }}" class="muyourcitymodule-external-specialoflocation">
 {% if displayMode == 'link' %}
     <p class="muyourcitymodule-external-link">
-    <a href="{{ path('muyourcitymodule_specialoflocation_display', { 'id': specialOfLocation.getId() }) }}" title="{{ specialOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}">
+    <a href="{{ path('muyourcitymodule_specialoflocation_display', {'id': specialOfLocation.getId()}) }}" title="{{ specialOfLocation|muyourcitymodule_formattedTitle|e('html_attr') }}">
     {{ specialOfLocation|muyourcitymodule_formattedTitle|notifyFilters('yourcity.filter_hooks.specialsoflocation.filter')|safeHtml }}
     </a>
     </p>

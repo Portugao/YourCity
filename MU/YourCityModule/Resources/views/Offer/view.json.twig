@@ -2,6 +2,6 @@
 [
 {% for offer in items %}
     {% if not loop.first %},{% endif %}
-    {{ offer.toJson() }}
+    {{ offer.toArray()|json_encode() }}
 {% endfor %}
 ]

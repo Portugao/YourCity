@@ -1,2 +1,2 @@
 {# purpose of this template: events display json view #}
-{{ event.toJson() }}
+{{ event.toArray()|json_encode() }}
