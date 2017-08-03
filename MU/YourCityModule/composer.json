@@ -1,6 +1,6 @@
 {
     "name": "mu/yourcity-module",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "Your City is an application to manage locations in your city.",
     "type": "zikula-module",
     "license": "LGPL-3.0+",
