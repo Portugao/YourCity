@@ -214,7 +214,7 @@ abstract class AbstractPartType extends AbstractType
             'required' => false && $options['mode'] == 'create',
             'entity' => $options['entity'],
             'allowed_extensions' => 'gif, jpeg, jpg, png',
-            'allowed_size' => '200KB'
+            'allowed_size' => '200k'
         ]);
     }
 

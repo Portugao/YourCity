@@ -205,7 +205,7 @@ abstract class AbstractEventType extends AbstractType
             'required' => false && $options['mode'] == 'create',
             'entity' => $options['entity'],
             'allowed_extensions' => 'gif, jpeg, jpg, png',
-            'allowed_size' => '200KB'
+            'allowed_size' => '200k'
         ]);
         
         $listEntries = $this->listHelper->getEntries('event', 'kindOfEvent');

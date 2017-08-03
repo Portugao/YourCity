@@ -243,7 +243,7 @@ abstract class AbstractMenuOfLocationType extends AbstractType
             'required' => false && $options['mode'] == 'create',
             'entity' => $options['entity'],
             'allowed_extensions' => 'gif, jpeg, jpg, png',
-            'allowed_size' => ''
+            'allowed_size' => '200k'
         ]);
         
         $builder->add('positionOfMenu', IntegerType::class, [

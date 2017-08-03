@@ -94,6 +94,7 @@ abstract class AbstractMenuOfLocationEntity extends EntityAccess implements Tran
      * @ORM\Column(length=255, nullable=true)
      * @Assert\Length(min="0", max="255")
      * @Assert\File(
+     *    maxSize = "200k",
      *    mimeTypes = {"image/*"}
      * )
      * @Assert\Image(
