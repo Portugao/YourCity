@@ -103,6 +103,39 @@ class ControllerHelper extends AbstractControllerHelper
     	if ($objectType == 'part') {   		
     		//$criteria = array('partOfCity' => $entity['name']);   		
     		$locationsForPart = $locationRepository->findBy(array('partOfCity' => $entity['name']), array('name' => 'ASC'));
+    		if (count($locationsForPart) > 0) {
+    			foreach ($locationsForPart as $location) {
+    				$events = $eventRepository->findBy(array('myLocation' => $location['id']), array('name' => 'ASC'));
+    				if ($events) {
+    					$location['isThereEvents'] = 1;
+    				} else {
+    					$location['isThereEvents'] = 0;
+    				}
+    				$menus = $menuRepository->findBy(array('myLocation' => $location['id']), array('name' => 'ASC'));
+    				if ($menus) {
+    					$location['isThereMenus'] = 1;
+    				} else {
+    					$location['isThereMenus'] = 0;
+    				}
+    				$offers = $offerRepository->findBy(array('myLocation' => $location['id']), array('name' => 'ASC'));
+    				if ($offers) {
+    					$location['isThereOffers'] = 1;
+    				} else {
+    					$location['isThereOffers'] = 0;
+    				}
+    				$products = $productRepository->findBy(array('myLocation' => $location['id']), array('name' => 'ASC'));
+    				if ($products) {
+    					$location['isThereProducts'] = 1;
+    				} else {
+    					$location['isThereProducts'] = 0;
+    				}
+    				$partLocations[] = $location;
+    			}
+    			//if ($locations && is_array($locations)) {
+    			//unset($entity['locations']);
+    			//$entity['locations'] = $locations;
+    			//}
+    		}
     	}
     	
     	if ($objectType == 'location') {
@@ -184,7 +217,7 @@ class ControllerHelper extends AbstractControllerHelper
 
     		$locations = array();
     		if ($objectType == 'part') {
-    			$relevantLocations = $locationsForPart;
+    			$relevantLocations = $partLocations;
     		}
     		if ($objectType == 'branch') {
     			$relevantLocations = $entity['locations'];

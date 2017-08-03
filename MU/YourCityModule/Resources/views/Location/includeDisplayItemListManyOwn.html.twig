@@ -90,7 +90,7 @@
                     {% for branch in location.branches %}
                         {% if loop.index == 1 %}
                         {{ __('Branches') }}: <a href="{{ path('muyourcitymodule_branch_' ~ routeArea ~ 'display', { 'id': branch.id }) }}">{{ branch.name }}</a>
-                        {% endif %}
+                        {% endif %}<br style="clear: both;" />
                     {% endfor %}
                     {% endif %}
                     {% if location.isThereMenus %}
