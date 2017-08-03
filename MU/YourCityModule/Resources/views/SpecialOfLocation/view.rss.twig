@@ -36,15 +36,15 @@
 {% endblock %}
 {% block entry_content %}
     <title><![CDATA[{% if specialOfLocation.updatedDate|default %}{{ specialOfLocation.updatedDate|localizeddate('medium', 'short') }} - {% endif %}{{ specialOfLocation|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.specialsoflocation')|safeHtml }}]]></title>
-    <link>{{ url('muyourcitymodule_specialoflocation_' ~ routeArea ~ 'display', { 'id': specialOfLocation.getId() }) }}</link>
-    <guid>{{ url('muyourcitymodule_specialoflocation_' ~ routeArea ~ 'display', { 'id': specialOfLocation.getId() }) }}</guid>
+    <link>{{ url('muyourcitymodule_specialoflocation_' ~ routeArea ~ 'display', {'id': specialOfLocation.getId()}) }}</link>
+    <guid>{{ url('muyourcitymodule_specialoflocation_' ~ routeArea ~ 'display', {'id': specialOfLocation.getId()}) }}</guid>
     {% if specialOfLocation.createdBy|default and specialOfLocation.createdBy.getUid() > 0 %}
         {% set creatorAttributes = specialOfLocation.createdBy.getAttributes() %}
         <author>{{ specialOfLocation.createdBy.getEmail() }} ({{ creatorAttributes.get('realname')|default(creatorAttributes.get('name'))|default(specialOfLocation.createdBy.getUname()) }})</author>
     {% endif %}
     <description>
         <![CDATA[
-        {{ specialOfLocation.description|replace({ '<br>': '<br />' }) }}
+        {{ specialOfLocation.description|replace({'<br>': '<br />'}) }}
         ]]>
     </description>
     {% if specialOfLocation.createdDate|default %}

@@ -36,15 +36,15 @@
 {% endblock %}
 {% block entry_content %}
     <title><![CDATA[{% if partOfMenu.updatedDate|default %}{{ partOfMenu.updatedDate|localizeddate('medium', 'short') }} - {% endif %}{{ partOfMenu|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.partsofmenu')|safeHtml }}]]></title>
-    <link>{{ url('muyourcitymodule_partofmenu_' ~ routeArea ~ 'display', { 'id': partOfMenu.getId() }) }}</link>
-    <guid>{{ url('muyourcitymodule_partofmenu_' ~ routeArea ~ 'display', { 'id': partOfMenu.getId() }) }}</guid>
+    <link>{{ url('muyourcitymodule_partofmenu_' ~ routeArea ~ 'display', {'id': partOfMenu.getId()}) }}</link>
+    <guid>{{ url('muyourcitymodule_partofmenu_' ~ routeArea ~ 'display', {'id': partOfMenu.getId()}) }}</guid>
     {% if partOfMenu.createdBy|default and partOfMenu.createdBy.getUid() > 0 %}
         {% set creatorAttributes = partOfMenu.createdBy.getAttributes() %}
         <author>{{ partOfMenu.createdBy.getEmail() }} ({{ creatorAttributes.get('realname')|default(creatorAttributes.get('name'))|default(partOfMenu.createdBy.getUname()) }})</author>
     {% endif %}
     <description>
         <![CDATA[
-        {{ partOfMenu.description|replace({ '<br>': '<br />' }) }}
+        {{ partOfMenu.description|replace({'<br>': '<br />'}) }}
         ]]>
     </description>
     {% if partOfMenu.createdDate|default %}

@@ -2,6 +2,6 @@
 [
 {% for part in items %}
     {% if not loop.first %},{% endif %}
-    {{ part.toJson() }}
+    {{ part.toArray()|json_encode() }}
 {% endfor %}
 ]

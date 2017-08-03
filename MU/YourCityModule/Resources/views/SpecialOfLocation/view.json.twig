@@ -2,6 +2,6 @@
 [
 {% for specialOfLocation in items %}
     {% if not loop.first %},{% endif %}
-    {{ specialOfLocation.toJson() }}
+    {{ specialOfLocation.toArray()|json_encode() }}
 {% endfor %}
 ]

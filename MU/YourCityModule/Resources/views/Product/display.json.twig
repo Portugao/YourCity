@@ -1,2 +1,2 @@
 {# purpose of this template: products display json view #}
-{{ product.toJson() }}
+{{ product.toArray()|json_encode() }}

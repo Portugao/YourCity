@@ -2,6 +2,6 @@
 [
 {% for product in items %}
     {% if not loop.first %},{% endif %}
-    {{ product.toJson() }}
+    {{ product.toArray()|json_encode() }}
 {% endfor %}
 ]

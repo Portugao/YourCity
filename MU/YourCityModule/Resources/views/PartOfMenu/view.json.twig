@@ -2,6 +2,6 @@
 [
 {% for partOfMenu in items %}
     {% if not loop.first %},{% endif %}
-    {{ partOfMenu.toJson() }}
+    {{ partOfMenu.toArray()|json_encode() }}
 {% endfor %}
 ]

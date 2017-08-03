@@ -2,6 +2,6 @@
 [
 {% for serviceOfLocation in items %}
     {% if not loop.first %},{% endif %}
-    {{ serviceOfLocation.toJson() }}
+    {{ serviceOfLocation.toArray()|json_encode() }}
 {% endfor %}
 ]

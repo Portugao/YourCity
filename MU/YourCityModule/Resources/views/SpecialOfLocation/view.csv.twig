@@ -4,7 +4,7 @@
 {% endspaceless %}
 {% for specialOfLocation in items %}
 {% spaceless %}
-    "{{ specialOfLocation.name }}";"{{ specialOfLocation.descriptionForGoogle }}";"{{ specialOfLocation.description|safeHtml }}";"{{ specialOfLocation.iconForSpecial }}";"<span class="label label-default" style="background-color: {{ specialOfLocation.colorOfIcon|e('html_attr') }}">{{ specialOfLocation.colorOfIcon }}</label>";"{{ specialOfLocation.workflowState|muyourcitymodule_objectState(false)|lower }}"
+    "{{ specialOfLocation.name }}";"{{ specialOfLocation.descriptionForGoogle }}";"{{ specialOfLocation.description|safeHtml }}";"{{ specialOfLocation.iconForSpecial }}";"{{ specialOfLocation.colorOfIcon }}";"{{ specialOfLocation.workflowState|muyourcitymodule_objectState(false)|lower }}"
     ;"
     {% if specialOfLocation.locations|default %}
         {% for relatedItem in specialOfLocation.locations %}

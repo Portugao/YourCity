@@ -5,7 +5,7 @@
     <descriptionForGoogle><![CDATA[{{ specialOfLocation.descriptionForGoogle }}]]></descriptionForGoogle>
     <description><![CDATA[{{ specialOfLocation.description|safeHtml }}]]></description>
     <iconForSpecial><![CDATA[{{ specialOfLocation.iconForSpecial }}]]></iconForSpecial>
-    <colorOfIcon><![CDATA[<span class="label label-default" style="background-color: {{ specialOfLocation.colorOfIcon|e('html_attr') }}">{{ specialOfLocation.colorOfIcon }}</label>]]></colorOfIcon>
+    <colorOfIcon><![CDATA[{{ specialOfLocation.colorOfIcon }}]]></colorOfIcon>
     <workflowState>{{ specialOfLocation.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
     <locations>
     {% if specialOfLocation.locations|default %}
