@@ -35,6 +35,9 @@ local.properties
 
 *.generated.*
 *.generated.html.twig
+*.generated.css
+
+*MenuAlt.php
 
 #################
 ## Visual Studio
