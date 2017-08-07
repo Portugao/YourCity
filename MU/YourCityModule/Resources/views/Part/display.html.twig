@@ -2,7 +2,9 @@
 {% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
 {% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
 {% block pageTitle %}{{ part.name }}
+{% if part.descriptionForGoogle %}
 {{ pageSetVar('meta.description', part.descriptionForGoogle) }}
+{% endif %}
 {% endblock %}
 
 {% block title %}
