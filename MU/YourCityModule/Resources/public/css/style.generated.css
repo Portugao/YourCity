@@ -26,10 +26,6 @@ div.muyourcitymodule-mapcontainer {
     height: 400px;
 }
 
-.muyourcitymoduleColourPicker {
-    cursor: pointer;
-}
-
 
 /* validation */
 div.form-group input:required, div.form-group textarea:required, div.form-group select:required {
@@ -87,9 +83,6 @@ div.muyourcitymodule-relation-rightside {
 
 div.muyourcitymodule-autocomplete .ui-autocomplete .suggestion {
     background-image: url("../../../../../../images/icons/extrasmall/tab_right.png");
-}
-div.muyourcitymodule-autocomplete-user .ui-autocomplete .suggestion {
-    background-image: url("../../../../../../images/icons/extrasmall/user.png");
 }
 div.muyourcitymodule-autocomplete-with-image .ui-autocomplete .suggestion {
     background-image: url("../../../../../../images/icons/extrasmall/agt_Multimedia.png");
