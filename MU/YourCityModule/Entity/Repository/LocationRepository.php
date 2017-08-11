@@ -186,4 +186,27 @@ class LocationRepository extends AbstractLocationRepository
     
     	return $qb;
     }
+    
+    /**
+     * Method to get query for all locations without joins
+     */
+    public function getLocationsQuery(QueryBuilder $qb, $currentPage = 1, $resultsPerPage = 25) {
+    	$qb = $this->getEntityManager()->createQueryBuilder();
+    	$qb->select('tbl')
+    	->from('MUYourCity_Entity_Location', 'tbl');
+    	
+    	$offset = ($currentPage-1) * $resultsPerPage;
+    	
+    	$query->setFirstResult($offset)
+    	->setMaxResults($resultsPerPage);
+    	
+    	return $query;
+    }
+    /**
+     * 
+     */
+    public function getLocations(QueryBuilder $qb) {
+    	$query = $this->getLocationsQuery($qb);
+    	return $results = $query->getResult();
+    }
 }
