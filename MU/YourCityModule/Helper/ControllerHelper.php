@@ -370,6 +370,7 @@ class ControllerHelper extends AbstractControllerHelper
     		// OWN CODE
     		// retrieve item list with pagination    		
     		if ($objectType == 'location' || $objectType == 'branch') {
+    			//list($entities, $objectCount) = $repository->getLocations(); TODO
     			list($entities, $objectCount) = $repository->selectWherePaginated($where, $sort . ' ' . $sortdir, $currentPage, $resultsPerPage, false);
     			    			
     		} else {
