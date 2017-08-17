@@ -493,11 +493,11 @@ div.muyourcitymodule-view .avatar img {
 }
 .carousel-control.right {
 	left:auto;
-	right:-32px;
+	right:-15px;
 }
 .carousel-control.left {
 	right:auto;
-	left:-32px;
+	left:-20px;
 }
 .carousel-indicators {
 	bottom:-30px;
