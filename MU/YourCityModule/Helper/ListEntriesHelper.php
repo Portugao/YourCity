@@ -219,7 +219,7 @@ class ListEntriesHelper extends AbstractListEntriesHelper
     	$uid = $this->controllerHelper->getUid();
     	$states = [];
     	$locationRepository = $this->entityFactory->getRepository('location');
-    	if ($uid != 2) {
+    	if ($uid > 2) {
     	$criteria = array('owner' => $uid);
     	$criteria2 = array('admin1' => $uid);
     	$criteria3 = array('admin2' => $uid);
