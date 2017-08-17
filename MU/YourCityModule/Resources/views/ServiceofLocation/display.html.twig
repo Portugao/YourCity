@@ -1,7 +1,11 @@
 {# purpose of this template: services of location display view #}
 {% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
 {% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
-{% block pageTitle %}{{ serviceOfLocation.name }}{% endblock %}
+{% block pageTitle %}{{ serviceOfLocation.name }}
+{% if serviceOfLocation.descriptionForGoogle != '' %}
+{{ pageSetVar('meta.description', serviceOfLocation.descriptionForGoogle) }}
+{% endif %}
+{% endblock %}
 {% block title %}
     {% set templateTitle = serviceOfLocation.name %}
     {{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.servicesOflocation.filter') }}
