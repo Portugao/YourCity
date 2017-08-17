@@ -5,7 +5,9 @@
 {% block content %}
 <div class="muyourcitymodule-branch muyourcitymodule-view">
 
-    {#{ block('page_nav_links') }#}
+    {% if routeArea == 'admin' %}
+    {{ block('page_nav_links') }}
+    {% endif %}
 
     {#{ include('@MUYourCityModule/Branch/viewQuickNav.html.twig', { workflowStateFilter: false }) }#}{# see template file for available options #}
 
