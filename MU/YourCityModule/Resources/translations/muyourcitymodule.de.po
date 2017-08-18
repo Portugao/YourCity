@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: Zikula 1.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-22 10:17+0200\n"
-"PO-Revision-Date: 2017-08-17 08:22+0200\n"
+"PO-Revision-Date: 2017-08-18 16:38+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.2\n"
+"X-Generator: Poedit 2.0.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: Resources/views/plugins/function.muyourcitymoduleObjectTypeSelector.php:30 Form/Type/Base/AbstractLocationType.php:1131
@@ -2377,11 +2377,11 @@ msgstr "Wählen Sie die Specials der Location"
 
 #: Form/Type/Base/AbstractLocationType.php:1199
 msgid "These remarks (like a reason for deny) are not stored, but added to any notification emails send to the creator."
-msgstr ""
+msgstr "Diese Bemerkungen (wie der Grund einer Ablehnung) werden nicht gespeichert, sondern etwaigen Emails zur Information hinzugefügt. "
 
 #: Form/Type/Base/AbstractLocationType.php:1201
 msgid "These remarks (like questions about conformance) are not stored, but added to any notification emails send to our moderators."
-msgstr ""
+msgstr "Diese Bermerkungen (wie Fragen zur Abstimmung) werden nicht gespeichert, sondern etwaigen Emails zur Information hinzugefügt."
 
 #: Form/Type/Base/AbstractLocationType.php:1212
 msgid "Enter any additions about your content"
@@ -2598,7 +2598,7 @@ msgstr "Gruppe der Moderatoren für Locations"
 
 #: Form/Type/Base/AbstractConfigType.php:162 Form/Type/Base/AbstractConfigType.php:164
 msgid "Used to determine moderator user accounts for sending email notifications."
-msgstr ""
+msgstr "´Benutzt, um Benutzer Konten als Moderator  zur Verschickung von Emails zu identifizieren."
 
 #: Form/Type/Base/AbstractConfigType.php:168
 msgid "Choose the moderation group for locations."
@@ -2610,11 +2610,11 @@ msgstr "Anzahl der Brancheneinträge pro Seite"
 
 #: Form/Type/Base/AbstractConfigType.php:190 Form/Type/Base/AbstractConfigType.php:192
 msgid "The amount of branches shown per page"
-msgstr ""
+msgstr "Die Anzahl der Branchen pro Seite"
 
 #: Form/Type/Base/AbstractConfigType.php:198
 msgid "Enter the branch entries per page."
-msgstr ""
+msgstr "Gib die Anzahl der Branchen pro Seite ein."
 
 #: Form/Type/Base/AbstractConfigType.php:202
 msgid "Link own branches on account page"
@@ -2622,11 +2622,11 @@ msgstr "Branchen Link im Account anzeigen"
 
 #: Form/Type/Base/AbstractConfigType.php:205 Form/Type/Base/AbstractConfigType.php:207
 msgid "Whether to add a link to branches of the current user on his account page"
-msgstr ""
+msgstr "Ob ein Link zu eigenen Branchen im Benutzerkonto angezeigt werden soll"
 
 #: Form/Type/Base/AbstractConfigType.php:211
 msgid "The link own branches on account page option."
-msgstr ""
+msgstr "Die Option zur Verlinkung eigener Branchen im Benutzerkonto."
 
 #: Form/Type/Base/AbstractConfigType.php:215
 msgid "Location entries per page"
@@ -2634,11 +2634,11 @@ msgstr "Einträge pro Seite für Locations"
 
 #: Form/Type/Base/AbstractConfigType.php:218 Form/Type/Base/AbstractConfigType.php:220
 msgid "The amount of locations shown per page"
-msgstr ""
+msgstr "Die Anzahl der Locations pro Seite"
 
 #: Form/Type/Base/AbstractConfigType.php:226
 msgid "Enter the location entries per page."
-msgstr ""
+msgstr "Gib die Anzahl der Locations pro Seite ein."
 
 #: Form/Type/Base/AbstractConfigType.php:230
 msgid "Link own locations on account page"
@@ -2646,15 +2646,15 @@ msgstr "Locations Link im Account anzeigen"
 
 #: Form/Type/Base/AbstractConfigType.php:233 Form/Type/Base/AbstractConfigType.php:235
 msgid "Whether to add a link to locations of the current user on his account page"
-msgstr ""
+msgstr "Ob ein Link zu eigenen Locations im Benutzerkonto angezeigt werden soll"
 
 #: Form/Type/Base/AbstractConfigType.php:239
 msgid "The link own locations on account page option."
-msgstr ""
+msgstr "Die Option zur Verlinkung eigener Locations im Benutzerkonto."
 
 #: Form/Type/Base/AbstractConfigType.php:243
 msgid "Part entries per page"
-msgstr ""
+msgstr "Stadtteil Einträge pro Seite"
 
 #: Form/Type/Base/AbstractConfigType.php:246 Form/Type/Base/AbstractConfigType.php:248
 msgid "The amount of parts shown per page"
@@ -2662,7 +2662,7 @@ msgstr ""
 
 #: Form/Type/Base/AbstractConfigType.php:254
 msgid "Enter the part entries per page."
-msgstr ""
+msgstr "Gib die Anzahl der Stadtteile pro Seite ein."
 
 #: Form/Type/Base/AbstractConfigType.php:258
 msgid "Link own parts on account page"
@@ -2670,15 +2670,15 @@ msgstr "Stadttteile Link im Account anzeigen"
 
 #: Form/Type/Base/AbstractConfigType.php:261 Form/Type/Base/AbstractConfigType.php:263
 msgid "Whether to add a link to parts of the current user on his account page"
-msgstr ""
+msgstr "Ob ein Link zu eigenen Statdtteilen im Benutzerkonto angezeigt werden soll"
 
 #: Form/Type/Base/AbstractConfigType.php:267
 msgid "The link own parts on account page option."
-msgstr ""
+msgstr "Die Option zur Verlinkung eigener Stadtteile im Benutzerkonto."
 
 #: Form/Type/Base/AbstractConfigType.php:271
 msgid "Offer entries per page"
-msgstr ""
+msgstr "Angebots Einträge pro Seite"
 
 #: Form/Type/Base/AbstractConfigType.php:274 Form/Type/Base/AbstractConfigType.php:276
 msgid "The amount of offers shown per page"
@@ -2686,7 +2686,7 @@ msgstr "Die Anzahl der Angebote per Seite"
 
 #: Form/Type/Base/AbstractConfigType.php:282
 msgid "Enter the offer entries per page."
-msgstr ""
+msgstr "Gib die Anzahl der Angebote pro Seite ein."
 
 #: Form/Type/Base/AbstractConfigType.php:286
 msgid "Link own offers on account page"
@@ -2694,11 +2694,11 @@ msgstr "Angebote Link im Account anzeigen"
 
 #: Form/Type/Base/AbstractConfigType.php:289 Form/Type/Base/AbstractConfigType.php:291
 msgid "Whether to add a link to offers of the current user on his account page"
-msgstr ""
+msgstr "Ob ein Link zu eigenen Angeboten im Benutzerkonto angezeigt werden soll"
 
 #: Form/Type/Base/AbstractConfigType.php:295
 msgid "The link own offers on account page option."
-msgstr ""
+msgstr "Angebote Link im Account anzeigen"
 
 #: Form/Type/Base/AbstractConfigType.php:299
 msgid "Menu of location entries per page"
@@ -2710,15 +2710,15 @@ msgstr ""
 
 #: Form/Type/Base/AbstractConfigType.php:310
 msgid "Enter the menu of location entries per page."
-msgstr ""
+msgstr "Gib die Anzahl der Menüs pro Seite ein."
 
 #: Form/Type/Base/AbstractConfigType.php:314
 msgid "Link own menus of location on account page"
-msgstr ""
+msgstr "Menüs einer Location Link im Account anzeigen"
 
 #: Form/Type/Base/AbstractConfigType.php:317 Form/Type/Base/AbstractConfigType.php:319
 msgid "Whether to add a link to menus of location of the current user on his account page"
-msgstr ""
+msgstr "Ob ein Link zu eigenen Menüs im Benutzerkonto angezeigt werden soll"
 
 #: Form/Type/Base/AbstractConfigType.php:323
 msgid "The link own menus of location on account page option."
@@ -2734,7 +2734,7 @@ msgstr ""
 
 #: Form/Type/Base/AbstractConfigType.php:338
 msgid "Enter the part of menu entries per page."
-msgstr ""
+msgstr "Gib die Anzahl der Kartenteile pro Seite ein."
 
 #: Form/Type/Base/AbstractConfigType.php:342
 msgid "Link own parts of menu on account page"
@@ -2742,7 +2742,7 @@ msgstr ""
 
 #: Form/Type/Base/AbstractConfigType.php:345 Form/Type/Base/AbstractConfigType.php:347
 msgid "Whether to add a link to parts of menu of the current user on his account page"
-msgstr ""
+msgstr "Ob ein Link zu eigenen Menüteilen im Benutzerkonto angezeigt werden soll"
 
 #: Form/Type/Base/AbstractConfigType.php:351
 msgid "The link own parts of menu on account page option."
@@ -2758,7 +2758,7 @@ msgstr ""
 
 #: Form/Type/Base/AbstractConfigType.php:366
 msgid "Enter the dish entries per page."
-msgstr ""
+msgstr "Gib die Anzahl der Gerichte pro Seite ein."
 
 #: Form/Type/Base/AbstractConfigType.php:370
 msgid "Link own dishes on account page"
@@ -2766,7 +2766,7 @@ msgstr ""
 
 #: Form/Type/Base/AbstractConfigType.php:373 Form/Type/Base/AbstractConfigType.php:375
 msgid "Whether to add a link to dishes of the current user on his account page"
-msgstr ""
+msgstr "Ob ein Link zu eigenen Gerichten im Benutzerkonto angezeigt werden soll"
 
 #: Form/Type/Base/AbstractConfigType.php:379
 msgid "The link own dishes on account page option."
@@ -2782,7 +2782,7 @@ msgstr ""
 
 #: Form/Type/Base/AbstractConfigType.php:394
 msgid "Enter the event entries per page."
-msgstr ""
+msgstr "Gib die Anzahl der Veranstaltungen pro Seite ein."
 
 #: Form/Type/Base/AbstractConfigType.php:398
 msgid "Link own events on account page"
@@ -2790,7 +2790,7 @@ msgstr ""
 
 #: Form/Type/Base/AbstractConfigType.php:401 Form/Type/Base/AbstractConfigType.php:403
 msgid "Whether to add a link to events of the current user on his account page"
-msgstr ""
+msgstr "Ob ein Link zu eigenen Veranstaltungen im Benutzerkonto angezeigt werden soll"
 
 #: Form/Type/Base/AbstractConfigType.php:407
 msgid "The link own events on account page option."
@@ -2806,7 +2806,7 @@ msgstr ""
 
 #: Form/Type/Base/AbstractConfigType.php:422
 msgid "Enter the product entries per page."
-msgstr ""
+msgstr "Gib die Anzahl der Produkte pro Seite ein."
 
 #: Form/Type/Base/AbstractConfigType.php:426
 msgid "Link own products on account page"
@@ -2814,7 +2814,7 @@ msgstr ""
 
 #: Form/Type/Base/AbstractConfigType.php:429 Form/Type/Base/AbstractConfigType.php:431
 msgid "Whether to add a link to products of the current user on his account page"
-msgstr ""
+msgstr "Ob ein Link zu eigenen Produkten im Benutzerkonto angezeigt werden soll"
 
 #: Form/Type/Base/AbstractConfigType.php:435
 msgid "The link own products on account page option."
@@ -2830,7 +2830,7 @@ msgstr ""
 
 #: Form/Type/Base/AbstractConfigType.php:450
 msgid "Enter the special of location entries per page."
-msgstr ""
+msgstr "Gib die Anzahl der Specials einer Location pro Seite ein."
 
 #: Form/Type/Base/AbstractConfigType.php:454
 msgid "Link own specials of location on account page"
@@ -2838,7 +2838,7 @@ msgstr "Link zu eigenen Specials im Benutzerkonto anzeigen"
 
 #: Form/Type/Base/AbstractConfigType.php:457 Form/Type/Base/AbstractConfigType.php:459
 msgid "Whether to add a link to specials of location of the current user on his account page"
-msgstr ""
+msgstr "Ob ein Link zu eigenen Specials von Locations im Benutzerkonto angezeigt werden soll"
 
 #: Form/Type/Base/AbstractConfigType.php:463
 msgid "The link own specials of location on account page option."
@@ -2854,7 +2854,7 @@ msgstr ""
 
 #: Form/Type/Base/AbstractConfigType.php:478
 msgid "Enter the service of location entries per page."
-msgstr ""
+msgstr "Gib die Anzahl der Services einer Location pro Seite ein."
 
 #: Form/Type/Base/AbstractConfigType.php:482
 msgid "Link own services of location on account page"
@@ -2862,7 +2862,7 @@ msgstr "Link zu eigenen Diensten im Benutzerkonto anzeigen"
 
 #: Form/Type/Base/AbstractConfigType.php:485 Form/Type/Base/AbstractConfigType.php:487
 msgid "Whether to add a link to services of location of the current user on his account page"
-msgstr ""
+msgstr "Ob ein Link zu eigenen Services von Locations im Benutzerkonto angezeigt werden soll"
 
 #: Form/Type/Base/AbstractConfigType.php:491
 msgid "The link own services of location on account page option."
@@ -2878,7 +2878,7 @@ msgstr ""
 
 #: Form/Type/Base/AbstractConfigType.php:506
 msgid "Enter the abonnement entries per page."
-msgstr ""
+msgstr "Gib die Anzahl der Abonnements pro Seite ein."
 
 #: Form/Type/Base/AbstractConfigType.php:510
 msgid "Link own abonnements on account page"
@@ -2886,7 +2886,7 @@ msgstr "Eigene Abonnements von Locations auf der Accountseite verlinken"
 
 #: Form/Type/Base/AbstractConfigType.php:513 Form/Type/Base/AbstractConfigType.php:515
 msgid "Whether to add a link to abonnements of the current user on his account page"
-msgstr ""
+msgstr "Ob ein Link zu eigenen Abonnements im Benutzerkonto angezeigt werden soll"
 
 #: Form/Type/Base/AbstractConfigType.php:519
 msgid "The link own abonnements on account page option."
@@ -2898,7 +2898,7 @@ msgstr ""
 #: Form/Type/Base/AbstractConfigType.php:1993 Form/Type/Base/AbstractConfigType.php:2155 Form/Type/Base/AbstractConfigType.php:2317
 #: Form/Type/Base/AbstractConfigType.php:2479 Form/Type/Base/AbstractConfigType.php:2641 Form/Type/Base/AbstractConfigType.php:2803
 msgid "Enable shrinking"
-msgstr ""
+msgstr "Beschneidung aktivieren"
 
 #: Form/Type/Base/AbstractConfigType.php:538 Form/Type/Base/AbstractConfigType.php:540 Form/Type/Base/AbstractConfigType.php:700
 #: Form/Type/Base/AbstractConfigType.php:702 Form/Type/Base/AbstractConfigType.php:862 Form/Type/Base/AbstractConfigType.php:864
