@@ -324,14 +324,8 @@ abstract class AbstractYourCityModuleInstaller extends AbstractExtensionInstalle
      */
     protected function updateModVarsTo14()
     {
-        $dbName = $this->getDbName();
         $conn = $this->getConnection();
-    
-        $conn->executeQuery("
-            UPDATE $dbName.module_vars
-            SET modname = 'MUYourCityModule'
-            WHERE modname = 'YourCity';
-        ");
+        $conn->update('module_vars', ['modname' => 'MUYourCityModule'], ['modname' => 'YourCity']);
     }
     
     /**
@@ -340,14 +334,7 @@ abstract class AbstractYourCityModuleInstaller extends AbstractExtensionInstalle
     protected function updateExtensionInfoFor14()
     {
         $conn = $this->getConnection();
-        $dbName = $this->getDbName();
-    
-        $conn->executeQuery("
-            UPDATE $dbName.modules
-            SET name = 'MUYourCityModule',
-                directory = 'MU/YourCityModule'
-            WHERE name = 'YourCity';
-        ");
+        $conn->update('modules', ['name' => 'MUYourCityModule', 'directory' => 'MU/YourCityModule'], ['name' => 'YourCity']);
     }
     
     /**
@@ -356,12 +343,10 @@ abstract class AbstractYourCityModuleInstaller extends AbstractExtensionInstalle
     protected function renamePermissionsFor14()
     {
         $conn = $this->getConnection();
-        $dbName = $this->getDbName();
-    
         $componentLength = strlen('YourCity') + 1;
     
         $conn->executeQuery("
-            UPDATE $dbName.group_perms
+            UPDATE group_perms
             SET component = CONCAT('MUYourCityModule', SUBSTRING(component, $componentLength))
             WHERE component LIKE 'YourCity%';
         ");
@@ -373,7 +358,6 @@ abstract class AbstractYourCityModuleInstaller extends AbstractExtensionInstalle
     protected function renameTablesFor14()
     {
         $conn = $this->getConnection();
-        $dbName = $this->getDbName();
     
         $oldPrefix = 'yourcity_';
         $oldPrefixLength = strlen($oldPrefix);
@@ -390,8 +374,8 @@ abstract class AbstractYourCityModuleInstaller extends AbstractExtensionInstalle
             $newTableName = str_replace($oldPrefix, $newPrefix, $tableName);
     
             $conn->executeQuery("
-                RENAME TABLE $dbName.$tableName
-                TO $dbName.$newTableName;
+                RENAME TABLE $tableName
+                TO $newTableName;
             ");
         }
     }
@@ -410,49 +394,32 @@ abstract class AbstractYourCityModuleInstaller extends AbstractExtensionInstalle
     protected function updateHookNamesFor14()
     {
         $conn = $this->getConnection();
-        $dbName = $this->getDbName();
     
-        $conn->executeQuery("
-            UPDATE $dbName.hook_area
-            SET owner = 'MUYourCityModule'
-            WHERE owner = 'YourCity';
-        ");
+        $conn->update('hook_area', ['owner' => 'MUYourCityModule'], ['owner' => 'YourCity']);
     
         $componentLength = strlen('subscriber.yourcity') + 1;
         $conn->executeQuery("
-            UPDATE $dbName.hook_area
+            UPDATE hook_area
             SET areaname = CONCAT('subscriber.muyourcitymodule', SUBSTRING(areaname, $componentLength))
             WHERE areaname LIKE 'subscriber.yourcity%';
         ");
     
-        $conn->executeQuery("
-            UPDATE $dbName.hook_binding
-            SET sowner = 'MUYourCityModule'
-            WHERE sowner = 'YourCity';
-        ");
+        $conn->update('hook_binding', ['sowner' => 'MUYourCityModule'], ['sowner' => 'YourCity']);
     
-        $conn->executeQuery("
-            UPDATE $dbName.hook_runtime
-            SET sowner = 'MUYourCityModule'
-            WHERE sowner = 'YourCity';
-        ");
+        $conn->update('hook_runtime', ['sowner' => 'MUYourCityModule'], ['sowner' => 'YourCity']);
     
         $componentLength = strlen('yourcity') + 1;
         $conn->executeQuery("
-            UPDATE $dbName.hook_runtime
+            UPDATE hook_runtime
             SET eventname = CONCAT('muyourcitymodule', SUBSTRING(eventname, $componentLength))
             WHERE eventname LIKE 'yourcity%';
         ");
     
-        $conn->executeQuery("
-            UPDATE $dbName.hook_subscriber
-            SET owner = 'MUYourCityModule'
-            WHERE owner = 'YourCity';
-        ");
+        $conn->update('hook_subscriber', ['owner' => 'MUYourCityModule'], ['owner' => 'YourCity']);
     
         $componentLength = strlen('yourcity') + 1;
         $conn->executeQuery("
-            UPDATE $dbName.hook_subscriber
+            UPDATE hook_subscriber
             SET eventname = CONCAT('muyourcitymodule', SUBSTRING(eventname, $componentLength))
             WHERE eventname LIKE 'yourcity%';
         ");
@@ -464,13 +431,19 @@ abstract class AbstractYourCityModuleInstaller extends AbstractExtensionInstalle
     protected function updateWorkflowsFor14()
     {
         $conn = $this->getConnection();
-        $dbName = $this->getDbName();
-    
-        $conn->executeQuery("
-            UPDATE $dbName.workflows
-            SET module = 'MUYourCityModule'
-            WHERE module = 'YourCity';
-        ");
+        $conn->update('workflows', ['module' => 'MUYourCityModule'], ['module' => 'YourCity']);
+        $conn->update('workflows', ['obj_table' => 'BranchEntity'], ['module' => 'MUYourCityModule', 'obj_table' => 'branch']);
+        $conn->update('workflows', ['obj_table' => 'LocationEntity'], ['module' => 'MUYourCityModule', 'obj_table' => 'location']);
+        $conn->update('workflows', ['obj_table' => 'PartEntity'], ['module' => 'MUYourCityModule', 'obj_table' => 'part']);
+        $conn->update('workflows', ['obj_table' => 'OfferEntity'], ['module' => 'MUYourCityModule', 'obj_table' => 'offer']);
+        $conn->update('workflows', ['obj_table' => 'MenuOfLocationEntity'], ['module' => 'MUYourCityModule', 'obj_table' => 'menuOfLocation']);
+        $conn->update('workflows', ['obj_table' => 'PartOfMenuEntity'], ['module' => 'MUYourCityModule', 'obj_table' => 'partOfMenu']);
+        $conn->update('workflows', ['obj_table' => 'DishEntity'], ['module' => 'MUYourCityModule', 'obj_table' => 'dish']);
+        $conn->update('workflows', ['obj_table' => 'EventEntity'], ['module' => 'MUYourCityModule', 'obj_table' => 'event']);
+        $conn->update('workflows', ['obj_table' => 'ProductEntity'], ['module' => 'MUYourCityModule', 'obj_table' => 'product']);
+        $conn->update('workflows', ['obj_table' => 'SpecialOfLocationEntity'], ['module' => 'MUYourCityModule', 'obj_table' => 'specialOfLocation']);
+        $conn->update('workflows', ['obj_table' => 'ServiceOfLocationEntity'], ['module' => 'MUYourCityModule', 'obj_table' => 'serviceOfLocation']);
+        $conn->update('workflows', ['obj_table' => 'AbonnementEntity'], ['module' => 'MUYourCityModule', 'obj_table' => 'abonnement']);
     }
     
     /**
