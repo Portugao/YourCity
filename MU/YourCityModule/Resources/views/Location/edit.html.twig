@@ -251,51 +251,42 @@
     {% set editImage = '<span class="fa fa-pencil-square-o"></span>' %}
     {% set removeImage = '<span class="fa fa-trash-o"></span>' %}
     
-    {% set geoScripts %}
-        {% set useGeoLocation = getModVar('MUYourCityModule', 'enableLocationGeoLocation', false) %}
-        {{ pageAddAsset('javascript', 'https://maps.google.com/maps/api/js?key=' ~ getModVar('MUYourCityModule', 'googleMapsApiKey', '') ~ '&amp;language=' ~ app.request.locale ~ '&amp;sensor=false') }}
-        {{ pageAddAsset('javascript', app.request.basePath ~ '/plugins/Mapstraction/lib/vendor/mxn/mxn.js?(googlev3)') }}
-        {% if useGeoLocation == true %}
-            {{ pageAddAsset('javascript', app.request.basePath ~ '/plugins/Mapstraction/lib/vendor/mxn/mxn.geocoder.js') }}
-            {{ pageAddAsset('javascript', app.request.basePath ~ '/plugins/Mapstraction/lib/vendor/mxn/mxn.googlev3.geocoder.js') }}
-        {% endif %}
+    {% set useGeoLocation = getModVar('MUYourCityModule', 'enableLocationGeoLocation', false) %}
+    {{ pageAddAsset('javascript', 'https://maps.google.com/maps/api/js?key=' ~ getModVar('MUYourCityModule', 'googleMapsApiKey', '') ~ '&amp;language=' ~ app.request.locale ~ '&amp;sensor=false') }}
+    {{ pageAddAsset('javascript', app.request.basePath ~ '/plugins/Mapstraction/lib/vendor/mxn/mxn.js?(googlev3)') }}
+    {% if useGeoLocation == true %}
+        {{ pageAddAsset('javascript', app.request.basePath ~ '/plugins/Mapstraction/lib/vendor/mxn/mxn.geocoder.js') }}
+        {{ pageAddAsset('javascript', app.request.basePath ~ '/plugins/Mapstraction/lib/vendor/mxn/mxn.googlev3.geocoder.js') }}
+    {% endif %}
+    <div id="geographicalInfo" class="hidden" data-context="edit" data-latitude="{{ location.latitude|muyourcitymodule_geoData }}" data-longitude="{{ location.longitude|muyourcitymodule_geoData }}" data-map-type="{{ getModVar('MUYourCityModule', 'defaultMapType', 'roadmap') }}" data-zoom-level="{{ getModVar('MUYourCityModule', 'defaultZoomLevel', 18) }}" data-use-geolocation="{% if mode == 'create' and useGeoLocation == true %}true{% else %}false{% endif %}"></div>
+    {% set formInitScript %}
         <script type="text/javascript">
         /* <![CDATA[ */
+            
             ( function($) {
                 $(document).ready(function() {
-                    mUYourCityInitGeographicalEditing({{ location.latitude|muyourcitymodule_geoData }}, {{ location.longitude|muyourcitymodule_geoData }}, '{{ getModVar('MUYourCityModule', 'defaultMapType', 'roadmap') }}', {{ getModVar('MUYourCityModule', 'defaultZoomLevel', 18) }}, '{{ mode }}', {% if useGeoLocation == true %}true{% else %}false{% endif %});
+                    // initialise auto completion for user fields
+                    initUserLiveSearch('muyourcitymodule_location_owner');
+                    initUserLiveSearch('muyourcitymodule_location_admin1');
+                    initUserLiveSearch('muyourcitymodule_location_admin2');
+                    {% if form.moderationSpecificCreator is defined %}
+                        initUserLiveSearch('muyourcitymodule_location_moderationSpecificCreator');
+                    {% endif %}
+                    mUYourCityInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ location.id }}{% endif %}');
+                    mUYourCityInitUploadField('muyourcitymodule_location_logoOfYourLocation_logoOfYourLocation');
+                    mUYourCityInitUploadField('muyourcitymodule_location_imageOfLocation_imageOfLocation');
+                    mUYourCityInitUploadField('muyourcitymodule_location_firstImage_firstImage');
+                    mUYourCityInitUploadField('muyourcitymodule_location_secondImage_secondImage');
+                    mUYourCityInitUploadField('muyourcitymodule_location_thirdImage_thirdImage');
+                    mUYourCityInitUploadField('muyourcitymodule_location_fourthImage_fourthImage');
+                    mUYourCityInitUploadField('muyourcitymodule_location_fifthImage_fifthImage');
+                    mUYourCityInitUploadField('muyourcitymodule_location_sixthImage_sixthImage');
+                    mUYourCityInitUploadField('muyourcitymodule_location_firstFile_firstFile');
+                    mUYourCityInitUploadField('muyourcitymodule_location_secondFile_secondFile');
                 });
             })(jQuery);
         /* ]]> */
         </script>
     {% endset %}
-    {{ pageAddAsset('footer', geoScripts) }}
-    
-    <script type="text/javascript">
-    /* <![CDATA[ */
-        
-        ( function($) {
-            $(document).ready(function() {
-                // initialise auto completion for user fields
-                mUYourCityInitUserField('muyourcitymodule_location_owner', 'getLocationOwnerUsers');
-                mUYourCityInitUserField('muyourcitymodule_location_admin1', 'getLocationAdmin1Users');
-                mUYourCityInitUserField('muyourcitymodule_location_admin2', 'getLocationAdmin2Users');
-                {% if form.moderationSpecificCreator is defined %}
-                    mUYourCityInitUserField('muyourcitymodule_location_moderationSpecificCreator', 'getCommonUsersList');
-                {% endif %}
-                mUYourCityInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ location.id }}{% endif %}');
-                mUYourCityInitUploadField('muyourcitymodule_location_logoOfYourLocation_logoOfYourLocation');
-                mUYourCityInitUploadField('muyourcitymodule_location_imageOfLocation_imageOfLocation');
-                mUYourCityInitUploadField('muyourcitymodule_location_firstImage_firstImage');
-                mUYourCityInitUploadField('muyourcitymodule_location_secondImage_secondImage');
-                mUYourCityInitUploadField('muyourcitymodule_location_thirdImage_thirdImage');
-                mUYourCityInitUploadField('muyourcitymodule_location_fourthImage_fourthImage');
-                mUYourCityInitUploadField('muyourcitymodule_location_fifthImage_fifthImage');
-                mUYourCityInitUploadField('muyourcitymodule_location_sixthImage_sixthImage');
-                mUYourCityInitUploadField('muyourcitymodule_location_firstFile_firstFile');
-                mUYourCityInitUploadField('muyourcitymodule_location_secondFile_secondFile');
-            });
-        })(jQuery);
-    /* ]]> */
-    </script>
+    {{ pageAddAsset('footer', formInitScript) }}
 {% endblock %}
