@@ -273,7 +273,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             $links[] = [
                 'url' => $this->router->generate('muyourcitymodule_branch_' . $routeArea . 'view'),
                 'text' => $this->__('Branches', 'muyourcitymodule'),
-                'title' => $this->__('Branch list', 'muyourcitymodule')
+                'title' => $this->__('Branches list', 'muyourcitymodule')
             ];
         }
         if (in_array('location', $allowedObjectTypes)
@@ -281,7 +281,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             $links[] = [
                 'url' => $this->router->generate('muyourcitymodule_location_' . $routeArea . 'view'),
                 'text' => $this->__('Locations', 'muyourcitymodule'),
-                'title' => $this->__('Location list', 'muyourcitymodule')
+                'title' => $this->__('Locations list', 'muyourcitymodule')
             ];
         }
         if (in_array('part', $allowedObjectTypes)
@@ -289,7 +289,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             $links[] = [
                 'url' => $this->router->generate('muyourcitymodule_part_' . $routeArea . 'view'),
                 'text' => $this->__('Parts', 'muyourcitymodule'),
-                'title' => $this->__('Part list', 'muyourcitymodule')
+                'title' => $this->__('Parts list', 'muyourcitymodule')
             ];
         }
         if (in_array('offer', $allowedObjectTypes)
@@ -297,7 +297,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             $links[] = [
                 'url' => $this->router->generate('muyourcitymodule_offer_' . $routeArea . 'view'),
                 'text' => $this->__('Offers', 'muyourcitymodule'),
-                'title' => $this->__('Offer list', 'muyourcitymodule')
+                'title' => $this->__('Offers list', 'muyourcitymodule')
             ];
         }
         if (in_array('menuOfLocation', $allowedObjectTypes)
@@ -305,7 +305,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             $links[] = [
                 'url' => $this->router->generate('muyourcitymodule_menuoflocation_' . $routeArea . 'view'),
                 'text' => $this->__('Menus of location', 'muyourcitymodule'),
-                'title' => $this->__('Menu of location list', 'muyourcitymodule')
+                'title' => $this->__('Menus of location list', 'muyourcitymodule')
             ];
         }
         if (in_array('partOfMenu', $allowedObjectTypes)
@@ -313,7 +313,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             $links[] = [
                 'url' => $this->router->generate('muyourcitymodule_partofmenu_' . $routeArea . 'view'),
                 'text' => $this->__('Parts of menu', 'muyourcitymodule'),
-                'title' => $this->__('Part of menu list', 'muyourcitymodule')
+                'title' => $this->__('Parts of menu list', 'muyourcitymodule')
             ];
         }
         if (in_array('dish', $allowedObjectTypes)
@@ -321,7 +321,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             $links[] = [
                 'url' => $this->router->generate('muyourcitymodule_dish_' . $routeArea . 'view'),
                 'text' => $this->__('Dishes', 'muyourcitymodule'),
-                'title' => $this->__('Dish list', 'muyourcitymodule')
+                'title' => $this->__('Dishes list', 'muyourcitymodule')
             ];
         }
         if (in_array('event', $allowedObjectTypes)
@@ -329,7 +329,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             $links[] = [
                 'url' => $this->router->generate('muyourcitymodule_event_' . $routeArea . 'view'),
                 'text' => $this->__('Events', 'muyourcitymodule'),
-                'title' => $this->__('Event list', 'muyourcitymodule')
+                'title' => $this->__('Events list', 'muyourcitymodule')
             ];
         }
         if (in_array('product', $allowedObjectTypes)
@@ -337,7 +337,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             $links[] = [
                 'url' => $this->router->generate('muyourcitymodule_product_' . $routeArea . 'view'),
                 'text' => $this->__('Products', 'muyourcitymodule'),
-                'title' => $this->__('Product list', 'muyourcitymodule')
+                'title' => $this->__('Products list', 'muyourcitymodule')
             ];
         }
         if (in_array('specialOfLocation', $allowedObjectTypes)
@@ -345,7 +345,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             $links[] = [
                 'url' => $this->router->generate('muyourcitymodule_specialoflocation_' . $routeArea . 'view'),
                 'text' => $this->__('Specials of location', 'muyourcitymodule'),
-                'title' => $this->__('Special of location list', 'muyourcitymodule')
+                'title' => $this->__('Specials of location list', 'muyourcitymodule')
             ];
         }
         if (in_array('serviceOfLocation', $allowedObjectTypes)
@@ -353,7 +353,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             $links[] = [
                 'url' => $this->router->generate('muyourcitymodule_serviceoflocation_' . $routeArea . 'view'),
                 'text' => $this->__('Services of location', 'muyourcitymodule'),
-                'title' => $this->__('Service of location list', 'muyourcitymodule')
+                'title' => $this->__('Services of location list', 'muyourcitymodule')
             ];
         }
         if (in_array('abonnement', $allowedObjectTypes)
@@ -361,7 +361,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             $links[] = [
                 'url' => $this->router->generate('muyourcitymodule_abonnement_' . $routeArea . 'view'),
                 'text' => $this->__('Abonnements', 'muyourcitymodule'),
-                'title' => $this->__('Abonnement list', 'muyourcitymodule')
+                'title' => $this->__('Abonnements list', 'muyourcitymodule')
             ];
         }
         if ($routeArea == 'admin' && $this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {
