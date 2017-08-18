@@ -15,7 +15,7 @@ namespace MU\YourCityModule\Form\Handler\Location;
 use MU\YourCityModule\Form\Handler\Location\Base\AbstractEditHandler;
 
 /**
- * This handler class handles the page events of the Form called by the mUYourCityModule_location_edit() function.
+ * This handler class handles the page events of editing forms.
  * It aims on the location object type.
  */
 class EditHandler extends AbstractEditHandler

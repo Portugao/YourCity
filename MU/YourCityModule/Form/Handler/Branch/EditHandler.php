@@ -15,7 +15,7 @@ namespace MU\YourCityModule\Form\Handler\Branch;
 use MU\YourCityModule\Form\Handler\Branch\Base\AbstractEditHandler;
 
 /**
- * This handler class handles the page events of the Form called by the mUYourCityModule_branch_edit() function.
+ * This handler class handles the page events of editing forms.
  * It aims on the branch object type.
  */
 class EditHandler extends AbstractEditHandler

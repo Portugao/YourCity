@@ -15,7 +15,7 @@ namespace MU\YourCityModule\Form\Handler\Part;
 use MU\YourCityModule\Form\Handler\Part\Base\AbstractEditHandler;
 
 /**
- * This handler class handles the page events of the Form called by the mUYourCityModule_part_edit() function.
+ * This handler class handles the page events of editing forms.
  * It aims on the part object type.
  */
 class EditHandler extends AbstractEditHandler

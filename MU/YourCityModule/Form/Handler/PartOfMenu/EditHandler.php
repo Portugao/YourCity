@@ -15,7 +15,7 @@ namespace MU\YourCityModule\Form\Handler\PartOfMenu;
 use MU\YourCityModule\Form\Handler\PartOfMenu\Base\AbstractEditHandler;
 
 /**
- * This handler class handles the page events of the Form called by the mUYourCityModule_partOfMenu_edit() function.
+ * This handler class handles the page events of editing forms.
  * It aims on the part of menu object type.
  */
 class EditHandler extends AbstractEditHandler

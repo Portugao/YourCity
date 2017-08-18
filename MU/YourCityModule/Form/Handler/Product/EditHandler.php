@@ -15,7 +15,7 @@ namespace MU\YourCityModule\Form\Handler\Product;
 use MU\YourCityModule\Form\Handler\Product\Base\AbstractEditHandler;
 
 /**
- * This handler class handles the page events of the Form called by the mUYourCityModule_product_edit() function.
+ * This handler class handles the page events of editing forms.
  * It aims on the product object type.
  */
 class EditHandler extends AbstractEditHandler

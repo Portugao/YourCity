@@ -15,7 +15,7 @@ namespace MU\YourCityModule\Form\Handler\Abonnement;
 use MU\YourCityModule\Form\Handler\Abonnement\Base\AbstractEditHandler;
 
 /**
- * This handler class handles the page events of the Form called by the mUYourCityModule_abonnement_edit() function.
+ * This handler class handles the page events of editing forms.
  * It aims on the abonnement object type.
  */
 class EditHandler extends AbstractEditHandler

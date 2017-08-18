@@ -15,7 +15,7 @@ namespace MU\YourCityModule\Form\Handler\SpecialOfLocation;
 use MU\YourCityModule\Form\Handler\SpecialOfLocation\Base\AbstractEditHandler;
 
 /**
- * This handler class handles the page events of the Form called by the mUYourCityModule_specialOfLocation_edit() function.
+ * This handler class handles the page events of editing forms.
  * It aims on the special of location object type.
  */
 class EditHandler extends AbstractEditHandler

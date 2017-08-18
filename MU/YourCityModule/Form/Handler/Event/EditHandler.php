@@ -15,7 +15,7 @@ namespace MU\YourCityModule\Form\Handler\Event;
 use MU\YourCityModule\Form\Handler\Event\Base\AbstractEditHandler;
 
 /**
- * This handler class handles the page events of the Form called by the mUYourCityModule_event_edit() function.
+ * This handler class handles the page events of editing forms.
  * It aims on the event object type.
  */
 class EditHandler extends AbstractEditHandler

@@ -15,7 +15,7 @@ namespace MU\YourCityModule\Form\Handler\Dish;
 use MU\YourCityModule\Form\Handler\Dish\Base\AbstractEditHandler;
 
 /**
- * This handler class handles the page events of the Form called by the mUYourCityModule_dish_edit() function.
+ * This handler class handles the page events of editing forms.
  * It aims on the dish object type.
  */
 class EditHandler extends AbstractEditHandler

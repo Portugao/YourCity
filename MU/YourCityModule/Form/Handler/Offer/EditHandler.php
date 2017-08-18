@@ -15,7 +15,7 @@ namespace MU\YourCityModule\Form\Handler\Offer;
 use MU\YourCityModule\Form\Handler\Offer\Base\AbstractEditHandler;
 
 /**
- * This handler class handles the page events of the Form called by the mUYourCityModule_offer_edit() function.
+ * This handler class handles the page events of editing forms.
  * It aims on the offer object type.
  */
 class EditHandler extends AbstractEditHandler
