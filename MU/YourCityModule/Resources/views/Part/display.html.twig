@@ -27,7 +27,7 @@
         {% if part.imageOfPart is not empty %}
         <div id="imageOfPart">
             {% if part.imageOfPart is not empty and part.imageOfPartMeta|default %}
-                        <a href="{{ part.imageOfPartUrl }}" title="{{ part|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if part.imageOfPartMeta.isImage %} class="image-link"{% endif %}>
+                <a href="{{ part.imageOfPartUrl }}" title="{{ part|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if part.imageOfPartMeta.isImage %} class="image-link"{% endif %}>
             {% if part.imageOfPartMeta.isImage %}
                 {% set thumbOptions = attribute(thumbRuntimeOptions, 'partImageOfPart') %}
                 <img src="{{ part.imageOfPart.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ part|muyourcitymodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
