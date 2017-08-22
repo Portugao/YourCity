@@ -19,5 +19,45 @@ use MU\YourCityModule\Helper\Base\AbstractImageHelper;
  */
 class ImageHelper extends AbstractImageHelper
 {
-    // feel free to add your own convenience methods here
+    /**
+     * This method returns an Imagine runtime options array for the given arguments.
+     *
+     * @param string $objectType Currently treated entity type
+     * @param string $fieldName  Name of upload field
+     * @param string $contextName Name of desired context
+     * @param string $context    Usage context (allowed values: controllerAction, api, actionHandler, block, contentType)
+     * @param array  $args       Additional arguments
+     *
+     * @return array The selected runtime options
+     */
+    public function getCustomRuntimeOptions($objectType = '', $fieldName = '', $contextName = '', $context = '', $args = [])
+    {
+        $options = [
+            'thumbnail' => [
+                'size'      => [100, 100], // thumbnail width and height in pixels
+                'mode'      => $this->variableApi->get('MUYourCityModule', 'thumbnailMode' . ucfirst($objectType) . ucfirst($fieldName), 'inset'),
+                'extension' => null        // file extension for thumbnails (jpg, png, gif; null for original file type)
+            ]
+        ];
+    
+        if ($contextName == $this->name . '_relateditem') {
+            $options['thumbnail']['size'] = [100, 75];
+        } elseif ($context == 'block' && $objectType == 'part') {
+        	$options['thumbnail']['size'] = [500, 375];
+        }
+        
+        elseif ($context == 'controllerAction') {
+            if (in_array($args['action'], ['view', 'display', 'edit'])) {
+                $fieldSuffix = ucfirst($objectType) . ucfirst($fieldName) . ucfirst($args['action']);
+                $defaultWidth = $args['action'] == 'view' ? 32 : 240;
+                $defaultHeight = $args['action'] == 'view' ? 24 : 180;
+                $options['thumbnail']['size'] = [
+                    $this->variableApi->get('MUYourCityModule', 'thumbnailWidth' . $fieldSuffix, $defaultWidth),
+                    $this->variableApi->get('MUYourCityModule', 'thumbnailHeight' . $fieldSuffix, $defaultHeight)
+                ];
+            }
+        }
+    
+        return $options;
+    }
 }

@@ -748,6 +748,15 @@ class ControllerHelper extends AbstractControllerHelper
     {
     	if (!in_array($context, ['controllerAction', 'api', 'actionHandler', 'block', 'contentType', 'mailz'])) {
     		$context = 'controllerAction';
+    	} else {
+    		if ($context == 'block') {
+    		    if ($objectType == 'part') {
+    			$thumbRuntimeOptions = [];
+    			$thumbRuntimeOptions[$objectType . 'ImageOfPart'] = $this->imageHelper->getRuntimeOptions($objectType, 'imageOfPart', $context, $args);
+    			//$thumbRuntimeOptions['location' . 'ImageOfLocation'] = $this->imageHelper->getRuntimeOptions('location', 'imageOfLocation', 'locationInDisplay', $args);
+    			$parameters['thumbRuntimeOptions'] = $thumbRuntimeOptions;
+    		}
+    		}
     	}
     
     	if ($context == 'controllerAction') {

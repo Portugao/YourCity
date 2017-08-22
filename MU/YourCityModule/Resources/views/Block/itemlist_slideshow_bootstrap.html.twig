@@ -89,7 +89,7 @@
                 <span class="offer-block-offer">{{ offer.percentOfOffer }}%</span>
             {% endif %#}
 
-            {{ offer.description|truncate(150)|safeHtml }}<br /><br />
+            {{ offer.description|truncate(150)|safeHtml }}
             {% if offer.myLocation is not empty %}
                 {{ __('Location') }}: {{ offer.myLocation|muyourcitymodule_listEntry('offer', 'myLocation') }}<br /><br />
             {% endif %}
@@ -105,7 +105,7 @@
         {% endif %}
     {% endif %}
     
-        {% if objectType == 'product' %}
+    {% if objectType == 'product' %}
         {% for product in items %}
             {% if loop.index == 1 %}
                 <div class="item active">
@@ -114,9 +114,9 @@
             {% endif %}
             <div class="item-container"> 
             <div class="productItem">
-            <h3>{{ product.name }}</h3>
-            {#{ product.description|safeHtml|truncate(100) }}
-            <h4>{{ __('Avaibility on weekdays') }}</h4>
+            <h2>{{ product.name }}</h2>
+            {{ product.description|safeHtml|truncate(100) }}
+            {#<h4>{{ __('Avaibility on weekdays') }}</h4>
             {{ __('Monday') }}
             {% set itemid = product|muyourcitymodule_formattedTitle|default(__('Product')) %}
                 <i class="fa fa-check{% if not product.monday %} hidden{% endif %}" id="yesMonday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
@@ -162,6 +162,24 @@
             </div>
         {% endfor %}
     {% endif %}
+    {% if objectType == 'part' %}
+        {% for part in items %}
+        {% if loop.index == 1 %}
+            <div class="item active">
+        {% else %}
+            <div class="item">
+        {% endif %}
+        <div class="item-container"> 
+            {% if part.imageOfPart is not empty and part.imageOfPartMeta|default %}
+                <h3>{{ part.name }}</h3>
+                {% set thumbOptions = attribute(thumbRuntimeOptions, 'partImageOfPart') %}
+                <img style="width: 100%;" src="{{ part.imageOfPart.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ part|muyourcitymodule_formattedTitle|e('html_attr') }}" class="img-thumbnail" />
+                <br /><br />{{ part.description|safeHtml }}
+       {% endif %}
+       </div>
+       </div>
+        {% endfor %}
+    {% endif %}
     
     </div>
     
@@ -191,6 +209,16 @@
         {% endif %}
         {% if objectType == 'product' %}
             {% for product in items %}
+                {% set counter = loop.index - 1 %}
+                {% if loop.index == 1 %}
+                    <li data-target="#Carousel{{ vars.bid }}" data-slide-to="{{ counter }}" class="active"></li>
+                {% else %}
+                    <li data-target="#Carousel{{ vars.bid }}" data-slide-to="{{ counter }}"></li>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        {% if objectType == 'part' %}
+            {% for part in items %}
                 {% set counter = loop.index - 1 %}
                 {% if loop.index == 1 %}
                     <li data-target="#Carousel{{ vars.bid }}" data-slide-to="{{ counter }}" class="active"></li>
