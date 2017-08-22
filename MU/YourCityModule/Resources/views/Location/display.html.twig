@@ -30,7 +30,7 @@
     
     <div class="col-sm-8">
     <div class="row">
-    <div class="col-sm-2">
+    <div class="col-sm-3 col-xs-5">
     <div id="location-logo">
             {% if location.logoOfYourLocation is not empty and location.logoOfYourLocationMeta|default %}
                         <a href="{{ location.logoOfYourLocationUrl }}" title="{{ location|muyourcitymodule_formattedTitle|e('html_attr') }}"{% if location.logoOfYourLocationMeta.isImage %} class="image-link"{% endif %}>
@@ -45,7 +45,7 @@
     </div>
     </div>
     
-    <div class="col-md-10">
+    <div class="col-sm-9 col-xs-7">
     {% if location.state == 'closed' %}
         {% set state = 'locationClosed' %}
     {% endif %}
