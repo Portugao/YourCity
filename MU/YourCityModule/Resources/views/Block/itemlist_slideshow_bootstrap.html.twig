@@ -89,7 +89,7 @@
                 <span class="offer-block-offer">{{ offer.percentOfOffer }}%</span>
             {% endif %#}
 
-            {{ offer.description|truncate(80) }}<br /><br />
+            {{ offer.description|truncate(150)|safeHtml }}<br /><br />
             {% if offer.myLocation is not empty %}
                 {{ __('Location') }}: {{ offer.myLocation|muyourcitymodule_listEntry('offer', 'myLocation') }}<br /><br />
             {% endif %}
