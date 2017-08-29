@@ -10,8 +10,12 @@
     <percentOfOffer>{{ offer.percentOfOffer }}%</percentOfOffer>
     <effectivFrom>{{ offer.effectivFrom|localizeddate('medium', 'short') }}</effectivFrom>
     <effectivUntil>{{ offer.effectivUntil|localizeddate('medium', 'short') }}</effectivUntil>
-    <inViewFrom>{{ offer.inViewFrom|localizeddate('medium', 'short') }}</inViewFrom>
-    <inViewUntil>{{ offer.inViewUntil|localizeddate('medium', 'short') }}</inViewUntil>
+    <inViewFrom>{% if offer.inViewFrom is not empty %}
+        {{ offer.inViewFrom|localizeddate('medium', 'short') }}
+    {% endif %}</inViewFrom>
+    <inViewUntil>{% if offer.inViewUntil is not empty %}
+        {{ offer.inViewUntil|localizeddate('medium', 'short') }}
+    {% endif %}</inViewUntil>
     <myLocation>{{ offer.myLocation|muyourcitymodule_listEntry('offer', 'myLocation') }}</myLocation>
     <workflowState>{{ offer.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
 </offer>
