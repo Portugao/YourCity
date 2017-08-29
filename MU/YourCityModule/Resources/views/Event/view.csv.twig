@@ -3,6 +3,14 @@
 {% endspaceless %}
 {% for event in items %}
 {% spaceless %}
-    "{{ event.name }}";"{{ event.description|safeHtml }}";"{{ event.imageOfEvent }}";"{{ event.kindOfEvent|muyourcitymodule_listEntry('event', 'kindOfEvent') }}";"{{ event.street }}";"{{ event.numberOfStreet }}";"{{ event.zipCode }}";"{{ event.city }}";"{{ event.startDate|localizeddate('medium', 'short') }}";"{{ event.endDate|localizeddate('medium', 'short') }}";"{{ event.start2Date|localizeddate('medium', 'short') }}";"{{ event.end2Date|localizeddate('medium', 'short') }}";"{{ event.inViewFrom|localizeddate('medium', 'short') }}";"{{ event.inViewUntil|localizeddate('medium', 'short') }}";"{{ event.myLocation|muyourcitymodule_listEntry('event', 'myLocation') }}";"{{ event.latitude|muyourcitymodule_geoData }}";"{{ event.longitude|muyourcitymodule_geoData }}";"{{ event.workflowState|muyourcitymodule_objectState(false)|lower }}"
+    "{{ event.name }}";"{{ event.description|safeHtml }}";"{{ event.imageOfEvent }}";"{{ event.kindOfEvent|muyourcitymodule_listEntry('event', 'kindOfEvent') }}";"{{ event.street }}";"{{ event.numberOfStreet }}";"{{ event.zipCode }}";"{{ event.city }}";"{{ event.startDate|localizeddate('medium', 'short') }}";"{{ event.endDate|localizeddate('medium', 'short') }}";"{% if event.start2Date is not empty %}
+        {{ event.start2Date|localizeddate('medium', 'short') }}
+    {% endif %}";"{% if event.end2Date is not empty %}
+        {{ event.end2Date|localizeddate('medium', 'short') }}
+    {% endif %}";"{% if event.inViewFrom is not empty %}
+        {{ event.inViewFrom|localizeddate('medium', 'short') }}
+    {% endif %}";"{% if event.inViewUntil is not empty %}
+        {{ event.inViewUntil|localizeddate('medium', 'short') }}
+    {% endif %}";"{{ event.myLocation|muyourcitymodule_listEntry('event', 'myLocation') }}";"{{ event.latitude|muyourcitymodule_geoData }}";"{{ event.longitude|muyourcitymodule_geoData }}";"{{ event.workflowState|muyourcitymodule_objectState(false)|lower }}"
 {% endspaceless %}
 {% endfor %}

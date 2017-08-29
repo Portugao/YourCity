@@ -7,10 +7,18 @@
     <positionOfMenu>{{ menuOfLocation.positionOfMenu }}</positionOfMenu>
     <kindOfMenu>{{ menuOfLocation.kindOfMenu|muyourcitymodule_listEntry('menuOfLocation', 'kindOfMenu') }}</kindOfMenu>
     <additionalRemarks><![CDATA[{{ menuOfLocation.additionalRemarks|safeHtml }}]]></additionalRemarks>
-    <effectivFrom>{{ menuOfLocation.effectivFrom|localizeddate('medium', 'short') }}</effectivFrom>
-    <effectivUntil>{{ menuOfLocation.effectivUntil|localizeddate('medium', 'short') }}</effectivUntil>
-    <inViewFrom>{{ menuOfLocation.inViewFrom|localizeddate('medium', 'short') }}</inViewFrom>
-    <inViewUntil>{{ menuOfLocation.inViewUntil|localizeddate('medium', 'short') }}</inViewUntil>
+    <effectivFrom>{% if menuOfLocation.effectivFrom is not empty %}
+        {{ menuOfLocation.effectivFrom|localizeddate('medium', 'short') }}
+    {% endif %}</effectivFrom>
+    <effectivUntil>{% if menuOfLocation.effectivUntil is not empty %}
+        {{ menuOfLocation.effectivUntil|localizeddate('medium', 'short') }}
+    {% endif %}</effectivUntil>
+    <inViewFrom>{% if menuOfLocation.inViewFrom is not empty %}
+        {{ menuOfLocation.inViewFrom|localizeddate('medium', 'short') }}
+    {% endif %}</inViewFrom>
+    <inViewUntil>{% if menuOfLocation.inViewUntil is not empty %}
+        {{ menuOfLocation.inViewUntil|localizeddate('medium', 'short') }}
+    {% endif %}</inViewUntil>
     <myLocation>{{ menuOfLocation.myLocation|muyourcitymodule_listEntry('menuOfLocation', 'myLocation') }}</myLocation>
     <workflowState>{{ menuOfLocation.workflowState|muyourcitymodule_objectState(false)|lower }}</workflowState>
     <dishes>

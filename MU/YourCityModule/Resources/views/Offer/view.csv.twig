@@ -3,6 +3,10 @@
 {% endspaceless %}
 {% for offer in items %}
 {% spaceless %}
-    "{{ offer.name }}";"{{ offer.description|safeHtml }}";"{{ offer.urlToOfferOnHomepage }}";"{{ offer.imageOfOffer }}";"{{ offer.priceOfOffer|localizedcurrency('EUR') }}";"{{ offer.normalPrice|localizedcurrency('EUR') }}";"{{ offer.percentOfOffer }}%";"{{ offer.effectivFrom|localizeddate('medium', 'short') }}";"{{ offer.effectivUntil|localizeddate('medium', 'short') }}";"{{ offer.inViewFrom|localizeddate('medium', 'short') }}";"{{ offer.inViewUntil|localizeddate('medium', 'short') }}";"{{ offer.myLocation|muyourcitymodule_listEntry('offer', 'myLocation') }}";"{{ offer.workflowState|muyourcitymodule_objectState(false)|lower }}"
+    "{{ offer.name }}";"{{ offer.description|safeHtml }}";"{{ offer.urlToOfferOnHomepage }}";"{{ offer.imageOfOffer }}";"{{ offer.priceOfOffer|localizedcurrency('EUR') }}";"{{ offer.normalPrice|localizedcurrency('EUR') }}";"{{ offer.percentOfOffer }}%";"{{ offer.effectivFrom|localizeddate('medium', 'short') }}";"{{ offer.effectivUntil|localizeddate('medium', 'short') }}";"{% if offer.inViewFrom is not empty %}
+        {{ offer.inViewFrom|localizeddate('medium', 'short') }}
+    {% endif %}";"{% if offer.inViewUntil is not empty %}
+        {{ offer.inViewUntil|localizeddate('medium', 'short') }}
+    {% endif %}";"{{ offer.myLocation|muyourcitymodule_listEntry('offer', 'myLocation') }}";"{{ offer.workflowState|muyourcitymodule_objectState(false)|lower }}"
 {% endspaceless %}
 {% endfor %}

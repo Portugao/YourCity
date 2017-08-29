@@ -11,10 +11,18 @@
     <city><![CDATA[{{ event.city }}]]></city>
     <startDate>{{ event.startDate|localizeddate('medium', 'short') }}</startDate>
     <endDate>{{ event.endDate|localizeddate('medium', 'short') }}</endDate>
-    <start2Date>{{ event.start2Date|localizeddate('medium', 'short') }}</start2Date>
-    <end2Date>{{ event.end2Date|localizeddate('medium', 'short') }}</end2Date>
-    <inViewFrom>{{ event.inViewFrom|localizeddate('medium', 'short') }}</inViewFrom>
-    <inViewUntil>{{ event.inViewUntil|localizeddate('medium', 'short') }}</inViewUntil>
+    <start2Date>{% if event.start2Date is not empty %}
+        {{ event.start2Date|localizeddate('medium', 'short') }}
+    {% endif %}</start2Date>
+    <end2Date>{% if event.end2Date is not empty %}
+        {{ event.end2Date|localizeddate('medium', 'short') }}
+    {% endif %}</end2Date>
+    <inViewFrom>{% if event.inViewFrom is not empty %}
+        {{ event.inViewFrom|localizeddate('medium', 'short') }}
+    {% endif %}</inViewFrom>
+    <inViewUntil>{% if event.inViewUntil is not empty %}
+        {{ event.inViewUntil|localizeddate('medium', 'short') }}
+    {% endif %}</inViewUntil>
     <myLocation>{{ event.myLocation|muyourcitymodule_listEntry('event', 'myLocation') }}</myLocation>
     <latitude>{{ event.latitude|muyourcitymodule_geoData }}</latitude>
     <longitude>{{ event.longitude|muyourcitymodule_geoData }}</longitude>

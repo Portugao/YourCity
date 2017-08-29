@@ -3,7 +3,15 @@
 ;"{{ __('Dishes') }}";"{{ __('Parts of menu') }}"{% endspaceless %}
 {% for menuOfLocation in items %}
 {% spaceless %}
-    "{{ menuOfLocation.name }}";"{{ menuOfLocation.description|safeHtml }}";"{{ menuOfLocation.imageOfMenu }}";"{{ menuOfLocation.positionOfMenu }}";"{{ menuOfLocation.kindOfMenu|muyourcitymodule_listEntry('menuOfLocation', 'kindOfMenu') }}";"{{ menuOfLocation.additionalRemarks|safeHtml }}";"{{ menuOfLocation.effectivFrom|localizeddate('medium', 'short') }}";"{{ menuOfLocation.effectivUntil|localizeddate('medium', 'short') }}";"{{ menuOfLocation.inViewFrom|localizeddate('medium', 'short') }}";"{{ menuOfLocation.inViewUntil|localizeddate('medium', 'short') }}";"{{ menuOfLocation.myLocation|muyourcitymodule_listEntry('menuOfLocation', 'myLocation') }}";"{{ menuOfLocation.workflowState|muyourcitymodule_objectState(false)|lower }}"
+    "{{ menuOfLocation.name }}";"{{ menuOfLocation.description|safeHtml }}";"{{ menuOfLocation.imageOfMenu }}";"{{ menuOfLocation.positionOfMenu }}";"{{ menuOfLocation.kindOfMenu|muyourcitymodule_listEntry('menuOfLocation', 'kindOfMenu') }}";"{{ menuOfLocation.additionalRemarks|safeHtml }}";"{% if menuOfLocation.effectivFrom is not empty %}
+        {{ menuOfLocation.effectivFrom|localizeddate('medium', 'short') }}
+    {% endif %}";"{% if menuOfLocation.effectivUntil is not empty %}
+        {{ menuOfLocation.effectivUntil|localizeddate('medium', 'short') }}
+    {% endif %}";"{% if menuOfLocation.inViewFrom is not empty %}
+        {{ menuOfLocation.inViewFrom|localizeddate('medium', 'short') }}
+    {% endif %}";"{% if menuOfLocation.inViewUntil is not empty %}
+        {{ menuOfLocation.inViewUntil|localizeddate('medium', 'short') }}
+    {% endif %}";"{{ menuOfLocation.myLocation|muyourcitymodule_listEntry('menuOfLocation', 'myLocation') }}";"{{ menuOfLocation.workflowState|muyourcitymodule_objectState(false)|lower }}"
     ;"
     {% if menuOfLocation.dishes|default %}
         {% for relatedItem in menuOfLocation.dishes %}
