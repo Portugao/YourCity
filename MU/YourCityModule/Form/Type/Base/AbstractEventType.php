@@ -276,7 +276,6 @@ abstract class AbstractEventType extends AbstractType
         
         $builder->add('startDate', DateTimeType::class, [
             'label' => $this->__('Start date') . ':',
-            'empty_data' => '',
             'attr' => [
                 'class' => ' validate-daterange-event',
                 'title' => $this->__('Enter the start date of the event')
@@ -290,7 +289,6 @@ abstract class AbstractEventType extends AbstractType
         
         $builder->add('endDate', DateTimeType::class, [
             'label' => $this->__('End date') . ':',
-            'empty_data' => '',
             'attr' => [
                 'class' => ' validate-daterange-event',
                 'title' => $this->__('Enter the end date of the event')
@@ -304,13 +302,12 @@ abstract class AbstractEventType extends AbstractType
         
         $builder->add('start2Date', DateTimeType::class, [
             'label' => $this->__('Start 2 date') . ':',
-            'empty_data' => '',
             'attr' => [
                 'class' => ' validate-daterange-event',
                 'title' => $this->__('Enter the start 2 date of the event')
             ],
             'required' => false,
-            'empty_data' => null,
+            'empty_data' => '',
             'with_seconds' => true,
             'date_widget' => 'single_text',
             'time_widget' => 'single_text'
@@ -318,13 +315,12 @@ abstract class AbstractEventType extends AbstractType
         
         $builder->add('end2Date', DateTimeType::class, [
             'label' => $this->__('End 2 date') . ':',
-            'empty_data' => '',
             'attr' => [
                 'class' => ' validate-daterange-event',
                 'title' => $this->__('Enter the end 2 date of the event')
             ],
             'required' => false,
-            'empty_data' => null,
+            'empty_data' => '',
             'with_seconds' => true,
             'date_widget' => 'single_text',
             'time_widget' => 'single_text'
@@ -341,13 +337,12 @@ abstract class AbstractEventType extends AbstractType
             'help' => $this->__('Here you can enter the date and time from this event will appear in the overview of events.
             Then it will get put into the archive. Then you only are able to reuse it as model.
             If you do not enter a value, this event will be shown further after the end.'),
-            'empty_data' => '',
             'attr' => [
                 'class' => ' validate-daterange-event',
                 'title' => $this->__('Enter the in view from of the event')
             ],
             'required' => false,
-            'empty_data' => null,
+            'empty_data' => '',
             'with_seconds' => true,
             'date_widget' => 'single_text',
             'time_widget' => 'single_text'
@@ -364,13 +359,12 @@ abstract class AbstractEventType extends AbstractType
             'help' => $this->__('Here you can enter the date and time until this event will appear in the overview of events.
             Then it will get put into the archive. Then you only are able to reuse it as model.
             If you do not enter a value, this event will be shown further after the end.'),
-            'empty_data' => '',
             'attr' => [
                 'class' => ' validate-daterange-event',
                 'title' => $this->__('Enter the in view until of the event')
             ],
             'required' => false,
-            'empty_data' => null,
+            'empty_data' => '',
             'with_seconds' => true,
             'date_widget' => 'single_text',
             'time_widget' => 'single_text'

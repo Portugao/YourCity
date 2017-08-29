@@ -524,7 +524,6 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('startOnMonday', TimeType::class, [
             'label' => $this->__('Start on monday') . ':',
-            'empty_data' => '',
             'attr' => [
                 'maxlength' => 8,
                 'class' => '',
@@ -537,7 +536,6 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('endOnMonday', TimeType::class, [
             'label' => $this->__('End on monday') . ':',
-            'empty_data' => '',
             'attr' => [
                 'maxlength' => 8,
                 'class' => '',
@@ -550,7 +548,6 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('start2OnMonday', TimeType::class, [
             'label' => $this->__('Start 2 on monday') . ':',
-            'empty_data' => '',
             'attr' => [
                 'maxlength' => 8,
                 'class' => '',
@@ -563,7 +560,6 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('end2OnMonday', TimeType::class, [
             'label' => $this->__('End 2 on monday') . ':',
-            'empty_data' => '',
             'attr' => [
                 'maxlength' => 8,
                 'class' => '',
@@ -585,7 +581,6 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('startOnTuesday', TimeType::class, [
             'label' => $this->__('Start on tuesday') . ':',
-            'empty_data' => '',
             'attr' => [
                 'maxlength' => 8,
                 'class' => '',
@@ -598,7 +593,6 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('endOnTuesday', TimeType::class, [
             'label' => $this->__('End on tuesday') . ':',
-            'empty_data' => '',
             'attr' => [
                 'maxlength' => 8,
                 'class' => '',
@@ -611,7 +605,6 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('start2OnTuesday', TimeType::class, [
             'label' => $this->__('Start 2 on tuesday') . ':',
-            'empty_data' => '',
             'attr' => [
                 'maxlength' => 8,
                 'class' => '',
@@ -624,7 +617,6 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('end2OnTuesday', TimeType::class, [
             'label' => $this->__('End 2 on tuesday') . ':',
-            'empty_data' => '',
             'attr' => [
                 'maxlength' => 8,
                 'class' => '',
@@ -646,7 +638,6 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('startOnWednesday', TimeType::class, [
             'label' => $this->__('Start on wednesday') . ':',
-            'empty_data' => '',
             'attr' => [
                 'maxlength' => 8,
                 'class' => '',
@@ -659,7 +650,6 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('endOnWednesday', TimeType::class, [
             'label' => $this->__('End on wednesday') . ':',
-            'empty_data' => '',
             'attr' => [
                 'maxlength' => 8,
                 'class' => '',
@@ -672,7 +662,6 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('start2OnWednesday', TimeType::class, [
             'label' => $this->__('Start 2 on wednesday') . ':',
-            'empty_data' => '',
             'attr' => [
                 'maxlength' => 8,
                 'class' => '',
@@ -685,7 +674,6 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('end2OnWednesday', TimeType::class, [
             'label' => $this->__('End 2 on wednesday') . ':',
-            'empty_data' => '',
             'attr' => [
                 'maxlength' => 8,
                 'class' => '',
@@ -707,7 +695,6 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('startOnThursday', TimeType::class, [
             'label' => $this->__('Start on thursday') . ':',
-            'empty_data' => '',
             'attr' => [
                 'maxlength' => 8,
                 'class' => '',
@@ -720,7 +707,6 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('endOnThursday', TimeType::class, [
             'label' => $this->__('End on thursday') . ':',
-            'empty_data' => '',
             'attr' => [
                 'maxlength' => 8,
                 'class' => '',
@@ -733,7 +719,6 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('start2OnThursday', TimeType::class, [
             'label' => $this->__('Start 2 on thursday') . ':',
-            'empty_data' => '',
             'attr' => [
                 'maxlength' => 8,
                 'class' => '',
@@ -746,7 +731,6 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('end2OnThursday', TimeType::class, [
             'label' => $this->__('End 2 on thursday') . ':',
-            'empty_data' => '',
             'attr' => [
                 'maxlength' => 8,
                 'class' => '',
@@ -768,7 +752,6 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('startOnFriday', TimeType::class, [
             'label' => $this->__('Start on friday') . ':',
-            'empty_data' => '',
             'attr' => [
                 'maxlength' => 8,
                 'class' => '',
@@ -781,7 +764,6 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('endOnFriday', TimeType::class, [
             'label' => $this->__('End on friday') . ':',
-            'empty_data' => '',
             'attr' => [
                 'maxlength' => 8,
                 'class' => '',
@@ -794,7 +776,6 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('start2OnFriday', TimeType::class, [
             'label' => $this->__('Start 2 on friday') . ':',
-            'empty_data' => '',
             'attr' => [
                 'maxlength' => 8,
                 'class' => '',
@@ -807,7 +788,6 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('end2OnFriday', TimeType::class, [
             'label' => $this->__('End 2 on friday') . ':',
-            'empty_data' => '',
             'attr' => [
                 'maxlength' => 8,
                 'class' => '',
@@ -829,7 +809,6 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('startOnSaturday', TimeType::class, [
             'label' => $this->__('Start on saturday') . ':',
-            'empty_data' => '',
             'attr' => [
                 'maxlength' => 8,
                 'class' => '',
@@ -842,7 +821,6 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('endOnSaturday', TimeType::class, [
             'label' => $this->__('End on saturday') . ':',
-            'empty_data' => '',
             'attr' => [
                 'maxlength' => 8,
                 'class' => '',
@@ -855,7 +833,6 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('start2OnSaturday', TimeType::class, [
             'label' => $this->__('Start 2 on saturday') . ':',
-            'empty_data' => '',
             'attr' => [
                 'maxlength' => 8,
                 'class' => '',
@@ -868,7 +845,6 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('end2OnSaturday', TimeType::class, [
             'label' => $this->__('End 2 on saturday') . ':',
-            'empty_data' => '',
             'attr' => [
                 'maxlength' => 8,
                 'class' => '',
@@ -890,7 +866,6 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('startOnSunday', TimeType::class, [
             'label' => $this->__('Start on sunday') . ':',
-            'empty_data' => '',
             'attr' => [
                 'maxlength' => 8,
                 'class' => '',
@@ -903,7 +878,6 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('endOnSunday', TimeType::class, [
             'label' => $this->__('End on sunday') . ':',
-            'empty_data' => '',
             'attr' => [
                 'maxlength' => 8,
                 'class' => '',
@@ -916,7 +890,6 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('start2OnSunday', TimeType::class, [
             'label' => $this->__('Start 2 on sunday') . ':',
-            'empty_data' => '',
             'attr' => [
                 'maxlength' => 8,
                 'class' => '',
@@ -929,7 +902,6 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('end2OnSunday', TimeType::class, [
             'label' => $this->__('End 2 on sunday') . ':',
-            'empty_data' => '',
             'attr' => [
                 'maxlength' => 8,
                 'class' => '',

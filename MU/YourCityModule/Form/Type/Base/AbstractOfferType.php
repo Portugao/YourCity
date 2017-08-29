@@ -285,7 +285,6 @@ abstract class AbstractOfferType extends AbstractType
                 'title' => $this->__('Enter here the date and time for the start of the offer.')
             ],
             'help' => $this->__('Enter here the date and time for the start of the offer.'),
-            'empty_data' => '',
             'attr' => [
                 'class' => ' validate-daterange-offer',
                 'title' => $this->__('Enter the effectiv from of the offer')
@@ -304,7 +303,6 @@ abstract class AbstractOfferType extends AbstractType
                 'title' => $this->__('Enter here the date and time for the end of the offer.')
             ],
             'help' => $this->__('Enter here the date and time for the end of the offer.'),
-            'empty_data' => '',
             'attr' => [
                 'class' => ' validate-daterange-offer',
                 'title' => $this->__('Enter the effectiv until of the offer')
@@ -325,13 +323,12 @@ abstract class AbstractOfferType extends AbstractType
             ],
             'help' => $this->__('On this date the offer will get put into the archive.
             if you wish, that the offer is still there after the end, enter none.'),
-            'empty_data' => '',
             'attr' => [
                 'class' => ' validate-daterange-offer',
                 'title' => $this->__('Enter the in view from of the offer')
             ],
             'required' => false,
-            'empty_data' => null,
+            'empty_data' => '',
             'with_seconds' => true,
             'date_widget' => 'single_text',
             'time_widget' => 'single_text'
@@ -339,13 +336,12 @@ abstract class AbstractOfferType extends AbstractType
         
         $builder->add('inViewUntil', DateTimeType::class, [
             'label' => $this->__('In view until') . ':',
-            'empty_data' => '',
             'attr' => [
                 'class' => ' validate-daterange-offer',
                 'title' => $this->__('Enter the in view until of the offer')
             ],
             'required' => false,
-            'empty_data' => null,
+            'empty_data' => '',
             'with_seconds' => true,
             'date_widget' => 'single_text',
             'time_widget' => 'single_text'
