@@ -48,6 +48,6 @@
         ]]>
     </description>
     {% if abonnement.createdDate|default %}
-        <pubDate>{{ abonnement.createdDate|date('a, d b Y T +0100') }}</pubDate>
+        <pubDate>{{ abonnement.createdDate|date('r') }}</pubDate>
     {% endif %}
 {% endblock %}

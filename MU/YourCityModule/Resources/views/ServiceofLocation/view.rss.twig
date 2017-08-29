@@ -48,6 +48,6 @@
         ]]>
     </description>
     {% if serviceOfLocation.createdDate|default %}
-        <pubDate>{{ serviceOfLocation.createdDate|date('a, d b Y T +0100') }}</pubDate>
+        <pubDate>{{ serviceOfLocation.createdDate|date('r') }}</pubDate>
     {% endif %}
 {% endblock %}

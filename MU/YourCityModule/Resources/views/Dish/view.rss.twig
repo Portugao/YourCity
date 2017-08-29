@@ -48,6 +48,6 @@
         ]]>
     </description>
     {% if dish.createdDate|default %}
-        <pubDate>{{ dish.createdDate|date('a, d b Y T +0100') }}</pubDate>
+        <pubDate>{{ dish.createdDate|date('r') }}</pubDate>
     {% endif %}
 {% endblock %}

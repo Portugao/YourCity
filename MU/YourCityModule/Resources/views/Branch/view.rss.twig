@@ -48,6 +48,6 @@
         ]]>
     </description>
     {% if branch.createdDate|default %}
-        <pubDate>{{ branch.createdDate|date('a, d b Y T +0100') }}</pubDate>
+        <pubDate>{{ branch.createdDate|date('r') }}</pubDate>
     {% endif %}
 {% endblock %}
