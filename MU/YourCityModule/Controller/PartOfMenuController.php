@@ -15,6 +15,8 @@ namespace MU\YourCityModule\Controller;
 use MU\YourCityModule\Controller\Base\AbstractPartOfMenuController;
 
 use RuntimeException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -33,6 +35,7 @@ class PartOfMenuController extends AbstractPartOfMenuController
      * @Route("/admin/partsOfMenu",
      *        methods = {"GET"}
      * )
+     * @Cache(expires="+7 days", public=true)
      * @Theme("admin")
      *
      * @param Request $request Current request instance
@@ -52,6 +55,7 @@ class PartOfMenuController extends AbstractPartOfMenuController
      * @Route("/partsOfMenu",
      *        methods = {"GET"}
      * )
+     * @Cache(expires="+7 days", public=true)
      *
      * @param Request $request Current request instance
      *
@@ -71,6 +75,8 @@ class PartOfMenuController extends AbstractPartOfMenuController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )
+     * @ParamConverter("partOfMenu", class="MUYourCityModule:PartOfMenuEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
+     * @Cache(lastModified="partOfMenu.getUpdatedDate()", ETag="'PartOfMenu' ~ partOfMenu.getid() ~ partOfMenu.getUpdatedDate().format('U')")
      * @Theme("admin")
      *
      * @param Request $request Current request instance
@@ -94,6 +100,8 @@ class PartOfMenuController extends AbstractPartOfMenuController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )
+     * @ParamConverter("partOfMenu", class="MUYourCityModule:PartOfMenuEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
+     * @Cache(lastModified="partOfMenu.getUpdatedDate()", ETag="'PartOfMenu' ~ partOfMenu.getid() ~ partOfMenu.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      * @param PartOfMenuEntity $partOfMenu Treated part of menu instance
@@ -115,6 +123,7 @@ class PartOfMenuController extends AbstractPartOfMenuController
      *        defaults = {"id" = "0", "_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
+     * @Cache(expires="+30 minutes", public=false)
      * @Theme("admin")
      *
      * @param Request $request Current request instance
@@ -138,6 +147,7 @@ class PartOfMenuController extends AbstractPartOfMenuController
      *        defaults = {"id" = "0", "_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
+     * @Cache(expires="+30 minutes", public=false)
      *
      * @param Request $request Current request instance
      *
@@ -159,6 +169,8 @@ class PartOfMenuController extends AbstractPartOfMenuController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
+     * @ParamConverter("partOfMenu", class="MUYourCityModule:PartOfMenuEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
+     * @Cache(lastModified="partOfMenu.getUpdatedDate()", ETag="'PartOfMenu' ~ partOfMenu.getid() ~ partOfMenu.getUpdatedDate().format('U')")
      * @Theme("admin")
      *
      * @param Request $request Current request instance
@@ -183,6 +195,8 @@ class PartOfMenuController extends AbstractPartOfMenuController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
+     * @ParamConverter("partOfMenu", class="MUYourCityModule:PartOfMenuEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
+     * @Cache(lastModified="partOfMenu.getUpdatedDate()", ETag="'PartOfMenu' ~ partOfMenu.getid() ~ partOfMenu.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      * @param PartOfMenuEntity $partOfMenu Treated part of menu instance
@@ -205,6 +219,7 @@ class PartOfMenuController extends AbstractPartOfMenuController
      *        defaults = {"sort" = "", "sortdir" = "asc", "pos" = 1, "num" = 10, "_format" = "html"},
      *        methods = {"GET"}
      * )
+     * @Cache(expires="+2 hours", public=false)
      * @Theme("admin")
      *
      * @param Request $request Current request instance
@@ -230,6 +245,7 @@ class PartOfMenuController extends AbstractPartOfMenuController
      *        defaults = {"sort" = "", "sortdir" = "asc", "pos" = 1, "num" = 10, "_format" = "html"},
      *        methods = {"GET"}
      * )
+     * @Cache(expires="+2 hours", public=false)
      *
      * @param Request $request Current request instance
      * @param string $sort         Sorting field

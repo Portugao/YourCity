@@ -17,9 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Zikula\Bundle\HookBundle\Category\FormAwareCategory;
 use Zikula\Bundle\HookBundle\Category\UiHooksCategory;
 use Zikula\Component\SortableColumns\Column;
@@ -35,7 +32,6 @@ abstract class AbstractLocationController extends AbstractController
 {
     /**
      * This is the default action handling the index admin area called without defining arguments.
-     * @Cache(expires="+7 days", public=true)
      *
      * @param Request $request Current request instance
      *
@@ -50,7 +46,6 @@ abstract class AbstractLocationController extends AbstractController
     
     /**
      * This is the default action handling the index area called without defining arguments.
-     * @Cache(expires="+7 days", public=true)
      *
      * @param Request $request Current request instance
      *
@@ -82,7 +77,6 @@ abstract class AbstractLocationController extends AbstractController
     }
     /**
      * This action provides an item list overview in the admin area.
-     * @Cache(expires="+2 hours", public=false)
      *
      * @param Request $request Current request instance
      * @param string $sort         Sorting field
@@ -101,7 +95,6 @@ abstract class AbstractLocationController extends AbstractController
     
     /**
      * This action provides an item list overview.
-     * @Cache(expires="+2 hours", public=false)
      *
      * @param Request $request Current request instance
      * @param string $sort         Sorting field
@@ -175,8 +168,6 @@ abstract class AbstractLocationController extends AbstractController
     }
     /**
      * This action provides a item detail view in the admin area.
-     * @ParamConverter("location", class="MUYourCityModule:LocationEntity", options = {"repository_method" = "selectBySlug", "mapping": {"slug": "slugTitle"}, "map_method_signature" = true})
-     * @Cache(lastModified="location.getUpdatedDate()", ETag="'Location' ~ location.getid() ~ location.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      * @param LocationEntity $location Treated location instance
@@ -193,8 +184,6 @@ abstract class AbstractLocationController extends AbstractController
     
     /**
      * This action provides a item detail view.
-     * @ParamConverter("location", class="MUYourCityModule:LocationEntity", options = {"repository_method" = "selectBySlug", "mapping": {"slug": "slugTitle"}, "map_method_signature" = true})
-     * @Cache(lastModified="location.getUpdatedDate()", ETag="'Location' ~ location.getid() ~ location.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      * @param LocationEntity $location Treated location instance
@@ -251,7 +240,6 @@ abstract class AbstractLocationController extends AbstractController
     }
     /**
      * This action provides a handling of edit requests in the admin area.
-     * @Cache(lastModified="location.getUpdatedDate()", ETag="'Location' ~ location.getid() ~ location.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      *
@@ -268,7 +256,6 @@ abstract class AbstractLocationController extends AbstractController
     
     /**
      * This action provides a handling of edit requests.
-     * @Cache(lastModified="location.getUpdatedDate()", ETag="'Location' ~ location.getid() ~ location.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      *
@@ -315,8 +302,6 @@ abstract class AbstractLocationController extends AbstractController
     }
     /**
      * This action provides a handling of simple delete requests in the admin area.
-     * @ParamConverter("location", class="MUYourCityModule:LocationEntity", options = {"repository_method" = "selectBySlug", "mapping": {"slug": "slugTitle"}, "map_method_signature" = true})
-     * @Cache(lastModified="location.getUpdatedDate()", ETag="'Location' ~ location.getid() ~ location.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      * @param LocationEntity $location Treated location instance
@@ -334,8 +319,6 @@ abstract class AbstractLocationController extends AbstractController
     
     /**
      * This action provides a handling of simple delete requests.
-     * @ParamConverter("location", class="MUYourCityModule:LocationEntity", options = {"repository_method" = "selectBySlug", "mapping": {"slug": "slugTitle"}, "map_method_signature" = true})
-     * @Cache(lastModified="location.getUpdatedDate()", ETag="'Location' ~ location.getid() ~ location.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      * @param LocationEntity $location Treated location instance

@@ -15,6 +15,8 @@ namespace MU\YourCityModule\Controller;
 use MU\YourCityModule\Controller\Base\AbstractMenuOfLocationController;
 
 use RuntimeException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -33,6 +35,7 @@ class MenuOfLocationController extends AbstractMenuOfLocationController
      * @Route("/admin/menusOfLocation",
      *        methods = {"GET"}
      * )
+     * @Cache(expires="+7 days", public=true)
      * @Theme("admin")
      *
      * @param Request $request Current request instance
@@ -52,6 +55,7 @@ class MenuOfLocationController extends AbstractMenuOfLocationController
      * @Route("/menusOfLocation",
      *        methods = {"GET"}
      * )
+     * @Cache(expires="+7 days", public=true)
      *
      * @param Request $request Current request instance
      *
@@ -71,6 +75,7 @@ class MenuOfLocationController extends AbstractMenuOfLocationController
      *        defaults = {"sort" = "", "sortdir" = "asc", "pos" = 1, "num" = 10, "_format" = "html"},
      *        methods = {"GET"}
      * )
+     * @Cache(expires="+2 hours", public=false)
      * @Theme("admin")
      *
      * @param Request $request Current request instance
@@ -96,6 +101,7 @@ class MenuOfLocationController extends AbstractMenuOfLocationController
      *        defaults = {"sort" = "", "sortdir" = "asc", "pos" = 1, "num" = 10, "_format" = "html"},
      *        methods = {"GET"}
      * )
+     * @Cache(expires="+2 hours", public=false)
      *
      * @param Request $request Current request instance
      * @param string $sort         Sorting field
@@ -119,6 +125,8 @@ class MenuOfLocationController extends AbstractMenuOfLocationController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )
+     * @ParamConverter("menuOfLocation", class="MUYourCityModule:MenuOfLocationEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
+     * @Cache(lastModified="menuOfLocation.getUpdatedDate()", ETag="'MenuOfLocation' ~ menuOfLocation.getid() ~ menuOfLocation.getUpdatedDate().format('U')")
      * @Theme("admin")
      *
      * @param Request $request Current request instance
@@ -142,6 +150,8 @@ class MenuOfLocationController extends AbstractMenuOfLocationController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )
+     * @ParamConverter("menuOfLocation", class="MUYourCityModule:MenuOfLocationEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
+     * @Cache(lastModified="menuOfLocation.getUpdatedDate()", ETag="'MenuOfLocation' ~ menuOfLocation.getid() ~ menuOfLocation.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      * @param MenuOfLocationEntity $menuOfLocation Treated menu of location instance
@@ -163,6 +173,7 @@ class MenuOfLocationController extends AbstractMenuOfLocationController
      *        defaults = {"id" = "0", "_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
+     * @Cache(expires="+30 minutes", public=false)
      * @Theme("admin")
      *
      * @param Request $request Current request instance
@@ -186,6 +197,7 @@ class MenuOfLocationController extends AbstractMenuOfLocationController
      *        defaults = {"id" = "0", "_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
+     * @Cache(expires="+30 minutes", public=false)
      *
      * @param Request $request Current request instance
      *
@@ -207,6 +219,8 @@ class MenuOfLocationController extends AbstractMenuOfLocationController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
+     * @ParamConverter("menuOfLocation", class="MUYourCityModule:MenuOfLocationEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
+     * @Cache(lastModified="menuOfLocation.getUpdatedDate()", ETag="'MenuOfLocation' ~ menuOfLocation.getid() ~ menuOfLocation.getUpdatedDate().format('U')")
      * @Theme("admin")
      *
      * @param Request $request Current request instance
@@ -231,6 +245,8 @@ class MenuOfLocationController extends AbstractMenuOfLocationController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
+     * @ParamConverter("menuOfLocation", class="MUYourCityModule:MenuOfLocationEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
+     * @Cache(lastModified="menuOfLocation.getUpdatedDate()", ETag="'MenuOfLocation' ~ menuOfLocation.getid() ~ menuOfLocation.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      * @param MenuOfLocationEntity $menuOfLocation Treated menu of location instance
