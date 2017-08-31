@@ -129,7 +129,7 @@
 {% endblock %}
 {% block footer %}
     {{ parent() }}
-    {% set pathToLeaflet = zasset('@MUYourCityModule:css/style.css')|replace({'Resources/public/css/style.css', ''}) ~ 'vendor/drmonty/leaflet/' %}
+    {% set pathToLeaflet = zasset('@MUYourCityModule:css/style.css')|replace({'Resources/public/css/style.css': ''}) ~ 'vendor/drmonty/leaflet/' %}
     {{ pageAddAsset('stylesheet', pathToLeaflet ~ 'css/leaflet.css') }}
     {{ pageAddAsset('javascript', pathToLeaflet ~ 'js/leaflet' ~ (app.environment == 'dev' ? '' : '.min') ~ '.js') }}
     <div id="geographicalInfo" class="hidden" data-context="edit" data-latitude="{{ event.latitude|muyourcitymodule_geoData }}" data-longitude="{{ event.longitude|muyourcitymodule_geoData }}" data-zoom-level="{{ getModVar('MUYourCityModule', 'defaultZoomLevel', 18) }}" data-tile-layer-url="{{ getModVar('MUYourCityModule', 'tileLayerUrl') }}" data-tile-layer-attribution="{{ getModVar('MUYourCityModule', 'tileLayerAttribution') }}" data-use-geolocation="{% if mode == 'create' and useGeoLocation == true %}true{% else %}false{% endif %}"></div>
