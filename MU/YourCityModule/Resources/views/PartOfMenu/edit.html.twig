@@ -64,7 +64,7 @@
         
         {{ include(
             '@MUYourCityModule/Dish/includeSelectMany.html.twig',
-            {group: 'partofmenu', alias: 'dishes', aliasReverse: 'partsOfMenu', mandatory: false, idPrefix: 'yourcityPartOfMenu_Dishes', linkingItem: partofmenu, displayMode: 'choices'}
+            {group: 'partofmenu', heading: __('Dishes'), alias: 'dishes', mandatory: false, idPrefix: 'yourcityPartOfMenu_Dishes', linkingItem: partofmenu, displayMode: 'choices'}
         ) }}
         {% if mode != 'create' %}
             {{ include('@MUYourCityModule/Helper/includeStandardFieldsEdit.html.twig', {obj: partofmenu}) }}
@@ -89,7 +89,7 @@
         {% endif %}
         
         {# include return control #}
-        {% if mode == 'create' %}
+        {% if mode == 'create' and form.repeatCreation is defined %}
             <fieldset>
                 <legend>{{ __('Return control') }}</legend>
                 {{ form_row(form.repeatCreation) }}
@@ -114,11 +114,11 @@
 {% endblock %}
 {% block footer %}
     {{ parent() }}
-    {% set editImage = '<span class="fa fa-pencil-square-o"></span>' %}
-    {% set removeImage = '<span class="fa fa-trash-o"></span>' %}
     {% set formInitScript %}
         <script type="text/javascript">
         /* <![CDATA[ */
+            var mUYourCityInlineEditHandlers = [];
+            var mUYourCityEditHandler = null;
             
             ( function($) {
                 $(document).ready(function() {

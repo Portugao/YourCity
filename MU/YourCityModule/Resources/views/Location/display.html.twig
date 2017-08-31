@@ -477,7 +477,7 @@
         {% if location.products is not empty %}
             <h4>{{ __('Products') }}</h4>
             {% for product in location.products %}
-                < href="{{ path('muyourcitymodule_product_display', {'id': product.id}) }}">{{ product.name }}</a><br />
+                <a href="{{ path('muyourcitymodule_product_display', {'id': product.id}) }}">{{ product.name }}</a><br />
                 {% if product.priceOfProduct %}
                 {{ product.priceOfProduct|localizedcurrency('EUR')  }} 
                 {% if product.priceAdditional %}
@@ -548,7 +548,6 @@
 {% endblock %}
 {% block related_items %}
     
-    
 {% endblock %}
 {% block display_hooks %}
     {% set hooks = notifyDisplayHooks(eventName='muyourcitymodule.ui_hooks.locations.display_view', id=location.id, urlObject=currentUrlObject) %}
@@ -559,18 +558,9 @@
 {% endblock %}
 {% block footer %}
     {{ parent() }}
-    {{ pageAddAsset('javascript', 'https://maps.google.com/maps/api/js?key=' ~ getModVar('MUYourCityModule', 'googleMapsApiKey', '') ~ '&amp;language=' ~ app.request.locale ~ '&amp;sensor=false') }}
-    {{ pageAddAsset('javascript', app.request.basePath ~ '/plugins/Mapstraction/lib/vendor/mxn/mxn.js?(googlev3)') }}
-    {% set geoScripts %}
-        <script type="text/javascript">
-        /* <![CDATA[ */
-            ( function($) {
-                $(document).ready(function() {
-                    mUYourCityInitGeographicalDisplay({{ location.latitude|muyourcitymodule_geoData }}, {{ location.longitude|muyourcitymodule_geoData }}, '{{ getModVar('MUYourCityModule', 'defaultMapType', 'roadmap') }}', {{ getModVar('MUYourCityModule', 'defaultZoomLevel', 18) }})
-                });
-            })(jQuery);
-        /* ]]> */
-        </script>
-    {% endset %}
-    {{ pageAddAsset('footer', geoScripts) }}
+    {% set pathToLeaflet = zasset('@MUYourCityModule:css/style.css')|replace({'Resources/public/css/style.css': ''}) ~ 'vendor/drmonty/leaflet/' %}
+    {{ pageAddAsset('stylesheet', pathToLeaflet ~ 'css/leaflet.css') }}
+    {{ pageAddAsset('javascript', pathToLeaflet ~ 'js/leaflet' ~ (app.environment == 'dev' ? '' : '.min') ~ '.js') }}
+    <div id="geographicalInfo" class="hidden" data-context="display" data-latitude="{{ location.latitude|muyourcitymodule_geoData }}" data-longitude="{{ location.longitude|muyourcitymodule_geoData }}" data-zoom-level="{{ getModVar('MUYourCityModule', 'defaultZoomLevel', 18) }}" data-tile-layer-url="{{ getModVar('MUYourCityModule', 'tileLayerUrl') }}" data-tile-layer-attribution="{{ getModVar('MUYourCityModule', 'tileLayerAttribution') }}"></div>
+    
 {% endblock %}

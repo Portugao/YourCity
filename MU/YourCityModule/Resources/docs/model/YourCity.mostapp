@@ -385,7 +385,7 @@ application "YourCity" {
                 },
                 upload "imageOfPart" {
                     mandatory false
-                displayType DISPLAY
+                displayType ALL
                 maxSize "200k"
                 }
             }

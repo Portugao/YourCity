@@ -1,5 +1,6 @@
 # INSTALLATION INSTRUCTIONS
 
+0. If the application's root folder does not contain a `vendor/` folder yet, run `composer install --no-dev` to install dependencies.
 1. Copy MUYourCityModule into your `modules` directory. Afterwards you should have a folder named `modules/MU/YourCityModule/Resources`.
 2. Initialize and activate MUYourCityModule in the extensions administration.
 3. Move or copy the directory `Resources/userdata/MUYourCityModule/` to `/userdata/MUYourCityModule/`.

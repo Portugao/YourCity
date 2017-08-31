@@ -452,11 +452,11 @@
                     
                         <p class="alert alert-info">{{ __('Here you can define settings related to geographical features.')|nl2br }}</p>
                     
-                        {{ form_row(form.googleMapsApiKey) }}
                         {{ form_row(form.defaultLatitude) }}
                         {{ form_row(form.defaultLongitude) }}
-                        {{ form_row(form.defaultMapType) }}
                         {{ form_row(form.defaultZoomLevel) }}
+                        {{ form_row(form.tileLayerUrl) }}
+                        {{ form_row(form.tileLayerAttribution) }}
                         {{ form_row(form.enableLocationGeoLocation) }}
                         {{ form_row(form.enableEventGeoLocation) }}
                     </fieldset>

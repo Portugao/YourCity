@@ -254,20 +254,16 @@
 {% endblock %}
 {% block footer %}
     {{ parent() }}
-    {% set editImage = '<span class="fa fa-pencil-square-o"></span>' %}
-    {% set removeImage = '<span class="fa fa-trash-o"></span>' %}
+    {% set pathToLeaflet = zasset('@MUYourCityModule:css/style.css')|replace({'Resources/public/css/style.css': ''}) ~ 'vendor/drmonty/leaflet/' %}
+    {{ pageAddAsset('stylesheet', pathToLeaflet ~ 'css/leaflet.css') }}
+    {{ pageAddAsset('javascript', pathToLeaflet ~ 'js/leaflet' ~ (app.environment == 'dev' ? '' : '.min') ~ '.js') }}
+    <div id="geographicalInfo" class="hidden" data-context="edit" data-latitude="{{ location.latitude|muyourcitymodule_geoData }}" data-longitude="{{ location.longitude|muyourcitymodule_geoData }}" data-zoom-level="{{ getModVar('MUYourCityModule', 'defaultZoomLevel', 18) }}" data-tile-layer-url="{{ getModVar('MUYourCityModule', 'tileLayerUrl') }}" data-tile-layer-attribution="{{ getModVar('MUYourCityModule', 'tileLayerAttribution') }}" data-use-geolocation="{% if mode == 'create' and useGeoLocation == true %}true{% else %}false{% endif %}"></div>
     
-    {% set useGeoLocation = getModVar('MUYourCityModule', 'enableLocationGeoLocation', false) %}
-    {{ pageAddAsset('javascript', 'https://maps.google.com/maps/api/js?key=' ~ getModVar('MUYourCityModule', 'googleMapsApiKey', '') ~ '&amp;language=' ~ app.request.locale ~ '&amp;sensor=false') }}
-    {{ pageAddAsset('javascript', app.request.basePath ~ '/plugins/Mapstraction/lib/vendor/mxn/mxn.js?(googlev3)') }}
-    {% if useGeoLocation == true %}
-        {{ pageAddAsset('javascript', app.request.basePath ~ '/plugins/Mapstraction/lib/vendor/mxn/mxn.geocoder.js') }}
-        {{ pageAddAsset('javascript', app.request.basePath ~ '/plugins/Mapstraction/lib/vendor/mxn/mxn.googlev3.geocoder.js') }}
-    {% endif %}
-    <div id="geographicalInfo" class="hidden" data-context="edit" data-latitude="{{ location.latitude|muyourcitymodule_geoData }}" data-longitude="{{ location.longitude|muyourcitymodule_geoData }}" data-map-type="{{ getModVar('MUYourCityModule', 'defaultMapType', 'roadmap') }}" data-zoom-level="{{ getModVar('MUYourCityModule', 'defaultZoomLevel', 18) }}" data-use-geolocation="{% if mode == 'create' and useGeoLocation == true %}true{% else %}false{% endif %}"></div>
     {% set formInitScript %}
         <script type="text/javascript">
         /* <![CDATA[ */
+            var mUYourCityInlineEditHandlers = [];
+            var mUYourCityEditHandler = null;
             
             ( function($) {
                 $(document).ready(function() {
