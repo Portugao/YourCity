@@ -230,8 +230,13 @@ div.muyourcitymodule-view .avatar img {
 	color: #ff8040;
 }
 
-.locationClosed {
+.locationClosedDisplay {
 	color: #ff0000;
+	font-weight: bolder;
+}
+
+.locationClosed {
+	color: #ff0000;;
 }
 
 .locationClosedThis {
@@ -240,6 +245,11 @@ div.muyourcitymodule-view .avatar img {
 
 .locationForEver {
 	color: #940b03;
+}
+
+.locationOpenDisplay {
+	color: #008a00;
+	font-weight: bolder;
 }
 
 .locationOpen {
