@@ -129,7 +129,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             $relatedComponent = 'MUYourCityModule:Location:';
             $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_COMMENT)) {
-                $title = $this->__('Create location');
+                $title = $this->__('Create locations');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_location_' . $routeArea . 'edit',
                     'routeParameters' => ['branches' => $entity->getKey()]
@@ -190,7 +190,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             $relatedComponent = 'MUYourCityModule:Abonnement:';
             $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
-                $title = $this->__('Create abonnement');
+                $title = $this->__('Create abonnements');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_abonnement_' . $routeArea . 'edit',
                     'routeParameters' => ['location' => $entity->getKey()]
@@ -201,7 +201,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             $relatedComponent = 'MUYourCityModule:Branch:';
             $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
-                $title = $this->__('Create branch');
+                $title = $this->__('Create branches');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_branch_' . $routeArea . 'edit',
                     'routeParameters' => ['locations' => $entity->getKey()]
@@ -212,7 +212,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             $relatedComponent = 'MUYourCityModule:ServiceOfLocation:';
             $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
-                $title = $this->__('Create service of location');
+                $title = $this->__('Create services of location');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_serviceoflocation_' . $routeArea . 'edit',
                     'routeParameters' => ['locations' => $entity->getKey()]
@@ -223,7 +223,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             $relatedComponent = 'MUYourCityModule:SpecialOfLocation:';
             $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
-                $title = $this->__('Create special of location');
+                $title = $this->__('Create specials of location');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_specialoflocation_' . $routeArea . 'edit',
                     'routeParameters' => ['locations' => $entity->getKey()]
@@ -380,7 +380,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             $relatedComponent = 'MUYourCityModule:Dish:';
             $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
-                $title = $this->__('Create dish');
+                $title = $this->__('Create dishes');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_dish_' . $routeArea . 'edit',
                     'routeParameters' => ['menusoflocation' => $entity->getKey()]
@@ -391,7 +391,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             $relatedComponent = 'MUYourCityModule:PartOfMenu:';
             $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
-                $title = $this->__('Create part of menu');
+                $title = $this->__('Create parts of menu');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_partofmenu_' . $routeArea . 'edit',
                     'routeParameters' => ['menusoflocation' => $entity->getKey()]
@@ -452,7 +452,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             $relatedComponent = 'MUYourCityModule:Dish:';
             $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
-                $title = $this->__('Create dish');
+                $title = $this->__('Create dishes');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_dish_' . $routeArea . 'edit',
                     'routeParameters' => ['partsofmenu' => $entity->getKey()]
@@ -463,7 +463,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             $relatedComponent = 'MUYourCityModule:MenuOfLocation:';
             $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
-                $title = $this->__('Create menu of location');
+                $title = $this->__('Create menus of location');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_menuoflocation_' . $routeArea . 'edit',
                     'routeParameters' => ['partsofmenu' => $entity->getKey()]
@@ -524,7 +524,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             $relatedComponent = 'MUYourCityModule:MenuOfLocation:';
             $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
-                $title = $this->__('Create menu of location');
+                $title = $this->__('Create menus of location');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_menuoflocation_' . $routeArea . 'edit',
                     'routeParameters' => ['dishes' => $entity->getKey()]
@@ -535,7 +535,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             $relatedComponent = 'MUYourCityModule:PartOfMenu:';
             $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
-                $title = $this->__('Create part of menu');
+                $title = $this->__('Create parts of menu');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_partofmenu_' . $routeArea . 'edit',
                     'routeParameters' => ['dishes' => $entity->getKey()]
@@ -692,7 +692,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             $relatedComponent = 'MUYourCityModule:Location:';
             $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_COMMENT)) {
-                $title = $this->__('Create location');
+                $title = $this->__('Create locations');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_location_' . $routeArea . 'edit',
                     'routeParameters' => ['specialsoflocation' => $entity->getKey()]
@@ -753,7 +753,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             $relatedComponent = 'MUYourCityModule:Location:';
             $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_COMMENT)) {
-                $title = $this->__('Create location');
+                $title = $this->__('Create locations');
                 $menu->addChild($title, [
                     'route' => 'muyourcitymodule_location_' . $routeArea . 'edit',
                     'routeParameters' => ['servicesoflocation' => $entity->getKey()]
