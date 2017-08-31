@@ -467,11 +467,10 @@ abstract class AbstractControllerHelper
     }
 
     /**
-     * Example method for performing geo coding in PHP.
-     * To use this please customise it to your needs in the concrete subclass.
-     * Also you have to call this method in a PrePersist-Handler of the
-     * corresponding entity class.
-     * There is also a method on JS level available in Resources/public/js/MUYourCityModule.Geo.js.
+     * Example method for performing geocoding in PHP.
+     * To use this please extend it or customise it to your needs in the concrete subclass.
+     *
+     * You can also easily do geocoding on JS level with some Leaflet plugins, see http://leafletjs.com/plugins.html#geocoding
      *
      * @param string $address The address input string
      *
@@ -479,9 +478,7 @@ abstract class AbstractControllerHelper
      */
     public function performGeoCoding($address)
     {
-        $lang = $this->request->getLocale();
-        $url = 'https://maps.googleapis.com/maps/api/geocode/json?key=' . $this->variableApi->get('MUYourCityModule', 'googleMapsApiKey', '') . '&address=' . urlencode($address);
-        $url .= '&region=' . $lang . '&language=' . $lang . '&sensor=false';
+        $url = 'https://nominatim.openstreetmap.org/search?limit=1&format=json&q=' . urlencode($address);
     
         $json = '';
     
@@ -512,19 +509,18 @@ abstract class AbstractControllerHelper
             'longitude' => 0
         ];
     
-        if ($json != '') {
-            $data = json_decode($json);
+        if ($json == '') {
+            return $result;
+        }
     
-            if (json_last_error() == JSON_ERROR_NONE && $data->status == 'OK') {
-                $jsonResult = reset($data->results);
-                $location = $jsonResult->geometry->location;
-    
-                $result['latitude'] = str_replace(',', '.', $location->lat);
-                $result['longitude'] = str_replace(',', '.', $location->lng);
-            } else {
-                $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->currentUserApi->get('uname'), 'field' => $field, 'address' => $address];
-                $this->logger->warning('{app}: User {user} tried geocoding for address "{address}", but failed.', $logArgs);
-            }
+        $data = json_decode($json);
+        if (json_last_error() == JSON_ERROR_NONE && $data->status == 'OK' && count($data) > 0) {
+            $location = $data[0];
+            $result['latitude'] = str_replace(',', '.', $location->lat);
+            $result['longitude'] = str_replace(',', '.', $location->lng);
+        } else {
+            $logArgs = ['app' => 'MUYourCityModule', 'user' => $this->currentUserApi->get('uname'), 'field' => $field, 'address' => $address];
+            $this->logger->warning('{app}: User {user} tried geocoding for address "{address}", but failed.', $logArgs);
         }
     
         return $result;
