@@ -44,7 +44,7 @@
             {% else %}&nbsp;{% endif %}    
     </div>
     </div>
-    
+
     <div class="col-sm-9 col-xs-7">
     {% if location.state == 'closed' %}
         {% set state = 'locationClosed' %}
@@ -52,7 +52,7 @@
     {% if location.state == 'closedForEver' %}
         {% set state = 'locationForEver' %}
     {% endif %}
-    {% if location.state == 'open' %}
+    {% if location.state == 'open' or location.state == 'open2' %}
         {% set state = 'locationOpen' %}
     {% endif %}
     {% if location.state == 'agreement' %}
@@ -144,8 +144,65 @@
         <h3>{{ __('Opening hours') }}</h3>
         
         {% if location.agreement == false and location.unclearTimes == false and location.closedForEver == false %}
-
+        {% set colorMonday = '' %}
+        {% set colorTuesday = '' %}
+        {% set colorWednesday = '' %}
+        {% set colorThursday = '' %}
+        {% set colorFriday = '' %}
+        {% set colorSaturday = '' %}
+        {% set colorSunday = '' %}
+        {% if location.realDay == 'Monday' %}
+            {% if location.closedOnMonday == false and location.state != 'closed' %}
+                {% set colorMonday = 'locationOpenDisplay' %}
+            {% else %}
+                {% set colorMonday = 'locationClosedDisplay' %}
+            {% endif %}
+        {% endif %}
+        {% if location.realDay == 'Tuesday' %}
+            {% if location.closedOnTuesday == false and location.state != 'closed' %}
+                {% set colorTuesday = 'locationOpenDisplay' %}
+            {% else %}
+                {% set colorTuesday = 'locationClosedDisplay' %}
+            {% endif %}
+        {% endif %}
+        {% if location.realDay == 'Wednesday' %}
+            {% if location.closedOnWednesday == false and location.state != 'closed' %}
+                {% set colorWednesday = 'locationOpenDisplay' %}
+            {% else %}
+                {% set colorWednesday = 'locationClosedDisplay' %}
+            {% endif %}
+        {% endif %}
+        {% if location.realDay == 'Thursday' %}
+            {% if location.closedOnThursday == false and location.state != 'closed' %}
+                {% set colorThursday = 'locationOpenDisplay' %}
+            {% else %}
+                {% set colorThursday = 'locationClosedDisplay' %}
+            {% endif %}
+        {% endif %}
+        {% if location.realDay == 'Friday' %}
+            {% if location.closedOnFriday == false and location.state != 'closed' %}
+                {% set colorFriday = 'locationOpenDisplay' %}
+            {% else %}
+                {% set colorFriday = 'locationClosedDisplay' %}
+            {% endif %}
+        {% endif %}
+        {% if location.realDay == 'Saturday' %}
+            {% if location.closedOnSaturday == false and location.state != 'closed' %}
+                {% set colorSaturday = 'locationOpenDisplay' %}
+            {% else %}
+                {% set colorSaturday = 'locationClosedDisplay' %}
+            {% endif %}
+        {% endif %}
+        {% if location.realDay == 'Sunday' %}
+            {% if location.closedOnSunday == false and location.state != 'closed' %}
+                {% set colorSunday = 'locationOpenDisplay' %}
+            {% else %}
+                {% set colorSunday = 'locationClosedDisplay' %}
+            {% endif %}
+        {% endif %}
+        
         <div class="row">
+        <div class="{{ colorMonday }}">
             <div class="col-md-4 col-sm-5 col-xs-6">
                 {{ __('Monday') }}
             </div>
@@ -172,8 +229,10 @@
             {% endif %}
             </div>
         </div>
+        </div>
         
         <div class="row">
+        <div class="{{ colorTuesday }}">
             <div class="col-md-4 col-sm-5 col-xs-6">
                 {{ __('Tuesday') }}
             </div>
@@ -200,8 +259,10 @@
             {% endif %}
             </div>
         </div>
+        </div>
         
         <div class="row">
+        <div class="{{ colorWednesday }}">
             <div class="col-md-4 col-sm-5 col-xs-6">
                 {{ __('Wednesday') }}
             </div>
@@ -228,8 +289,10 @@
             {% endif %}
             </div>
         </div>
+        </div>
         
         <div class="row">
+        <div class="{{ colorThursday }}">
             <div class="col-md-4 col-sm-5 col-xs-6">
                 {{ __('Thursday') }}
             </div>
@@ -256,8 +319,10 @@
             {% endif %}
             </div>
         </div>
+        </div>
         
         <div class="row">
+        <div class="{{ colorFriday }}">
             <div class="col-md-4 col-sm-5 col-xs-6">
                 {{ __('Friday') }}
             </div>
@@ -274,7 +339,7 @@
                 {% if location.start2OnFriday is not empty %}
                     <br />{{ location.start2OnFriday|localizeddate('none', 'short') }}
                 {% if location.end2OnFriday is not empty %}
-                    {{ location.end2OnFriday|localizeddate('none', 'short') }}
+                    - {{ location.end2OnFriday|localizeddate('none', 'short') }}
                 {% else %}
                     - {{ __('Open end') }}
                 {% endif %}
@@ -284,8 +349,10 @@
             {% endif %}
             </div>
         </div>
+        </div>
         
         <div class="row">
+        <div class="{{ colorSaturday }}">
             <div class="col-md-4 col-sm-5 col-xs-6">
                 {{ __('Saturday') }}
             </div>
@@ -313,8 +380,10 @@
             {% endif %}
             </div>
         </div>
+        </div>
         
         <div class="row">
+        <div class="{{ colorSunday }}">
             <div class="col-md-4 col-sm-5 col-xs-6">
                 {{ __('Sunday') }}
             </div>
@@ -339,6 +408,7 @@
             {% else %}
                 {{ __('Closed') }}
             {% endif %}
+            </div>
             </div>
         </div>
         {% elseif location.agreement == true %}
@@ -395,7 +465,7 @@
         {% if location.offers is not empty %}
             <h4>{{ __('Offers') }}</h4>
             {% for offer in location.offers %}
-                {{ offer.name }}<br />
+                <a href="{{ path('muyourcitymodule_offer_display', {'id': offer.id})  }}">{{ offer.name }}</a><br />
                 {% if offer.percentOfOffer != '' %}
                 {{ offer.percentOfOffer }}%
                 {% else %}
@@ -407,7 +477,7 @@
         {% if location.products is not empty %}
             <h4>{{ __('Products') }}</h4>
             {% for product in location.products %}
-                {{ product.name }}<br />
+                < href="{{ path('muyourcitymodule_product_display', {'id': product.id}) }}">{{ product.name }}</a><br />
                 {% if product.priceOfProduct %}
                 {{ product.priceOfProduct|localizedcurrency('EUR')  }} 
                 {% if product.priceAdditional %}
