@@ -205,7 +205,8 @@ class ControllerHelper extends AbstractControllerHelper
     						//$locations[] = $location;
     					} else {
     						$location['state'] = $this->checkActualDay($actualDay, $location);
-    						$location['showHours'] = $this->checkActualDay($actualDay, $location, 2);
+    						$location['realDay'] = $this->checkActualDay($actualDay, $location, 2);
+    						$location['showHours'] = $this->checkActualDay($actualDay, $location, 3);
     						//$locations[] = $location;
     					}
     				}
@@ -251,7 +252,7 @@ class ControllerHelper extends AbstractControllerHelper
     						} else {
     							$location = $locationRepository->find($location['id']);
     							$location['state'] = $this->checkActualDay($actualDay, $location);
-    							$location['showHours'] = $this->checkActualDay($actualDay, $location, 2);
+    							$location['showHours'] = $this->checkActualDay($actualDay, $location, 3);
     							$locations[] = $location;
     						}
     					}
@@ -563,10 +564,37 @@ class ControllerHelper extends AbstractControllerHelper
 			$nextEnd2Time == '';
 		}
 		
-		$beforeStartTime = \DateUtil::formatDatetime($location['startOn' . $beforeDay], 'timelong');
-		$beforeEndTime = \DateUtil::formatDatetime($location['endOn' . $beforeDay], 'timelong');
-		$beforeStart2Time = \DateUtil::formatDatetime($location['start2On' . $beforeDay], 'timelong');
-		$beforeEnd2Time = \DateUtil::formatDatetime($location['end2On' . $beforeDay], 'timelong');
+		$function = 'getStartOn' . $beforeDay;
+		$beforeStartTime = $location->$function();
+		if ($beforeStartTime) {
+			$beforeStartTime = $beforeStartTime->format('H:i');
+		} else {
+			$beforeStartTime = '';
+		}
+		
+		$function = 'getEndOn' . $beforeDay;
+		$beforeEndTime = $location->$function();
+		if ($beforeEndTime) {
+			$beforeEndTime = $beforeEndTime->format('H:i');
+		} else {
+			$beforeEndTime = '';
+		}
+		
+		$function = 'getStart2On' . $beforeDay;
+		$beforeStart2Time = $location->$function();
+		if ($beforeStart2Time) {
+			$beforeStart2Time = $beforeStart2Time->format('H:i');
+		} else {
+			$beforeStart2Time = '';
+		}
+		
+		$function = 'getEnd2On' . $beforeDay;
+		$beforeEnd2Time = $location->$function();
+		if ($beforeEnd2Time) {
+			$beforeEnd2Time = $beforeEnd2Time->format('H:i');
+		} else {
+			$beforeEnd2Time = '';
+		}
     	
     	// we get actual time
     	$actualTime = date('H:i');
@@ -576,7 +604,7 @@ class ControllerHelper extends AbstractControllerHelper
     	if ($startTime != '') {
     	    if ($startTime < $actualTime) {
     	    	if ($endTime != '') {
-    		        if ($endTime >= $actualTime || $endTime == '00:00' || ($endTime > '00:00' && $endTime < $nextStartTime && $actualTime > $startTime) || ($actualTime > '00:00' && $actualTime < '06:00' && ($beforeEndTime < $actualTime || $beforeEnd2Time < $actualTime))) {
+    		        if ($endTime >= $actualTime || $endTime == '00:00') {
     			        $state = 'open';
     		        } else {
     		    	    $state = 'closed';
@@ -588,14 +616,20 @@ class ControllerHelper extends AbstractControllerHelper
     		if ($endTime == '') {
     			$state = 'openEnd';
     		} else {
-    		    $state = 'closed';
-    		}
+    			if($actualTime > '00:00' && $actualTime < '06:00' && $beforeEndTime > $actualTime) {
+    				$state = 'open2';
+    			} else {
+    		        $state = 'closed';
+    			}
     	    }
     	}
+    	}
 
+    	//die($state);
+    	//die('Aktueller Tag: ' . $actualDay. 'Actual Time: ' . $actualTime . ', Next Start: ' . $nextStartTime . ', End Time: ' . $endTime);
 
     	// we check the second times
-    	if ($state != 'open') {
+    	if ($state != 'open' && $state != 'open2') {
     	if ($start2Time != '') {
     		if ($start2Time < $actualTime) {
     			if ($end2Time != '') {
@@ -611,12 +645,18 @@ class ControllerHelper extends AbstractControllerHelper
     		    if ($end2Time == '') {
     			$state = 'openEnd';
     		} else {
+    			if ($actualTime > '00:00' && $actualTime < '06:00' && $beforeEndTime > $actualTime) {
+    				$state = 'open2';
+    			} else {
     		        $state = 'closed';
+    			}
     		}
     		}
     	}
-    }
-    	
+        }
+
+    	//die($state);
+    	// we look for the hours
     	if ($state == 'open' || $state == 'openEnd' || $state == 'closed' || ($end2Time > '00:00' && $end2Time < $nextStartTime && $actualTime > $start2Time) || ($startTime == '00:00' && $startTime == '00:00')) {
     		$hours = $startTime;
     		if ($endTime != '') {
@@ -637,13 +677,34 @@ class ControllerHelper extends AbstractControllerHelper
     		}
 
     	} else {
-    		$hours = 'none';
+    		if ($state == 'open2') {
+    			$hours = $beforeStartTime;
+    			if ($beforeEndTime != '') {
+    				$hours .= ' - ' . $beforeEndTime;
+    			}
+    			if ($beforeStart2Time != '') {
+    				$hours .= "\n" . $beforeStart2Time;
+    				
+    				if ($beforeEnd2Time != '') {
+    					$hours .= ' - ' . $beforeEnd2Time;
+    				} else {
+    					$hours .= ' - ' . $this->__('Open end');
+    				}
+    			}
+    		} else {
+    		    $hours = 'none';
+    		}
     	}
     	//die($hours);
+    	//die($state);
+    	
+    	$realDay = $this->getActualDay($state);
     	
     	if ($kind == 1) {
     	    return $state;
-    	} else {
+    	} elseif ($kind == 2) {
+    		return $realDay;
+    	} else {  	
     		return $hours;
     	}
     }
@@ -651,12 +712,15 @@ class ControllerHelper extends AbstractControllerHelper
     /**
      * 
      */
-    private function getActualDay()
+    private function getActualDay($state = '')
     {
     	$wochentage = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
     	
     	$tag = date ( "w" );
     	$year = date ( "Y" );
+    	if ($state != '' && $state == 'open2') {
+    		$tag = $tag - 1;
+    	}
     	
     	return $wochentage[$tag];
     	
