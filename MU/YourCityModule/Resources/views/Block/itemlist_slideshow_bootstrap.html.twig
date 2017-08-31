@@ -1,5 +1,6 @@
 {# Purpose of this template: Display items within a block (fallback template) #}
 
+{% set lang = app.request.locale %}
 <div id="Carousel{{ vars.bid }}" class="carousel slide">
     <div class="carousel-inner">
     {% if objectType == 'location' %}
@@ -15,14 +16,24 @@
             <div class="row">
             <div class="col-md-6">
             {% if location.branches|default %}
+            {% if lang == 'en' %}
             <h4>{{ __('Branches') }}</h4>
+            {% endif %}
+            {% if lang == 'de' %}
+            <h4>{{ __('Branchen') }}</h4>
+            {% endif %}
                 {% for branch in location.branches %}
                     {{ branch.name }}
                 {% endfor %}
             {% endif %}
             </div>
             <div class="col-md-6">
+            {% if lang == 'en' %}
             <h4>{{ __('Part') }}</h4>
+            {% endif %}
+            {% if lang == 'de' %}
+            <h4>{{ __('Stadtteil') }}</h4>
+            {% endif %}
             {{ location.partOfCity|muyourcitymodule_listEntry('location', 'partOfCity') }}
             </div>
             </div>
@@ -74,11 +85,21 @@
             <h2>{{ offer.name }}</h2>
             {% if offer.percentOfOffer == 0 %}
                 {% if offer.priceOfOffer > 0 %}
+                {% if lang == 'en' %}
                     <h3>{{ __('Price of offer') }}</h3>
+                {% endif %}
+                {% if lang == 'de' %}
+                    <h3>{{ __('Angebotspreis') }}</h3>
+                {% endif %}
                     <span class="offerPrice">{{ offer.priceOfOffer|localizedcurrency('EUR') }}</span>
                 {% endif %}
                 {% if offer.normalPrice > 0 %}
+                {% if lang == 'en' %}
                     <h4>{{ __('Normal price') }}</h4>
+                {% endif %}
+                {% if lang == 'de' %}
+                    <h4>{{ __('Normalpreis') }}</h4>
+                {% endif %}
                     {{ offer.normalPrice|localizedcurrency('EUR') }}<br />
                 {% endif %}
             {% else %}
@@ -140,12 +161,22 @@
                 <i class="fa fa-check{% if not product.sunday %} hidden{% endif %}" id="yesSunday{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
                 <i class="fa fa-times{% if product.sunday %} hidden{% endif %}" id="noSunday{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
                 <br />#}
+            {% if lang == 'en' %}
             <h4>{{ __('Price of product') }}</h4>
+            {% endif %}
+            {% if lang == 'de' %}
+            <h4>{{ __('Produktpreis') }}</h4>
+            {% endif %}
             {% if product.priceOfProduct != 0 %}
                 {{ product.priceOfProduct|localizedcurrency('EUR') }}
                 {% if product.priceAdditional is not empty %}
                     {% if product.priceAdditional == 'permonth' %}
+                    {% if lang == 'en' %}
                         {{ __('per month') }}
+                    {% endif %}
+                    {% if lang == 'de' %}
+                        {{ __('pro Monat') }}
+                    {% endif %}                    
                     {% endif %}
                 {% endif %}
             {% else %}
