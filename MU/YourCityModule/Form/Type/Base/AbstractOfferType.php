@@ -204,7 +204,7 @@ abstract class AbstractOfferType extends AbstractType
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 255,
-                'class' => ' validate-url',
+                'class' => '',
                 'title' => $this->__('Enter the url to offer on homepage of the offer')
             ],
             'required' => false,
@@ -232,7 +232,7 @@ abstract class AbstractOfferType extends AbstractType
             'empty_data' => '0.00',
             'attr' => [
                 'maxlength' => 15,
-                'class' => ' validate-number',
+                'class' => '',
                 'title' => $this->__('Enter the price of offer of the offer')
             ],
             'required' => false,
@@ -251,7 +251,7 @@ abstract class AbstractOfferType extends AbstractType
             'empty_data' => '0.00',
             'attr' => [
                 'maxlength' => 15,
-                'class' => ' validate-number',
+                'class' => '',
                 'title' => $this->__('Enter the normal price of the offer')
             ],
             'required' => false,
@@ -270,7 +270,7 @@ abstract class AbstractOfferType extends AbstractType
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 3,
-                'class' => ' validate-digits',
+                'class' => '',
                 'title' => $this->__('Enter the percent of offer of the offer.') . ' ' . $this->__('Only digits are allowed.')
             ],
             'required' => false,
@@ -392,7 +392,6 @@ abstract class AbstractOfferType extends AbstractType
             'label' => $this->__('Creator') . ':',
             'attr' => [
                 'maxlength' => 11,
-                'class' => ' validate-digits',
                 'title' => $this->__('Here you can choose a user which will be set as creator')
             ],
             'empty_data' => 0,

@@ -333,7 +333,7 @@ abstract class AbstractProductType extends AbstractType
             'empty_data' => '0.00',
             'attr' => [
                 'maxlength' => 15,
-                'class' => ' validate-number',
+                'class' => '',
                 'title' => $this->__('Enter the price of product of the product')
             ],
             'required' => false,
@@ -410,7 +410,6 @@ abstract class AbstractProductType extends AbstractType
             'label' => $this->__('Creator') . ':',
             'attr' => [
                 'maxlength' => 11,
-                'class' => ' validate-digits',
                 'title' => $this->__('Here you can choose a user which will be set as creator')
             ],
             'empty_data' => 0,

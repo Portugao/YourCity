@@ -241,13 +241,15 @@ abstract class AbstractSpecialOfLocationType extends AbstractType
         if (!$options['has_moderate_permission']) {
             return;
         }
+        if ($options['inline_usage']) {
+            return;
+        }
     
         $builder->add('moderationSpecificCreator', UserLiveSearchType::class, [
             'mapped' => false,
             'label' => $this->__('Creator') . ':',
             'attr' => [
                 'maxlength' => 11,
-                'class' => ' validate-digits',
                 'title' => $this->__('Here you can choose a user which will be set as creator')
             ],
             'empty_data' => 0,
@@ -279,6 +281,9 @@ abstract class AbstractSpecialOfLocationType extends AbstractType
     public function addReturnControlField(FormBuilderInterface $builder, array $options)
     {
         if ($options['mode'] != 'create') {
+            return;
+        }
+        if ($options['inline_usage']) {
             return;
         }
         $builder->add('repeatCreation', CheckboxType::class, [

@@ -3062,21 +3062,6 @@ abstract class AbstractConfigType extends AbstractType
     public function addGeoFields(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('googleMapsApiKey', TextType::class, [
-                'label' => $this->__('Google maps api key') . ':',
-                'label_attr' => [
-                    'class' => 'tooltips',
-                    'title' => $this->__('The API key required for Google Maps.')
-                ],
-                'help' => $this->__('The API key required for Google Maps.'),
-                'required' => false,
-                'data' => isset($this->moduleVars['googleMapsApiKey']) ? $this->moduleVars['googleMapsApiKey'] : '',
-                'empty_data' => '',
-                'attr' => [
-                    'maxlength' => 255,
-                    'title' => $this->__('Enter the google maps api key.')
-                ],
-            ])
             ->add('defaultLatitude', TextType::class, [
                 'label' => $this->__('Default latitude') . ':',
                 'label_attr' => [
@@ -3107,26 +3092,6 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Enter the default longitude.')
                 ],
             ])
-            ->add('defaultMapType', ChoiceType::class, [
-                'label' => $this->__('Default map type') . ':',
-                'label_attr' => [
-                    'class' => 'tooltips',
-                    'title' => $this->__('The default map type.')
-                ],
-                'help' => $this->__('The default map type.'),
-                'data' => isset($this->moduleVars['defaultMapType']) ? $this->moduleVars['defaultMapType'] : '',
-                'empty_data' => 'roadmap',
-                'attr' => [
-                    'title' => $this->__('Choose the default map type.')
-                ],'choices' => [
-                    $this->__('Roadmap') => 'roadmap',
-                    $this->__('Satellite') => 'satellite',
-                    $this->__('Hybrid') => 'hybrid',
-                    $this->__('Physical') => 'physical'
-                ],
-                'choices_as_values' => true,
-                'multiple' => false
-            ])
             ->add('defaultZoomLevel', IntegerType::class, [
                 'label' => $this->__('Default zoom level') . ':',
                 'label_attr' => [
@@ -3141,6 +3106,36 @@ abstract class AbstractConfigType extends AbstractType
                     'maxlength' => 255,
                     'title' => $this->__('Enter the default zoom level.') . ' ' . $this->__('Only digits are allowed.')
                 ],'scale' => 0
+            ])
+            ->add('tileLayerUrl', TextType::class, [
+                'label' => $this->__('Tile layer url') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('URL of tile layer to use. See http://leaflet-extras.github.io/leaflet-providers/preview/ for examples.')
+                ],
+                'help' => $this->__('URL of tile layer to use. See http://leaflet-extras.github.io/leaflet-providers/preview/ for examples.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['tileLayerUrl']) ? $this->moduleVars['tileLayerUrl'] : '',
+                'empty_data' => 'https://{s}.tile.osm.org/{z}/{x}/{y}.png',
+                'attr' => [
+                    'maxlength' => 255,
+                    'title' => $this->__('Enter the tile layer url.')
+                ],
+            ])
+            ->add('tileLayerAttribution', TextType::class, [
+                'label' => $this->__('Tile layer attribution') . ':',
+                'label_attr' => [
+                    'class' => 'tooltips',
+                    'title' => $this->__('Attribution for tile layer to use.')
+                ],
+                'help' => $this->__('Attribution for tile layer to use.'),
+                'required' => false,
+                'data' => isset($this->moduleVars['tileLayerAttribution']) ? $this->moduleVars['tileLayerAttribution'] : '',
+                'empty_data' => '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                'attr' => [
+                    'maxlength' => 255,
+                    'title' => $this->__('Enter the tile layer attribution.')
+                ],
             ])
             ->add('enableLocationGeoLocation', CheckboxType::class, [
                 'label' => $this->__('Enable location geo location') . ':',

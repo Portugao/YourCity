@@ -431,7 +431,7 @@ abstract class AbstractLocationType extends AbstractType
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 255,
-                'class' => ' validate-url',
+                'class' => '',
                 'title' => $this->__('Enter the homepage of the location')
             ],
             'required' => false,
@@ -1018,7 +1018,7 @@ abstract class AbstractLocationType extends AbstractType
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 11,
-                'class' => ' validate-digits',
+                'class' => '',
                 'title' => $this->__('Enter the owner of the location')
             ],
             'required' => false,
@@ -1030,7 +1030,7 @@ abstract class AbstractLocationType extends AbstractType
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 11,
-                'class' => ' validate-digits',
+                'class' => '',
                 'title' => $this->__('Enter the admin 1 of the location')
             ],
             'required' => false,
@@ -1042,7 +1042,7 @@ abstract class AbstractLocationType extends AbstractType
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 11,
-                'class' => ' validate-digits',
+                'class' => '',
                 'title' => $this->__('Enter the admin 2 of the location')
             ],
             'required' => false,
@@ -1062,16 +1062,10 @@ abstract class AbstractLocationType extends AbstractType
     {
         $builder->add('latitude', GeoType::class, [
             'label' => $this->__('Latitude') . ':',
-            'attr' => [
-                'class' => 'validate-number'
-            ],
             'required' => false
         ]);
         $builder->add('longitude', GeoType::class, [
             'label' => $this->__('Longitude') . ':',
-            'attr' => [
-                'class' => 'validate-number'
-            ],
             'required' => false
         ]);
     }
@@ -1199,13 +1193,15 @@ abstract class AbstractLocationType extends AbstractType
         if (!$options['has_moderate_permission']) {
             return;
         }
+        if ($options['inline_usage']) {
+            return;
+        }
     
         $builder->add('moderationSpecificCreator', UserLiveSearchType::class, [
             'mapped' => false,
             'label' => $this->__('Creator') . ':',
             'attr' => [
                 'maxlength' => 11,
-                'class' => ' validate-digits',
                 'title' => $this->__('Here you can choose a user which will be set as creator')
             ],
             'empty_data' => 0,
@@ -1237,6 +1233,9 @@ abstract class AbstractLocationType extends AbstractType
     public function addReturnControlField(FormBuilderInterface $builder, array $options)
     {
         if ($options['mode'] != 'create') {
+            return;
+        }
+        if ($options['inline_usage']) {
             return;
         }
         $builder->add('repeatCreation', CheckboxType::class, [
