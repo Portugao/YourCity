@@ -61,6 +61,7 @@ abstract class AbstractPartRepository extends EntityRepository
     {
         return [
             'name',
+            'imageOfPart',
             'createdBy',
             'createdDate',
             'updatedBy',
