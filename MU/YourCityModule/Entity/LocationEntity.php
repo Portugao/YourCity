@@ -38,6 +38,11 @@ class LocationEntity extends BaseEntity
 	protected $state;
 	
 	/**
+	 * var string $realDay
+	 */
+	protected  $realDay;
+	
+	/**
 	 * var string $showHours
 	 */
 	protected  $showHours;
@@ -105,6 +110,30 @@ class LocationEntity extends BaseEntity
         if ($this->state !== $state) {
             $this->state = isset($state) ? $state : '';
         }
+    }
+    
+    /**
+     * Returns the realDay.
+     *
+     * @return string
+     */
+    public function getRealDay()
+    {
+    	return $this->realDay;
+    }
+    
+    /**
+     * Sets the realDay.
+     *
+     * @param string $realDay
+     *
+     * @return void
+     */
+    public function setRealDay($realDay)
+    {
+    	if ($this->realDay !== $realDay) {
+    		$this->realDay = isset($realDay) ? $realDay : '';
+    	}
     }
     
     /**
