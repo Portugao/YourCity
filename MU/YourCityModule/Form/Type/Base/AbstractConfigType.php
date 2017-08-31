@@ -3116,7 +3116,7 @@ abstract class AbstractConfigType extends AbstractType
                 'help' => $this->__('URL of tile layer to use. See http://leaflet-extras.github.io/leaflet-providers/preview/ for examples.'),
                 'required' => false,
                 'data' => isset($this->moduleVars['tileLayerUrl']) ? $this->moduleVars['tileLayerUrl'] : '',
-                'empty_data' => 'https://{s}.tile.osm.org/{z}/{x}/{y}.png',
+                'empty_data' => 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                 'attr' => [
                     'maxlength' => 255,
                     'title' => $this->__('Enter the tile layer url.')
