@@ -16,7 +16,8 @@
         "psr-4": { "MU\\YourCityModule\\": "" }
     },
     "require": {
-        "php": ">=5.5.9"
+        "php": ">=5.5.9",
+        "drmonty/leaflet": "*"
     },
     "suggest": {
     },
