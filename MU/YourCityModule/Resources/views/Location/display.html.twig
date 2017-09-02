@@ -370,7 +370,7 @@
                     <br />{{ location.start2OnSaturday|localizeddate('none', 'short') }}
 
                 {% if location.end2OnSaturday is not empty %}
-                    {{ location.end2OnSaturday|localizeddate('none', 'short') }}
+                    - {{ location.end2OnSaturday|localizeddate('none', 'short') }}
                 {% else %}
                     - {{ __('Open end') }}
                 {% endif %}                
@@ -400,7 +400,7 @@
                 {% if location.start2OnSunday is not empty %}
                     <br />{{ location.start2OnSunday|localizeddate('none', 'short') }}
                 {% if location.end2OnSunday is not empty %}
-                    {{ location.end2OnSunday|localizeddate('none', 'short') }}
+                    - {{ location.end2OnSunday|localizeddate('none', 'short') }}
                  {% else %}
                     - {{ __('Open end') }}
                  {% endif %}               
@@ -438,14 +438,18 @@
         {{ block('display_hooks') }}
         </div>
         <div class="col-sm-5">
-        {% if location.specialsOfLocation is not empty %}
-            <h4>{{ __('Specials') }}</h4>
-            {{ location.specialsOfLocation|muyourcitymodule_listEntry('location', 'specialsOfLocation') }}
+        {% if location.specialsOfLocation|default %}
+            {{ include(
+                '@MUYourCityModule/SpecialOfLocation/includeDisplayItemListManyOwn.html.twig',
+                {items: location.specialsOfLocation}
+            ) }}
         {% endif %}
             
-        {% if location.servicesOfLocation is not empty %}
-            <h4>{{ __('Services') }}</h4>
-            {{ location.servicesOfLocation|muyourcitymodule_listEntry('location', 'servicesOfLocation') }}
+        {% if location.servicesOfLocation|default %}
+            {{ include(
+                '@MUYourCityModule/ServiceOfLocation/includeDisplayItemListMany.html.twig',
+                {items: location.servicesOfLocation}
+            ) }}
         {% endif %}
         
         {% if location.events is not empty %}
