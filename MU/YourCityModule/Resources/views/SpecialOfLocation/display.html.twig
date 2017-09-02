@@ -35,10 +35,10 @@
             {{ specialOfLocation.description|safeHtml }}
         {% endif %}
     
-        {% if locations|default %}
+        {% if specialOfLocation.locations|default %}
             {{ include(
                '@MUYourCityModule/Location/includeDisplayItemListManyOwn.html.twig',
-                { items: locations }
+                { items: specialOfLocation.locations, entity: 'specialOfLocation' }
             ) }}
         {% endif %}
         

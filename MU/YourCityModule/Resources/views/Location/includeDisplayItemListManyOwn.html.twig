@@ -83,10 +83,10 @@
                     {% if location.showHours != 'none' %}
                         {{ location.showHours }}<br style="clear: both;" />
                     {% endif %}
-                    {% if location.partOfCity and entity == 'branch' %}
+                    {% if location.partOfCity and entity == 'branch' or entity == 'serviceOfLocation' or entity == 'specialOfLocation' %}
                         {{ __('Part') }}: {{ location.partOfCity }}<br style="clear: both;" />
                     {% endif %}
-                    {% if entity == 'part'  %}
+                    {% if entity == 'part' or entity == 'serviceOfLocation' or entity == 'specialOfLocation' %}
                     {% for branch in location.branches %}
                         {% if loop.index == 1 %}
                         {{ __('Branches') }}: <a href="{{ path('muyourcitymodule_branch_' ~ routeArea ~ 'display', { 'id': branch.id }) }}">{{ branch.name }}</a>
