@@ -244,7 +244,7 @@ class ControllerHelper extends AbstractControllerHelper
     						if ($location['closedOn' . $actualDay] == 1) {
     							$location['state'] = $this->checkActualDay($actualDay, $location, 1, 'closedThisDay');
     							$location['realDay'] = $this->checkActualDay($actualDay, $location, 2);
-    							$location['showHours'] = $this->checkActualDay($actualDay, $location, 3);
+    							$location['showHours'] = $this->checkActualDay($actualDay, $location, 3, 'closedThisDay');
     							$locations[] = $location;
     						} else {
     							$location = $locationRepository->find($location['id']);
@@ -600,7 +600,8 @@ class ControllerHelper extends AbstractControllerHelper
     	/*******************CHECK********************/
     	
     	// check for 00:00
-    	if ($actualTime == '00:00' && $sate != 'closedThisDay') {
+    	if ($actualTime == '00:00' && $state != 'closedThisDay') {
+    		if ($startTime != '' && $endTime != '') {
     		// we check first time
     		if ($startTime == '00:00' && $endTime != '00:00') {
     			$state = 'open';    			
@@ -614,7 +615,9 @@ class ControllerHelper extends AbstractControllerHelper
     		if ($startTime != '00:00' && $endTime != '00:00') {
     			$state = 'closed';
     		}
+    		}
     		
+    		if ($start2Time != '' && $end2Time != '') {
     	    // we check second time
     		if ($start2Time == '00:00' && $end2Time != '00:00') {
     			$state = 'open';    			
@@ -628,11 +631,13 @@ class ControllerHelper extends AbstractControllerHelper
     		if ($start2Time != '00:00' && $end2Time != '00:00') {
     			$state = 'closed';
     		}
+    		}
     	}
     	
     	// check for time from 06:01 to 23:59
     	if ($actualTime > '06:00' && $actualTime < '23:59' && $state != 'closedThisDay') {
     		// check first times
+    		if ($startTime != '' && $endTime != '') {
     		// if end time between 0:00 and 06:00
     		if($endTime >= '00:00' && $endTime <= '06:00') {
     			// actual time >= start time
@@ -650,9 +655,15 @@ class ControllerHelper extends AbstractControllerHelper
     				$state = 'closed';
     			}
     		}
+    		}
+    		if ($startTime != '' && $endTime == '' && $startTime <= $actualTime) {
+    			$state = 'openEnd';
+    		} elseif ($startTime != '' && $endTime == '' && $startTime > $actualTime) {
+    			$state = 'closed';
+    		}
     		
     		// check second time
-    		if ($state != 'open') {
+    		if ($state != 'open' && $start2Time != '' && $end2Time != '') {
     		    if ($end2Time >= '00:00' && $end2Time <= '06:00') {
     			    if ($actualTime >= $start2Time) {
     				    $state = 'open';
@@ -666,7 +677,12 @@ class ControllerHelper extends AbstractControllerHelper
     			    	$state = 'closed';
     			    }
     		    }
-    	    }  		
+    	    }
+    	    if ($start2Time != '' && $end2Time == '' && $start2Time <= $actual2Time) {
+    			$state = 'openEnd';
+    		} elseif ($start2Time != '' && $end2Time == '' && $start2Time > $actual2Time) {
+    			$state = 'closed';
+    		}
     	}
     	
     	// check for time from 00:01 to 06:00
@@ -683,8 +699,12 @@ class ControllerHelper extends AbstractControllerHelper
     			}
     		// if end time between 06:01 and 23:59
     		} else {
-    				$state = 'closed';
-    			}
+    			$state = 'closed';
+    		}
+    		
+    		if ($startTime != '' && $endTime == '') {
+    			$state = 'openEnd';
+    		}
     		
     		// check second time
     		if ($state != 'open' && $state != 'open2') {
@@ -700,7 +720,10 @@ class ControllerHelper extends AbstractControllerHelper
     			} else {
     					$state = 'closed';
     				}
-    		}    		
+    		}
+    		if ($start2Time != '' && $end2Time == '') {
+    			$state = 'openEnd';
+    		}
     	}
 
     	// we look for the hours
@@ -723,11 +746,12 @@ class ControllerHelper extends AbstractControllerHelper
     		    }    			
     		}
 
-    	} else {
-    		if ($state == 'open2') {
+    	} elseif ($state == 'open2') {
     			$hours = $beforeStartTime;
     			if ($beforeEndTime != '') {
     				$hours .= ' - ' . $beforeEndTime;
+    			} else {
+    				$hours .= ' - ' . $this->__('Open end');
     			}
     			if ($beforeStart2Time != '') {
     				$hours .= "\n" . $beforeStart2Time;
@@ -738,9 +762,10 @@ class ControllerHelper extends AbstractControllerHelper
     					$hours .= ' - ' . $this->__('Open end');
     				}
     			}
+    		} elseif ($state == 'closedThisDay') {
+    			$hours = $this->__('Today closed');
     		} else {
     		    $hours = 'none';
-    		}
     	}
     	
     	$realDay = $this->getActualDay($state);

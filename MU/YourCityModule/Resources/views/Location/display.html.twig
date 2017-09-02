@@ -99,7 +99,7 @@
             {% else %}&nbsp;{% endif %}
         </div>
         {% endif %}
-        <div class="col-md-6">
+        <div class="col-md-6 col-xs-6">
         <h3>{{ __('Branches') }}</h3>
         <h4>    {% if location.branches|default %}
         {{ include(
@@ -109,7 +109,7 @@
         {% endif %}</h4>
         </div>
         
-        <div class="col-md-6">
+        <div class="col-md-6 col-xs-6">
         <h3>{{ __('Part') }}</h3>
         <h4>{{ location.partOfCity|muyourcitymodule_listEntry('location', 'partOfCity') }}</h4>
         </div>
@@ -140,7 +140,7 @@
             {% endif %}
         {% else %}
             &nbsp;
-        {% endif %}<br /><br />
+        {% endif %}<br />
         
         {% if location.description is not empty %}
             {{ location.description|safeHtml }}<br />
