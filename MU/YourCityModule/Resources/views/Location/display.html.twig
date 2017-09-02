@@ -55,6 +55,11 @@
     {% if location.state == 'open' or location.state == 'open2' %}
         {% set state = 'locationOpen' %}
     {% endif %}
+    {% if location.state == 'open2' %}
+        {% set special = 'yes' %}
+    {% else %}
+        {% set state = 'no' %}
+    {% endif %}
     {% if location.state == 'agreement' %}
         {% set state = 'locationAgreement' %}
     {% endif %}
