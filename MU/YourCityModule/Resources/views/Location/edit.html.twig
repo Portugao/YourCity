@@ -254,6 +254,7 @@
 {% endblock %}
 {% block footer %}
     {{ parent() }}
+    {% set useGeoLocation = getModVar('MUYourCityModule', 'enableLocationgeoLocation') %}
     {% set pathToLeaflet = zasset('@MUYourCityModule:css/style.css')|replace({'Resources/public/css/style.css': ''}) ~ 'vendor/drmonty/leaflet/' %}
     {{ pageAddAsset('stylesheet', pathToLeaflet ~ 'css/leaflet.css') }}
     {{ pageAddAsset('javascript', pathToLeaflet ~ 'js/leaflet' ~ (app.environment == 'dev' ? '' : '.min') ~ '.js') }}
