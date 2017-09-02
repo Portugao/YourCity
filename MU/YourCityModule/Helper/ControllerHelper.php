@@ -616,11 +616,11 @@ class ControllerHelper extends AbstractControllerHelper
     		if ($endTime == '') {
     			$state = 'openEnd';
     		} else {
-    			if($actualTime > '00:00' && $actualTime < '06:00' && $beforeEndTime > $actualTime) {
-    				$state = 'open2';
-    			} else {
+    			/*if($actualTime > '00:00' && $actualTime < '06:00' && $beforeEndTime > $actualTime) {
+    				$state = 'closed';
+    			} else {*/
     		        $state = 'closed';
-    			}
+    			//}
     	    }
     	}
     	}
@@ -633,10 +633,16 @@ class ControllerHelper extends AbstractControllerHelper
     	if ($start2Time != '') {
     		if ($start2Time < $actualTime) {
     			if ($end2Time != '') {
-    				if ($end2Time >= $actualTime || $end2Time == '00:00' || ($end2Time > '00:00' && $end2Time < $nextStartTime && $actualTime > $start2Time) || ($startTime == '00:00' && $startTime == '00:00')) {
+    				if ($end2Time >= $actualTime || $end2Time == '00:00') {
     					    $state = 'open';
+ 
     				} else {
-    					    $state = 'closed';
+    					if ($actualTime <= '23:59' && $actualTime > '06:00') {
+    						if ($end2Time <= '06:00')
+    						$state = 'open';
+    						//die('T');
+    					}
+    					    //$state = 'closed';
     				}
     			} else {
     				    $state = 'openEnd';
@@ -645,14 +651,18 @@ class ControllerHelper extends AbstractControllerHelper
     		    if ($end2Time == '') {
     			$state = 'openEnd';
     		} else {
-    			if ($actualTime > '00:00' && $actualTime < '06:00' && $beforeEndTime > $actualTime) {
-    				$state = 'open2';
-    			} else {
+    			/*if ($actualTime > '00:00' && $actualTime < '06:00' && $beforeEndTime > $actualTime) {
+    				$state = 'closed';
+    			} else {*/
     		        $state = 'closed';
-    			}
+    			//}
     		}
     		}
     	}
+        }
+        
+        if ($state != 'open' && $actualTime > '00:00' && $actualTime < '06:00' && (($beforeEndTime != '' && $beforeEndTime > $actualTime) || ($beforeEnd2Time != '' && $beforeEnd2Time > $actualTime))) {
+        	$state = 'open2';
         }
 
     	//die($state);
@@ -695,8 +705,6 @@ class ControllerHelper extends AbstractControllerHelper
     		    $hours = 'none';
     		}
     	}
-    	//die($hours);
-    	//die($state);
     	
     	$realDay = $this->getActualDay($state);
     	
