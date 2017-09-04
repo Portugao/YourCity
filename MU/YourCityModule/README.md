@@ -2,7 +2,7 @@
 
 Your City is an application to manage locations in your city.
 
-This module is intended for being used with Zikula 1.5.0 and later.
+This module is intended for being used with Zikula 1.5.1 and later.
 
 For questions and other remarks visit our homepage https://homepages-mit-zikula.de.
 
