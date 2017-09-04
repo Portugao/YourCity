@@ -241,7 +241,7 @@ abstract class AbstractYourCityModuleInstaller extends AbstractExtensionInstalle
         $this->setVar('enabledFinderTypes', [ 'branch' ,  'location' ,  'part' ,  'offer' ,  'menuOfLocation' ,  'partOfMenu' ,  'dish' ,  'event' ,  'product' ,  'specialOfLocation' ,  'serviceOfLocation' ]);
         $this->setVar('defaultLatitude', '0.00');
         $this->setVar('defaultLongitude', '0.00');
-        $this->setVar('defaultZoomLevel', '18');
+        $this->setVar('defaultZoomLevel', '5');
         $this->setVar('tileLayerUrl', 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
         $this->setVar('tileLayerAttribution', '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors');
         $this->setVar('enableLocationGeoLocation', false);
