@@ -349,6 +349,7 @@ abstract class AbstractEditHandler
     public function processForm(array $templateParameters)
     {
         $this->templateParameters = $templateParameters;
+        $this->templateParameters['inlineUsage'] = $this->request->query->getBoolean('raw', false);
     
         $this->idPrefix = $this->request->query->get('idp', '');
     
@@ -418,7 +419,8 @@ abstract class AbstractEditHandler
                 }
             }
         } else {
-            if (!$this->permissionApi->hasPermission($this->permissionComponent, '::', ACCESS_EDIT)) {
+            $permissionLevel = in_array($this->objectType, ['location']) ? ACCESS_COMMENT : ACCESS_EDIT;
+            if (!$this->permissionApi->hasPermission($this->permissionComponent, '::', $permissionLevel)) {
                 throw new AccessDeniedException();
             }
     
