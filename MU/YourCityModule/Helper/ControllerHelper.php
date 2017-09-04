@@ -678,9 +678,9 @@ class ControllerHelper extends AbstractControllerHelper
     			    }
     		    }
     	    }
-    	    if ($start2Time != '' && $end2Time == '' && $start2Time <= $actual2Time) {
+    	    if ($start2Time != '' && $end2Time == '' && $start2Time <= $actualTime) {
     			$state = 'openEnd';
-    		} elseif ($start2Time != '' && $end2Time == '' && $start2Time > $actual2Time) {
+    		} elseif ($start2Time != '' && $end2Time == '' && $start2Time > $actualTime) {
     			$state = 'closed';
     		}
     	}
