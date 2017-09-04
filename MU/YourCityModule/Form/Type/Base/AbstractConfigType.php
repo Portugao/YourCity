@@ -3100,8 +3100,8 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'help' => $this->__('The default zoom level.'),
                 'required' => false,
-                'data' => isset($this->moduleVars['defaultZoomLevel']) ? intval($this->moduleVars['defaultZoomLevel']) : intval(18),
-                'empty_data' => intval('18'),
+                'data' => isset($this->moduleVars['defaultZoomLevel']) ? intval($this->moduleVars['defaultZoomLevel']) : intval(5),
+                'empty_data' => intval('5'),
                 'attr' => [
                     'maxlength' => 255,
                     'title' => $this->__('Enter the default zoom level.') . ' ' . $this->__('Only digits are allowed.')
