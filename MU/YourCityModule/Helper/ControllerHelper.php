@@ -103,6 +103,7 @@ class ControllerHelper extends AbstractControllerHelper
     	if ($objectType == 'part') {   		
     		//$criteria = array('partOfCity' => $entity['name']);   		
     		$locationsForPart = $locationRepository->findBy(array('partOfCity' => $entity['name']), array('name' => 'ASC'));
+    		$partLocations= array();
     		if (count($locationsForPart) > 0) {
     			foreach ($locationsForPart as $location) {
     				$events = $eventRepository->findBy(array('myLocation' => $location['id']), array('name' => 'ASC'));
@@ -198,7 +199,7 @@ class ControllerHelper extends AbstractControllerHelper
     					if ($location['closedOn' . $actualDay] == 1) {
     						$location['state'] = $this->checkActualDay($actualDay, $location, 1, 'closedThisDay');
     						$location['realDay'] = $this->checkActualDay($actualDay, $location, 2);
-    						$location['showHours'] = $this->__('Closed this day');
+    						$location['showHours'] = $this->__('Today closed');
     						//$locations[] = $location;
     					} else {
     						$location['state'] = $this->checkActualDay($actualDay, $location);
@@ -244,7 +245,8 @@ class ControllerHelper extends AbstractControllerHelper
     						if ($location['closedOn' . $actualDay] == 1) {
     							$location['state'] = $this->checkActualDay($actualDay, $location, 1, 'closedThisDay');
     							$location['realDay'] = $this->checkActualDay($actualDay, $location, 2);
-    							$location['showHours'] = $this->checkActualDay($actualDay, $location, 3, 'closedThisDay');
+    							$location['showHours'] = $this->__('Today closed');
+    							//$location['showHours'] = $this->checkActualDay($actualDay, $location, 3, 'closedThisDay');
     							$locations[] = $location;
     						} else {
     							$location = $locationRepository->find($location['id']);
@@ -686,7 +688,7 @@ class ControllerHelper extends AbstractControllerHelper
     	}
     	
     	// check for time from 00:01 to 06:00
-    	if ($actualTime > '00:00' && $actualTime <= '06:00' ) {
+    	if ($actualTime > '00:00' && $actualTime <= '06:00') {
     		// check first times
     		// if end time between 0:00 and 06:00
     		if($beforeEndTime >= '00:00' && $beforeEndTime <= '06:00') {
@@ -699,11 +701,25 @@ class ControllerHelper extends AbstractControllerHelper
     			}
     		// if end time between 06:01 and 23:59
     		} else {
+    			if ($startTime == '00:00' && $endTime == '00:00') {
+    				$state = 'open';
+    			} else {
     			$state = 'closed';
+    			}
     		}
     		
-    		if ($startTime != '' && $endTime == '') {
+    		if ($state != 'open') {
+    		if ($startTime == '00:00' && $endTime == '00:00') {
+    			$state = 'open';
+    		} else {
+    			$state = 'closed';
+    		}
+    		}
+    		
+    	    if ($startTime != '' && $endTime == '' && $startTime <= $actualTime) {
     			$state = 'openEnd';
+    		} elseif ($startTime != '' && $endTime == '' && $startTime > $actualTime) {
+    			$state = 'closed';
     		}
     		
     		// check second time
@@ -718,16 +734,28 @@ class ControllerHelper extends AbstractControllerHelper
     				}
     			// if end time between 06:01 and 23:59
     			} else {
+    				if ($start2Time == '00:00' && $end2Time == '00:00') {
+    					$state = 'open';
+    				} else {
     					$state = 'closed';
     				}
+    			}
+    			
+    			if ($start2Time == '00:00' && $end2Time == '00:00') {
+    				$state = 'open';
+    			} else {
+    				$state = 'closed';
+    			}
     		}
-    		if ($start2Time != '' && $end2Time == '') {
+    	    if ($start2Time != '' && $end2Time == '' && $start2Time <= $actualTime) {
     			$state = 'openEnd';
+    		} elseif ($start2Time != '' && $end2Time == '' && $start2Time > $actualTime) {
+    			$state = 'closed';
     		}
     	}
 
     	// we look for the hours
-    	if ($state == 'open' || $state == 'openEnd' || $state == 'closed' || ($end2Time > '00:00' && $end2Time < $nextStartTime && $actualTime > $start2Time) || ($startTime == '00:00' && $startTime == '00:00')) {
+    	if ($state == 'open' || $state == 'openEnd' || $state == 'closed') {
     		$hours = $startTime;
     		if ($endTime != '') {
     			$hours .= ' - ' . $endTime;
