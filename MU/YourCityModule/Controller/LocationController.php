@@ -346,7 +346,7 @@ class LocationController extends AbstractLocationController
         // fetch and return the appropriate template
         return $viewHelper->processTemplate($objectType, 'view', $templateParameters);
     	} else {
-    		return $this->redirectToRoute('muyourcitymodule_abonnement_view');
+    		return $this->redirectToRoute('muyourcitymodule_branch_view');
     	}
     }
 }
