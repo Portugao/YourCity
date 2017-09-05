@@ -150,6 +150,10 @@ div.muyourcitymodule-view .avatar img {
 	width: 100%;
 	height: auto;
 }
+
+.current > a {
+	color: #400809 !important;
+}
 /****************TABS*********************/
 
 .tab-pane {
@@ -170,7 +174,8 @@ div.muyourcitymodule-view .avatar img {
 
 .list-group-item-display {
 	border: none;
-	list-style-type: none
+	list-style-type: none;
+	display: inline;
 }
 
 /**********ABO**************/
