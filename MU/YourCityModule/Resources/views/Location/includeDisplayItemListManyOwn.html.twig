@@ -89,10 +89,12 @@
                     {% if entity == 'part' or entity == 'serviceOfLocation' or entity == 'specialOfLocation' %}
                     {% for branch in location.branches %}
                         {% if loop.index == 1 %}
-                        {{ __('Branches') }}: <a href="{{ path('muyourcitymodule_branch_' ~ routeArea ~ 'display', { 'id': branch.id }) }}">{{ branch.name }}</a>
-                        {% endif %}
-                    {% endfor %}<br style="clear: both;" />
-                    {% endif %}
+                        {{ __('Branches') }}:
+                        {% endif %} 
+                        <a href="{{ path('muyourcitymodule_branch_' ~ routeArea ~ 'display', { 'id': branch.id }) }}">{{ branch.name }}</a>&nbsp;
+                        
+                    {% endfor %}
+                    {% endif %}<br style="clear: both;" />
                     {% if location.isThereMenus %}
                     <i class="fa fa-newspaper-o" aria-hidden="true"></i>
                     {% endif %}

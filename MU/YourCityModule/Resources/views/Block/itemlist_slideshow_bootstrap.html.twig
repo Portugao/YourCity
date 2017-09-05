@@ -205,7 +205,12 @@
                 <h3>{{ part.name }}</h3>
                 {% set thumbOptions = attribute(thumbRuntimeOptions, 'partImageOfPart') %}
                 <img style="width: 100%;" src="{{ part.imageOfPart.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ part|muyourcitymodule_formattedTitle|e('html_attr') }}" class="img-thumbnail" />
-                <br /><br />{{ part.description|safeHtml }}
+                <br /><br />
+                {% if part.description|length > 200 %}
+                {{ part.description|truncate(150)|safeHtml }}<a class="btn btn-default bnt-sm" href="{{ path('muyourcitymodule_part_display', { 'id': part.id }) }}">{{ __('Read  more about') }} {{ part.name }}</a>
+                {% else %}
+                {{ part.description|safeHtml }}
+                {% endif %}
        {% endif %}
        </div>
        </div>

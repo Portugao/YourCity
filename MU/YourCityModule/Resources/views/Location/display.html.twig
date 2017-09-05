@@ -4,6 +4,9 @@
 {% block pageTitle %}{{ location.name }} {% if location.street != '' %} - {{ location.street }} {% if location.numberOfStreet != '' %} {{ location.numberOfStreet }}{% endif %}{% endif %}{% if location.zipCode != '' and location.city != '' %} - {{ location.zipCode }} {{ location.city }}{% endif %} - {{ __('Auf Achse in Deiner Stadt Bremen') }}   
 {% if location.descriptionForGoogle is not empty %}
     {{ pageSetVar('meta.description', location.descriptionForGoogle) }}
+{% else %}
+    {#% set metadescription = location.name ~ ' ' ~ __('in Bremen on On tour in your city Bremen') ~ ', ' ~ location.street ~ ' ' ~location.numberOfStreet ~ ', ' ~ location.zipCode ~ ' ' ~ location.city  %} 
+    {{ pageSetVar('meta.description', metadescription) }#}
 {% endif %}
 {% endblock %}
 {% block title %}
@@ -25,6 +28,16 @@
         {{ block('related_items') }}
         {% if location.owner is sameas(NULL) and location.admin1 is sameas(NULL) and location.admin2 is sameas(NULL) %}
         {{ showblockposition('leftOfLocation') }}
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- Neues Auf Achse - Locations Display links -->
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-6271730282382541"
+        data-ad-slot="9280292874"
+        data-ad-format="auto"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
         {% endif %}
     </div>
     
@@ -58,7 +71,7 @@
     {% if location.state == 'open2' %}
         {% set special = 'yes' %}
     {% else %}
-        {% set state = 'no' %}
+        {% set special = 'no' %}
     {% endif %}
     {% if location.state == 'agreement' %}
         {% set state = 'locationAgreement' %}
@@ -80,7 +93,7 @@
     </div>   
     <div class="row">       
         <div class="col-sm-12">    
-        <div class="col-sm-7">
+        <div class="col-sm-8">
         {% if location.workflowState is not empty and routeArea == 'admin' %}
             <dt>{{ __('State') }}</dt>
             <dd>{{ location.workflowState|muyourcitymodule_listEntry('location', 'workflowState') }}</dd>
@@ -99,7 +112,7 @@
             {% else %}&nbsp;{% endif %}
         </div>
         {% endif %}
-        <div class="col-md-6 col-xs-6">
+        <div class="col-md-8 col-xs-8">
         <h3>{{ __('Branches') }}</h3>
         <h4>    {% if location.branches|default %}
         {{ include(
@@ -109,7 +122,7 @@
         {% endif %}</h4>
         </div>
         
-        <div class="col-md-6 col-xs-6">
+        <div class="col-md-4 col-xs-4">
         <h3>{{ __('Part') }}</h3>
         <h4>{{ location.partOfCity|muyourcitymodule_listEntry('location', 'partOfCity') }}</h4>
         </div>
@@ -437,12 +450,13 @@
             <dd>{{ location.longitude|muyourcitymodule_geoData }}</dd>
         {% endif %#} 
         <br style="clear: both;" />
+        <div class="alert alert-info">{{ __('It has to be taken into account that particularly to celebration divergent opening hours can be for days and adjacent days.') }}</div>
 
         {#{ include('@MUYourCityModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: location }) }#}
 
         {{ block('display_hooks') }}
         </div>
-        <div class="col-sm-5">
+        <div class="col-sm-4">
         {% if location.specialsOfLocation|default %}
             {{ include(
                 '@MUYourCityModule/SpecialOfLocation/includeDisplayItemListManyOwn.html.twig',
