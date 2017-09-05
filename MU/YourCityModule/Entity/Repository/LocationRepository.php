@@ -100,6 +100,31 @@ class LocationRepository extends AbstractLocationRepository
      */
     public function getListQueryBuilder($where = '', $orderBy = '', $useJoins = true, $slimMode = false)
     { 	
+    	/*$uid = \UserUtil::getVar('uid');
+    	if (\UserUtil::isLoggedIn() && $uid != 2) {
+    		$where = 'tbl.owner = ' . \DataUtil::formatForDisplay($uid) . ' or tbl.admin1 = ' . \DataUtil::formatForDisplay($uid)  .  ' or tbl.admin2 = ' . \DataUtil::formatForDisplay($uid);
+    	}*/
+    	//$useJoins = false;
+    	$qb = $this->genericBaseQuery($where, $orderBy, $useJoins, $slimMode);
+    	if ((!$useJoins || !$slimMode) && null !== $this->collectionFilterHelper) {
+    		$qb = $this->collectionFilterHelper->addCommonViewFilters('location', $qb);
+    	}
+    
+    	return $qb;
+    }
+    
+    /**
+     * Returns query builder for selecting a list of objects with a given where clause.
+     *
+     * @param string  $where    The where clause to use when retrieving the collection (optional) (default='')
+     * @param string  $orderBy  The order-by clause to use when retrieving the collection (optional) (default='')
+     * @param boolean $useJoins Whether to include joining related objects (optional) (default=true)
+     * @param boolean $slimMode If activated only some basic fields are selected without using any joins (optional) (default=false)
+     *
+     * @return QueryBuilder Query builder for the given arguments
+     */
+    public function getListForClientsQueryBuilder($where = '', $orderBy = '', $useJoins = true, $slimMode = false)
+    {
     	$uid = \UserUtil::getVar('uid');
     	if (\UserUtil::isLoggedIn() && $uid != 2) {
     		$where = 'tbl.owner = ' . \DataUtil::formatForDisplay($uid) . ' or tbl.admin1 = ' . \DataUtil::formatForDisplay($uid)  .  ' or tbl.admin2 = ' . \DataUtil::formatForDisplay($uid);
@@ -126,6 +151,26 @@ class LocationRepository extends AbstractLocationRepository
     public function selectWhereForModVars($where = '', $orderBy = '', $useJoins = true, $slimMode = false)
     {
     	$qb = $this->getListQueryBuilder($where, $orderBy, $useJoins, $slimMode);
+    
+    	$query = $this->getQueryFromBuilder($qb);
+    
+    	return $this->retrieveCollectionResult($query, false);
+    }
+    
+    /**
+     * Selects a list of objects with a given where clause. This is especially for building the
+     * list of loctions, when clients want to create an event an so on.
+     *
+     * @param string  $where    The where clause to use when retrieving the collection (optional) (default='')
+     * @param string  $orderBy  The order-by clause to use when retrieving the collection (optional) (default='')
+     * @param boolean $useJoins Whether to include joining related objects (optional) (default=true)
+     * @param boolean $slimMode If activated only some basic fields are selected without using any joins (optional) (default=false)
+     *
+     * @return ArrayCollection Collection containing retrieved locationEntity instances
+     */
+    public function selectWhereForClients($where = '', $orderBy = '', $useJoins = true, $slimMode = false)
+    {
+    	$qb = $this->getListForClientsQueryBuilder($where, $orderBy, $useJoins, $slimMode);
     
     	$query = $this->getQueryFromBuilder($qb);
     
