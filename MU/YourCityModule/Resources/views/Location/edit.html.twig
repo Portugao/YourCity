@@ -292,4 +292,29 @@
         </script>
     {% endset %}
     {{ pageAddAsset('footer', formInitScript) }}
+    <script>
+    var MU = jQuery.noConflict();
+    MU(document).ready(function() {
+        MU('#muyourcitymodule_location_startOnMonday').change(function() {
+            var valMondayStart = MU(this).val();
+            MU('#muyourcitymodule_location_startOnTuesday').val(valMondayStart);
+            MU('#muyourcitymodule_location_startOnWednesday').val(valMondayStart);
+            MU('#muyourcitymodule_location_startOnThursday').val(valMondayStart);
+            MU('#muyourcitymodule_location_startOnFriday').val(valMondayStart);
+            MU('#muyourcitymodule_location_startOnSaturday').val(valMondayStart);
+            MU('#muyourcitymodule_location_startOnSunday').val(valMondayStart);
+        });
+        
+        MU('#muyourcitymodule_location_endOnMonday').change(function() {
+            var valMondayEnd = MU(this).val();
+            MU('#muyourcitymodule_location_endOnTuesday').val(valMondayEnd);
+            MU('#muyourcitymodule_location_endOnWednesday').val(valMondayEnd);
+            MU('#muyourcitymodule_location_endOnThursday').val(valMondayEnd);
+            MU('#muyourcitymodule_location_endOnFriday').val(valMondayEnd);
+            MU('#muyourcitymodule_location_endOnSaturday').val(valMondayEnd);
+            MU('#muyourcitymodule_location_endOnSunday').val(valMondayEnd);
+        });
+        
+    });
+    </script>
 {% endblock %}
