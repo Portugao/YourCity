@@ -14,22 +14,26 @@ function getMUYourCityModulePopupAttributes()
     pWidth = screen.width * 0.75;
     pHeight = screen.height * 0.66;
 
-    return 'width=' + pWidth + ',height=' + pHeight + ',scrollbars,resizable';
+    return 'width=' + pWidth + ',height=' + pHeight + ',location=no,menubar=no,toolbar=no,dependent=yes,minimizable=no,modal=yes,alwaysRaised=yes,resizable=yes,scrollbars=yes';
 }
 
 /**
- * Open a popup window with the finder triggered by a CKEditor button.
+ * Open a popup window with the finder triggered by an editor button.
  */
-function MUYourCityModuleFinderCKEditor(editor, yourcityUrl)
+function MUYourCityModuleFinderOpenPopup(editor, editorName)
 {
+    var popupUrl;
+
     // Save editor for access in selector window
     currentMUYourCityModuleEditor = editor;
 
-    editor.popup(
-        Routing.generate('muyourcitymodule_external_finder', { objectType: 'location', editor: 'ckeditor' }),
-        /*width*/ '80%', /*height*/ '70%',
-        'location=no,menubar=no,toolbar=no,dependent=yes,minimizable=no,modal=yes,alwaysRaised=yes,resizable=yes,scrollbars=yes'
-    );
+    popupUrl = Routing.generate('muyourcitymodule_external_finder', { objectType: 'location', editor: editorName });
+
+    if (editorName == 'ckeditor') {
+        editor.popup(popupUrl, /*width*/ '80%', /*height*/ '70%', getMUYourCityModulePopupAttributes());
+    } else {
+        window.open(popupUrl, '_blank', getMUYourCityModulePopupAttributes());
+    }
 }
 
 
@@ -79,9 +83,13 @@ mUYourCityModule.finder.handleCancel = function (event)
 
     event.preventDefault();
     editor = jQuery("[id$='editor']").first().val();
-    if ('tinymce' === editor) {
+    if ('ckeditor' === editor) {
         mUYourCityClosePopup();
-    } else if ('ckeditor' === editor) {
+    } else if ('quill' === editor) {
+        mUYourCityClosePopup();
+    } else if ('summernote' === editor) {
+        mUYourCityClosePopup();
+    } else if ('tinymce' === editor) {
         mUYourCityClosePopup();
     } else {
         alert('Close Editor: ' + editor);
@@ -148,17 +156,23 @@ mUYourCityModule.finder.selectItem = function (itemId)
 {
     var editor, html;
 
+    html = mUYourCityGetPasteSnippet('html', itemId);
     editor = jQuery("[id$='editor']").first().val();
-    if ('tinymce' === editor) {
-        html = mUYourCityGetPasteSnippet('html', itemId);
-        tinyMCE.activeEditor.execCommand('mceInsertContent', false, html);
-        // other tinymce commands: mceImage, mceInsertLink, mceReplaceContent, see http://www.tinymce.com/wiki.php/Command_identifiers
-    } else if ('ckeditor' === editor) {
+    if ('ckeditor' === editor) {
         if (null !== window.opener.currentMUYourCityModuleEditor) {
-            html = mUYourCityGetPasteSnippet('html', itemId);
-
             window.opener.currentMUYourCityModuleEditor.insertHtml(html);
         }
+    } else if ('quill' === editor) {
+        if (null !== window.opener.currentMUYourCityModuleEditor) {
+            window.opener.currentMUYourCityModuleEditor.clipboard.dangerouslyPasteHTML(window.opener.currentMUYourCityModuleEditor.getLength(), html);
+        }
+    } else if ('summernote' === editor) {
+        if (null !== window.opener.currentMUYourCityModuleEditor) {
+            html = jQuery(html).get(0);
+            window.opener.currentMUYourCityModuleEditor.invoke('insertNode', html);
+        }
+    } else if ('tinymce' === editor) {
+        window.opener.currentMUYourCityModuleEditor.insertContent(html);
     } else {
         alert('Insert into Editor: ' + editor);
     }
