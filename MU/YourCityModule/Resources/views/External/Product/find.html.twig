@@ -83,7 +83,7 @@
                                     <input type="hidden" id="desc{{ itemId }}" value="{% set description %}{% if product.description is not empty %}{{ product.description }}{% endif %}
                                     {% endset %}{{ description|striptags|e('html_attr') }}" />
                                     {% if onlyImages %}
-                                        <input type="hidden" id="imagePath{{ itemId }}" value="/{{ attribute(product, imageField).getPathname() }}" />
+                                        <input type="hidden" id="imagePath{{ itemId }}" value="{{ app.request.basePath }}/{{ attribute(product, imageField).getPathname() }}" />
                                     {% endif %}
                                 {% if not onlyImages %}
                                     </li>

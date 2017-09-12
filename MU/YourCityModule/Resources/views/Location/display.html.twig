@@ -24,7 +24,7 @@
     
     <div class="muyourcitymodule-location muyourcitymodule-display">
     
-    <div class="col-sm-4">
+    <div class="col-md-4 col-sm-12 col-xs-12">
         {{ block('related_items') }}
         {% if location.owner is sameas(NULL) and location.admin1 is sameas(NULL) and location.admin2 is sameas(NULL) %}
         {{ showblockposition('leftOfLocation') }}
@@ -41,7 +41,7 @@
         {% endif %}
     </div>
     
-    <div class="col-sm-8">
+    <div class="col-md-8 col-sm-12 col-xs-12">
     <div class="row">
     <div class="col-sm-3 col-xs-5">
     <div id="location-logo">
@@ -112,7 +112,7 @@
             {% else %}&nbsp;{% endif %}
         </div>
         {% endif %}
-        <div class="col-md-8 col-xs-8">
+        <div class="col-md-7 col-sm-12 col-xs-7">
         <h3>{{ __('Branches') }}</h3>
         <h4>    {% if location.branches|default %}
         {{ include(
@@ -122,7 +122,7 @@
         {% endif %}</h4>
         </div>
         
-        <div class="col-md-4 col-xs-4">
+        <div class="col-md-5 col-sm-12 col-xs-5">
         <h3>{{ __('Part') }}</h3>
         <h4>{{ location.partOfCity|muyourcitymodule_listEntry('location', 'partOfCity') }}</h4>
         </div>
@@ -520,7 +520,25 @@
                 <span class="location-bus"><i class="fa fa-bus" aria-hidden="true"></i> {{ location.bus }}</span><br />
             {% endif %}
         {% endif %}
-            
+        {% if 'Handelskette' in location.branches|keys %}
+        <br /><br />Werbung<br />
+        <!-- BEGIN AFFILINET PUBLISHER CONTAINER - DO NOT CHANGE THE PARAMETERS OF THE HYPERLINK -->
+        <script data-affPcId="000bb636-314f-314f-b562-faa49ab0bdb6" type="text/javascript">
+        (function (d) {
+        var s = d.createElement("script");s.type = "text/javascript";
+        var protocol = ("https:" === d.location.protocol) ? "https:" : "http:";
+        s.src = protocol + "//c.webmasterplan.com/s_ad.aspx?pcid=000bb636-314f-314f-b562-faa49ab0bdb6";
+        (d.getElementsByTagName("body")[0] || d.getElementsByTagName("head")[0]).appendChild(s);
+        })(document);
+        </script>
+        <noscript>
+            <iframe allowtransparency="true" framespacing="0" frameborder="no" scrolling="no"
+            width="125" height="125" marginheight="0" marginwidth="0" style="border:0px; display: block;"
+            src="http://c.webmasterplan.com/s_noscriptad.aspx?pcid=000bb636-314f-314f-b562-faa49ab0bdb6">
+            </iframe>
+        </noscript>
+        <!-- END AFFILINET PUBLISHER CONTAINER -->
+        {% endif %}
         </div>
         <br style="clear: both;" />
 

@@ -1,13 +1,13 @@
 {# purpose of this template: branches display view #}
 {% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
 {% extends 'MUYourCityModule::' ~ baseTemplate ~ '.html.twig' %}
-{% block pageTitle %}{{ branch.name }}
+{% block pageTitle %}{{ branch.name }} {{ __('in Bremen on On tour in your city Bremen') }}
 {% if branch.descriptionForGoogle %}
 {{ pageSetVar('meta.description', branch.descriptionForGoogle) }}
 {% endif %}
 {% endblock %}
 {% block title %}
-    {% set templateTitle = branch.name %}
+    {% set templateTitle = branch.name ~ ' ' ~ __('in Bremen')  %}
     {{ templateTitle|notifyFilters('muyourcitymodule.filter_hooks.branches.filter') }}
     {% set itemActions = knp_menu_get('MUYourCityModule:ItemActionsMenu:menu', [], { entity: branch, area: routeArea, context: 'display' }) %}
     <div class="dropdown">

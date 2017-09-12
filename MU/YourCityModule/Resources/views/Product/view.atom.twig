@@ -8,13 +8,13 @@
     </author>
 {% set amountOfItems = items|length %}
 {% if amountOfItems > 0 %}
-{% set uniqueID %}tag:{{ app.request.getSchemeAndHttpHost()|replace({'http://': '', '/': ''}) }},{{ items.first.createdDate|date('Y-m-d') }}:{{ path('muyourcitymodule_product_' ~ routeArea ~ 'display', {'id': items.first.getId()}) }}{% endset %}
+{% set uniqueID %}tag:{{ app.request.schemeAndHttpHost|replace({'http://': '', '/': ''}) }},{{ items.first.createdDate|date('Y-m-d') }}:{{ path('muyourcitymodule_product_' ~ routeArea ~ 'display', {'id': items.first.getId()}) }}{% endset %}
     <id>{{ uniqueID }}</id>
     <updated>{{ items[0].updatedDate|date('Y-m-dTH:M:SZ') }}</updated>
 {% endif %}
     <link rel="alternate" type="text/html" hreflang="{{ app.request.locale }}" href="{{ url('muyourcitymodule_product_' ~ routeArea ~ 'index') }}" />
-    <link rel="self" type="application/atom+xml" href="{{ app.request.getSchemeAndHttpHost() ~ app.request.getBasePath() }}" />
-    <rights>Copyright (c) {{ 'now'|date('Y') }}, {{ app.request.getSchemeAndHttpHost()|e }}</rights>
+    <link rel="self" type="application/atom+xml" href="{{ app.request.schemeAndHttpHost ~ app.request.basePath }}" />
+    <rights>Copyright (c) {{ 'now'|date('Y') }}, {{ app.request.schemeAndHttpHost }}</rights>
 {% for product in items %}
     {{ block('entry') }}
 {% endfor %}
@@ -27,7 +27,7 @@
 {% block entry_content %}
     <title type="html">{{ product|muyourcitymodule_formattedTitle|notifyFilters('muyourcitymodule.filterhook.products')|safeHtml }}</title>
     <link rel="alternate" type="text/html" href="{{ url('muyourcitymodule_product_' ~ routeArea ~ 'display', {'id': product.getId()}) }}" />
-    {% set uniqueID %}tag:{{ app.request.getSchemeAndHttpHost()|replace({ 'http://': '', '/': '' }) }},{{ product.createdDate|date('Y-m-d') }}:{{ path('muyourcitymodule_product_' ~ routeArea ~ 'display', {'id': product.getId()}) }}{% endset %}
+    {% set uniqueID %}tag:{{ app.request.schemeAndHttpHost|replace({ 'http://': '', '/': '' }) }},{{ product.createdDate|date('Y-m-d') }}:{{ path('muyourcitymodule_product_' ~ routeArea ~ 'display', {'id': product.getId()}) }}{% endset %}
     <id>{{ uniqueID }}</id>
     {% if product.updatedDate|default %}
         <updated>{{ product.updatedDate|date('Y-m-dTH:M:SZ') }}</updated>
