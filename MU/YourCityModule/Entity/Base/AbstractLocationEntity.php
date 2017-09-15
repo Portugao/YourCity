@@ -813,21 +813,21 @@ abstract class AbstractLocationEntity extends EntityAccess implements Translatab
     
     /**
      * @ORM\ManyToOne(targetEntity="Zikula\UsersModule\Entity\UserEntity")
-     * @ORM\JoinColumn(referencedColumnName="uid")
+     * @ORM\JoinColumn(referencedColumnName="uid", nullable=true)
      * @var UserEntity $owner
      */
     protected $owner = null;
     
     /**
      * @ORM\ManyToOne(targetEntity="Zikula\UsersModule\Entity\UserEntity")
-     * @ORM\JoinColumn(referencedColumnName="uid")
+     * @ORM\JoinColumn(referencedColumnName="uid", nullable=true)
      * @var UserEntity $admin1
      */
     protected $admin1 = null;
     
     /**
      * @ORM\ManyToOne(targetEntity="Zikula\UsersModule\Entity\UserEntity")
-     * @ORM\JoinColumn(referencedColumnName="uid")
+     * @ORM\JoinColumn(referencedColumnName="uid", nullable=true)
      * @var UserEntity $admin2
      */
     protected $admin2 = null;
