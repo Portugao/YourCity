@@ -14,7 +14,6 @@ namespace MU\YourCityModule\Helper\Base;
 
 use Doctrine\ORM\QueryBuilder;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Zikula\Bundle\HookBundle\Category\UiHooksCategory;
 use Zikula\Common\Translator\TranslatorInterface;
@@ -35,9 +34,9 @@ abstract class AbstractArchiveHelper
     protected $translator;
 
     /**
-     * @var Request
+     * @var RequestStack
      */
-    protected $request;
+    protected $requestStack;
 
     /**
      * @var LoggerInterface
@@ -85,7 +84,7 @@ abstract class AbstractArchiveHelper
         HookHelper $hookHelper
     ) {
         $this->translator = $translator;
-        $this->request = $requestStack->getCurrentRequest();
+        $this->requestStack = $requestStack;
         $this->logger = $logger;
         $this->permissionApi = $permissionApi;
         $this->entityFactory = $entityFactory;
@@ -187,13 +186,16 @@ abstract class AbstractArchiveHelper
      */
     protected function archiveSingleObject($entity)
     {
+        $request = $this->requestStack->getCurrentRequest();
         if ($entity->supportsHookSubscribers()) {
             // Let any hooks perform additional validation actions
             $validationErrors = $this->hookHelper->callValidationHooks($entity, UiHooksCategory::TYPE_VALIDATE_EDIT);
             if (count($validationErrors) > 0) {
-                $flashBag = $this->request->getSession()->getFlashBag();
-                foreach ($validationErrors as $message) {
-                    $flashBag->add('error', $message);
+                if (null !== $request) {
+                    $flashBag = $request->getSession()->getFlashBag();
+                    foreach ($validationErrors as $message) {
+                        $flashBag->add('error', $message);
+                    }
                 }
     
                 return false;
@@ -205,8 +207,10 @@ abstract class AbstractArchiveHelper
             // execute the workflow action
             $success = $this->workflowHelper->executeAction($entity, 'archive');
         } catch (\Exception $exception) {
-            $flashBag = $this->request->getSession()->getFlashBag();
-            $flashBag->add('error', $this->translator->__f('Sorry, but an error occured during the %action% action. Please apply the changes again!', ['%action%' => $action]) . '  ' . $exception->getMessage());
+            if (null !== $request) {
+                $flashBag = $request->getSession()->getFlashBag();
+                $flashBag->add('error', $this->translator->__f('Sorry, but an error occured during the %action% action. Please apply the changes again!', ['%action%' => $action]) . '  ' . $exception->getMessage());
+            }
         }
     
         if (!$success) {
@@ -221,7 +225,9 @@ abstract class AbstractArchiveHelper
             $hasDisplayPage = in_array($objectType, ['branch', 'location', 'part', 'offer', 'menuOfLocation', 'partOfMenu', 'dish', 'event', 'product', 'specialOfLocation', 'serviceOfLocation']);
             if ($hasDisplayPage) {
                 $urlArgs = $entity->createUrlArgs();
-                $urlArgs['_locale'] = $this->request->getLocale();
+                if (null !== $request) {
+                    $urlArgs['_locale'] = $request->getLocale();
+                }
                 $url = new RouteUrl('muyourcitymodule_' . strtolower($objectType) . '_display', $urlArgs);
         	}
             $this->hookHelper->callProcessHooks($entity, UiHooksCategory::TYPE_PROCESS_EDIT, $url);
