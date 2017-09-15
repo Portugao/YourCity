@@ -109,7 +109,6 @@ abstract class AbstractAbonnementType extends AbstractType
         $this->addEntityFields($builder, $options);
         $this->addIncomingRelationshipFields($builder, $options);
         $this->addModerationFields($builder, $options);
-        $this->addReturnControlField($builder, $options);
         $this->addSubmitButtons($builder, $options);
     }
 
@@ -349,27 +348,6 @@ abstract class AbstractAbonnementType extends AbstractType
     }
 
     /**
-     * Adds the return control field.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
-    public function addReturnControlField(FormBuilderInterface $builder, array $options)
-    {
-        if ($options['mode'] != 'create') {
-            return;
-        }
-        if ($options['inline_usage']) {
-            return;
-        }
-        $builder->add('repeatCreation', CheckboxType::class, [
-            'mapped' => false,
-            'label' => $this->__('Create another item after save'),
-            'required' => false
-        ]);
-    }
-
-    /**
      * Adds submit buttons.
      *
      * @param FormBuilderInterface $builder The form builder
@@ -385,6 +363,16 @@ abstract class AbstractAbonnementType extends AbstractType
                     'class' => $action['buttonClass']
                 ]
             ]);
+            if ($options['mode'] == 'create' && $action['id'] == 'submit' && !$options['inline_usage']) {
+                // add additional button to submit item and return to create form
+                $builder->add('submitrepeat', SubmitType::class, [
+                    'label' => $this->__('Submit and repeat'),
+                    'icon' => 'fa-repeat',
+                    'attr' => [
+                        'class' => $action['buttonClass']
+                    ]
+                ]);
+            }
         }
         $builder->add('reset', ResetType::class, [
             'label' => $this->__('Reset'),
