@@ -73,7 +73,7 @@
     {% endif %}
     
     {% if objectType == 'offer' %}
-        {% if items is defined and items is iterable %}
+        {% if items is same as(true) %}
         {% for offer in items %}
             {% if loop.index == 1 %}
                 <div class="item active">
@@ -121,7 +121,7 @@
             </div>
         {% endfor %}
         {% else %}
-            <h4>{{ __('No offers available at this moment') }}</h4>
+            <h3>{{ __('No offers available at this moment') }}</h3>
             {{ __('Use the possibility to present your offers on a central platform!') }}
         {% endif %}
     {% endif %}
