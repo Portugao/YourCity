@@ -121,8 +121,8 @@
             </div>
         {% endfor %}
         {% else %}
-            <h3>{{ __('No offers available at this moment') }}</h3>
-            {{ __('Use the possibility to present your offers on a central platform!') }}
+            <h3>{% if lang == 'en' %}{{ __('No offers available at this moment') }}{% endif %}{% if lang == 'de' %}{{ __('Momentan ist kein Angebot vorhanden') }}{% endif %}</h3><br />
+            {% if lang == 'en' %}{{ __('Use the possibility to present your offers on a central platform!') }}{% endif %}{% if lang == 'de' %}Nutzen Sie die M&ouml;glichkeit, Angebote Ihrer Location zentral auf einer Plattform zu pr&auml;sentieren!{% endif %}
         {% endif %}
     {% endif %}
     
