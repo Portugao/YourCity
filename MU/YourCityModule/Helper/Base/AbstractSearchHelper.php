@@ -148,16 +148,11 @@ abstract class AbstractSearchHelper implements SearchableInterface
     
         foreach ($searchTypes as $searchTypeCode => $typeInfo) {
             $objectType = $typeInfo['value'];
-            $isActivated = false;
-            if ($this->request->isMethod('GET')) {
-                $isActivated = $this->request->query->get('active_' . $searchTypeCode, false);
-            } elseif ($this->request->isMethod('POST')) {
-                $searchSettings = $this->request->request->get('zikulasearchmodule_search', []);
-                $moduleActivationInfo = $searchSettings['modules'];
-                if (isset($moduleActivationInfo['MUYourCityModule'])) {
-                    $moduleActivationInfo = $moduleActivationInfo['MUYourCityModule'];
-                    $isActivated = isset($moduleActivationInfo['active_' . $searchTypeCode]);
-                }
+            $searchSettings = $this->request->query->get('zikulasearchmodule_search', []);
+            $moduleActivationInfo = $searchSettings['modules'];
+            if (isset($moduleActivationInfo['MUYourCityModule'])) {
+                $moduleActivationInfo = $moduleActivationInfo['MUYourCityModule'];
+                $isActivated = isset($moduleActivationInfo['active_' . $searchTypeCode]);
             }
             if (!$isActivated) {
                 continue;
