@@ -488,12 +488,14 @@
         {% if location.offers is not empty %}
             <h4>{{ __('Offers') }}</h4>
             {% for offer in location.offers %}
+            {% if offer.workflowState == 'approved' %}
                 <a href="{{ path('muyourcitymodule_offer_display', {'id': offer.id})  }}">{{ offer.name }}</a><br />
                 {% if offer.percentOfOffer != '' %}
                 {{ offer.percentOfOffer }}%
                 {% else %}
                 {{ offer.priceOfoffer|localizedcurrency('EUR')  }}
                 {% endif %}
+            {% endif %}
             {% endfor %}
         {% endif %}
         
