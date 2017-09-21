@@ -1,0 +1,9 @@
+{# Purpose of this template: Display items within a block (fallback template) #}
+
+{#% if objectType == 'specialOfLocation' %}
+    {% if items is same as(true) %#}
+        {% for special in items %}
+            <span class="speciallink"><a href="{{ path('muyourcitymodule_specialoflocation_display', { 'id': special.id }) }}" class="btn btn-primary btn-sm" href="#" role="button">{{ special.name }}</a></span>        
+        {% endfor %}
+    {#% endif %}
+{% endif %#}
