@@ -231,13 +231,6 @@
         {% if uid != 2 %}
         </div>
         {% endif %}
-        {# include return control #}
-        {% if mode == 'create' %}
-            <fieldset>
-                <legend>{{ __('Return control') }}</legend>
-                {{ form_row(form.repeatCreation) }}
-            </fieldset>
-        {% endif %}
         
         {# include possible submit actions #}
         <div class="form-group form-buttons">
