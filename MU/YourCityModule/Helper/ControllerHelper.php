@@ -67,25 +67,25 @@ class ControllerHelper extends AbstractControllerHelper
     		$productRepository = $this->entityFactory->getRepository('product');
     		if (count($entityLocations) > 0) {
     		foreach ($entityLocations as $location) {
-    			$events = $eventRepository->findBy(array('myLocation' => $location['id']), array('name' => 'ASC'));
+    			$events = $eventRepository->findBy(array('myLocation' => $location['id'], 'workflowState' => 'approved'), array('name' => 'ASC'));
     			if ($events) {
     				$location['isThereEvents'] = 1;
     			} else {
     				$location['isThereEvents'] = 0;
     			}
-    			$menus = $menuRepository->findBy(array('myLocation' => $location['id']), array('name' => 'ASC'));
+    			$menus = $menuRepository->findBy(array('myLocation' => $location['id'], 'workflowState' => 'approved'), array('name' => 'ASC'));
     			if ($menus) {
     				$location['isThereMenus'] = 1;
     			} else {
     				$location['isThereMenus'] = 0;
     			}
-    			$offers = $offerRepository->findBy(array('myLocation' => $location['id']), array('name' => 'ASC'));
+    			$offers = $offerRepository->findBy(array('myLocation' => $location['id'], 'workflowState' => 'approved'), array('name' => 'ASC'));
     			if ($offers) {
     				$location['isThereOffers'] = 1;
     			} else {
     				$location['isThereOffers'] = 0;
     			}
-    			$products = $productRepository->findBy(array('myLocation' => $location['id']), array('name' => 'ASC'));
+    			$products = $productRepository->findBy(array('myLocation' => $location['id'], 'workflowState' => 'approved'), array('name' => 'ASC'));
     			if ($products) {
     				$location['isThereProducts'] = 1;
     			} else {
@@ -106,25 +106,25 @@ class ControllerHelper extends AbstractControllerHelper
     		$partLocations= array();
     		if (count($locationsForPart) > 0) {
     			foreach ($locationsForPart as $location) {
-    				$events = $eventRepository->findBy(array('myLocation' => $location['id']), array('name' => 'ASC'));
+    				$events = $eventRepository->findBy(array('myLocation' => $location['id'], 'workflowState' => 'approved'), array('name' => 'ASC'));
     				if ($events) {
     					$location['isThereEvents'] = 1;
     				} else {
     					$location['isThereEvents'] = 0;
     				}
-    				$menus = $menuRepository->findBy(array('myLocation' => $location['id']), array('name' => 'ASC'));
+    				$menus = $menuRepository->findBy(array('myLocation' => $location['id'], 'workflowState' => 'approved'), array('name' => 'ASC'));
     				if ($menus) {
     					$location['isThereMenus'] = 1;
     				} else {
     					$location['isThereMenus'] = 0;
     				}
-    				$offers = $offerRepository->findBy(array('myLocation' => $location['id']), array('name' => 'ASC'));
+    				$offers = $offerRepository->findBy(array('myLocation' => $location['id'], 'workflowState' => 'approved'), array('name' => 'ASC'));
     				if ($offers) {
     					$location['isThereOffers'] = 1;
     				} else {
     					$location['isThereOffers'] = 0;
     				}
-    				$products = $productRepository->findBy(array('myLocation' => $location['id']), array('name' => 'ASC'));
+    				$products = $productRepository->findBy(array('myLocation' => $location['id'], 'workflowState' => 'approved'), array('name' => 'ASC'));
     				if ($products) {
     					$location['isThereProducts'] = 1;
     				} else {
