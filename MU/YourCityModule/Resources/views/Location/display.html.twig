@@ -50,7 +50,9 @@
     <div class="col-md-8 col-sm-12 col-xs-12">
     <div class="row">
     <div class="">
+        {% if location.owner is sameas(NULL) and location.admin1 is sameas(NULL) and location.admin2 is sameas(NULL) %}
         {{ showblockposition('topOfLocation') }}
+        {% endif %}
     </div>
     <div class="col-sm-3 col-xs-5">
     <div id="location-logo">
