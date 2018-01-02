@@ -23,7 +23,7 @@ function mUYourCityInitGeographicalDisplay(parameters, isEditMode)
     }).addTo(map);
     
     var achseIcon = L.icon({
-        iconUrl: '../../modules/MU/YourCityModule/Resources/public/images/Logo_Marker.png',
+        iconUrl: '/modules/MU/YourCityModule/Resources/public/images/Logo_Marker.png',
         //shadowUrl: 'leaf-shadow.png',
 
         iconSize:     [40, 40], // size of the icon
