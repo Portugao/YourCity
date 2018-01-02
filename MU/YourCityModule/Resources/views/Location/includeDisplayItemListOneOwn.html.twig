@@ -49,6 +49,7 @@
 {% if item.offers|default and showOffers == true %}
     <h3>{{ __('Offers') }}</h3>
     {% for offer in item.offers %}
+    {% if offer.workflowState == 'approved' %}
     {% if item.offers|length <= 4 %}
         <div class="col-md-12 abo-location-list offer">
     {% else %}
@@ -61,6 +62,7 @@
             { item: offer }
         ) }#}
         </div>
+    {% endif %}
     {% endfor %}
         <br style="clear: both;" />
 {% endif %}
@@ -68,6 +70,7 @@
 {% if item.products|default and showProducts == true %}
     <h3>{{ __('Products') }}</h3>
     {% for product in item.products %}
+    {% if product.workflowState == 'approved' %}
     {% if item.products|length <= 4 %}
         <div class="col-sm-6 col-md-4 abo-location-list product">
     {% else %}
@@ -80,6 +83,7 @@
             { item: product }
         ) }#}
         </div>
+    {% endif %}
     {% endfor %}
 {% endif %}
 
