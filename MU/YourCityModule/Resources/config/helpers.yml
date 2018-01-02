@@ -138,3 +138,5 @@ services:
             - "@zikula_users_module.current_user"
             - "@mu_yourcity_module.entity_factory"
             - "@mu_yourcity_module.listentries_helper"
+            - "@zikula_mailer_module.api.mailer"
+            - "@zikula_users_module.current_user"

@@ -349,4 +349,41 @@ class LocationController extends AbstractLocationController
     		return $this->redirectToRoute('muyourcitymodule_branch_view');
     	}
     }
+    
+    /**
+     * This method includes the common implementation code for adminEdit() and edit().
+     */
+    protected function editInternal(Request $request, $isAdmin = false)
+    {
+    	// parameter specifying which type of objects we are treating
+    	$objectType = 'location';
+    	
+    	$id = $request->query->getInt('id', 0);
+    	if ($id == 0) {
+    		$permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_COMMENT;
+    	} else {
+    	    $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_EDIT;
+    	}
+    	if (!$this->hasPermission('MUYourCityModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
+    		throw new AccessDeniedException();
+    	}
+    	$templateParameters = [
+    			'routeArea' => $isAdmin ? 'admin' : ''
+    	];
+    
+    	$controllerHelper = $this->get('mu_yourcity_module.controller_helper');
+    	$templateParameters = $controllerHelper->processEditActionParameters($objectType, $templateParameters);
+    
+    	// delegate form processing to the form handler
+    	$formHandler = $this->get('mu_yourcity_module.form.handler.location');
+    	$result = $formHandler->processForm($templateParameters);
+    	if ($result instanceof RedirectResponse) {
+    		return $result;
+    	}
+    
+    	$templateParameters = $formHandler->getTemplateParameters();
+    
+    	// fetch and return the appropriate template
+    	return $this->get('mu_yourcity_module.view_helper')->processTemplate($objectType, 'edit', $templateParameters);
+    }
 }

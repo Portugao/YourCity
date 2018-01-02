@@ -45,7 +45,7 @@
 
             {% endif %}
     
-            <a href="{{ path('muyourcitymodule_location_display', { 'id': location.id, 'slug': location.slug }) }}" class="btn btn-danger btn-sm" href="#" role="button">{{ __('More about') }} {{ location.name }}</a>
+            <a href="{{ path('muyourcitymodule_location_display', { 'id': location.id, 'slug': location.slug }) }}" class="btn btn-danger btn-sm" href="#" role="button">{% if lang == 'en' %}{{ __('More about') }}{% endif %}{% if lang == 'de' %}Mehr &uuml;ber{% endif %} {{ location.name }}</a>
             </div>
             </div>
         {% endfor %}
@@ -73,7 +73,7 @@
     {% endif %}
     
     {% if objectType == 'offer' %}
-        {% if items is same as(true) %}
+        {#% if items is same as(true) %#}
         {% for offer in items %}
             {% if loop.index == 1 %}
                 <div class="item active">
@@ -110,20 +110,20 @@
                 <span class="offer-block-offer">{{ offer.percentOfOffer }}%</span>
             {% endif %#}
 
-            {{ offer.description|truncate(150)|safeHtml }}
+            {{ offer.description|truncate(150)|safeHtml }}<br />
             {% if offer.myLocation is not empty %}
                 {{ __('Location') }}: {{ offer.myLocation|muyourcitymodule_listEntry('offer', 'myLocation') }}<br /><br />
             {% endif %}
             
-            <a href="{{ path('muyourcitymodule_offer_display', { 'id': offer.id }) }}" class="btn btn-primary btn-sm" href="#" role="button">{{ __('More') }}</a>
+            <a href="{{ path('muyourcitymodule_offer_display', { 'id': offer.id }) }}" class="btn btn-primary btn-sm" href="#" role="button">{% if lang == 'en' %}{{ __('More') }}{% endif %}{% if lang == 'de' %}{{ __('Mehr') }}{% endif %}</a>
             </div> 
             </div>
             </div>
         {% endfor %}
-        {% else %}
+        {#% else %}
             <h2>{% if lang == 'en' %}{{ __('No offers available at this moment') }}{% endif %}{% if lang == 'de' %}{{ __('Momentan ist kein Angebot vorhanden') }}{% endif %}</h2><br />
             {% if lang == 'en' %}{{ __('Use the possibility to present your offers on a central platform!') }}{% endif %}{% if lang == 'de' %}Nutzen Sie die M&ouml;glichkeit, Angebote Ihrer Location zentral auf einer Plattform zu pr&auml;sentieren!{% endif %}
-        {% endif %}
+        {% endif %#}
     {% endif %}
     
     {% if objectType == 'product' %}
@@ -187,7 +187,7 @@
                 {{ __('Location') }}: {{ product.myLocation|muyourcitymodule_listEntry('product', 'myLocation') }}<br /><br />
         {% endif %}    
 
-            <a href="{{ path('muyourcitymodule_product_display', { 'id': product.id }) }}" class="btn btn-primary btn-sm" href="#" role="button">{{ __('More') }}</a>
+            <a href="{{ path('muyourcitymodule_product_display', { 'id': product.id }) }}" class="btn btn-primary btn-sm" href="#" role="button">{% if lang == 'en' %}{{ __('More') }}{% endif %}{% if lang == 'de' %}{{ __('Mehr') }}{% endif %}</a>
             </div> 
             </div>
             </div>

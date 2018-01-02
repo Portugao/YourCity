@@ -165,18 +165,24 @@
             {{ form_row(form.owner) }}
             {{ form_row(form.admin1) }}
             {{ form_row(form.admin2) }}
+            {{ form_row(form.latitude) }}
+            {{ form_row(form.longitude) }}
             {% if uid != 2 %}
             </div>
             {% endif %}
-            {{ form_row(form.latitude) }}
-            {{ form_row(form.longitude) }}
         </fieldset>
+        {% if uid != 2 %}
+        <div class="hidden">
+        {% endif %}
         {{ __('Click into the map for setting the correct position of the marker for your submission, if you like!') }}
         <fieldset class="muyourcitymodule-map">
             <legend>{{ __('Map') }}</legend>
             <div id="mapContainer" class="muyourcitymodule-mapcontainer">
             </div>
         </fieldset>
+        {% if uid != 2 %}
+        </div>
+        {% endif %}
         
         {{ include(
             '@MUYourCityModule/Branch/includeSelectMany.html.twig',

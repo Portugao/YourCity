@@ -5,8 +5,13 @@
 {% if location.descriptionForGoogle is not empty %}
     {{ pageSetVar('meta.description', location.descriptionForGoogle) }}
 {% else %}
-    {#% set metadescription = location.name ~ ' ' ~ __('in Bremen on On tour in your city Bremen') ~ ', ' ~ location.street ~ ' ' ~location.numberOfStreet ~ ', ' ~ location.zipCode ~ ' ' ~ location.city  %} 
-    {{ pageSetVar('meta.description', metadescription) }#}
+    {% set lang = app.request.locale %}
+    {% if lang == 'en' %}
+        {% set metadescription = location.name ~ ' ' ~ __('in Bremen on On tour in your city Bremen') ~ ', ' ~ location.street ~ ' ' ~location.numberOfStreet ~ ', ' ~ location.zipCode ~ ' ' ~ location.city  %}
+    {% else %}
+        {% set metadescription = location.name ~ ' ' ~ __('in Bremen auf Auf Achse in Deiner Stadt Bremen') ~ ', ' ~ location.street ~ ' ' ~location.numberOfStreet ~ ', ' ~ location.zipCode ~ ' ' ~ location.city  %}
+    {% endif %}
+    {{ pageSetVar('meta.description', metadescription) }}
 {% endif %}
 {% endblock %}
 {% block title %}
@@ -28,6 +33,7 @@
         {{ block('related_items') }}
         {% if location.owner is sameas(NULL) and location.admin1 is sameas(NULL) and location.admin2 is sameas(NULL) %}
         {{ showblockposition('leftOfLocation') }}
+        Werbung<br />
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         <!-- Neues Auf Achse - Locations Display links -->
         <ins class="adsbygoogle"
@@ -43,6 +49,9 @@
     
     <div class="col-md-8 col-sm-12 col-xs-12">
     <div class="row">
+    <div class="">
+        {{ showblockposition('topOfLocation') }}
+    </div>
     <div class="col-sm-3 col-xs-5">
     <div id="location-logo">
             {% if location.logoOfYourLocation is not empty and location.logoOfYourLocationMeta|default %}
@@ -522,7 +531,7 @@
                 <span class="location-bus"><i class="fa fa-bus" aria-hidden="true"></i> {{ location.bus }}</span><br />
             {% endif %}
         {% endif %}
-        {% if 'Handelskette' in location.branches|keys %}
+        {#% if 'Handelskette' in location.branches|keys %}
         <br /><br />Werbung<br />
         <!-- BEGIN AFFILINET PUBLISHER CONTAINER - DO NOT CHANGE THE PARAMETERS OF THE HYPERLINK -->
         <script data-affPcId="000bb636-314f-314f-b562-faa49ab0bdb6" type="text/javascript">
@@ -540,7 +549,7 @@
             </iframe>
         </noscript>
         <!-- END AFFILINET PUBLISHER CONTAINER -->
-        {% endif %}
+        {% endif %#}
         </div>
         <br style="clear: both;" />
 
