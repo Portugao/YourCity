@@ -19,5 +19,30 @@ use MU\YourCityModule\Helper\Base\AbstractSearchHelper;
  */
 class SearchHelper extends AbstractSearchHelper
 {
+	/**
+	 * Returns list of supported search types.
+	 *
+	 * @return array
+	 */
+	protected function getSearchTypes()
+	{
+		$searchTypes = [
+				'mUYourCityModuleLocations' => [
+						'value' => 'location',
+						'label' => $this->__('Locations')
+				]
+		];
+	
+		$allowedTypes = $this->controllerHelper->getObjectTypes('helper', ['helper' => 'search', 'action' => 'getSearchTypes']);
+		$allowedSearchTypes = [];
+		foreach ($searchTypes as $searchType => $typeInfo) {
+			if (!in_array($typeInfo['value'], $allowedTypes)) {
+				continue;
+			}
+			$allowedSearchTypes[$searchType] = $typeInfo;
+		}
+	
+		return $allowedSearchTypes;
+	}
     // feel free to extend the search helper here
 }
